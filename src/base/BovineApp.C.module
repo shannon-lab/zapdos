@@ -1,0 +1,46 @@
+#include "BovineApp.h"
+#include "Moose.h"
+#include "AppFactory.h"
+
+template<>
+InputParameters validParams<BovineApp>()
+{
+  InputParameters params = validParams<MooseApp>();
+
+  params.set<bool>("use_legacy_uo_initialization") = false;
+  params.set<bool>("use_legacy_uo_aux_computation") = false;
+  return params;
+}
+
+BovineApp::BovineApp(const std::string & name, InputParameters parameters) :
+    MooseApp(name, parameters)
+{
+  srand(processor_id());
+
+  Moose::registerObjects(_factory);
+  BovineApp::registerObjects(_factory);
+
+  Moose::associateSyntax(_syntax, _action_factory);
+  BovineApp::associateSyntax(_syntax, _action_factory);
+}
+
+BovineApp::~BovineApp()
+{
+}
+
+extern "C" void BovineApp__registerApps() { BovineApp::registerApps(); }
+void
+BovineApp::registerApps()
+{
+  registerApp(BovineApp);
+}
+
+void
+BovineApp::registerObjects(Factory & factory)
+{
+}
+
+void
+BovineApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
+{
+}
