@@ -3,6 +3,12 @@
 #include "AppFactory.h"
 #include "ModulesApp.h"
 
+// Kernels
+#include "ConstTimesDiffusion.h"
+
+// Materials
+// #include "DiffusionConst.h"
+
 template<>
 InputParameters validParams<BovineApp>()
 {
@@ -41,6 +47,8 @@ BovineApp::registerApps()
 void
 BovineApp::registerObjects(Factory & factory)
 {
+  registerKernel(ConstTimesDiffusion);
+//  registerMaterial(DiffusionConst);
 }
 
 void

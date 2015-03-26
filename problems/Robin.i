@@ -1,11 +1,11 @@
 [Mesh]
   type = GeneratedMesh # Can generate simple lines, rectangles and rectangular prisms
-  dim = 2 # Dimension of the mesh
+  dim = 1 # Dimension of the mesh
   nx = 30 # Number of elements in the x direction
-  ny = 3 # Number of elements in the y direction
+  # ny = 3 # Number of elements in the y direction
   xmax = 50e-6  # Length of reactor
-  ymax = 5e-6 # Width of reactor
-  # uniform_refine = 3
+  # ymax = 50e-7 # Width of reactor
+  uniform_refine = 3
 []
 
 [Variables]
@@ -19,6 +19,7 @@
   [./diff]
     type = ConstTimesDiffusion # A Laplacian operator
     variable = n_concentration # Operate on the "n_concentration" variable from above
+    diffusion_coeff = 3.16e-8
   [../]
   [./time_derivative]
     type = TimeDerivative
@@ -36,18 +37,18 @@
   [./outlet]
     type = VacuumBC
     variable = n_concentration
-    alpha = 1 # 1/m 
+    alpha = 3.3e4 # 1/m 
     boundary = right
     # value = 0 # Outlet concentration
   [../]
 []
 
-[Materials]
-  [./hoof]
-    type = DiffusionConst
-    block = 0
-  [../]
-[]
+# [Materials]
+#   [./hoof]
+#     type = DiffusionConst
+#     block = 0
+#   [../]
+# []
 
 [Problem]
   type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
@@ -56,16 +57,26 @@
 
 [Executioner]
   type = Transient # Transient solver
-  num_steps = 100
-  dt = 0.01
+  dt = 7.91e-5
   solve_type = PJFNK #Preconditioned Jacobian Free Newton Krylov
   petsc_options_iname = '-pc_type -pc_hypre_type' #Matches with the values below
   petsc_options_value = 'hypre boomeramg'
+  end_time = 0.5
+   nl_rel_tol = 1e-02
+   l_tol = 1e-02
+  [./TimeStepper]
+    type = IterationAdaptiveDT
+    linear_iteration_ratio = 5
+    cutback_factor = 0.5
+    dt = 7.91e-5
+    growth_factor = 2
+    optimal_iterations = 4
+  [../]
 []
 
 [Adaptivity]
   marker = error_frac
-  max_h_level = 3
+  max_h_level = 5
   [./Indicators]
     [./temp_jump]
       type = GradientJumpIndicator
@@ -76,9 +87,9 @@
   [./Markers]
     [./error_frac]
       type = ErrorFractionMarker
-      coarsen = 0.5
+      coarsen = 0.1
       indicator = temp_jump
-      refine = 0.5
+      refine = 0.6
     [../]
   [../]
 []
