@@ -5,6 +5,7 @@
 
 // Kernels
 #include "ConstTimesDiffusion.h"
+#include "FirstOrderReaction.h"
 
 // Materials
 // #include "DiffusionConst.h"
@@ -48,6 +49,7 @@ void
 BovineApp::registerObjects(Factory & factory)
 {
   registerKernel(ConstTimesDiffusion);
+  registerKernel(FirstOrderReaction);
 //  registerMaterial(DiffusionConst);
 }
 

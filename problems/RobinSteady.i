@@ -15,7 +15,11 @@
 []
 
 [Kernels]
-  # active = 'diff time_derivative'
+  active = 'diff'
+  [./justDiff]
+    type = Diffusion
+    variable = n_concentration
+  [../]
   [./diff]
     type = ConstTimesDiffusion
     variable = n_concentration # Operate on the "n_concentration" variable from above
@@ -24,11 +28,6 @@
   [./time_derivative]
     type = TimeDerivative
     variable = n_concentration
-  [../]
-  [./reaction_term]
-    type = FirstOrderReaction
-    variable = n_concentration
-    reaction_coeff = 51.2
   [../]
 []
 
@@ -61,15 +60,10 @@
 []
 
 [Executioner]
-  # active = 'Transient'
-  type = Transient
-  num_steps = 100
-  dt = .01
+  type = Steady
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-  trans_ss_check = true
-  ss_check_tol = 1e-4
 []
 
 # [Executioner]
