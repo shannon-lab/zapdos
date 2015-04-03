@@ -6,6 +6,10 @@
 // Kernels
 #include "ConstTimesDiffusion.h"
 #include "FirstOrderReaction.h"
+#include "SecondOrderReaction.h"
+#include "SelfBinaryReaction.h"
+#include "SrcSelfBinaryReaction.h"
+#include "SrcSecondOrderReaction.h"
 
 // Materials
 // #include "DiffusionConst.h"
@@ -50,6 +54,10 @@ BovineApp::registerObjects(Factory & factory)
 {
   registerKernel(ConstTimesDiffusion);
   registerKernel(FirstOrderReaction);
+  registerKernel(SecondOrderReaction);
+  registerKernel(SelfBinaryReaction);
+  registerKernel(SrcSelfBinaryReaction);
+  registerKernel(SrcSecondOrderReaction);
 //  registerMaterial(DiffusionConst);
 }
 
