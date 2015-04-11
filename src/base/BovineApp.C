@@ -10,6 +10,9 @@
 #include "SelfBinaryReaction.h"
 #include "SrcSelfBinaryReaction.h"
 #include "SrcSecondOrderReaction.h"
+#include "PoissonSource.h"
+#include "Convection.h"
+#include "IonizationSource.h"
 
 // Materials
 // #include "DiffusionConst.h"
@@ -58,6 +61,9 @@ BovineApp::registerObjects(Factory & factory)
   registerKernel(SelfBinaryReaction);
   registerKernel(SrcSelfBinaryReaction);
   registerKernel(SrcSecondOrderReaction);
+  registerKernel(PoissonSource);
+  registerKernel(Convection);
+  registerKernel(IonizationSource);
 //  registerMaterial(DiffusionConst);
 }
 

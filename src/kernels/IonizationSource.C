@@ -34,11 +34,22 @@ IonizationSource::IonizationSource(const std::string & name, InputParameters par
 Real
 IonizationSource::computeQpResidual()
 {
-  return -_test[_i][_qp]*_ionization_coeff*std::exp(1.65e7/_grad_potential[_qp].size())  _u[_qp];
+  return -_test[_i][_qp]*_ionization_coeff*std::exp(1.65e7/_grad_potential[_qp].size())*(.0382+2.9e5/760.0)/(1.0e4)*_grad_potential[_qp].size()*_u[_qp];
 }
 
 Real
 IonizationSource::computeQpJacobian()
 {
-  return _test[_i][_qp]*_ionization_coeff*_phi[_j][_qp];
+  return -_test[_i][_qp]*_ionization_coeff*std::exp(1.65e7/_grad_potential[_qp].size())*(.0382+2.9e5/760.0)/(1.0e4)*_grad_potential[_qp].size()*_phi[_j][_qp];
+}
+
+Real
+IonizationSoruce:computeQpOffDiagJacobian(unsigned int jvar)
+{
+  if (jvar == _potential_id)
+  {
+    return _test[_i][_qp]*_ionization_coeff*(.0382+2.9e5/760.0)/(1.0e4)*_u[_qp]*_grad_potential[_qp]*_grad_phi[_j][_qp]*std::exp(1.65e7/_grad_potential[_qp].size())*(1.65e7/(_grad_potential[_qp]*_grad_potential[_qp])-1.0/(_grad_potential[_qp].size()))
+  }
+  
+  return 0.0
 }
