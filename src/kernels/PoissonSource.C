@@ -55,12 +55,12 @@ PoissonSource::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _ion_density_id)
   {
-    return -_test[_i][_qp]*_coulomb_charge/_permittivity*phi[_j][_qp];
+    return -_test[_i][_qp]*_coulomb_charge/_permittivity*_phi[_j][_qp];
   }
   
   if (jvar == _electron_density_id)
   {
-    return _test[_i][_qp]*_coulomb_charge/_permittivity*phi[_j][_qp];
+    return _test[_i][_qp]*_coulomb_charge/_permittivity*_phi[_j][_qp];
   }
   
   return 0.0;

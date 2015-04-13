@@ -26,15 +26,34 @@ InputParameters validParams<Convection>()
 Convection::Convection(const std::string & name,
                        InputParameters parameters) :
     Kernel(name, parameters),
-    _grad_some_variable(coupledGradient("some_variable"))
+    _grad_some_variable(coupledGradient("some_variable")),
+    _some_variable_id(coupled("some_variable"))
 {}
 
 Real Convection::computeQpResidual()
 {
-  return _test[_i][_qp]*(_grad_some_variable[_qp]*_grad_u[_qp]);
+
+  /* Note that the residual below is specific for electron convection because the
+  constants used in the formulation are specific to electrons. This convection kernel
+  does not assume that the divergence of velocity is zero like is assumed in the 
+  moose tutorials and examples that I've looked at. Make sure to include appropriate
+  boundary conditions to match this kernel */
+   
+  return -_u[_qp]*(0.0382+2.9e5/760.0)/(1.0e4)*_grad_some_variable[_qp]*_grad_test[_i][_qp];
 }
 
 Real Convection::computeQpJacobian()
 {
-  return _test[_i][_qp]*(_grad_some_variable[_qp]*_grad_phi[_j][_qp]);
+  return -_phi[_j][_qp]*(0.0382+2.9e5/760.0)/(1.0e4)*_grad_some_variable[_qp]*_grad_test[_i][_qp];
 }
+
+Real Convection::computeQpOffDiagJacobian(unsigned int jvar)
+{
+  if (jvar == _some_variable_id)
+  {
+    return -_u[_qp]*(0.0382+2.9e5/760.0)/(1.0e4)*_grad_phi[_j][_qp]*_grad_test[_i][_qp];
+  }
+  
+  return 0.0;
+}
+

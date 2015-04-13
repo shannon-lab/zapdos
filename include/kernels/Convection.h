@@ -34,14 +34,10 @@ protected:
   virtual Real computeQpResidual();
 
   virtual Real computeQpJacobian();
-  
-  virtual Real computeQpOffDiagJacobian;
-  
-  unsigned int _potential_id;
 
-private:
+//private:
 
-  VariableGradient & _grad_potential;
+  VariableGradient & _grad_some_variable;
 };
 
 #endif //CONVECTION_H
