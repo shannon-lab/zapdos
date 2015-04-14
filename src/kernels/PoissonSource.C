@@ -18,7 +18,7 @@ template<>
 InputParameters validParams<PoissonSource>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addRequiredParam<Real>("permittivity", "The permittivity of the medium");
+  params.addParam<Real>("permittivity", 8.85e-12, "The permittivity of the medium");
   params.addParam<Real>("coulomb_charge", 1.6e-19, "The charge of a single electron");
   params.addRequiredCoupledVar("ion_density", "Ion density in the simulation");
   params.addRequiredCoupledVar("electron_density", "Electron density in the simulation");
@@ -38,10 +38,13 @@ PoissonSource::PoissonSource(const std::string & name, InputParameters parameter
 {
 }
 
+/* Adding scaling terms for both the densities and the potential. The scaling term
+for the densities is 1e19. The scaling term for the potential is 1e4 */
+
 Real
 PoissonSource::computeQpResidual()
 {
-  return _test[_i][_qp]*_coulomb_charge/_permittivity*(_electron_density[_qp]-_ion_density[_qp]);
+  return _test[_i][_qp]*_coulomb_charge/_permittivity*(1.0e19/(1.0e4))*(_electron_density[_qp]-_ion_density[_qp]);
 }
 
 Real
@@ -55,12 +58,12 @@ PoissonSource::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _ion_density_id)
   {
-    return -_test[_i][_qp]*_coulomb_charge/_permittivity*_phi[_j][_qp];
+    return -_test[_i][_qp]*_coulomb_charge/_permittivity*(1.0e19/(1.0e4))*_phi[_j][_qp];
   }
   
   if (jvar == _electron_density_id)
   {
-    return _test[_i][_qp]*_coulomb_charge/_permittivity*_phi[_j][_qp];
+    return _test[_i][_qp]*_coulomb_charge/_permittivity*(1.0e19/(1.0e4))*_phi[_j][_qp];
   }
   
   return 0.0;

@@ -45,7 +45,7 @@
 []
 
 [Kernels]
-  active = 'electrons_time_deriv electron_diffusion poisson_diffusion electron_convection electron_src ions_src ions_time_deriv' 
+  active = 'electrons_time_deriv electron_diffusion poisson_diffusion electron_convection electron_src ions_src ions_time_deriv poisson_src' 
   [./poisson_diffusion]
     type = Diffusion
     variable = potential
@@ -53,7 +53,7 @@
   [./poisson_src]
     type = PoissonSource
     variable = potential
-    permittivity = 8.85e-12
+    #permittivity = 8.85e-12
     ion_density = ion_density
     electron_density = electron_density
   [../]
@@ -109,15 +109,15 @@
   # coord_type = XYZ # Cartesian   
 []   
 
-#[Preconditioning]
-#  [./SMP_jfnk_full]
-#    type = SMP
-#    full = true
-#    solve_type = 'PJFNK'
-#    # petsc_options_iname = '-pc_type'
-#    # petsc_options_value = 'lu'
-#  [../]
-#[]
+[Preconditioning]
+  [./SMP_jfnk_full]
+    type = SMP
+    full = true
+    solve_type = 'PJFNK'
+    # petsc_options_iname = '-pc_type'
+    # petsc_options_value = 'lu'
+  [../]
+[]
 
 [Executioner]
   type = Transient
@@ -130,14 +130,14 @@
   ss_check_tol = 1e-8
   nl_rel_tol = 1e-2
   l_tol = 1e-2
-#  [./TimeStepper]
-#    type = IterationAdaptiveDT
-#    linear_iteration_ratio = 25
-#    cutback_factor = 0.5
-#    dt = 1.0e-5
-#    growth_factor = 2
-#    optimal_iterations = 4
-#  [../]
+  [./TimeStepper]
+    type = IterationAdaptiveDT
+    linear_iteration_ratio = 25
+    cutback_factor = 0.5
+    dt = 1.0e-6
+    growth_factor = 2
+    optimal_iterations = 4
+  [../]
 []
 
 [Adaptivity]
