@@ -12,21 +12,21 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef CONVECTION_H
-#define CONVECTION_H
+#ifndef BOVINECONVECTION_H
+#define BOVINECONVECTION_H
 
 #include "Kernel.h"
 
-class Convection;
+class BovineConvection;
 
 template<>
-InputParameters validParams<Convection>();
+InputParameters validParams<BovineConvection>();
 
-class Convection : public Kernel
+class BovineConvection : public Kernel
 {
 public:
 
-  Convection(const std::string & name,
+  BovineConvection(const std::string & name,
              InputParameters parameters);
 
 protected:
@@ -34,10 +34,14 @@ protected:
   virtual Real computeQpResidual();
 
   virtual Real computeQpJacobian();
+  
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  
+  unsigned int _some_variable_id;
 
-//private:
+private:
 
   VariableGradient & _grad_some_variable;
 };
 
-#endif //CONVECTION_H
+#endif //BOVINECONVECTION_H

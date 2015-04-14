@@ -12,36 +12,34 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef CONVECTION_H
-#define CONVECTION_H
+#ifndef IONIZATIONSOURCE_H
+#define IONIZATIONSOURCE_H
 
 #include "Kernel.h"
 
-class Convection;
+// Forward Declaration
+class IonizationSource;
 
 template<>
-InputParameters validParams<Convection>();
+InputParameters validParams<IonizationSource>();
 
-class Convection : public Kernel
+class IonizationSource : public Kernel
 {
 public:
-
-  Convection(const std::string & name,
-             InputParameters parameters);
+  IonizationSource(const std::string & name, InputParameters parameters);
 
 protected:
-
   virtual Real computeQpResidual();
-
   virtual Real computeQpJacobian();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
   
-  virtual Real computeQpOffDiagJacobian;
+  Real _ionization_coeff;
   
-  unsigned int _some_variable_id;
-
+  unsigned int _potential_id;
+  
 private:
+  
+  VariableGradient & _grad_potential;
 
-  VariableGradient & _grad_some_variable;
 };
-
-#endif //CONVECTION_H
+#endif //IONIZATIONSOURCE_H

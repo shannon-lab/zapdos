@@ -3,6 +3,6 @@
 #ifndef BOVINE_REVISION_H
 #define BOVINE_REVISION_H
 
-#define BOVINE_REVISION "git commit 25d1b60 on 2015-04-10"
+#define BOVINE_REVISION "git commit 8efbbf3 on 2015-04-13"
 
 #endif // BOVINE_REVISION_H

@@ -12,29 +12,36 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "Convection.h"
+#ifndef DIVFREECONVECTION_H
+#define DIVFREECONVECTION_H
+
+#include "Kernel.h"
+
+class DivFreeConvection;
 
 template<>
-InputParameters validParams<Convection>()
+InputParameters validParams<DivFreeConvection>();
+
+class DivFreeConvection : public Kernel
 {
-  InputParameters params = validParams<Kernel>();
+public:
 
-  params.addRequiredCoupledVar("some_variable", "The gradient of this variable will be used as the velocity vector.");
-  return params;
-}
+  DivFreeConvection(const std::string & name,
+             InputParameters parameters);
 
-Convection::Convection(const std::string & name,
-                       InputParameters parameters) :
-    Kernel(name, parameters),
-    _grad_some_variable(coupledGradient("some_variable"))
-{}
+protected:
 
-Real Convection::computeQpResidual()
-{
-  return _test[_i][_qp]*(_grad_some_variable[_qp]*_grad_u[_qp]);
-}
+  virtual Real computeQpResidual();
 
-Real Convection::computeQpJacobian()
-{
-  return _test[_i][_qp]*(_grad_some_variable[_qp]*_grad_phi[_j][_qp]);
-}
+  virtual Real computeQpJacobian();
+  
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  
+  unsigned int _some_variable_id;
+
+private:
+
+  VariableGradient & _grad_some_variable;
+};
+
+#endif //DIVFREECONVECTION_H

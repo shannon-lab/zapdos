@@ -12,10 +12,10 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "Convection.h"
+#include "BovineConvection.h"
 
 template<>
-InputParameters validParams<Convection>()
+InputParameters validParams<BovineConvection>()
 {
   InputParameters params = validParams<Kernel>();
 
@@ -23,14 +23,14 @@ InputParameters validParams<Convection>()
   return params;
 }
 
-Convection::Convection(const std::string & name,
+BovineConvection::BovineConvection(const std::string & name,
                        InputParameters parameters) :
     Kernel(name, parameters),
-    _grad_some_variable(coupledGradient("some_variable")),
-    _some_variable_id(coupled("some_variable"))
+    _some_variable_id(coupled("some_variable")),
+    _grad_some_variable(coupledGradient("some_variable"))
 {}
 
-Real Convection::computeQpResidual()
+Real BovineConvection::computeQpResidual()
 {
 
   /* Note that the residual below is specific for electron convection because the
@@ -42,12 +42,12 @@ Real Convection::computeQpResidual()
   return -_u[_qp]*(0.0382+2.9e5/760.0)/(1.0e4)*_grad_some_variable[_qp]*_grad_test[_i][_qp];
 }
 
-Real Convection::computeQpJacobian()
+Real BovineConvection::computeQpJacobian()
 {
   return -_phi[_j][_qp]*(0.0382+2.9e5/760.0)/(1.0e4)*_grad_some_variable[_qp]*_grad_test[_i][_qp];
 }
 
-Real Convection::computeQpOffDiagJacobian(unsigned int jvar)
+Real BovineConvection::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _some_variable_id)
   {
