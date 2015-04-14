@@ -22,10 +22,27 @@
   [../]
 []
 
+[AuxVariables]
+  [./e_field_mag]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
+[]
+
+[AuxKernels]
+  [./e_field_mag_kernel]
+    type = EFieldMag
+    variable = e_field_mag
+    potential = potential
+    execute_on = timestep_end
+    #component = x
+  [../]
+[]
+
 [Functions]
   [./parsed_function]
     type = ParsedFunction
-    #value = '1e13 + 1e19*exp(-pow(x-2.5e-3,2)/pow(100.e-6,2))'
+    #value = '1e13 + 1e19*exp(-pow(x-2.5e-3,2)/pow(100.e-6,2))*exp(-pow(y-2.5e-4,2)/pow(10.e-6,2))'
     value = '1.0*exp(-pow(x-2.5e-3,2)/pow(100.e-6,2))'
   [../]
 []
@@ -121,23 +138,25 @@
 
 [Executioner]
   type = Transient
-  dt = 1.0e-6
+  dt = 1.0e-7
   #solve_type = PJFNK
   #petsc_options_iname = '-pc_type -pc_hypre_type'
   #petsc_options_value = 'hypre boomeramg'
-  end_time = 1.0e-5
-  trans_ss_check = true
-  ss_check_tol = 1e-8
+  end_time = 1.0e-4
+#  trans_ss_check = true
+#  ss_check_tol = 1e-8
   nl_rel_tol = 1e-2
-  l_tol = 1e-2
-  [./TimeStepper]
-    type = IterationAdaptiveDT
-    linear_iteration_ratio = 25
-    cutback_factor = 0.5
-    dt = 1.0e-6
-    growth_factor = 2
-    optimal_iterations = 4
-  [../]
+  l_tol = 1e-1
+#  nl_abs_tol = 1e-3
+  l_max_its = 500
+#  [./TimeStepper]
+#    type = IterationAdaptiveDT
+#    linear_iteration_ratio = 10
+#    cutback_factor = 0.67
+#    dt = 1.0e-7
+#    growth_factor = 1.5
+#    optimal_iterations = 4
+#  [../]
 []
 
 [Adaptivity]
@@ -146,16 +165,16 @@
   [./Indicators]
     [./temp_jump]
       type = GradientJumpIndicator
-      variable = electron_density
+      variable = potential
       scale_by_flux_faces = true
     [../]
   [../]
   [./Markers]
     [./error_frac]
       type = ErrorFractionMarker
-      coarsen = 0.5
+      coarsen = 0.1
       indicator = temp_jump
-      refine = 0.5
+      refine = 0.6
     [../]
   [../]
 []

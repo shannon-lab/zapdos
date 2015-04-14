@@ -16,6 +16,10 @@
 #include "DivFreeConvection.h"
 #include "CoupledIonizationSource.h"
 
+// AuxKernels
+
+#include "EFieldMag.h"
+
 // Materials
 // #include "DiffusionConst.h"
 
@@ -68,6 +72,7 @@ BovineApp::registerObjects(Factory & factory)
   registerKernel(IonizationSource);
   registerKernel(DivFreeConvection);
   registerKernel(CoupledIonizationSource);
+  registerAux(EFieldMag);
 //  registerMaterial(DiffusionConst);
 }
 
