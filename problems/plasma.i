@@ -9,7 +9,7 @@
 []
 
 [Variables]
-  active = 'electron_density potential'
+  active = 'electron_density ion_density potential'
   [./electron_density]
     #Adds a Linear Lagrange variable by default
     #scaling = 1e0
@@ -31,7 +31,7 @@
 []
 
 [ICs]
-  active = 'electron_density_ic'
+  active = 'electron_density_ic ion_density_ic'
   [./electron_density_ic]
     type = FunctionIC
     variable = 'electron_density'
@@ -45,7 +45,7 @@
 []
 
 [Kernels]
-  active = 'electrons_time_deriv electron_diffusion poisson_diffusion electron_convection electron_src' 
+  active = 'electrons_time_deriv electron_diffusion poisson_diffusion electron_convection electron_src ions_src ions_time_deriv' 
   [./poisson_diffusion]
     type = Diffusion
     variable = potential
@@ -81,10 +81,11 @@
     variable = ion_density
   [../]
   [./ions_src]
-    type = IonizationSource
+    type = CoupledIonizationSource
     variable = ion_density
     potential = potential
-    ionization_coeff = 0.35e-6
+    electron_density = electron_density
+    #ionization_coeff = 0.35e-6
   [../]
 []
 
