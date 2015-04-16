@@ -12,36 +12,41 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef IONIZATIONSOURCE_H
-#define IONIZATIONSOURCE_H
+#ifndef VELOCITYMAG_H
+#define VELOCITYMAG_H
 
-#include "Kernel.h"
+#include "AuxKernel.h"
 
-// Forward Declaration
-class IonizationSource;
+//Forward Declarations
+class VelocityMag;
 
 template<>
-InputParameters validParams<IonizationSource>();
+InputParameters validParams<VelocityMag>();
 
-class IonizationSource : public Kernel
+/**
+ * Constant auxiliary value
+ */
+class VelocityMag : public AuxKernel
 {
 public:
-  IonizationSource(const std::string & name, InputParameters parameters);
+  VelocityMag(const std::string & name, InputParameters parameters);
+
+  virtual ~VelocityMag() {}
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  /**
+   * AuxKernels MUST override computeValue.  computeValue() is called on
+   * every quadrature point.  For Nodal Auxiliary variables those quadrature
+   * points coincide with the nodes.
+   */
+  virtual Real computeValue();
   
-  Real _ionization_coeff;
-  
-  unsigned int _potential_id;
+  //int _component;
+
+  /// The gradient of a coupled variable
+  VariableGradient & _grad_potential;
   
   MaterialProperty<Real> & _velocity_coeff;
-  
-private:
-  
-  VariableGradient & _grad_potential;
-
 };
-#endif //IONIZATIONSOURCE_H
+
+#endif //VELOCITYMAG_H

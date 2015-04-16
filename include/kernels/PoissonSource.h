@@ -32,8 +32,8 @@ protected:
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  Real _permittivity;
-  Real _coulomb_charge;
+  MaterialProperty<Real> & _permittivity;
+  MaterialProperty<Real> & _coulomb_charge;
   VariableValue & _ion_density;
   VariableValue & _electron_density;
   

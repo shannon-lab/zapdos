@@ -19,9 +19,11 @@
 // AuxKernels
 
 #include "EFieldMag.h"
+#include "VelocityMag.h"
+#include "ChargeDensity.h"
 
 // Materials
-// #include "DiffusionConst.h"
+#include "Air.h"
 
 template<>
 InputParameters validParams<BovineApp>()
@@ -73,7 +75,9 @@ BovineApp::registerObjects(Factory & factory)
   registerKernel(DivFreeConvection);
   registerKernel(CoupledIonizationSource);
   registerAux(EFieldMag);
-//  registerMaterial(DiffusionConst);
+  registerAux(VelocityMag);
+  registerAux(ChargeDensity);
+  registerMaterial(Air);
 }
 
 void

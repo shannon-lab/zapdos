@@ -27,6 +27,7 @@ DivFreeConvection::DivFreeConvection(const std::string & name,
                        InputParameters parameters) :
     Kernel(name, parameters),
     _some_variable_id(coupled("some_variable")),
+    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
     _grad_some_variable(coupledGradient("some_variable"))
 {}
 
@@ -41,19 +42,19 @@ Real DivFreeConvection::computeQpResidual()
   because I am scaling the electron density and the potential so that there approximate
   magnitudes are equal */
    
-  return (0.0382+2.9e5/760.0)/(1.0e4)*1.0e4*_grad_some_variable[_qp]*_grad_u[_qp]*_test[_i][_qp];
+  return _velocity_coeff[_qp]/(1.0e4)*1.0e4*_grad_some_variable[_qp]*_grad_u[_qp]*_test[_i][_qp];
 }
 
 Real DivFreeConvection::computeQpJacobian()
 {
-  return (0.0382+2.9e5/760.0)/(1.0e4)*1.0e4*_grad_some_variable[_qp]*_grad_phi[_j][_qp]*_test[_i][_qp];
+  return _velocity_coeff[_qp]/(1.0e4)*1.0e4*_grad_some_variable[_qp]*_grad_phi[_j][_qp]*_test[_i][_qp];
 }
 
 Real DivFreeConvection::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _some_variable_id)
   {
-    return (0.0382+2.9e5/760.0)/(1.0e4)*1.0e4*_grad_phi[_j][_qp]*_grad_u[_qp]*_test[_i][_qp];;
+    return _velocity_coeff[_qp]/(1.0e4)*1.0e4*_grad_phi[_j][_qp]*_grad_u[_qp]*_test[_i][_qp];;
   }
   
   return 0.0;
