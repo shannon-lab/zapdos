@@ -13,12 +13,12 @@
 /****************************************************************/
 
 #include "CoupledIonizationSource.h"
+//#include "math.h"
 
 template<>
 InputParameters validParams<CoupledIonizationSource>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addParam<Real>("ionization_coeff", 0.35, "The ionization coefficient of the medium");
   params.addRequiredCoupledVar("potential", "The electrical potential");
   params.addRequiredCoupledVar("electron_density", "electron density");
   return params;
@@ -27,7 +27,15 @@ InputParameters validParams<CoupledIonizationSource>()
 CoupledIonizationSource::CoupledIonizationSource(const std::string & name, InputParameters parameters) :
     Kernel(name, parameters),
     
-    _ionization_coeff(getParam<Real>("ionization_coeff")),
+    // Material Properties
+    
+    _ionization_coeff(getMaterialProperty<Real>("ionization_coeff")),
+    _ion_activation_energy(getMaterialProperty<Real>("ion_activation_energy")),
+    _potential_mult(getMaterialProperty<Real>("potential_mult")),
+    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
+    
+    // Coupled variables
+    
     _potential_id(coupled("potential")),
     _electrons_id(coupled("electron_density")),
     _electron_density(coupledValue("electron_density")),
@@ -40,7 +48,8 @@ This scaling is evident anywhere where you see the potential multiplied by 1.0e4
 Real
 CoupledIonizationSource::computeQpResidual()
 {
-  return -_test[_i][_qp]*_ionization_coeff*std::exp(-1.65e7/(1.0e4*_grad_potential[_qp].size()+1.0))*(.0382+2.9e5/760.0)/(1.0e4)*1.0e4*_grad_potential[_qp].size()*_electron_density[_qp];
+  /* return -_test[_i][_qp]*_ionization_coeff[_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0))*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].size()*_electron_density[_qp]; */
+  return -_test[_i][_qp]*fmax(1.0e5 * std::exp(1.0 - 1.0e7/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0)) - 9697.2,0.0)*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].size()*_electron_density[_qp];
 }
 
 Real
@@ -49,18 +58,18 @@ CoupledIonizationSource::computeQpJacobian()
   return 0.0;
 }
 
-Real
+/* Real
 CoupledIonizationSource::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
   {
-    return _test[_i][_qp]*_ionization_coeff*(.0382+2.9e5/760.0)/(1.0e4)*_electron_density[_qp]*1.0e4*_grad_potential[_qp]*_grad_phi[_j][_qp]*std::exp(-1.65e7/(1.0e4*_grad_potential[_qp].size()+1.0))*(1.65e7/(_grad_potential[_qp]*_grad_potential[_qp]*1.0e8+1.0)-1.0/(1.0e4*_grad_potential[_qp].size()+1.0));
+    return _test[_i][_qp]*_ionization_coeff[_qp]*_velocity_coeff[_qp]*_electron_density[_qp]*_potential_mult[_qp]*_grad_potential[_qp]*_grad_phi[_j][_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0))*(_ion_activation_energy[_qp]/(_grad_potential[_qp]*_grad_potential[_qp]*std::pow(_potential_mult[_qp],2)+1.0)-1.0/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0));
   }
 
   if (jvar == _electrons_id)
   {
-    return -_test[_i][_qp]*_ionization_coeff*std::exp(-1.65e7/(1.0e4*_grad_potential[_qp].size()+1.0))*(.0382+2.9e5/760.0)/(1.0e4)*1.0e4*_grad_potential[_qp].size()*_phi[_j][_qp];
+    return -_test[_i][_qp]*_ionization_coeff[_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0))*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].size()*_phi[_j][_qp];
   }
   
   return 0.0;
-}
+} */

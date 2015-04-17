@@ -26,6 +26,16 @@ InputParameters validParams<BovineConvection>()
 BovineConvection::BovineConvection(const std::string & name,
                        InputParameters parameters) :
     Kernel(name, parameters),
+    
+    // Input file scalars
+    
+    // Material properties
+    
+    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
+    _potential_mult(getMaterialProperty<Real>("potential_mult")),
+    
+    // Coupled variables
+    
     _some_variable_id(coupled("some_variable")),
     _grad_some_variable(coupledGradient("some_variable"))
 {}
@@ -39,21 +49,21 @@ Real BovineConvection::computeQpResidual()
   moose tutorials and examples that I've looked at. Make sure to include appropriate
   boundary conditions to match this kernel */
    
-  return -_u[_qp]*(0.0382+2.9e5/760.0)/(1.0e4)*_grad_some_variable[_qp]*_grad_test[_i][_qp];
+  return -_u[_qp]*_velocity_coeff[_qp]*_grad_some_variable[_qp]*_potential_mult[_qp]*_grad_test[_i][_qp];
 }
 
 Real BovineConvection::computeQpJacobian()
 {
-  return -_phi[_j][_qp]*(0.0382+2.9e5/760.0)/(1.0e4)*_grad_some_variable[_qp]*_grad_test[_i][_qp];
+  return -_phi[_j][_qp]*_velocity_coeff[_qp]*_grad_some_variable[_qp]*_potential_mult[_qp]*_grad_test[_i][_qp];
 }
 
-Real BovineConvection::computeQpOffDiagJacobian(unsigned int jvar)
+/* Real BovineConvection::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _some_variable_id)
   {
-    return -_u[_qp]*(0.0382+2.9e5/760.0)/(1.0e4)*_grad_phi[_j][_qp]*_grad_test[_i][_qp];
+    return -_u[_qp]*_velocity_coeff[_qp]*_grad_phi[_j][_qp]*_potential_mult[_qp]*_grad_test[_i][_qp];
   }
   
-  return 0.0;
-}
+  return 0.0; 
+} */
 

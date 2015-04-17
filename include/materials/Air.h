@@ -42,14 +42,24 @@ protected:
    */
   virtual void computeQpProperties();
 
-  /// The radius of the balls in the column
+  // Input parameters
+  
   const Real & _velocity_multiplier;
   const Real & _relative_permittivity;
+  const Real & _ionization_multiplier;
+  const Real & _user_potential_mult;
+  const Real & _user_density_mult;
 
-  /// Coefficient in expression for velocity
+  // Material properties
+  
   MaterialProperty<Real> & _velocity_coeff;
   MaterialProperty<Real> & _permittivity;
   MaterialProperty<Real> & _coulomb_charge;
+  MaterialProperty<Real> & _ionization_coeff;
+  MaterialProperty<Real> & _ion_activation_energy;
+  MaterialProperty<Real> & _potential_mult;
+  MaterialProperty<Real> & _density_mult;
+  
 };
 
 #endif //AIR_H

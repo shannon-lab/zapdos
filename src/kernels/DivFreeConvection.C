@@ -26,8 +26,15 @@ InputParameters validParams<DivFreeConvection>()
 DivFreeConvection::DivFreeConvection(const std::string & name,
                        InputParameters parameters) :
     Kernel(name, parameters),
-    _some_variable_id(coupled("some_variable")),
+    
+    // Material properties
+    
     _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
+    _potential_mult(getMaterialProperty<Real>("potential_mult")),
+    
+    // Coupled variables
+    
+    _some_variable_id(coupled("some_variable")),
     _grad_some_variable(coupledGradient("some_variable"))
 {}
 
@@ -36,25 +43,23 @@ Real DivFreeConvection::computeQpResidual()
 
   /* Note that the residual below is specific for electron convection because the
   constants used in the formulation are specific to electrons. This convection kernel
-  does not assume that the divergence of velocity is zero like is assumed in the 
+  does assume that the divergence of velocity is zero like is assumed in the 
   moose tutorials and examples that I've looked at. Make sure to include appropriate
-  boundary conditions to match this kernel. Second note: I'm introducing a factor of 1.0e4
-  because I am scaling the electron density and the potential so that there approximate
-  magnitudes are equal */
+  boundary conditions to match this kernel. */
    
-  return _velocity_coeff[_qp]/(1.0e4)*1.0e4*_grad_some_variable[_qp]*_grad_u[_qp]*_test[_i][_qp];
+  return _velocity_coeff[_qp]*_potential_mult[_qp]*_grad_some_variable[_qp]*_grad_u[_qp]*_test[_i][_qp];
 }
 
 Real DivFreeConvection::computeQpJacobian()
 {
-  return _velocity_coeff[_qp]/(1.0e4)*1.0e4*_grad_some_variable[_qp]*_grad_phi[_j][_qp]*_test[_i][_qp];
+  return _velocity_coeff[_qp]*_potential_mult[_qp]*_grad_some_variable[_qp]*_grad_phi[_j][_qp]*_test[_i][_qp];
 }
 
 Real DivFreeConvection::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _some_variable_id)
   {
-    return _velocity_coeff[_qp]/(1.0e4)*1.0e4*_grad_phi[_j][_qp]*_grad_u[_qp]*_test[_i][_qp];;
+    return _velocity_coeff[_qp]*_potential_mult[_qp]*_grad_phi[_j][_qp]*_grad_u[_qp]*_test[_i][_qp];
   }
   
   return 0.0;

@@ -31,9 +31,17 @@ public:
 protected:
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  //virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  
+  // Material properties
+  
   MaterialProperty<Real> & _permittivity;
   MaterialProperty<Real> & _coulomb_charge;
+  MaterialProperty<Real> & _density_mult;
+  MaterialProperty<Real> & _potential_mult;
+  
+  // Coupled variables
+  
   VariableValue & _ion_density;
   VariableValue & _electron_density;
   

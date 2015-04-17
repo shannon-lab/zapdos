@@ -37,9 +37,14 @@ protected:
   
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
   
-  unsigned int _some_variable_id;
+  // Material Properties
   
   MaterialProperty<Real> & _velocity_coeff;
+  MaterialProperty<Real> & _potential_mult;
+  
+  // Coupled variables
+  
+  unsigned int _some_variable_id;
 
 private:
 
