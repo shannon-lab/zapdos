@@ -2,9 +2,9 @@
   type = GeneratedMesh
   dim = 2
   nx = 100
-  ny = 100
+  ny = 50
   xmax = 32e-3 # Length of test chamber
-  ymax = 32e-3 # Test chamber radius
+  ymax = 16e-3 # Test chamber radius
   uniform_refine = 1
 []
 
@@ -24,9 +24,10 @@
 []
 
 [AuxVariables]
+  active = 'e_field_mag charge_density ion_src_term'
   [./e_field_mag]
-#    order = CONSTANT
-#    family = MONOMIAL
+    order = CONSTANT
+    family = MONOMIAL
   [../]
   [./velocity_mag]
     order = CONSTANT
@@ -36,9 +37,14 @@
     order = CONSTANT
     family = MONOMIAL
   [../]
+  [./ion_src_term]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
 []
 
 [AuxKernels]
+  active = 'e_field_mag_kernel charge_dens_kernel ion_src_kernel'
   [./e_field_mag_kernel]
     type = EFieldMag
     variable = e_field_mag
@@ -58,6 +64,12 @@
     electron_density = electron_density
     ion_density = ion_density
   [../]
+  [./ion_src_kernel]
+    type = IonSrcTerm
+    variable = ion_src_term
+    electron_density = electron_density
+    potential = potential
+  [../]
 []
 
 [Materials]
@@ -73,12 +85,16 @@
 [Functions]
   [./parsed_function]
     type = ParsedFunction
-    value = '(1.0e13 + 5.0e19*exp(-pow(x-16e-3,2)/pow(1.e-3,2))*exp(-pow(y-16e-3,2)/pow(0.5e-3,2)))/(1.0e19)'
+    value = '(1.0e13 + 5.0e19*exp(-pow(x-16e-3,2)/pow(1.e-3,2))*exp(-pow(y-8e-3,2)/pow(0.5e-3,2)))/(1.0e19)'
     #value = '1.0*exp(-pow(x-2.5e-3,2)/pow(100.e-6,2))*exp(-pow(y-2.5e-4,2)/pow(50.e-6,2))'
   [../]
   [./linear_function]
     type = ParsedFunction
     value = '(8.0e4-2.5e6*x)/(1.0e4)'
+  [../]
+  [./null_function]
+    type = ParsedFunction
+    value = '0.0'
   [../]
 []
 
@@ -102,7 +118,12 @@
 []
 
 [Kernels]
-  active = 'electrons_time_deriv poisson_diffusion electron_convection ions_time_deriv poisson_src electron_diffusion electron_src ions_src'
+  active = 'electrons_time_deriv poisson_diffusion electron_convection ions_time_deriv poisson_src electron_diffusion electron_src ions_src artificial_diff'
+  [./artificial_diff]
+    type = ArtificialDiff
+    variable = electron_density
+    potential = potential
+  [../]
   [./poisson_diffusion]
     type = Diffusion
     variable = potential
@@ -178,7 +199,7 @@
 
 [Executioner]
   type = Transient
-  dt = 1.0e-11
+  dt = 5.0e-12
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
@@ -188,14 +209,14 @@
   nl_rel_tol = 1e-2
   l_tol = 1e-1
 #  nl_abs_tol = 1e-3
-  l_max_its = 25
-  nl_max_its = 4
+  l_max_its = 9
+  nl_max_its = 3
 #  scheme = crank-nicolson
   [./TimeStepper]
     type = IterationAdaptiveDT
     linear_iteration_ratio = 5
     cutback_factor = 0.4
-    dt = 1.0e-11
+    dt = 5.0e-12
     growth_factor = 1.2
     optimal_iterations = 4
   [../]
@@ -203,12 +224,18 @@
 
 [Adaptivity]
   marker = error_frac
-  max_h_level = 4
+  max_h_level = 3
   [./Indicators]
+    active = 'temp_jump'
     [./temp_jump]
       type = GradientJumpIndicator
-      variable = charge_density
+      variable = potential
       scale_by_flux_faces = true
+    [../]
+    [./analytical]
+      type = AnalyticalIndicator
+      variable = ion_src_term
+      function = null_function
     [../]
   [../]
   [./Markers]

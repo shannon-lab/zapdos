@@ -15,12 +15,14 @@
 #include "IonizationSource.h"
 #include "DivFreeConvection.h"
 #include "CoupledIonizationSource.h"
+#include "ArtificialDiff.h"
 
 // AuxKernels
 
 #include "EFieldMag.h"
 #include "VelocityMag.h"
 #include "ChargeDensity.h"
+#include "IonSrcTerm.h"
 
 // Materials
 #include "Air.h"
@@ -74,9 +76,11 @@ BovineApp::registerObjects(Factory & factory)
   registerKernel(IonizationSource);
   registerKernel(DivFreeConvection);
   registerKernel(CoupledIonizationSource);
+  registerKernel(ArtificialDiff);
   registerAux(EFieldMag);
   registerAux(VelocityMag);
   registerAux(ChargeDensity);
+  registerAux(IonSrcTerm);
   registerMaterial(Air);
 }
 
