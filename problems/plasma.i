@@ -1,10 +1,10 @@
 [Mesh]
   type = GeneratedMesh
-  dim = 2
+  dim = 1
   nx = 100
-  ny = 50
+#  ny = 50
   xmax = 32e-3 # Length of test chamber
-  ymax = 16e-3 # Test chamber radius
+#  ymax = 16e-3 # Test chamber radius
   uniform_refine = 1
 []
 
@@ -94,7 +94,7 @@
 [Functions]
   [./parsed_function]
     type = ParsedFunction
-    value = '(1.0e13 + 5.0e19*exp(-pow(x-16e-3,2)/pow(1.e-3,2))*exp(-pow(y-8e-3,2)/pow(0.5e-3,2)))/(1.0e19)'
+    value = '(1.0e13 + 5.0e19*exp(-pow(x-16e-3,2)/pow(1.e-3,2)))/(1.0e19)' #*exp(-pow(y-8e-3,2)/pow(0.5e-3,2)))/(1.0e19)
     #value = '1.0*exp(-pow(x-2.5e-3,2)/pow(100.e-6,2))*exp(-pow(y-2.5e-4,2)/pow(50.e-6,2))'
   [../]
   [./linear_function]
@@ -131,7 +131,7 @@
 []
 
 [Kernels]
-  active = 'electrons_time_deriv poisson_diffusion electron_convection ions_time_deriv poisson_src electron_diffusion electron_src ions_src artificial_diff'
+  active = 'electrons_time_deriv poisson_diffusion electron_convection ions_time_deriv poisson_src electron_diffusion electron_src ions_src'
   [./artificial_diff]
     type = ArtificialDiff
     variable = electron_density
@@ -212,11 +212,11 @@
 
 [Executioner]
   type = Transient
-  dt = 5.0e-12
+  dt = 5.0e-11
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-  end_time = 5.0e-11
+  end_time = 2.0e-8
 #  trans_ss_check = true
 #  ss_check_tol = 1e-8
   nl_rel_tol = 1e-2
@@ -225,19 +225,19 @@
   l_max_its = 9
   nl_max_its = 3
 #  scheme = crank-nicolson
-  [./TimeStepper]
-    type = IterationAdaptiveDT
-    linear_iteration_ratio = 5
-    cutback_factor = 0.4
-    dt = 5.0e-12
-    growth_factor = 1.2
-    optimal_iterations = 4
-  [../]
+#  [./TimeStepper]
+#    type = IterationAdaptiveDT
+#    linear_iteration_ratio = 5
+#    cutback_factor = 0.4
+#    dt = 5.0e-12
+#    growth_factor = 1.2
+#    optimal_iterations = 4
+#  [../]
 []
 
 [Adaptivity]
   marker = combo
-  max_h_level = 3
+  max_h_level = 5
   [./Indicators]
     active = 'temp_jump_potential temp_jump_edens'
     [./temp_jump_potential]
@@ -265,15 +265,15 @@
     active = 'error_frac_pot error_frac_edens combo'
     [./error_frac_pot]
       type = ErrorFractionMarker
-      coarsen = 0.9
+      coarsen = 0.1
       indicator = temp_jump_potential
-      refine = 0.9
+      refine = 0.6
     [../]
     [./error_frac_edens]
       type = ErrorFractionMarker
-      coarsen = 0.9
+      coarsen = 0.1
       indicator = temp_jump_edens
-      refine = 0.9
+      refine = 0.6
     [../]
     [./combo]
       type = ComboMarker
