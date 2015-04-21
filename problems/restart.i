@@ -1,11 +1,5 @@
 [Mesh]
-  type = GeneratedMesh
-  dim = 2
-  nx = 100
-  ny = 50
-  xmax = 32e-3 # Length of test chamber
-  ymax = 16e-3 # Test chamber radius
-  uniform_refine = 1
+  file = peacock_run_tmp_out.e-s007
 []
 
 [Variables]
@@ -13,13 +7,19 @@
   [./electron_density]
 #    Adds a Linear Lagrange variable by default
 #    scaling = 1e-14
+    initial_from_file_var = electron_density 
+    initial_from_file_timestep = 7
   [../]
   [./ion_density]
 #    scaling = 1e-7
+    initial_from_file_var = ion_density
+    initial_from_file_timestep = 7
   [../]
   [./potential]
 #    scaling = 1e-6
 #    initial_condition = 0
+    initial_from_file_var = potential
+    initial_from_file_timestep = 7
   [../]
 []
 
@@ -28,22 +28,32 @@
   [./e_field_mag]
     order = CONSTANT
     family = MONOMIAL
+    initial_from_file_var = e_field_mag
+    initial_from_file_timestep = 7    
   [../]
   [./velocity_mag]
     order = CONSTANT
     family = MONOMIAL
+    initial_from_file_var = velocity_mag
+    initial_from_file_timestep = 7
   [../]
   [./charge_density]
     order = CONSTANT
-    family = MONOMIAL
+    family = MONOMIAL    
+    initial_from_file_var = charge_density
+    initial_from_file_timestep = 7
   [../]
   [./ion_src_term]
     order = CONSTANT
     family = MONOMIAL
+    initial_from_file_var = ion_src_term
+    initial_from_file_timestep = 7
   [../]
   [./alpha_times_h]
     order = CONSTANT
     family = MONOMIAL
+    initial_from_file_var = alpha_times_h
+    initial_from_file_timestep = 7
   [../]
 []
 
@@ -216,7 +226,7 @@
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-  end_time = 5.0e-11
+  end_time = 2.0e-8
 #  trans_ss_check = true
 #  ss_check_tol = 1e-8
   nl_rel_tol = 1e-2
@@ -298,3 +308,4 @@
   print_perf_log = true # Show performance log information on screen
   print_linear_residuals = true # Display linear residuals on screen
 []
+

@@ -23,9 +23,13 @@
 #include "VelocityMag.h"
 #include "ChargeDensity.h"
 #include "IonSrcTerm.h"
+#include "AlphaTimesHSize.h"
 
 // Materials
 #include "Air.h"
+
+// Indicators
+#include "AnalyticalDiffIndicator.h"
 
 template<>
 InputParameters validParams<BovineApp>()
@@ -81,7 +85,9 @@ BovineApp::registerObjects(Factory & factory)
   registerAux(VelocityMag);
   registerAux(ChargeDensity);
   registerAux(IonSrcTerm);
+  registerAux(AlphaTimesHSize);
   registerMaterial(Air);
+  registerIndicator(AnalyticalDiffIndicator);
 }
 
 void
