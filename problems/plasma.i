@@ -24,7 +24,11 @@
 []
 
 [AuxVariables]
-  active = 'e_field_mag charge_density ion_src_term alpha_times_h'
+  active = 'e_field_mag charge_density ion_src_term alpha_times_h h_size'
+  [./h_size]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
   [./e_field_mag]
     order = CONSTANT
     family = MONOMIAL
@@ -48,7 +52,7 @@
 []
 
 [AuxKernels]
-  active = 'e_field_mag_kernel charge_dens_kernel ion_src_kernel alpha_h_kernel'
+  active = 'e_field_mag_kernel charge_dens_kernel ion_src_kernel h_kernel'
   [./e_field_mag_kernel]
     type = EFieldMag
     variable = e_field_mag
@@ -78,6 +82,10 @@
     type = AlphaTimesHSize
     variable = alpha_times_h
     potential = potential
+  [../]
+  [./h_kernel]
+    type = HSize
+    variable = h_size
   [../]
 []
 
@@ -185,7 +193,7 @@
     type = DirichletBC # Simple u=value BC
     variable = potential
     boundary = left # Name of a sideset in the mesh
-    value = 8.0 #
+    value = 9.0 #
   [../]
   [./cathode]
     type = DirichletBC
@@ -212,7 +220,7 @@
 
 [Executioner]
   type = Transient
-  dt = 5.0e-11
+  dt = 1.25e-12
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
@@ -237,7 +245,7 @@
 
 [Adaptivity]
   marker = combo
-  max_h_level = 5
+  max_h_level = 10
   [./Indicators]
     active = 'temp_jump_potential temp_jump_edens'
     [./temp_jump_potential]

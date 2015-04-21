@@ -1,17 +1,40 @@
 #!/bin/bash
 
-STRING=plasma_out.e-s
+STRING=plasma_out.e
 
-COUNTER=138
-while [ $COUNTER -lt 99 ] ; do
-     rm $STRING"0"$COUNTER 
-     let COUNTER=COUNTER+1
+rm $STRING
+COUNTER=0
+MAX=212
+
+until (( COUNTER == 10 || COUNTER == MAX )) ; do
+        rm $STRING"-s00"$COUNTER 
+	let COUNTER=COUNTER+1
 done
-while [ $COUNTER -lt 220 ] ; do
-     rm $STRING$COUNTER
-     let COUNTER=COUNTER+1
+until (( COUNTER == 100 || COUNTER == MAX )) ; do
+        rm $STRING"-s0"$COUNTER 
+	let COUNTER=COUNTER+1
 done
-# while [ $COUNTER -lt 1288 ] ; do
-#      rm $STRING$COUNTER
-#      let COUNTER=COUNTER+1
+until (( COUNTER == 1000 || COUNTER == MAX )) ; do
+        rm $STRING"-s"$COUNTER
+	let COUNTER=COUNTER+1
+done
+
+
+# while [ $COUNTER -lt $MAX ] ; do
+#   while [ $COUNTER -lt 10 ] ; do
+#        rm $STRING"-s00"$COUNTER 
+#        let COUNTER=COUNTER+1
+#   done
+#   while [ $COUNTER -lt 100 ] ; do
+#        rm $STRING"-s0"$COUNTER 
+#        let COUNTER=COUNTER+1
+#   done
+#   while [ $COUNTER -lt 1000 ] ; do
+#        rm $STRING"-s"$COUNTER
+#        let COUNTER=COUNTER+1
+#   done
+#   # while [ $COUNTER -lt 1288 ] ; do
+#   #      rm $STRING"-s"$COUNTER
+#   #      let COUNTER=COUNTER+1
+#   # done
 # done

@@ -24,6 +24,7 @@
 #include "ChargeDensity.h"
 #include "IonSrcTerm.h"
 #include "AlphaTimesHSize.h"
+#include "HSize.h"
 
 // Materials
 #include "Air.h"
@@ -86,6 +87,7 @@ BovineApp::registerObjects(Factory & factory)
   registerAux(ChargeDensity);
   registerAux(IonSrcTerm);
   registerAux(AlphaTimesHSize);
+  registerAux(HSize);
   registerMaterial(Air);
   registerIndicator(AnalyticalDiffIndicator);
 }
