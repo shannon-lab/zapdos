@@ -29,5 +29,5 @@ IonSrcTerm::IonSrcTerm(const std::string & name, InputParameters parameters) :
 Real
 IonSrcTerm::computeValue()
 {
-  return fmax(1.0e5 * std::exp(1.0 - 1.0e7/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0)) - 9697.2,0.0)*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].size()*_electron_density[_qp];
+  return std::exp(-1.0/(_grad_potential[_qp].size()+1.0e-6))*_grad_potential[_qp].size()*_electron_density[_qp];
 }

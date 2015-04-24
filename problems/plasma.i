@@ -3,13 +3,13 @@
   dim = 1
   nx = 100
 #  ny = 50
-  xmax = 32e-3 # Length of test chamber
+  xmax = 1 # Length of test chamber
 #  ymax = 16e-3 # Test chamber radius
   uniform_refine = 1
 []
 
 [Variables]
-  active = 'electron_density ion_density potential'
+  active = 'electron_density potential ion_density'
   [./electron_density]
 #    Adds a Linear Lagrange variable by default
 #    scaling = 1e-14
@@ -24,7 +24,7 @@
 []
 
 [AuxVariables]
-  active = 'e_field_mag charge_density ion_src_term alpha_times_h h_size'
+  active = 'e_field_mag h_size charge_density ion_src_term'
   [./h_size]
     order = CONSTANT
     family = MONOMIAL
@@ -52,7 +52,7 @@
 []
 
 [AuxKernels]
-  active = 'e_field_mag_kernel charge_dens_kernel ion_src_kernel h_kernel'
+  active = 'e_field_mag_kernel h_kernel charge_dens_kernel ion_src_kernel'
   [./e_field_mag_kernel]
     type = EFieldMag
     variable = e_field_mag
@@ -102,12 +102,11 @@
 [Functions]
   [./parsed_function]
     type = ParsedFunction
-    value = '(1.0e13 + 5.0e19*exp(-pow(x-16e-3,2)/pow(1.e-3,2)))/(1.0e19)' #*exp(-pow(y-8e-3,2)/pow(0.5e-3,2)))/(1.0e19)
-    #value = '1.0*exp(-pow(x-2.5e-3,2)/pow(100.e-6,2))*exp(-pow(y-2.5e-4,2)/pow(50.e-6,2))'
+    value = '1.0*exp(-pow(x-0.5,2)/pow(.05,2))'
   [../]
   [./linear_function]
     type = ParsedFunction
-    value = '(8.0e4-2.5e6*x)/(1.0e4)'
+    value = '1-x'
   [../]
   [./null_function]
     type = ParsedFunction
@@ -120,7 +119,7 @@
 []
 
 [ICs]
-  active = 'electron_density_ic ion_density_ic potential_ic'
+  active = 'electron_density_ic potential_ic ion_density_ic'
   [./electron_density_ic]
     type = FunctionIC
     variable = 'electron_density'
@@ -139,7 +138,7 @@
 []
 
 [Kernels]
-  active = 'electrons_time_deriv poisson_diffusion electron_convection ions_time_deriv poisson_src electron_diffusion electron_src ions_src'
+  active = 'electrons_time_deriv poisson_diffusion electron_convection electron_diffusion poisson_src ions_time_deriv electron_src ions_src'
   [./artificial_diff]
     type = ArtificialDiff
     variable = electron_density
@@ -162,13 +161,14 @@
   [../]
   [./electron_convection]
     type = BovineConvection
+#    type = DivFreeConvection
     variable = electron_density
     some_variable = potential
   [../]
   [./electron_diffusion]
     type = ConstTimesDiffusion
     variable = electron_density
-    diffusion_coeff = 0.18
+    diffusion_coeff = 0.1
   [../]
   [./electron_src]
     type = IonizationSource
@@ -193,7 +193,7 @@
     type = DirichletBC # Simple u=value BC
     variable = potential
     boundary = left # Name of a sideset in the mesh
-    value = 9.0 #
+    value = 1.0 #
   [../]
   [./cathode]
     type = DirichletBC
@@ -220,11 +220,11 @@
 
 [Executioner]
   type = Transient
-  dt = 1.25e-12
+  dt = 0.01
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-  end_time = 2.0e-8
+  end_time = 1.0
 #  trans_ss_check = true
 #  ss_check_tol = 1e-8
   nl_rel_tol = 1e-2
@@ -243,58 +243,58 @@
 #  [../]
 []
 
-[Adaptivity]
-  marker = combo
-  max_h_level = 10
-  [./Indicators]
-    active = 'temp_jump_potential temp_jump_edens'
-    [./temp_jump_potential]
-      type = GradientJumpIndicator
-      variable = potential
-      scale_by_flux_faces = true
-    [../]
-    [./temp_jump_edens]
-      type = GradientJumpIndicator
-      variable = electron_density
-      scale_by_flux_faces = true
-    [../]
-    [./analytical]
-      type = AnalyticalIndicator
-      variable = ion_src_term
-      function = null_function
-    [../]
-    [./analytical_diff]
-      type = AnalyticalDiffIndicator
-      variable = alpha_times_h
-      function = unity_function
-    [../]
-  [../]
-  [./Markers]
-    active = 'error_frac_pot error_frac_edens combo'
-    [./error_frac_pot]
-      type = ErrorFractionMarker
-      coarsen = 0.1
-      indicator = temp_jump_potential
-      refine = 0.6
-    [../]
-    [./error_frac_edens]
-      type = ErrorFractionMarker
-      coarsen = 0.1
-      indicator = temp_jump_edens
-      refine = 0.6
-    [../]
-    [./combo]
-      type = ComboMarker
-      markers = 'error_frac_pot error_frac_edens'
-    [../]
-    [./error_tol]
-      type = ErrorToleranceMarker
-      indicator = analytical_diff
-      coarsen = 0
-      refine = 0
-    [../]
-  [../]
-[]
+# [Adaptivity]
+#   marker = combo
+#   max_h_level = 10
+#   [./Indicators]
+#     active = 'temp_jump_potential temp_jump_edens'
+#     [./temp_jump_potential]
+#       type = GradientJumpIndicator
+#       variable = potential
+#       scale_by_flux_faces = true
+#     [../]
+#     [./temp_jump_edens]
+#       type = GradientJumpIndicator
+#       variable = electron_density
+#       scale_by_flux_faces = true
+#     [../]
+#     [./analytical]
+#       type = AnalyticalIndicator
+#       variable = ion_src_term
+#       function = null_function
+#     [../]
+#     [./analytical_diff]
+#       type = AnalyticalDiffIndicator
+#       variable = alpha_times_h
+#       function = unity_function
+#     [../]
+#   [../]
+#   [./Markers]
+#     active = 'error_frac_pot error_frac_edens combo'
+#     [./error_frac_pot]
+#       type = ErrorFractionMarker
+#       coarsen = 0.1
+#       indicator = temp_jump_potential
+#       refine = 0.6
+#     [../]
+#     [./error_frac_edens]
+#       type = ErrorFractionMarker
+#       coarsen = 0.1
+#       indicator = temp_jump_edens
+#       refine = 0.6
+#     [../]
+#     [./combo]
+#       type = ComboMarker
+#       markers = 'error_frac_pot error_frac_edens'
+#     [../]
+#     [./error_tol]
+#       type = ErrorToleranceMarker
+#       indicator = analytical_diff
+#       coarsen = 0
+#       refine = 0
+#     [../]
+#   [../]
+# []
 
 [Debug]
   show_var_residual_norms = true

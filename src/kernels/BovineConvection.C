@@ -49,12 +49,12 @@ Real BovineConvection::computeQpResidual()
   moose tutorials and examples that I've looked at. Make sure to include appropriate
   boundary conditions to match this kernel */
    
-  return -_u[_qp]*_velocity_coeff[_qp]*_grad_some_variable[_qp]*_potential_mult[_qp]*_grad_test[_i][_qp];
+  return -_u[_qp]*_grad_some_variable[_qp]*_grad_test[_i][_qp];
 }
 
 Real BovineConvection::computeQpJacobian()
 {
-  return -_phi[_j][_qp]*_velocity_coeff[_qp]*_grad_some_variable[_qp]*_potential_mult[_qp]*_grad_test[_i][_qp];
+  return -_phi[_j][_qp]*_grad_some_variable[_qp]*_grad_test[_i][_qp];
 }
 
 /* Real BovineConvection::computeQpOffDiagJacobian(unsigned int jvar)

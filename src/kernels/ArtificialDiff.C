@@ -58,12 +58,12 @@ Real
 ArtificialDiff::computeQpResidual()
 {
   // Use the MaterialProperty references we stored earlier
-  return _delta*_current_elem->hmax()*_velocity_coeff[_qp]*_grad_potential[_qp].size()* Diffusion::computeQpResidual();
+  return _delta*_current_elem->hmax()*_grad_potential[_qp].size()* Diffusion::computeQpResidual();
 }
 
 Real
 ArtificialDiff::computeQpJacobian()
 {
   // Use the MaterialProperty references we stored earlier
-  return _delta*_current_elem->hmax()*_velocity_coeff[_qp]*_grad_potential[_qp].size()*Diffusion::computeQpJacobian();
+  return _delta*_current_elem->hmax()*_grad_potential[_qp].size()*Diffusion::computeQpJacobian();
 }

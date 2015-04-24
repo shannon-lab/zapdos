@@ -23,7 +23,7 @@ ChargeDensity::ChargeDensity(const std::string & name, InputParameters parameter
 Real
 ChargeDensity::computeValue()
 {
-  return _coulomb_charge[_qp]*(_ion_density[_qp]-_electron_density[_qp]);
+  return (_ion_density[_qp]-_electron_density[_qp]);
 }
 
  

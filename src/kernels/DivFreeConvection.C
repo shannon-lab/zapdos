@@ -47,15 +47,15 @@ Real DivFreeConvection::computeQpResidual()
   moose tutorials and examples that I've looked at. Make sure to include appropriate
   boundary conditions to match this kernel. */
    
-  return _velocity_coeff[_qp]*_potential_mult[_qp]*_grad_some_variable[_qp]*_grad_u[_qp]*_test[_i][_qp];
+  return _grad_some_variable[_qp]*_grad_u[_qp]*_test[_i][_qp];
 }
 
 Real DivFreeConvection::computeQpJacobian()
 {
-  return _velocity_coeff[_qp]*_potential_mult[_qp]*_grad_some_variable[_qp]*_grad_phi[_j][_qp]*_test[_i][_qp];
+  return _grad_some_variable[_qp]*_grad_phi[_j][_qp]*_test[_i][_qp];
 }
 
-Real DivFreeConvection::computeQpOffDiagJacobian(unsigned int jvar)
+/* Real DivFreeConvection::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _some_variable_id)
   {
@@ -63,5 +63,5 @@ Real DivFreeConvection::computeQpOffDiagJacobian(unsigned int jvar)
   }
   
   return 0.0;
-}
+} */
 

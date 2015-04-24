@@ -25,7 +25,7 @@ InputParameters validParams<ConstTimesDiffusion>()
   // permeability and viscosity from the Material
   // so we just return params...
 
-  params.addRequiredParam<Real>("diffusion_coeff", "The diffusion coefficient of the medium");
+  params.addParam<Real>("diffusion_coeff", 0.1,"The diffusion coefficient of the medium");
 
   return params;
 }

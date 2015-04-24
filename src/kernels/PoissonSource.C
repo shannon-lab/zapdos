@@ -49,7 +49,7 @@ for the densities is 1e19. The scaling term for the potential is 1e4 */
 Real
 PoissonSource::computeQpResidual()
 {
-  return _test[_i][_qp]*_coulomb_charge[_qp]/_permittivity[_qp]*_density_mult[_qp]/_potential_mult[_qp]*(_electron_density[_qp]-_ion_density[_qp]);
+  return _test[_i][_qp]*(_electron_density[_qp]-_ion_density[_qp]);
 }
 
 Real

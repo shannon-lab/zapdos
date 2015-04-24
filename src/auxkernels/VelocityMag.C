@@ -49,6 +49,6 @@ VelocityMag::computeValue()
   // Then pull out the "component" of it we are looking for (x, y or z)
   // Note that getting a particular component of a gradient is done using the
   // parenthesis operator
-  return _velocity_coeff[_qp]*_grad_potential[_qp].size();
+  return _grad_potential[_qp].size();
   // return _grad_potential[_qp](_component);
 }
