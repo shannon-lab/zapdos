@@ -1,11 +1,11 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 10240
+  nx = 512
 #  ny = 50
   xmax = 1024 # Length of test chamber
 #  ymax = 16e-3 # Test chamber radius
-#  uniform_refine = 1
+  uniform_refine = 1
 []
 
 [Variables]
@@ -193,7 +193,7 @@
     type = DirichletBC # Simple u=value BC
     variable = potential
     boundary = right # Name of a sideset in the mesh
-    value = 1024 #
+    value = 1024.0 #
   [../]
   [./cathode]
     type = DirichletBC
@@ -220,11 +220,11 @@
 
 [Executioner]
   type = Transient
-  dt = 0.1
+  dt = 1.0
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-  end_time = 200
+  end_time = 200.0
 #  trans_ss_check = true
 #  ss_check_tol = 1e-8
   nl_rel_tol = 1e-2
