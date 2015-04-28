@@ -11,13 +11,13 @@
 []
 
 [Functions]
-  [./parsed_function]
-    type = ParsedFunction
-    value = '10.0*exp(-pow(x-.3,2)/pow(.03,2))'
-  [../]
   [./velocity_function]
     type = ParsedVectorFunction
     value_x = '5.0-x'
+  [../]
+  [./parsed_function]
+    type = ParsedFunction
+    value = '10.0*exp(-pow(x-.3,2)/pow(.03,2))'
   [../]
 []
 
