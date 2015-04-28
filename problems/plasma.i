@@ -102,7 +102,7 @@
 [Functions]
   [./parsed_function]
     type = ParsedFunction
-    value = '.01*exp(-pow(x-31,2))'
+    value = '1.0e-5+.01*exp(-pow(x-993,2))'
   [../]
   [./linear_function]
     type = ParsedFunction
@@ -199,6 +199,18 @@
     type = DirichletBC
     variable = potential
     boundary = left
+    value = 0
+  [../]
+  [./electron_anode]
+    type = DirichletBC
+    variable = electron_density
+    boundary = left
+    value = 0
+  [../]
+  [./electron_cathode] 
+    type = DirichletBC
+    variable = electron_density
+    boundary = right
     value = 0
   [../]
 []
