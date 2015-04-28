@@ -16,6 +16,7 @@
 #include "DivFreeConvection.h"
 #include "CoupledIonizationSource.h"
 #include "ArtificialDiff.h"
+#include "ConvectionArb.h"
 
 // AuxKernels
 
@@ -82,6 +83,7 @@ BovineApp::registerObjects(Factory & factory)
   registerKernel(DivFreeConvection);
   registerKernel(CoupledIonizationSource);
   registerKernel(ArtificialDiff);
+  registerKernel(ConvectionArb);
   registerAux(EFieldMag);
   registerAux(VelocityMag);
   registerAux(ChargeDensity);

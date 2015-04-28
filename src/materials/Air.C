@@ -18,12 +18,15 @@ InputParameters validParams<Air>()
 {
   InputParameters params = validParams<Material>();
 
-  // Add a parameter to get the radius of the balls in the column (used later to interpolate permeability).
   params.addParam<Real>("velocity_multiplier", 1.0, "This multiplies the velocity coefficient in case you want to modify the magnitude of the velocity.");
   params.addParam<Real>("relative_permittivity", 1.0, "Multiplies the permittivity of free space.");
   params.addParam<Real>("ionization_multiplier",1.0,"This multiplies the ionization coefficient in case you want to modify the magnitude of ionization.");
   params.addParam<Real>("user_potential_mult",1.0e4,"Scaling for potential");
   params.addParam<Real>("user_density_mult",1.0e19,"Scaling for densities");
+  
+  // Choose a function for advection
+
+  // params.addRequiredParam<FunctionName>("function", "The material velocity function.");
 
   return params;
 }
@@ -38,6 +41,10 @@ Air::Air(const std::string & name, InputParameters parameters) :
     _ionization_multiplier(getParam<Real>("ionization_multiplier")),
     _user_potential_mult(getParam<Real>("user_potential_mult")),
     _user_density_mult(getParam<Real>("user_density_mult")),
+
+    // Get function
+
+    // _velocity_func(getFunction("function")),
 
     // Declare material properties.  This returns references that we
     // hold onto as member variables

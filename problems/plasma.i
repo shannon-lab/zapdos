@@ -1,216 +1,51 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 10240
-#  ny = 50
-  xmax = 1024 # Length of test chamber
-#  ymax = 16e-3 # Test chamber radius
-#  uniform_refine = 1
+  nx = 100
+  xmax = 10
 []
 
 [Variables]
-  active = 'electron_density potential ion_density'
-  [./electron_density]
-#    Adds a Linear Lagrange variable by default
-#    scaling = 1e-14
-  [../]
-  [./ion_density]
-#    scaling = 1e-7
-  [../]
-  [./potential]
-#    scaling = 1e-6
-#    initial_condition = 0
-  [../]
-[]
-
-[AuxVariables]
-  active = 'e_field_mag h_size charge_density ion_src_term'
-  [./h_size]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./e_field_mag]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./velocity_mag]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./charge_density]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./ion_src_term]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./alpha_times_h]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-[]
-
-[AuxKernels]
-  active = 'e_field_mag_kernel h_kernel charge_dens_kernel ion_src_kernel'
-  [./e_field_mag_kernel]
-    type = EFieldMag
-    variable = e_field_mag
-    potential = potential
-    execute_on = timestep_end
-    #component = x
-  [../]
-  [./velocity_mag_kernel]
-    type = VelocityMag
-    variable = velocity_mag
-    potential = potential
-    execute_on = timestep_end
-  [../]
-  [./charge_dens_kernel]
-    type = ChargeDensity
-    variable = charge_density
-    electron_density = electron_density
-    ion_density = ion_density
-  [../]
-  [./ion_src_kernel]
-    type = IonSrcTerm
-    variable = ion_src_term
-    electron_density = electron_density
-    potential = potential
-  [../]
-  [./alpha_h_kernel]
-    type = AlphaTimesHSize
-    variable = alpha_times_h
-    potential = potential
-  [../]
-  [./h_kernel]
-    type = HSize
-    variable = h_size
-  [../]
-[]
-
-[Materials]
-  [./whole_domain]
-    block = 0
-    type = Air
-#    ionization_multiplier = 1.0e3
-#    user_potential_mult = 1.0
-#    user_density_mult = 1.0
+  [./concentration]
   [../]
 []
 
 [Functions]
   [./parsed_function]
     type = ParsedFunction
-    value = '1.0e-5+.01*exp(-pow(x-993,2))'
+    value = '10.0*exp(-pow(x-.3,2)/pow(.03,2))'
   [../]
-  [./linear_function]
-    type = ParsedFunction
-    value = 'x'
-  [../]
-  [./null_function]
-    type = ParsedFunction
-    value = '0.0'
-  [../]
-  [./unity_function]
-    type = ParsedFunction
-    value = '1.0'
+  [./velocity_function]
+    type = ParsedVectorFunction
+    value_x = '5.0-x'
   [../]
 []
 
 [ICs]
-  active = 'electron_density_ic potential_ic ion_density_ic'
-  [./electron_density_ic]
+  [./concentration_ic]
     type = FunctionIC
-    variable = 'electron_density'
+    variable = 'concentration'
     function = parsed_function
-  [../]
-  [./ion_density_ic]
-    type = FunctionIC
-    variable = 'ion_density'
-    function = parsed_function
-  [../]
-  [./potential_ic]
-    type = FunctionIC
-    variable = 'potential'
-    function = linear_function
   [../]
 []
 
 [Kernels]
-  active = 'electrons_time_deriv poisson_diffusion electron_convection electron_diffusion poisson_src ions_time_deriv electron_src ions_src'
-  [./artificial_diff]
-    type = ArtificialDiff
-    variable = electron_density
-    potential = potential
+  [./advection]
+    type = ConvectionArb
+    variable = concentration
+    velocity_function = velocity_function
   [../]
-  [./poisson_diffusion]
-    type = Diffusion
-    variable = potential
-  [../]
-  [./poisson_src]
-    type = PoissonSource
-    variable = potential
-    #permittivity = 8.85e-12
-    ion_density = ion_density
-    electron_density = electron_density
-  [../]
-  [./electrons_time_deriv]
+  [./time_derivative]
     type = TimeDerivative
-    variable = electron_density
-  [../]
-  [./electron_convection]
-    type = BovineConvection
-#    type = DivFreeConvection
-    variable = electron_density
-    some_variable = potential
-  [../]
-  [./electron_diffusion]
-    type = ConstTimesDiffusion
-    variable = electron_density
-    diffusion_coeff = 0.1
-  [../]
-  [./electron_src]
-    type = IonizationSource
-    variable = electron_density
-    potential = potential
-  [../]
-  [./ions_time_deriv]
-    type = TimeDerivative
-    variable = ion_density
-  [../]
-  [./ions_src]
-    type = CoupledIonizationSource
-    variable = ion_density
-    potential = potential
-    electron_density = electron_density
-    #ionization_coeff = 0.35e-6
+    variable = concentration
   [../]
 []
 
 [BCs] 
-  [./anode]
+  [./left_wall]
     type = DirichletBC # Simple u=value BC
-    variable = potential
-    boundary = right # Name of a sideset in the mesh
-    value = 1024 #
-  [../]
-  [./cathode]
-    type = DirichletBC
-    variable = potential
+    variable = concentration
     boundary = left
-    value = 0
-  [../]
-  [./electron_anode]
-    type = DirichletBC
-    variable = electron_density
-    boundary = left
-    value = 0
-  [../]
-  [./electron_cathode] 
-    type = DirichletBC
-    variable = electron_density
-    boundary = right
     value = 0
   [../]
 []
@@ -220,23 +55,13 @@
   # coord_type = XYZ # Cartesian   
 []   
 
-#[Preconditioning]
-#  [./SMP_jfnk_full]
-#    type = SMP
-#    full = true
-#    solve_type = 'PJFNK'
-#    # petsc_options_iname = '-pc_type'
-#    # petsc_options_value = 'lu'
-#  [../]
-#[]
-
 [Executioner]
   type = Transient
-  dt = 0.1
+  dt = 0.002
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-  end_time = 200
+  end_time = 2
 #  trans_ss_check = true
 #  ss_check_tol = 1e-8
   nl_rel_tol = 1e-2
