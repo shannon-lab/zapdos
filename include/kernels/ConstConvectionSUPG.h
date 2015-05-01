@@ -12,21 +12,21 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef CONSTCONVECTION_H
-#define CONSTCONVECTION_H
+#ifndef CONSTCONVECTIONSUPG_H
+#define CONSTCONVECTIONSUPG_H
 
 #include "Kernel.h"
 
-class ConstConvection;
+class ConstConvectionSUPG;
 
 template<>
-InputParameters validParams<ConstConvection>();
+InputParameters validParams<ConstConvectionSUPG>();
 
-class ConstConvection : public Kernel
+class ConstConvectionSUPG : public Kernel
 {
 public:
 
-  ConstConvection(const std::string & name,
+  ConstConvectionSUPG(const std::string & name,
              InputParameters parameters);
 
 protected:
@@ -43,7 +43,9 @@ protected:
 
   // Unique to kernel
   
-  RealVectorValue _velocity;
+  MaterialProperty<RealVectorValue> & _velocity;
+  MaterialProperty<Real> & _alpha;
+  MaterialProperty<RealVectorValue> & _velocity_norm;
 };
 
-#endif //CONSTCONVECTION_H
+#endif //CONSTCONVECTIONSUPG_H

@@ -44,12 +44,12 @@ Real
 ConstTimesDiffusion::computeQpResidual()
 {
   // Use the MaterialProperty references we stored earlier
-  return _diffusivity[_qp] * Diffusion::computeQpResidual();
+  return _diffusivity[_qp] * _grad_u[_qp] * _grad_test[_i][_qp];
 }
 
 Real
 ConstTimesDiffusion::computeQpJacobian()
 {
   // Use the MaterialProperty references we stored earlier
-  return _diffusivity[_qp]* Diffusion::computeQpJacobian();
+  return _diffusivity[_qp] * _grad_phi[_j][_qp] * _grad_test[_i][_qp];
 }

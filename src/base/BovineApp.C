@@ -18,6 +18,7 @@
 #include "ArtificialDiff.h"
 #include "ConstConvection.h"
 #include "TimeDerivativeSUPG.h"
+#include "ConstConvectionSUPG.h"
 // AuxKernels
 
 #include "EFieldMag.h"
@@ -85,6 +86,7 @@ BovineApp::registerObjects(Factory & factory)
   registerKernel(ArtificialDiff);
   registerKernel(ConstConvection);
   registerKernel(TimeDerivativeSUPG);
+  registerKernel(ConstConvectionSUPG);
   registerAux(EFieldMag);
   registerAux(VelocityMag);
   registerAux(ChargeDensity);
