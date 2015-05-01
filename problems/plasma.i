@@ -1,15 +1,15 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 10240
+  nx = 100
 #  ny = 50
-  xmax = 1024 # Length of test chamber
+  xmax = 100 # Length of test chamber
 #  ymax = 16e-3 # Test chamber radius
 #  uniform_refine = 1
 []
 
 [Variables]
-  active = 'electron_density potential ion_density'
+  active = 'electron_density'
   [./electron_density]
 #    Adds a Linear Lagrange variable by default
 #    scaling = 1e-14
@@ -24,7 +24,7 @@
 []
 
 [AuxVariables]
-  active = 'e_field_mag h_size charge_density ion_src_term'
+  active = ''
   [./h_size]
     order = CONSTANT
     family = MONOMIAL
@@ -52,7 +52,7 @@
 []
 
 [AuxKernels]
-  active = 'e_field_mag_kernel h_kernel charge_dens_kernel ion_src_kernel'
+  active = ''
   [./e_field_mag_kernel]
     type = EFieldMag
     variable = e_field_mag
@@ -119,7 +119,7 @@
 []
 
 [ICs]
-  active = 'electron_density_ic potential_ic ion_density_ic'
+  active = 'electron_density_ic'
   [./electron_density_ic]
     type = FunctionIC
     variable = 'electron_density'
@@ -138,11 +138,11 @@
 []
 
 [Kernels]
-  active = 'electrons_time_deriv poisson_diffusion electron_convection electron_diffusion poisson_src ions_time_deriv electron_src ions_src'
+  active = 'electrons_time_deriv electron_convection electron_diffusion'
   [./artificial_diff]
     type = ArtificialDiff
     variable = electron_density
-    potential = potential
+#    potential = potential
   [../]
   [./poisson_diffusion]
     type = Diffusion
@@ -160,7 +160,7 @@
     variable = electron_density
   [../]
   [./electron_convection]
-    type = BovineConvection
+    type = ConstConvection
 #    type = DivFreeConvection
     variable = electron_density
     some_variable = potential
@@ -189,6 +189,7 @@
 []
 
 [BCs] 
+  active = ''
   [./anode]
     type = DirichletBC # Simple u=value BC
     variable = potential
@@ -224,7 +225,7 @@
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-  end_time = 200
+  end_time = 20
 #  trans_ss_check = true
 #  ss_check_tol = 1e-8
   nl_rel_tol = 1e-2

@@ -24,7 +24,7 @@ InputParameters validParams<Air>()
   params.addParam<Real>("ionization_multiplier",1.0,"This multiplies the ionization coefficient in case you want to modify the magnitude of ionization.");
   params.addParam<Real>("user_potential_mult",1.0e4,"Scaling for potential");
   params.addParam<Real>("user_density_mult",1.0e19,"Scaling for densities");
-
+  params.addParam<Real>("user_diffusivity",0.1,"Diffusivity specified by the user");
   return params;
 }
 
@@ -38,6 +38,7 @@ Air::Air(const std::string & name, InputParameters parameters) :
     _ionization_multiplier(getParam<Real>("ionization_multiplier")),
     _user_potential_mult(getParam<Real>("user_potential_mult")),
     _user_density_mult(getParam<Real>("user_density_mult")),
+    _user_diffusivity(getParam<Real>("user_diffusivity")),
 
     // Declare material properties.  This returns references that we
     // hold onto as member variables
@@ -47,7 +48,12 @@ Air::Air(const std::string & name, InputParameters parameters) :
     _ionization_coeff(declareProperty<Real>("ionization_coeff")),
     _ion_activation_energy(declareProperty<Real>("ion_activation_energy")),
     _potential_mult(declareProperty<Real>("potential_mult")),
-    _density_mult(declareProperty<Real>("density_mult"))
+  _density_mult(declareProperty<Real>("density_mult")),
+  _peclet_num(declareProperty<Real>("peclet_num")),
+  _alpha(declareProperty<Real>("alpha")),
+  _velocity(declareProperty<RealVectorValue>("velocity")),
+  _velocity_norm(declareProperty<RealVectorValue>("velocity_norm")),
+  _diffusivity(declareProperty<Real>("diffusivity"))
 {}
 
 void
@@ -68,4 +74,14 @@ Air::computeQpProperties()
   _ion_activation_energy[_qp] = 1.65e7; // From Morrow paper
   _potential_mult[_qp] = _user_potential_mult;
   _density_mult[_qp] = _user_density_mult;
+  _diffusivity[_qp] = _user_diffusivity;
+  
+  _peclet_num[_qp] = _current_elem->hmax() / (2.0 * _diffusivity[_qp]);
+  _alpha[_qp] = 1.0 / std::tanh(_peclet_num[_qp]) - 1.0 / _peclet_num[_qp];
+  _velocity[_qp](0) = 1.0;
+  _velocity[_qp](1) = 0.0;
+  _velocity[_qp](2) = 0.0;
+  _velocity_norm[_qp](0) = 1.0;
+  _velocity_norm[_qp](1) = 0.0;
+  _velocity_norm[_qp](2) = 0.0;
 }

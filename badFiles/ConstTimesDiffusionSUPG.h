@@ -12,42 +12,34 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef ARTIFICIALDIFF_H
-#define ARTIFICIALDIFF_H
+#ifndef CONSTTIMESDIFFUSIONSUPG_H
+#define CONSTTIMESDIFFUSIONSUPG_H
 
 // Including the "Diffusion" Kernel here so we can extend it
 #include "Diffusion.h"
 
-class ArtificialDiff;
+class ConstTimesDiffusionSUPG;
 
 template<>
-InputParameters validParams<ArtificialDiff>();
+InputParameters validParams<ConstTimesDiffusionSUPG>();
 
-
-class ArtificialDiff : public Diffusion
+class ConstTimesDiffusionSUPG : public Diffusion
 {
 public:
-  ArtificialDiff(const std::string & name, InputParameters parameters);
-  virtual ~ArtificialDiff();
+  ConstTimesDiffusionSUPG(const std::string & name, InputParameters parameters);
+  virtual ~ConstTimesDiffusionSUPG();
 
 protected:
 
   virtual Real computeQpResidual();
 
-  virtual Real computeQpJacobian();
-  
-  // Input Parameters
-  
-  const Real & _delta;
-  
-  // Material Properties
-  
-  // MaterialProperty<Real> & _velocity_coeff;
-  
-  // Coupled variables
 
-  // VariableGradient & _grad_potential;
+  virtual Real computeQpJacobian();
+
+  MaterialProperty<Real> _alpha;
+  MaterialProperty<RealVectorValue> _velocity_norm;
+  MaterialProperty<Real> _diffusivity;
 };
 
 
-#endif /* ARTIFICIALDIFF_H */
+#endif /* CONSTTIMESDIFFUSIONSUPG_H */

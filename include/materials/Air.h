@@ -49,6 +49,7 @@ protected:
   const Real & _ionization_multiplier;
   const Real & _user_potential_mult;
   const Real & _user_density_mult;
+  const Real & _user_diffusivity;
 
   // Material properties
   
@@ -59,7 +60,11 @@ protected:
   MaterialProperty<Real> & _ion_activation_energy;
   MaterialProperty<Real> & _potential_mult;
   MaterialProperty<Real> & _density_mult;
-  
+  MaterialProperty<Real> & _peclet_num;
+  MaterialProperty<Real> & _alpha; 
+  MaterialProperty<RealVectorValue> & _velocity;
+  MaterialProperty<RealVectorValue> & _velocity_norm;
+  MaterialProperty<Real> & _diffusivity;
 };
 
 #endif //AIR_H
