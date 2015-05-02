@@ -1,15 +1,15 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 100
+  nx = 10240
 #  ny = 50
-  xmax = 100 # Length of test chamber
+  xmax = 1024
 #  ymax = 16e-3 # Test chamber radius
 #  uniform_refine = 1
 []
 
 [Variables]
-  active = 'electron_density'
+  active = 'electron_density potential ion_density'
   [./electron_density]
 #    Adds a Linear Lagrange variable by default
 #    scaling = 1e-14
@@ -24,7 +24,7 @@
 []
 
 [AuxVariables]
-  active = ''
+  active = 'e_field_mag charge_density ion_src_term'
   [./h_size]
     order = CONSTANT
     family = MONOMIAL
@@ -52,7 +52,7 @@
 []
 
 [AuxKernels]
-  active = ''
+  active = 'e_field_mag_kernel charge_dens_kernel ion_src_kernel'
   [./e_field_mag_kernel]
     type = EFieldMag
     variable = e_field_mag
@@ -93,16 +93,15 @@
   [./whole_domain]
     block = 0
     type = Air
-#    ionization_multiplier = 1.0e3
-#    user_potential_mult = 1.0
-#    user_density_mult = 1.0
+    delta = 0.0
+    potential = potential
   [../]
 []
 
 [Functions]
   [./parsed_function]
     type = ParsedFunction
-    value = '.01*exp(-pow(x-31,2))'
+    value = '.01*exp(-pow(x-993,2))+1.0e-5'
   [../]
   [./linear_function]
     type = ParsedFunction
@@ -119,7 +118,7 @@
 []
 
 [ICs]
-  active = 'electron_density_ic'
+  active = 'electron_density_ic potential_ic ion_density_ic'
   [./electron_density_ic]
     type = FunctionIC
     variable = 'electron_density'
@@ -138,7 +137,7 @@
 []
 
 [Kernels]
-  active = 'electrons_time_deriv electron_convection electron_diffusion'
+  active = 'electrons_time_deriv electron_convection electron_diffusion artificial_diff poisson_diffusion poisson_src electron_src ions_src ions_time_deriv'
   [./artificial_diff]
     type = ArtificialDiff
     variable = electron_density
@@ -168,7 +167,6 @@
   [./electron_diffusion]
     type = ConstTimesDiffusion
     variable = electron_density
-    diffusion_coeff = 0.1
   [../]
   [./electron_src]
     type = IonizationSource
@@ -189,18 +187,30 @@
 []
 
 [BCs] 
-  active = ''
+  active = 'anode cathode electrons_anode electrons_cathode'
   [./anode]
     type = DirichletBC # Simple u=value BC
     variable = potential
     boundary = right # Name of a sideset in the mesh
-    value = 1024 #
+    value = 1024
   [../]
   [./cathode]
     type = DirichletBC
     variable = potential
     boundary = left
     value = 0
+  [../]
+  [./electrons_anode]
+    type = DirichletBC
+    variable = electron_density
+    boundary = right
+    value = 0
+  [../]
+  [./electrons_cathode]
+    type = DirichletBC
+    variable = electron_density
+    value = 0
+    boundary = left
   [../]
 []
 
@@ -225,7 +235,7 @@
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
-  end_time = 20
+  end_time = 200
 #  trans_ss_check = true
 #  ss_check_tol = 1e-8
   nl_rel_tol = 1e-2

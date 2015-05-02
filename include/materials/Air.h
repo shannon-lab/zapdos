@@ -50,6 +50,11 @@ protected:
   const Real & _user_potential_mult;
   const Real & _user_density_mult;
   const Real & _user_diffusivity;
+  const Real & _delta;
+
+  // Coupled Variables
+
+  VariableGradient & _grad_potential;
 
   // Material properties
   
@@ -65,6 +70,7 @@ protected:
   MaterialProperty<RealVectorValue> & _velocity;
   MaterialProperty<RealVectorValue> & _velocity_norm;
   MaterialProperty<Real> & _diffusivity;
+  MaterialProperty<Real> & _tau;
 };
 
 #endif //AIR_H

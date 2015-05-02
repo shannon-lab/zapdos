@@ -27,11 +27,13 @@ IonizationSource::IonizationSource(const std::string & name, InputParameters par
     Kernel(name, parameters),
     
     // Material properties
-    
-    _ionization_coeff(getMaterialProperty<Real>("ionization_coeff")),
+
+    _velocity(getMaterialProperty<RealVectorValue>("velocity")),
+
+    /*    _ionization_coeff(getMaterialProperty<Real>("ionization_coeff")),
     _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
     _ion_activation_energy(getMaterialProperty<Real>("ion_activation_energy")),
-    _potential_mult(getMaterialProperty<Real>("potential_mult")),
+    _potential_mult(getMaterialProperty<Real>("potential_mult")), */
     
     // Coupled variables
     
@@ -46,14 +48,14 @@ Real
 IonizationSource::computeQpResidual()
 {
   /* return -_test[_i][_qp]*_ionization_coeff[_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0))*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].size()*_u[_qp]; */
-  return -_test[_i][_qp]*std::exp(-1.0/(_grad_potential[_qp].size()+1.0e-6))*_grad_potential[_qp].size()*_u[_qp];
+  return -_test[_i][_qp]*std::exp(-1.0/(_grad_potential[_qp].size()+1.0e-6))*_velocity[_qp].size()*_u[_qp];
 }
 
 Real
 IonizationSource::computeQpJacobian()
 {
   /* return -_test[_i][_qp]*_ionization_coeff[_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0))*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].size()*_phi[_j][_qp]; */
-  return -_test[_i][_qp]*std::exp(-1.0/(_grad_potential[_qp].size()+1.0e-6))*_grad_potential[_qp].size()*_phi[_j][_qp];
+  return -_test[_i][_qp]*std::exp(-1.0/(_grad_potential[_qp].size()+1.0e-6))*_velocity[_qp].size()*_phi[_j][_qp];
 }
 
 /* Real

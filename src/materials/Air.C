@@ -25,6 +25,8 @@ InputParameters validParams<Air>()
   params.addParam<Real>("user_potential_mult",1.0e4,"Scaling for potential");
   params.addParam<Real>("user_density_mult",1.0e19,"Scaling for densities");
   params.addParam<Real>("user_diffusivity",0.1,"Diffusivity specified by the user");
+  params.addParam<Real>("delta",0.5,"Scaling parameter for artificial diffusivity");
+  params.addRequiredCoupledVar("potential", "The potential for calculating the electron velocity");
   return params;
 }
 
@@ -39,6 +41,8 @@ Air::Air(const std::string & name, InputParameters parameters) :
     _user_potential_mult(getParam<Real>("user_potential_mult")),
     _user_density_mult(getParam<Real>("user_density_mult")),
     _user_diffusivity(getParam<Real>("user_diffusivity")),
+    _delta(getParam<Real>("delta")),
+    _grad_potential(coupledGradient("potential")),
 
     // Declare material properties.  This returns references that we
     // hold onto as member variables
@@ -53,7 +57,8 @@ Air::Air(const std::string & name, InputParameters parameters) :
   _alpha(declareProperty<Real>("alpha")),
   _velocity(declareProperty<RealVectorValue>("velocity")),
   _velocity_norm(declareProperty<RealVectorValue>("velocity_norm")),
-  _diffusivity(declareProperty<Real>("diffusivity"))
+  _diffusivity(declareProperty<Real>("diffusivity")),
+  _tau(declareProperty<Real>("tau"))
 {}
 
 void
@@ -78,10 +83,10 @@ Air::computeQpProperties()
   
   _peclet_num[_qp] = _current_elem->hmax() / (2.0 * _diffusivity[_qp]);
   _alpha[_qp] = 1.0 / std::tanh(_peclet_num[_qp]) - 1.0 / _peclet_num[_qp];
-  _velocity[_qp](0) = 1.0;
-  _velocity[_qp](1) = 0.0;
-  _velocity[_qp](2) = 0.0;
-  _velocity_norm[_qp](0) = 1.0;
-  _velocity_norm[_qp](1) = 0.0;
-  _velocity_norm[_qp](2) = 0.0;
+  _velocity[_qp] = _grad_potential[_qp];
+  _velocity_norm[_qp] = _velocity[_qp] / _velocity[_qp].size();
+
+  // Isotropic diffusion formulation of tau
+
+  _tau[_qp] = _delta*_current_elem->hmax() / _velocity[_qp].size();
 }

@@ -19,7 +19,7 @@ InputParameters validParams<BovineConvection>()
 {
   InputParameters params = validParams<Kernel>();
 
-  params.addRequiredCoupledVar("some_variable", "The gradient of this variable will be used as the velocity vector.");
+  //  params.addRequiredCoupledVar("some_variable", "The gradient of this variable will be used as the velocity vector.");
   return params;
 }
 
@@ -31,24 +31,26 @@ BovineConvection::BovineConvection(const std::string & name,
     
     // Material properties
     
-    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
-    _potential_mult(getMaterialProperty<Real>("potential_mult")),
+    _velocity(getMaterialProperty<RealVectorValue>("velocity"))
+
+    /*    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
+	  _potential_mult(getMaterialProperty<Real>("potential_mult")), */
     
     // Coupled variables
     
-    _some_variable_id(coupled("some_variable")),
-    _grad_some_variable(coupledGradient("some_variable"))
+    /*    _some_variable_id(coupled("some_variable")),
+	  _grad_some_variable(coupledGradient("some_variable")) */
 {}
 
 Real BovineConvection::computeQpResidual()
 {
    
-  return -_u[_qp]*_grad_some_variable[_qp]*_grad_test[_i][_qp];
+  return -_u[_qp]*_velocity[_qp]*_grad_test[_i][_qp];
 }
 
 Real BovineConvection::computeQpJacobian()
 {
-  return -_phi[_j][_qp]*_grad_some_variable[_qp]*_grad_test[_i][_qp];
+  return -_phi[_j][_qp]*_velocity[_qp]*_grad_test[_i][_qp];
 }
 
 /* Real BovineConvection::computeQpOffDiagJacobian(unsigned int jvar)

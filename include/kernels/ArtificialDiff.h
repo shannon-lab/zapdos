@@ -38,11 +38,10 @@ protected:
   
   // Input Parameters
   
-  const Real & _delta;
-  
   // Material Properties
   
-  // MaterialProperty<Real> & _velocity_coeff;
+  MaterialProperty<RealVectorValue> & _velocity;
+  MaterialProperty<Real> & _tau;
   
   // Coupled variables
 
