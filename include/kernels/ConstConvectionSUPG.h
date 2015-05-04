@@ -12,23 +12,22 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef ARTIFICIALDIFF_H
-#define ARTIFICIALDIFF_H
+#ifndef CONSTCONVECTIONSUPG_H
+#define CONSTCONVECTIONSUPG_H
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Diffusion.h"
+#include "Kernel.h"
 
-class ArtificialDiff;
+class ConstConvectionSUPG;
 
 template<>
-InputParameters validParams<ArtificialDiff>();
+InputParameters validParams<ConstConvectionSUPG>();
 
-
-class ArtificialDiff : public Diffusion
+class ConstConvectionSUPG : public Kernel
 {
 public:
-  ArtificialDiff(const std::string & name, InputParameters parameters);
-  virtual ~ArtificialDiff();
+
+  ConstConvectionSUPG(const std::string & name,
+             InputParameters parameters);
 
 protected:
 
@@ -36,17 +35,17 @@ protected:
 
   virtual Real computeQpJacobian();
   
-  // Input Parameters
+  // Input file scalars
   
-  // Material Properties
-  
-  MaterialProperty<RealVectorValue> & _velocity;
-  MaterialProperty<Real> & _tau;
+  // Material properties
   
   // Coupled variables
 
-  // VariableGradient & _grad_potential;
+  // Unique to kernel
+  
+  MaterialProperty<RealVectorValue> & _velocity;
+  MaterialProperty<Real> & _alpha;
+  MaterialProperty<RealVectorValue> & _velocity_norm;
 };
 
-
-#endif /* ARTIFICIALDIFF_H */
+#endif //CONSTCONVECTIONSUPG_H

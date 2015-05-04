@@ -24,10 +24,8 @@ InputParameters validParams<ArtificialDiff>()
   // No parameters are necessary here because we're going to get
   // permeability and viscosity from the Material
   // so we just return params...
-
-  params.addParam<Real>("delta", 0.5, "Prefix multiplier for artificial diffusion term");
   
-  params.addRequiredCoupledVar("potential", "The electrical potential");
+  // params.addRequiredCoupledVar("potential", "The electrical potential");
 
   return params;
 }
@@ -37,16 +35,15 @@ ArtificialDiff::ArtificialDiff(const std::string & name, InputParameters paramet
     Diffusion(name, parameters),
     
     // Input Parameters
-
-    _delta(getParam<Real>("delta")),
     
     // Material Properties
-    
-    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
-    
+   
+    _velocity(getMaterialProperty<RealVectorValue>("velocity")),
+    _tau(getMaterialProperty<Real>("tau"))
+ 
     // Coupled Variables
     
-    _grad_potential(coupledGradient("potential"))
+    //_grad_potential(coupledGradient("potential"))
 {
 }
 
@@ -58,12 +55,14 @@ Real
 ArtificialDiff::computeQpResidual()
 {
   // Use the MaterialProperty references we stored earlier
-  return _delta*_current_elem->hmax()*_grad_potential[_qp].size()* Diffusion::computeQpResidual();
+  // return _delta*_current_elem->hmax()*_grad_potential[_qp].size()* Diffusion::computeQpResidual();
+  return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_u[_qp];
 }
 
 Real
 ArtificialDiff::computeQpJacobian()
 {
   // Use the MaterialProperty references we stored earlier
-  return _delta*_current_elem->hmax()*_grad_potential[_qp].size()*Diffusion::computeQpJacobian();
+  // return _delta*_current_elem->hmax()*_grad_potential[_qp].size()*Diffusion::computeQpJacobian();
+  return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_phi[_j][_qp];
 }

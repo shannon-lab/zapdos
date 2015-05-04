@@ -12,41 +12,40 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef ARTIFICIALDIFF_H
-#define ARTIFICIALDIFF_H
+#ifndef TIMEDERIVATIVESUPG_H
+#define TIMEDERIVATIVESUPG_H
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Diffusion.h"
+#include "TimeKernel.h"
 
-class ArtificialDiff;
+// Forward Declaration
+class TimeDerivativeSUPG;
 
 template<>
-InputParameters validParams<ArtificialDiff>();
+InputParameters validParams<TimeDerivativeSUPG>();
 
-
-class ArtificialDiff : public Diffusion
+class TimeDerivativeSUPG : public TimeKernel
 {
 public:
-  ArtificialDiff(const std::string & name, InputParameters parameters);
-  virtual ~ArtificialDiff();
+  TimeDerivativeSUPG(const std::string & name, InputParameters parameters);
+
+  virtual void computeJacobian();
 
 protected:
-
   virtual Real computeQpResidual();
-
   virtual Real computeQpJacobian();
-  
-  // Input Parameters
-  
-  // Material Properties
-  
-  MaterialProperty<RealVectorValue> & _velocity;
-  MaterialProperty<Real> & _tau;
-  
-  // Coupled variables
 
-  // VariableGradient & _grad_potential;
+  bool _lumping;
+
+  // Material properties
+
+  MaterialProperty<Real> & _alpha;
+  //  MaterialProperty<RealVectorValue> & _velocity;  
+  MaterialProperty<RealVectorValue> & _velocity_norm;  
+
+  // Kernel specific members
+
+  //  RealVectorValue _velocity;
+
 };
 
-
-#endif /* ARTIFICIALDIFF_H */
+#endif //TIMEDERIVATIVESUPG_H

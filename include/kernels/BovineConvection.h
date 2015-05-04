@@ -41,16 +41,17 @@ protected:
   
   // Material properties
   
-  MaterialProperty<Real> & _velocity_coeff;
-  MaterialProperty<Real> & _potential_mult;
+  MaterialProperty<RealVectorValue> & _velocity;
+  //  MaterialProperty<Real> & _velocity_coeff;
+  //  MaterialProperty<Real> & _potential_mult;
   
   // Coupled variables
   
-  unsigned int _some_variable_id;
+  /*  unsigned int _some_variable_id;
 
 private:
 
-  VariableGradient & _grad_some_variable;
+VariableGradient & _grad_some_variable; */
 };
 
 #endif //BOVINECONVECTION_H

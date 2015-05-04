@@ -12,48 +12,48 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "BovineConvection.h"
+#include "ConstConvectionSUPG.h"
 
 template<>
-InputParameters validParams<BovineConvection>()
+InputParameters validParams<ConstConvectionSUPG>()
 {
   InputParameters params = validParams<Kernel>();
 
-  //  params.addRequiredCoupledVar("some_variable", "The gradient of this variable will be used as the velocity vector.");
   return params;
 }
 
-BovineConvection::BovineConvection(const std::string & name,
+ConstConvectionSUPG::ConstConvectionSUPG(const std::string & name,
                        InputParameters parameters) :
     Kernel(name, parameters),
     
     // Input file scalars
     
     // Material properties
-    
-    _velocity(getMaterialProperty<RealVectorValue>("velocity"))
 
-    /*    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
-	  _potential_mult(getMaterialProperty<Real>("potential_mult")), */
+    _velocity(getMaterialProperty<RealVectorValue>("velocity")),
+    _alpha(getMaterialProperty<Real>("alpha")),
+    _velocity_norm(getMaterialProperty<RealVectorValue>("velocity_norm"))
     
     // Coupled variables
     
-    /*    _some_variable_id(coupled("some_variable")),
-	  _grad_some_variable(coupledGradient("some_variable")) */
-{}
-
-Real BovineConvection::computeQpResidual()
+    // Unique to kernel
 {
-   
-  return -_u[_qp]*_velocity[_qp]*_grad_test[_i][_qp];
+/*    _velocity(0) = 1.0;
+    _velocity(1) = 0.0;
+    _velocity(2) = 0.0; */
 }
 
-Real BovineConvection::computeQpJacobian()
-{
-  return -_phi[_j][_qp]*_velocity[_qp]*_grad_test[_i][_qp];
+Real ConstConvectionSUPG::computeQpResidual()
+{   
+  return _alpha[_qp]*_current_elem->hmax()*_velocity_norm[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_u[_qp];
 }
 
-/* Real BovineConvection::computeQpOffDiagJacobian(unsigned int jvar)
+Real ConstConvectionSUPG::computeQpJacobian()
+{
+  return _alpha[_qp]*_current_elem->hmax()*_velocity_norm[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_phi[_j][_qp];
+}
+
+/* Real ConstConvectionSUPG::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _some_variable_id)
   {
