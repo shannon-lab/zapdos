@@ -56,6 +56,8 @@
   [./SUPG_convection]
     type = ArtificialDiff
     variable = concentration
+    crosswind = true
+    epsilon = 1.0e-12
   [../]
 []
 

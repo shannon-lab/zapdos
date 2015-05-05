@@ -37,6 +37,9 @@ protected:
   virtual Real computeQpJacobian();
   
   // Input Parameters
+
+  const bool & _crosswind;
+  const Real & _epsilon;
   
   // Material Properties
   

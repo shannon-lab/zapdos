@@ -19,12 +19,14 @@ InputParameters validParams<TimeDerivativeSUPG>()
 {
   InputParameters params = validParams<TimeKernel>();
   params.addParam<bool>("lumping", false, "True for mass matrix lumping, false otherwise");
+  params.addParam<bool>("crosswind",false,"True if you want to include crosswind diffusion");
   return params;
 }
 
 TimeDerivativeSUPG::TimeDerivativeSUPG(const std::string & name, InputParameters parameters) :
     TimeKernel(name, parameters),
     _lumping(getParam<bool>("lumping")),
+    _crosswind(getParam<bool>("crosswind")),
 
     // Material Properties
 
@@ -40,7 +42,14 @@ TimeDerivativeSUPG::TimeDerivativeSUPG(const std::string & name, InputParameters
 Real
 TimeDerivativeSUPG::computeQpResidual()
 {
-  return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_u_dot[_qp];
+  if (_crosswind)
+    {
+      return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].size() * _grad_u[_qp].size() + _epsilon ) * _grad_u[_qp] * _grad_test[_i][_qp] ) * _u_dot[_qp];
+    }
+  else 
+    {
+      return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_u_dot[_qp];
+    }
 }
 
 Real

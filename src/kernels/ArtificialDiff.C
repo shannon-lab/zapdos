@@ -27,6 +27,8 @@ InputParameters validParams<ArtificialDiff>()
   
   // params.addRequiredCoupledVar("potential", "The electrical potential");
 
+  params.addParam<bool>("crosswind",false,"Whether to use crosswind stabilization");
+  params.addParam<Real>("epsilon",1.0e-6,"Parameter to prevent non-zero denominators");
   return params;
 }
 
@@ -35,7 +37,10 @@ ArtificialDiff::ArtificialDiff(const std::string & name, InputParameters paramet
     Diffusion(name, parameters),
     
     // Input Parameters
-    
+
+    _crosswind(getParam<bool>("crosswind")),
+    _epsilon(getParam<Real>("epsilon")),
+
     // Material Properties
    
     _velocity(getMaterialProperty<RealVectorValue>("velocity")),
@@ -57,13 +62,17 @@ ArtificialDiff::computeQpResidual()
   // Use the MaterialProperty references we stored earlier
   // return _delta*_current_elem->hmax()*_grad_potential[_qp].size()* Diffusion::computeQpResidual();
   if (!_crosswind)
-  {
-    return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_u[_qp];
-  }
-  if (_crosswind)
-  {
-    return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].size() * _grad_u[_qp].size() ) * _grad_u[_qp] * _grad_test[_i][_qp] ) * _velocity[_qp] * _grad_u[_qp];
-  } 
+    {
+      return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_u[_qp];
+    }
+  else if (_crosswind)
+    {
+      return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].size() * _grad_u[_qp].size() + _epsilon ) * _grad_u[_qp] * _grad_test[_i][_qp] ) * _velocity[_qp] * _grad_u[_qp];
+    } 
+  else
+    {
+      return 0.0;
+    }
 }
 
 Real
@@ -72,11 +81,15 @@ ArtificialDiff::computeQpJacobian()
   // Use the MaterialProperty references we stored earlier
   // return _delta*_current_elem->hmax()*_grad_potential[_qp].size()*Diffusion::computeQpJacobian();
   if (!_crosswind)
-  {
-    return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_phi[_j][_qp];
-  }
-  if (_crosswind)
-  {
-    return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].size() * _grad_u[_qp].size() ) * _grad_u[_qp] * _grad_test[_i][_qp] ) * _velocity[_qp] * _grad_u[_qp];
-  
+    {
+      return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_phi[_j][_qp];
+    }
+  else if (_crosswind)
+    {
+      return _tau[_qp] * _velocity[_qp] * _grad_test[_i][_qp] * _velocity[_qp] * _grad_phi[_j][_qp]+ _tau[_qp] * ((_grad_u[_qp] * _grad_test[_i][_qp] )*( ( ( _grad_u[_qp] * _grad_u[_qp] )* ( _velocity[_qp] * _grad_phi[_j][_qp])-(_velocity[_qp] * _grad_u[_qp] )* ( 2.0 * _grad_u[_qp] * _grad_phi[_j][_qp] ) ) / ( (_grad_u[_qp] * _grad_u[_qp] + _epsilon)*(_grad_u[_qp] * _grad_u[_qp] + _epsilon)))+(_velocity[_qp]*_grad_u[_qp]) * (_grad_test[_i][_qp]*_grad_phi[_j][_qp]) / (_grad_u[_qp]*_grad_u[_qp] + _epsilon) ) * _velocity[_qp] * _grad_u[_qp] + _tau[_qp] * _velocity[_qp] * _grad_phi[_j][_qp] * _grad_u[_qp] * _grad_test[_i][_qp] * (_velocity[_qp] * _grad_u[_qp])/(_grad_u[_qp]*_grad_u[_qp] + _epsilon);
+    }
+  else
+    {
+      return 0.0;
+    }
 }
