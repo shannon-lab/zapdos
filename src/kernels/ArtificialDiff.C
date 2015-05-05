@@ -56,7 +56,14 @@ ArtificialDiff::computeQpResidual()
 {
   // Use the MaterialProperty references we stored earlier
   // return _delta*_current_elem->hmax()*_grad_potential[_qp].size()* Diffusion::computeQpResidual();
-  return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_u[_qp];
+  if (!_crosswind)
+  {
+    return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_u[_qp];
+  }
+  if (_crosswind)
+  {
+    return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].size() * _grad_u[_qp].size() ) * _grad_u[_qp] * _grad_test[_i][_qp] ) * _velocity[_qp] * _grad_u[_qp];
+  } 
 }
 
 Real
@@ -64,5 +71,12 @@ ArtificialDiff::computeQpJacobian()
 {
   // Use the MaterialProperty references we stored earlier
   // return _delta*_current_elem->hmax()*_grad_potential[_qp].size()*Diffusion::computeQpJacobian();
-  return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_phi[_j][_qp];
+  if (!_crosswind)
+  {
+    return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_velocity[_qp]*_grad_phi[_j][_qp];
+  }
+  if (_crosswind)
+  {
+    return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].size() * _grad_u[_qp].size() ) * _grad_u[_qp] * _grad_test[_i][_qp] ) * _velocity[_qp] * _grad_u[_qp];
+  
 }
