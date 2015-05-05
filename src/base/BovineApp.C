@@ -30,6 +30,7 @@
 
 // Materials
 #include "Air.h"
+#include "NoCouplingAir.h"
 
 // Indicators
 #include "AnalyticalDiffIndicator.h"
@@ -94,6 +95,7 @@ BovineApp::registerObjects(Factory & factory)
   registerAux(AlphaTimesHSize);
   registerAux(HSize);
   registerMaterial(Air);
+  registerMaterial(NoCouplingAir);
   registerIndicator(AnalyticalDiffIndicator);
 }
 

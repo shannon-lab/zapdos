@@ -38,9 +38,9 @@ protected:
 
   // Material properties
 
-  MaterialProperty<Real> & _alpha;
+  MaterialProperty<Real> & _tau;
   //  MaterialProperty<RealVectorValue> & _velocity;  
-  MaterialProperty<RealVectorValue> & _velocity_norm;  
+  MaterialProperty<RealVectorValue> & _velocity;  
 
   // Kernel specific members
 

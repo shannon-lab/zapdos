@@ -19,7 +19,7 @@ InputParameters validParams<DivFreeConvection>()
 {
   InputParameters params = validParams<Kernel>();
 
-  params.addRequiredCoupledVar("some_variable", "The gradient of this variable will be used as the velocity vector.");
+  // params.addRequiredCoupledVar("some_variable", "The gradient of this variable will be used as the velocity vector.");
   return params;
 }
 
@@ -29,13 +29,15 @@ DivFreeConvection::DivFreeConvection(const std::string & name,
     
     // Material properties
     
-    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
-    _potential_mult(getMaterialProperty<Real>("potential_mult")),
+    /*    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff")),
+	  _potential_mult(getMaterialProperty<Real>("potential_mult")), */
+
+    _velocity(getMaterialProperty<RealVectorValue>("velocity"))
     
     // Coupled variables
     
-    _some_variable_id(coupled("some_variable")),
-    _grad_some_variable(coupledGradient("some_variable"))
+    /*    _some_variable_id(coupled("some_variable")),
+	  _grad_some_variable(coupledGradient("some_variable")) */
 {}
 
 Real DivFreeConvection::computeQpResidual()
@@ -47,12 +49,12 @@ Real DivFreeConvection::computeQpResidual()
   moose tutorials and examples that I've looked at. Make sure to include appropriate
   boundary conditions to match this kernel. */
    
-  return _grad_some_variable[_qp]*_grad_u[_qp]*_test[_i][_qp];
+  return _velocity[_qp]*_grad_u[_qp]*_test[_i][_qp];
 }
 
 Real DivFreeConvection::computeQpJacobian()
 {
-  return _grad_some_variable[_qp]*_grad_phi[_j][_qp]*_test[_i][_qp];
+  return _velocity[_qp]*_grad_phi[_j][_qp]*_test[_i][_qp];
 }
 
 /* Real DivFreeConvection::computeQpOffDiagJacobian(unsigned int jvar)

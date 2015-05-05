@@ -28,25 +28,25 @@ TimeDerivativeSUPG::TimeDerivativeSUPG(const std::string & name, InputParameters
 
     // Material Properties
 
-    _alpha(getMaterialProperty<Real>("alpha")),
+    _tau(getMaterialProperty<Real>("tau")),
     //    _velocity(getMaterialProperty<RealVectorValue>("velocity"))
-    _velocity_norm(getMaterialProperty<RealVectorValue>("velocity_norm"))
+    _velocity(getMaterialProperty<RealVectorValue>("velocity"))
 
     // Kernel specific properties
-    //    _velocity_norm(1.0,0.0,0.0)
+    //    _velocity(1.0,0.0,0.0)
 {
 }
 
 Real
 TimeDerivativeSUPG::computeQpResidual()
 {
-  return _alpha[_qp]*_current_elem->hmax()*_velocity_norm[_qp]*_grad_test[_i][_qp]*_u_dot[_qp];
+  return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_u_dot[_qp];
 }
 
 Real
 TimeDerivativeSUPG::computeQpJacobian()
 {
-  return _alpha[_qp]*_current_elem->hmax()*_velocity_norm[_qp]*_grad_test[_i][_qp]*_phi[_j][_qp]*_du_dot_du[_qp];
+  return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_phi[_j][_qp]*_du_dot_du[_qp];
 }
 
 void

@@ -39,16 +39,19 @@ protected:
   
   // Material Properties
   
-  MaterialProperty<Real> & _velocity_coeff;
-  MaterialProperty<Real> & _potential_mult;
+  /*  MaterialProperty<Real> & _velocity_coeff;
+      MaterialProperty<Real> & _potential_mult; */
+
+  MaterialProperty<RealVectorValue> & _velocity;
   
   // Coupled variables
   
-  unsigned int _some_variable_id;
+  /*  unsigned int _some_variable_id;
 
 private:
 
-  VariableGradient & _grad_some_variable;
+VariableGradient & _grad_some_variable; */
+
 };
 
 #endif //DIVFREECONVECTION_H
