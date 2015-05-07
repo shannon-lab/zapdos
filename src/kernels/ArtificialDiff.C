@@ -44,11 +44,17 @@ ArtificialDiff::ArtificialDiff(const std::string & name, InputParameters paramet
     // Material Properties
    
     _velocity(getMaterialProperty<RealVectorValue>("velocity")),
-    _tau(getMaterialProperty<Real>("tau"))
+    _tau(getMaterialProperty<Real>("tau")),
  
     // Coupled Variables
     
     //_grad_potential(coupledGradient("potential"))
+
+    // Variables unique to kernel
+
+    _velocity_h(declareProperty<RealVectorValue>("velocity_h")),
+    _tau_h(declareProperty<Real>("tau_h")),
+    _sigma(<Real>("sigma"))
 {
 }
 
@@ -65,7 +71,12 @@ ArtificialDiff::computeQpResidual()
     {
       if (_grad_u[_qp].size() == 0.0)
 	{
-	  return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp]* _grad_test[_i][_qp] ) * _velocity[_qp] * _grad_u[_qp];
+	  _velocity_h[_qp] = _velocity[_qp];
+	  _peclet_num_h[_qp] = _current_elem->hmax() * _velocity_h[_qp].size() / (2.0 * _diffusivity[_qp]);
+	  _alpha_h[_qp] = 1.0 / std::tanh(_peclet_num_h[_qp]) - 1.0 / _peclet_num_h[_qp];
+	  _tau_h[_qp] = _current_elem->hmax() * _alpha_h[_qp] / _velocity_h[_qp].size();
+	  _sigma[_qp] = std::max(0,_tau_h[_qp]-_tau[_qp]);
+	  return (_tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp] + _sigma[_qp]*_velocity_h[_qp]* _grad_test[_i][_qp]) * _velocity[_qp] * _grad_u[_qp];
 	}
       else
 	{
