@@ -35,6 +35,8 @@ protected:
   virtual Real computeQpJacobian();
 
   bool _lumping;
+  const bool & _crosswind;
+  const Real & _epsilon;
 
   // Material properties
 

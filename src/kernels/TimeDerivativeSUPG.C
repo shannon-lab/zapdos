@@ -20,6 +20,7 @@ InputParameters validParams<TimeDerivativeSUPG>()
   InputParameters params = validParams<TimeKernel>();
   params.addParam<bool>("lumping", false, "True for mass matrix lumping, false otherwise");
   params.addParam<bool>("crosswind",false,"True if you want to include crosswind diffusion");
+  params.addParam<Real>("epsilon",0.0,"To prevent denominators from being zero");
   return params;
 }
 
@@ -27,6 +28,7 @@ TimeDerivativeSUPG::TimeDerivativeSUPG(const std::string & name, InputParameters
     TimeKernel(name, parameters),
     _lumping(getParam<bool>("lumping")),
     _crosswind(getParam<bool>("crosswind")),
+    _epsilon(getParam<Real>("epsilon")),
 
     // Material Properties
 
@@ -44,7 +46,14 @@ TimeDerivativeSUPG::computeQpResidual()
 {
   if (_crosswind)
     {
-      return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].size() * _grad_u[_qp].size() + _epsilon ) * _grad_u[_qp] * _grad_test[_i][_qp] ) * _u_dot[_qp];
+      if (_grad_u[_qp].size() == 0.0)
+	{
+	  return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp] * _grad_test[_i][_qp] ) * _u_dot[_qp];
+	}
+      else
+	{
+	  return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].size() * _grad_u[_qp].size() + _epsilon ) * _grad_u[_qp] * _grad_test[_i][_qp] ) * _u_dot[_qp];
+	}
     }
   else 
     {
@@ -55,7 +64,23 @@ TimeDerivativeSUPG::computeQpResidual()
 Real
 TimeDerivativeSUPG::computeQpJacobian()
 {
-  return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_phi[_j][_qp]*_du_dot_du[_qp];
+  if (_crosswind)
+    {
+      if (_grad_u[_qp].size() == 0.0)
+	{
+	  return _tau[_qp]*(_velocity[_qp]*_grad_test[_i][_qp] + _velocity[_qp] * _grad_test[_i][_qp] ) * _phi[_j][_qp] * _du_dot_du[_qp];
+	}
+      else
+	{
+      // First term is from taking the partial derivative with respect to the standard SUPG term. Second and third terms are from taking the partial derivative with respect to the shock-capturing term. In the second term the derivative is with respect to the shock-capturing version of the test function while keeping the physics (du / dt) constant. The third term is from keeping the shock-capturing test function constant while taking the derivative of the physics. 
+
+	  return  _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_phi[_j][_qp]*_du_dot_du[_qp] + _tau[_qp] * ((_grad_u[_qp] * _grad_test[_i][_qp] )*( ( ( _grad_u[_qp] * _grad_u[_qp] )* ( _velocity[_qp] * _grad_phi[_j][_qp])-(_velocity[_qp] * _grad_u[_qp] )* ( 2.0 * _grad_u[_qp] * _grad_phi[_j][_qp] ) ) / ( (_grad_u[_qp] * _grad_u[_qp] + _epsilon)*(_grad_u[_qp] * _grad_u[_qp] + _epsilon)))+(_velocity[_qp]*_grad_u[_qp]) * (_grad_test[_i][_qp]*_grad_phi[_j][_qp]) / (_grad_u[_qp]*_grad_u[_qp] + _epsilon) ) * _u_dot[_qp] + _tau[_qp] * _grad_u[_qp] * _grad_test[_i][_qp] * (_velocity[_qp] * _grad_u[_qp])/(_grad_u[_qp]*_grad_u[_qp] + _epsilon) * _phi[_j][_qp]*_du_dot_du[_qp];
+	}
+    }
+  else
+    {
+      return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_phi[_j][_qp]*_du_dot_du[_qp];
+    }
 }
 
 void

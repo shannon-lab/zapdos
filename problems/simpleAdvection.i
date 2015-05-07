@@ -40,6 +40,7 @@
   [./SUPG_time_deriv]
     type = TimeDerivativeSUPG
     variable = concentration
+    crosswind = true
   [../]
   [./advection]
     type = DivFreeConvection
@@ -57,7 +58,6 @@
     type = ArtificialDiff
     variable = concentration
     crosswind = true
-    epsilon = 1.0e-12
   [../]
 []
 
