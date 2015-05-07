@@ -10,6 +10,21 @@
   [../]
 []
 
+#[AuxVariables]
+#  [./sigma]
+#    order = CONSTANT
+#    family = MONOMIAL
+#  [../]
+#  [./velocity_h]
+#    order = CONSTANT
+#    family = MONOMIAL
+#  [../]
+#  [./velocity]
+#    order = CONSTANT
+#    family = MONOMIAL
+#  [../]
+#[]
+
 [Functions]
   [./velocity_function]
     type = ParsedVectorFunction
@@ -60,6 +75,27 @@
     crosswind = true
   [../]
 []
+
+#[AuxKernels]
+#  [./sigma_aux_kernel]
+#    type = Sigma
+#    variable = sigma
+#    some_var = concentration
+#    execute_on = timestep_end
+#  [../]
+#  [./velocity_h_kernel]
+#    type = VelocityH
+#    variable = velocity_h
+#    some_var = concentration
+#    execute_on = timestep_end
+#  [../]
+#  [./velocity_kernel]
+#    type = Velocity
+#    variable = velocity
+#    some_var = concentration
+#    execute_on = timestep_end
+#  [../]
+#[]
 
 [BCs] 
   active = 'left_wall'

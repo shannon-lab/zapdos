@@ -1,4 +1,4 @@
-/****************************************************************/
+//****************************************************************/
 /*               DO NOT MODIFY THIS HEADER                      */
 /* MOOSE - Multiphysics Object Oriented Simulation Environment  */
 /*                                                              */
@@ -12,36 +12,45 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef TIMEDERIVATIVESUPG_H
-#define TIMEDERIVATIVESUPG_H
+#ifndef SIGMA_H
+#define SIGMA_H
 
-#include "TimeKernel.h"
+#include "AuxKernel.h"
 
-// Forward Declaration
-class TimeDerivativeSUPG;
+//Forward Declarations
+class Sigma;
 
 template<>
-InputParameters validParams<TimeDerivativeSUPG>();
+InputParameters validParams<Sigma>();
 
-class TimeDerivativeSUPG : public TimeKernel
+/**
+ * Constant auxiliary value
+ */
+class Sigma : public AuxKernel
 {
 public:
-  TimeDerivativeSUPG(const std::string & name, InputParameters parameters);
+  Sigma(const std::string & name, InputParameters parameters);
 
-  virtual void computeJacobian();
+  virtual ~Sigma() {}
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  /**
+   * AuxKernels MUST override computeValue.  computeValue() is called on
+   * every quadrature point.  For Nodal Auxiliary variables those quadrature
+   * points coincide with the nodes.
+   */
+  virtual Real computeValue();
+  
+  //int _component;
 
-  bool _lumping;
-  const bool & _crosswind;
-  const Real & _epsilon;
+  // Coupling variables
 
+  VariableGradient & _grad_some_var;
+  VariableValue & _some_var;
+  
   // Material properties
 
-  MaterialProperty<Real> & _tau;
-  //  MaterialProperty<RealVectorValue> & _velocity;  
+  MaterialProperty<Real> & _tau; 
   MaterialProperty<RealVectorValue> & _velocity; 
   MaterialProperty<Real> & _diffusivity;
 
@@ -54,7 +63,6 @@ protected:
   Real _alpha_h;
   Real _tau_h;
   Real _sigma;
-
 };
 
-#endif //TIMEDERIVATIVESUPG_H
+#endif //SIGMA_H

@@ -45,10 +45,20 @@ protected:
   
   MaterialProperty<RealVectorValue> & _velocity;
   MaterialProperty<Real> & _tau;
+  MaterialProperty<Real> & _diffusivity;
   
   // Coupled variables
 
   // VariableGradient & _grad_potential;
+
+  // Variables unique to the kernel
+
+  RealVectorValue  _velocity_h;
+  RealVectorValue  _d_velocity_h_d_uj;
+  Real  _peclet_num_h;
+  Real  _alpha_h;
+  Real  _tau_h;
+  Real  _sigma;
 };
 
 

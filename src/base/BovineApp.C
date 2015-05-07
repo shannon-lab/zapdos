@@ -19,6 +19,7 @@
 #include "ConstConvection.h"
 #include "TimeDerivativeSUPG.h"
 #include "ConstConvectionSUPG.h"
+
 // AuxKernels
 
 #include "EFieldMag.h"
@@ -27,6 +28,9 @@
 #include "IonSrcTerm.h"
 #include "AlphaTimesHSize.h"
 #include "HSize.h"
+#include "Sigma.h"
+#include "VelocityH.h"
+#include "Velocity.h"
 
 // Materials
 #include "Air.h"
@@ -94,6 +98,9 @@ BovineApp::registerObjects(Factory & factory)
   registerAux(IonSrcTerm);
   registerAux(AlphaTimesHSize);
   registerAux(HSize);
+  registerAux(Sigma);
+  registerAux(VelocityH);
+  registerAux(Velocity);
   registerMaterial(Air);
   registerMaterial(NoCouplingAir);
   registerIndicator(AnalyticalDiffIndicator);
