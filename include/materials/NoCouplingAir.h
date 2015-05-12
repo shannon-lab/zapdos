@@ -52,14 +52,15 @@ protected:
   const Real & _user_diffusivity;
   const Real & _delta;
   const bool & _consistent;
-  
-  // Functions
-  
-  Function & _velocity_function;
+  const bool & _coupling;
 
   // Coupled Variables
 
-  // VariableGradient & _grad_potential;
+  //  VariableGradient & _grad_potential;
+
+  // Functions
+  
+  Function & _velocity_function;
 
   // Material properties
   

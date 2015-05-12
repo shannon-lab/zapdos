@@ -51,7 +51,7 @@ CoupledIonizationSource::computeQpResidual()
 {
   /* return -_test[_i][_qp]*_ionization_coeff[_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0))*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].size()*_electron_density[_qp]; */
 
-  return -_test[_i][_qp]*std::exp(-1.0/(_grad_potential[_qp].size()+1.0e-6))*_velocity[_qp].size()*_electron_density[_qp];
+  return -_test[_i][_qp]*std::max(std::exp(-1.0/(_grad_potential[_qp].size()+1.0e-6))*_velocity[_qp].size()*_electron_density[_qp],0.0);
 
 }
 

@@ -51,14 +51,14 @@
 []
 
 [Kernels]
-  active = 'advection time_derivative diffusion SUPG_convection SUPG_time_deriv'
+  active = 'advection time_derivative diffusion' # SUPG_convection SUPG_time_deriv
   [./SUPG_time_deriv]
     type = TimeDerivativeSUPG
     variable = concentration
     crosswind = true
   [../]
   [./advection]
-    type = DivFreeConvection
+    type = BovineConvection
     variable = concentration
   [../]
   [./time_derivative]
@@ -98,7 +98,7 @@
 #[]
 
 [BCs] 
-  active = 'left_wall'
+  active = 'left_wall right_wall'
   [./left_wall]
     type = DirichletBC # Simple u=value BC
     variable = concentration
@@ -106,10 +106,10 @@
     value = 1
   [../]
   [./right_wall]
-    type = DirichletBC
+    type = NoDiffusiveFlux
     variable = concentration
     boundary = right
-    value = 0
+#    value = 0
   [../]
 []
 
@@ -117,9 +117,10 @@
   [./whole_domain]
     block = 0
     type = NoCouplingAir
-    user_diffusivity = 1.0e-6
+    user_diffusivity = 1.0
     velocity_function = velocity_function
     consistent = true
+    potential = potential
   [../]
 []
 

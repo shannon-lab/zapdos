@@ -92,16 +92,25 @@
 [Materials]
   [./whole_domain]
     block = 0
-    type = Air
-    delta = 0.0
+    type = NoCouplingAir
     potential = potential
+    consistent = false
+    coupling = true
+    velocity_function = velocity_function # Not used when coupling = true
+    outputs = exodus
+    delta = 0.25
   [../]
 []
 
 [Functions]
+  [./velocity_function]
+    type = ParsedVectorFunction
+    value_x = '1.0'
+  [../]
   [./parsed_function]
     type = ParsedFunction
-    value = '.01*exp(-pow(x-993,2))+1.0e-5'
+#    value = '.01*exp(-pow(x-993,2))+1.0e-5'
+    value = '1.0e-2'
   [../]
   [./linear_function]
     type = ParsedFunction
@@ -137,11 +146,16 @@
 []
 
 [Kernels]
-  active = 'electrons_time_deriv electron_convection electron_diffusion artificial_diff poisson_diffusion poisson_src electron_src ions_src ions_time_deriv'
-  [./artificial_diff]
+  active = 'electrons_time_deriv electron_convection electron_diffusion stabilization_convection poisson_diffusion poisson_src electron_src ions_src ions_time_deriv'
+  [./stabilization_time_deriv]
+    type = TimeDerivativeSUPG
+    variable = electron_density
+    crosswind = false
+  [../]
+  [./stabilization_convection]
     type = ArtificialDiff
     variable = electron_density
-#    potential = potential
+    crosswind = false
   [../]
   [./poisson_diffusion]
     type = Diffusion
@@ -201,17 +215,27 @@
     value = 0
   [../]
   [./electrons_anode]
-    type = DirichletBC
+    type = NoDiffusiveFlux
     variable = electron_density
     boundary = right
-    value = 0
   [../]
   [./electrons_cathode]
-    type = DirichletBC
+    type = NoDiffusiveFlux
     variable = electron_density
-    value = 0
     boundary = left
   [../]
+#  [./electrons_anode]
+#    type = DirichletBC
+#    variable = electron_density
+#    boundary = right
+#    value = 0
+#  [../]
+#  [./electrons_cathode]
+#    type = DirichletBC
+#    variable = electron_density
+#    value = 0
+#    boundary = left
+#  [../]
 []
 
 [Problem]   
@@ -231,7 +255,7 @@
 
 [Executioner]
   type = Transient
-  dt = 0.1
+  dt = 0.05
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'

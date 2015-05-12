@@ -26,8 +26,9 @@ InputParameters validParams<NoCouplingAir>()
   params.addParam<Real>("user_density_mult",1.0e19,"Scaling for densities");
   params.addParam<Real>("user_diffusivity",0.1,"Diffusivity specified by the user");
   params.addParam<Real>("delta",0.5,"Scaling parameter for artificial diffusivity");
+  params.addParam<bool>("consistent",false,"Whether to use consistent stabilization vs. inconsistent isotropic diffusion");  
+  params.addParam<bool>("coupling",true,"Whether the velocity is determined by a user function or through a coupling variable");
   params.addRequiredParam<FunctionName>("velocity_function", "name of velocity function to utilize");
-  params.addParam<bool>("consistent",false,"Whether to use consistent stabilization vs. inconsistent isotropic diffusion");
   // params.addRequiredCoupledVar("potential", "The potential for calculating the electron velocity");
   return params;
 }
@@ -45,23 +46,24 @@ NoCouplingAir::NoCouplingAir(const std::string & name, InputParameters parameter
     _user_diffusivity(getParam<Real>("user_diffusivity")),
     _delta(getParam<Real>("delta")),
     _consistent(getParam<bool>("consistent")),
+    _coupling(getParam<bool>("coupling")),
     
     // Coupled variables
     
-    // _grad_potential(coupledGradient("potential")),
+    //    _grad_potential(coupledGradient("potential")),
     
-    // Functions
+// Functions
     
-    _velocity_function(getFunction("velocity_function")),
+  _velocity_function(getFunction("velocity_function")),
 
-    // Declare material properties.  This returns references that we
-    // hold onto as member variables
-    _velocity_coeff(declareProperty<Real>("velocity_coeff")),
-    _permittivity(declareProperty<Real>("permittivity")),
-    _coulomb_charge(declareProperty<Real>("coulomb_charge")),
-    _ionization_coeff(declareProperty<Real>("ionization_coeff")),
-    _ion_activation_energy(declareProperty<Real>("ion_activation_energy")),
-    _potential_mult(declareProperty<Real>("potential_mult")),
+// Declare material properties.  This returns references that we
+// hold onto as member variables
+  _velocity_coeff(declareProperty<Real>("velocity_coeff")),
+  _permittivity(declareProperty<Real>("permittivity")),
+  _coulomb_charge(declareProperty<Real>("coulomb_charge")),
+  _ionization_coeff(declareProperty<Real>("ionization_coeff")),
+  _ion_activation_energy(declareProperty<Real>("ion_activation_energy")),
+  _potential_mult(declareProperty<Real>("potential_mult")),
   _density_mult(declareProperty<Real>("density_mult")),
   _peclet_num(declareProperty<Real>("peclet_num")),
   _alpha(declareProperty<Real>("alpha")),
@@ -91,9 +93,14 @@ NoCouplingAir::computeQpProperties()
   _density_mult[_qp] = _user_density_mult; */
   
   _diffusivity[_qp] = _user_diffusivity;
-
-  //_velocity[_qp] = _grad_potential[_qp];
-  _velocity[_qp] = _velocity_function.vectorValue(_t,_qp);
+  /*  if (_coupling)
+    {
+      _velocity[_qp] = _grad_potential[_qp];
+    }
+  else
+  { */
+      _velocity[_qp] = _velocity_function.vectorValue(_t,_qp);
+      //    }
   _velocity_norm[_qp] = _velocity[_qp] / _velocity[_qp].size();  
   _peclet_num[_qp] = _current_elem->hmax() * _velocity[_qp].size() / (2.0 * _diffusivity[_qp]);
   _alpha[_qp] = 1.0 / std::tanh(_peclet_num[_qp]) - 1.0 / _peclet_num[_qp];

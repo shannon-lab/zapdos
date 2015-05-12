@@ -19,6 +19,7 @@
 #include "ConstConvection.h"
 #include "TimeDerivativeSUPG.h"
 #include "ConstConvectionSUPG.h"
+#include "ExampleDiffusion.h"
 
 // AuxKernels
 
@@ -35,9 +36,16 @@
 // Materials
 #include "Air.h"
 #include "NoCouplingAir.h"
+#include "BlockAverageDiffusionMaterial.h"
 
 // Indicators
 #include "AnalyticalDiffIndicator.h"
+
+// User Objects
+#include "BlockAverageValue.h"
+
+// Boundary Conditions
+#include "NoDiffusiveFlux.h"
 
 template<>
 InputParameters validParams<BovineApp>()
@@ -92,6 +100,7 @@ BovineApp::registerObjects(Factory & factory)
   registerKernel(ConstConvection);
   registerKernel(TimeDerivativeSUPG);
   registerKernel(ConstConvectionSUPG);
+  registerKernel(ExampleDiffusion);
   registerAux(EFieldMag);
   registerAux(VelocityMag);
   registerAux(ChargeDensity);
@@ -103,7 +112,10 @@ BovineApp::registerObjects(Factory & factory)
   registerAux(Velocity);
   registerMaterial(Air);
   registerMaterial(NoCouplingAir);
+  registerMaterial(BlockAverageDiffusionMaterial);
   registerIndicator(AnalyticalDiffIndicator);
+  registerUserObject(BlockAverageValue);
+  registerBoundaryCondition(NoDiffusiveFlux);
 }
 
 void
