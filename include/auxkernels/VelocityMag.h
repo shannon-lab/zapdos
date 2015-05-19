@@ -44,9 +44,10 @@ protected:
   //int _component;
 
   /// The gradient of a coupled variable
-  VariableGradient & _grad_potential;
+  //  VariableGradient & _grad_potential;
   
-  MaterialProperty<Real> & _velocity_coeff;
+  //  MaterialProperty<Real> & _velocity_coeff;
+  MaterialProperty<RealVectorValue> & _velocity;
 };
 
 #endif //VELOCITYMAG_H

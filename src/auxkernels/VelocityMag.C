@@ -24,9 +24,9 @@ InputParameters validParams<VelocityMag>()
   //params.addRequiredParam<MooseEnum>("component",component, "The desired component of potential gradient.");
 
   // Add a "coupling paramater" to get a variable from the input file.
-  params.addRequiredCoupledVar("potential", "The potential");
+  /*  params.addRequiredCoupledVar("potential", "The potential"); */
 
-  return params;
+      return params;
 }
 
 VelocityMag::VelocityMag(const std::string & name, InputParameters parameters) :
@@ -35,10 +35,12 @@ VelocityMag::VelocityMag(const std::string & name, InputParameters parameters) :
     //_component(getParam<MooseEnum>("component")),
 
     // Get the gradient of the variable
-    _grad_potential(coupledGradient("potential")),
+    //    _grad_potential(coupledGradient("potential")),
     
     // Get material properties
-    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff"))
+    //    _velocity_coeff(getMaterialProperty<Real>("velocity_coeff"))
+    _velocity(getMaterialProperty<RealVectorValue>("velocity"))
+
 {
 }
 
@@ -49,6 +51,6 @@ VelocityMag::computeValue()
   // Then pull out the "component" of it we are looking for (x, y or z)
   // Note that getting a particular component of a gradient is done using the
   // parenthesis operator
-  return _grad_potential[_qp].size();
+  return _velocity[_qp].size();
   // return _grad_potential[_qp](_component);
 }

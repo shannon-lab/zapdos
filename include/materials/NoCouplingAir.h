@@ -52,11 +52,11 @@ protected:
   const Real & _user_diffusivity;
   const Real & _delta;
   const bool & _consistent;
-  const bool & _coupling;
+  bool  _coupling;
 
   // Coupled Variables
 
-  //  VariableGradient & _grad_potential;
+  VariableGradient & _grad_potential;
 
   // Functions
   
