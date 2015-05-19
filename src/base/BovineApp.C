@@ -20,7 +20,13 @@
 #include "TimeDerivativeSUPG.h"
 #include "ConstConvectionSUPG.h"
 #include "ExampleDiffusion.h"
-
+#include "INSMass.h"
+#include "INSMomentum.h"
+#include "INSTemperature.h"
+#include "INSMomentumTimeDerivative.h"
+#include "INSTemperatureTimeDerivative.h"
+//#include "NSMassInviscidFlux.h"
+//#include "NSKernel.h"
 // AuxKernels
 
 #include "EFieldMag.h"
@@ -37,6 +43,7 @@
 #include "Air.h"
 #include "NoCouplingAir.h"
 #include "BlockAverageDiffusionMaterial.h"
+#include "WD.h"
 
 // Indicators
 #include "AnalyticalDiffIndicator.h"
@@ -101,6 +108,13 @@ BovineApp::registerObjects(Factory & factory)
   registerKernel(TimeDerivativeSUPG);
   registerKernel(ConstConvectionSUPG);
   registerKernel(ExampleDiffusion);
+  registerKernel(INSMass);
+  registerKernel(INSMomentum);
+  registerKernel(INSTemperature);
+  registerKernel(INSMomentumTimeDerivative);
+  registerKernel(INSTemperatureTimeDerivative);
+//  registerKernel(NSMassInviscidFlux);
+//  registerKernel(NSKernel);
   registerAux(EFieldMag);
   registerAux(VelocityMag);
   registerAux(ChargeDensity);
@@ -113,6 +127,7 @@ BovineApp::registerObjects(Factory & factory)
   registerMaterial(Air);
   registerMaterial(NoCouplingAir);
   registerMaterial(BlockAverageDiffusionMaterial);
+  registerMaterial(WD);
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
   registerBoundaryCondition(NoDiffusiveFlux);
