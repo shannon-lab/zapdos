@@ -12,10 +12,10 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "BovineConvection.h"
+#include "MatAdvection.h"
 
 template<>
-InputParameters validParams<BovineConvection>()
+InputParameters validParams<MatAdvection>()
 {
   InputParameters params = validParams<Kernel>();
 
@@ -23,7 +23,7 @@ InputParameters validParams<BovineConvection>()
   return params;
 }
 
-BovineConvection::BovineConvection(const std::string & name,
+MatAdvection::MatAdvection(const std::string & name,
                        InputParameters parameters) :
     Kernel(name, parameters),
     
@@ -42,18 +42,18 @@ BovineConvection::BovineConvection(const std::string & name,
 	  _grad_some_variable(coupledGradient("some_variable")) */
 {}
 
-Real BovineConvection::computeQpResidual()
+Real MatAdvection::computeQpResidual()
 {
    
   return -_u[_qp]*_velocity[_qp]*_grad_test[_i][_qp];
 }
 
-Real BovineConvection::computeQpJacobian()
+Real MatAdvection::computeQpJacobian()
 {
   return -_phi[_j][_qp]*_velocity[_qp]*_grad_test[_i][_qp];
 }
 
-/* Real BovineConvection::computeQpOffDiagJacobian(unsigned int jvar)
+/* Real MatAdvection::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _some_variable_id)
   {

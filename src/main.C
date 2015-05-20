@@ -1,11 +1,11 @@
-#include "BovineApp.h"
+#include "ZapdosApp.h"
 #include "MooseInit.h"
 #include "Moose.h"
 #include "MooseApp.h"
 #include "AppFactory.h"
 
 // Create a performance log
-PerfLog Moose::perf_log("Bovine");
+PerfLog Moose::perf_log("Zapdos");
 
 // Begin the main program.
 int main(int argc, char *argv[])
@@ -14,10 +14,10 @@ int main(int argc, char *argv[])
   MooseInit init(argc, argv);
 
   // Register this application's MooseApp and any it depends on
-  BovineApp::registerApps();
+  ZapdosApp::registerApps();
 
   // This creates dynamic memory that we're responsible for deleting
-  MooseApp * app = AppFactory::createApp("BovineApp", argc, argv);
+  MooseApp * app = AppFactory::createApp("ZapdosApp", argc, argv);
 
   // Execute the application
   app->run();

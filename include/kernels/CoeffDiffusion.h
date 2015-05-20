@@ -12,46 +12,34 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef BOVINECONVECTION_H
-#define BOVINECONVECTION_H
+#ifndef COEFFDIFFUSION_H
+#define COEFFDIFFUSION_H
 
-#include "Kernel.h"
+// Including the "Diffusion" Kernel here so we can extend it
+#include "Diffusion.h"
 
-class BovineConvection;
+class CoeffDiffusion;
 
 template<>
-InputParameters validParams<BovineConvection>();
+InputParameters validParams<CoeffDiffusion>();
 
-class BovineConvection : public Kernel
+class CoeffDiffusion : public Diffusion
 {
 public:
-
-  BovineConvection(const std::string & name,
-             InputParameters parameters);
+  CoeffDiffusion(const std::string & name, InputParameters parameters);
+  virtual ~CoeffDiffusion();
 
 protected:
 
   virtual Real computeQpResidual();
 
+
   virtual Real computeQpJacobian();
-  
-  //virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  
-  // Input file scalars
-  
-  // Material properties
-  
-  MaterialProperty<RealVectorValue> & _velocity;
-  //  MaterialProperty<Real> & _velocity_coeff;
-  //  MaterialProperty<Real> & _potential_mult;
-  
-  // Coupled variables
-  
-  /*  unsigned int _some_variable_id;
 
-private:
+  const std::string _string;
 
-VariableGradient & _grad_some_variable; */
+  MaterialProperty<Real> & _diffusivity;
 };
 
-#endif //BOVINECONVECTION_H
+
+#endif /* COEFFDIFFUSION_H */

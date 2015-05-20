@@ -12,32 +12,46 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef CONSTTIMESDIFFUSION_H
-#define CONSTTIMESDIFFUSION_H
+#ifndef MATADVECTION_H
+#define MATADVECTION_H
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Diffusion.h"
+#include "Kernel.h"
 
-class ConstTimesDiffusion;
+class MatAdvection;
 
 template<>
-InputParameters validParams<ConstTimesDiffusion>();
+InputParameters validParams<MatAdvection>();
 
-class ConstTimesDiffusion : public Diffusion
+class MatAdvection : public Kernel
 {
 public:
-  ConstTimesDiffusion(const std::string & name, InputParameters parameters);
-  virtual ~ConstTimesDiffusion();
+
+  MatAdvection(const std::string & name,
+             InputParameters parameters);
 
 protected:
 
   virtual Real computeQpResidual();
 
-
   virtual Real computeQpJacobian();
+  
+  //virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  
+  // Input file scalars
+  
+  // Material properties
+  
+  MaterialProperty<RealVectorValue> & _velocity;
+  //  MaterialProperty<Real> & _velocity_coeff;
+  //  MaterialProperty<Real> & _potential_mult;
+  
+  // Coupled variables
+  
+  /*  unsigned int _some_variable_id;
 
-  MaterialProperty<Real> & _diffusivity;
+private:
+
+VariableGradient & _grad_some_variable; */
 };
 
-
-#endif /* CONSTTIMESDIFFUSION_H */
+#endif //MATADVECTION_H

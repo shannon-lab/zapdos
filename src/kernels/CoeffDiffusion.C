@@ -12,11 +12,11 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "ConstTimesDiffusion.h"
+#include "CoeffDiffusion.h"
 
 
 template<>
-InputParameters validParams<ConstTimesDiffusion>()
+InputParameters validParams<CoeffDiffusion>()
 {
   // Start with the parameters from our parent
   InputParameters params = validParams<Diffusion>();
@@ -25,30 +25,37 @@ InputParameters validParams<ConstTimesDiffusion>()
   // permeability and viscosity from the Material
   // so we just return params...
 
+  params.addParam<std::string>("string","What diffusivity to use");
   return params;
 }
 
 
-ConstTimesDiffusion::ConstTimesDiffusion(const std::string & name, InputParameters parameters) :
+CoeffDiffusion::CoeffDiffusion(const std::string & name, InputParameters parameters) :
     Diffusion(name, parameters),
+    
+    // Input Parameters
 
-    _diffusivity(getMaterialProperty<Real>("diffusivity"))
+    _string(getParam<std::string>("string")),
+
+    // Material Properties
+
+    _diffusivity(getMaterialProperty<Real>(getParam<std::string>("string")))
 {
 }
 
-ConstTimesDiffusion::~ConstTimesDiffusion()
+CoeffDiffusion::~CoeffDiffusion()
 {
 }
 
 Real
-ConstTimesDiffusion::computeQpResidual()
+CoeffDiffusion::computeQpResidual()
 {
   // Use the MaterialProperty references we stored earlier
   return _diffusivity[_qp] * _grad_u[_qp] * _grad_test[_i][_qp];
 }
 
 Real
-ConstTimesDiffusion::computeQpJacobian()
+CoeffDiffusion::computeQpJacobian()
 {
   // Use the MaterialProperty references we stored earlier
   return _diffusivity[_qp] * _grad_phi[_j][_qp] * _grad_test[_i][_qp];

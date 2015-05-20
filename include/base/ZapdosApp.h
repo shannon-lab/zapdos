@@ -3,16 +3,16 @@
 
 #include "MooseApp.h"
 
-class BovineApp;
+class ZapdosApp;
 
 template<>
-InputParameters validParams<BovineApp>();
+InputParameters validParams<ZapdosApp>();
 
-class BovineApp : public MooseApp
+class ZapdosApp : public MooseApp
 {
 public:
-  BovineApp(const std::string & name, InputParameters parameters);
-  virtual ~BovineApp();
+  ZapdosApp(const std::string & name, InputParameters parameters);
+  virtual ~ZapdosApp();
 
   static void registerApps();
   static void registerObjects(Factory & factory);

@@ -1,17 +1,17 @@
-#include "BovineApp.h"
+#include "ZapdosApp.h"
 #include "Moose.h"
 #include "AppFactory.h"
 // #include "ModulesApp.h"
 
 // Kernels
-#include "ConstTimesDiffusion.h"
+#include "CoeffDiffusion.h"
 #include "FirstOrderReaction.h"
 #include "SecondOrderReaction.h"
 #include "SelfBinaryReaction.h"
 #include "SrcSelfBinaryReaction.h"
 #include "SrcSecondOrderReaction.h"
 #include "PoissonSource.h"
-#include "BovineConvection.h"
+#include "MatAdvection.h"
 #include "IonizationSource.h"
 #include "DivFreeConvection.h"
 #include "CoupledIonizationSource.h"
@@ -44,6 +44,7 @@
 #include "NoCouplingAir.h"
 #include "BlockAverageDiffusionMaterial.h"
 #include "WD.h"
+#include "Water.h"
 
 // Indicators
 #include "AnalyticalDiffIndicator.h"
@@ -55,7 +56,7 @@
 #include "NoDiffusiveFlux.h"
 
 template<>
-InputParameters validParams<BovineApp>()
+InputParameters validParams<ZapdosApp>()
 {
   InputParameters params = validParams<MooseApp>();
 
@@ -64,42 +65,42 @@ InputParameters validParams<BovineApp>()
   return params;
 }
 
-BovineApp::BovineApp(const std::string & name, InputParameters parameters) :
+ZapdosApp::ZapdosApp(const std::string & name, InputParameters parameters) :
     MooseApp(name, parameters)
 {
   srand(processor_id());
 
   Moose::registerObjects(_factory);
 //  ModulesApp::registerObjects(_factory);
-  BovineApp::registerObjects(_factory);
+  ZapdosApp::registerObjects(_factory);
 
   Moose::associateSyntax(_syntax, _action_factory);
 //  ModulesApp::associateSyntax(_syntax, _action_factory);
-  BovineApp::associateSyntax(_syntax, _action_factory);
+  ZapdosApp::associateSyntax(_syntax, _action_factory);
 }
 
-BovineApp::~BovineApp()
+ZapdosApp::~ZapdosApp()
 {
 }
 
-extern "C" void BovineApp__registerApps() { BovineApp::registerApps(); }
+extern "C" void ZapdosApp__registerApps() { ZapdosApp::registerApps(); }
 void
-BovineApp::registerApps()
+ZapdosApp::registerApps()
 {
-  registerApp(BovineApp);
+  registerApp(ZapdosApp);
 }
 
 void
-BovineApp::registerObjects(Factory & factory)
+ZapdosApp::registerObjects(Factory & factory)
 {
-  registerKernel(ConstTimesDiffusion);
+  registerKernel(CoeffDiffusion);
   registerKernel(FirstOrderReaction);
   registerKernel(SecondOrderReaction);
   registerKernel(SelfBinaryReaction);
   registerKernel(SrcSelfBinaryReaction);
   registerKernel(SrcSecondOrderReaction);
   registerKernel(PoissonSource);
-  registerKernel(BovineConvection);
+  registerKernel(MatAdvection);
   registerKernel(IonizationSource);
   registerKernel(DivFreeConvection);
   registerKernel(CoupledIonizationSource);
@@ -128,12 +129,13 @@ BovineApp::registerObjects(Factory & factory)
   registerMaterial(NoCouplingAir);
   registerMaterial(BlockAverageDiffusionMaterial);
   registerMaterial(WD);
+  registerMaterial(Water);
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
   registerBoundaryCondition(NoDiffusiveFlux);
 }
 
 void
-BovineApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
+ZapdosApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
 {
 }

@@ -1,7 +1,7 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 1024
+  nx = 10240
 #  ny = 50
   xmax = 1024
 #  ymax = 16e-3 # Test chamber radius
@@ -97,7 +97,7 @@
     velocity_function = velocity_function # Required input even if using a coupling variable
     potential = potential # Optional input. If used, then it overrides the function input
 #    outputs = exodus
-    delta = 1.0
+#    delta = 1.0
   [../]
 []
 
@@ -145,7 +145,7 @@
 []
 
 [Kernels]
-  active = 'electrons_time_deriv electron_convection electron_diffusion poisson_diffusion poisson_src electron_src ions_src ions_time_deriv stabilization_convection'
+  active = 'electrons_time_deriv electron_convection electron_diffusion poisson_diffusion poisson_src electron_src ions_src ions_time_deriv'
   [./stabilization_time_deriv]
     type = TimeDerivativeSUPG
     variable = electron_density
@@ -173,7 +173,6 @@
   [../]
   [./electron_convection]
     type = BovineConvection
-#    type = DivFreeConvection
     variable = electron_density
     some_variable = potential
   [../]
@@ -200,7 +199,7 @@
 []
 
 [BCs] 
-  active = 'anode cathode electrons_anode electrons_cathode'
+  active = 'anode cathode'
   [./anode]
     type = DirichletBC # Simple u=value BC
     variable = potential
@@ -238,8 +237,7 @@
 []
 
 [Problem]   
-  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE   
-  # coord_type = XYZ # Cartesian   
+  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
 []   
 
 #[Preconditioning]
@@ -254,7 +252,7 @@
 
 [Executioner]
   type = Transient
-  dt = 1.0
+  dt = 0.1
   solve_type = PJFNK
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
@@ -266,7 +264,7 @@
 #  nl_abs_tol = 1e-3
   l_max_its = 9
   nl_max_its = 3
-#  scheme = crank-nicolson
+  scheme = crank-nicolson
 #  [./TimeStepper]
 #    type = IterationAdaptiveDT
 #    linear_iteration_ratio = 5
