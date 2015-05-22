@@ -12,34 +12,39 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
+#ifndef EX_H
+#define EX_H
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Diffusion.h"
+#include "AuxKernel.h"
 
-class CoeffDiffusion;
+//Forward Declarations
+class Ex;
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
+InputParameters validParams<Ex>();
 
-class CoeffDiffusion : public Diffusion
+/**
+ * Constant auxiliary value
+ */
+class Ex : public AuxKernel
 {
 public:
-  CoeffDiffusion(const std::string & name, InputParameters parameters);
-  virtual ~CoeffDiffusion();
+  Ex(const std::string & name, InputParameters parameters);
+
+  virtual ~Ex() {}
 
 protected:
+  /**
+   * AuxKernels MUST override computeValue.  computeValue() is called on
+   * every quadrature point.  For Nodal Auxiliary variables those quadrature
+   * points coincide with the nodes.
+   */
+  virtual Real computeValue();
+  
+  //int _component;
 
-  virtual Real computeQpResidual();
-
-
-  virtual Real computeQpJacobian();
-
-  //  const std::string _string;
-
-  MaterialProperty<Real> & _diffusivity;
+  /// The gradient of a coupled variable
+  VariableGradient & _grad_potential;
 };
 
-
-#endif /* COEFFDIFFUSION_H */
+#endif //EX_H

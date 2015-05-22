@@ -12,34 +12,49 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
+#ifndef EFIELDBC_H
+#define EFIELDBC_H
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Diffusion.h"
+#include "IntegratedBC.h"
 
-class CoeffDiffusion;
+
+class EFieldBC;
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
+InputParameters validParams<EFieldBC>();
 
-class CoeffDiffusion : public Diffusion
+/**
+ * Implements a simple constant Neumann BC where grad(u)=value on the boundary.
+ * Uses the term produced from integrating the diffusion operator by parts.
+ */
+class EFieldBC : public IntegratedBC
 {
 public:
-  CoeffDiffusion(const std::string & name, InputParameters parameters);
-  virtual ~CoeffDiffusion();
+  /**
+   * Factory constructor, takes parameters so that all derived classes can be built using the same
+   * constructor.
+   */
+  EFieldBC(const std::string & name, InputParameters parameters);
+
 
 protected:
-
   virtual Real computeQpResidual();
 
+  // Input Parameters
 
-  virtual Real computeQpJacobian();
+  const Real & _x_boundary_e_field;
+  const Real & _y_boundary_e_field;
+  const Real & _z_boundary_e_field;
 
-  //  const std::string _string;
+  // Material Properties
 
-  MaterialProperty<Real> & _diffusivity;
+  MaterialProperty<Real> & _eps_r;
+  MaterialProperty<Real> & _potential_mult;
+
+  // Members unique to object
+
+  RealVectorValue _e_field;
 };
 
 
-#endif /* COEFFDIFFUSION_H */
+#endif //EFIELDBC_H

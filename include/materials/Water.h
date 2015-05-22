@@ -16,8 +16,15 @@ class Water : public Material
  protected:
   virtual void computeQpProperties();
 
+  // Input Parameters
+
+  const Real & _user_relative_permittivity;
+  const Real & _user_potential_mult;
+  const Real & _user_electron_mult;
+  
   // Material Properties
 
+  MaterialProperty<Real> & _eps_r;
   MaterialProperty<Real> & _e;
   MaterialProperty<Real> & _k;
   MaterialProperty<Real> & _T;
@@ -108,7 +115,11 @@ class Water : public Material
   MaterialProperty<Real> & _muHO2;
   MaterialProperty<Real> & _muO3;
   MaterialProperty<Real> & _muO3m;
-		      
+  MaterialProperty<Real> & _Dunity;
+  MaterialProperty<Real> & _muunity;
+  MaterialProperty<Real> & _munegunity;
+  MaterialProperty<Real> & _electron_mult;
+  MaterialProperty<Real> & _potential_mult;
 };	      
 		      
 #endif //WATER_H

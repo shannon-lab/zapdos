@@ -12,34 +12,40 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
+#ifndef ADVECTIVEFLUX_H
+#define ADVECTIVEFLUX_H
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Diffusion.h"
+#include "AuxKernel.h"
 
-class CoeffDiffusion;
+class AdvectiveFlux;
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
+InputParameters validParams<AdvectiveFlux>();
 
-class CoeffDiffusion : public Diffusion
+class AdvectiveFlux : public AuxKernel
 {
-public:
-  CoeffDiffusion(const std::string & name, InputParameters parameters);
-  virtual ~CoeffDiffusion();
+ public:
 
-protected:
+  AdvectiveFlux(const std::string & name,
+		   InputParameters parameters);
 
-  virtual Real computeQpResidual();
+ protected:
 
+  virtual Real computeValue();
+  
+  // Input file scalars
+  
+  // Material properties
 
-  virtual Real computeQpJacobian();
+  MaterialProperty<Real> & _mobility;
+  MaterialProperty<Real> & _electron_mult;
+  MaterialProperty<Real> & _potential_mult;
+  
+  // Coupled variables
 
-  //  const std::string _string;
-
-  MaterialProperty<Real> & _diffusivity;
+ private:
+  VariableValue & _electron_density;
+  VariableGradient & _grad_potential;
 };
 
-
-#endif /* COEFFDIFFUSION_H */
+#endif //ADVECTIVEFLUX_H

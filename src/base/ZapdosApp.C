@@ -25,8 +25,10 @@
 #include "INSTemperature.h"
 #include "INSMomentumTimeDerivative.h"
 #include "INSTemperatureTimeDerivative.h"
+#include "EFieldAdvection.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
+
 // AuxKernels
 
 #include "EFieldMag.h"
@@ -38,6 +40,9 @@
 #include "Sigma.h"
 #include "VelocityH.h"
 #include "Velocity.h"
+#include "Ex.h"
+#include "AdvectiveFlux.h"
+#include "DiffusiveFlux.h"
 
 // Materials
 #include "Air.h"
@@ -54,6 +59,9 @@
 
 // Boundary Conditions
 #include "NoDiffusiveFlux.h"
+#include "EFieldBC.h"
+#include "SpeciesNetFluxBC.h"
+#include "SimpleNetFluxBC.h"
 
 template<>
 InputParameters validParams<ZapdosApp>()
@@ -114,6 +122,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(INSTemperature);
   registerKernel(INSMomentumTimeDerivative);
   registerKernel(INSTemperatureTimeDerivative);
+  registerKernel(EFieldAdvection);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);
@@ -125,6 +134,9 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(Sigma);
   registerAux(VelocityH);
   registerAux(Velocity);
+  registerAux(Ex);
+  registerAux(AdvectiveFlux);
+  registerAux(DiffusiveFlux);
   registerMaterial(Air);
   registerMaterial(NoCouplingAir);
   registerMaterial(BlockAverageDiffusionMaterial);
@@ -133,6 +145,9 @@ ZapdosApp::registerObjects(Factory & factory)
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
   registerBoundaryCondition(NoDiffusiveFlux);
+  registerBoundaryCondition(EFieldBC);
+  registerBoundaryCondition(SpeciesNetFluxBC);
+  registerBoundaryCondition(SimpleNetFluxBC);
 }
 
 void

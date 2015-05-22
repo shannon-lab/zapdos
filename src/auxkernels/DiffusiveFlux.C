@@ -12,42 +12,34 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COUPLEDADVECTION_H
-#define COUPLEDADVECTION_H
-
-#include "Kernel.h"
-
-class CoupledAdvection;
+#include "DiffusiveFlux.h"
 
 template<>
-InputParameters validParams<CoupledAdvection>();
-
-class CoupledAdvection : public Kernel
+InputParameters validParams<DiffusiveFlux>()
 {
- public:
+  InputParameters params = validParams<AuxKernel>();
+  params.addRequiredParam<std::string>("diffusivity","What diffusivity to use");
+  params.addRequiredCoupledVar("electron_density", "The electron density.");
+  return params;
+}
 
-  CoupledAdvection(const std::string & name,
-		   InputParameters parameters);
+DiffusiveFlux::DiffusiveFlux(const std::string & name,
+                       InputParameters parameters) :
+    AuxKernel(name, parameters),
+    
+    // Input Parameters
+    
+    // Material properties
 
- protected:
+    _diffusivity(getMaterialProperty<Real>(getParam<std::string>("diffusivity"))),
+    _electron_mult(getMaterialProperty<Real>("electron_mult")),
+    
+    // Coupled variables
 
-  virtual Real computeQpResidual();
+    _grad_electron_density(coupledGradient("electron_density"))
+{}
 
-  virtual Real computeQpJacobian();
-  
-  //virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  
-  // Input file scalars
-  
-  // Material properties
-  
-  // Coupled variables
-  
-  unsigned int _some_variable_id;
-
- private:
-
-  VariableGradient & _grad_some_variable; 
-};
-
-#endif //COUPLEDADVECTION_H
+Real DiffusiveFlux::computeValue()
+{  
+  return -_diffusivity[_qp]*_grad_electron_density[_qp](0)*_electron_mult[_qp];
+}

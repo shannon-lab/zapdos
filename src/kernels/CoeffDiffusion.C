@@ -25,7 +25,7 @@ InputParameters validParams<CoeffDiffusion>()
   // permeability and viscosity from the Material
   // so we just return params...
 
-  params.addParam<std::string>("string","What diffusivity to use");
+  params.addRequiredParam<std::string>("diffusivity","What diffusivity to use");
   return params;
 }
 
@@ -35,11 +35,11 @@ CoeffDiffusion::CoeffDiffusion(const std::string & name, InputParameters paramet
     
     // Input Parameters
 
-    _string(getParam<std::string>("string")),
+    //    _string(getParam<std::string>("string")),
 
     // Material Properties
 
-    _diffusivity(getMaterialProperty<Real>(getParam<std::string>("string")))
+    _diffusivity(getMaterialProperty<Real>(getParam<std::string>("diffusivity")))
 {
 }
 

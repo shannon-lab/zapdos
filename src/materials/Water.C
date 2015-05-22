@@ -5,16 +5,24 @@ InputParameters validParams<Water>()
 {
   InputParameters params = validParams<Material>();
 
-  // params.addParam<std::string>("diffusivity_string","The string that determines which diffusivity to use");
-
+  params.addParam<Real>("user_relative_permittivity",78.5,"The relative permittivity of the medium.");
+  params.addRequiredParam<Real>("user_potential_mult","Scaling for the potential.");
+  params.addRequiredParam<Real>("user_electron_mult","Scaling for the electrons.");
   return params;
 }
 
 Water::Water(const std::string & name, InputParameters parameters) :
   Material(name,parameters),
 
-  // Declare material properties
+  // Retrieve input parameters
 
+  _user_relative_permittivity(getParam<Real>("user_relative_permittivity")),
+  _user_potential_mult(getParam<Real>("user_potential_mult")),
+  _user_electron_mult(getParam<Real>("user_electron_mult")),
+
+  // Declare material properties
+  
+  _eps_r(declareProperty<Real>("eps_r")),
   _e(declareProperty<Real>("e")),
   _k(declareProperty<Real>("k")),           
   _T(declareProperty<Real>("T")),            
@@ -104,12 +112,20 @@ Water::Water(const std::string & name, InputParameters parameters) :
   _muO(declareProperty<Real>("muO")),
   _muHO2(declareProperty<Real>("muHO2")),
   _muO3(declareProperty<Real>("muO3")),
-  _muO3m(declareProperty<Real>("muO3m"))
+  _muO3m(declareProperty<Real>("muO3m")),
+  _Dunity(declareProperty<Real>("Dunity")),
+  _muunity(declareProperty<Real>("muunity")),
+  _munegunity(declareProperty<Real>("munegunity")),
+  _electron_mult(declareProperty<Real>("electron_mult")),
+  _potential_mult(declareProperty<Real>("potential_mult"))
 {}
 
 void
 Water::computeQpProperties()
 {
+  _electron_mult[_qp] = _user_electron_mult;
+  _potential_mult[_qp] = _user_potential_mult;
+  _eps_r[_qp]   = _user_relative_permittivity;
   _e[_qp]	= 1.6e-19;  // coulombic charge
   _k[_qp]	= 1.38e-23; // Boltzmanns constant
   _T[_qp]	= 300;      // Simulation temperature
@@ -200,4 +216,7 @@ Water::computeQpProperties()
   _muHO2[_qp]	= _zHO2[_qp]*_e[_qp]*_DHO2[_qp]/_k[_qp]/_T[_qp];	// HO2 radical
   _muO3[_qp]	= _zO3[_qp]*_e[_qp]*_DO3[_qp]/_k[_qp]/_T[_qp];	// O3 molecule
   _muO3m[_qp]	= _zO3m[_qp]*_e[_qp]*_DO3m[_qp]/_k[_qp]/_T[_qp];	// O3- ion
+  _Dunity[_qp] = 1.0;
+  _muunity[_qp] = 1.0;
+  _munegunity[_qp] = -1.0;
 }

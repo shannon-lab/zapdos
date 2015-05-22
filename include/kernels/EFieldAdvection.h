@@ -12,34 +12,44 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
+#ifndef EFIELDADVECTION_H
+#define EFIELDADVECTION_H
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Diffusion.h"
+#include "Kernel.h"
 
-class CoeffDiffusion;
+class EFieldAdvection;
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
+InputParameters validParams<EFieldAdvection>();
 
-class CoeffDiffusion : public Diffusion
+class EFieldAdvection : public Kernel
 {
-public:
-  CoeffDiffusion(const std::string & name, InputParameters parameters);
-  virtual ~CoeffDiffusion();
+ public:
 
-protected:
+  EFieldAdvection(const std::string & name,
+		   InputParameters parameters);
+
+ protected:
 
   virtual Real computeQpResidual();
 
-
   virtual Real computeQpJacobian();
+  
+  //virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  
+  // Input file scalars
+  
+  // Material properties
 
-  //  const std::string _string;
+  MaterialProperty<Real> & _mobility;
+  MaterialProperty<Real> & _potential_mult;
+  // Coupled variables
+  
+  unsigned int _potential_id;
 
-  MaterialProperty<Real> & _diffusivity;
+ private:
+
+  VariableGradient & _grad_potential;
 };
 
-
-#endif /* COEFFDIFFUSION_H */
+#endif //EFIELDADVECTION_H

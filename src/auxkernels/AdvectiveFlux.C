@@ -12,49 +12,37 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "CoupledAdvection.h"
+#include "AdvectiveFlux.h"
 
 template<>
-InputParameters validParams<CoupledAdvection>()
+InputParameters validParams<AdvectiveFlux>()
 {
-  InputParameters params = validParams<Kernel>();
-
-  params.addRequiredCoupledVar("some_variable", "The gradient of this variable will be used as the velocity vector.");
+  InputParameters params = validParams<AuxKernel>();
+  params.addRequiredParam<std::string>("mobility","What mobility to use");
+  params.addRequiredCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
+  params.addRequiredCoupledVar("electron_density", "The electron density.");
   return params;
 }
 
-CoupledAdvection::CoupledAdvection(const std::string & name,
+AdvectiveFlux::AdvectiveFlux(const std::string & name,
                        InputParameters parameters) :
-    Kernel(name, parameters),
+    AuxKernel(name, parameters),
     
-    // Input file scalars
+    // Input Parameters
     
     // Material properties
+
+    _mobility(getMaterialProperty<Real>(getParam<std::string>("mobility"))),
+    _electron_mult(getMaterialProperty<Real>("electron_mult")),
+    _potential_mult(getMaterialProperty<Real>("potential_mult")),
     
     // Coupled variables
     
-    _some_variable_id(coupled("some_variable")),
-    _grad_some_variable(coupledGradient("some_variable"))
+    _electron_density(coupledValue("electron_density")),
+    _grad_potential(coupledGradient("potential"))
 {}
 
-Real CoupledAdvection::computeQpResidual()
-{
-   
-  return -_u[_qp]*_grad_some_variable[_qp]*_grad_test[_i][_qp];
+Real AdvectiveFlux::computeValue()
+{  
+  return -_mobility[_qp]*_electron_density[_qp]*_electron_mult[_qp]*_grad_potential[_qp](0)*_potential_mult[_qp];
 }
-
-Real CoupledAdvection::computeQpJacobian()
-{
-  return -_phi[_j][_qp]*_grad_some_variable[_qp]*_grad_test[_i][_qp];
-}
-
-/* Real CoupledAdvection::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  if (jvar == _some_variable_id)
-  {
-    return -_u[_qp]*_grad_some_variable_coeff[_qp]*_grad_phi[_j][_qp]*_potential_mult[_qp]*_grad_test[_i][_qp];
-  }
-  
-  return 0.0; 
-} */
-
