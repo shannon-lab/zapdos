@@ -8,7 +8,23 @@ InputParameters validParams<Water>()
   params.addParam<Real>("user_relative_permittivity",78.5,"The relative permittivity of the medium.");
   params.addRequiredParam<Real>("user_potential_mult","Scaling for the potential.");
   params.addRequiredParam<Real>("user_electron_mult","Scaling for the electrons.");
-  return params;
+  params.addCoupledVar("em", "electrons");
+  params.addCoupledVar("H", "hydrogen atoms");
+  params.addCoupledVar("OHm", "hydroxide ions");
+  params.addCoupledVar("H2Op", "positive water ions");
+  params.addCoupledVar("OH", "hydroxyl molecules");
+  params.addCoupledVar("H2", "hydrogen molecules");
+  params.addCoupledVar("Om", "atomic oxygen anions");
+  params.addCoupledVar("H3Op", "positive hydronium cations");
+  params.addCoupledVar("H2O2", "hydrogen peroxide molecules");
+  params.addCoupledVar("HO2m", "HO2 anions");
+  params.addCoupledVar("O2", "oxygen molecules");
+  params.addCoupledVar("O2m", "molecular oxygen anions");
+  params.addCoupledVar("O", "oxygen atoms");
+  params.addCoupledVar("HO2", "HO2 molecules");
+  params.addCoupledVar("O3", "ozone molecules");
+  params.addCoupledVar("O3m", "ozone anions"));
+return params;
 }
 
 Water::Water(const std::string & name, InputParameters parameters) :
@@ -30,94 +46,113 @@ Water::Water(const std::string & name, InputParameters parameters) :
   _k2(declareProperty<Real>("k2")),
   _k3(declareProperty<Real>("k3")),
   _k4(declareProperty<Real>("k4")),
-  _k5(declareProperty<Real>("k5")),
-  _k6(declareProperty<Real>("k6")),
-  _k7(declareProperty<Real>("k7")),
-  _k8(declareProperty<Real>("k8")),
-  _k9(declareProperty<Real>("k9")),
-  _k10(declareProperty<Real>("k10")),
-  _k11(declareProperty<Real>("k11")),
-  _k12(declareProperty<Real>("k12")),
-  _k13(declareProperty<Real>("k13")),
-  _k14(declareProperty<Real>("k14")),
-  _k15(declareProperty<Real>("k15")),
-  _k16(declareProperty<Real>("k16")),
-  _k17(declareProperty<Real>("k17")),
-  _k18(declareProperty<Real>("k18")),
-  _k19(declareProperty<Real>("k19")),
-  _k20(declareProperty<Real>("k20")),
-  _k21(declareProperty<Real>("k21")),
-  _k22(declareProperty<Real>("k22")),
-  _k23(declareProperty<Real>("k23")),
-  _k24(declareProperty<Real>("k24")),
-  _k25(declareProperty<Real>("k25")),
-  _k26(declareProperty<Real>("k26")),
-  _k27(declareProperty<Real>("k27")),
-  _k28(declareProperty<Real>("k28")),
-  _k29(declareProperty<Real>("k29")),
-  _k30(declareProperty<Real>("k30")),
-  _k31(declareProperty<Real>("k31")),
-  _k32(declareProperty<Real>("k32")),
-  _k33(declareProperty<Real>("k33")),
-  _k34(declareProperty<Real>("k34")),
-  _k35(declareProperty<Real>("k35")),
-  _k36(declareProperty<Real>("k36")),
-  _k37(declareProperty<Real>("k37")),
-  _k38(declareProperty<Real>("k38")),
-  _k39(declareProperty<Real>("k39")),
-  _Dem(declareProperty<Real>("Dem")),
-  _DH(declareProperty<Real>("DH")),
-  _DOHm(declareProperty<Real>("DOHm")),
-  _DH2Op(declareProperty<Real>("DH2Op")),
-  _DOH(declareProperty<Real>("DOH")),
-  _DH2(declareProperty<Real>("DH2")),
-  _DOm(declareProperty<Real>("DOm")),
-  _DH3Op(declareProperty<Real>("DH3Op")),
-  _DH2O2(declareProperty<Real>("DH2O2")),
-  _DHO2m(declareProperty<Real>("DHO2m")),
-  _DO2(declareProperty<Real>("DO2")),
-  _DO2m(declareProperty<Real>("DO2m")),
-  _DO(declareProperty<Real>("DO")),
-  _DHO2(declareProperty<Real>("DHO2")),
-  _DO3(declareProperty<Real>("DO3")),
-  _DO3m(declareProperty<Real>("DO3m")),
-  _zem(declareProperty<Real>("zem")),
-  _zH(declareProperty<Real>("zH")),
-  _zOHm(declareProperty<Real>("zOHm")),
-  _zH2Op(declareProperty<Real>("zH2Op")),
-  _zOH(declareProperty<Real>("zOH")),
-  _zH2(declareProperty<Real>("zH2")),
-  _zOm(declareProperty<Real>("zOm")),
-  _zH3Op(declareProperty<Real>("zH3Op")),
-  _zH2O2(declareProperty<Real>("zH2O2")),
-  _zHO2m(declareProperty<Real>("zHO2m")),
-  _zO2(declareProperty<Real>("zO2")),
-  _zO2m(declareProperty<Real>("zO2m")),
-  _zO(declareProperty<Real>("zO")),
-  _zHO2(declareProperty<Real>("zHO2")),
-  _zO3(declareProperty<Real>("zO3")),
-  _zO3m(declareProperty<Real>("zO3m")),
-  _muem(declareProperty<Real>("muem")),
-  _muH(declareProperty<Real>("muH")),
-  _muOHm(declareProperty<Real>("muOHm")),
-  _muH2Op(declareProperty<Real>("muH2Op")),
-  _muOH(declareProperty<Real>("muOH")),
-  _muH2(declareProperty<Real>("muH2")),
-  _muOm(declareProperty<Real>("muOm")),
-  _muH3Op(declareProperty<Real>("muH3Op")),
-  _muH2O2(declareProperty<Real>("muH2O2")),
-  _muHO2m(declareProperty<Real>("muHO2m")),
-  _muO2(declareProperty<Real>("muO2")),
-  _muO2m(declareProperty<Real>("muO2m")),
-  _muO(declareProperty<Real>("muO")),
-  _muHO2(declareProperty<Real>("muHO2")),
-  _muO3(declareProperty<Real>("muO3")),
-  _muO3m(declareProperty<Real>("muO3m")),
-  _Dunity(declareProperty<Real>("Dunity")),
-  _muunity(declareProperty<Real>("muunity")),
-  _munegunity(declareProperty<Real>("munegunity")),
-  _electron_mult(declareProperty<Real>("electron_mult")),
-  _potential_mult(declareProperty<Real>("potential_mult"))
+ _k5(declareProperty<Real>("k5")),
+ _k6(declareProperty<Real>("k6")),
+ _k7(declareProperty<Real>("k7")),
+ _k8(declareProperty<Real>("k8")),
+ _k9(declareProperty<Real>("k9")),
+ _k10(declareProperty<Real>("k10")),
+ _k11(declareProperty<Real>("k11")),
+ _k12(declareProperty<Real>("k12")),
+ _k13(declareProperty<Real>("k13")),
+ _k14(declareProperty<Real>("k14")),
+ _k15(declareProperty<Real>("k15")),
+ _k16(declareProperty<Real>("k16")),
+ _k17(declareProperty<Real>("k17")),
+ _k18(declareProperty<Real>("k18")),
+ _k19(declareProperty<Real>("k19")),
+ _k20(declareProperty<Real>("k20")),
+ _k21(declareProperty<Real>("k21")),
+ _k22(declareProperty<Real>("k22")),
+ _k23(declareProperty<Real>("k23")),
+ _k24(declareProperty<Real>("k24")),
+ _k25(declareProperty<Real>("k25")),
+ _k26(declareProperty<Real>("k26")),
+ _k27(declareProperty<Real>("k27")),
+ _k28(declareProperty<Real>("k28")),
+ _k29(declareProperty<Real>("k29")),
+ _k30(declareProperty<Real>("k30")),
+ _k31(declareProperty<Real>("k31")),
+ _k32(declareProperty<Real>("k32")),
+ _k33(declareProperty<Real>("k33")),
+ _k34(declareProperty<Real>("k34")),
+ _k35(declareProperty<Real>("k35")),
+ _k36(declareProperty<Real>("k36")),
+ _k37(declareProperty<Real>("k37")),
+ _k38(declareProperty<Real>("k38")),
+ _k39(declareProperty<Real>("k39")),
+ _Dem(declareProperty<Real>("Dem")),
+ _DH(declareProperty<Real>("DH")),
+ _DOHm(declareProperty<Real>("DOHm")),
+ _DH2Op(declareProperty<Real>("DH2Op")),
+ _DOH(declareProperty<Real>("DOH")),
+ _DH2(declareProperty<Real>("DH2")),
+ _DOm(declareProperty<Real>("DOm")),
+ _DH3Op(declareProperty<Real>("DH3Op")),
+ _DH2O2(declareProperty<Real>("DH2O2")),
+ _DHO2m(declareProperty<Real>("DHO2m")),
+ _DO2(declareProperty<Real>("DO2")),
+ _DO2m(declareProperty<Real>("DO2m")),
+ _DO(declareProperty<Real>("DO")),
+ _DHO2(declareProperty<Real>("DHO2")),
+ _DO3(declareProperty<Real>("DO3")),
+ _DO3m(declareProperty<Real>("DO3m")),
+ _zem(declareProperty<Real>("zem")),
+ _zH(declareProperty<Real>("zH")),
+ _zOHm(declareProperty<Real>("zOHm")),
+ _zH2Op(declareProperty<Real>("zH2Op")),
+ _zOH(declareProperty<Real>("zOH")),
+ _zH2(declareProperty<Real>("zH2")),
+ _zOm(declareProperty<Real>("zOm")),
+ _zH3Op(declareProperty<Real>("zH3Op")),
+ _zH2O2(declareProperty<Real>("zH2O2")),
+ _zHO2m(declareProperty<Real>("zHO2m")),
+ _zO2(declareProperty<Real>("zO2")),
+ _zO2m(declareProperty<Real>("zO2m")),
+ _zO(declareProperty<Real>("zO")),
+ _zHO2(declareProperty<Real>("zHO2")),
+ _zO3(declareProperty<Real>("zO3")),
+ _zO3m(declareProperty<Real>("zO3m")),
+ _muem(declareProperty<Real>("muem")),
+ _muH(declareProperty<Real>("muH")),
+ _muOHm(declareProperty<Real>("muOHm")),
+ _muH2Op(declareProperty<Real>("muH2Op")),
+ _muOH(declareProperty<Real>("muOH")),
+ _muH2(declareProperty<Real>("muH2")),
+ _muOm(declareProperty<Real>("muOm")),
+ _muH3Op(declareProperty<Real>("muH3Op")),
+ _muH2O2(declareProperty<Real>("muH2O2")),
+ _muHO2m(declareProperty<Real>("muHO2m")),
+ _muO2(declareProperty<Real>("muO2")),
+ _muO2m(declareProperty<Real>("muO2m")),
+ _muO(declareProperty<Real>("muO")),
+ _muHO2(declareProperty<Real>("muHO2")),
+ _muO3(declareProperty<Real>("muO3")),
+ _muO3m(declareProperty<Real>("muO3m")),
+ _Dunity(declareProperty<Real>("Dunity")),
+ _muunity(declareProperty<Real>("muunity")),
+ _munegunity(declareProperty<Real>("munegunity")),
+ _electron_mult(declareProperty<Real>("electron_mult")),
+ _potential_mult(declareProperty<Real>("potential_mult")),
+
+// Coupled Variables
+
+_em(isCoupled("em") ? coupledValue("em
+_H(isCoupled("H") ? coupledValue("
+_OHm(isCoupled("OHm") ? coupledValue("
+_H2Op(isCoupled("H2Op") ? coupledValue("
+_OH(isCoupled("OH") ? coupledValue("
+_H2(isCoupled("H2") ? coupledValue("
+_Om(isCoupled("Om") ? coupledValue("
+_H3Op(isCoupled("H3Op") ? coupledValue("
+_H2O2(isCoupled("H2O2") ? coupledValue("
+_HO2m(isCoupled("HO2m") ? coupledValue("
+_O2(isCoupled("O2") ? coupledValue("
+_O2m(isCoupled("O2m") ? coupledValue("
+_O(isCoupled("O") ? coupledValue("
+_HO2(isCoupled("HO2") ? coupledValue("
+_O3(isCoupled("O3") ? coupledValue("
+_O3m(isCoupled("O3m") ? coupledValue(" 
 {}
 
 void

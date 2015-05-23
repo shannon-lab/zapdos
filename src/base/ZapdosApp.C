@@ -63,6 +63,12 @@
 #include "SpeciesNetFluxBC.h"
 #include "SimpleNetFluxBC.h"
 
+// Actions
+
+#include "AddLotsOfDiffusion.h"
+#include "AddLotsOfCoeffDiffusion.h"
+#include "AddLotsOfVariables.h"
+
 template<>
 InputParameters validParams<ZapdosApp>()
 {
@@ -153,4 +159,17 @@ ZapdosApp::registerObjects(Factory & factory)
 void
 ZapdosApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
 {
+  // add actions
+  registerAction(AddLotsOfDiffusion, "add_variable");
+  registerAction(AddLotsOfDiffusion, "add_kernel");
+  registerAction(AddLotsOfDiffusion, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfDiffusion", "Testing/LotsOfDiffusion/*");
+  registerAction(AddLotsOfCoeffDiffusion, "add_variable");
+  registerAction(AddLotsOfCoeffDiffusion, "add_kernel");
+  registerAction(AddLotsOfCoeffDiffusion, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfCoeffDiffusion", "LotsOfCoeffDiffusion");
+  registerAction(AddLotsOfVariables, "add_variable");
+  registerAction(AddLotsOfVariables, "add_kernel");
+  registerAction(AddLotsOfVariables, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfVariables", "LotsOfVariables");
 }
