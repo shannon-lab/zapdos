@@ -137,22 +137,23 @@ Water::Water(const std::string & name, InputParameters parameters) :
 
 // Coupled Variables
 
-_em(isCoupled("em") ? coupledValue("em
-_H(isCoupled("H") ? coupledValue("
-_OHm(isCoupled("OHm") ? coupledValue("
-_H2Op(isCoupled("H2Op") ? coupledValue("
-_OH(isCoupled("OH") ? coupledValue("
-_H2(isCoupled("H2") ? coupledValue("
-_Om(isCoupled("Om") ? coupledValue("
-_H3Op(isCoupled("H3Op") ? coupledValue("
-_H2O2(isCoupled("H2O2") ? coupledValue("
-_HO2m(isCoupled("HO2m") ? coupledValue("
-_O2(isCoupled("O2") ? coupledValue("
-_O2m(isCoupled("O2m") ? coupledValue("
-_O(isCoupled("O") ? coupledValue("
-_HO2(isCoupled("HO2") ? coupledValue("
-_O3(isCoupled("O3") ? coupledValue("
-_O3m(isCoupled("O3m") ? coupledValue(" 
+_em	(isCoupled("em") ? coupledValue("em") : _zero),
+_H	(isCoupled("H") ? coupledValue("H") : _zero),
+_OHm	(isCoupled("OHm") ? coupledValue("OHm") : _zero),
+_H2Op	(isCoupled("H2Op") ? coupledValue("H2Op") : _zero),
+_OH	(isCoupled("OH") ? coupledValue("OH") : _zero),
+_H2	(isCoupled("H2") ? coupledValue("H2") : _zero),
+_Om	(isCoupled("Om") ? coupledValue("Om") : _zero),
+_H3Op	(isCoupled("H3Op") ? coupledValue("H3Op") : _zero),
+_H2O2	(isCoupled("H2O2") ? coupledValue("H2O2") : _zero),
+_HO2m	(isCoupled("HO2m") ? coupledValue("HO2m") : _zero),
+_O2	(isCoupled("O2") ? coupledValue("O2") : _zero),
+_O2m	(isCoupled("O2m") ? coupledValue("O2m") : _zero),
+_O	(isCoupled("O") ? coupledValue("O") : _zero),
+_HO2	(isCoupled("HO2") ? coupledValue("HO2") : _zero),
+_O3	(isCoupled("O3") ? coupledValue("O3") : _zero),
+_O3m	(isCoupled("O3m") ? coupledValue("O3m") : _zero)
+
 {}
 
 void
