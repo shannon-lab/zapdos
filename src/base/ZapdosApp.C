@@ -26,6 +26,7 @@
 #include "INSMomentumTimeDerivative.h"
 #include "INSTemperatureTimeDerivative.h"
 #include "EFieldAdvection.h"
+#include "Source.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
 
@@ -68,6 +69,7 @@
 #include "AddLotsOfDiffusion.h"
 #include "AddLotsOfCoeffDiffusion.h"
 #include "AddLotsOfVariables.h"
+#include "AddLotsOfSources.h"
 
 template<>
 InputParameters validParams<ZapdosApp>()
@@ -129,6 +131,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(INSMomentumTimeDerivative);
   registerKernel(INSTemperatureTimeDerivative);
   registerKernel(EFieldAdvection);
+  registerKernel(Source);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);
@@ -172,4 +175,8 @@ ZapdosApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
   registerAction(AddLotsOfVariables, "add_kernel");
   registerAction(AddLotsOfVariables, "add_bc");
   syntax.registerActionSyntax("AddLotsOfVariables", "LotsOfVariables");
+  registerAction(AddLotsOfSources, "add_variable");
+  registerAction(AddLotsOfSources, "add_kernel");
+  registerAction(AddLotsOfSources, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfSources", "LotsOfSources");
 }
