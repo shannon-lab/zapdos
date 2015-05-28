@@ -22,7 +22,8 @@ SpeciesNetFluxBC::SpeciesNetFluxBC(const std::string & name, InputParameters par
   // MaterialProperties
   _species_charge(getMaterialProperty<Real>(getParam<std::string>("species_charge"))),
   _coulomb_charge(getMaterialProperty<Real>("e")),
-  _electron_mult(getMaterialProperty<Real>("electron_mult"))
+  _electron_mult(getMaterialProperty<Real>("electron_mult")),
+  _N_A(getMaterialProperty<Real>("N_A"))
 {
 
   _species_current(0) = _x_boundary_species_current;
@@ -34,6 +35,6 @@ SpeciesNetFluxBC::SpeciesNetFluxBC(const std::string & name, InputParameters par
 Real
 SpeciesNetFluxBC::computeQpResidual()
 {
-  return _test[_i][_qp]*_species_current*_normals[_qp]/(_species_charge[_qp]*_coulomb_charge[_qp]*_electron_mult[_qp]);
+  return _test[_i][_qp]*_species_current*_normals[_qp]/(_species_charge[_qp]*_coulomb_charge[_qp]*_N_A[_qp]);
 }
 

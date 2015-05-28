@@ -27,11 +27,11 @@ Source::~Source()
 Real
 Source::computeQpResidual()
 {
-  return _test[_i][_qp]*_source[_qp];
+  return -_test[_i][_qp]*_source[_qp];
 }
 
 Real
 Source::computeQpJacobian()
 {
-  return _test[_i][_qp]*_jacobian[_qp]*_phi[_j][_qp];
+  return -_test[_i][_qp]*_jacobian[_qp]*_phi[_j][_qp];
 }

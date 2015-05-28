@@ -27,6 +27,7 @@ class Water : public Material
   MaterialProperty<Real> & _cw;
   MaterialProperty<Real> & _electron_mult;
   MaterialProperty<Real> & _potential_mult;
+  MaterialProperty<Real> & _N_A;
   MaterialProperty<Real> & _eps_r;
   MaterialProperty<Real> & _e;
   MaterialProperty<Real> & _k;

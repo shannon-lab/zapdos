@@ -29,6 +29,7 @@ protected:
   MaterialProperty<Real> & _species_charge;
   MaterialProperty<Real> & _coulomb_charge;
   MaterialProperty<Real> & _electron_mult;
+  MaterialProperty<Real> & _N_A;
 
   // Members unique to object
 

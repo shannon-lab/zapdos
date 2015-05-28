@@ -12,7 +12,7 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "AddLotsOfCoeffDiffusion.h"
+#include "AddLotsOfTimeDerivatives.h"
 #include "Parser.h"
 #include "FEProblem.h"
 #include "Factory.h"
@@ -39,76 +39,41 @@
 #include "libmesh/fe.h"
 
 template<>
-InputParameters validParams<AddLotsOfCoeffDiffusion>()
+InputParameters validParams<AddLotsOfTimeDerivatives>()
 {
   MooseEnum families(AddVariableAction::getNonlinearVariableFamilies());
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
   InputParameters params = validParams<AddVariableAction>();
-  //  params.addRequiredParam<unsigned int>("number", "The number of variables to add");
-  params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which CoeffDiffusion kernels should be added");
-  params.addRequiredParam<std::vector<std::string> >("diffusion_coeffs", "The names of the diffusion coefficients used in the kernels.");
+  params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which TimeDerivative kernels should be added");
 
   return params;
 }
 
 
-AddLotsOfCoeffDiffusion::AddLotsOfCoeffDiffusion(const std::string & name, InputParameters params) :
+AddLotsOfTimeDerivatives::AddLotsOfTimeDerivatives(const std::string & name, InputParameters params) :
   AddVariableAction(name, params)
 {
 }
 
 void
-AddLotsOfCoeffDiffusion::act()
+AddLotsOfTimeDerivatives::act()
 {
   MooseSharedPointer<Action> action;
   MooseSharedPointer<MooseObjectAction> moose_object_action;
-  //  unsigned int number = getParam<unsigned int>("number");
 
   std::vector<NonlinearVariableName> variables = getParam<std::vector<NonlinearVariableName> > ("variables");
-  std::vector<std::string> diffusion_coeffs = getParam<std::vector<std::string> > ("diffusion_coeffs");
 
   unsigned int number = variables.size();
 
-  /*  if (_current_task == "add_variable")
-    {
-      for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-	{
-	  //      std::string var_name = getShortName() + Moose::stringify(cur_num);
-	  std::string var_name = variables[cur_num];
-	  addVariable(var_name);
-	}
-	} */
-  //  else if (_current_task == "add_kernel")
   if (_current_task == "add_kernel")
     {
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)
 	{
 	  std::string var_name = variables[cur_num];
-	  std::string indiv_diffusion_coeff = diffusion_coeffs[cur_num];
-	  InputParameters params = _factory.getValidParams("CoeffDiffusion");
+	  InputParameters params = _factory.getValidParams("TimeDerivative");
 	  params.set<NonlinearVariableName>("variable") = var_name;
-	  params.set<std::string>("diffusivity") = indiv_diffusion_coeff;
-	  _problem->addKernel("CoeffDiffusion", var_name, params);
+	  _problem->addKernel("TimeDerivative", var_name, params);
 	}
     }
-//  else if (_current_task == "add_bc")
-//    {
-//      for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-//	{
-//	  std::string var_name = variables[cur_num];
-//
-//	  InputParameters params = _factory.getValidParams("DirichletBC");
-//	  params.set<NonlinearVariableName>("variable") = var_name;
-//	  params.set<std::vector<BoundaryName> >("boundary").push_back("left");
-//	  params.set<Real>("value") = 0;
-//
-//	  _problem->addBoundaryCondition("DirichletBC", var_name + "_left", params);
-//
-//	  params.set<std::vector<BoundaryName> >("boundary")[0] = "right";
-//	  params.set<Real>("value") = 1;
-//
-//	  _problem->addBoundaryCondition("DirichletBC", var_name + "_right", params);
-//	} 
-//    } 
 }

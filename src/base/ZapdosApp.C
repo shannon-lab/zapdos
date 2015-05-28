@@ -70,6 +70,7 @@
 #include "AddLotsOfCoeffDiffusion.h"
 #include "AddLotsOfVariables.h"
 #include "AddLotsOfSources.h"
+#include "AddLotsOfTimeDerivatives.h"
 
 template<>
 InputParameters validParams<ZapdosApp>()
@@ -179,4 +180,8 @@ ZapdosApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
   registerAction(AddLotsOfSources, "add_kernel");
   registerAction(AddLotsOfSources, "add_bc");
   syntax.registerActionSyntax("AddLotsOfSources", "LotsOfSources");
+  registerAction(AddLotsOfTimeDerivatives, "add_variable");
+  registerAction(AddLotsOfTimeDerivatives, "add_kernel");
+  registerAction(AddLotsOfTimeDerivatives, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfTimeDerivatives", "LotsOfTimeDerivatives");
 }

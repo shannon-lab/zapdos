@@ -12,30 +12,24 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "FirstOrderReaction.h"
+#ifndef ADDLOTSOFTIMEDERIVATIVES_H
+#define ADDLOTSOFTIMEDERIVATIVES_H
+
+#include "AddVariableAction.h"
+#include "Action.h"
+
+class AddLotsOfTimeDerivatives;
 
 template<>
-InputParameters validParams<FirstOrderReaction>()
-{
-  InputParameters params = validParams<Kernel>();
-  params.addRequiredParam<Real>("reaction_coeff", "The reaction coefficient of the medium");
-  return params;
-}
+InputParameters validParams<AddLotsOfTimeDerivatives>();
 
-FirstOrderReaction::FirstOrderReaction(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
-    
-    _reaction_coeff(getParam<Real>("reaction_coeff"))
-{}
 
-Real
-FirstOrderReaction::computeQpResidual()
+class AddLotsOfTimeDerivatives : public AddVariableAction
 {
-  return -_test[_i][_qp]*_reaction_coeff*_u[_qp];
-}
+public:
+  AddLotsOfTimeDerivatives(const std::string & name, InputParameters params);
 
-Real
-FirstOrderReaction::computeQpJacobian()
-{
-  return -_test[_i][_qp]*_reaction_coeff*_phi[_j][_qp];
-}
+  virtual void act();
+};
+
+#endif // ADDLOTSOFTIMEDERIVATIVES_H
