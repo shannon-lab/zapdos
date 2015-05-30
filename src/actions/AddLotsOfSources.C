@@ -85,7 +85,6 @@ AddLotsOfSources::act()
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)
 	{
 	  std::string var_name = variables[cur_num];
-	  //std::string indiv_diffusion_coeff = diffusion_coeffs[cur_num];
 	  InputParameters params = _factory.getValidParams("Source");
 	  params.set<NonlinearVariableName>("variable") = var_name;
 	  params.set<std::string>("var_name_string") = var_name;

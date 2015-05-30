@@ -1,8 +1,8 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 100
-  xmax = 1e-5
+  nx = 10
+  xmax = 2.31e-9
 #  xmax = 1.0
 []
 
@@ -19,9 +19,10 @@
 
 [Executioner]
   type = Transient
-  dt = 5.263e-5
+  dt = 1.14e-11
 #  dt = .1
-  num_steps = 10
+#  num_steps = 10
+  end_time = 1.14e-10
 #  solve_type = PJFNK
 #  petsc_options_iname = '-pc_type -pc_hypre_type'
 #  petsc_options_value = 'hypre boomeramg'
@@ -41,27 +42,88 @@
   output_initial = true
 []
 
-[LotsOfCoeffDiffusion]
-  variables = 'em OHm H'
-  diffusion_coeffs = 'Dem DOHm DH'
+[Debug]
+  show_var_residual_norms = true
 []
 
-[LotsOfVariables]
-  variables = 'em OHm H'
+[LotsOfCoeffDiffusion]
+  variables = 'em H OHm H2Op OH H2 Om H3Op H2O2 HO2m O2 O2m O HO2 O3 O3m'
 []
+
+#[LotsOfVariables]
+#  variables = 'em H OHm H2Op OH H2 Om H3Op H2O2 HO2m O2 O2m O HO2 O3 O3m'
+#[]
 
 [LotsOfTimeDerivatives]
-  variables = 'em OHm H'
+  variables = 'em H OHm H2Op OH H2 Om H3Op H2O2 HO2m O2 O2m O HO2 O3 O3m'
 []
 
 [LotsOfSources]
-  variables = 'em OHm H'
+  variables = 'em H OHm H2Op OH H2 Om H3Op H2O2 HO2m O2 O2m O HO2 O3 O3m'
 []
 
-#[Variables]
-#  [./em]
-#  [../]
-#[]
+[LotsOfEFieldAdvection]
+  variables = 'em H OHm H2Op OH H2 Om H3Op H2O2 HO2m O2 O2m O HO2 O3 O3m'
+  potential = 'potential'
+[]
+
+[Kernels]
+  [./potential_diffusion]
+    type = Diffusion
+    variable = potential
+  [../]
+[]
+
+[Variables]
+  [./potential]
+    scaling = 1e12
+  [../]
+  [./em]
+    scaling = 1e17
+  [../]
+  [./H]
+    scaling = 1e23
+  [../]
+  [./OHm]
+    scaling = 1e18
+  [../]
+  [./H2Op]
+  [../]
+  [./OH]
+    scaling = 1e29
+  [../]
+  [./H2]
+    scaling = 1e18
+  [../]
+  [./Om]
+    scaling = 1e33
+  [../]
+  [./H3Op]
+    scaling = 1e56
+  [../]
+  [./H2O2]
+    scaling = 1e33
+  [../]
+  [./HO2m]
+    scaling = 1e48
+  [../]
+  [./O2]
+    scaling = 1e67
+  [../]
+  [./O2m]
+    scaling = 1e51
+  [../]
+  [./O]
+  [../]
+  [./HO2]
+    scaling = 1e51
+  [../]
+  [./O3]
+  [../]
+  [./O3m]
+   scaling = 1e74
+  [../]
+[]
 
 [Materials]
   [./water]
@@ -72,16 +134,21 @@
     em = em
     H = H
     OHm = OHm
+    H2Op = H2Op
+    OH = OH
+    H2 = H2
+    Om = Om
+    H3Op = H3Op
+    H2O2 = H2O2
+    HO2m = HO2m
+    O2 = O2
+    O2m = O2m
+    O = O
+    HO2 = HO2
+    O3 = O3
+    O3m = O3m
   [../]
 []
-
-#[Kernels]
-#  [./em_source]
-#    type = FirstOrderReaction
-#    reaction_coeff = 1
-#    variable = em
-#  [../]
-#[]
 
 [BCs]
   [./electrons_flux_left]
@@ -91,21 +158,27 @@
     x_boundary_species_current = -60.0
     species_charge = zem
   [../]
-#  [./electron_dirichlet_left]
-#    type = DirichletBC
-#    variable = em
-#    boundary = left
-#    value = 1.0
-#  [../]
   [./electron_dirichlet_right]
     type = DirichletBC
     variable = em
     boundary = right
     value = 0.0
   [../]
-  [./OHm_dirichlet_right]
+#  [./OHm_dirichlet_right]
+#    type = DirichletBC
+#    variable = OHm
+#    boundary = right
+#    value = 0.0
+#  [../]
+  [./potential_left]
+    type = EFieldBC
+    variable = potential
+    boundary = left
+    x_boundary_e_field = -5.0e5
+  [../]
+  [./potential_right]
     type = DirichletBC
-    variable = OHm
+    variable = potential
     boundary = right
     value = 0.0
   [../]

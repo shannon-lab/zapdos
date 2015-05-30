@@ -12,7 +12,7 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "AddLotsOfCoeffDiffusion.h"
+#include "AddLotsOfEFieldAdvection.h"
 #include "Parser.h"
 #include "FEProblem.h"
 #include "Factory.h"
@@ -39,76 +39,51 @@
 #include "libmesh/fe.h"
 
 template<>
-InputParameters validParams<AddLotsOfCoeffDiffusion>()
+InputParameters validParams<AddLotsOfEFieldAdvection>()
 {
   MooseEnum families(AddVariableAction::getNonlinearVariableFamilies());
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
   InputParameters params = validParams<AddVariableAction>();
-  //  params.addRequiredParam<unsigned int>("number", "The number of variables to add");
-  params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which CoeffDiffusion kernels should be added");
-  //params.addRequiredParam<std::vector<std::string> >("diffusion_coeffs", "The names of the diffusion coefficients used in the kernels.");
+  params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which EFieldAdvection kernels should be added");
+  //params.addRequiredParam<std::string>("potential", "The potential that will be responsible for advecting the species.");
+  params.addRequiredParam<std::vector<VariableName> >("potential", "A dummy vector that holds the potential to couple in for advection");
 
   return params;
 }
 
 
-AddLotsOfCoeffDiffusion::AddLotsOfCoeffDiffusion(const std::string & name, InputParameters params) :
+AddLotsOfEFieldAdvection::AddLotsOfEFieldAdvection(const std::string & name, InputParameters params) :
   AddVariableAction(name, params)
 {
 }
 
 void
-AddLotsOfCoeffDiffusion::act()
+AddLotsOfEFieldAdvection::act()
 {
   MooseSharedPointer<Action> action;
   MooseSharedPointer<MooseObjectAction> moose_object_action;
-  //  unsigned int number = getParam<unsigned int>("number");
 
   std::vector<NonlinearVariableName> variables = getParam<std::vector<NonlinearVariableName> > ("variables");
-  //std::vector<std::string> diffusion_coeffs = getParam<std::vector<std::string> > ("diffusion_coeffs");
+  //std::string potential = getParam<std::string>("potential");
+  std::vector<VariableName> potential = getParam<std::vector<VariableName> > ("potential");
 
   unsigned int number = variables.size();
 
-  /*  if (_current_task == "add_variable")
-    {
-      for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-	{
-	  //      std::string var_name = getShortName() + Moose::stringify(cur_num);
-	  std::string var_name = variables[cur_num];
-	  addVariable(var_name);
-	}
-	} */
-  //  else if (_current_task == "add_kernel")
   if (_current_task == "add_kernel")
     {
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)
 	{
 	  std::string var_name = variables[cur_num];
-	  //std::string indiv_diffusion_coeff = diffusion_coeffs[cur_num];
-	  InputParameters params = _factory.getValidParams("CoeffDiffusion");
+	  //std::vector<std::string> fictional_vec_variables;
+	  //std::vector<VariableName> vel_vec_variable;
+	  //fictional_vec_varables.push_back(potential[0]);
+	  //vel_vec_variable.push_back(potential[0]);
+	  InputParameters params = _factory.getValidParams("EFieldAdvection");
 	  params.set<NonlinearVariableName>("variable") = var_name;
 	  params.set<std::string>("var_name_string") = var_name;
-	  _problem->addKernel("CoeffDiffusion", var_name, params);
+	  params.set<std::vector<VariableName> >("potential") = potential;
+	  _problem->addKernel("EFieldAdvection", var_name, params);
 	}
     }
-//  else if (_current_task == "add_bc")
-//    {
-//      for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-//	{
-//	  std::string var_name = variables[cur_num];
-//
-//	  InputParameters params = _factory.getValidParams("DirichletBC");
-//	  params.set<NonlinearVariableName>("variable") = var_name;
-//	  params.set<std::vector<BoundaryName> >("boundary").push_back("left");
-//	  params.set<Real>("value") = 0;
-//
-//	  _problem->addBoundaryCondition("DirichletBC", var_name + "_left", params);
-//
-//	  params.set<std::vector<BoundaryName> >("boundary")[0] = "right";
-//	  params.set<Real>("value") = 1;
-//
-//	  _problem->addBoundaryCondition("DirichletBC", var_name + "_right", params);
-//	} 
-//    } 
 }

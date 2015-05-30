@@ -71,6 +71,7 @@
 #include "AddLotsOfVariables.h"
 #include "AddLotsOfSources.h"
 #include "AddLotsOfTimeDerivatives.h"
+#include "AddLotsOfEFieldAdvection.h"
 
 template<>
 InputParameters validParams<ZapdosApp>()
@@ -184,4 +185,8 @@ ZapdosApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
   registerAction(AddLotsOfTimeDerivatives, "add_kernel");
   registerAction(AddLotsOfTimeDerivatives, "add_bc");
   syntax.registerActionSyntax("AddLotsOfTimeDerivatives", "LotsOfTimeDerivatives");
+  registerAction(AddLotsOfEFieldAdvection, "add_variable");
+  registerAction(AddLotsOfEFieldAdvection, "add_kernel");
+  registerAction(AddLotsOfEFieldAdvection, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfEFieldAdvection", "LotsOfEFieldAdvection");
 }

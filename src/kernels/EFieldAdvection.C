@@ -18,7 +18,8 @@ template<>
 InputParameters validParams<EFieldAdvection>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addRequiredParam<std::string>("mobility","What mobility to use");
+  //params.addRequiredParam<std::string>("mobility","What mobility to use");
+  params.addRequiredParam<std::string>("var_name_string","The name of the kernel variable. Required to import the correct mobility from the material properties file.");
   params.addRequiredCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
   return params;
 }
@@ -31,7 +32,7 @@ EFieldAdvection::EFieldAdvection(const std::string & name,
     
     // Material properties
 
-    _mobility(getMaterialProperty<Real>(getParam<std::string>("mobility"))),
+    _mobility(getMaterialProperty<Real>("mu"+getParam<std::string>("var_name_string"))),
     _potential_mult(getMaterialProperty<Real>("potential_mult")),
     
     // Coupled variables
