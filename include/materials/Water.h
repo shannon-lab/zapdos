@@ -29,6 +29,7 @@ class Water : public Material
   MaterialProperty<Real> & _potential_mult;
   MaterialProperty<Real> & _N_A;
   MaterialProperty<Real> & _eps_r;
+  MaterialProperty<Real> & _eps_0;  
   MaterialProperty<Real> & _e;
   MaterialProperty<Real> & _k;
   MaterialProperty<Real> & _T;
@@ -177,6 +178,7 @@ class Water : public Material
   MaterialProperty<Real> & _sHO2;
   MaterialProperty<Real> & _sO3;
   MaterialProperty<Real> & _sO3m;
+  MaterialProperty<Real> & _spotential;
   MaterialProperty<Real> & _Jac_em;
   MaterialProperty<Real> & _Jac_H;
   MaterialProperty<Real> & _Jac_OHm;
@@ -193,6 +195,7 @@ class Water : public Material
   MaterialProperty<Real> & _Jac_HO2;
   MaterialProperty<Real> & _Jac_O3;
   MaterialProperty<Real> & _Jac_O3m;
+  MaterialProperty<Real> & _Jac_potential;
 
  private:
 

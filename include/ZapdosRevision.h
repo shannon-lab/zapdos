@@ -3,6 +3,6 @@
 #ifndef ZAPDOS_REVISION_H
 #define ZAPDOS_REVISION_H
 
-#define ZAPDOS_REVISION "git commit fe0498c on 2015-05-19"
+#define ZAPDOS_REVISION "git commit fc4182a on 2015-05-29"
 
 #endif // ZAPDOS_REVISION_H

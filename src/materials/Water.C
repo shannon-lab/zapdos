@@ -42,6 +42,7 @@ Water::Water(const std::string & name, InputParameters parameters) :
   _potential_mult(declareProperty<Real>("potential_mult")),  
   _N_A(declareProperty<Real>("N_A")),
   _eps_r(declareProperty<Real>("eps_r")),
+  _eps_0(declareProperty<Real>("eps_0")),
   _e(declareProperty<Real>("e")),
   _k(declareProperty<Real>("k")),           
   _T(declareProperty<Real>("T")),            
@@ -190,6 +191,7 @@ Water::Water(const std::string & name, InputParameters parameters) :
  _sHO2(declareProperty<Real>("sHO2")),
  _sO3(declareProperty<Real>("sO3")),
  _sO3m(declareProperty<Real>("sO3m")),
+  _spotential(declareProperty<Real>("spotential")),
  _Jac_em(declareProperty<Real>("Jac_em")),
  _Jac_H(declareProperty<Real>("Jac_H")),
  _Jac_OHm(declareProperty<Real>("Jac_OHm")),
@@ -206,6 +208,7 @@ Water::Water(const std::string & name, InputParameters parameters) :
  _Jac_HO2(declareProperty<Real>("Jac_HO2")),
  _Jac_O3(declareProperty<Real>("Jac_O3")),
  _Jac_O3m(declareProperty<Real>("Jac_O3m")),
+  _Jac_potential(declareProperty<Real>("Jac_potential")),
 
 // Coupled Variables
 
@@ -236,6 +239,7 @@ Water::computeQpProperties()
   _potential_mult[_qp] = _user_potential_mult;
   _N_A[_qp] = 6.02e23;
   _eps_r[_qp]   = _user_relative_permittivity;
+  _eps_0[_qp]   = 8.85e-12;
   _e[_qp]	= 1.6e-19;  // coulombic charge
   _k[_qp]	= 1.38e-23; // Boltzmanns constant
   _T[_qp]	= 300;      // Simulation temperature
@@ -409,6 +413,14 @@ Water::computeQpProperties()
   _Jac_HO2[_qp]    = -_k19[_qp]*_H[_qp]-_k26[_qp]*_OH[_qp]-_k38[_qp]*_cw[_qp];
   _Jac_O3[_qp]     = 0.0;
   _Jac_O3m[_qp]    = 0.0;
+
+  // Source for the potential
+
+  _spotential[_qp] = _N_A[_qp]*_e[_qp]/(_eps_r[_qp]*_eps_0[_qp])*(_em[_qp]*_zem[_qp]+_H[_qp]*_zH[_qp]+_OHm[_qp]*_zOHm[_qp]+_H2Op[_qp]*_zH2Op[_qp]+_OH[_qp]*_zOH[_qp]+_H2[_qp]*_zH2[_qp]+_Om[_qp]*_zOm[_qp]+_H3Op[_qp]*_zH3Op[_qp]+_H2O2[_qp]*_zH2O2[_qp]+_HO2m[_qp]*_zHO2m[_qp]+_O2[_qp]*_zO2[_qp]+_O2m[_qp]*_zO2m[_qp]+_O[_qp]*_zO[_qp]+_HO2[_qp]*_zHO2[_qp]+_O3[_qp]*_zO3[_qp]+_O3m[_qp]*_zO3m[_qp]);
+
+  // On-diagonal elements for the potential source
+
+  _Jac_potential[_qp] = 0.0;
 
 }
 

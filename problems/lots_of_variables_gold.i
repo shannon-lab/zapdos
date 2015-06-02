@@ -1,46 +1,38 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 10000
-  xmax = 2.31e-6
+  nx = 10
+  xmax = 2.31e-9
 #  xmax = 1.0
 []
 
-#[Preconditioning]
-#  [./SMP]
-#    type = FDP
-#    full = true
-#  #Preconditioned JFNK (default)
+[Preconditioning]
+  [./SMP]
+    type = FDP
+    full = true
+  #Preconditioned JFNK (default)
 #    solve_type = 'PJFNK'
 #    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
 #    petsc_options_value = 'lu       1e-6                 ds'
-#  [../]
-#[]
+  [../]
+[]
 
 [Executioner]
   type = Transient
-#  dt = 1.14e-7
+  dt = 1.14e-11
 #  dt = .1
 #  num_steps = 10
-  end_time = 1.14e-4
-  solve_type = PJFNK
-  petsc_options_iname = '-pc_type -pc_hypre_type'
-  petsc_options_value = 'hypre boomeramg'
+  end_time = 1.14e-10
+#  solve_type = PJFNK
+#  petsc_options_iname = '-pc_type -pc_hypre_type'
+#  petsc_options_value = 'hypre boomeramg'
   trans_ss_check = true
   ss_check_tol = 1e-7
 #  nl_rel_tol = 1e-2
 #  l_tol = 1e-1
 ##  nl_abs_tol = 1e-3
-  l_max_its = 9
-  nl_max_its = 5
-  [./TimeStepper]
-    type = IterationAdaptiveDT
-    linear_iteration_ratio = 5
-    cutback_factor = 0.5
-    dt = 1.14e-7
-    growth_factor = 2.0
-    optimal_iterations = 4
-  [../]
+#  l_max_its = 9
+#  nl_max_its = 3
 []
 
 [Outputs]
@@ -48,7 +40,7 @@
   print_perf_log = true
   print_linear_residuals = true
   output_initial = true
-  interval = 100
+  interval = 5
 []
 
 [Debug]
@@ -112,7 +104,7 @@
     scaling = 1e33
   [../]
   [./H3Op]
-    scaling = 1e29
+    scaling = 1e56
   [../]
   [./H2O2]
     scaling = 1e33
@@ -121,7 +113,7 @@
     scaling = 1e48
   [../]
   [./O2]
-    scaling = 1e51
+    scaling = 1e67
   [../]
   [./O2m]
     scaling = 1e51
@@ -134,7 +126,7 @@
   [./O3]
   [../]
   [./O3m]
-   scaling = 1e61
+   scaling = 1e74
   [../]
 []
 
@@ -203,15 +195,10 @@
   [../]
 []
 
-[ICs]
-  [./H3Op_ic]
-    type = ConstantIC
-    variable = H3Op
-    value = 1e-7
-  [../]
-  [./OHm_ic]
-    type = ConstantIC
-    variable = OHm
-    value = 1e-7
-  [../]
-[]
+#[ICs]
+#  [./electron_ic]
+#    type = ConstantIC
+#    variable = em
+#    value = 0.0
+#  [../]
+#[]

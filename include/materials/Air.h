@@ -44,33 +44,60 @@ protected:
 
   // Input parameters
   
-  const Real & _velocity_multiplier;
-  const Real & _relative_permittivity;
-  const Real & _ionization_multiplier;
+  //  const Real & _velocity_multiplier;
+  const Real & _user_relative_permittivity;
+  //const Real & _ionization_multiplier;
   const Real & _user_potential_mult;
   const Real & _user_density_mult;
-  const Real & _user_diffusivity;
-  const Real & _delta;
+//  const Real & _user_diffusivity;
+//  const Real & _delta;
+//  const bool & _consistent;
+//  bool  _coupling;
 
   // Coupled Variables
 
   VariableGradient & _grad_potential;
+  VariableValue & _em;
+  VariableValue & _ip;
+
+  // Functions
+  
+  //  Function & _velocity_function;
 
   // Material properties
   
-  MaterialProperty<Real> & _velocity_coeff;
-  MaterialProperty<Real> & _permittivity;
-  MaterialProperty<Real> & _coulomb_charge;
-  MaterialProperty<Real> & _ionization_coeff;
-  MaterialProperty<Real> & _ion_activation_energy;
+//  MaterialProperty<Real> & _velocity_coeff;
+//  MaterialProperty<Real> & _permittivity;
+//  MaterialProperty<Real> & _coulomb_charge;
+//  MaterialProperty<Real> & _ionization_coeff;
+//  MaterialProperty<Real> & _ion_activation_energy;
   MaterialProperty<Real> & _potential_mult;
   MaterialProperty<Real> & _density_mult;
-  MaterialProperty<Real> & _peclet_num;
-  MaterialProperty<Real> & _alpha; 
-  MaterialProperty<RealVectorValue> & _velocity;
-  MaterialProperty<RealVectorValue> & _velocity_norm;
-  MaterialProperty<Real> & _diffusivity;
-  MaterialProperty<Real> & _tau;
+//  MaterialProperty<Real> & _peclet_num;
+//  MaterialProperty<Real> & _alpha; 
+//  MaterialProperty<RealVectorValue> & _velocity;
+//  MaterialProperty<RealVectorValue> & _velocity_norm;
+//  MaterialProperty<Real> & _diffusivity;
+//  MaterialProperty<Real> & _tau;
+  MaterialProperty<Real> & _N_A;
+  MaterialProperty<Real> & _eps_r;
+  MaterialProperty<Real> & _eps_0;
+  MaterialProperty<Real> & _e;
+  MaterialProperty<Real> & _Dem;
+  MaterialProperty<Real> & _Dip;
+  MaterialProperty<Real> & _zem;
+  MaterialProperty<Real> & _zip;
+  MaterialProperty<Real> & _muem;
+  MaterialProperty<Real> & _muip;
+  MaterialProperty<Real> & _alpha_0;
+  MaterialProperty<Real> & _E_0;
+  MaterialProperty<Real> & _s;
+  MaterialProperty<Real> & _sem;
+  MaterialProperty<Real> & _sip;
+  MaterialProperty<Real> & _spotential;
+  MaterialProperty<Real> & _Jac_em;
+  MaterialProperty<Real> & _Jac_ip;
+  MaterialProperty<Real> & _Jac_potential;
 };
 
 #endif //AIR_H
