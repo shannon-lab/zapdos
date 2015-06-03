@@ -1,39 +1,39 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 1024000
+  nx = 10240
   xmax = 2.3552e-3
 #  uniform_refine = 3
 #  xmax = 1.0
 []
 
-[Preconditioning]
-  [./SMP]
-    type = FDP
-    full = true
-  #Preconditioned JFNK (default)
-    solve_type = 'PJFNK'
+#[Preconditioning]
+#  [./SMP]
+#    type = FDP
+#    full = true
+#  #Preconditioned JFNK (default)
+#    solve_type = 'PJFNK'
 #    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
 #    petsc_options_value = 'lu       1e-6                 ds'
-  [../]
-[]
+#  [../]
+#[]
 
 [Executioner]
-  type = Steady
-#  dt = 3e-13
+  type = Transient
+  dt = 3e-13
 #  num_steps = 10
-#  end_time = 6e-10
-#  solve_type = PJFNK
-#  petsc_options_iname = '-pc_type -pc_hypre_type'
-#  petsc_options_value = 'hypre boomeramg'
+  end_time = 6e-10
+  solve_type = PJFNK
+  petsc_options_iname = '-pc_type -pc_hypre_type'
+  petsc_options_value = 'hypre boomeramg'
 #  trans_ss_check = true
 #  ss_check_tol = 1e-7
-#  nl_rel_tol = 1e-2
+  nl_rel_tol = 1e-2
 #  l_tol = 1e-1
 ##  nl_abs_tol = 1e-3
-#  l_max_its = 20
-#  nl_max_its = 5
-#  dtmin = 1e-20
+  l_max_its = 20
+  nl_max_its = 5
+  dtmin = 1e-20
 #  [./TimeStepper]
 #    type = IterationAdaptiveDT
 #    linear_iteration_ratio = 5
@@ -64,9 +64,9 @@
 #  variables = 'em ip potential'
 #[]
 
-#[LotsOfTimeDerivatives]
-#  variables = 'em ip'
-#[]
+[LotsOfTimeDerivatives]
+  variables = 'em ip'
+[]
 
 [LotsOfSources]
   variables = 'em ip potential'
@@ -90,13 +90,13 @@
 
 [Variables]
   [./potential]
-    scaling = 1e2
+    scaling = 1e-1
  [../]
   [./em]
-    scaling = 1e9
+    scaling = 1e5
   [../]
   [./ip]
-    scaling = 1e11
+    scaling = 1e5
   [../]
 []
 
@@ -171,8 +171,7 @@
 [Functions]
   [./density_ic_parsed_function]
     type = ParsedFunction
-#    value = '7.81e-6*exp(-pow(x-(7.36e-5),2)/pow(2.30e-6,2))'
-    value = '7.81e-6'
+    value = '7.81e-6*exp(-pow(x-(7.36e-5),2)/pow(2.30e-6,2))'
   [../]
   [./potential_parsed_function]
     type = ParsedFunction
