@@ -27,6 +27,8 @@
 #include "INSTemperatureTimeDerivative.h"
 #include "EFieldAdvection.h"
 #include "Source.h"
+#include "UnitySource.h"
+#include "ConvectionArb.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
 
@@ -65,6 +67,8 @@
 #include "SimpleNetFluxBC.h"
 #include "PhysicalIonBC.h"
 #include "PhysicalElectronBC.h"
+#include "AdvectionDoNothingBC.h"
+#include "SometimesAdvectionBC.h"
 
 // Actions
 
@@ -136,6 +140,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(INSTemperatureTimeDerivative);
   registerKernel(EFieldAdvection);
   registerKernel(Source);
+  registerKernel(UnitySource);
+  registerKernel(ConvectionArb);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);
@@ -163,6 +169,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(SimpleNetFluxBC);
   registerBoundaryCondition(PhysicalIonBC);
   registerBoundaryCondition(PhysicalElectronBC);
+  registerBoundaryCondition(AdvectionDoNothingBC);
+  registerBoundaryCondition(SometimesAdvectionBC);
 }
 
 void
@@ -172,7 +180,7 @@ ZapdosApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
   registerAction(AddLotsOfDiffusion, "add_variable");
   registerAction(AddLotsOfDiffusion, "add_kernel");
   registerAction(AddLotsOfDiffusion, "add_bc");
-  syntax.registerActionSyntax("AddLotsOfDiffusion", "Testing/LotsOfDiffusion/*");
+  syntax.registerActionSyntax("AddLotsOfDiffusion", "LotsOfDiffusion");
   registerAction(AddLotsOfCoeffDiffusion, "add_variable");
   registerAction(AddLotsOfCoeffDiffusion, "add_kernel");
   registerAction(AddLotsOfCoeffDiffusion, "add_bc");

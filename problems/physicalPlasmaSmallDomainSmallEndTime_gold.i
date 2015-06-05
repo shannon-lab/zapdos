@@ -1,7 +1,7 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 10
+  nx = 1000
   xmax = 1.95e-6
 #  uniform_refine = 3
 #  xmax = 1.0
@@ -11,11 +11,11 @@
   [./SMP]
     type = FDP
     full = true
-  #Preconditioned JFNK (default)
-#    solve_type = 'PJFNK'
-#    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
-#    petsc_options_value = 'lu       1e-6                 ds'
-#  [../]
+ #Preconditioned JFNK (default)
+    solve_type = 'PJFNK'
+    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
+    petsc_options_value = 'lu       1e-6                 ds'
+  [../]
 []
 
 [Executioner]
@@ -27,12 +27,13 @@
 #  petsc_options_value = 'hypre boomeramg'
 #  trans_ss_check = true
 #  ss_check_tol = 1e-7
-#  nl_rel_tol = 1e-4
+  nl_rel_tol = 1e-6
 #  l_tol = 1e-1
 ##  nl_abs_tol = 1e-3
   l_max_its = 20
-  nl_max_its = 7
-  dtmin = 2.1e-15
+  nl_max_its = 21
+  dtmin = 2.1e-16
+  line_search = none
 #  [./TimeStepper]
 #    type = IterationAdaptiveDT
 #    linear_iteration_ratio = 5
@@ -68,9 +69,9 @@
 #  variables = 'em ip potential'
 #[]
 
-#[LotsOfTimeDerivatives]
-#  variables = 'em ip'
-#[]
+[LotsOfTimeDerivatives]
+  variables = 'em ip'
+[]
 
 [LotsOfSources]
   variables = 'em ip potential'
@@ -86,21 +87,17 @@
     type = Diffusion
     variable = potential
   [../]
-#  [./potential_source]
-#    variable = potential
-#    type = Source
-#  [../]
 []
 
 [Variables]
   [./potential]
-    scaling = 1e2
+    scaling = 1e9
  [../]
   [./em]
-    scaling = 1e6
+    scaling = 1e23
   [../]
   [./ip]
-    scaling = 1e7
+    scaling = 1e25
   [../]
 []
 
@@ -126,7 +123,7 @@
     type = DirichletBC
     variable = potential
     boundary = right
-    value = 47104
+    value = 39
   [../]
   [./ip_physical_left]
     type = PhysicalIonBC
@@ -173,8 +170,8 @@
 [Functions]
   [./density_ic_parsed_function]
     type = ParsedFunction
-    value = '7.81e-6*exp(-pow(x-(7.36e-5),2)/pow(2.30e-6,2))'
-#    value = '7.81e-6'
+#    value = '7.81e-6*exp(-pow(x-(7.36e-5),2)/pow(2.30e-6,2))'
+    value = '1e-15'
   [../]
   [./potential_parsed_function]
     type = ParsedFunction

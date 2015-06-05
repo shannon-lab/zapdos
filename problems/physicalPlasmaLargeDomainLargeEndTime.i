@@ -1,8 +1,8 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 10
-  xmax = 1.95e-6
+  nx = 10240
+  xmax = 2.3552e-3
 #  uniform_refine = 3
 #  xmax = 1.0
 []
@@ -20,14 +20,14 @@
 
 [Executioner]
   type = Transient
-  dt = 2.1e-13
-  end_time = 2.1e-12
+  dt = 3e-13
+  end_time = 6e-10
 #  solve_type = PJFNK
 #  petsc_options_iname = '-pc_type -pc_hypre_type'
 #  petsc_options_value = 'hypre boomeramg'
 #  trans_ss_check = true
 #  ss_check_tol = 1e-7
-#  nl_rel_tol = 1e-4
+  nl_rel_tol = 1e-2
 #  l_tol = 1e-1
 ##  nl_abs_tol = 1e-3
   l_max_its = 20
@@ -68,9 +68,9 @@
 #  variables = 'em ip potential'
 #[]
 
-#[LotsOfTimeDerivatives]
-#  variables = 'em ip'
-#[]
+[LotsOfTimeDerivatives]
+  variables = 'em ip'
+[]
 
 [LotsOfSources]
   variables = 'em ip potential'
@@ -86,21 +86,17 @@
     type = Diffusion
     variable = potential
   [../]
-#  [./potential_source]
-#    variable = potential
-#    type = Source
-#  [../]
 []
 
 [Variables]
   [./potential]
-    scaling = 1e2
+    scaling = 1e0
  [../]
   [./em]
     scaling = 1e6
   [../]
   [./ip]
-    scaling = 1e7
+    scaling = 1e6
   [../]
 []
 

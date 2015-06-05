@@ -37,7 +37,7 @@ PhysicalIonBC::computeQpResidual()
   }
   //  return _test[_i][_qp]*(1.0-_reflection_coeff)/(1.0+_reflection_coeff)*((2.0*_a-1.0)*_advection_velocity_ip[_qp]*_normals[_qp]*_u[_qp]+0.5*_v_thermal_ip[_qp]*_u[_qp]);
 
-  return _test[_i][_qp]*_a*_advection_velocity_ip[_qp]*_normals[_qp]*_u[_qp]+0.25*_v_thermal_ip[_qp]*_u[_qp];
+  return _test[_i][_qp]*(_a*_advection_velocity_ip[_qp]*_normals[_qp]*std::max(0.0,_u[_qp])+0.25*_v_thermal_ip[_qp]*std::max(0.0,_u[_qp]));
 }
 
 Real
@@ -51,6 +51,6 @@ PhysicalIonBC::computeQpJacobian()
   }
   //  return _test[_i][_qp]*(1.0-_reflection_coeff)/(1.0+_reflection_coeff)*((2.0*_a-1.0)*_advection_velocity_ip[_qp]*_normals[_qp]*_phi[_j][_qp]+0.5*_v_thermal_ip[_qp]*_phi[_j][_qp]);
 
-  return _test[_i][_qp]*_a*_advection_velocity_ip[_qp]*_normals[_qp]*_phi[_j][_qp]+0.25*_v_thermal_ip[_qp]*_phi[_j][_qp];
+  return _test[_i][_qp]*(_a*_advection_velocity_ip[_qp]*_normals[_qp]*_phi[_j][_qp]+0.25*_v_thermal_ip[_qp]*_phi[_j][_qp]);
 }
   

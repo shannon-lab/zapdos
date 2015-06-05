@@ -40,7 +40,7 @@ InputParameters validParams<AddLotsOfDiffusion>()
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
   InputParameters params = validParams<AddVariableAction>();
-  params.addRequiredParam<unsigned int>("number", "The number of variables to add");
+  params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which CoeffDiffusion kernels should be added");
 
   return params;
 }
@@ -54,28 +54,28 @@ AddLotsOfDiffusion::AddLotsOfDiffusion(const std::string & name, InputParameters
 void
 AddLotsOfDiffusion::act()
 {
-  unsigned int number = getParam<unsigned int>("number");
+  std::vector<NonlinearVariableName> variables = getParam<std::vector<NonlinearVariableName> > ("variables");
+  unsigned int number = variables.size();
 
-  if (_current_task == "add_variable")
+  /*  if (_current_task == "add_variable")
   {
     for (unsigned int cur_num = 0; cur_num < number; cur_num++)
     {
       std::string var_name = getShortName() + Moose::stringify(cur_num);
       addVariable(var_name);
     }
-  }
-  else if (_current_task == "add_kernel")
+    }*/
+  if (_current_task == "add_kernel")
   {
     for (unsigned int cur_num = 0; cur_num < number; cur_num++)
     {
-      std::string var_name = getShortName() + Moose::stringify(cur_num);
-
-      InputParameters params = _factory.getValidParams("Diffusion");
-      params.set<NonlinearVariableName>("variable") = var_name;
-      _problem->addKernel("Diffusion", var_name, params);
+	  std::string var_name = variables[cur_num];
+	  InputParameters params = _factory.getValidParams("Diffusion");
+	  params.set<NonlinearVariableName>("variable") = var_name;
+	  _problem->addKernel("Diffusion", var_name, params);
     }
   }
-  else if (_current_task == "add_bc")
+  /*else if (_current_task == "add_bc")
   {
     for (unsigned int cur_num = 0; cur_num < number; cur_num++)
     {
@@ -93,5 +93,5 @@ AddLotsOfDiffusion::act()
 
       _problem->addBoundaryCondition("DirichletBC", var_name + "_right", params);
     }
-  }
+    }*/
 }

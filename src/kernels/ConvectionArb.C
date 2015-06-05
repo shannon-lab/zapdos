@@ -34,13 +34,13 @@ ConvectionArb::ConvectionArb(const std::string & name, InputParameters parameter
 Real
 ConvectionArb::computeQpResidual()
 {
-  return _u[_qp]*_velocity.vectorValue(_t,_qp)*_grad_test[_i][_qp];
+  return -_u[_qp]*_velocity.vectorValue(_t,_qp)*_grad_test[_i][_qp];
 }
 
 Real
 ConvectionArb::computeQpJacobian()
 {
-  return _phi[_j][_qp]*_velocity.vectorValue(_t,_qp)*_grad_test[_i][_qp];
+  return -_phi[_j][_qp]*_velocity.vectorValue(_t,_qp)*_grad_test[_i][_qp];
 }
 
 
