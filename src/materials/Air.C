@@ -46,7 +46,8 @@ Air::Air(const std::string & name, InputParameters parameters) :
     _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
     _em(isCoupled("em") ? coupledValue("em") : _zero),
     _ip(isCoupled("ip") ? coupledValue("ip") : _zero),
-
+    _grad_em(isCoupled("em") ? coupledGradient("em") : _grad_zero),
+    _grad_ip(isCoupled("ip") ? coupledGradient("ip") : _grad_zero),
 // Functions
 
 //  _peclet_num(declareProperty<Real>("peclet_num")),
@@ -80,8 +81,19 @@ Air::Air(const std::string & name, InputParameters parameters) :
   _spotential(declareProperty<Real>("spotential")),
   _Jac_em(declareProperty<Real>("Jac_em")),
   _Jac_ip(declareProperty<Real>("Jac_ip")),
-  _Jac_potential(declareProperty<Real>("Jac_potential"))
-
+  _Jac_potential(declareProperty<Real>("Jac_potential")),
+  _EField(declareProperty<RealVectorValue>("EField")),
+  _gamma_em(declareProperty<RealVectorValue>("gamma_em")),
+  _gamma_ip(declareProperty<RealVectorValue>("gamma_ip")),
+  _k_boltz(declareProperty<Real>("k_boltz")),
+  _T_em(declareProperty<Real>("T_em")),
+  _T_ip(declareProperty<Real>("T_ip")),
+  _m_em(declareProperty<Real>("m_em")),
+  _m_ip(declareProperty<Real>("m_ip")),
+  _v_thermal_em(declareProperty<Real>("v_thermal_em")),
+  _v_thermal_ip(declareProperty<Real>("v_thermal_ip")),
+  _advection_velocity_em(declareProperty<RealVectorValue>("advection_velocity_em")),
+  _advection_velocity_ip(declareProperty<RealVectorValue>("advection_velocity_ip"))
 {
   /*  if (isCoupled("potential"))
     {
@@ -119,6 +131,18 @@ Air::computeQpProperties()
   _Jac_ip[_qp] = 0.0;
   _Jac_potential[_qp] = 0.0;
 
+  _EField[_qp] = -_grad_potential[_qp];
+  _gamma_em[_qp] = _muem[_qp]*_EField[_qp]*_em[_qp]-_Dem[_qp]*_grad_em[_qp];
+  _gamma_ip[_qp] = _muip[_qp]*_EField[_qp]*_ip[_qp]-_Dip[_qp]*_grad_ip[_qp];
+  _k_boltz[_qp] = 1.38e-23;
+  _T_em[_qp] = 11000;
+  _T_ip[_qp] = 300;
+  _m_em[_qp] = 9.11e-31;
+  _m_ip[_qp] = 29.0*1.66e-27;
+  _v_thermal_em[_qp] = 1.6*std::sqrt(_k_boltz[_qp]*_T_em[_qp]/_m_em[_qp]);
+  _v_thermal_ip[_qp] = 1.6*std::sqrt(_k_boltz[_qp]*_T_ip[_qp]/_m_ip[_qp]);
+  _advection_velocity_em[_qp] = _muem[_qp]*_EField[_qp];
+  _advection_velocity_ip[_qp] = _muip[_qp]*_EField[_qp];
   // The following commented section should be moved to a kernel so that different stabilization can be used
   // for different variables.
 

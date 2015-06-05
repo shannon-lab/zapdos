@@ -59,6 +59,8 @@ protected:
   VariableGradient & _grad_potential;
   VariableValue & _em;
   VariableValue & _ip;
+  VariableGradient & _grad_em;
+  VariableGradient & _grad_ip;
 
   // Functions
   
@@ -98,6 +100,18 @@ protected:
   MaterialProperty<Real> & _Jac_em;
   MaterialProperty<Real> & _Jac_ip;
   MaterialProperty<Real> & _Jac_potential;
+  MaterialProperty<RealVectorValue> & _EField;
+  MaterialProperty<RealVectorValue> & _gamma_em;
+  MaterialProperty<RealVectorValue> & _gamma_ip;
+  MaterialProperty<Real> & _k_boltz;
+  MaterialProperty<Real> & _T_em;
+  MaterialProperty<Real> & _T_ip;
+  MaterialProperty<Real> & _m_em;
+  MaterialProperty<Real> & _m_ip;
+  MaterialProperty<Real> & _v_thermal_em;
+  MaterialProperty<Real> & _v_thermal_ip;
+  MaterialProperty<RealVectorValue> & _advection_velocity_em;
+  MaterialProperty<RealVectorValue> & _advection_velocity_ip;
 };
 
 #endif //AIR_H

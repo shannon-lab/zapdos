@@ -63,6 +63,8 @@
 #include "EFieldBC.h"
 #include "SpeciesNetFluxBC.h"
 #include "SimpleNetFluxBC.h"
+#include "PhysicalIonBC.h"
+#include "PhysicalElectronBC.h"
 
 // Actions
 
@@ -159,6 +161,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(EFieldBC);
   registerBoundaryCondition(SpeciesNetFluxBC);
   registerBoundaryCondition(SimpleNetFluxBC);
+  registerBoundaryCondition(PhysicalIonBC);
+  registerBoundaryCondition(PhysicalElectronBC);
 }
 
 void
