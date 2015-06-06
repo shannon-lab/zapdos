@@ -118,8 +118,10 @@ Air::computeQpProperties()
   _Dip[_qp] = 0.046/(1.0e4); // Morrow review
   _zem[_qp] = -1.0;
   _zip[_qp] = 1.0;
+  _T_em[_qp] = 11000;
+  _T_ip[_qp] = 300;
   _muem[_qp] = _zem[_qp]*380.0/(1.0e4); // Ebert article
-  _muip[_qp] = _zip[_qp]*380.0/(1.0e4)*_Dip[_qp]/_Dem[_qp]; // Assuming Einstein relationship
+  _muip[_qp] = _zip[_qp]*380.0/(1.0e4)*(_T_em[_qp]/_T_ip[_qp])*(_Dip[_qp]/_Dem[_qp]); // Assuming Einstein relationship
   _alpha_0[_qp] = 4332.0*100.0; // Ebert article
   _E_0[_qp] = 2.0e7; // Ebert article
   
@@ -135,8 +137,6 @@ Air::computeQpProperties()
   _gamma_em[_qp] = _muem[_qp]*_EField[_qp]*_em[_qp]-_Dem[_qp]*_grad_em[_qp];
   _gamma_ip[_qp] = _muip[_qp]*_EField[_qp]*_ip[_qp]-_Dip[_qp]*_grad_ip[_qp];
   _k_boltz[_qp] = 1.38e-23;
-  _T_em[_qp] = 11000;
-  _T_ip[_qp] = 300;
   _m_em[_qp] = 9.11e-31;
   _m_ip[_qp] = 29.0*1.66e-27;
   _v_thermal_em[_qp] = 1.6*std::sqrt(_k_boltz[_qp]*_T_em[_qp]/_m_em[_qp]);
