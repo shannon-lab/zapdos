@@ -57,7 +57,7 @@ PhysicalElectronBC::computeQpResidual()
 //  _n_gamma = std::max(0.0,(1.0-_a)/std::abs(_muem[_qp])*_se_coeff*((2.0*_a_p-1.0)+0.5*std::sqrt(2.0/3.14))*_muip[_qp]*std::max(0.0,_ip[_qp]));
 //  return _test[_i][_qp]*(1.0-_reflection_coeff)/(1.0+_reflection_coeff)*((2.0*_a-1.0)*_advection_velocity_em[_qp]*_normals[_qp]*_u[_qp]+0.5*_v_thermal_em[_qp]*_u[_qp]-0.5*_v_thermal_em[_qp]*_n_gamma)+_test[_i][_qp]*-2.0/(1.0+_reflection_coeff)*(1.0-_a)*_se_coeff*_gamma_ip[_qp]*_normals[_qp];
 
-  return _test[_i][_qp]*(_a*_advection_velocity_em[_qp]*_normals[_qp]*std::max(0.0,_u[_qp])+0.25*_v_thermal_em[_qp]*std::max(0.0,_u[_qp]));
+  return _test[_i][_qp]*(_a*_advection_velocity_em[_qp]*_normals[_qp]*std::max(0.0,_u[_qp])+0.25*_v_thermal_em[_qp]*std::max(0.0,_u[_qp])-_se_coeff*_gamma_ip[_qp]*_normals[_qp]);
 }
 
 Real
