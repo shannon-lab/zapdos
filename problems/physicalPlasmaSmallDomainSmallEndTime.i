@@ -21,7 +21,7 @@
 [Executioner]
   type = Transient
   dt = 2.1e-13
-  end_time = 2.1e-12
+  end_time = 2.1e-11
 #  solve_type = PJFNK
 #  petsc_options_iname = '-pc_type -pc_hypre_type'
 #  petsc_options_value = 'hypre boomeramg'
@@ -140,12 +140,14 @@
     variable = em
     boundary = left
     ip = ip
+    se_coeff = 1.0
   [../]
   [./em_physical_right]
     type = PhysicalElectronBC
     variable = em
     boundary = right
     ip = ip
+    se_coeff = 1.0
   [../]
 []
 
@@ -171,7 +173,7 @@
   [./density_ic_parsed_function]
     type = ParsedFunction
 #    value = '7.81e-6*exp(-pow(x-(7.36e-5),2)/pow(2.30e-6,2))'
-    value = '1e-15'
+    value = '1e-10'
   [../]
   [./potential_parsed_function]
     type = ParsedFunction
