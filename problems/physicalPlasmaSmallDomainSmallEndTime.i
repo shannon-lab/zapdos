@@ -20,8 +20,8 @@
 
 [Executioner]
   type = Transient
-  dt = 2.1e-13
-  end_time = 2.1e-11
+#  dt = 2.1e-13
+  end_time = 2.1e-10
 #  solve_type = PJFNK
 #  petsc_options_iname = '-pc_type -pc_hypre_type'
 #  petsc_options_value = 'hypre boomeramg'
@@ -34,14 +34,14 @@
   nl_max_its = 21
   dtmin = 2.1e-16
   line_search = none
-#  [./TimeStepper]
-#    type = IterationAdaptiveDT
-#    linear_iteration_ratio = 5
-#    cutback_factor = 0.5
-#    dt = 3e-13
-#    growth_factor = 2.0
-#    optimal_iterations = 4
-#  [../]
+  [./TimeStepper]
+    type = IterationAdaptiveDT
+    linear_iteration_ratio = 5
+    cutback_factor = 0.5
+    dt = 2.1e-13
+    growth_factor = 2.0
+    optimal_iterations = 4
+  [../]
 []
 
 [Outputs]
@@ -97,7 +97,7 @@
     scaling = 1e23
   [../]
   [./ip]
-    scaling = 1e25
+    scaling = 1e23
   [../]
 []
 
@@ -123,7 +123,7 @@
     type = DirichletBC
     variable = potential
     boundary = right
-    value = 39
+    value = 390
   [../]
   [./ip_physical_left]
     type = PhysicalIonBC
@@ -177,7 +177,7 @@
   [../]
   [./potential_parsed_function]
     type = ParsedFunction
-    value = '2.0e7*x'
+    value = '2.0e8*x'
 []
 
 #[Adaptivity]
