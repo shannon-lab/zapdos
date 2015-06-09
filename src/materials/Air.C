@@ -93,7 +93,8 @@ Air::Air(const std::string & name, InputParameters parameters) :
   _v_thermal_em(declareProperty<Real>("v_thermal_em")),
   _v_thermal_ip(declareProperty<Real>("v_thermal_ip")),
   _advection_velocity_em(declareProperty<RealVectorValue>("advection_velocity_em")),
-  _advection_velocity_ip(declareProperty<RealVectorValue>("advection_velocity_ip"))
+  _advection_velocity_ip(declareProperty<RealVectorValue>("advection_velocity_ip")),
+  _h_size(declareProperty<Real>("h_size"))
 {
   /*  if (isCoupled("potential"))
     {
@@ -143,6 +144,7 @@ Air::computeQpProperties()
   _v_thermal_ip[_qp] = 1.6*std::sqrt(_k_boltz[_qp]*_T_ip[_qp]/_m_ip[_qp]);
   _advection_velocity_em[_qp] = _muem[_qp]*_EField[_qp];
   _advection_velocity_ip[_qp] = _muip[_qp]*_EField[_qp];
+  _h_size[_qp] = _current_elem->hmax();
   // The following commented section should be moved to a kernel so that different stabilization can be used
   // for different variables.
 

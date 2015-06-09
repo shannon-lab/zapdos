@@ -112,6 +112,7 @@ protected:
   MaterialProperty<Real> & _v_thermal_ip;
   MaterialProperty<RealVectorValue> & _advection_velocity_em;
   MaterialProperty<RealVectorValue> & _advection_velocity_ip;
+  MaterialProperty<Real> & _h_size;
 };
 
 #endif //AIR_H

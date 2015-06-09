@@ -29,6 +29,7 @@
 #include "Source.h"
 #include "UnitySource.h"
 #include "ConvectionArb.h"
+#include "PotentialDrivenArtificialDiff.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
 
@@ -78,6 +79,7 @@
 #include "AddLotsOfSources.h"
 #include "AddLotsOfTimeDerivatives.h"
 #include "AddLotsOfEFieldAdvection.h"
+#include "AddLotsOfPotentialDrivenArtificialDiff.h"
 
 template<>
 InputParameters validParams<ZapdosApp>()
@@ -142,6 +144,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(Source);
   registerKernel(UnitySource);
   registerKernel(ConvectionArb);
+  registerKernel(PotentialDrivenArtificialDiff);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);
@@ -201,4 +204,8 @@ ZapdosApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
   registerAction(AddLotsOfEFieldAdvection, "add_kernel");
   registerAction(AddLotsOfEFieldAdvection, "add_bc");
   syntax.registerActionSyntax("AddLotsOfEFieldAdvection", "LotsOfEFieldAdvection");
+  registerAction(AddLotsOfPotentialDrivenArtificialDiff, "add_variable");
+  registerAction(AddLotsOfPotentialDrivenArtificialDiff, "add_kernel");
+  registerAction(AddLotsOfPotentialDrivenArtificialDiff, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfPotentialDrivenArtificialDiff", "LotsOfPotentialDrivenArtificialDiff");
 }
