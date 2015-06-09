@@ -1,7 +1,7 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 100
+  nx = 1000
   xmax = 2.29e-5
 #  uniform_refine = 3
 #  xmax = 1.0
