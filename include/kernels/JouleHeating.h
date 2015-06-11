@@ -12,21 +12,21 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef EFIELDADVECTION_H
-#define EFIELDADVECTION_H
+#ifndef JOULEHEATING_H
+#define JOULEHEATING_H
 
 #include "Kernel.h"
 
-class EFieldAdvection;
+class JouleHeating;
 
 template<>
-InputParameters validParams<EFieldAdvection>();
+InputParameters validParams<JouleHeating>();
 
-class EFieldAdvection : public Kernel
+class JouleHeating : public Kernel
 {
  public:
 
-  EFieldAdvection(const std::string & name,
+  JouleHeating(const std::string & name,
 		   InputParameters parameters);
 
  protected:
@@ -41,15 +41,15 @@ class EFieldAdvection : public Kernel
   
   // Material properties
 
-  MaterialProperty<Real> & _advection_coeff;
+  MaterialProperty<Real> & _advection_coeff_em;
+  MaterialProperty<Real> & _D_em;
 
   // Coupled variables
   
   unsigned int _potential_id;
-
- private:
-
   VariableGradient & _grad_potential;
+  VariableValue & _em;
+  VariableGradient & _grad_em;
 };
 
-#endif //EFIELDADVECTION_H
+#endif //JOULEHEATING_H

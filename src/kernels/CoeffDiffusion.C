@@ -40,7 +40,7 @@ CoeffDiffusion::CoeffDiffusion(const std::string & name, InputParameters paramet
 
     // Material Properties
 
-    _diffusivity(getMaterialProperty<Real>("D"+getParam<std::string>("var_name_string")))
+    _diffusivity(getMaterialProperty<Real>("D_"+getParam<std::string>("var_name_string")))
 {
 }
 

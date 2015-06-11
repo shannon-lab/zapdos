@@ -12,46 +12,47 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "EFieldAdvection.h"
+#include "JouleHeating.h"
 
 template<>
-InputParameters validParams<EFieldAdvection>()
+InputParameters validParams<JouleHeating>()
 {
   InputParameters params = validParams<Kernel>();
-  //params.addRequiredParam<std::string>("mobility","What mobility to use");
-  params.addRequiredParam<std::string>("var_name_string","The name of the kernel variable. Required to import the correct advection_coefficient from the material properties file.");
+
   params.addRequiredCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
   return params;
 }
 
-EFieldAdvection::EFieldAdvection(const std::string & name,
+JouleHeating::JouleHeating(const std::string & name,
                        InputParameters parameters) :
     Kernel(name, parameters),
     
     // Input Parameters
     
     // Material properties
-
-    _advection_coeff(getMaterialProperty<Real>("EFieldAdvectionCoeff_"+getParam<std::string>("var_name_string"))),
     
+    _advection_coeff_em(getMaterialProperty<Real>("EFieldAdvectionCoeff_em")),
+    _D_em(getMaterialProperty<Real>("D_em")),
+
     // Coupled variables
     
     _potential_id(coupled("potential")),
-    _grad_potential(coupledGradient("potential"))
+    _grad_potential(coupledGradient("potential")),
+    _em(coupledValue("em")),
+    _grad_em(coupledGradient("em"))
 {}
 
-Real EFieldAdvection::computeQpResidual()
+Real JouleHeating::computeQpResidual()
 {
-   
-  return _advection_coeff[_qp]*_u[_qp]*-_grad_potential[_qp]*-_grad_test[_i][_qp];
+     return _test[_i][_qp]*-_grad_potential[_qp]*(_advection_coeff_em[_qp]*-_grad_potential[_qp]*_em[_qp]-_D_em[_qp]*_grad_em[_qp]);
 }
 
-Real EFieldAdvection::computeQpJacobian()
+Real JouleHeating::computeQpJacobian()
 {
-  return _advection_coeff[_qp]*_phi[_j][_qp]*-_grad_potential[_qp]*-_grad_test[_i][_qp];
+  return 0.0;
 }
 
-/* Real EFieldAdvection::computeQpOffDiagJacobian(unsigned int jvar)
+/* Real JouleHeating::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
   {

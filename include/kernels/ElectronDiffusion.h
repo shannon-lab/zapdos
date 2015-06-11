@@ -12,44 +12,43 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef EFIELDADVECTION_H
-#define EFIELDADVECTION_H
+#ifndef ELECTRONDIFFUSION_H
+#define ELECTRONDIFFUSION_H
 
-#include "Kernel.h"
+// Including the "Diffusion" Kernel here so we can extend it
+#include "Diffusion.h"
 
-class EFieldAdvection;
+class ElectronDiffusion;
 
 template<>
-InputParameters validParams<EFieldAdvection>();
+InputParameters validParams<ElectronDiffusion>();
 
-class EFieldAdvection : public Kernel
+class ElectronDiffusion : public Diffusion
 {
- public:
+public:
+  ElectronDiffusion(const std::string & name, InputParameters parameters);
+  virtual ~ElectronDiffusion();
 
-  EFieldAdvection(const std::string & name,
-		   InputParameters parameters);
-
- protected:
+protected:
 
   virtual Real computeQpResidual();
-
   virtual Real computeQpJacobian();
-  
-  //virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  
-  // Input file scalars
-  
-  // Material properties
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
-  MaterialProperty<Real> & _advection_coeff;
+  // Material Properties
 
-  // Coupled variables
-  
-  unsigned int _potential_id;
+  MaterialProperty<Real> & _muem;
 
- private:
+  // Coupled Variables
 
-  VariableGradient & _grad_potential;
+  VariableValue & _mean_electron_energy;
+  unsigned int _mean_electron_energy_id;
+
+  // Unique variables
+
+  Real _T_em;
+  Real _D_em;
 };
 
-#endif //EFIELDADVECTION_H
+
+#endif /* ELECTRONDIFFUSION_H */

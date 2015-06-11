@@ -30,6 +30,9 @@
 #include "UnitySource.h"
 #include "ConvectionArb.h"
 #include "PotentialDrivenArtificialDiff.h"
+#include "JouleHeating.h"
+#include "ElectronDiffusion.h"
+#include "ElectronEnergyDiffusion.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
 
@@ -54,6 +57,7 @@
 #include "BlockAverageDiffusionMaterial.h"
 #include "WD.h"
 #include "Water.h"
+#include "Argon.h"
 
 // Indicators
 #include "AnalyticalDiffIndicator.h"
@@ -145,6 +149,9 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(UnitySource);
   registerKernel(ConvectionArb);
   registerKernel(PotentialDrivenArtificialDiff);
+  registerKernel(JouleHeating);
+  registerKernel(ElectronDiffusion);
+  registerKernel(ElectronEnergyDiffusion);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);
@@ -163,7 +170,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerMaterial(NoCouplingAir);
   registerMaterial(BlockAverageDiffusionMaterial);
   registerMaterial(WD);
-  registerMaterial(Water);
+registerMaterial(Water);
+registerMaterial(Argon);
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
   registerBoundaryCondition(NoDiffusiveFlux);
