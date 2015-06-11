@@ -35,10 +35,10 @@ protected:
   
   // Material properties
   
-  MaterialProperty<Real> & _permittivity;
-  MaterialProperty<Real> & _coulomb_charge;
-  MaterialProperty<Real> & _density_mult;
-  MaterialProperty<Real> & _potential_mult;
+  const MaterialProperty<Real> & _permittivity;
+  const MaterialProperty<Real> & _coulomb_charge;
+  const MaterialProperty<Real> & _density_mult;
+  const MaterialProperty<Real> & _potential_mult;
   
   // Coupled variables
   

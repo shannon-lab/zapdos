@@ -26,10 +26,10 @@ protected:
 
   // Material Properties
 
-  MaterialProperty<Real> & _species_charge;
-  MaterialProperty<Real> & _coulomb_charge;
-  MaterialProperty<Real> & _electron_mult;
-  MaterialProperty<Real> & _N_A;
+  const MaterialProperty<Real> & _species_charge;
+  const MaterialProperty<Real> & _coulomb_charge;
+  const MaterialProperty<Real> & _electron_mult;
+  const MaterialProperty<Real> & _N_A;
 
   // Members unique to object
 

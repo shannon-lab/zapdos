@@ -43,9 +43,9 @@ protected:
   
   // Material Properties
   
-  MaterialProperty<RealVectorValue> & _velocity;
-  MaterialProperty<Real> & _tau;
-  MaterialProperty<Real> & _diffusivity;
+  const MaterialProperty<RealVectorValue> & _velocity;
+  const MaterialProperty<Real> & _tau;
+  const MaterialProperty<Real> & _diffusivity;
   
   // Coupled variables
 

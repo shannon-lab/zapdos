@@ -25,7 +25,7 @@ protected:
 
   // Material Properties
   
-  MaterialProperty<Real> & _potential_mult;
+  const MaterialProperty<Real> & _potential_mult;
 
   // Coupled variables
   

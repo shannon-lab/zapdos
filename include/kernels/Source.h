@@ -21,8 +21,8 @@ class Source : public Kernel
 
   // Material properties
 
-  MaterialProperty<Real> & _source;
-  MaterialProperty<Real> & _jacobian;
+  const MaterialProperty<Real> & _source;
+  const MaterialProperty<Real> & _jacobian;
 };
 
 #endif /* SOURCE_H */
