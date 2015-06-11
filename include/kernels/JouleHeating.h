@@ -35,14 +35,14 @@ class JouleHeating : public Kernel
 
   virtual Real computeQpJacobian();
   
-  //virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
   
   // Input file scalars
   
   // Material properties
 
-  MaterialProperty<Real> & _advection_coeff_em;
-  MaterialProperty<Real> & _D_em;
+  const MaterialProperty<Real> & _advection_coeff_em;
+  const MaterialProperty<Real> & _muem;
 
   // Coupled variables
   
@@ -50,6 +50,12 @@ class JouleHeating : public Kernel
   VariableGradient & _grad_potential;
   VariableValue & _em;
   VariableGradient & _grad_em;
+  unsigned int _em_id;
+
+  // Unique variables
+
+  Real _T_em;
+  Real _D_em;
 };
 
 #endif //JOULEHEATING_H
