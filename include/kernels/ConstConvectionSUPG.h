@@ -43,9 +43,9 @@ protected:
 
   // Unique to kernel
   
-  MaterialProperty<RealVectorValue> & _velocity;
-  MaterialProperty<Real> & _alpha;
-  MaterialProperty<RealVectorValue> & _velocity_norm;
+  const MaterialProperty<RealVectorValue> & _velocity;
+  const MaterialProperty<Real> & _alpha;
+  const MaterialProperty<RealVectorValue> & _velocity_norm;
 };
 
 #endif //CONSTCONVECTIONSUPG_H

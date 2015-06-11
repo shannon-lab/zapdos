@@ -46,8 +46,8 @@ protected:
   /// The gradient of a coupled variable
   //  VariableGradient & _grad_potential;
   
-  //  MaterialProperty<Real> & _velocity_coeff;
-  MaterialProperty<RealVectorValue> & _velocity;
+  //  const MaterialProperty<Real> & _velocity_coeff;
+  const MaterialProperty<RealVectorValue> & _velocity;
 };
 
 #endif //VELOCITYMAG_H

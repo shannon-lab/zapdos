@@ -48,8 +48,8 @@ protected:
 
   // Material Properties
 
-  MaterialProperty<Real> & _eps_r;
-  MaterialProperty<Real> & _potential_mult;
+  const MaterialProperty<Real> & _eps_r;
+  const MaterialProperty<Real> & _potential_mult;
 
   // Members unique to object
 

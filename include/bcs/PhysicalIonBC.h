@@ -28,9 +28,9 @@ protected:
   
   // Material Properties
 
-  MaterialProperty<RealVectorValue> & _advection_velocity_ip;
-  MaterialProperty<Real> & _muip;
-  MaterialProperty<Real> & _v_thermal_ip;
+  const MaterialProperty<RealVectorValue> & _advection_velocity_ip;
+  const MaterialProperty<Real> & _muip;
+  const MaterialProperty<Real> & _v_thermal_ip;
 };
 
 #endif //PHYSICALIONBC_H
