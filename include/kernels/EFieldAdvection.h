@@ -35,7 +35,7 @@ class EFieldAdvection : public Kernel
 
   virtual Real computeQpJacobian();
   
-  //virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
   
   // Input file scalars
   

@@ -60,7 +60,17 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
   _advection_velocity_em(declareProperty<RealVectorValue>("advection_velocity_em")),
   _mu_mean_electron_energy(declareProperty<Real>("mu_mean_electron_energy")),
   _EFieldAdvectionCoeff_mean_electron_energy(declareProperty<Real>("EFieldAdvectionCoeff_mean_electron_energy")),
-  _D_mean_electron_energy(declareProperty<Real>("D_mean_electron_energy"))
+  _D_mean_electron_energy(declareProperty<Real>("D_mean_electron_energy")),
+  _k6(declareProperty<Real>("k6")),
+  _k7(declareProperty<Real>("k7")),
+  _pressure(declareProperty<Real>("pressure")),
+  _T_gas(declareProperty<Real>("T_gas")),
+  _R_const(declareProperty<Real>("R_const")),
+  _Ar(declareProperty<Real>("Ar")),
+  _el_energy_gain_excitation(declareProperty<Real>("el_energy_gain_excitation")),
+  _el_energy_gain_deexcitation(declareProperty<Real>("el_energy_gain_deexcitation")),
+  _el_energy_gain_ionization(declareProperty<Real>("el_energy_gain_ionization")),
+  _el_energy_gain_meta_ionization(declareProperty<Real>("el_energy_gain_meta_ionization"))
 {
 }
 
@@ -85,4 +95,14 @@ Argon::computeQpProperties()
   _mu_mean_electron_energy[_qp] = 5.0/3.0*_muem[_qp];
   _EFieldAdvectionCoeff_mean_electron_energy[_qp] = _mu_mean_electron_energy[_qp]*-1.0;
   _D_mean_electron_energy[_qp] = _mu_mean_electron_energy[_qp]*_T_em[_qp];
+  _k6[_qp] = 1807.0; // m^3/(s*mol)
+  _k7[_qp] = 2.3e7; // m^3/(s*mol)
+  _pressure[_qp] = 1.01e5; // Pascals
+  _T_gas[_qp] = 300; // Kelvin
+  _R_const[_qp] = 8.3145; // J/(K*mol)
+  _Ar[_qp] = _pressure[_qp]/(_T_gas[_qp]*_R_const[_qp]);
+  _el_energy_gain_excitation[_qp] = -11.5; // eV
+  _el_energy_gain_deexcitation[_qp] = 11.5; // eV
+  _el_energy_gain_ionization[_qp] = -15.8; // eV
+  _el_energy_gain_meta_ionization[_qp] = -4.24; // eV
 }

@@ -33,6 +33,10 @@
 #include "JouleHeating.h"
 #include "ElectronDiffusion.h"
 #include "ElectronEnergyDiffusion.h"
+#include "ArsSource.h"
+#include "ArpSource.h"
+#include "ElectronSource.h"
+#include "ElectronEnergySource.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
 
@@ -152,6 +156,10 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(JouleHeating);
   registerKernel(ElectronDiffusion);
   registerKernel(ElectronEnergyDiffusion);
+  registerKernel(ArsSource);
+  registerKernel(ArpSource);
+  registerKernel(ElectronSource);
+  registerKernel(ElectronEnergySource);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);

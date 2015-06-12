@@ -60,6 +60,16 @@ protected:
   MaterialProperty<Real> & _mu_mean_electron_energy;
   MaterialProperty<Real> & _EFieldAdvectionCoeff_mean_electron_energy;
   MaterialProperty<Real> & _D_mean_electron_energy;
+  MaterialProperty<Real> & _k6;
+  MaterialProperty<Real> & _k7;
+  MaterialProperty<Real> & _pressure;
+  MaterialProperty<Real> & _T_gas;
+  MaterialProperty<Real> & _R_const;
+  MaterialProperty<Real> & _Ar;
+  MaterialProperty<Real> & _el_energy_gain_excitation;
+  MaterialProperty<Real> & _el_energy_gain_deexcitation;
+  MaterialProperty<Real> & _el_energy_gain_ionization;
+  MaterialProperty<Real> & _el_energy_gain_meta_ionization;
 };
 
 #endif //ARGON_H
