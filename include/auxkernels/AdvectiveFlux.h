@@ -37,9 +37,9 @@ class AdvectiveFlux : public AuxKernel
   
   // Material properties
 
-  MaterialProperty<Real> & _mobility;
-  MaterialProperty<Real> & _electron_mult;
-  MaterialProperty<Real> & _potential_mult;
+  const MaterialProperty<Real> & _mobility;
+  const MaterialProperty<Real> & _electron_mult;
+  const MaterialProperty<Real> & _potential_mult;
   
   // Coupled variables
 

@@ -42,7 +42,7 @@ protected:
 
   // Material Properties
 
-  MaterialProperty<RealVectorValue> & _velocity;
+  const MaterialProperty<RealVectorValue> & _velocity;
 };
 
 

@@ -47,8 +47,8 @@ protected:
   
   // Material Properties
   
-  MaterialProperty<Real> & _mobility;
-  MaterialProperty<Real> & _diffusivity;
+  const MaterialProperty<Real> & _mobility;
+  const MaterialProperty<Real> & _diffusivity;
 
   // Variables unique to the kernel
 

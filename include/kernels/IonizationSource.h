@@ -35,12 +35,12 @@ protected:
   
   // Material properties
   
-  MaterialProperty<RealVectorValue> & _velocity;
+  const MaterialProperty<RealVectorValue> & _velocity;
 
-  /*  MaterialProperty<Real> & _ionization_coeff;
-  MaterialProperty<Real> & _velocity_coeff;
-  MaterialProperty<Real> & _ion_activation_energy;
-  MaterialProperty<Real> & _potential_mult; */
+  /*  const MaterialProperty<Real> & _ionization_coeff;
+  const MaterialProperty<Real> & _velocity_coeff;
+  const MaterialProperty<Real> & _ion_activation_energy;
+  const MaterialProperty<Real> & _potential_mult; */
   
   // Coupled variables
   

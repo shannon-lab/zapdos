@@ -22,7 +22,7 @@ protected:
   VariableValue & _electron_density;
   VariableValue & _ion_density;
 
-  MaterialProperty<Real> & _coulomb_charge;
+  const MaterialProperty<Real> & _coulomb_charge;
 };
 
 #endif //CHARGEDENSITY_H

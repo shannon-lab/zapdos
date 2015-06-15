@@ -40,10 +40,10 @@ protected:
 
   // Material properties
 
-  MaterialProperty<Real> & _tau;
-  //  MaterialProperty<RealVectorValue> & _velocity;  
-  MaterialProperty<RealVectorValue> & _velocity; 
-  MaterialProperty<Real> & _diffusivity;
+  const MaterialProperty<Real> & _tau;
+  //  const MaterialProperty<RealVectorValue> & _velocity;  
+  const MaterialProperty<RealVectorValue> & _velocity; 
+  const MaterialProperty<Real> & _diffusivity;
 
   // Kernel specific members
 

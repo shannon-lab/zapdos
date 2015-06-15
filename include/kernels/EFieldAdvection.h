@@ -41,7 +41,8 @@ class EFieldAdvection : public Kernel
   
   // Material properties
 
-  MaterialProperty<Real> & _advection_coeff;
+  const MaterialProperty<Real> & _mobility;
+  const MaterialProperty<Real> & _potential_mult;
 
   // Coupled variables
   

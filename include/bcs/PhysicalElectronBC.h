@@ -31,12 +31,12 @@ protected:
   
   // Material Properties
 
-  MaterialProperty<RealVectorValue> & _advection_velocity_em;
-  MaterialProperty<Real> & _muem;
-  MaterialProperty<Real> & _v_thermal_em;
-  MaterialProperty<RealVectorValue> & _gamma_ip;
-  MaterialProperty<RealVectorValue> & _advection_velocity_ip;
-  MaterialProperty<Real> & _muip;
+  const MaterialProperty<RealVectorValue> & _advection_velocity_em;
+  const MaterialProperty<Real> & _muem;
+  const MaterialProperty<Real> & _v_thermal_em;
+  const MaterialProperty<RealVectorValue> & _gamma_ip;
+  const MaterialProperty<RealVectorValue> & _advection_velocity_ip;
+  const MaterialProperty<Real> & _muip;
 
   // Coupled variables
   

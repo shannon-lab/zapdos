@@ -23,8 +23,8 @@ class DiffusiveFlux : public AuxKernel
   
   // Material properties
 
-  MaterialProperty<Real> & _diffusivity;
-  MaterialProperty<Real> & _electron_mult;
+  const MaterialProperty<Real> & _diffusivity;
+  const MaterialProperty<Real> & _electron_mult;
   
   // Coupled variables
 

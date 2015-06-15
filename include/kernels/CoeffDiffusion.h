@@ -38,7 +38,7 @@ protected:
 
   //  const std::string _string;
 
-  MaterialProperty<Real> & _diffusivity;
+  const MaterialProperty<Real> & _diffusivity;
 };
 
 
