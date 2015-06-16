@@ -23,7 +23,6 @@ class ElectronSource : public Kernel
   // Material properties
 
   const MaterialProperty<Real> & _Ar;
-  const MaterialProperty<Real> & _N_A;
 
   // Coupled Variables
 

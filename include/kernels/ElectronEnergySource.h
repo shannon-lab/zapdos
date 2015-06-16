@@ -27,6 +27,8 @@ class ElectronEnergySource : public Kernel
   const MaterialProperty<Real> & _el_energy_gain_deexcitation;
   const MaterialProperty<Real> & _el_energy_gain_ionization;
   const MaterialProperty<Real> & _el_energy_gain_meta_ionization;
+  const MaterialProperty<Real> & _m_em;
+  const MaterialProperty<Real> & _mAr;
 
   // Coupled Variables
 
@@ -37,10 +39,19 @@ class ElectronEnergySource : public Kernel
 
   // Unique to kernel
 
+  Real _T_e;
+  Real _k1;
   Real _k2;
   Real _k3;
   Real _k4;
   Real _k5;
+  Real _dk1_dTe;
+  Real _dk2_dTe;
+  Real _dk3_dTe;
+  Real _dk4_dTe;
+  Real _dk5_dTe;
+  Real _dTe_d_em;
+  Real _dTe_d_mean_el_energy;
 };
 
 #endif /* ELECTRONENERGYSOURCE_H */

@@ -18,7 +18,6 @@ ElectronSource::ElectronSource(const std::string & name, InputParameters paramet
 
   // Material Properties
   _Ar(getMaterialProperty<Real>("Ar")),
-  _N_A(getMaterialProperty<Real>("N_A")),
 
   // Coupled Variables
   _Ars(coupledValue("Ars")),
@@ -50,7 +49,7 @@ ElectronSource::computeQpResidual()
   _k_4 = 2.34e-14*std::pow(_T_e,0.59)*std::exp(-17.44/(_T_e+1e-6));
   _k_5 = 6.8e-15*std::pow(_T_e,0.67)*std::exp(-4.20/(_T_e+1e-6));
 
-  return -_test[_i][_qp]*(_k_4*std::max(_u[_qp],0.0)*std::max(_Ar[_qp],0.0)*_N_A[_qp]+_k_5*std::max(_u[_qp],0.0)*std::max(_Ars[_qp],0.0)*_N_A[_qp]);
+  return -_test[_i][_qp]*(_k_4*std::max(_u[_qp],0.0)*std::max(_Ar[_qp],0.0)+_k_5*std::max(_u[_qp],0.0)*std::max(_Ars[_qp],0.0));
 }
 
 Real
@@ -60,7 +59,7 @@ ElectronSource::computeQpJacobian()
   _k_4 = 2.34e-14*std::pow(_T_e,0.59)*std::exp(-17.44/(_T_e+1e-6));
   _k_5 = 6.8e-15*std::pow(_T_e,0.67)*std::exp(-4.20/(_T_e+1e-6));
 
-  return -_test[_i][_qp]*(_k_4*_phi[_j][_qp]*_Ar[_qp]*_N_A[_qp]+_u[_qp]*_Ar[_qp]*_N_A[_qp]*(4.08096e-13*std::pow(_T_e,-1.41)*std::exp(-17.44/(_T_e+1e-6)) + 1.3806e-14*std::pow(_T_e,-0.41)*std::exp(-17.44/(_T_e+1e-6)))*-2.0*_mean_electron_energy[_qp]/(3.0*std::pow(_u[_qp],2))*_phi[_j][_qp] +_k_5*_phi[_j][_qp]*_Ars[_qp]*_N_A[_qp] + _u[_qp]*_Ars[_qp]*_N_A[_qp]*(2.856e-14*std::pow(_T_e,-1.33)*std::exp(-4.2/(_T_e+1e-6)) + 4.556e-15*std::pow(_T_e,-0.33)*std::exp(-4.2/(_T_e+1e-6)))*-2.0*_mean_electron_energy[_qp]/(3.0*std::pow(_u[_qp],2))*_phi[_j][_qp]);
+  return -_test[_i][_qp]*(_k_4*_phi[_j][_qp]*_Ar[_qp]+_u[_qp]*_Ar[_qp]*(4.08096e-13*std::pow(_T_e,-1.41)*std::exp(-17.44/(_T_e+1e-6)) + 1.3806e-14*std::pow(_T_e,-0.41)*std::exp(-17.44/(_T_e+1e-6)))*-2.0*_mean_electron_energy[_qp]/(3.0*std::pow(_u[_qp],2))*_phi[_j][_qp] +_k_5*_phi[_j][_qp]*_Ars[_qp] + _u[_qp]*_Ars[_qp]*(2.856e-14*std::pow(_T_e,-1.33)*std::exp(-4.2/(_T_e+1e-6)) + 4.556e-15*std::pow(_T_e,-0.33)*std::exp(-4.2/(_T_e+1e-6)))*-2.0*_mean_electron_energy[_qp]/(3.0*std::pow(_u[_qp],2))*_phi[_j][_qp]);
 }
 
 Real
@@ -76,11 +75,11 @@ ElectronSource::computeQpOffDiagJacobian(unsigned int jvar)
 
   if (jvar == _Ars_id)
     {
-      return -_test[_i][_qp]*(_k_5*_u[_qp]*_phi[_j][_qp]*_N_A[_qp]);
+      return -_test[_i][_qp]*(_k_5*_u[_qp]*_phi[_j][_qp]);
     }
   else if (jvar == _mean_electron_energy_id)
     {
-      return -_test[_i][_qp]*(_u[_qp]*_Ar[_qp]*_N_A[_qp]*_dk4_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]+_u[_qp]*_Ars[_qp]*_N_A[_qp]*_dk5_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]);
+      return -_test[_i][_qp]*(_u[_qp]*_Ar[_qp]*_dk4_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]+_u[_qp]*_Ars[_qp]*_dk5_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]);
     }
   else
     {

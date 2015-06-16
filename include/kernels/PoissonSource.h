@@ -31,14 +31,12 @@ public:
 protected:
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
-  //virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
   
   // Material properties
   
   const MaterialProperty<Real> & _permittivity;
-  const MaterialProperty<Real> & _coulomb_charge;
-  const MaterialProperty<Real> & _density_mult;
-  const MaterialProperty<Real> & _potential_mult;
+  const MaterialProperty<Real> & _e;
   
   // Coupled variables
   

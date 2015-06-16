@@ -78,6 +78,7 @@
 #include "PhysicalElectronBC.h"
 #include "AdvectionDoNothingBC.h"
 #include "SometimesAdvectionBC.h"
+#include "PhysicalElectronEnergyBC.h"
 
 // Actions
 
@@ -190,6 +191,7 @@ registerMaterial(Argon);
   registerBoundaryCondition(PhysicalElectronBC);
   registerBoundaryCondition(AdvectionDoNothingBC);
   registerBoundaryCondition(SometimesAdvectionBC);
+  registerBoundaryCondition(PhysicalElectronEnergyBC);
 }
 
 void

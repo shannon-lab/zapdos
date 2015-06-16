@@ -1,14 +1,19 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 1000
-  xmax = .05
-#  uniform_refine = 3
-#  xmax = 1.0
+  ny = 1000
+  ymin = .002
+  ymax = .05
 []
 
-#[Preconditioning]
-#  [./SMP]
+[Problem]
+  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
+  coord_type = RZ # Axisymmetric RZ
+  rz_coord_axis = X # Which axis the symmetry is around
+[]
+
+[Preconditioning]
+#  [./FDP]
 #    type = FDP
 #    full = true
 # #Preconditioned JFNK (default)
@@ -16,29 +21,37 @@
 #    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
 #    petsc_options_value = 'lu       1e-6                 ds'
 #  [../]
-#[]
+  [./SMP]
+    type = SMP
+    full = true
+ #Preconditioned JFNK (default)
+    solve_type = 'PJFNK'
+    petsc_options_iname = '-pc_type -pc_hypre_type'
+    petsc_options_value = 'hypre boomeramg'
+  [../]
+[]
 
 [Executioner]
   type = Transient
 #  dt = 2.1e-13
-  end_time = 2.1e-7
-  solve_type = PJFNK
-  petsc_options_iname = '-pc_type -pc_hypre_type'
-  petsc_options_value = 'hypre boomeramg'
+  end_time = 0.1
+#  solve_type = PJFNK
+#  petsc_options_iname = '-pc_type -pc_hypre_type'
+#  petsc_options_value = 'hypre boomeramg'
 #  trans_ss_check = true
 #  ss_check_tol = 1e-7
-  nl_rel_tol = 1e-6
+#  nl_rel_tol = 1e-6
 #  l_tol = 1e-1
 ##  nl_abs_tol = 1e-3
   l_max_its = 10
   nl_max_its = 5
-  dtmin = 2.1e-16
+#  dtmin = 2.1e-16
 #  line_search = none
   [./TimeStepper]
     type = IterationAdaptiveDT
     linear_iteration_ratio = 5
     cutback_factor = 0.5
-    dt = 2.1e-13
+    dt = 1e-6
     growth_factor = 2.0
     optimal_iterations = 4
   [../]
@@ -62,31 +75,74 @@
 []
 
 [LotsOfCoeffDiffusion]
-  variables = 'em mean_electron_energy'
+  variables = 'Ars Arp'
 []
 
 [LotsOfTimeDerivatives]
-  variables = 'em mean_electron_energy'
-[]
-
-[LotsOfSources]
-  variables = 'em ip potential'
+  variables = 'em mean_electron_energy Ars Arp'
 []
 
 [LotsOfEFieldAdvection]
-  variables = 'em mean_electron_energy'
+  variables = 'em mean_electron_energy Arp'
   potential = 'potential'
 []
 
-[LotsOfPotentialDrivenArtificialDiff]
-  variables = 'em'
-  potential = 'potential'
-[]
+#[LotsOfPotentialDrivenArtificialDiff]
+#  variables = 'em'
+#  potential = 'potential'
+#[]
 
 [Kernels]
   [./potential_diffusion]
     type = Diffusion
     variable = potential
+  [../]
+  [./potential_source]
+    type = PoissonSource
+    variable = potential
+    ion_density = Arp
+    electron_density = em
+  [../]
+  [./electron_diffusion]
+    type = ElectronDiffusion
+    variable = em
+    mean_electron_energy = mean_electron_energy
+  [../]
+  [./electron_source]
+    type = ElectronSource
+    variable = em
+    Ars = Ars
+    mean_electron_energy = mean_electron_energy
+  [../]
+  [./el_energy_diffusion]
+    type = ElectronEnergyDiffusion
+    variable = mean_electron_energy
+    em = em
+  [../]
+  [./el_energy_source]
+    type = ElectronEnergySource
+    variable = mean_electron_energy
+    Ars = Ars
+    em = em
+  [../]
+  [./ars_source]
+    type = ArsSource
+    variable = Ars
+    em = em
+    mean_electron_energy = mean_electron_energy
+  [../]
+  [./arp_source]
+    type = ArpSource
+    variable = Arp
+    em = em
+    mean_electron_energy = mean_electron_energy
+    Ars = Ars
+  [../]
+  [./joule_heating]
+    type = JouleHeating
+    variable = mean_electron_energy
+    potential = potential
+    em = em
   [../]
 []
 
@@ -97,8 +153,14 @@
   [./em]
     scaling = 1e-7
   [../]
-  [./ip]
+  [./Arp]
     scaling = 1e-5
+  [../]
+  [./Ars]
+    scaling = 1
+  [../]
+  [./mean_electron_energy]
+    scaling = 1
   [../]
 []
 
@@ -122,6 +184,7 @@
     type = Argon
     em = em
     potential = potential
+    mean_electron_energy = mean_electron_energy
  [../]
 []
 
@@ -130,36 +193,36 @@
     type = DirichletBC
     variable = potential
     boundary = left
-    value = 0.0
+    value = -1000
   [../]
   [./potential_dirichlet_right]
     type = DirichletBC
     variable = potential
     boundary = right
-    value = 458
+    value = 0
   [../]
   [./ip_physical_left]
     type = PhysicalIonBC
-    variable = ip
+    variable = Arp
     boundary = left
   [../]
   [./ip_physical_right]
     type = PhysicalIonBC
-    variable = ip
+    variable = Arp
     boundary = right
   [../]
   [./em_physical_left]
     type = PhysicalElectronBC
     variable = em
     boundary = left
-    ip = ip
+    ip = Arp
     se_coeff = 0.1
   [../]
   [./em_physical_right]
     type = PhysicalElectronBC
     variable = em
     boundary = right
-    ip = ip
+    ip = Arp
     se_coeff = 0.1
   [../]
 []
@@ -172,21 +235,20 @@
   [../]
   [./ip_ic]
     type = FunctionIC
-    variable = ip
+    variable = Arp
     function = density_ic_parsed_function
   [../]
-  [./potential_ic]
-    type = FunctionIC
-    variable = potential
-    function = potential_parsed_function
-  [../]
+#  [./potential_ic]
+#    type = FunctionIC
+#    variable = potential
+#    function = potential_parsed_function
+#  [../]
 []
 
 [Functions]
   [./density_ic_parsed_function]
     type = ParsedFunction
-#    value = '7.81e-6*exp(-pow(x-(7.36e-5),2)/pow(2.30e-6,2))'
-    value = '1e-6'
+    value = '1e13'
   [../]
   [./potential_parsed_function]
     type = ParsedFunction

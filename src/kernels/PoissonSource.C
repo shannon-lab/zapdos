@@ -29,9 +29,7 @@ PoissonSource::PoissonSource(const std::string & name, InputParameters parameter
     // Material properties 
     
     _permittivity(getMaterialProperty<Real>("permittivity")),
-    _coulomb_charge(getMaterialProperty<Real>("coulomb_charge")),
-    _density_mult(getMaterialProperty<Real>("density_mult")),
-    _potential_mult(getMaterialProperty<Real>("potential_mult")),
+    _e(getMaterialProperty<Real>("e")),
     
     // Coupled variables
     
@@ -49,7 +47,7 @@ for the densities is 1e19. The scaling term for the potential is 1e4 */
 Real
 PoissonSource::computeQpResidual()
 {
-  return _test[_i][_qp]*(_electron_density[_qp]-_ion_density[_qp]);
+  return -_test[_i][_qp]*_e[_qp]/_permittivity[_qp]*(_ion_density[_qp]-_electron_density[_qp]);
 }
 
 Real
@@ -58,19 +56,20 @@ PoissonSource::computeQpJacobian()
   return 0.0;
 }
 
-/*Real
+Real
 PoissonSource::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _ion_density_id)
-  {
-    return -_test[_i][_qp]*_coulomb_charge[_qp]/_permittivity[_qp]*_density_mult[_qp]/_potential_mult[_qp]*_phi[_j][_qp];
-  }
+    {
+      return -_test[_i][_qp]*_e[_qp]/_permittivity[_qp]*_phi[_j][_qp];
+    }
   
-  if (jvar == _electron_density_id)
-  {
-    return _test[_i][_qp]*_coulomb_charge[_qp]/_permittivity[_qp]*_density_mult[_qp]/_potential_mult[_qp]*_phi[_j][_qp];
-  }
-  
-  return 0.0;
-} */
-  
+  else if (jvar == _electron_density_id)
+    {
+      return _test[_i][_qp]*_e[_qp]/_permittivity[_qp]*_phi[_j][_qp];
+    }
+  else
+    {
+      return 0.0;
+    }
+}

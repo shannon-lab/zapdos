@@ -55,6 +55,7 @@ protected:
   MaterialProperty<Real> & _k_boltz;
   MaterialProperty<Real> & _T_em;
   MaterialProperty<Real> & _m_em;
+  MaterialProperty<Real> & _mAr;
   MaterialProperty<Real> & _v_thermal_em;
   MaterialProperty<RealVectorValue> & _advection_velocity_em;
   MaterialProperty<Real> & _mu_mean_electron_energy;
@@ -70,6 +71,13 @@ protected:
   MaterialProperty<Real> & _el_energy_gain_deexcitation;
   MaterialProperty<Real> & _el_energy_gain_ionization;
   MaterialProperty<Real> & _el_energy_gain_meta_ionization;
+  MaterialProperty<Real> & _muAr;
+  MaterialProperty<Real> & _D_Ar;
+  MaterialProperty<Real> &  _D_Ars;
+  MaterialProperty<Real> &  _D_Arp;
+  MaterialProperty<Real> &  _muArp;
+  MaterialProperty<Real> &  _permittivity;
+  MaterialProperty<Real> & _EFieldAdvectionCoeff_Arp;
 };
 
 #endif //ARGON_H
