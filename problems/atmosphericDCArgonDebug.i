@@ -1,9 +1,15 @@
 [Mesh]
   type = GeneratedMesh
-  dim = 1
-  nx = 100
+  dim = 3
+  nx = 4
+  ny = 4
+  nz = 4
   xmin = 0.0
   xmax = .05
+  ymin = 0.0
+  ymax = .05
+  zmin = 0.0
+  zmax = .05
 []
 
 #[Problem]
@@ -13,14 +19,14 @@
 #[]
 
 [Preconditioning]
-  [./FDP]
-    type = FDP
-    full = true
- #Preconditioned JFNK (default)
-#    solve_type = 'PJFNK'
-#    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
-#    petsc_options_value = 'lu       1e-6                 ds'
-  [../]
+#  [./FDP]
+#    type = FDP
+#    full = true
+# #Preconditioned JFNK (default)
+##    solve_type = 'PJFNK'
+##    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
+##    petsc_options_value = 'lu       1e-6                 ds'
+#  [../]
 #  [./SMP]
 #    type = SMP
 #    full = true
@@ -34,40 +40,40 @@
 [Executioner]
   type = Transient
 #  dt = 1e-6
-  end_time = 1e-6
+  end_time = 1e-10
 #  solve_type = PJFNK
 #  petsc_options_iname = '-pc_type -pc_hypre_type'
 #  petsc_options_value = 'hypre boomeramg'
 #  trans_ss_check = true
 #  ss_check_tol = 1e-7
-  nl_rel_tol = 1e-6
+#  nl_rel_tol = 1e-6
 #  l_tol = 1e-1
 ##  nl_abs_tol = 1e-3
   l_max_its = 10
-  nl_max_its = 7
-  dtmin = 1e-12
+  nl_max_its = 5
+  dtmin = 5e-12
   line_search = none
   [./TimeStepper]
     type = IterationAdaptiveDT
-#    linear_iteration_ratio = 5
+    linear_iteration_ratio = 5
     cutback_factor = 0.5
     dt = 1e-11
     growth_factor = 2.0
-#    optimal_iterations = 4
+    optimal_iterations = 4
   [../]
 []
 
 [Outputs]
-#  exodus = true
+  exodus = true
   print_perf_log = true
   print_linear_residuals = true
   output_initial = true
 #  interval = 100
-  [./out]
-    type = Exodus
-    output_material_properties = true
-    show_material_properties = 'T_em'
-  [../]
+#  [./out]
+#    type = Exodus
+#    output_material_properties = true
+#    show_material_properties = 'advection_velocity_em advection_velocity_ip EField gamma_em gamma_ip'
+#  [../]
 []
 
 [Debug]
@@ -90,7 +96,6 @@
 [LotsOfPotentialDrivenArtificialDiff]
   variables = 'em Arp mean_electron_energy'
   potential = 'potential'
-  delta = 500.0
 []
 
 [Kernels]
@@ -147,39 +152,21 @@
   [../]
 []
 
-#[Variables]
-#  [./potential]
-#    scaling = 1e-6
-# [../]
-#  [./em]
-#    scaling = 1e-18
-#  [../]
-#  [./Arp]
-#    scaling = 1e-18
-#  [../]
-#  [./Ars]
-#    scaling = 1e-12
-#  [../]
-#  [./mean_electron_energy]
-#    scaling = 1e-79
-#  [../]
-#[]
-
 [Variables]
   [./potential]
-    scaling = 1e-5
+    scaling = 1e-6
  [../]
   [./em]
-    scaling = 1e-22
+    scaling = 1e-18
   [../]
   [./Arp]
-    scaling = 1e-22
+    scaling = 1e-18
   [../]
   [./Ars]
-    scaling = 1e-22
+    scaling = 1e-12
   [../]
   [./mean_electron_energy]
-    scaling = 1e-23
+    scaling = 1e-79
   [../]
 []
 
@@ -254,51 +241,51 @@
 
 [ICs]
   [./em_ic]
-    type = FunctionIC
+    type = RandomIC
     variable = em
-    function = density_ic_parsed_function
   [../]
   [./ip_ic]
-    type = FunctionIC
+    type = RandomIC
     variable = Arp
-    function = density_ic_parsed_function
   [../]
   [./mean_el_energy_ic]
-    type = ConstantIC
+    type = RandomIC
     variable = mean_electron_energy
-    value = 1.5e13
   [../]
-#  [./potential_ic]
-#    type = FunctionIC
-#    variable = potential
-#    function = potential_parsed_function
+  [./potential_ic]
+    type = RandomIC
+    variable = potential
+  [../]
+  [./ars_ic]
+    type = RandomIC
+    variable = Ars
+  [../]
+[]
+
+#[Functions]
+#  [./density_ic_parsed_function]
+#    type = ParsedFunction
+#    value = '1e13'
 #  [../]
-[]
+#  [./potential_parsed_function]
+#    type = ParsedFunction
+#    value = '2.0e7*x'
+#[]
 
-[Functions]
-  [./density_ic_parsed_function]
-    type = ParsedFunction
-    value = '1e13'
-  [../]
-  [./potential_parsed_function]
-    type = ParsedFunction
-    value = '2.0e7*x'
-[]
-
-[Adaptivity]
-  marker = error_frac_edens
-  max_h_level = 3
-  [./Indicators]
+#[Adaptivity]
+#  marker = combo
+#  max_h_level = 3
+#  [./Indicators]
 #    [./temp_jump_potential]
 #      type = GradientJumpIndicator
 #      variable = potential
 #      scale_by_flux_faces = true
 #    [../]
-    [./temp_jump_edens]
-      type = GradientJumpIndicator
-      variable = em
-      scale_by_flux_faces = true
-    [../]
+#    [./temp_jump_edens]
+#      type = GradientJumpIndicator
+#      variable = em
+#      scale_by_flux_faces = true
+#    [../]
 #    [./temp_jump_idens]
 #      type = GradientJumpIndicator
 #      variable = ip
@@ -314,20 +301,20 @@
 ##      variable = alpha_times_h
 ##      function = unity_function
 ##    [../]
-  [../]
-  [./Markers]
+#  [../]
+#  [./Markers]
 #    [./error_frac_pot]
 #      type = ErrorFractionMarker
 #      coarsen = 0.1
 #      indicator = temp_jump_potential
 #      refine = 0.6
 #    [../]
-    [./error_frac_edens]
-      type = ErrorFractionMarker
-      coarsen = 0.1
-      indicator = temp_jump_edens
-      refine = 0.6
-    [../]
+#    [./error_frac_edens]
+#      type = ErrorFractionMarker
+#      coarsen = 0.1
+#      indicator = temp_jump_edens
+#      refine = 0.6
+#    [../]
 #    [./error_frac_idens]
 #      type = ErrorFractionMarker
 #      coarsen = 0.1
@@ -344,5 +331,5 @@
 ##      coarsen = 0
 ##      refine = 0
 ##    [../]
-  [../]
-[]
+#  [../]
+#[]

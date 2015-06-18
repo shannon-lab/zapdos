@@ -86,6 +86,7 @@ ArsSource::computeQpOffDiagJacobian(unsigned int jvar)
     }
   else if (jvar == _mean_electron_energy_id)
     {
+      //      std::cout << "In the mean_electron_energy off-diagonal calculations for u = Ars" << std::endl;
       return -_test[_i][_qp]*(_Ar[_qp]*std::max(_em[_qp],1.0)*_dk2_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]-std::max(_em[_qp],1.0)*_u[_qp]*_dk3_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]-_k5*std::max(_em[_qp],1.0)*_u[_qp]*_dk5_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]);
     }
   else

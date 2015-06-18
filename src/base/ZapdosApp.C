@@ -37,6 +37,7 @@
 #include "ArpSource.h"
 #include "ElectronSource.h"
 #include "ElectronEnergySource.h"
+#include "TimeDerivativeElectronTemp.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
 
@@ -161,6 +162,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ArpSource);
   registerKernel(ElectronSource);
   registerKernel(ElectronEnergySource);
+  registerKernel(TimeDerivativeElectronTemp);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);

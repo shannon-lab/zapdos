@@ -47,7 +47,7 @@ InputParameters validParams<AddLotsOfPotentialDrivenArtificialDiff>()
   InputParameters params = validParams<AddVariableAction>();
   params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which PotentialDrivenArtificialDiff kernels should be added");
   params.addRequiredParam<std::vector<VariableName> >("potential", "A dummy vector that holds the potential to couple in for advection");
-
+  params.addParam<Real>("delta","Used for determining the amount of artificial diffusion to add.");
   return params;
 }
 
@@ -65,6 +65,7 @@ AddLotsOfPotentialDrivenArtificialDiff::act()
 
   std::vector<NonlinearVariableName> variables = getParam<std::vector<NonlinearVariableName> > ("variables");
   std::vector<VariableName> potential = getParam<std::vector<VariableName> > ("potential");
+  Real delta = getParam<Real>("delta");
 
   unsigned int number = variables.size();
 
@@ -77,6 +78,7 @@ AddLotsOfPotentialDrivenArtificialDiff::act()
 	  params.set<NonlinearVariableName>("variable") = var_name;
 	  params.set<std::string>("var_name_string") = var_name;
 	  params.set<std::vector<VariableName> >("potential") = potential;
+	  params.set<Real>("delta") = delta;
 	  _problem->addKernel("PotentialDrivenArtificialDiff", var_name, params);
 	}
     }
