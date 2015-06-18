@@ -58,7 +58,7 @@ protected:
   MaterialProperty<Real> & _mAr;
   MaterialProperty<Real> & _v_thermal_em;
   MaterialProperty<RealVectorValue> & _advection_velocity_em;
-  MaterialProperty<Real> & _mu_mean_electron_energy;
+  MaterialProperty<Real> & _mumean_electron_energy;
   MaterialProperty<Real> & _EFieldAdvectionCoeff_mean_electron_energy;
   MaterialProperty<Real> & _D_mean_electron_energy;
   MaterialProperty<Real> & _k6;

@@ -1,40 +1,40 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  ny = 1000
-  ymin = .002
-  ymax = .05
+  nx = 1000
+  xmin = 0.0
+  xmax = .05
 []
 
-[Problem]
-  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
-  coord_type = RZ # Axisymmetric RZ
-  rz_coord_axis = X # Which axis the symmetry is around
-[]
+#[Problem]
+#  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
+#  coord_type = RZ # Axisymmetric RZ
+#  rz_coord_axis = X # Which axis the symmetry is around
+#[]
 
 [Preconditioning]
 #  [./FDP]
 #    type = FDP
 #    full = true
 # #Preconditioned JFNK (default)
-#    solve_type = 'PJFNK'
-#    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
-#    petsc_options_value = 'lu       1e-6                 ds'
+##    solve_type = 'PJFNK'
+##    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
+##    petsc_options_value = 'lu       1e-6                 ds'
 #  [../]
-  [./SMP]
-    type = SMP
-    full = true
- #Preconditioned JFNK (default)
-    solve_type = 'PJFNK'
-    petsc_options_iname = '-pc_type -pc_hypre_type'
-    petsc_options_value = 'hypre boomeramg'
-  [../]
+#  [./SMP]
+#    type = SMP
+#    full = true
+# #Preconditioned JFNK (default)
+#    solve_type = 'PJFNK'
+#    petsc_options_iname = '-pc_type -pc_hypre_type'
+#    petsc_options_value = 'hypre boomeramg'
+#  [../]
 []
 
 [Executioner]
   type = Transient
-#  dt = 2.1e-13
-  end_time = 0.1
+#  dt = 1e-6
+  end_time = 1e-10
 #  solve_type = PJFNK
 #  petsc_options_iname = '-pc_type -pc_hypre_type'
 #  petsc_options_value = 'hypre boomeramg'
@@ -45,29 +45,29 @@
 ##  nl_abs_tol = 1e-3
   l_max_its = 10
   nl_max_its = 5
-#  dtmin = 2.1e-16
-#  line_search = none
+  dtmin = 5e-12
+  line_search = none
   [./TimeStepper]
     type = IterationAdaptiveDT
     linear_iteration_ratio = 5
     cutback_factor = 0.5
-    dt = 1e-6
+    dt = 1e-11
     growth_factor = 2.0
     optimal_iterations = 4
   [../]
 []
 
 [Outputs]
-#  exodus = true
+  exodus = true
   print_perf_log = true
   print_linear_residuals = true
   output_initial = true
 #  interval = 100
-  [./out]
-    type = Exodus
-    output_material_properties = true
-    show_material_properties = 'advection_velocity_em advection_velocity_ip EField gamma_em gamma_ip'
-  [../]
+#  [./out]
+#    type = Exodus
+#    output_material_properties = true
+#    show_material_properties = 'advection_velocity_em advection_velocity_ip EField gamma_em gamma_ip'
+#  [../]
 []
 
 [Debug]
@@ -87,10 +87,10 @@
   potential = 'potential'
 []
 
-#[LotsOfPotentialDrivenArtificialDiff]
-#  variables = 'em'
-#  potential = 'potential'
-#[]
+[LotsOfPotentialDrivenArtificialDiff]
+  variables = 'em Arp mean_electron_energy'
+  potential = 'potential'
+[]
 
 [Kernels]
   [./potential_diffusion]
@@ -100,8 +100,8 @@
   [./potential_source]
     type = PoissonSource
     variable = potential
-    ion_density = Arp
-    electron_density = em
+    Arp = Arp
+    em = em
   [../]
   [./electron_diffusion]
     type = ElectronDiffusion
@@ -148,19 +148,19 @@
 
 [Variables]
   [./potential]
-    scaling = 1e9
+    scaling = 1e-6
  [../]
   [./em]
-    scaling = 1e-7
+    scaling = 1e-18
   [../]
   [./Arp]
-    scaling = 1e-5
+    scaling = 1e-18
   [../]
   [./Ars]
-    scaling = 1
+    scaling = 1e-12
   [../]
   [./mean_electron_energy]
-    scaling = 1
+    scaling = 1e-79
   [../]
 []
 
@@ -225,6 +225,12 @@
     ip = Arp
     se_coeff = 0.1
   [../]
+  [./mean_el_en]
+    type = PhysicalElectronEnergyBC
+    variable = mean_electron_energy
+    potential = potential
+    boundary = 'left right'
+  [../]
 []
 
 [ICs]
@@ -237,6 +243,11 @@
     type = FunctionIC
     variable = Arp
     function = density_ic_parsed_function
+  [../]
+  [./mean_el_energy_ic]
+    type = ConstantIC
+    variable = mean_electron_energy
+    value = 1.5e13
   [../]
 #  [./potential_ic]
 #    type = FunctionIC

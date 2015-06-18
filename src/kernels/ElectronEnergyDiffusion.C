@@ -33,7 +33,7 @@ ElectronEnergyDiffusion::ElectronEnergyDiffusion(const std::string & name, Input
 
     // Material Properties
 
-    _mu_mean_electron_energy(getMaterialProperty<Real>("mu_mean_electron_energy")),
+    _mu_mean_electron_energy(getMaterialProperty<Real>("mumean_electron_energy")),
 
     // Coupled Variables
 

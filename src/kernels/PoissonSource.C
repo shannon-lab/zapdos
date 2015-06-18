@@ -18,8 +18,8 @@ template<>
 InputParameters validParams<PoissonSource>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addRequiredCoupledVar("ion_density", "Ion density in the simulation");
-  params.addRequiredCoupledVar("electron_density", "Electron density in the simulation");
+  params.addRequiredCoupledVar("Arp", "Ion density in the simulation");
+  params.addRequiredCoupledVar("em", "Electron density in the simulation");
   return params;
 }
 
@@ -33,10 +33,10 @@ PoissonSource::PoissonSource(const std::string & name, InputParameters parameter
     
     // Coupled variables
     
-    _ion_density(coupledValue("ion_density")),
-    _electron_density(coupledValue("electron_density")),
-    _ion_density_id(coupled("ion_density")),
-    _electron_density_id(coupled("electron_density"))
+    _Arp(coupledValue("Arp")),
+    _em(coupledValue("em")),
+    _Arp_id(coupled("Arp")),
+    _em_id(coupled("em"))
     
 {
 }
@@ -47,7 +47,7 @@ for the densities is 1e19. The scaling term for the potential is 1e4 */
 Real
 PoissonSource::computeQpResidual()
 {
-  return -_test[_i][_qp]*_e[_qp]/_permittivity[_qp]*(_ion_density[_qp]-_electron_density[_qp]);
+  return -_test[_i][_qp]*_e[_qp]/_permittivity[_qp]*(_Arp[_qp]-_em[_qp]);
 }
 
 Real
@@ -59,12 +59,12 @@ PoissonSource::computeQpJacobian()
 Real
 PoissonSource::computeQpOffDiagJacobian(unsigned int jvar)
 {
-  if (jvar == _ion_density_id)
+  if (jvar == _Arp_id)
     {
       return -_test[_i][_qp]*_e[_qp]/_permittivity[_qp]*_phi[_j][_qp];
     }
   
-  else if (jvar == _electron_density_id)
+  else if (jvar == _em_id)
     {
       return _test[_i][_qp]*_e[_qp]/_permittivity[_qp]*_phi[_j][_qp];
     }

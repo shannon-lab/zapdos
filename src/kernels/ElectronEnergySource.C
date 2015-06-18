@@ -56,63 +56,63 @@ Real
 ElectronEnergySource::computeQpResidual()
 {
   // Clean expression for reading:
-  // return -_test[_i][_qp]*(_k2*_em[_qp]*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_k3*_em[_qp]*_Ars[_qp]*_el_energy_gain_deexcitation[_qp]+_k4*_em[_qp]*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_k5*_em[_qp]*_Ars[_qp]*_el_energy_gain_meta_ionization[_qp]-_k1*_em[_qp]*_Ar[_qp]*3.0*_m_em[_qp]/_mAr[_qp]*_u[_qp]*2.0/(3.0*_em[_qp]));
+  // return -_test[_i][_qp]*(_k2*std::max(_em[_qp],1.0)*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_k3*std::max(_em[_qp],1.0)*_Ars[_qp]*_el_energy_gain_deexcitation[_qp]+_k4*std::max(_em[_qp],1.0)*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_k5*std::max(_em[_qp],1.0)*_Ars[_qp]*_el_energy_gain_meta_ionization[_qp]-_k1*std::max(_em[_qp],1.0)*_Ar[_qp]*3.0*std::max(_em[_qp],1.0)/_mAr[_qp]*std::max(_u[_qp],0.0)*2.0/(3.0*std::max(_em[_qp],1.0)));
 
-  _T_e = _u[_qp]*2.0/(3.0*_em[_qp]);
-  _k1 = 2.336e-14*std::pow(_T_e,1.609)*std::exp(0.0618*std::pow(std::log(_T_e),2)-0.1171*std::pow(std::log(_T_e),3));
-  _k2 = 5.0e-15*std::pow(_T_e,0.74)*std::exp(-11.56/(_T_e+1e-6)); // Electron impact excitation of ground state argon to create Ars (Ar(4s) in Liebermans text)
-  _k3 = 4.3e-16*std::pow(_T_e,0.74); // Electron impact dexcitation of Ars (Ar(4s) in Liebermans text)
-  _k4 = 2.34e-14*std::pow(_T_e,0.59)*std::exp(-17.44/(_T_e+1e-6));
-  _k5 = 6.8e-15*std::pow(_T_e,0.67)*std::exp(-4.20/(_T_e+1e-6));
+  _T_e = std::max(_u[_qp],0.0)*2.0/(3.0*std::max(_em[_qp],1.0));
+  _k1 = 2.336e-14*std::pow(std::max(_T_e,1e-6),1.609)*std::exp(0.0618*std::pow(std::log(std::max(_T_e,1e-6)),2)-0.1171*std::pow(std::log(std::max(_T_e,1e-6)),3));
+  _k2 = 5.0e-15*std::pow(std::max(_T_e,1e-6),0.74)*std::exp(-11.56/(_T_e+1e-6)); // Electron impact excitation of ground state argon to create Ars (Ar(4s) in Liebermans text)
+  _k3 = 4.3e-16*std::pow(std::max(_T_e,1e-6),0.74); // Electron impact dexcitation of Ars (Ar(4s) in Liebermans text)
+  _k4 = 2.34e-14*std::pow(std::max(_T_e,1e-6),0.59)*std::exp(-17.44/(_T_e+1e-6));
+  _k5 = 6.8e-15*std::pow(std::max(_T_e,1e-6),0.67)*std::exp(-4.20/(_T_e+1e-6));
 
-  return -_test[_i][_qp]*(_k2*std::max(_em[_qp],0.0)*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_k3*std::max(_em[_qp],0.0)*std::max(_Ars[_qp],0.0)*_el_energy_gain_deexcitation[_qp]+_k4*std::max(_em[_qp],0.0)*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_k5*std::max(_em[_qp],0.0)*std::max(_Ars[_qp],0.0)*_el_energy_gain_meta_ionization[_qp]-_k1*std::max(_em[_qp],0.0)*_Ar[_qp]*3.0*_m_em[_qp]/_mAr[_qp]*_u[_qp]*2.0/(3.0*_em[_qp]));
+  return -_test[_i][_qp]*(_k2*std::max(std::max(_em[_qp],1.0),0.0)*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_k3*std::max(std::max(_em[_qp],1.0),0.0)*std::max(_Ars[_qp],0.0)*_el_energy_gain_deexcitation[_qp]+_k4*std::max(std::max(_em[_qp],1.0),0.0)*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_k5*std::max(std::max(_em[_qp],1.0),0.0)*std::max(_Ars[_qp],0.0)*_el_energy_gain_meta_ionization[_qp]-_k1*std::max(std::max(_em[_qp],1.0),0.0)*_Ar[_qp]*3.0*std::max(_em[_qp],1.0)/_mAr[_qp]*std::max(_u[_qp],0.0)*2.0/(3.0*std::max(_em[_qp],1.0)));
 }
 
 Real
 ElectronEnergySource::computeQpJacobian()
 {
-  _T_e = _u[_qp]*2.0/(3.0*_em[_qp]);
-  _k1 = 2.336e-14*std::pow(_T_e,1.609)*std::exp(0.0618*std::pow(std::log(_T_e),2)-0.1171*std::pow(std::log(_T_e),3));
-  _k2 = 5.0e-15*std::pow(_T_e,0.74)*std::exp(-11.56/(_T_e+1e-6)); // Electron impact excitation of ground state argon to create Ars (Ar(4s) in Liebermans text)
-  _k3 = 4.3e-16*std::pow(_T_e,0.74); // Electron impact dexcitation of Ars (Ar(4s) in Liebermans text)
-  _k5 = 6.8e-15*std::pow(_T_e,0.67)*std::exp(-4.20/(_T_e+1e-6));
-  _dk1_dTe = 3.758624e-14*std::pow(_T_e,0.609)*exp(-0.1171*std::pow(std::log(_T_e),3) + 0.0618*std::pow(std::log(_T_e),2)) + 2.336e-14*std::pow(_T_e,1.609)*(-0.3513*std::pow(std::log(_T_e),2)/_T_e + 0.1236*std::log(_T_e)/_T_e)*exp(-0.1171*std::pow(std::log(_T_e),3) + 0.0618*std::pow(std::log(_T_e),2));
-  _dk2_dTe = 5.78e-14*std::pow(_T_e,-1.26)*std::exp(-11.56/(_T_e+1e-6))+3.7e-15*std::pow(_T_e,-0.26)*std::exp(-11.56/(_T_e+1e-6));
-  _dk3_dTe = 3.182e-16*std::pow(_T_e,-0.26);
-  _dk4_dTe = 4.08096e-13*std::pow(_T_e,-1.41)*std::exp(-17.44/(_T_e+1e-6))+1.3806e-14*std::pow(_T_e,-0.41)*std::exp(-17.44/(_T_e+1e-6));
-  _dk5_dTe = 2.856e-14*std::pow(_T_e,-1.33)*std::exp(-4.2/(_T_e+1e-6))+4.556e-15*std::pow(_T_e,-0.33)*std::exp(-4.2/(_T_e+1e-6));
-  _dTe_d_em = -2.0*_u[_qp]/(3.0*std::pow(_em[_qp],2));
-  _dTe_d_mean_el_energy = 2.0/(3.0*_em[_qp]);  
+  _T_e = std::max(_u[_qp],0.0)*2.0/(3.0*std::max(_em[_qp],1.0));
+  _k1 = 2.336e-14*std::pow(std::max(_T_e,1e-6),1.609)*std::exp(0.0618*std::pow(std::log(std::max(_T_e,1e-6)),2)-0.1171*std::pow(std::log(std::max(_T_e,1e-6)),3));
+  _k2 = 5.0e-15*std::pow(std::max(_T_e,1e-6),0.74)*std::exp(-11.56/(_T_e+1e-6)); // Electron impact excitation of ground state argon to create Ars (Ar(4s) in Liebermans text)
+  _k3 = 4.3e-16*std::pow(std::max(_T_e,1e-6),0.74); // Electron impact dexcitation of Ars (Ar(4s) in Liebermans text)
+  _k5 = 6.8e-15*std::pow(std::max(_T_e,1e-6),0.67)*std::exp(-4.20/(_T_e+1e-6));
+  _dk1_dTe = 3.758624e-14*std::pow(std::max(_T_e,1e-6),0.609)*exp(-0.1171*std::pow(std::log(std::max(_T_e,1e-6)),3) + 0.0618*std::pow(std::log(std::max(_T_e,1e-6)),2)) + 2.336e-14*std::pow(std::max(_T_e,1e-6),1.609)*(-0.3513*std::pow(std::log(std::max(_T_e,1e-6)),2)/std::max(_T_e,1e-16) + 0.1236*std::log(std::max(_T_e,1e-6))/std::max(_T_e,1e-16))*exp(-0.1171*std::pow(std::log(std::max(_T_e,1e-6)),3) + 0.0618*std::pow(std::log(std::max(_T_e,1e-6)),2));
+  _dk2_dTe = 5.78e-14*std::pow(std::max(_T_e,1e-6),-1.26)*std::exp(-11.56/(_T_e+1e-6))+3.7e-15*std::pow(std::max(_T_e,1e-6),-0.26)*std::exp(-11.56/(_T_e+1e-6));
+  _dk3_dTe = 3.182e-16*std::pow(std::max(_T_e,1e-6),-0.26);
+  _dk4_dTe = 4.08096e-13*std::pow(std::max(_T_e,1e-6),-1.41)*std::exp(-17.44/(_T_e+1e-6))+1.3806e-14*std::pow(std::max(_T_e,1e-6),-0.41)*std::exp(-17.44/(_T_e+1e-6));
+  _dk5_dTe = 2.856e-14*std::pow(std::max(_T_e,1e-6),-1.33)*std::exp(-4.2/(_T_e+1e-6))+4.556e-15*std::pow(std::max(_T_e,1e-6),-0.33)*std::exp(-4.2/(_T_e+1e-6));
+  _dTe_d_em = -2.0*std::max(_u[_qp],0.0)/(3.0*std::pow(std::max(_em[_qp],1.0),2));
+  _dTe_d_mean_el_energy = 2.0/(3.0*std::max(_em[_qp],1.0));  
 
   // Clean residual
-  // return -_test[_i][_qp]*(_k2*_em[_qp]*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_k3*_em[_qp]*_Ars[_qp]*_el_energy_gain_deexcitation[_qp]+_k4*_em[_qp]*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_k5*_em[_qp]*_Ars[_qp]*_el_energy_gain_meta_ionization[_qp]-_k1*_em[_qp]*_Ar[_qp]*3.0*_m_em[_qp]/_mAr[_qp]*_u[_qp]*2.0/(3.0*_em[_qp]));
+  // return -_test[_i][_qp]*(_k2*std::max(_em[_qp],1.0)*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_k3*std::max(_em[_qp],1.0)*_Ars[_qp]*_el_energy_gain_deexcitation[_qp]+_k4*std::max(_em[_qp],1.0)*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_k5*std::max(_em[_qp],1.0)*_Ars[_qp]*_el_energy_gain_meta_ionization[_qp]-_k1*std::max(_em[_qp],1.0)*_Ar[_qp]*3.0*std::max(_em[_qp],1.0)/_mAr[_qp]*std::max(_u[_qp],0.0)*2.0/(3.0*std::max(_em[_qp],1.0)));
 
-  return -_test[_i][_qp]*(_dk2_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]*_em[_qp]*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_dk3_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]*_em[_qp]*_Ars[_qp]*_el_energy_gain_deexcitation[_qp]+_dk4_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]*_em[_qp]*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_dk5_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]*_em[_qp]*_Ars[_qp]*_el_energy_gain_meta_ionization[_qp]-_dk1_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]*_em[_qp]*_Ar[_qp]*3.0*_m_em[_qp]/_mAr[_qp]*_u[_qp]*2.0/(3.0*_em[_qp])-_k1*_em[_qp]*_Ar[_qp]*3.0*_m_em[_qp]/_mAr[_qp]*_phi[_j][_qp]*2.0/(3.0*_em[_qp]));
+  return -_test[_i][_qp]*(_dk2_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]*std::max(_em[_qp],1.0)*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_dk3_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]*std::max(_em[_qp],1.0)*_Ars[_qp]*_el_energy_gain_deexcitation[_qp]+_dk4_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]*std::max(_em[_qp],1.0)*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_dk5_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]*std::max(_em[_qp],1.0)*_Ars[_qp]*_el_energy_gain_meta_ionization[_qp]-_dk1_dTe*_dTe_d_mean_el_energy*_phi[_j][_qp]*std::max(_em[_qp],1.0)*_Ar[_qp]*3.0*std::max(_em[_qp],1.0)/_mAr[_qp]*std::max(_u[_qp],0.0)*2.0/(3.0*std::max(_em[_qp],1.0))-_k1*std::max(_em[_qp],1.0)*_Ar[_qp]*3.0*std::max(_em[_qp],1.0)/_mAr[_qp]*_phi[_j][_qp]*2.0/(3.0*std::max(_em[_qp],1.0)));
 }
 
 Real
 ElectronEnergySource::computeQpOffDiagJacobian(unsigned int jvar)
 {
-  _T_e = _u[_qp]*2.0/(3.0*_em[_qp]);
-  _k1 = 2.336e-14*std::pow(_T_e,1.609)*std::exp(0.0618*std::pow(std::log(_T_e),2)-0.1171*std::pow(std::log(_T_e),3));
-  _k2 = 5.0e-15*std::pow(_T_e,0.74)*std::exp(-11.56/(_T_e+1e-6)); // Electron impact excitation of ground state argon to create Ars (Ar(4s) in Liebermans text)
-  _k3 = 4.3e-16*std::pow(_T_e,0.74); // Electron impact dexcitation of Ars (Ar(4s) in Liebermans text)
-  _k5 = 6.8e-15*std::pow(_T_e,0.67)*std::exp(-4.20/(_T_e+1e-6));
-  _dk1_dTe = 3.758624e-14*std::pow(_T_e,0.609)*exp(-0.1171*std::pow(std::log(_T_e),3) + 0.0618*std::pow(std::log(_T_e),2)) + 2.336e-14*std::pow(_T_e,1.609)*(-0.3513*std::pow(std::log(_T_e),2)/_T_e + 0.1236*std::log(_T_e)/_T_e)*exp(-0.1171*std::pow(std::log(_T_e),3) + 0.0618*std::pow(std::log(_T_e),2));
-  _dk2_dTe = 5.78e-14*std::pow(_T_e,-1.26)*std::exp(-11.56/(_T_e+1e-6))+3.7e-15*std::pow(_T_e,-0.26)*std::exp(-11.56/(_T_e+1e-6));
-  _dk3_dTe = 3.182e-16*std::pow(_T_e,-0.26);
-  _dk4_dTe = 4.08096e-13*std::pow(_T_e,-1.41)*std::exp(-17.44/(_T_e+1e-6))+1.3806e-14*std::pow(_T_e,-0.41)*std::exp(-17.44/(_T_e+1e-6));
-  _dk5_dTe = 2.856e-14*std::pow(_T_e,-1.33)*std::exp(-4.2/(_T_e+1e-6))+4.556e-15*std::pow(_T_e,-0.33)*std::exp(-4.2/(_T_e+1e-6));
-  _dTe_d_em = -2.0*_u[_qp]/(3.0*std::pow(_em[_qp],2));
-  _dTe_d_mean_el_energy = 2.0/(3.0*_em[_qp]);  
+  _T_e = std::max(_u[_qp],0.0)*2.0/(3.0*std::max(_em[_qp],1.0));
+  _k1 = 2.336e-14*std::pow(std::max(_T_e,1e-6),1.609)*std::exp(0.0618*std::pow(std::log(std::max(_T_e,1e-6)),2)-0.1171*std::pow(std::log(std::max(_T_e,1e-6)),3));
+  _k2 = 5.0e-15*std::pow(std::max(_T_e,1e-6),0.74)*std::exp(-11.56/(_T_e+1e-6)); // Electron impact excitation of ground state argon to create Ars (Ar(4s) in Liebermans text)
+  _k3 = 4.3e-16*std::pow(std::max(_T_e,1e-6),0.74); // Electron impact dexcitation of Ars (Ar(4s) in Liebermans text)
+  _k5 = 6.8e-15*std::pow(std::max(_T_e,1e-6),0.67)*std::exp(-4.20/(_T_e+1e-6));
+  _dk1_dTe = 3.758624e-14*std::pow(std::max(_T_e,1e-6),0.609)*exp(-0.1171*std::pow(std::log(std::max(_T_e,1e-6)),3) + 0.0618*std::pow(std::log(std::max(_T_e,1e-6)),2)) + 2.336e-14*std::pow(std::max(_T_e,1e-6),1.609)*(-0.3513*std::pow(std::log(std::max(_T_e,1e-6)),2)/std::max(_T_e,1e-16) + 0.1236*std::log(std::max(_T_e,1e-6))/std::max(_T_e,1e-16))*exp(-0.1171*std::pow(std::log(std::max(_T_e,1e-6)),3) + 0.0618*std::pow(std::log(std::max(_T_e,1e-6)),2));
+  _dk2_dTe = 5.78e-14*std::pow(std::max(_T_e,1e-6),-1.26)*std::exp(-11.56/(_T_e+1e-6))+3.7e-15*std::pow(std::max(_T_e,1e-6),-0.26)*std::exp(-11.56/(_T_e+1e-6));
+  _dk3_dTe = 3.182e-16*std::pow(std::max(_T_e,1e-6),-0.26);
+  _dk4_dTe = 4.08096e-13*std::pow(std::max(_T_e,1e-6),-1.41)*std::exp(-17.44/(_T_e+1e-6))+1.3806e-14*std::pow(std::max(_T_e,1e-6),-0.41)*std::exp(-17.44/(_T_e+1e-6));
+  _dk5_dTe = 2.856e-14*std::pow(std::max(_T_e,1e-6),-1.33)*std::exp(-4.2/(_T_e+1e-6))+4.556e-15*std::pow(std::max(_T_e,1e-6),-0.33)*std::exp(-4.2/(_T_e+1e-6));
+  _dTe_d_em = -2.0*std::max(_u[_qp],0.0)/(3.0*std::pow(std::max(_em[_qp],1.0),2));
+  _dTe_d_mean_el_energy = 2.0/(3.0*std::max(_em[_qp],1.0));  
 
   if (jvar == _Ars_id)
     {
-      return -_test[_i][_qp]*(_k3*_em[_qp]*_phi[_j][_qp]*_el_energy_gain_deexcitation[_qp]+_k5*_em[_qp]*_phi[_j][_qp]*_el_energy_gain_meta_ionization[_qp]);
+      return -_test[_i][_qp]*(_k3*std::max(_em[_qp],1.0)*_phi[_j][_qp]*_el_energy_gain_deexcitation[_qp]+_k5*std::max(_em[_qp],1.0)*_phi[_j][_qp]*_el_energy_gain_meta_ionization[_qp]);
     }
   else if (jvar == _em_id)
     {
-      return -_test[_i][_qp]*(_k2*_phi[_j][_qp]*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_k3*_phi[_j][_qp]*_Ars[_qp]*_el_energy_gain_deexcitation[_qp]+_k4*_phi[_j][_qp]*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_k5*_phi[_j][_qp]*_Ars[_qp]*_el_energy_gain_meta_ionization[_qp]+_dk2_dTe*_dTe_d_em*_phi[_j][_qp]*_em[_qp]*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_dk3_dTe*_dTe_d_em*_phi[_j][_qp]*_em[_qp]*_Ars[_qp]*_el_energy_gain_deexcitation[_qp]+_dk4_dTe*_dTe_d_em*_phi[_j][_qp]*_em[_qp]*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_dk5_dTe*_dTe_d_em*_phi[_j][_qp]*_em[_qp]*_Ars[_qp]*_el_energy_gain_meta_ionization[_qp]-_dk1_dTe*_dTe_d_em*_phi[_j][_qp]*_em[_qp]*_Ar[_qp]*3.0*_m_em[_qp]/_mAr[_qp]*_u[_qp]*2.0/(3.0*_em[_qp])-_k1*_em[_qp]*_Ar[_qp]*3.0*_m_em[_qp]/_mAr[_qp]*_u[_qp]*2.0/(3.0*-std::pow(_em[_qp],2))*_phi[_j][_qp]);
+      return -_test[_i][_qp]*(_k2*_phi[_j][_qp]*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_k3*_phi[_j][_qp]*_Ars[_qp]*_el_energy_gain_deexcitation[_qp]+_k4*_phi[_j][_qp]*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_k5*_phi[_j][_qp]*_Ars[_qp]*_el_energy_gain_meta_ionization[_qp]+_dk2_dTe*_dTe_d_em*_phi[_j][_qp]*std::max(_em[_qp],1.0)*_Ar[_qp]*_el_energy_gain_excitation[_qp]+_dk3_dTe*_dTe_d_em*_phi[_j][_qp]*std::max(_em[_qp],1.0)*_Ars[_qp]*_el_energy_gain_deexcitation[_qp]+_dk4_dTe*_dTe_d_em*_phi[_j][_qp]*std::max(_em[_qp],1.0)*_Ar[_qp]*_el_energy_gain_ionization[_qp]+_dk5_dTe*_dTe_d_em*_phi[_j][_qp]*std::max(_em[_qp],1.0)*_Ars[_qp]*_el_energy_gain_meta_ionization[_qp]-_dk1_dTe*_dTe_d_em*_phi[_j][_qp]*std::max(_em[_qp],1.0)*_Ar[_qp]*3.0*std::max(_em[_qp],1.0)/_mAr[_qp]*std::max(_u[_qp],0.0)*2.0/(3.0*std::max(_em[_qp],1.0))-_k1*std::max(_em[_qp],1.0)*_Ar[_qp]*3.0*std::max(_em[_qp],1.0)/_mAr[_qp]*std::max(_u[_qp],0.0)*2.0/(3.0*-std::pow(std::max(_em[_qp],1.0),2))*_phi[_j][_qp]);
     }
   else
     {

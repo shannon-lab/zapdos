@@ -59,7 +59,7 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
   _mAr(declareProperty<Real>("mAr")),
   _v_thermal_em(declareProperty<Real>("v_thermal_em")),
   _advection_velocity_em(declareProperty<RealVectorValue>("advection_velocity_em")),
-  _mu_mean_electron_energy(declareProperty<Real>("mu_mean_electron_energy")),
+  _mumean_electron_energy(declareProperty<Real>("mumean_electron_energy")),
   _EFieldAdvectionCoeff_mean_electron_energy(declareProperty<Real>("EFieldAdvectionCoeff_mean_electron_energy")),
   _D_mean_electron_energy(declareProperty<Real>("D_mean_electron_energy")),
   _k6(declareProperty<Real>("k6")),
@@ -97,9 +97,9 @@ Argon::computeQpProperties()
   _muArp[_qp] = _muAr[_qp];
   _EFieldAdvectionCoeff_em[_qp] = _muem[_qp]*-1.0;
   _EFieldAdvectionCoeff_Arp[_qp] = _muArp[_qp]*1.0;
-  _T_em[_qp] = _mean_electron_energy[_qp]*2.0/(3.0*_em[_qp]);
+  _T_em[_qp] = std::max(_mean_electron_energy[_qp],0.0)*2.0/(3.0*_em[_qp]);
   _T_gas[_qp] = 300; // Kelvin
-  _D_em[_qp] = _muem[_qp]*_T_em[_qp];
+  _D_em[_qp] = _muem[_qp]*std::max(_T_em[_qp],1e-6);
   _D_Ar[_qp] = _muAr[_qp]*_k_boltz[_qp]*_T_gas[_qp]/_e[_qp];
   _D_Ars[_qp] = _D_Ar[_qp];
   _D_Arp[_qp] = _D_Ar[_qp];
@@ -107,16 +107,16 @@ Argon::computeQpProperties()
   _gamma_em[_qp] = _muem[_qp]*_EField[_qp]*_em[_qp]-_D_em[_qp]*_grad_em[_qp];
   _m_em[_qp] = 9.11e-31;
   _mAr[_qp] = 40.0*1.66e-27;
-  _v_thermal_em[_qp] = 1.6*std::sqrt(_k_boltz[_qp]*_T_em[_qp]/_m_em[_qp]);
+  _v_thermal_em[_qp] = 1.6*std::sqrt(_k_boltz[_qp]*std::max(_T_em[_qp],1e-6)/_m_em[_qp]);
   _advection_velocity_em[_qp] = _muem[_qp]*_EField[_qp];
-  _mu_mean_electron_energy[_qp] = 5.0/3.0*_muem[_qp];
-  _EFieldAdvectionCoeff_mean_electron_energy[_qp] = _mu_mean_electron_energy[_qp]*-1.0;
-  _D_mean_electron_energy[_qp] = _mu_mean_electron_energy[_qp]*_T_em[_qp];
+  _mumean_electron_energy[_qp] = 5.0/3.0*_muem[_qp];
+  _EFieldAdvectionCoeff_mean_electron_energy[_qp] = _mumean_electron_energy[_qp]*-1.0;
+  _D_mean_electron_energy[_qp] = _mumean_electron_energy[_qp]*std::max(_T_em[_qp],1e-6);
   _k6[_qp] = 1807.0/_N_A[_qp]; // m^3/s
   _k7[_qp] = 2.3e7/_N_A[_qp]; // m^3/s
   _pressure[_qp] = 1.01e5; // Pascals
   _R_const[_qp] = 8.3145; // J/(K*mol)
-  _Ar[_qp] = _pressure[_qp]/(_T_gas[_qp]*_R_const[_qp]);
+  _Ar[_qp] = _pressure[_qp]/(_T_gas[_qp]*_k_boltz[_qp]);
   _el_energy_gain_excitation[_qp] = -11.5; // eV
   _el_energy_gain_deexcitation[_qp] = 11.5; // eV
   _el_energy_gain_ionization[_qp] = -15.8; // eV

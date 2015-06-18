@@ -27,7 +27,7 @@ PotentialDrivenArtificialDiff::PotentialDrivenArtificialDiff(const std::string &
     // Material properties
 
     _mobility(getMaterialProperty<Real>("mu"+getParam<std::string>("var_name_string"))),
-    _diffusivity(getMaterialProperty<Real>("D"+getParam<std::string>("var_name_string"))),
+    _diffusivity(getMaterialProperty<Real>("D_"+getParam<std::string>("var_name_string"))),
 
     // Variables unique to class
     
@@ -46,19 +46,19 @@ Real
 PotentialDrivenArtificialDiff::computeQpResidual()
 {
   _advection_velocity = _mobility[_qp]*-_grad_potential[_qp];
-  _peclet_num = _current_elem->hmax() * _advection_velocity.size() / (2.0 * _diffusivity[_qp]);
-  _alpha = 1.0 / std::tanh(_peclet_num) - 1.0 / _peclet_num;
+  _peclet_num = _current_elem->hmax() * std::max(_advection_velocity.size(),1e-16) / (2.0 * _diffusivity[_qp]);
+  _alpha = 1.0 / std::tanh(std::max(_peclet_num,1e-16)) - 1.0 / std::max(_peclet_num,1e-16);
   
   if (_consistent)
   {
     // Consistent diffusion formulation of tau
-    _tau = _delta * _current_elem->hmax() * _alpha / _advection_velocity.size();
+    _tau = _delta * _current_elem->hmax() * _alpha / std::max(_advection_velocity.size(),1e-16);
   }
   else if (!_consistent)
   {
     // Isotropic diffusion formulation of tau
 
-    _tau = _delta * _current_elem->hmax() / _advection_velocity.size();
+    _tau = _delta * _current_elem->hmax() / std::max(_advection_velocity.size(),1e-16);
   }
 
   return _tau*_advection_velocity*_grad_test[_i][_qp]*_advection_velocity*_grad_u[_qp];    
@@ -68,19 +68,19 @@ Real
 PotentialDrivenArtificialDiff::computeQpJacobian()
 {
   _advection_velocity = _mobility[_qp]*-_grad_potential[_qp];
-  _peclet_num = _current_elem->hmax() * _advection_velocity.size() / (2.0 * _diffusivity[_qp]);
-  _alpha = 1.0 / std::tanh(_peclet_num) - 1.0 / _peclet_num;
+  _peclet_num = _current_elem->hmax() * std::max(_advection_velocity.size(),1e-16) / (2.0 * _diffusivity[_qp]);
+  _alpha = 1.0 / std::tanh(std::max(_peclet_num,1e-16)) - 1.0 / std::max(_peclet_num,1e-16);
   
   if (_consistent)
   {
     // Consistent diffusion formulation of tau
-    _tau = _delta * _current_elem->hmax() * _alpha / _advection_velocity.size();
+    _tau = _delta * _current_elem->hmax() * _alpha / std::max(_advection_velocity.size(),1e-16);
   }
   else if (!_consistent)
   {
     // Isotropic diffusion formulation of tau
 
-    _tau = _delta * _current_elem->hmax() / _advection_velocity.size();
+    _tau = _delta * _current_elem->hmax() / std::max(_advection_velocity.size(),1e-16);
   }
 
   return _tau*_advection_velocity*_grad_test[_i][_qp]*_advection_velocity*_grad_phi[_j][_qp];    

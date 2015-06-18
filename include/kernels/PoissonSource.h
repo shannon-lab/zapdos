@@ -40,13 +40,13 @@ protected:
   
   // Coupled variables
   
-  VariableValue & _ion_density;
-  VariableValue & _electron_density;
+  VariableValue & _Arp;
+  VariableValue & _em;
   
   // Coupling identifiers for variables
   
-  unsigned int _ion_density_id;
-  unsigned int _electron_density_id;
+  unsigned int _Arp_id;
+  unsigned int _em_id;
 
 };
 #endif //POISSONSOURCE_H
