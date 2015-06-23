@@ -12,43 +12,54 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef ELECTRONENERGYDIFFUSION_H
-#define ELECTRONENERGYDIFFUSION_H
+#ifndef POTENTIALDRIVENARTIFICIALDIFFELECTRONS_H
+#define POTENTIALDRIVENARTIFICIALDIFFELECTRONS_H
 
 // Including the "Diffusion" Kernel here so we can extend it
-#include "Diffusion.h"
+#include "Kernel.h"
 
-class ElectronEnergyDiffusion;
+class PotentialDrivenArtificialDiffElectrons;
 
 template<>
-InputParameters validParams<ElectronEnergyDiffusion>();
+InputParameters validParams<PotentialDrivenArtificialDiffElectrons>();
 
-class ElectronEnergyDiffusion : public Diffusion
+
+class PotentialDrivenArtificialDiffElectrons : public Kernel
 {
 public:
-  ElectronEnergyDiffusion(const std::string & name, InputParameters parameters);
-  virtual ~ElectronEnergyDiffusion();
+  PotentialDrivenArtificialDiffElectrons(const std::string & name, InputParameters parameters);
+  virtual ~PotentialDrivenArtificialDiffElectrons();
 
 protected:
 
   virtual Real computeQpResidual();
+
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  // Input Parameters
 
+  const bool & _consistent;
+  const Real & _delta;
+  
+  // Coupled variables
+
+  VariableGradient & _grad_potential;
+  unsigned int _potential_id;
+  VariableValue & _Te;
+  unsigned int _Te_id;
+  
   // Material Properties
+  
+  const MaterialProperty<Real> & _mobility;
 
-  MaterialProperty<Real> & _mu_mean_electron_energy;
+  // Variables unique to the kernel
 
-  // Coupled Variables
-
-  VariableValue & _em;
-  unsigned int _em_id;
-
-  // Unique variables
-
-  Real _T_em;
-  Real _D_mean_electron_energy;
+  RealVectorValue  _advection_velocity;
+  Real  _peclet_num;
+  Real  _alpha;
+  Real  _tau;
+  Real _diffusivity;
 };
 
 
-#endif /* ELECTRONENERGYDIFFUSION_H */
+#endif /* POTENTIALDRIVENARTIFICIALDIFFELECTRONS_H */

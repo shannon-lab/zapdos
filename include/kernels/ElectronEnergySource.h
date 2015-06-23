@@ -50,8 +50,8 @@ class ElectronEnergySource : public Kernel
   Real _dk3_dTe;
   Real _dk4_dTe;
   Real _dk5_dTe;
-  Real _dTe_d_em;
-  Real _dTe_d_mean_el_energy;
+
+  bool ArsCoupling;
 };
 
 #endif /* ELECTRONENERGYSOURCE_H */

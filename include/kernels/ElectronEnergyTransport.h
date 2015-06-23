@@ -12,21 +12,21 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef JOULEHEATING_H
-#define JOULEHEATING_H
+#ifndef ELECTRONENERGYTRANSPORT_H
+#define ELECTRONENERGYTRANSPORT_H
 
 #include "Kernel.h"
 
-class JouleHeating;
+class ElectronEnergyTransport;
 
 template<>
-InputParameters validParams<JouleHeating>();
+InputParameters validParams<ElectronEnergyTransport>();
 
-class JouleHeating : public Kernel
+class ElectronEnergyTransport : public Kernel
 {
  public:
 
-  JouleHeating(const std::string & name,
+  ElectronEnergyTransport(const std::string & name,
 		   InputParameters parameters);
 
  protected:
@@ -47,14 +47,9 @@ class JouleHeating : public Kernel
   
   unsigned int _potential_id;
   VariableGradient & _grad_potential;
+  unsigned int _em_id;
   VariableValue & _em;
   VariableGradient & _grad_em;
-  unsigned int _em_id;
-
-  // Unique variables
-
-  Real _T_em;
-  Real _D_em;
 };
 
-#endif //JOULEHEATING_H
+#endif //ELECTRONENERGYTRANSPORT_H

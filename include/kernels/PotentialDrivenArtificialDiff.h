@@ -35,7 +35,7 @@ protected:
   virtual Real computeQpResidual();
 
   virtual Real computeQpJacobian();
-  
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
   // Input Parameters
 
   const bool & _consistent;
@@ -44,6 +44,7 @@ protected:
   // Coupled variables
 
   VariableGradient & _grad_potential;
+  unsigned int _potential_id;
   
   // Material Properties
   

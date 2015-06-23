@@ -41,13 +41,10 @@ protected:
 
   // Coupled Variables
 
-  VariableValue & _mean_electron_energy;
-  unsigned int _mean_electron_energy_id;
+  VariableValue & _Te;
+  unsigned int _Te_id;
 
   // Unique variables
-
-  Real _T_em;
-  Real _D_em;
 };
 
 

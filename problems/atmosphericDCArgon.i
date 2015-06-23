@@ -1,73 +1,80 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 100
-  xmin = 0.0
-  xmax = .05
+  nx = 1000
+  xmin = .005
+  xmax = .055
 []
 
-#[Problem]
-#  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
-#  coord_type = RZ # Axisymmetric RZ
+[Problem]
+  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
+  coord_type = RZ # Axisymmetric RZ
 #  rz_coord_axis = X # Which axis the symmetry is around
-#[]
+[]
 
 [Preconditioning]
+  active = 'FDP'
   [./FDP]
     type = FDP
     full = true
  #Preconditioned JFNK (default)
-#    solve_type = 'PJFNK'
+#    solve_type = 'NEWTON'
 #    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
 #    petsc_options_value = 'lu       1e-6                 ds'
+#    petsc_options_iname = '-pc_type -sub_ksp_type -sub_pc_type'
+#    petsc_options_value = 'asm preonly lu'
+    petsc_options_iname = '-ksp_converged_reason -snes_converged_reason -mat_fd_type'
+    petsc_options_value = '1 1 ds'  
   [../]
-#  [./SMP]
-#    type = SMP
-#    full = true
-# #Preconditioned JFNK (default)
-#    solve_type = 'PJFNK'
-#    petsc_options_iname = '-pc_type -pc_hypre_type'
-#    petsc_options_value = 'hypre boomeramg'
-#  [../]
+  [./SMP]
+    type = SMP
+    full = true
+ #Preconditioned JFNK (default)
+    solve_type = 'PJFNK'
+    petsc_options_iname = '-pc_type -pc_hypre_type -ksp_converged_reason -snes_converged_reason'
+    petsc_options_value = 'hypre boomeramg 1 1'
+#    petsc_options_iname = '-ksp_type -pc_type -sub_pc_type -sub_pc_factor_shift_type -ksp_converged_reason -snes_converged_reason'
+#    petsc_options_value = 'gmres asm lu NONZERO 1 1'
+  [../]
 []
 
 [Executioner]
   type = Transient
-#  dt = 1e-6
-  end_time = 1e-6
-#  solve_type = PJFNK
+  dt = 2e-11
+  end_time = 2e-4
+#  petsc_options_iname = '-snes_type'
+#  petsc_options_value = 'test'
+#  solve_type = NEWTON
 #  petsc_options_iname = '-pc_type -pc_hypre_type'
 #  petsc_options_value = 'hypre boomeramg'
 #  trans_ss_check = true
 #  ss_check_tol = 1e-7
-  nl_rel_tol = 1e-6
-#  l_tol = 1e-1
-##  nl_abs_tol = 1e-3
-  l_max_its = 10
-  nl_max_its = 7
-  dtmin = 1e-12
-  line_search = none
+#  nl_rel_tol = 1e-2
+  l_max_its = 50
+#  nl_max_its = 75
+  dtmin = 2e-11
+#  line_search = none
   [./TimeStepper]
     type = IterationAdaptiveDT
 #    linear_iteration_ratio = 5
     cutback_factor = 0.5
-    dt = 1e-11
+    dt = 2e-11
     growth_factor = 2.0
 #    optimal_iterations = 4
   [../]
 []
 
 [Outputs]
-#  exodus = true
+  exodus = true
   print_perf_log = true
   print_linear_residuals = true
   output_initial = true
 #  interval = 100
-  [./out]
-    type = Exodus
-    output_material_properties = true
-    show_material_properties = 'T_em'
-  [../]
+#  [./out]
+#    type = Exodus
+#    output_material_properties = true
+#    show_material_properties = 'T_em'
+#  [../]
 []
 
 [Debug]
@@ -75,22 +82,22 @@
 []
 
 [LotsOfCoeffDiffusion]
-  variables = 'Ars Arp'
+  variables = 'Arp'
 []
 
 [LotsOfTimeDerivatives]
-  variables = 'em mean_electron_energy Ars Arp'
+  variables = 'em Arp'
 []
 
 [LotsOfEFieldAdvection]
-  variables = 'em mean_electron_energy Arp'
+  variables = 'em Arp'
   potential = 'potential'
 []
 
 [LotsOfPotentialDrivenArtificialDiff]
-  variables = 'em Arp mean_electron_energy'
+  variables = 'Arp'
   potential = 'potential'
-  delta = 500.0
+  delta = 5e-1
 []
 
 [Kernels]
@@ -107,79 +114,72 @@
   [./electron_diffusion]
     type = ElectronDiffusion
     variable = em
-    mean_electron_energy = mean_electron_energy
+    Te = Te
+  [../]
+  [./electron_artificial_diffusion]
+    type = PotentialDrivenArtificialDiffElectrons
+    variable = em
+    var_name_string = em
+    potential = potential
+    Te = Te
+    delta = 5e-1
   [../]
   [./electron_source]
     type = ElectronSource
     variable = em
-    Ars = Ars
-    mean_electron_energy = mean_electron_energy
+    Te = Te
   [../]
-  [./el_energy_diffusion]
-    type = ElectronEnergyDiffusion
-    variable = mean_electron_energy
+  [./el_energy_time_deriv]
+    type = TimeDerivativeElectronTemp
+    variable = Te
+    em = em
+  [../]
+  [./el_energy_transport]
+    type = ElectronEnergyTransport
+    variable = Te
+    potential = potential
     em = em
   [../]
   [./el_energy_source]
     type = ElectronEnergySource
-    variable = mean_electron_energy
-    Ars = Ars
+    variable = Te
     em = em
   [../]
-  [./ars_source]
-    type = ArsSource
-    variable = Ars
-    em = em
-    mean_electron_energy = mean_electron_energy
-  [../]
+#  [./ars_source]
+#    type = ArsSource
+#    variable = Ars
+#    em = em
+#    Te = Te
+#  [../]
   [./arp_source]
     type = ArpSource
     variable = Arp
     em = em
-    mean_electron_energy = mean_electron_energy
-    Ars = Ars
+    Te = Te
   [../]
   [./joule_heating]
     type = JouleHeating
-    variable = mean_electron_energy
+    variable = Te
     potential = potential
     em = em
   [../]
 []
 
-#[Variables]
-#  [./potential]
-#    scaling = 1e-6
-# [../]
-#  [./em]
-#    scaling = 1e-18
-#  [../]
-#  [./Arp]
-#    scaling = 1e-18
-#  [../]
-#  [./Ars]
-#    scaling = 1e-12
-#  [../]
-#  [./mean_electron_energy]
-#    scaling = 1e-79
-#  [../]
-#[]
-
 [Variables]
   [./potential]
-    scaling = 1e-5
+    scaling = 1e3
  [../]
   [./em]
-    scaling = 1e-22
+    scaling = 1e-4
   [../]
   [./Arp]
-    scaling = 1e-22
+    scaling = 1e-3
   [../]
-  [./Ars]
-    scaling = 1e-22
-  [../]
-  [./mean_electron_energy]
-    scaling = 1e-23
+#  [./Ars]
+#    scaling = 1e-6
+#  [../]
+  [./Te]
+    scaling = 1e-5
   [../]
 []
 
@@ -203,7 +203,7 @@
     type = Argon
     em = em
     potential = potential
-    mean_electron_energy = mean_electron_energy
+    Te = Te
  [../]
 []
 
@@ -220,59 +220,63 @@
     boundary = right
     value = 0
   [../]
-  [./ip_physical_left]
+  [./ip_physical]
     type = PhysicalIonBC
     variable = Arp
-    boundary = left
+    var_name = Arp
+    potential = potential
+    boundary = 'left right'
   [../]
-  [./ip_physical_right]
-    type = PhysicalIonBC
-    variable = Arp
-    boundary = right
-  [../]
-  [./em_physical_left]
+  [./em_physical]
     type = PhysicalElectronBC
     variable = em
-    boundary = left
+    boundary = 'left right'
     ip = Arp
+    coupled_ion_name = Arp
     se_coeff = 0.1
-  [../]
-  [./em_physical_right]
-    type = PhysicalElectronBC
-    variable = em
-    boundary = right
-    ip = Arp
-    se_coeff = 0.1
+    potential = potential
+    Te = Te
   [../]
   [./mean_el_en]
     type = PhysicalElectronEnergyBC
-    variable = mean_electron_energy
+    variable = Te
     potential = potential
+    em = em
     boundary = 'left right'
   [../]
 []
 
 [ICs]
+#  [./em_ic]
+#    type = FunctionIC
+#    variable = em
+#    function = density_ic_parsed_function
+#  [../]
+#  [./ip_ic]
+#    type = FunctionIC
+#    variable = Arp
+#    function = density_ic_parsed_function
+#  [../]
   [./em_ic]
-    type = FunctionIC
+    type = ConstantIC
     variable = em
-    function = density_ic_parsed_function
+    value = 1e7
   [../]
   [./ip_ic]
-    type = FunctionIC
+    type = ConstantIC
     variable = Arp
-    function = density_ic_parsed_function
+    value = 1e7
   [../]
   [./mean_el_energy_ic]
     type = ConstantIC
-    variable = mean_electron_energy
-    value = 1.5e13
+    variable = Te
+    value = 1.0
   [../]
-#  [./potential_ic]
-#    type = FunctionIC
-#    variable = potential
-#    function = potential_parsed_function
-#  [../]
+  [./potential_ic]
+    type = FunctionIC
+    variable = potential
+    function = potential_parsed_function
+  [../]
 []
 
 [Functions]
@@ -282,67 +286,67 @@
   [../]
   [./potential_parsed_function]
     type = ParsedFunction
-    value = '2.0e7*x'
+    value = '2.0e4*(x-.055)'
 []
 
-[Adaptivity]
-  marker = error_frac_edens
-  max_h_level = 3
-  [./Indicators]
-#    [./temp_jump_potential]
+#[Adaptivity]
+#  marker = error_frac_edens
+#  max_h_level = 3
+#  [./Indicators]
+##    [./temp_jump_potential]
+##      type = GradientJumpIndicator
+##      variable = potential
+##      scale_by_flux_faces = true
+##    [../]
+#    [./temp_jump_edens]
 #      type = GradientJumpIndicator
-#      variable = potential
+#      variable = em
 #      scale_by_flux_faces = true
 #    [../]
-    [./temp_jump_edens]
-      type = GradientJumpIndicator
-      variable = em
-      scale_by_flux_faces = true
-    [../]
-#    [./temp_jump_idens]
-#      type = GradientJumpIndicator
-#      variable = ip
-#      scale_by_flux_faces = true
-#    [../]
-##    [./analytical]
-##      type = AnalyticalIndicator
-##      variable = ion_src_term
-##      function = null_function
+##    [./temp_jump_idens]
+##      type = GradientJumpIndicator
+##      variable = ip
+##      scale_by_flux_faces = true
 ##    [../]
-##    [./analytical_diff]
-##      type = AnalyticalDiffIndicator
-##      variable = alpha_times_h
-##      function = unity_function
+###    [./analytical]
+###      type = AnalyticalIndicator
+###      variable = ion_src_term
+###      function = null_function
+###    [../]
+###    [./analytical_diff]
+###      type = AnalyticalDiffIndicator
+###      variable = alpha_times_h
+###      function = unity_function
+###    [../]
+#  [../]
+#  [./Markers]
+##    [./error_frac_pot]
+##      type = ErrorFractionMarker
+##      coarsen = 0.1
+##      indicator = temp_jump_potential
+##      refine = 0.6
 ##    [../]
-  [../]
-  [./Markers]
-#    [./error_frac_pot]
+#    [./error_frac_edens]
 #      type = ErrorFractionMarker
 #      coarsen = 0.1
-#      indicator = temp_jump_potential
+#      indicator = temp_jump_edens
 #      refine = 0.6
 #    [../]
-    [./error_frac_edens]
-      type = ErrorFractionMarker
-      coarsen = 0.1
-      indicator = temp_jump_edens
-      refine = 0.6
-    [../]
-#    [./error_frac_idens]
-#      type = ErrorFractionMarker
-#      coarsen = 0.1
-#      indicator = temp_jump_idens
-#      refine = 0.6
-#    [../]
-#    [./combo]
-#      type = ComboMarker
-#      markers = 'error_frac_pot error_frac_edens error_frac_idens'
-#    [../]
-##    [./error_tol]
-##      type = ErrorToleranceMarker
-##      indicator = analytical_diff
-##      coarsen = 0
-##      refine = 0
+##    [./error_frac_idens]
+##      type = ErrorFractionMarker
+##      coarsen = 0.1
+##      indicator = temp_jump_idens
+##      refine = 0.6
 ##    [../]
-  [../]
-[]
+##    [./combo]
+##      type = ComboMarker
+##      markers = 'error_frac_pot error_frac_edens error_frac_idens'
+##    [../]
+###    [./error_tol]
+###      type = ErrorToleranceMarker
+###      indicator = analytical_diff
+###      coarsen = 0
+###      refine = 0
+###    [../]
+#  [../]
+#[]

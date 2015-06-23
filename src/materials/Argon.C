@@ -21,7 +21,7 @@ InputParameters validParams<Argon>()
   params.addParam<Real>("user_relative_permittivity", 1.0, "Multiplies the permittivity of free space.");
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
-  params.addCoupledVar("mean_electron_energy", "The mean electron energy.");
+  params.addCoupledVar("Te", "The electron temperature.");
   return params;
 }
 
@@ -38,7 +38,7 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
     _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
     _em(isCoupled("em") ? coupledValue("em") : _zero),
     _grad_em(isCoupled("em") ? coupledGradient("em") : _grad_zero),
-    _mean_electron_energy(isCoupled("mean_electron_energy") ? coupledValue("mean_electron_energy") : _zero),
+    _Te(isCoupled("Te") ? coupledValue("Te") : _zero),
 
 // Declare material properties.  This returns references that we
 // hold onto as member variables
@@ -46,39 +46,33 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
   _N_A(declareProperty<Real>("N_A")),
   _eps_r(declareProperty<Real>("eps_r")),
   _eps_0(declareProperty<Real>("eps_0")),
+  _permittivity(declareProperty<Real>("permittivity")),
   _e(declareProperty<Real>("e")),
-  _D_em(declareProperty<Real>("D_em")),
+  _k_boltz(declareProperty<Real>("k_boltz")),
   _zem(declareProperty<Real>("zem")),
   _muem(declareProperty<Real>("muem")),
+  _muAr(declareProperty<Real>("muAr")),
+  _muArp(declareProperty<Real>("muArp")),
   _EFieldAdvectionCoeff_em(declareProperty<Real>("EFieldAdvectionCoeff_em")),
-  _EField(declareProperty<RealVectorValue>("EField")),
-  _gamma_em(declareProperty<RealVectorValue>("gamma_em")),
-  _k_boltz(declareProperty<Real>("k_boltz")),
-  _T_em(declareProperty<Real>("T_em")),
+  _EFieldAdvectionCoeff_Arp(declareProperty<Real>("EFieldAdvectionCoeff_Arp")),
+  _T_gas(declareProperty<Real>("T_gas")),
+  _D_Ar(declareProperty<Real>("D_Ar")),
+  _D_Ars(declareProperty<Real>("D_Ars")),
+  _D_Arp(declareProperty<Real>("D_Arp")),
   _m_em(declareProperty<Real>("m_em")),
   _mAr(declareProperty<Real>("mAr")),
-  _v_thermal_em(declareProperty<Real>("v_thermal_em")),
-  _advection_velocity_em(declareProperty<RealVectorValue>("advection_velocity_em")),
-  _mumean_electron_energy(declareProperty<Real>("mumean_electron_energy")),
-  _EFieldAdvectionCoeff_mean_electron_energy(declareProperty<Real>("EFieldAdvectionCoeff_mean_electron_energy")),
-  _D_mean_electron_energy(declareProperty<Real>("D_mean_electron_energy")),
+  _mArp(declareProperty<Real>("mArp")),
+  _muTe(declareProperty<Real>("muTe")),
+  _EFieldAdvectionCoeff_Te(declareProperty<Real>("EFieldAdvectionCoeff_Te")),
   _k6(declareProperty<Real>("k6")),
   _k7(declareProperty<Real>("k7")),
   _pressure(declareProperty<Real>("pressure")),
-  _T_gas(declareProperty<Real>("T_gas")),
   _R_const(declareProperty<Real>("R_const")),
   _Ar(declareProperty<Real>("Ar")),
   _el_energy_gain_excitation(declareProperty<Real>("el_energy_gain_excitation")),
   _el_energy_gain_deexcitation(declareProperty<Real>("el_energy_gain_deexcitation")),
   _el_energy_gain_ionization(declareProperty<Real>("el_energy_gain_ionization")),
-  _el_energy_gain_meta_ionization(declareProperty<Real>("el_energy_gain_meta_ionization")),
-  _muAr(declareProperty<Real>("muAr")),
-  _D_Ar(declareProperty<Real>("D_Ar")),
-  _D_Ars(declareProperty<Real>("D_Ars")),
-  _D_Arp(declareProperty<Real>("D_Arp")),
-  _muArp(declareProperty<Real>("muArp")),
-  _permittivity(declareProperty<Real>("permittivity")),
-  _EFieldAdvectionCoeff_Arp(declareProperty<Real>("EFieldAdvectionCoeff_Arp"))
+  _el_energy_gain_meta_ionization(declareProperty<Real>("el_energy_gain_meta_ionization"))
 {
 }
 
@@ -97,21 +91,15 @@ Argon::computeQpProperties()
   _muArp[_qp] = _muAr[_qp];
   _EFieldAdvectionCoeff_em[_qp] = _muem[_qp]*-1.0;
   _EFieldAdvectionCoeff_Arp[_qp] = _muArp[_qp]*1.0;
-  _T_em[_qp] = std::max(_mean_electron_energy[_qp],0.0)*2.0/(3.0*_em[_qp]);
   _T_gas[_qp] = 300; // Kelvin
-  _D_em[_qp] = _muem[_qp]*std::max(_T_em[_qp],1e-6);
   _D_Ar[_qp] = _muAr[_qp]*_k_boltz[_qp]*_T_gas[_qp]/_e[_qp];
   _D_Ars[_qp] = _D_Ar[_qp];
   _D_Arp[_qp] = _D_Ar[_qp];
-  _EField[_qp] = -_grad_potential[_qp];
-  _gamma_em[_qp] = _muem[_qp]*_EField[_qp]*_em[_qp]-_D_em[_qp]*_grad_em[_qp];
   _m_em[_qp] = 9.11e-31;
   _mAr[_qp] = 40.0*1.66e-27;
-  _v_thermal_em[_qp] = 1.6*std::sqrt(_k_boltz[_qp]*std::max(_T_em[_qp],1e-6)/_m_em[_qp]);
-  _advection_velocity_em[_qp] = _muem[_qp]*_EField[_qp];
-  _mumean_electron_energy[_qp] = 5.0/3.0*_muem[_qp];
-  _EFieldAdvectionCoeff_mean_electron_energy[_qp] = _mumean_electron_energy[_qp]*-1.0;
-  _D_mean_electron_energy[_qp] = _mumean_electron_energy[_qp]*std::max(_T_em[_qp],1e-6);
+  _mArp[_qp] = _mAr[_qp];
+  _muTe[_qp] = 5.0/3.0*_muem[_qp];
+  _EFieldAdvectionCoeff_Te[_qp] = _muTe[_qp]*-1.0;
   _k6[_qp] = 1807.0/_N_A[_qp]; // m^3/s
   _k7[_qp] = 2.3e7/_N_A[_qp]; // m^3/s
   _pressure[_qp] = 1.01e5; // Pascals

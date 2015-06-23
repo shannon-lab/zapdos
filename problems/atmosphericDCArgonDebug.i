@@ -1,15 +1,15 @@
 [Mesh]
   type = GeneratedMesh
-  dim = 3
-  nx = 4
-  ny = 4
-  nz = 4
+  dim = 2
+  nx = 2
+  ny = 2
+#  nz = 4
   xmin = 0.0
   xmax = .05
   ymin = 0.0
   ymax = .05
-  zmin = 0.0
-  zmax = .05
+#  zmin = 0.0
+#  zmax = .05
 []
 
 #[Problem]
@@ -27,19 +27,19 @@
 ##    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
 ##    petsc_options_value = 'lu       1e-6                 ds'
 #  [../]
-#  [./SMP]
-#    type = SMP
-#    full = true
-# #Preconditioned JFNK (default)
+  [./SMP]
+#    type = FDP
+    full = true
+ #Preconditioned JFNK (default)
 #    solve_type = 'PJFNK'
 #    petsc_options_iname = '-pc_type -pc_hypre_type'
 #    petsc_options_value = 'hypre boomeramg'
-#  [../]
+  [../]
 []
 
 [Executioner]
   type = Transient
-#  dt = 1e-6
+  dt = 1e-11
   end_time = 1e-10
 #  solve_type = PJFNK
 #  petsc_options_iname = '-pc_type -pc_hypre_type'
@@ -52,15 +52,15 @@
   l_max_its = 10
   nl_max_its = 5
   dtmin = 5e-12
-  line_search = none
-  [./TimeStepper]
-    type = IterationAdaptiveDT
-    linear_iteration_ratio = 5
-    cutback_factor = 0.5
-    dt = 1e-11
-    growth_factor = 2.0
-    optimal_iterations = 4
-  [../]
+#  line_search = none
+#  [./TimeStepper]
+#    type = IterationAdaptiveDT
+#    linear_iteration_ratio = 5
+#    cutback_factor = 0.5
+#    dt = 1e-11
+#    growth_factor = 2.0
+#    optimal_iterations = 4
+#  [../]
 []
 
 [Outputs]

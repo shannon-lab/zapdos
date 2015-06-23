@@ -12,19 +12,19 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "JouleHeating.h"
+#include "ElectronEnergyTransport.h"
 
 template<>
-InputParameters validParams<JouleHeating>()
+InputParameters validParams<ElectronEnergyTransport>()
 {
   InputParameters params = validParams<Kernel>();
-
+  //params.addRequiredParam<std::string>("mobility","What mobility to use");
   params.addRequiredCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
-  params.addRequiredCoupledVar("em", "The electron density.");
+  params.addRequiredCoupledVar("em", "The electron density");
   return params;
 }
 
-JouleHeating::JouleHeating(const std::string & name,
+ElectronEnergyTransport::ElectronEnergyTransport(const std::string & name,
                        InputParameters parameters) :
     Kernel(name, parameters),
     
@@ -38,35 +38,31 @@ JouleHeating::JouleHeating(const std::string & name,
     
     _potential_id(coupled("potential")),
     _grad_potential(coupledGradient("potential")),
+    _em_id(coupled("em")),
     _em(coupledValue("em")),
-    _grad_em(coupledGradient("em")),
-    _em_id(coupled("em"))
-
-    // Unique variables
+    _grad_em(coupledGradient("em"))
 {}
 
-Real JouleHeating::computeQpResidual()
-{
-  return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*_em[_qp]-_muem[_qp]*_u[_qp]*_grad_em[_qp]);
+Real ElectronEnergyTransport::computeQpResidual()
+{   
+  return -_grad_test[_i][_qp]*(-2.5*_em[_qp]*_u[_qp]*_muem[_qp]*-_grad_potential[_qp]-2.5*_muem[_qp]*_u[_qp]*(_em[_qp]*_grad_u[_qp]+_u[_qp]*_grad_em[_qp]));
 }
 
-Real JouleHeating::computeQpJacobian()
+Real ElectronEnergyTransport::computeQpJacobian()
 {
-  return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*_phi[_j][_qp]*_grad_em[_qp]);
+  return -_grad_test[_i][_qp]*(-2.5*_em[_qp]*_phi[_j][_qp]*_muem[_qp]*-_grad_potential[_qp]-2.5*_muem[_qp]*_phi[_j][_qp]*(_em[_qp]*_grad_u[_qp]+_u[_qp]*_grad_em[_qp])-2.5*_muem[_qp]*_u[_qp]*(_em[_qp]*_grad_phi[_j][_qp]+_phi[_j][_qp]*_grad_em[_qp]));
 }
 
-Real JouleHeating::computeQpOffDiagJacobian(unsigned int jvar)
+Real ElectronEnergyTransport::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
-    {
-      return _test[_i][_qp]*-_grad_phi[_j][_qp]*(-_muem[_qp]*-_grad_potential[_qp]*_em[_qp]-_muem[_qp]*_u[_qp]*_grad_em[_qp])+_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_phi[_j][_qp]*_em[_qp]);
-    }
+  {
+    return -_grad_test[_i][_qp]*(-2.5*_em[_qp]*_u[_qp]*_muem[_qp]*-_grad_phi[_j][_qp]);
+  }
   else if (jvar == _em_id)
     {
-      return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*_phi[_j][_qp]-_muem[_qp]*_u[_qp]*_grad_phi[_j][_qp]);
+      return -_grad_test[_i][_qp]*(-2.5*_phi[_j][_qp]*_u[_qp]*_muem[_qp]*-_grad_potential[_qp]-2.5*_muem[_qp]*_u[_qp]*(_phi[_j][_qp]*_grad_u[_qp]+_u[_qp]*_grad_phi[_j][_qp]));
     }
-  else
-    {
-      return 0.0; 
-    }
+  return 0.0; 
 }
+

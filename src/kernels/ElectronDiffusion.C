@@ -20,7 +20,7 @@ InputParameters validParams<ElectronDiffusion>()
 {
   InputParameters params = validParams<Diffusion>();
 
-  params.addRequiredCoupledVar("mean_electron_energy","The electron energy used to calculate the diffusivity using the Einstein relation");
+  params.addRequiredCoupledVar("Te","The electron energy used to calculate the diffusivity using the Einstein relation");
 
   return params;
 }
@@ -37,13 +37,10 @@ ElectronDiffusion::ElectronDiffusion(const std::string & name, InputParameters p
 
     // Coupled Variables
 
-    _mean_electron_energy(coupledValue("mean_electron_energy")),
-    _mean_electron_energy_id(coupled("mean_electron_energy")),
+    _Te(coupledValue("Te")),
+    _Te_id(coupled("Te"))
 
     // Unique variables
-
-    _T_em(0.0),
-    _D_em(0.0)
 {
 }
 
@@ -54,22 +51,20 @@ ElectronDiffusion::~ElectronDiffusion()
 Real
 ElectronDiffusion::computeQpResidual()
 {
-  _T_em = _mean_electron_energy[_qp]*2.0/(3.0*_u[_qp]);
-  _D_em = _muem[_qp]*_T_em;
-  return _D_em*_grad_u[_qp] * _grad_test[_i][_qp];
+  return _muem[_qp]*_Te[_qp]*_grad_u[_qp] * _grad_test[_i][_qp];
 }
 
 Real
 ElectronDiffusion::computeQpJacobian()
 {
-  return _grad_test[_i][_qp]*(_grad_u[_qp]*_muem[_qp]*_mean_electron_energy[_qp]*2.0/(3.0*-std::pow(_u[_qp],2))*_phi[_j][_qp]+_D_em*_grad_phi[_j][_qp]);
+  return _muem[_qp]*_Te[_qp]*_grad_phi[_j][_qp] * _grad_test[_i][_qp];
 }
 
 Real ElectronDiffusion::computeQpOffDiagJacobian(unsigned int jvar)
 {
-  if (jvar == _mean_electron_energy_id)
+  if (jvar == _Te_id)
     {
-      return _grad_test[_i][_qp]*_grad_u[_qp]*_muem[_qp]*_phi[_j][_qp]*2.0/(3.0*_u[_qp]);
+  return _muem[_qp]*_phi[_j][_qp]*_grad_u[_qp] * _grad_test[_i][_qp];
     }
   else
     {

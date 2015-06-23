@@ -47,7 +47,7 @@ InputParameters validParams<AddLotsOfPotentialDrivenArtificialDiff>()
   InputParameters params = validParams<AddVariableAction>();
   params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which PotentialDrivenArtificialDiff kernels should be added");
   params.addRequiredParam<std::vector<VariableName> >("potential", "A dummy vector that holds the potential to couple in for advection");
-  params.addParam<Real>("delta","Used for determining the amount of artificial diffusion to add.");
+  params.addParam<Real>("delta",0.5,"Used for determining the amount of artificial diffusion to add.");
   return params;
 }
 

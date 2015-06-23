@@ -7,6 +7,9 @@ InputParameters validParams<PhysicalElectronBC>()
     params.addParam<Real>("reflection_coeff",0.0,"The reflection coefficient for electrons at the walls.");
     params.addParam<Real>("se_coeff",0.1,"The secondary electron emission coefficient for the walls.");
     params.addRequiredCoupledVar("ip","The ion density");
+    params.addRequiredParam<std::string>("coupled_ion_name","Though redundant, this parameter determines correct mobility and diffusivity for the ions.");
+    params.addRequiredCoupledVar("Te","The electron temperature");
+    params.addRequiredCoupledVar("potential","The electric potential");
     return params;
 }
 
@@ -21,55 +24,88 @@ PhysicalElectronBC::PhysicalElectronBC(const std::string & name, InputParameters
   // Variables unique to class
 
   _a(0.0),
-  _a_p(0.0),
-  _n_gamma(0.0),
+  _d_vthermal_em_d_Te(0.0),
 
   // Material Properties
 
-  _advection_velocity_em(getMaterialProperty<RealVectorValue>("advection_velocity_em")),
   _muem(getMaterialProperty<Real>("muem")),
-  _v_thermal_em(getMaterialProperty<Real>("v_thermal_em")),
-  _gamma_ip(getMaterialProperty<RealVectorValue>("gamma_ip")),
-  _advection_velocity_ip(getMaterialProperty<RealVectorValue>("advection_velocity_ip")),
-  _muip(getMaterialProperty<Real>("muip")),
+  _muip(getMaterialProperty<Real>("mu"+getParam<std::string>("coupled_ion_name"))),
+  _D_ip(getMaterialProperty<Real>("D_"+getParam<std::string>("coupled_ion_name"))),
+  _k_boltz(getMaterialProperty<Real>("k_boltz")),
+  _m_em(getMaterialProperty<Real>("m_em")),
 
 // Coupled Variables
 
-  _ip(coupledValue("ip"))
+  _ip(coupledValue("ip")),
+  _ip_id(coupled("ip")),
+  _grad_ip(coupledGradient("ip")),
+  _Te(coupledValue("Te")),
+  _Te_id(coupled("Te")),
+  _grad_potential(coupledGradient("potential")),
+  _potential_id(coupled("potential"))
 {}
 
 Real
 PhysicalElectronBC::computeQpResidual()
 {
-  if ( _normals[_qp]*_advection_velocity_em[_qp] > 0.0) {
+  if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
   }
   else {
     _a = 0.0;
   }
-//  if ( _normals[_qp]*_advection_velocity_ip[_qp] > 0.0) {
-//    _a_p = 1.0;
-//  }
-//  else {
-//    _a_p = 0.0;
-//  }
-//  _n_gamma = (_a-1.0)*_se_coeff*_gamma_ip[_qp]*_normals[_qp]/(_advection_velocity_em[_qp]*_normals[_qp]);
-//  _n_gamma = std::max(0.0,(1.0-_a)/std::abs(_muem[_qp])*_se_coeff*((2.0*_a_p-1.0)+0.5*std::sqrt(2.0/3.14))*_muip[_qp]*std::max(0.0,_ip[_qp]));
-//  return _test[_i][_qp]*(1.0-_reflection_coeff)/(1.0+_reflection_coeff)*((2.0*_a-1.0)*_advection_velocity_em[_qp]*_normals[_qp]*_u[_qp]+0.5*_v_thermal_em[_qp]*_u[_qp]-0.5*_v_thermal_em[_qp]*_n_gamma)+_test[_i][_qp]*-2.0/(1.0+_reflection_coeff)*(1.0-_a)*_se_coeff*_gamma_ip[_qp]*_normals[_qp];
-
-  return _test[_i][_qp]*(_a*_advection_velocity_em[_qp]*_normals[_qp]*std::max(0.0,_u[_qp])+0.25*_v_thermal_em[_qp]*std::max(0.0,_u[_qp])-_se_coeff*_gamma_ip[_qp]*_normals[_qp]);
+    return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_potential[_qp]*_normals[_qp]*std::max(0.0,_u[_qp])+0.25*1.6*std::sqrt(_k_boltz[_qp]*_Te[_qp]/_m_em[_qp])*std::max(0.0,_u[_qp])-_se_coeff*(_muip[_qp]*-_grad_potential[_qp]*_ip[_qp]-_D_ip[_qp]*_grad_ip[_qp])*_normals[_qp]);
+    //return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_potential[_qp]*_normals[_qp]*std::max(0.0,_u[_qp])-_se_coeff*(_muip[_qp]*-_grad_potential[_qp]*_ip[_qp])*_normals[_qp]);
 }
 
 Real
 PhysicalElectronBC::computeQpJacobian()
 {
-  if ( _normals[_qp]*_advection_velocity_em[_qp] > 0.0) {
+  if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
   }
   else {
     _a = 0.0;
   }
-  //  return _test[_i][_qp]*(1.0-_reflection_coeff)/(1.0+_reflection_coeff)*((2.0*_a-1.0)*_advection_velocity_em[_qp]*_normals[_qp]*_phi[_j][_qp]+0.5*_v_thermal_em[_qp]*_phi[_j][_qp]);
 
-  return _test[_i][_qp]*(_a*_advection_velocity_em[_qp]*_normals[_qp]*_phi[_j][_qp]+0.25*_v_thermal_em[_qp]*_phi[_j][_qp]);
+    return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_potential[_qp]*_normals[_qp]*_phi[_j][_qp]+0.25*1.6*std::sqrt(_k_boltz[_qp]*_Te[_qp]/_m_em[_qp])*_phi[_j][_qp]);
+    //return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_potential[_qp]*_normals[_qp]*_phi[_j][_qp]);
 } 
+
+Real
+PhysicalElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
+{
+  if (jvar == _potential_id) {
+    if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+      _a = 1.0;
+    }
+    else {
+      _a = 0.0;
+    }
+    return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_phi[_j][_qp]*_normals[_qp]*std::max(0.0,_u[_qp])-_se_coeff*(_muip[_qp]*-_grad_phi[_j][_qp]*_ip[_qp])*_normals[_qp]);
+  }
+  else if (jvar == _ip_id) {
+    if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+      _a = 1.0;
+    }
+    else {
+      _a = 0.0;
+    }
+        return _test[_i][_qp]*(-_se_coeff*(_muip[_qp]*-_grad_potential[_qp]*_phi[_j][_qp]-_D_ip[_qp]*_grad_phi[_j][_qp])*_normals[_qp]);
+	//return _test[_i][_qp]*(-_se_coeff*(_muip[_qp]*-_grad_potential[_qp]*_phi[_j][_qp])*_normals[_qp]);
+  }
+  else if (jvar == _Te_id) {
+    if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+      _a = 1.0;
+    }
+    else {
+      _a = 0.0;
+    }
+    _d_vthermal_em_d_Te = 0.8*std::sqrt(_k_boltz[_qp]*std::max(_Te[_qp],0.0)/_m_em[_qp])/std::max(_Te[_qp],1e-16);
+        return _test[_i][_qp]*(0.25*_d_vthermal_em_d_Te*_phi[_j][_qp]*std::max(0.0,_u[_qp]));
+	//return 0.0;
+  }
+  else {
+    return 0.0;
+  }
+}

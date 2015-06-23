@@ -12,49 +12,45 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef JOULEHEATING_H
-#define JOULEHEATING_H
+#ifndef ELECTRONENERGYDIFFUSION_H
+#define ELECTRONENERGYDIFFUSION_H
 
-#include "Kernel.h"
+// Including the "Diffusion" Kernel here so we can extend it
+#include "Diffusion.h"
 
-class JouleHeating;
+class ElectronEnergyDiffusion;
 
 template<>
-InputParameters validParams<JouleHeating>();
+InputParameters validParams<ElectronEnergyDiffusion>();
 
-class JouleHeating : public Kernel
+class ElectronEnergyDiffusion : public Diffusion
 {
- public:
+public:
+  ElectronEnergyDiffusion(const std::string & name, InputParameters parameters);
+  virtual ~ElectronEnergyDiffusion();
 
-  JouleHeating(const std::string & name,
-		   InputParameters parameters);
-
- protected:
+protected:
 
   virtual Real computeQpResidual();
-
   virtual Real computeQpJacobian();
-  
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  
-  // Input file scalars
-  
-  // Material properties
+
+  // Material Properties
 
   const MaterialProperty<Real> & _muem;
 
-  // Coupled variables
-  
-  unsigned int _potential_id;
-  VariableGradient & _grad_potential;
+  // Coupled Variables
+
   VariableValue & _em;
-  VariableGradient & _grad_em;
   unsigned int _em_id;
 
   // Unique variables
 
-  Real _T_em;
-  Real _D_em;
+  Real _T_e;
+  Real _D_Te;
+  Real _mu_Te;
+  Real _d_D_Te_d_Te;
 };
 
-#endif //JOULEHEATING_H
+
+#endif /* ELECTRONENERGYDIFFUSION_H */

@@ -33,7 +33,7 @@ ElectronEnergyDiffusion::ElectronEnergyDiffusion(const std::string & name, Input
 
     // Material Properties
 
-    _mu_mean_electron_energy(getMaterialProperty<Real>("mumean_electron_energy")),
+    _muem(getMaterialProperty<Real>("muem")),
 
     // Coupled Variables
 
@@ -42,8 +42,10 @@ ElectronEnergyDiffusion::ElectronEnergyDiffusion(const std::string & name, Input
 
     // Unique variables
 
-    _T_em(0.0),
-    _D_mean_electron_energy(0.0)
+    _T_e(0.0),
+    _D_Te(0.0),
+    _mu_Te(0.0),
+    _d_D_Te_d_Te(0.0)
 {
 }
 
@@ -54,22 +56,31 @@ ElectronEnergyDiffusion::~ElectronEnergyDiffusion()
 Real
 ElectronEnergyDiffusion::computeQpResidual()
 {
-  _T_em = _u[_qp]*2.0/(3.0*_em[_qp]);
-  _D_mean_electron_energy = _mu_mean_electron_energy[_qp]*_T_em;
-  return _D_mean_electron_energy*_grad_u[_qp] * _grad_test[_i][_qp];
+  _mu_Te = 5.0/3.0*_muem[_qp];
+  _T_e = _std::max(_u[_qp],0.0);
+  _D_Te = _mu_Te*_T_e;
+  return 1.5*_D_Te*_em[_qp]*_grad_u[_qp] * _grad_test[_i][_qp];
 }
 
 Real
 ElectronEnergyDiffusion::computeQpJacobian()
 {
-  return _grad_test[_i][_qp]*(_grad_u[_qp]*_mu_mean_electron_energy[_qp]*_phi[_j][_qp]*2.0/(3.0*_em[_qp])+_D_mean_electron_energy*_grad_phi[_j][_qp]);
+  _mu_Te = 5.0/3.0*_muem[_qp];
+  _T_e = _std::max(_u[_qp],0.0);
+  _D_Te = _mu_Te*_T_e;
+  _d_D_Te_d_Te = _mu_Te;
+  return 1.5*_em[_qp]*_grad_test[_i][_qp]*(_grad_u[_qp]*_d_D_Te_d_Te*_phi[_j][_qp]+_D_Te*_grad_phi[_j][_qp]);
 }
 
 Real ElectronEnergyDiffusion::computeQpOffDiagJacobian(unsigned int jvar)
 {
+  _mu_Te = 5.0/3.0*_muem[_qp];
+  _T_e = _std::max(_u[_qp],0.0);
+  _D_Te = _mu_Te*_T_e;
+
   if (jvar == _em_id)
     {
-      return _grad_test[_i][_qp]*_grad_u[_qp]*_mu_mean_electron_energy[_qp]*_u[_qp]*2.0/(3.0*-std::pow(_em[_qp],2))*_phi[_j][_qp];
+      return 1.5*_D_Te*_phi[_j][_qp]*_grad_u[_qp] * _grad_test[_i][_qp];
     }
   else
     {

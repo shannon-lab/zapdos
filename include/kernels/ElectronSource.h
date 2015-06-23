@@ -28,17 +28,17 @@ class ElectronSource : public Kernel
 
   VariableValue & _Ars;
   unsigned int _Ars_id;
-  VariableValue & _mean_electron_energy;
-  unsigned int _mean_electron_energy_id;
+  VariableValue & _Te;
+  unsigned int _Te_id;
 
   // Unique to kernel
 
   Real _k_4;
   Real _k_5;
-  Real _T_e;
   Real _dk4_dTe;
   Real _dk5_dTe;
-  Real _dTe_d_mean_el_energy;
+
+  bool ArsCoupling;
 };
 
 #endif /* ELECTRONSOURCE_H */

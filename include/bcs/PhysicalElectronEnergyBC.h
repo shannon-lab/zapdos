@@ -35,6 +35,8 @@ protected:
   
   unsigned int _potential_id;
   VariableGradient & _grad_potential;  
+  unsigned int _em_id;
+  VariableValue & _em;
 };
 
 #endif //PHYSICALELECTRONENERGYBC_H

@@ -32,12 +32,13 @@
 #include "PotentialDrivenArtificialDiff.h"
 #include "JouleHeating.h"
 #include "ElectronDiffusion.h"
-#include "ElectronEnergyDiffusion.h"
 #include "ArsSource.h"
 #include "ArpSource.h"
 #include "ElectronSource.h"
 #include "ElectronEnergySource.h"
 #include "TimeDerivativeElectronTemp.h"
+#include "ElectronEnergyTransport.h"
+#include "PotentialDrivenArtificialDiffElectrons.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
 
@@ -157,12 +158,13 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(PotentialDrivenArtificialDiff);
   registerKernel(JouleHeating);
   registerKernel(ElectronDiffusion);
-  registerKernel(ElectronEnergyDiffusion);
   registerKernel(ArsSource);
   registerKernel(ArpSource);
   registerKernel(ElectronSource);
   registerKernel(ElectronEnergySource);
   registerKernel(TimeDerivativeElectronTemp);
+  registerKernel(ElectronEnergyTransport);
+  registerKernel(PotentialDrivenArtificialDiffElectrons);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);

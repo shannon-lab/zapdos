@@ -30,20 +30,17 @@ class ArsSource : public Kernel
 
   VariableValue & _em;
   unsigned int _em_id;
-  VariableValue & _mean_electron_energy;
-  unsigned int _mean_electron_energy_id;
+  VariableValue & _Te;
+  unsigned int _Te_id;
 
   // Unique to kernel
 
-  Real _T_e;
   Real _k2;
   Real _k3;
   Real _k5;
   Real _dk2_dTe;
   Real _dk3_dTe;
   Real _dk5_dTe;
-  Real _dTe_d_em;
-  Real _dTe_d_mean_el_energy;
 };
 
 #endif /* ARSSOURCE_H */

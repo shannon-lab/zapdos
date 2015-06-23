@@ -19,7 +19,7 @@ InputParameters validParams<TimeDerivativeElectronTemp>()
 {
   InputParameters params = validParams<TimeKernel>();
   params.addParam<bool>("lumping", false, "True for mass matrix lumping, false otherwise");
-  params.addCoupledVar("em", "The electron density");
+  params.addRequiredCoupledVar("em", "The electron density");
   return params;
 }
 
@@ -37,13 +37,26 @@ TimeDerivativeElectronTemp::TimeDerivativeElectronTemp(const std::string & name,
 Real
 TimeDerivativeElectronTemp::computeQpResidual()
 {
-  return _test[_i][_qp]*(_em[_qp]*_u_dot[_qp]+_u[_qp]*_em_dot[_qp]);
+  return _test[_i][_qp]*1.5*(_em[_qp]*_u_dot[_qp]+_u[_qp]*_em_dot[_qp]);
 }
 
 Real
 TimeDerivativeElectronTemp::computeQpJacobian()
 {
-  return _test[_i][_qp]*_phi[_j][_qp]*_du_dot_du[_qp];
+  return _test[_i][_qp]*1.5*(_em[_qp]*_du_dot_du[_qp]*_phi[_j][_qp]+_phi[_j][_qp]*_em_dot[_qp]);
+}
+
+Real
+TimeDerivativeElectronTemp::computeQpOffDiagJacobian(unsigned int jvar)
+{
+  if (jvar == _em_id)
+    {
+        return _test[_i][_qp]*1.5*(_phi[_j][_qp]*_u_dot[_qp]+_u[_qp]*_dem_dot[_qp]*_phi[_j][_qp]);
+    }
+  else
+    {
+      return 0.0;
+    }
 }
 
 void

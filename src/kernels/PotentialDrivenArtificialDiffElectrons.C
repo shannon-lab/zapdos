@@ -1,18 +1,19 @@
-#include "PotentialDrivenArtificialDiff.h"
+#include "PotentialDrivenArtificialDiffElectrons.h"
 
 template<>
-InputParameters validParams<PotentialDrivenArtificialDiff>()
+InputParameters validParams<PotentialDrivenArtificialDiffElectrons>()
 {
   InputParameters params = validParams<Kernel>();
 
   params.addRequiredParam<std::string>("var_name_string","The name of the kernel variable. Required to import the correct mobility from the material properties file.");
   params.addRequiredCoupledVar("potential","The potential for calculating the advection velocity.");
+  params.addRequiredCoupledVar("Te","The electron temperature for calculating the diffusivity.");
   params.addParam<bool>("consistent",false,"Whether to use consistent stabilization");
   params.addParam<Real>("delta",0.5,"Scaling parameter for artificial diffusivity");
   return params;
 }
 
-PotentialDrivenArtificialDiff::PotentialDrivenArtificialDiff(const std::string & name, InputParameters parameters) :
+PotentialDrivenArtificialDiffElectrons::PotentialDrivenArtificialDiffElectrons(const std::string & name, InputParameters parameters) :
     Kernel(name, parameters),
 
     // Input parameters
@@ -24,30 +25,33 @@ PotentialDrivenArtificialDiff::PotentialDrivenArtificialDiff(const std::string &
 
     _grad_potential(coupledGradient("potential")),
     _potential_id(coupled("potential")),
+    _Te(coupledValue("Te")),
+    _Te_id(coupled("Te")),
 
     // Material properties
 
     _mobility(getMaterialProperty<Real>("mu"+getParam<std::string>("var_name_string"))),
-    _diffusivity(getMaterialProperty<Real>("D_"+getParam<std::string>("var_name_string"))),
 
     // Variables unique to class
     
     _advection_velocity(0.0,0.0,0.0),
     _peclet_num(0.0),
     _alpha(0.0),
-    _tau(0.0)
+    _tau(0.0),
+    _diffusivity(0.0)
 {
 }
 
-PotentialDrivenArtificialDiff::~PotentialDrivenArtificialDiff()
+PotentialDrivenArtificialDiffElectrons::~PotentialDrivenArtificialDiffElectrons()
 {
 }
 
 Real
-PotentialDrivenArtificialDiff::computeQpResidual()
+PotentialDrivenArtificialDiffElectrons::computeQpResidual()
 {
   _advection_velocity = _mobility[_qp]*-_grad_potential[_qp];
-  _peclet_num = _current_elem->hmax() * std::max(_advection_velocity.size(),1e-16) / (2.0 * _diffusivity[_qp]);
+  _diffusivity = _mobility[_qp]*_Te[_qp];
+  _peclet_num = _current_elem->hmax() * std::max(_advection_velocity.size(),1e-16) / (2.0 * _diffusivity);
   _alpha = 1.0 / std::tanh(std::max(_peclet_num,1e-16)) - 1.0 / std::max(_peclet_num,1e-16);
   
   if (_consistent)
@@ -65,10 +69,11 @@ PotentialDrivenArtificialDiff::computeQpResidual()
 }
 
 Real
-PotentialDrivenArtificialDiff::computeQpJacobian()
+PotentialDrivenArtificialDiffElectrons::computeQpJacobian()
 {
   _advection_velocity = _mobility[_qp]*-_grad_potential[_qp];
-  _peclet_num = _current_elem->hmax() * std::max(_advection_velocity.size(),1e-16) / (2.0 * _diffusivity[_qp]);
+  _diffusivity = _mobility[_qp]*_Te[_qp];
+  _peclet_num = _current_elem->hmax() * std::max(_advection_velocity.size(),1e-16) / (2.0 * _diffusivity);
   _alpha = 1.0 / std::tanh(std::max(_peclet_num,1e-16)) - 1.0 / std::max(_peclet_num,1e-16);
   
   if (_consistent)
@@ -86,12 +91,15 @@ PotentialDrivenArtificialDiff::computeQpJacobian()
 }
 
 Real
-PotentialDrivenArtificialDiff::computeQpOffDiagJacobian(unsigned int jvar)
+PotentialDrivenArtificialDiffElectrons::computeQpOffDiagJacobian(unsigned int jvar)
 {
+  // Current off-diag jacobian is only correct for inconsistent formulation since I haven't written the derivatives out with respect to the electront temperature for the consistent formulation.
+
   if (jvar == _potential_id)
     {
       _advection_velocity = _mobility[_qp]*-_grad_potential[_qp];
-      _peclet_num = _current_elem->hmax() * std::max(_advection_velocity.size(),1e-16) / (2.0 * _diffusivity[_qp]);
+      _diffusivity = _mobility[_qp]*_Te[_qp];
+      _peclet_num = _current_elem->hmax() * std::max(_advection_velocity.size(),1e-16) / (2.0 * _diffusivity);
       _alpha = 1.0 / std::tanh(std::max(_peclet_num,1e-16)) - 1.0 / std::max(_peclet_num,1e-16);
       if (!_consistent)
 	{
