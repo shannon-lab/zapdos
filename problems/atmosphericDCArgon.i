@@ -23,25 +23,29 @@
 #    petsc_options_value = 'lu       1e-6                 ds'
 #    petsc_options_iname = '-pc_type -sub_ksp_type -sub_pc_type'
 #    petsc_options_value = 'asm preonly lu'
-    petsc_options_iname = '-ksp_converged_reason -snes_converged_reason -mat_fd_type'
-    petsc_options_value = '1 1 ds'  
+#    petsc_options_iname = '-ksp_converged_reason -snes_converged_reason -mat_fd_type -snes_monitor -ksp_monitor_true_residual -pc_type -sub_pc_type -sub_pc_factor_shift'
+#    petsc_options_value = '1 1 ds 1 1 asm lu NONZERO'  
+    petsc_options_iname = '-ksp_converged_reason -snes_converged_reason'
+    petsc_options_value = '1 1'  
   [../]
   [./SMP]
     type = SMP
     full = true
  #Preconditioned JFNK (default)
-    solve_type = 'PJFNK'
-    petsc_options_iname = '-pc_type -pc_hypre_type -ksp_converged_reason -snes_converged_reason'
-    petsc_options_value = 'hypre boomeramg 1 1'
-#    petsc_options_iname = '-ksp_type -pc_type -sub_pc_type -sub_pc_factor_shift_type -ksp_converged_reason -snes_converged_reason'
-#    petsc_options_value = 'gmres asm lu NONZERO 1 1'
+    solve_type = 'NEWTON'
+#    petsc_options_iname = '-pc_type -pc_hypre_type -ksp_converged_reason -snes_converged_reason -snes_monitor -ksp_monitor_true_residual'
+#    petsc_options_value = 'hypre boomeramg 1 1 1 1'
+    petsc_options_iname = '-ksp_type -pc_type -sub_pc_type -sub_pc_factor_shift_type -ksp_converged_reason -snes_converged_reason'
+    petsc_options_value = 'gmres asm lu NONZERO 1 1'
+#    petsc_options_iname = '-ksp_converged_reason -snes_converged_reason -pc_type' # -sub_pc_type -sub_pc_factor_shift
+#    petsc_options_value = '1 1 lu' # lu NONZERO
   [../]
 []
 
 [Executioner]
   type = Transient
   dt = 2e-11
-  end_time = 2e-4
+  end_time = 1
 #  petsc_options_iname = '-snes_type'
 #  petsc_options_value = 'test'
 #  solve_type = NEWTON
@@ -272,11 +276,11 @@
     variable = Te
     value = 1.0
   [../]
-  [./potential_ic]
-    type = FunctionIC
-    variable = potential
-    function = potential_parsed_function
-  [../]
+#  [./potential_ic]
+#    type = FunctionIC
+#    variable = potential
+#    function = potential_parsed_function
+#  [../]
 []
 
 [Functions]

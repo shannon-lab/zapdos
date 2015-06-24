@@ -25,11 +25,14 @@ protected:
 
   Real _a;
   RealVectorValue _advection_velocity;
+  Real _v_thermal_em;
+  Real _d_v_thermal_em_d_Te;
   
   // Material Properties
 
-  const MaterialProperty<Real> & _v_thermal_em;
   const MaterialProperty<Real> & _advection_coeff;
+  const MaterialProperty<Real> & _e;
+  const MaterialProperty<Real> & _m_em;
 
   // Coupled variables
   

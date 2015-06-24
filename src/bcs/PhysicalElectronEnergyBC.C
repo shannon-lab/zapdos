@@ -18,11 +18,14 @@ PhysicalElectronEnergyBC::PhysicalElectronEnergyBC(const std::string & name, Inp
 
   _a(0.0),
   _advection_velocity(0.0,0.0,0.0),
+  _v_thermal_em(0.0),
+  _d_v_thermal_em_d_Te(0.0),
 
   // Material Properties
 
-  _v_thermal_em(getMaterialProperty<Real>("v_thermal_em")),
   _advection_coeff(getMaterialProperty<Real>("EFieldAdvectionCoeff_em")),
+  _e(getMaterialProperty<Real>("e")),
+  _m_em(getMaterialProperty<Real>("m_em")),
   
 // Coupled Variables
 
@@ -36,6 +39,7 @@ Real
 PhysicalElectronEnergyBC::computeQpResidual()
 {
   _advection_velocity = _advection_coeff[_qp]*-_grad_potential[_qp];
+  _v_thermal_em = 1.6*std::sqrt(_e[_qp]*std::max(_u[_qp],0.0)/_m_em[_qp]);
 
   if ( _normals[_qp]*_advection_velocity > 0.0) {
     _a = 1.0;
@@ -44,14 +48,17 @@ PhysicalElectronEnergyBC::computeQpResidual()
     _a = 0.0;
   }
 
-    return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]+0.25*_v_thermal_em[_qp]*_em[_qp]);
+  //    return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]+0.25*_v_thermal_em*_em[_qp]);
     //return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]);
+  return _test[_i][_qp]*2.5*_u[_qp]*(0.25*_v_thermal_em*_em[_qp]);
 }
 
 Real
 PhysicalElectronEnergyBC::computeQpJacobian()
 {
   _advection_velocity = _advection_coeff[_qp]*-_grad_potential[_qp];
+  _v_thermal_em = 1.6*std::sqrt(_e[_qp]*std::max(_u[_qp],0.0)/_m_em[_qp]);
+  _d_v_thermal_em_d_Te = 0.8*std::sqrt(_e[_qp]*std::max(_u[_qp],0.0)/_m_em[_qp])/std::max(_u[_qp],1e-16);
 
   if ( _normals[_qp]*_advection_velocity > 0.0) {
     _a = 1.0;
@@ -60,8 +67,9 @@ PhysicalElectronEnergyBC::computeQpJacobian()
     _a = 0.0;
   }
 
-    return _test[_i][_qp]*2.5*_phi[_j][_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]+0.25*_v_thermal_em[_qp]*_em[_qp]);
+  //  return _test[_i][_qp]*2.5*_phi[_j][_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]+0.25*_v_thermal_em*_em[_qp])+_test[_i][_qp]*2.5*_u[_qp]*(0.25*_d_v_thermal_em_d_Te*_phi[_j][_qp]*_em[_qp]);
     //return _test[_i][_qp]*2.5*_phi[_j][_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]);
+  return _test[_i][_qp]*2.5*_phi[_j][_qp]*(0.25*_v_thermal_em*_em[_qp])+_test[_i][_qp]*2.5*_u[_qp]*(0.25*_d_v_thermal_em_d_Te*_phi[_j][_qp]*_em[_qp]);
 } 
 
 Real
@@ -70,25 +78,30 @@ PhysicalElectronEnergyBC::computeQpOffDiagJacobian(unsigned int jvar)
   if (jvar == _potential_id)
     {
       _advection_velocity = _advection_coeff[_qp]*-_grad_potential[_qp];
+      _v_thermal_em = 1.6*std::sqrt(_e[_qp]*std::max(_u[_qp],0.0)/_m_em[_qp]);
+
       if ( _normals[_qp]*_advection_velocity > 0.0) {
 	_a = 1.0;
       }
       else {
 	_a = 0.0;
       }
-      return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_coeff[_qp]*-_grad_phi[_j][_qp]*_normals[_qp]*_em[_qp]);
+      //      return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_coeff[_qp]*-_grad_phi[_j][_qp]*_normals[_qp]*_em[_qp]);
+      return 0.0;
     }
   else if (jvar == _em_id)
     {
       _advection_velocity = _advection_coeff[_qp]*-_grad_potential[_qp];
+      _v_thermal_em = 1.6*std::sqrt(_e[_qp]*std::max(_u[_qp],0.0)/_m_em[_qp]);
       if ( _normals[_qp]*_advection_velocity > 0.0) {
 	_a = 1.0;
       }
       else {
 	_a = 0.0;
       }
-            return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_phi[_j][_qp]+0.25*_v_thermal_em[_qp]*_phi[_j][_qp]);
+      //      return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_phi[_j][_qp]+0.25*_v_thermal_em*_phi[_j][_qp]);
 	    //return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_phi[_j][_qp]);
+      return _test[_i][_qp]*2.5*_u[_qp]*(0.25*_v_thermal_em*_phi[_j][_qp]);
     }
   else
     {
