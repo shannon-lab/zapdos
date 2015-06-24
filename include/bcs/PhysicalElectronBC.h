@@ -36,6 +36,7 @@ protected:
   const MaterialProperty<Real> & _D_ip;
   const MaterialProperty<Real> & _e;
   const MaterialProperty<Real> & _m_em;
+  const MaterialProperty<Real> & _blahzie;
 
   // Coupled variables
   
