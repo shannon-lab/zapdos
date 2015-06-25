@@ -21,6 +21,8 @@ protected:
 
   // Input Parameters
 
+  const Real _se_energy;
+
   // Members unique to class  
 
   Real _a;
@@ -36,6 +38,8 @@ protected:
 
   // Coupled variables
   
+  VariableValue & _ip;
+  unsigned int _ip_id;
   unsigned int _potential_id;
   VariableGradient & _grad_potential;  
   unsigned int _em_id;

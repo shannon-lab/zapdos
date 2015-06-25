@@ -33,7 +33,6 @@ PhysicalElectronBC::PhysicalElectronBC(const std::string & name, InputParameters
   _D_ip(getMaterialProperty<Real>("D_"+getParam<std::string>("coupled_ion_name"))),
   _e(getMaterialProperty<Real>("e")),
   _m_em(getMaterialProperty<Real>("m_em")),
-  _blahzie(getMaterialProperty<Real>("blahzie")),
 
 // Coupled Variables
 

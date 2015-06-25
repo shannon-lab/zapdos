@@ -6,6 +6,9 @@ InputParameters validParams<PhysicalElectronEnergyBC>()
     InputParameters params = validParams<IntegratedBC>();
     params.addRequiredCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
     params.addRequiredCoupledVar("em","The electron density");    
+    params.addRequiredCoupledVar("ip","The ion density");
+    params.addRequiredParam<std::string>("coupled_ion_name","Though redundant, this parameter determines correct mobility and diffusivity for the ions.");
+    params.addParam("se_energy",4.0,"The energy of electrons emitted from the walls by ion bombardment.");
     return params;
 }
 
@@ -13,6 +16,8 @@ PhysicalElectronEnergyBC::PhysicalElectronEnergyBC(const std::string & name, Inp
   IntegratedBC(name, parameters),
 
   // Parameters
+
+  _se_energy(getParam<Real>("se_energy")),
 
   // Variables unique to class
 
@@ -26,9 +31,13 @@ PhysicalElectronEnergyBC::PhysicalElectronEnergyBC(const std::string & name, Inp
   _advection_coeff(getMaterialProperty<Real>("EFieldAdvectionCoeff_em")),
   _e(getMaterialProperty<Real>("e")),
   _m_em(getMaterialProperty<Real>("m_em")),
+  _muip(getMaterialProperty<Real>("mu"+getParam<std::string>("coupled_ion_name"))),
+  _D_ip(getMaterialProperty<Real>("D_"+getParam<std::string>("coupled_ion_name"))),
   
 // Coupled Variables
 
+  _ip(coupledValue("ip")),
+  _ip_id(coupled("ip")),
   _potential_id(coupled("potential")),
   _grad_potential(coupledGradient("potential")),
   _em_id(coupled("em")),
@@ -50,7 +59,7 @@ PhysicalElectronEnergyBC::computeQpResidual()
 
   //    return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]+0.25*_v_thermal_em*_em[_qp]);
     //return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]);
-  return _test[_i][_qp]*2.5*_u[_qp]*(0.25*_v_thermal_em*_em[_qp]);
+  return _test[_i][_qp]*2.5*_u[_qp]*(0.25*_v_thermal_em*_em[_qp])+_test[_i][_qp]*-_se_coeff*_se_energy*(_muip[_qp]*-_grad_potential[_qp]*_ip[_qp]-_D_ip[_qp]*_grad_ip[_qp])*_normals[_qp];
 }
 
 Real

@@ -216,7 +216,7 @@
     type = DirichletBC
     variable = potential
     boundary = left
-    value = -1000
+    value = 1000
   [../]
   [./potential_dirichlet_right]
     type = DirichletBC
@@ -231,13 +231,14 @@
     potential = potential
     boundary = 'left right'
   [../]
+  # Below is the BC that contains a fictional material property _blahzie_ that does not exist in the material file
   [./em_physical]
     type = PhysicalElectronBC
     variable = em
     boundary = 'left right'
     ip = Arp
     coupled_ion_name = Arp
-    se_coeff = 0.1
+    se_coeff = 0.2
     potential = potential
     Te = Te
   [../]
@@ -274,7 +275,7 @@
   [./mean_el_energy_ic]
     type = ConstantIC
     variable = Te
-    value = 1.0
+    value = 4.0
   [../]
 #  [./potential_ic]
 #    type = FunctionIC
