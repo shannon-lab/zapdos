@@ -8,7 +8,8 @@ InputParameters validParams<PhysicalElectronEnergyBC>()
     params.addRequiredCoupledVar("em","The electron density");    
     params.addRequiredCoupledVar("ip","The ion density");
     params.addRequiredParam<std::string>("coupled_ion_name","Though redundant, this parameter determines correct mobility and diffusivity for the ions.");
-    params.addParam("se_energy",4.0,"The energy of electrons emitted from the walls by ion bombardment.");
+    params.addParam<Real>("se_energy",4.0,"The energy of electrons emitted from the walls by ion bombardment.");
+    params.addParam<Real>("se_coeff",0.1,"The fraction of incident ions that produce secondary electrons.");
     return params;
 }
 
@@ -18,6 +19,7 @@ PhysicalElectronEnergyBC::PhysicalElectronEnergyBC(const std::string & name, Inp
   // Parameters
 
   _se_energy(getParam<Real>("se_energy")),
+  _se_coeff(getParam<Real>("se_coeff")),
 
   // Variables unique to class
 
@@ -37,6 +39,7 @@ PhysicalElectronEnergyBC::PhysicalElectronEnergyBC(const std::string & name, Inp
 // Coupled Variables
 
   _ip(coupledValue("ip")),
+  _grad_ip(coupledGradient("ip")),
   _ip_id(coupled("ip")),
   _potential_id(coupled("potential")),
   _grad_potential(coupledGradient("potential")),
@@ -112,6 +115,21 @@ PhysicalElectronEnergyBC::computeQpOffDiagJacobian(unsigned int jvar)
 	    //return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_phi[_j][_qp]);
       return _test[_i][_qp]*2.5*_u[_qp]*(0.25*_v_thermal_em*_phi[_j][_qp]);
     }
+  else if (jvar == _ip_id)
+    {
+      _advection_velocity = _advection_coeff[_qp]*-_grad_potential[_qp];
+      _v_thermal_em = 1.6*std::sqrt(_e[_qp]*std::max(_u[_qp],0.0)/_m_em[_qp]);
+      if ( _normals[_qp]*_advection_velocity > 0.0) {
+	_a = 1.0;
+      }
+      else {
+	_a = 0.0;
+      }
+      //      return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_phi[_j][_qp]+0.25*_v_thermal_em*_phi[_j][_qp]);
+	    //return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_phi[_j][_qp]);
+      return _test[_i][_qp]*-_se_coeff*_se_energy*(_muip[_qp]*-_grad_potential[_qp]*_phi[_j][_qp]-_D_ip[_qp]*_grad_phi[_j][_qp])*_normals[_qp];
+    }
+
   else
     {
       return 0.0;

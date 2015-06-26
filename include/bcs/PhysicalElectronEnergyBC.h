@@ -22,6 +22,7 @@ protected:
   // Input Parameters
 
   const Real _se_energy;
+  const Real _se_coeff;
 
   // Members unique to class  
 
@@ -35,10 +36,13 @@ protected:
   const MaterialProperty<Real> & _advection_coeff;
   const MaterialProperty<Real> & _e;
   const MaterialProperty<Real> & _m_em;
+  const MaterialProperty<Real> & _muip;
+  const MaterialProperty<Real> & _D_ip;
 
   // Coupled variables
   
   VariableValue & _ip;
+  VariableGradient & _grad_ip;
   unsigned int _ip_id;
   unsigned int _potential_id;
   VariableGradient & _grad_potential;  

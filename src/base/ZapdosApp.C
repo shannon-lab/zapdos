@@ -39,6 +39,7 @@
 #include "TimeDerivativeElectronTemp.h"
 #include "ElectronEnergyTransport.h"
 #include "PotentialDrivenArtificialDiffElectrons.h"
+#include "PotentialDrivenArtificialDiffEnergy.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
 
@@ -165,6 +166,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(TimeDerivativeElectronTemp);
   registerKernel(ElectronEnergyTransport);
   registerKernel(PotentialDrivenArtificialDiffElectrons);
+  registerKernel(PotentialDrivenArtificialDiffEnergy);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);

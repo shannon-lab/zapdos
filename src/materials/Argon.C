@@ -22,6 +22,7 @@ InputParameters validParams<Argon>()
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("Te", "The electron temperature.");
+  params.addCoupledVar("Arp", "The argon ion density.");
   return params;
 }
 
@@ -39,6 +40,8 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
     _em(isCoupled("em") ? coupledValue("em") : _zero),
     _grad_em(isCoupled("em") ? coupledGradient("em") : _grad_zero),
     _Te(isCoupled("Te") ? coupledValue("Te") : _zero),
+    _Arp(isCoupled("Arp") ? coupledValue("Arp") : _zero),
+    _grad_Arp(isCoupled("Arp") ? coupledGradient("Arp") : _grad_zero),
 
 // Declare material properties.  This returns references that we
 // hold onto as member variables
@@ -72,7 +75,14 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
   _el_energy_gain_excitation(declareProperty<Real>("el_energy_gain_excitation")),
   _el_energy_gain_deexcitation(declareProperty<Real>("el_energy_gain_deexcitation")),
   _el_energy_gain_ionization(declareProperty<Real>("el_energy_gain_ionization")),
-  _el_energy_gain_meta_ionization(declareProperty<Real>("el_energy_gain_meta_ionization"))
+  _el_energy_gain_meta_ionization(declareProperty<Real>("el_energy_gain_meta_ionization")),
+  _advective_ion_flux(declareProperty<RealVectorValue>("advective_ion_flux")),
+  _diffusive_ion_flux(declareProperty<RealVectorValue>("diffusive_ion_flux")),
+  _total_ion_flux(declareProperty<RealVectorValue>("total_ion_flux")),
+  _advective_electron_flux(declareProperty<RealVectorValue>("advective_electron_flux")),
+  _diffusive_electron_flux(declareProperty<RealVectorValue>("diffusive_electron_flux")),
+  _total_electron_flux(declareProperty<RealVectorValue>("total_electron_flux")),
+  _Electric_Field(declareProperty<RealVectorValue>("Electric_Field"))
 {
 }
 
@@ -109,4 +119,11 @@ Argon::computeQpProperties()
   _el_energy_gain_deexcitation[_qp] = 11.5; // eV
   _el_energy_gain_ionization[_qp] = -15.8; // eV
   _el_energy_gain_meta_ionization[_qp] = -4.24; // eV
+  _advective_ion_flux[_qp] = _muArp[_qp]*-_grad_potential[_qp]*_Arp[_qp];
+  _diffusive_ion_flux[_qp] = -_D_Arp[_qp]*_grad_Arp[_qp];
+  _total_ion_flux[_qp] = _advective_ion_flux[_qp] + _diffusive_ion_flux[_qp];
+  _advective_electron_flux[_qp] = -_muem[_qp]*-_grad_potential[_qp]*_em[_qp];
+  _diffusive_electron_flux[_qp] = -_muem[_qp]*_Te[_qp]*_grad_em[_qp];
+  _total_electron_flux[_qp] = _advective_electron_flux[_qp] + _diffusive_electron_flux[_qp];  
+  _Electric_Field[_qp] = -_grad_potential[_qp];
 }

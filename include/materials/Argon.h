@@ -39,6 +39,8 @@ protected:
   VariableValue & _em;
   VariableGradient & _grad_em;
   VariableValue & _Te;
+  VariableValue & _Arp;
+  VariableGradient & _grad_Arp;
 
   // Material properties
   MaterialProperty<Real> &  _N_A;
@@ -71,6 +73,13 @@ protected:
   MaterialProperty<Real> &  _el_energy_gain_deexcitation;
   MaterialProperty<Real> &  _el_energy_gain_ionization;
   MaterialProperty<Real> &  _el_energy_gain_meta_ionization;
+  MaterialProperty<RealVectorValue> &   _advective_ion_flux;
+  MaterialProperty<RealVectorValue> &   _diffusive_ion_flux;
+  MaterialProperty<RealVectorValue> &   _total_ion_flux;
+  MaterialProperty<RealVectorValue> &   _advective_electron_flux;
+  MaterialProperty<RealVectorValue> &   _diffusive_electron_flux;
+  MaterialProperty<RealVectorValue> &   _total_electron_flux;
+  MaterialProperty<RealVectorValue> &   _Electric_Field;
 };
 
 #endif //ARGON_H

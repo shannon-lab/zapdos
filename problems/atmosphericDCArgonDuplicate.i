@@ -13,7 +13,7 @@
 []
 
 [Preconditioning]
-  active = 'FDP'
+  active = 'SMP'
   [./FDP]
     type = FDP
     full = true
@@ -32,11 +32,11 @@
     type = SMP
     full = true
  #Preconditioned JFNK (default)
-    solve_type = 'NEWTON'
-#    petsc_options_iname = '-pc_type -pc_hypre_type -ksp_converged_reason -snes_converged_reason -snes_monitor -ksp_monitor_true_residual'
-#    petsc_options_value = 'hypre boomeramg 1 1 1 1'
-    petsc_options_iname = '-ksp_type -pc_type -sub_pc_type -sub_pc_factor_shift_type -ksp_converged_reason -snes_converged_reason'
-    petsc_options_value = 'gmres asm lu NONZERO 1 1'
+    solve_type = 'PJFNK'
+    petsc_options_iname = '-pc_type -pc_hypre_type -ksp_converged_reason -snes_converged_reason'
+    petsc_options_value = 'hypre boomeramg 1 1'
+#    petsc_options_iname = '-ksp_type -pc_type -sub_pc_type -sub_pc_factor_shift_type -ksp_converged_reason -snes_converged_reason'
+#    petsc_options_value = 'gmres asm lu NONZERO 1 1'
 #    petsc_options_iname = '-ksp_converged_reason -snes_converged_reason -pc_type' # -sub_pc_type -sub_pc_factor_shift
 #    petsc_options_value = '1 1 lu' # lu NONZERO
   [../]
