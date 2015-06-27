@@ -73,6 +73,7 @@
   print_perf_log = true
   print_linear_residuals = true
   output_initial = true
+  output_on = 'nonlinear'
 #  interval = 100
   [./out]
     type = Exodus
@@ -137,17 +138,20 @@
     type = TimeDerivativeElectronTemp
     variable = Te
     em = em
+    save_in = el_energy_time_deriv_aux
   [../]
   [./el_energy_transport]
     type = ElectronEnergyTransport
     variable = Te
     potential = potential
     em = em
+    save_in = electron_energy_transport_aux
   [../]
   [./el_energy_source]
     type = ElectronEnergySource
     variable = Te
     em = em
+    save_in = el_energy_source_aux
   [../]
   [./el_energy_artificial_diff]
     type = PotentialDrivenArtificialDiffEnergy
@@ -174,6 +178,7 @@
     variable = Te
     potential = potential
     em = em
+    save_in = joule_heating_aux
   [../]
 []
 
@@ -195,19 +200,44 @@
   [../]
 []
 
-#[AuxVariables]
-#  [./h_size]
-#    order = CONSTANT
-#    family = MONOMIAL
-#  [../]
-#[]
-#
-#[AuxKernels]
-#  [./h_kernel]
-#    type = HSize
-#    variable = h_size
-#  [../]
-#[]
+[AuxVariables]
+  [./electron_energy_transport_aux]
+  [../]
+  [./el_energy_time_deriv_aux]
+  [../]
+  [./joule_heating_aux]
+  [../]
+  [./el_energy_source_aux]
+  [../]
+[]
+
+[Postprocessors]
+  [./el_energy_transport_contrib]
+    type = NodalL2Norm
+    variable = electron_energy_transport_aux
+    execute_on = 'nonlinear'
+    block = 0
+  [../]
+  [./el_energy_time_deriv_contrib]
+    type = NodalL2Norm
+    variable = el_energy_time_deriv_aux
+    execute_on = 'nonlinear'
+    block = 0
+  [../]
+  [./joule_heating_contrib]
+    type = NodalL2Norm
+    variable = joule_heating_aux
+    execute_on = 'nonlinear'
+    block = 0
+  [../]
+  [./el_energy_source_contrib]
+    type = NodalL2Norm
+    variable = el_energy_source_aux
+    execute_on = 'nonlinear'
+    block = 0
+  [../]
+[]
+
 
 [Materials]
   [./air]

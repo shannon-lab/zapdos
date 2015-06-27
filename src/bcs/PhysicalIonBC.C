@@ -44,8 +44,8 @@ PhysicalIonBC::computeQpResidual()
     _a = 0.0;
   }
 
-    return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*_normals[_qp]*std::max(0.0,_u[_qp])+0.25*1.6*std::sqrt(_k_boltz[_qp]*_T_gas[_qp]/_m_ip[_qp])*std::max(0.0,_u[_qp]));
-    //return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*_normals[_qp]*std::max(0.0,_u[_qp]));
+  //    return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*_normals[_qp]*std::max(0.0,_u[_qp])+0.25*1.6*std::sqrt(_k_boltz[_qp]*_T_gas[_qp]/_m_ip[_qp])*std::max(0.0,_u[_qp]));
+  return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*_normals[_qp]*std::max(0.0,_u[_qp]));
 }
 
 Real
@@ -57,8 +57,8 @@ PhysicalIonBC::computeQpJacobian()
   else {
     _a = 0.0;
   }
-    return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*_normals[_qp]*_phi[_j][_qp]+0.25*1.6*std::sqrt(_k_boltz[_qp]*_T_gas[_qp]/_m_ip[_qp])*_phi[_j][_qp]);
-    //return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*_normals[_qp]*_phi[_j][_qp]);
+  //    return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*_normals[_qp]*_phi[_j][_qp]+0.25*1.6*std::sqrt(_k_boltz[_qp]*_T_gas[_qp]/_m_ip[_qp])*_phi[_j][_qp]);
+  return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*_normals[_qp]*_phi[_j][_qp]);
 }
 
 Real

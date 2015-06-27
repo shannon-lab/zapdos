@@ -60,9 +60,8 @@ PhysicalElectronEnergyBC::computeQpResidual()
     _a = 0.0;
   }
 
-  //    return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]+0.25*_v_thermal_em*_em[_qp]);
-    //return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]);
-  return _test[_i][_qp]*2.5*_u[_qp]*(0.25*_v_thermal_em*_em[_qp])+_test[_i][_qp]*-_se_coeff*_se_energy*(_muip[_qp]*-_grad_potential[_qp]*_ip[_qp]-_D_ip[_qp]*_grad_ip[_qp])*_normals[_qp];
+  return _test[_i][_qp]*2.5*_u[_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp])+_test[_i][_qp]*-_se_coeff*_se_energy*(_muip[_qp]*-_grad_potential[_qp]*_ip[_qp]-_D_ip[_qp]*_grad_ip[_qp])*_normals[_qp];
+  //return _test[_i][_qp]*2.5*_u[_qp]*(0.25*_v_thermal_em*_em[_qp])+_test[_i][_qp]*-_se_coeff*_se_energy*(_muip[_qp]*-_grad_potential[_qp]*_ip[_qp]-_D_ip[_qp]*_grad_ip[_qp])*_normals[_qp];
 }
 
 Real
@@ -80,8 +79,8 @@ PhysicalElectronEnergyBC::computeQpJacobian()
   }
 
   //  return _test[_i][_qp]*2.5*_phi[_j][_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]+0.25*_v_thermal_em*_em[_qp])+_test[_i][_qp]*2.5*_u[_qp]*(0.25*_d_v_thermal_em_d_Te*_phi[_j][_qp]*_em[_qp]);
-    //return _test[_i][_qp]*2.5*_phi[_j][_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]);
-  return _test[_i][_qp]*2.5*_phi[_j][_qp]*(0.25*_v_thermal_em*_em[_qp])+_test[_i][_qp]*2.5*_u[_qp]*(0.25*_d_v_thermal_em_d_Te*_phi[_j][_qp]*_em[_qp]);
+    return _test[_i][_qp]*2.5*_phi[_j][_qp]*(_a*_advection_velocity*_normals[_qp]*_em[_qp]);
+  //  return _test[_i][_qp]*2.5*_phi[_j][_qp]*(0.25*_v_thermal_em*_em[_qp])+_test[_i][_qp]*2.5*_u[_qp]*(0.25*_d_v_thermal_em_d_Te*_phi[_j][_qp]*_em[_qp]);
 } 
 
 Real
