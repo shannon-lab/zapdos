@@ -41,17 +41,17 @@ ElectronSource::~ElectronSource()
 Real
 ElectronSource::computeQpResidual()
 {
-  // Clean expression for reading:
-  //   return -_test[_i][_qp]*(_k_4*std::max(_u[_qp],1.0)*_Ar[_qp]+_k_5*std::max(_u[_qp],1.0)*_Ars[_qp]);n
-
   //  _k_4 = 2.34e-14*std::pow(std::max(_Te[_qp],1e-6),0.59)*std::exp(-17.44/(_Te[_qp]+1e-6));
-  _k_4 = 5e-14*std::exp(-15.76/(std::max(_Te[_qp],1e-16)));
-  if (ArsCoupling)
+
+  /*  if (ArsCoupling)
     _k_5 = 6.8e-15*std::pow(std::max(_Te[_qp],1e-6),0.67)*std::exp(-4.20/(_Te[_qp]+1e-6));
   else
-    _k_5 = 0.0;
+  _k_5 = 0.0;*/
 
-  return -_test[_i][_qp]*(_k_4*std::max(std::max(_u[_qp],1.0),0.0)*std::max(_Ar[_qp],0.0)+_k_5*std::max(std::max(_u[_qp],1.0),0.0)*std::max(_Ars[_qp],0.0));
+  _k_4 = 5e-14*std::exp(-15.76/(std::max(_Te[_qp],1e-16)));
+  return -_test[_i][_qp]*(_k_4*std::max(_u[_qp],0.0)*_Ar[_qp]);
+
+  //+_k_5*std::max(std::max(_u[_qp],1.0),0.0)*std::max(_Ars[_qp],0.0));
 }
 
 Real
@@ -98,3 +98,4 @@ ElectronSource::computeQpOffDiagJacobian(unsigned int jvar)
       return 0.0;
     }
 }
+

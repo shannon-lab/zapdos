@@ -43,33 +43,32 @@ protected:
   VariableGradient & _grad_Arp;
 
   // Material properties
-  MaterialProperty<Real> &  _N_A;
-  MaterialProperty<Real> &  _eps_r;
-  MaterialProperty<Real> &  _eps_0;
-  MaterialProperty<Real> &  _permittivity;
-  MaterialProperty<Real> &  _e;
-  MaterialProperty<Real> &  _k_boltz;
-  MaterialProperty<Real> &  _zem;
-  MaterialProperty<Real> &  _muem;
-  MaterialProperty<Real> &  _muAr;
-  MaterialProperty<Real> &  _muArp;
-  MaterialProperty<Real> &  _EFieldAdvectionCoeff_em;
-  MaterialProperty<Real> &  _EFieldAdvectionCoeff_Arp;
-  MaterialProperty<Real> &  _T_gas;
-  MaterialProperty<Real> &  _D_Ar;
-  MaterialProperty<Real> &  _D_Ars;
-  MaterialProperty<Real> &  _D_Arp;
-  MaterialProperty<Real> &  _m_em;
-  MaterialProperty<Real> &  _mAr;
-  MaterialProperty<Real> &  _mArp;
-  MaterialProperty<Real> &  _muTe;
-  MaterialProperty<Real> &  _EFieldAdvectionCoeff_Te;
-  MaterialProperty<Real> &  _k6;
-  MaterialProperty<Real> &  _k7;
-  MaterialProperty<Real> &  _pressure;
-  MaterialProperty<Real> &  _R_const;
-  MaterialProperty<Real> &  _Ar;
-  MaterialProperty<Real> &  _el_energy_gain_excitation;
+
+  MaterialProperty<Real> & _tc;
+  MaterialProperty<Real> & _rc;
+  MaterialProperty<Real> & _emc;
+  MaterialProperty<Real> & _Arpc;
+  MaterialProperty<Real> & _Tec;
+  MaterialProperty<Real> & _Vc;
+  MaterialProperty<Real> & _eps_r;
+  MaterialProperty<Real> & _eps_0;
+  MaterialProperty<Real> & _permittivity;
+  MaterialProperty<Real> & _e;
+  MaterialProperty<Real> & _k_boltz;
+  MaterialProperty<Real> & _muem;
+  MaterialProperty<Real> & _T_gas;
+  MaterialProperty<Real> & _pressure;
+  MaterialProperty<Real> & _Ar;
+  MaterialProperty<Real> & _k1_const;
+  MaterialProperty<Real> & _k4_const;
+  MaterialProperty<Real> & _muAr;
+  MaterialProperty<Real> & _muArp;
+  MaterialProperty<Real> & _mem;
+  MaterialProperty<Real> & _mAr;
+  MaterialProperty<Real> & _mArp;
+  MaterialProperty<Real> & _muel;
+
+/*  MaterialProperty<Real> &  _el_energy_gain_excitation;
   MaterialProperty<Real> &  _el_energy_gain_deexcitation;
   MaterialProperty<Real> &  _el_energy_gain_ionization;
   MaterialProperty<Real> &  _el_energy_gain_meta_ionization;
@@ -79,7 +78,7 @@ protected:
   MaterialProperty<RealVectorValue> &   _advective_electron_flux;
   MaterialProperty<RealVectorValue> &   _diffusive_electron_flux;
   MaterialProperty<RealVectorValue> &   _total_electron_flux;
-  MaterialProperty<RealVectorValue> &   _Electric_Field;
+  MaterialProperty<RealVectorValue> &   _Electric_Field; */
 };
 
 #endif //ARGON_H

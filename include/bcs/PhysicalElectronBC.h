@@ -16,8 +16,8 @@ public:
 
 protected:
   virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  //  virtual Real computeQpJacobian();
+  //  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   // Input Parameters
 
@@ -27,25 +27,28 @@ protected:
   // Members unique to class  
 
   Real _a;
-  Real _d_vthermal_em_d_Te;
+  //  Real _d_vthermal_em_d_Te;
 
   // Material Properties
 
   const MaterialProperty<Real> & _muem;
-  const MaterialProperty<Real> & _muip;
-  const MaterialProperty<Real> & _D_ip;
+  const MaterialProperty<Real> & _muArp;
   const MaterialProperty<Real> & _e;
-  const MaterialProperty<Real> & _m_em;
+  const MaterialProperty<Real> & _mem;
+  const MaterialProperty<Real> & _tc;
+  const MaterialProperty<Real> & _Vc;
+  const MaterialProperty<Real> & _rc;
+  //  const MaterialProperty<Real> & _D_Arp;
 
   // Coupled variables
   
-  VariableValue & _ip;
-  unsigned int _ip_id;
-  VariableGradient & _grad_ip;
+  VariableValue & _Arp;
+  VariableGradient & _grad_Arp;
   VariableValue & _Te;
-  unsigned int _Te_id;
   VariableGradient & _grad_potential;
+  /*  unsigned int _Arp_id;
   unsigned int _potential_id;
+  unsigned int _Te_id;*/
 };
 
 #endif //PHYSICALELECTRONBC_H

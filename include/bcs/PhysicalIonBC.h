@@ -16,8 +16,8 @@ public:
 
 protected:
   virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  //  virtual Real computeQpJacobian();
+  //  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   // Input Parameters
 
@@ -29,15 +29,18 @@ protected:
   
   // Material Properties
 
-  const MaterialProperty<Real> & _muip;
+  const MaterialProperty<Real> & _muArp;
   const MaterialProperty<Real> & _k_boltz;
   const MaterialProperty<Real> & _T_gas;
-  const MaterialProperty<Real> & _m_ip;
+  const MaterialProperty<Real> & _mArp;
+  const MaterialProperty<Real> & _tc;
+  const MaterialProperty<Real> & _Vc;
+  const MaterialProperty<Real> & _rc;
 
   // coupled variables
 
   VariableGradient & _grad_potential;
-  unsigned int _potential_id;
+  //  unsigned int _potential_id;
 };
 
 #endif //PHYSICALIONBC_H

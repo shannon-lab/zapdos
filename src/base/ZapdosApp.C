@@ -40,6 +40,10 @@
 #include "ElectronEnergyTransport.h"
 #include "PotentialDrivenArtificialDiffElectrons.h"
 #include "PotentialDrivenArtificialDiffEnergy.h"
+#include "ElectronKernel.h"
+#include "ArpKernel.h"
+#include "ElectronEnergyKernel.h"
+#include "PoissonKernel.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
 
@@ -167,6 +171,10 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ElectronEnergyTransport);
   registerKernel(PotentialDrivenArtificialDiffElectrons);
   registerKernel(PotentialDrivenArtificialDiffEnergy);
+  registerKernel(ElectronKernel);
+  registerKernel(ArpKernel);
+  registerKernel(ElectronEnergyKernel);
+  registerKernel(PoissonKernel);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);
