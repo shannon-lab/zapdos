@@ -12,40 +12,33 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef ELECTRONDIFFUSION_H
-#define ELECTRONDIFFUSION_H
+#include "ExampleTimeDerivative.h"
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Diffusion.h"
-
-class ElectronDiffusion;
+#include "Material.h"
 
 template<>
-InputParameters validParams<ElectronDiffusion>();
-
-class ElectronDiffusion : public Diffusion
+InputParameters validParams<ExampleTimeDerivative>()
 {
-public:
-  ElectronDiffusion(const std::string & name, InputParameters parameters);
-  virtual ~ElectronDiffusion();
+  InputParameters params = validParams<TimeDerivative>();
+  params.addParam<Real>("time_coefficient", 1.0, "Time Coefficient");
+  return params;
+}
 
-protected:
+ExampleTimeDerivative::ExampleTimeDerivative(const std::string & name,
+                                             InputParameters parameters) :
+    TimeDerivative(name,parameters),
+    // This kernel expects an input parameter named "time_coefficient"
+    _time_coefficient(getParam<Real>("time_coefficient"))
+{}
 
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+Real
+ExampleTimeDerivative::computeQpResidual()
+{
+  return _time_coefficient*TimeDerivative::computeQpResidual();
+}
 
-  // Material Properties
-
-  const MaterialProperty<Real> & _muem;
-
-  // Coupled Variables
-
-  VariableValue & _Te;
-  unsigned int _Te_id;
-
-  // Unique variables
-};
-
-
-#endif /* ELECTRONDIFFUSION_H */
+Real
+ExampleTimeDerivative::computeQpJacobian()
+{
+  return _time_coefficient*TimeDerivative::computeQpJacobian();
+}

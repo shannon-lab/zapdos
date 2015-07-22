@@ -4,6 +4,7 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "ExampleTimeDerivative.h"
 #include "CoeffDiffusion.h"
 #include "FirstOrderReaction.h"
 #include "SecondOrderReaction.h"
@@ -175,6 +176,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ArpKernel);
   registerKernel(ElectronEnergyKernel);
   registerKernel(PoissonKernel);
+  registerKernel(ExampleTimeDerivative);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);

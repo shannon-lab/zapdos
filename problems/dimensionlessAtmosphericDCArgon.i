@@ -1,33 +1,33 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 1000
-  xmin = .2
+  nx = 2000
+  xmin = 0
   xmax = 5
 []
 
 [Problem]
   type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
-  coord_type = RZ # Axisymmetric RZ
+  # coord_type = RZ # Axisymmetric RZ
 #  rz_coord_axis = X # Which axis the symmetry is around
 []
 
-[Preconditioning]
-  [./FDP]
-    type = FDP
-    full = true
- #Preconditioned JFNK (default)
-    solve_type = 'NEWTON'
-#    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
-#    petsc_options_value = 'lu       1e-6                 ds'
-#    petsc_options_iname = '-pc_type -sub_ksp_type -sub_pc_type'
-#    petsc_options_value = 'asm preonly lu'
-#    petsc_options_iname = '-ksp_converged_reason -snes_converged_reason -mat_fd_type -snes_monitor -ksp_monitor_true_residual -pc_type -sub_pc_type -sub_pc_factor_shift'
-#    petsc_options_value = '1 1 ds 1 1 asm lu NONZERO'  
-    petsc_options_iname = '-ksp_converged_reason -snes_converged_reason'
-    petsc_options_value = '1 1'  
-  [../]
-[]
+# [Preconditioning]
+#   [./FDP]
+#     type = FDP
+#     full = true
+#  #Preconditioned JFNK (default)
+#     solve_type = 'NEWTON'
+# #    petsc_options_iname = '-pc_type -mat_fd_coloring_err -mat_fd_type'
+# #    petsc_options_value = 'lu       1e-6                 ds'
+# #    petsc_options_iname = '-pc_type -sub_ksp_type -sub_pc_type'
+# #    petsc_options_value = 'asm preonly lu'
+# #    petsc_options_iname = '-ksp_converged_reason -snes_converged_reason -mat_fd_type -snes_monitor -ksp_monitor_true_residual -pc_type -sub_pc_type -sub_pc_factor_shift'
+# #    petsc_options_value = '1 1 ds 1 1 asm lu NONZERO'  
+#     petsc_options_iname = '-ksp_converged_reason -snes_converged_reason'
+#     petsc_options_value = '1 1'  
+#   [../]
+# []
 
 [Executioner]
   type = Transient
@@ -35,14 +35,14 @@
   end_time = 10
 #  petsc_options_iname = '-snes_type'
 #  petsc_options_value = 'test'
-#  solve_type = NEWTON
-#  petsc_options_iname = '-pc_type -pc_hypre_type'
-#  petsc_options_value = 'hypre boomeramg'
+ solve_type = PJFNK
+ petsc_options_iname = '-pc_type -pc_hypre_type'
+ petsc_options_value = 'hypre boomeramg'
 #  trans_ss_check = true
 #  ss_check_tol = 1e-7
-#  nl_rel_tol = 1e-2
-  l_max_its = 50
-#  nl_max_its = 75
+ nl_rel_tol = 1e-4
+  l_max_its = 15
+ nl_max_its = 6
   dtmin = 1e-12
 #  line_search = none
   [./TimeStepper]

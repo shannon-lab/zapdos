@@ -12,40 +12,30 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef ELECTRONDIFFUSION_H
-#define ELECTRONDIFFUSION_H
+#ifndef EXAMPLETIMEDERIVATIVE
+#define EXAMPLETIMEDERIVATIVE
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Diffusion.h"
+#include "TimeDerivative.h"
 
-class ElectronDiffusion;
+// Forward Declarations
+class ExampleTimeDerivative;
 
 template<>
-InputParameters validParams<ElectronDiffusion>();
+InputParameters validParams<ExampleTimeDerivative>();
 
-class ElectronDiffusion : public Diffusion
+class ExampleTimeDerivative : public TimeDerivative
 {
 public:
-  ElectronDiffusion(const std::string & name, InputParameters parameters);
-  virtual ~ElectronDiffusion();
+
+  ExampleTimeDerivative(const std::string & name,
+                        InputParameters parameters);
 
 protected:
-
   virtual Real computeQpResidual();
+
   virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
-  // Material Properties
-
-  const MaterialProperty<Real> & _muem;
-
-  // Coupled Variables
-
-  VariableValue & _Te;
-  unsigned int _Te_id;
-
-  // Unique variables
+  Real _time_coefficient;
 };
 
-
-#endif /* ELECTRONDIFFUSION_H */
+#endif //EXAMPLETIMEDERIVATIVE
