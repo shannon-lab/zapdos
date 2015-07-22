@@ -12,21 +12,21 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef TIMEDERIVATIVEELECTRONTEMP_H
-#define TIMEDERIVATIVEELECTRONTEMP_H
+#ifndef ELECTRONTIMEDERIVATIVE_H
+#define ELECTRONTIMEDERIVATIVE_H
 
 #include "TimeKernel.h"
 
 // Forward Declaration
-class TimeDerivativeElectronTemp;
+class ElectronTimeDerivative;
 
 template<>
-InputParameters validParams<TimeDerivativeElectronTemp>();
+InputParameters validParams<ElectronTimeDerivative>();
 
-class TimeDerivativeElectronTemp : public TimeKernel
+class ElectronTimeDerivative : public TimeKernel
 {
 public:
-  TimeDerivativeElectronTemp(const std::string & name, InputParameters parameters);
+  ElectronTimeDerivative(const std::string & name, InputParameters parameters);
 
   /* virtual void computeJacobian(); */
 
@@ -36,10 +36,6 @@ protected:
   /* virtual Real computeQpOffDiagJacobian(unsigned int jvar); */
 
   bool _lumping;
-  /* VariableValue & _em; */
-  /* VariableValue & _em_dot; */
-  /* VariableValue & _dem_dot; */
-  /* unsigned int _em_id; */
 };
 
-#endif //TIMEDERIVATIVEELECTRONTEMP_H
+#endif //ELECTRONTIMEDERIVATIVE_H

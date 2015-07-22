@@ -12,34 +12,31 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef TIMEDERIVATIVEELECTRONTEMP_H
-#define TIMEDERIVATIVEELECTRONTEMP_H
-
-#include "TimeKernel.h"
-
-// Forward Declaration
-class TimeDerivativeElectronTemp;
+#include "ElectronTimeDerivative.h"
 
 template<>
-InputParameters validParams<TimeDerivativeElectronTemp>();
-
-class TimeDerivativeElectronTemp : public TimeKernel
+InputParameters validParams<ElectronTimeDerivative>()
 {
-public:
-  TimeDerivativeElectronTemp(const std::string & name, InputParameters parameters);
+  InputParameters params = validParams<TimeKernel>();
+  params.addParam<bool>("lumping", false, "True for mass matrix lumping, false otherwise");
+  return params;
+}
 
-  /* virtual void computeJacobian(); */
+ElectronTimeDerivative::ElectronTimeDerivative(const std::string & name, InputParameters parameters) :
+    TimeKernel(name, parameters),
+    _lumping(getParam<bool>("lumping"))
 
-protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  /* virtual Real computeQpOffDiagJacobian(unsigned int jvar); */
+{
+}
 
-  bool _lumping;
-  /* VariableValue & _em; */
-  /* VariableValue & _em_dot; */
-  /* VariableValue & _dem_dot; */
-  /* unsigned int _em_id; */
-};
+Real
+ElectronTimeDerivative::computeQpResidual()
+{
+  return _test[_i][_qp]*std::exp(_u[_qp])*_u_dot[_qp];
+}
 
-#endif //TIMEDERIVATIVEELECTRONTEMP_H
+Real
+ElectronTimeDerivative::computeQpJacobian()
+{
+  return _test[_i][_qp]*(std::exp(_u[_qp])*_phi[_j][_qp]*_u_dot[_qp] + std::exp(_u[_qp])*_du_dot_du[_qp]*_phi[_j][_qp]);
+}

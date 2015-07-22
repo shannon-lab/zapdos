@@ -4,8 +4,6 @@ template<>
 InputParameters validParams<PhysicalIonBC>()
 {
     InputParameters params = validParams<IntegratedBC>();
-    params.addParam<Real>("reflection_coeff",0.0,"The reflection coefficient for ions at the walls.");
-    //    params.addRequiredParam<std::string>("var_name","Though redundant, this parameter determines correct mobility and diffusivity for the ions.");
     params.addRequiredCoupledVar("potential","The electrical potential");
     return params;
 }
@@ -13,72 +11,55 @@ InputParameters validParams<PhysicalIonBC>()
 PhysicalIonBC::PhysicalIonBC(const std::string & name, InputParameters parameters) :
   IntegratedBC(name, parameters),
 
-  // Paramters
-
-  _reflection_coeff(getParam<Real>("reflection_coeff")),
-
   // Variables unique to class
 
   _a(0.0),
-
-  // Material Properties
-
-  _muArp(getMaterialProperty<Real>("muArp")),
-  _k_boltz(getMaterialProperty<Real>("k_boltz")),
-  _T_gas(getMaterialProperty<Real>("T_gas")),
-  _mArp(getMaterialProperty<Real>("mArp")),
-  _tc(getMaterialProperty<Real>("tc")),
-  _Vc(getMaterialProperty<Real>("Vc")),
-  _rc(getMaterialProperty<Real>("rc")),
-  //  _mArp(getMaterialProperty<Real>("m"+getParam<std::string>("var_name"))),
+  _muArp(1.54/1.0e4),
 
   // coupled variables
 
   _grad_potential(coupledGradient("potential"))
-  //  _potential_id(coupled("potential"))
 {}
 
 Real
 PhysicalIonBC::computeQpResidual()
 {
-  if ( _normals[_qp]*1.0*-_grad_potential[_qp] > 0.0) {
+  if ( _normals[_qp]*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
   }
   else {
     _a = 0.0;
   }
 
-  return _test[_i][_qp]*(_tc[_qp]*_a*_muArp[_qp]*-_grad_potential[_qp]*_Vc[_qp]/_rc[_qp]*_normals[_qp]*std::max(_u[_qp],0.0));
-
-  //    return _test[_i][_qp]*(_a*_muArp[_qp]*-_grad_potential[_qp]*_normals[_qp]*std::max(0.0,_u[_qp])+0.25*1.6*std::sqrt(_k_boltz[_qp]*_T_gas[_qp]/_m_Arp[_qp])*std::max(0.0,_u[_qp]));
-}
-
-/*Real
-PhysicalIonBC::computeQpJacobian()
-{
-  if ( _normals[_qp]*1.0*-_grad_potential[_qp] > 0.0) {
-    _a = 1.0;
-  }
-  else {
-    _a = 0.0;
-  }
-  //    return _test[_i][_qp]*(_a*_muArp[_qp]*-_grad_potential[_qp]*_normals[_qp]*_phi[_j][_qp]+0.25*1.6*std::sqrt(_k_boltz[_qp]*_T_gas[_qp]/_m_Arp[_qp])*_phi[_j][_qp]);
-  return _test[_i][_qp]*(_a*_muArp[_qp]*-_grad_potential[_qp]*_normals[_qp]*_phi[_j][_qp]);
+  return _test[_i][_qp]*(_a*_muArp*-_grad_potential[_qp]*_u[_qp]*_normals[_qp]);
 }
 
 Real
-PhysicalIonBC::computeQpOffDiagJacobian(unsigned int jvar)
+PhysicalIonBC::computeQpJacobian()
 {
-  if (jvar == _potential_id) {
-    if ( _normals[_qp]*1.0*-_grad_potential[_qp] > 0.0) {
-      _a = 1.0;
-    }
-    else {
-      _a = 0.0;
-    }
-    return _test[_i][_qp]*(_a*_muArp[_qp]*-_grad_phi[_j][_qp]*_normals[_qp]*std::max(0.0,_u[_qp]));
+  if ( _normals[_qp]*-_grad_potential[_qp] > 0.0) {
+    _a = 1.0;
   }
   else {
-    return 0.0;
+    _a = 0.0;
   }
-  }*/
+
+  return _test[_i][_qp]*(_a*_muArp*-_grad_potential[_qp]*_phi[_j][_qp]*_normals[_qp]);
+}
+
+// Real
+// PhysicalIonBC::computeQpOffDiagJacobian(unsigned int jvar)
+// {
+//   if (jvar == _potential_id) {
+//     if ( _normals[_qp]*1.0*-_grad_potential[_qp] > 0.0) {
+//       _a = 1.0;
+//     }
+//     else {
+//       _a = 0.0;
+//     }
+//     return _test[_i][_qp]*(_a*_muArp[_qp]*-_grad_phi[_j][_qp]*_normals[_qp]*std::max(0.0,_u[_qp]));
+//   }
+//   else {
+//     return 0.0;
+//   }
+//   }

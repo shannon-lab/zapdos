@@ -17,26 +17,23 @@ class ElectronEnergyKernel : public Kernel
  protected:
   
   virtual Real computeQpResidual();
-
-  // Material Properties
-
-  const MaterialProperty<Real> & _tc;
-  const MaterialProperty<Real> & _rc;
-  const MaterialProperty<Real> & _Tec;
-  const MaterialProperty<Real> & _Vc;
-  const MaterialProperty<Real> & _muel;
-  const MaterialProperty<Real> & _k4_const;
-  const MaterialProperty<Real> & _k1_const;
-  const MaterialProperty<Real> & _Ar;
-  const MaterialProperty<Real> & _mem;
-  const MaterialProperty<Real> & _mAr;
-  const MaterialProperty<Real> & _muem;
+  virtual Real computeQpJacobian();
 
   // coupled vars
 
   VariableValue & _em;
   VariableGradient & _grad_em;
   VariableGradient & _grad_potential;
+
+  // kernel members
+
+  Real _muel;
+  Real _muem;
+  Real _Ar;
+  Real _mem;
+  Real _mAr;
+  Real _k4_const;
+  Real _k1_const;
 };
 
 #endif /* ELECTRONENERGYKERNEL_H */

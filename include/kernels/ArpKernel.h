@@ -17,25 +17,18 @@ class ArpKernel : public Kernel
  protected:
   
   virtual Real computeQpResidual();
-
-  // Material Properties
-
-  const MaterialProperty<Real> & _tc;
-  const MaterialProperty<Real> & _rc;
-  const MaterialProperty<Real> & _Vc;
-  const MaterialProperty<Real> & _Tec;
-  const MaterialProperty<Real> & _muArp;
-  const MaterialProperty<Real> & _k4_const;
-  const MaterialProperty<Real> & _Ar;
-  const MaterialProperty<Real> & _k_boltz;
-  const MaterialProperty<Real> & _e;
-  const MaterialProperty<Real> & _T_gas;
+  virtual Real computeQpJacobian();
 
   // coupled vars
 
   VariableValue & _em;
-  VariableGradient & _grad_potential;
-  VariableValue & _Te;
+  /* VariableGradient & _grad_potential; */
+  /* VariableValue & _Te; */
+
+  // Kernel members
+
+  Real _k4_const;
+  Real _Ar;
 };
 
 #endif /* ARPKERNEL_H */

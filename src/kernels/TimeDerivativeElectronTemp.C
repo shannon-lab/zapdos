@@ -19,60 +19,29 @@ InputParameters validParams<TimeDerivativeElectronTemp>()
 {
   InputParameters params = validParams<TimeKernel>();
   params.addParam<bool>("lumping", false, "True for mass matrix lumping, false otherwise");
-  params.addRequiredCoupledVar("em", "The electron density");
+  // params.addRequiredCoupledVar("em", "The electron density");
   return params;
 }
 
 TimeDerivativeElectronTemp::TimeDerivativeElectronTemp(const std::string & name, InputParameters parameters) :
     TimeKernel(name, parameters),
-    _lumping(getParam<bool>("lumping")),
+    _lumping(getParam<bool>("lumping"))
 
-    _em(coupledValue("em")),
-    _em_dot(coupledDot("em")),
-    _dem_dot(coupledDotDu("em")),
-    _em_id(coupled("em"))
+    // _em(coupledValue("em")),
+    // _em_dot(coupledDot("em")),
+    // _dem_dot(coupledDotDu("em")),
+    // _em_id(coupled("em"))
 {
 }
 
 Real
 TimeDerivativeElectronTemp::computeQpResidual()
 {
-  return _test[_i][_qp]*1.5*(_em[_qp]*_u_dot[_qp]+_u[_qp]*_em_dot[_qp]);
+  return _test[_i][_qp]*std::exp(_u[_qp])*_u_dot[_qp];
 }
 
 Real
 TimeDerivativeElectronTemp::computeQpJacobian()
 {
-  return _test[_i][_qp]*1.5*(_em[_qp]*_du_dot_du[_qp]*_phi[_j][_qp]+_phi[_j][_qp]*_em_dot[_qp]);
-}
-
-Real
-TimeDerivativeElectronTemp::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  if (jvar == _em_id)
-    {
-        return _test[_i][_qp]*1.5*(_phi[_j][_qp]*_u_dot[_qp]+_u[_qp]*_dem_dot[_qp]*_phi[_j][_qp]);
-    }
-  else
-    {
-      return 0.0;
-    }
-}
-
-void
-TimeDerivativeElectronTemp::computeJacobian()
-{
-  if (_lumping)
-  {
-    DenseMatrix<Number> & ke = _assembly.jacobianBlock(_var.number(), _var.number());
-
-    for (_i = 0; _i < _test.size(); _i++)
-      for (_j = 0; _j < _phi.size(); _j++)
-        for (_qp = 0; _qp < _qrule->n_points(); _qp++)
-        {
-          ke(_i, _i) += _JxW[_qp] * _coord[_qp] * computeQpJacobian();
-        }
-  }
-  else
-    TimeKernel::computeJacobian();
+  return _test[_i][_qp]*(std::exp(_u[_qp])*_phi[_j][_qp]*_u_dot[_qp] + std::exp(_u[_qp])*_du_dot_du[_qp]*_phi[_j][_qp]);
 }

@@ -17,19 +17,17 @@ class PoissonKernel : public Kernel
  protected:
   
   virtual Real computeQpResidual();
-
-  // Material Properties
-
-  const MaterialProperty<Real> & _e;
-  const MaterialProperty<Real> & _permittivity;
-  const MaterialProperty<Real> & _rc;
-  const MaterialProperty<Real> & _Vc;
-  const MaterialProperty<Real> & _emc;
+  virtual Real computeQpJacobian();
 
   // coupled vars
 
-  VariableValue & _em;
-  VariableValue & _Arp;
+  /* VariableValue & _em; */
+  /* VariableValue & _Arp; */
+
+  // Kernel members
+
+  Real _e;
+  Real _eps;
 };
 
 #endif /* POISSONKERNEL_H */

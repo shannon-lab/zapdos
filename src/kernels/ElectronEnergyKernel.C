@@ -14,21 +14,17 @@ InputParameters validParams<ElectronEnergyKernel>()
 ElectronEnergyKernel::ElectronEnergyKernel(const std::string & name, InputParameters parameters) :
   Kernel(name, parameters),
 
-  _tc(getMaterialProperty<Real>("tc")),
-  _rc(getMaterialProperty<Real>("rc")),
-  _Tec(getMaterialProperty<Real>("Tec")),
-  _Vc(getMaterialProperty<Real>("Vc")),
-  _muel(getMaterialProperty<Real>("muel")),
-  _k4_const(getMaterialProperty<Real>("k4_const")),
-  _k1_const(getMaterialProperty<Real>("k1_const")),
-  _Ar(getMaterialProperty<Real>("Ar")),
-  _mem(getMaterialProperty<Real>("mem")),
-  _mAr(getMaterialProperty<Real>("mAr")),
-  _muem(getMaterialProperty<Real>("muem")),
-
   _em(coupledValue("em")),
   _grad_em(coupledGradient("em")),
-  _grad_potential(coupledGradient("potential"))
+  _grad_potential(coupledGradient("potential")),
+
+  _muel(380.0/1e4*5/3),
+  _muem(380.0/1e4),
+  _Ar(1.01e5/(300*1.38e-23)),
+  _mem(9.11e-31),
+  _mAr(40*1.66e-27),
+  _k4_const(5e-14),
+  _k1_const(1e-13)
 {}
 
 ElectronEnergyKernel::~ElectronEnergyKernel()
@@ -37,5 +33,23 @@ ElectronEnergyKernel::~ElectronEnergyKernel()
 Real
 ElectronEnergyKernel::computeQpResidual()
 {
-  return -_grad_test[_i][_qp]*(1.5*_muel[_qp]*_tc[_qp]*_Vc[_qp]/std::pow(_rc[_qp],2)*std::max(_em[_qp],0.0)*std::max(_u[_qp],0.0)*_grad_potential[_qp]-1.5*_muel[_qp]*_tc[_qp]*_Tec[_qp]/std::pow(_rc[_qp],2)*std::max(_u[_qp],0.0)*(std::max(_em[_qp],0.0)*_grad_u[_qp]+std::max(_u[_qp],0.0)*_grad_em[_qp]))+_test[_i][_qp]*-_grad_potential[_qp]*(_muem[_qp]*_tc[_qp]*std::pow(_Vc[_qp],2)/(_Tec[_qp]*std::pow(_rc[_qp],2))*std::max(_em[_qp],0.0)*_grad_potential[_qp]-_muem[_qp]*_tc[_qp]*_Vc[_qp]/std::pow(_rc[_qp],2)*std::max(_u[_qp],0.0)*_grad_em[_qp])-_test[_i][_qp]*(_k4_const[_qp]*std::exp(-15.76/(_Tec[_qp]*std::max(_u[_qp],1e-16)))*_Ar[_qp]*-15.76*_tc[_qp]/_Tec[_qp]*std::max(_em[_qp],0.0)-_k1_const[_qp]*_Ar[_qp]*3.0*_mem[_qp]/_mAr[_qp]*_tc[_qp]*std::max(_em[_qp],0.0)*std::max(_u[_qp],0.0))+_tc[_qp]*_grad_test[_i][_qp]/_rc[_qp]*_current_elem->hmax()*_rc[_qp]*_muel[_qp]*_grad_potential[_qp].size()*_Vc[_qp]/_rc[_qp]*(std::max(_em[_qp],0.0)*_grad_u[_qp]+std::max(_u[_qp],0.0)*_grad_em[_qp])/_rc[_qp];
+  return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muel*-_grad_potential[_qp] // Advective motion
+						 -_muel*2/3*std::exp(_u[_qp]-_em[_qp])*_grad_u[_qp]); // Diffusive motion
+         +_test[_i][_qp]*-_grad_potential[_qp]*(-_muem*std::exp(_em[_qp])*-_grad_potential[_qp] // Joule Heating
+						 -_muem*2/3*std::exp(_u[_qp]-_em[_qp])*std::exp(_em[_qp]*_grad_em[_qp]) // Joule Heating
+	 -_test[_i][_qp]*(_k4_const*std::exp(-15.76/(2.0/3*std::exp(_u[_qp]-_em[_qp])))*_Ar*std::exp(_em[_qp])*-15.76 // Energy loss from ionization
+			  -_k1_const*_Ar*std::exp(_em[_qp])*3.0*_mem/_mAr*2/3*std::exp(_u[_qp]-_em[_qp])); // Energy loss from elastic collisions
 }
+
+Real
+ElectronEnergyKernel::computeQpJacobian()
+{
+  return -_grad_test[_i][_qp]*(std::exp(_u[_qp])*_phi[_j][_qp]*(-_muel*-_grad_potential[_qp]
+								-_muel*2/3*std::exp(_u[_qp]-_em[_qp])*_grad_u[_qp])
+			       +std::exp(_u[_qp])*-_muel*2/3*(_grad_phi[_j][_qp]*std::exp(_u[_qp]-_em[_qp])
+							      +_grad_u[_qp]*std::exp(_u[_qp]-_em[_qp])*_phi[_j][_qp]));
+         // + _test[_i][_qp]*-_grad_potential[_qp]*(-_muem*_phi[_j][_qp]*_grad_em[_qp]) // Joule Heating
+         // -_test[_i][_qp]*(_k4_const*15.76*std::exp(-15.76/std::max(_u[_qp],1e-16))/std::max(std::pow(_u[_qp],2),1e-16)*_phi[_j][_qp]*_Ar*_em[_qp]*-15.76 // Energy loss from ionization
+			  // -_k1_const*_Ar*_em[_qp]*3.0*_mem/_mAr*_phi[_j][_qp]); // Energy loss from elastic collisions
+}
+

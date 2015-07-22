@@ -5,8 +5,8 @@ InputParameters validParams<PoissonKernel>()
 {
   InputParameters params = validParams<Kernel>();
 
-  params.addRequiredCoupledVar("em", "The electron density");
-  params.addRequiredCoupledVar("Arp", "The argon ion density");
+  // params.addRequiredCoupledVar("em", "The electron density");
+  // params.addRequiredCoupledVar("Arp", "The argon ion density");
 
   return params;
 }
@@ -14,14 +14,11 @@ InputParameters validParams<PoissonKernel>()
 PoissonKernel::PoissonKernel(const std::string & name, InputParameters parameters) :
   Kernel(name, parameters),
 
-  _e(getMaterialProperty<Real>("e")),
-  _permittivity(getMaterialProperty<Real>("permittivity")),
-  _rc(getMaterialProperty<Real>("rc")),
-  _Vc(getMaterialProperty<Real>("Vc")),
-  _emc(getMaterialProperty<Real>("emc")),
+  // _em(coupledValue("em")),
+  // _Arp(coupledValue("Arp")),
 
-  _em(coupledValue("em")),
-  _Arp(coupledValue("Arp"))
+  _e(1.6e-19),
+  _eps(8.85e-12)
 {}
 
 PoissonKernel::~PoissonKernel()
@@ -30,5 +27,12 @@ PoissonKernel::~PoissonKernel()
 Real
 PoissonKernel::computeQpResidual()
 {
-  return -_grad_test[_i][_qp]*(-_grad_u[_qp])-_test[_i][_qp]*_e[_qp]/_permittivity[_qp]*_emc[_qp]*std::pow(_rc[_qp],2)/_Vc[_qp]*(std::max(_Arp[_qp],0.0)-std::max(_em[_qp],0.0));
+  return -_grad_test[_i][_qp]*(-_grad_u[_qp]);
+    //-_test[_i][_qp]*_e/_eps*(/*_Arp[_qp]*/-_em[_qp]);
+}
+
+Real
+PoissonKernel::computeQpJacobian()
+{
+  return -_grad_test[_i][_qp]*(-_grad_phi[_j][_qp]);
 }

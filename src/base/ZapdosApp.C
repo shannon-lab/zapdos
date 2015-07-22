@@ -45,6 +45,7 @@
 #include "ArpKernel.h"
 #include "ElectronEnergyKernel.h"
 #include "PoissonKernel.h"
+#include "ElectronTimeDerivative.h"
 //#include "NSMassInviscidFlux.h"
 //#include "NSKernel.h"
 
@@ -177,6 +178,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ElectronEnergyKernel);
   registerKernel(PoissonKernel);
   registerKernel(ExampleTimeDerivative);
+  registerKernel(ElectronTimeDerivative);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(EFieldMag);
