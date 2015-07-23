@@ -18,11 +18,14 @@ class PoissonKernel : public Kernel
   
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   // coupled vars
 
-  /* VariableValue & _em; */
-  /* VariableValue & _Arp; */
+  VariableValue & _em;
+  VariableValue & _Arp;
+  unsigned int _em_id;
+  unsigned int _Arp_id;
 
   // Kernel members
 

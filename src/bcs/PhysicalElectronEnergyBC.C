@@ -24,7 +24,10 @@ PhysicalElectronEnergyBC::PhysicalElectronEnergyBC(const std::string & name, Inp
   // Variables unique to class
 
   _a(0.0),
-  _muel(380.0/1e4*5/3),
+  _b(0.0),
+  _muel(0.16*5.0/3),
+  _e(1.6e-19),
+  _m_el(9.11e-31),
 
 // Coupled Variables
 
@@ -40,26 +43,31 @@ PhysicalElectronEnergyBC::computeQpResidual()
 
   if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
+    _b = 0.0;
   }
   else {
     _a = 0.0;
+    _b = 1.0;
   }
 
-  return _test[_i][_qp]*_a*-_muel*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp];
+  return _test[_i][_qp]*_a*-_muel*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp]
+         + _test[_i][_qp]*_b*5.0/6*1.6*std::sqrt(_e*2.0/3*std::exp(_u[_qp]-_em[_qp])/_m_el)*std::exp(_u[_qp]);
 }
 
 Real
 PhysicalElectronEnergyBC::computeQpJacobian()
 {
-
   if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
+    _b = 0.0;
   }
   else {
     _a = 0.0;
+    _b = 1.0;
   }
 
-  return _test[_i][_qp]*_a*-_muel*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp];
+  return _test[_i][_qp]*_a*-_muel*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp]
+         + _test[_i][_qp]*_b*5.0/6*1.6*(std::sqrt(_e*2.0/3*std::exp(_u[_qp]-_em[_qp])/_m_el)*std::exp(_u[_qp])*_phi[_j][_qp] + std::exp(_u[_qp])*0.408248*std::sqrt(_e*std::exp(_u[_qp]-_em[_qp])/_m_el)*_phi[_j][_qp]);
 }
 
 /*Real

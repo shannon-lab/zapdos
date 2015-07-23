@@ -29,11 +29,14 @@ class ElectronEnergyKernel : public Kernel
 
   Real _muel;
   Real _muem;
+  Real _diff;
+  Real _diffel;
   Real _Ar;
   Real _mem;
   Real _mAr;
   Real _k4_const;
   Real _k1_const;
+  Real _Eiz;
 };
 
 #endif /* ELECTRONENERGYKERNEL_H */

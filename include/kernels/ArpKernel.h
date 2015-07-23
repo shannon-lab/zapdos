@@ -22,13 +22,16 @@ class ArpKernel : public Kernel
   // coupled vars
 
   VariableValue & _em;
-  /* VariableGradient & _grad_potential; */
-  /* VariableValue & _Te; */
+  VariableGradient & _grad_potential;
+  VariableValue & _mean_en;
 
   // Kernel members
 
   Real _k4_const;
   Real _Ar;
+  Real _Eiz;
+  Real _muArp;
+  Real _DArp;
 };
 
 #endif /* ARPKERNEL_H */

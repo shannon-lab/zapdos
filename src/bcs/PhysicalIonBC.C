@@ -31,7 +31,7 @@ PhysicalIonBC::computeQpResidual()
     _a = 0.0;
   }
 
-  return _test[_i][_qp]*(_a*_muArp*-_grad_potential[_qp]*_u[_qp]*_normals[_qp]);
+  return _test[_i][_qp]*(_a*_muArp*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp]);
 }
 
 Real
@@ -44,7 +44,7 @@ PhysicalIonBC::computeQpJacobian()
     _a = 0.0;
   }
 
-  return _test[_i][_qp]*(_a*_muArp*-_grad_potential[_qp]*_phi[_j][_qp]*_normals[_qp]);
+  return _test[_i][_qp]*(_a*_muArp*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp]);
 }
 
 // Real

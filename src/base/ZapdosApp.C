@@ -51,6 +51,7 @@
 
 // AuxKernels
 
+#include "ElectronTemperature.h"
 #include "EFieldMag.h"
 #include "VelocityMag.h"
 #include "ChargeDensity.h"
@@ -63,6 +64,7 @@
 #include "Ex.h"
 #include "AdvectiveFlux.h"
 #include "DiffusiveFlux.h"
+#include "ElectronDensity.h"
 
 // Materials
 #include "Air.h"
@@ -181,6 +183,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ElectronTimeDerivative);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
+  registerAux(ElectronTemperature);
+  registerAux(ElectronDensity);
   registerAux(EFieldMag);
   registerAux(VelocityMag);
   registerAux(ChargeDensity);

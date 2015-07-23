@@ -27,7 +27,10 @@ protected:
   // Members unique to class  
 
   Real _a;
+  Real _b;
   Real _muel;
+  Real _e;
+  Real _m_el;
 
   // Coupled variables
   

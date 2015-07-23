@@ -26,13 +26,16 @@ protected:
   // Members unique to class  
 
   Real _a;
+  Real _b;
   Real _muem;
+  Real _e;
+  Real _m_el;
 
   // Coupled variables
   
   /* VariableValue & _Arp; */
   /* VariableGradient & _grad_Arp; */
-  /* VariableValue & _Te; */
+  VariableValue & _mean_en;
   VariableGradient & _grad_potential;
 };
 

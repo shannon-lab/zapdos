@@ -28,7 +28,9 @@ class ElectronKernel : public Kernel
 
   Real _muem;
   Real _k4_const;
+  Real _diff;
   Real _Ar;
+  Real _Eiz;
 };
 
 #endif /* ELECTRONKERNEL_H */

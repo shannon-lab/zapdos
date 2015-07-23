@@ -18,11 +18,10 @@ public:
 protected:
 
   virtual Real computeValue();
-  
+
+  Real _e;
   VariableValue & _electron_density;
   VariableValue & _ion_density;
-
-  const MaterialProperty<Real> & _coulomb_charge;
 };
 
 #endif //CHARGEDENSITY_H

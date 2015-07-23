@@ -14,16 +14,16 @@ InputParameters validParams<ChargeDensity>()
 ChargeDensity::ChargeDensity(const std::string & name, InputParameters parameters) :
     AuxKernel(name,parameters),
     
+    _e(1.6e-19),
     _electron_density(coupledValue("electron_density")),
-    _ion_density(coupledValue("ion_density")),
-    _coulomb_charge(getMaterialProperty<Real>("coulomb_charge"))
+    _ion_density(coupledValue("ion_density"))
 {
 }
 
 Real
 ChargeDensity::computeValue()
 {
-  return (_ion_density[_qp]-_electron_density[_qp]);
+  return _e*(std::exp(_ion_density[_qp])-std::exp(_electron_density[_qp]));
 }
 
  

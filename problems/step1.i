@@ -1,6 +1,6 @@
 [Mesh]
   type = FileMesh
-  file = MeshRec.unv
+  file = table_density_mesh.unv
 []
 
 [Variables]
