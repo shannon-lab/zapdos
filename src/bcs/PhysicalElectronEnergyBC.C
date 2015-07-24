@@ -5,7 +5,7 @@ InputParameters validParams<PhysicalElectronEnergyBC>()
 {
     InputParameters params = validParams<IntegratedBC>();
     params.addRequiredCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
-    params.addRequiredCoupledVar("em","The electron density");    
+    // params.addRequiredCoupledVar("em","The electron density");    
     // params.addRequiredCoupledVar("Arp","The ion density");
     //    params.addRequiredParam<std::string>("coupled_ion_name","Though redundant, this parameter determines correct mobility and diffusivity for the ions.");
     // params.addParam<Real>("se_energy",4.0,"The energy of electrons emitted from the walls by ion bombardment.");
@@ -33,8 +33,8 @@ PhysicalElectronEnergyBC::PhysicalElectronEnergyBC(const std::string & name, Inp
 
   // _Arp(coupledValue("Arp")),
   // _grad_Arp(coupledGradient("Arp")),
-  _grad_potential(coupledGradient("potential")),
-  _em(coupledValue("em"))
+  _grad_potential(coupledGradient("potential"))
+  // _em(coupledValue("em"))
 {}
 
 Real
@@ -43,15 +43,15 @@ PhysicalElectronEnergyBC::computeQpResidual()
 
   if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
-    _b = 0.0;
+    // _b = 0.0;
   }
   else {
     _a = 0.0;
-    _b = 1.0;
+    // _b = 1.0;
   }
 
-  return _test[_i][_qp]*_a*-_muel*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp]
-         + _test[_i][_qp]*_b*5.0/6*1.6*std::sqrt(_e*2.0/3*std::exp(_u[_qp]-_em[_qp])/_m_el)*std::exp(_u[_qp]);
+  return _test[_i][_qp]*_a*-_muel*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp];
+         // + _test[_i][_qp]*_b*5.0/6*1.6*std::sqrt(_e*2.0/3*std::exp(_u[_qp]-_em[_qp])/_m_el)*std::exp(_u[_qp]);
 }
 
 Real
@@ -59,15 +59,15 @@ PhysicalElectronEnergyBC::computeQpJacobian()
 {
   if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
-    _b = 0.0;
+    // _b = 0.0;
   }
   else {
     _a = 0.0;
-    _b = 1.0;
+    // _b = 1.0;
   }
 
-  return _test[_i][_qp]*_a*-_muel*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp]
-         + _test[_i][_qp]*_b*5.0/6*1.6*(std::sqrt(_e*2.0/3*std::exp(_u[_qp]-_em[_qp])/_m_el)*std::exp(_u[_qp])*_phi[_j][_qp] + std::exp(_u[_qp])*0.408248*std::sqrt(_e*std::exp(_u[_qp]-_em[_qp])/_m_el)*_phi[_j][_qp]);
+  return _test[_i][_qp]*_a*-_muel*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp];
+         // + _test[_i][_qp]*_b*5.0/6*1.6*(std::sqrt(_e*2.0/3*std::exp(_u[_qp]-_em[_qp])/_m_el)*std::exp(_u[_qp])*_phi[_j][_qp] + std::exp(_u[_qp])*0.408248*std::sqrt(_e*std::exp(_u[_qp]-_em[_qp])/_m_el)*_phi[_j][_qp]);
 }
 
 /*Real

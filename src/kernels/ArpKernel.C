@@ -7,7 +7,7 @@ InputParameters validParams<ArpKernel>()
 
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("em", "The electron density");
-  // params.addRequiredCoupledVar("mean_en", "The electront temperature");
+  params.addRequiredCoupledVar("mean_en", "The electront temperature");
   return params;
 }
 
@@ -16,7 +16,8 @@ ArpKernel::ArpKernel(const std::string & name, InputParameters parameters) :
 
   _em(coupledValue("em")),
   _grad_potential(coupledGradient("potential")),
-  // _mean_en(coupledValue("mean_en")),
+  _potential_id(coupled("potential")),
+  _mean_en(coupledValue("mean_en")),
 
   _k4_const(5e-14),
   _Ar(1.01e5/(300*1.38e-23)),
@@ -31,8 +32,8 @@ ArpKernel::~ArpKernel()
 Real
 ArpKernel::computeQpResidual()
 {
-  return -_grad_test[_i][_qp]*(_muArp*-_grad_potential[_qp]*std::exp(_u[_qp])-_DArp*exp(_u[_qp])*_grad_u[_qp]);
-         // -_test[_i][_qp]*_k4_const*_Ar*std::exp(_em[_qp])*std::exp(-_Eiz/(2.0/3*std::exp(_mean_en[_qp]-_em[_qp])));
+  return -_grad_test[_i][_qp]*(_muArp*-_grad_potential[_qp]*std::exp(_u[_qp])-_DArp*exp(_u[_qp])*_grad_u[_qp])
+         -_test[_i][_qp]*_k4_const*_Ar*std::exp(_em[_qp])*std::exp(-_Eiz/(2.0/3*std::exp(_mean_en[_qp]-_em[_qp])));
 }
 
 Real
@@ -40,3 +41,16 @@ ArpKernel::computeQpJacobian()
 {
   return -_grad_test[_i][_qp]*(_muArp*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]-_DArp*(std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp]+std::exp(_u[_qp])*_grad_phi[_j][_qp]));
 }
+
+Real
+ArpKernel::computeQpOffDiagJacobian(unsigned int jvar)
+{
+  if (jvar == _potential_id) {
+    return -_grad_test[_i][_qp]*(_muArp*-_grad_phi[_j][_qp]*std::exp(_u[_qp]));
+  }
+
+  else {
+    return 0.0;
+  }
+}
+

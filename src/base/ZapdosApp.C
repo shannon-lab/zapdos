@@ -51,6 +51,7 @@
 
 // AuxKernels
 
+#include "IonDensity.h"
 #include "ElectronTemperature.h"
 #include "EFieldMag.h"
 #include "VelocityMag.h"
@@ -183,6 +184,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ElectronTimeDerivative);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
+  registerAux(IonDensity);
   registerAux(ElectronTemperature);
   registerAux(ElectronDensity);
   registerAux(EFieldMag);

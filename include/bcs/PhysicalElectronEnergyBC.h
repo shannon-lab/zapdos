@@ -37,7 +37,7 @@ protected:
   /* VariableValue & _Arp; */
   /* VariableGradient & _grad_Arp; */
   VariableGradient & _grad_potential;  
-  VariableValue & _em;
+  /* VariableValue & _em; */
 };
 
 #endif //PHYSICALELECTRONENERGYBC_H

@@ -18,11 +18,13 @@ class ElectronKernel : public Kernel
   
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   // coupled vars
 
-  /* VariableValue & _mean_en; */
+  VariableValue & _mean_en;
   VariableGradient & _grad_potential;
+  unsigned int _potential_id;
 
   // Kernel members
 
