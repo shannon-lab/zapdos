@@ -35,7 +35,7 @@ protected:
   
   /* VariableValue & _Arp; */
   /* VariableGradient & _grad_Arp; */
-  VariableValue & _mean_en;
+  /* VariableValue & _mean_en; */
   VariableGradient & _grad_potential;
 };
 

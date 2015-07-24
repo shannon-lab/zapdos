@@ -5,7 +5,7 @@ InputParameters validParams<ElectronKernel>()
 {
   InputParameters params = validParams<Kernel>();
 
-  params.addRequiredCoupledVar("mean_en", "The electron temperature");
+  // params.addRequiredCoupledVar("mean_en", "The electron temperature");
   params.addRequiredCoupledVar("potential","The electric potential");
 
   return params;
@@ -14,7 +14,7 @@ InputParameters validParams<ElectronKernel>()
 ElectronKernel::ElectronKernel(const std::string & name, InputParameters parameters) :
   Kernel(name, parameters),
 
-  _mean_en(coupledValue("mean_en")),
+  // _mean_en(coupledValue("mean_en")),
   _grad_potential(coupledGradient("potential")),
 
   // _muem(380.0/1e4),
@@ -32,8 +32,8 @@ Real
 ElectronKernel::computeQpResidual()
 {
   // Trying a logarithmic formulation
-  return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muem*-_grad_potential[_qp]-/*_muem*2.0/3*std::exp(_mean_en[_qp]-_u[_qp])*/_diff*_grad_u[_qp])
-         -_test[_i][_qp]*_k4_const*_Ar*std::exp(-_Eiz/(2.0/3*std::exp(_mean_en[_qp]-_u[_qp])))*std::exp(_u[_qp]);
+  return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muem*-_grad_potential[_qp]-/*_muem*2.0/3*std::exp(_mean_en[_qp]-_u[_qp])*/_diff*_grad_u[_qp]);
+         // -_test[_i][_qp]*_k4_const*_Ar*std::exp(-_Eiz/(2.0/3*std::exp(_mean_en[_qp]-_u[_qp])))*std::exp(_u[_qp]);
 }
 
 Real
@@ -43,7 +43,7 @@ ElectronKernel::computeQpJacobian()
 	 // 						     +_grad_u[_qp]*std::exp(_mean_en[_qp]-_u[_qp])*-_phi[_j][_qp])
 	 // 		       +std::exp(_u[_qp])*_phi[_j][_qp]*(-_muem*-_grad_potential[_qp]
 	 // 							 -_muem*2.0/3*std::exp(_mean_en[_qp]-_u[_qp])*_grad_u[_qp]))
-  return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muem*-_grad_potential[_qp]*_phi[_j][_qp] - _diff*(_phi[_j][_qp]*_grad_u[_qp]+_grad_phi[_j][_qp]))
-	 -_test[_i][_qp]*_k4_const*_Ar*(-3.0/2*_Eiz*std::exp(-_Eiz/(2.0/3*std::exp(_mean_en[_qp]-_u[_qp])))*std::exp(_u[_qp]-_mean_en[_qp])*_phi[_j][_qp]*std::exp(_u[_qp]) 
-                                        + std::exp(-_Eiz/(2.0/3*std::exp(_mean_en[_qp]-_u[_qp])))*std::exp(_u[_qp])*_phi[_j][_qp]);
+  return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muem*-_grad_potential[_qp]*_phi[_j][_qp] - _diff*(_phi[_j][_qp]*_grad_u[_qp]+_grad_phi[_j][_qp]));
+	 // -_test[_i][_qp]*_k4_const*_Ar*(-3.0/2*_Eiz*std::exp(-_Eiz/(2.0/3*std::exp(_mean_en[_qp]-_u[_qp])))*std::exp(_u[_qp]-_mean_en[_qp])*_phi[_j][_qp]*std::exp(_u[_qp]) 
+                                        // + std::exp(-_Eiz/(2.0/3*std::exp(_mean_en[_qp]-_u[_qp])))*std::exp(_u[_qp])*_phi[_j][_qp]);
 }

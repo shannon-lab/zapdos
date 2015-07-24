@@ -23,7 +23,7 @@ class ArpKernel : public Kernel
 
   VariableValue & _em;
   VariableGradient & _grad_potential;
-  VariableValue & _mean_en;
+  /* VariableValue & _mean_en; */
 
   // Kernel members
 

@@ -21,7 +21,7 @@ class ElectronKernel : public Kernel
 
   // coupled vars
 
-  VariableValue & _mean_en;
+  /* VariableValue & _mean_en; */
   VariableGradient & _grad_potential;
 
   // Kernel members
