@@ -4,6 +4,7 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "AdvectionDiffusionKernel.h"
 #include "ExampleTimeDerivative.h"
 #include "CoeffDiffusion.h"
 #include "FirstOrderReaction.h"
@@ -140,6 +141,7 @@ ZapdosApp::registerApps()
 void
 ZapdosApp::registerObjects(Factory & factory)
 {
+  registerKernel(AdvectionDiffusionKernel);
   registerKernel(CoeffDiffusion);
   registerKernel(FirstOrderReaction);
   registerKernel(SecondOrderReaction);

@@ -37,6 +37,9 @@ class ElectronKernel : public Kernel
   Real _Pe;
   Real _vd_mag;
   Real _delta;
+  Real _a0;
+  Real _b0;
+  Real _c0;
 };
 
 #endif /* ELECTRONKERNEL_H */

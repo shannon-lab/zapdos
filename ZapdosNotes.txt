@@ -16,7 +16,7 @@ the step size at 1e-7 seconds is 1.6e-9
 
 Currently not able to even get to 1e-7 seconds with NEWTON. Perhaps my Jacobian is wrong. But it could also be right.
 
-Best sim fail: somewhere in the microsecond range. Specs for this best simulation: nx = 4000, nl_rel_tol = 1e-2, hypre boomeramg, no scaling of any variables
+Best sim fail: somewhere in the microsecond range. Specs for this best simulation: nx = 4000, nl_rel_tol = 1e-2, hypre boomeramg, no scaling of any variables. Looks like fail time was: 3.0207e-6 seconds. I think a kink between .01 and .015 meters is what dooms the simulation. It's good to know that I can repeat this: after removing the stabilization which I implemented later in these notes, I reproduced this same later fail time, which is still the gold standard (assuming that that is a legitimate measure). 
 
 These simulation failures are fundamentally different from the problems I was having before. Before the solutions were all smooth and pretty but the solves were either diverging or just going too slowly. I believe that this was simply because my relative tolerance was too high. If making the tolerance higher doesn't introduce oscillations in the solution and it allows the time steps to be much longer, than I am absolutely going to increase the tolerance! My priority is getting a solution. I don't care if there's too much diffusion for example. I don't give a damn about that. 
 
@@ -42,4 +42,20 @@ Test suite #2
 Oscillations are my problem. Paths to solution:
 
 1) Stabilization -> Artificial diffusion
+   Back to 4000 elements. With the stabilization, fail at 2.59839e-6 seconds. It looks like a kink forms around 5.5e-7 seconds. There aren't nearly as many oscillations in this simulation as in the 16000 element simulation. 
 2) Mesh refinement -> Salome tutorial
+
+Table of fail times:
+4000 elements. nl_rel_tol = 1e-2. No stabilization. Fail time = 3.0207e-6 (normal fail)
+4000 elements. nl_rel_tol = 1e-2. With stabilization. Fail time = 2.59839e-6 (normal fail)
+4000 elements. nl_rel_tol = 1e-3. With stabilization. Fail time = 9.9839e-07 (normal fail)
+16000 elements. nl_rel_tol = 1e-2. No stabilization. Fail time = 2.7911e-6 (normal fail)
+8000 elements. nl_rel_tol = 1e-2. No stabilization. Fail time = 1.27e-8 (Nan differencing parameter)
+4000 elements. nl_rel_tol = 1e-3. No stabilization. Fail time = 1.27e-8 (Nan differencing parameter)
+8000 elements. nl_rel_tol = 1e-4. With stabilization. Fail time = 9.278e-08 (normal fail)
+4000 elements. nl_rel_tol = 1e-2. No stabilization. Townsend form. Fail time = 6.493e-8 seconds. At least there no kinks this time. The problems were all in the oscillations at the cathode. 
+4000 elements. nl_rel_tol = 1e-2. With stabilization. Townsend form. Fail time = 2.7639e-7 seconds. At least there no kinks this time. The problems were all in the oscillations at the cathode. And yes there are a lot of oscillations. Hahahahahahahah. Not really that funny. Guess what. I'm going to figure out how to mesh the hell out of that cathode region with salome. That's the next task! Hey at least stabilization helped that time!!! 
+
+Note that the current Jacobian for the electrons for the Townsend formulation is absolutely wrong because I don't really know how to take the derivative of the absolute value of the flux. If the simulation fails because of this (pending that I can determine that that was indeed the cause of the failure), then I will invest some time into figuring out how to do that derivative correctly.
+
+Running some simple tests, it looks like my scheme does indeed help stabilize. 
