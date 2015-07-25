@@ -33,6 +33,10 @@ class ElectronKernel : public Kernel
   Real _diff;
   Real _Ar;
   Real _Eiz;
+  Real _alpha;
+  Real _Pe;
+  Real _vd_mag;
+  Real _delta;
 };
 
 #endif /* ELECTRONKERNEL_H */

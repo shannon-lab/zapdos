@@ -37,6 +37,10 @@ class ElectronEnergyKernel : public Kernel
   Real _k4_const;
   Real _k1_const;
   Real _Eiz;
+  Real _alpha;
+  Real _Pe;
+  Real _vd_mag;
+  Real _delta;
 };
 
 #endif /* ELECTRONENERGYKERNEL_H */

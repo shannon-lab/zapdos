@@ -5,7 +5,7 @@
   # boundary_name = 'left right'
   type = GeneratedMesh
   dim = 1
-  nx = 8000
+  nx = 4000
   xmin = 0.002
   xmax = .05
 []
@@ -37,7 +37,7 @@
  # nl_abs_tol = 1e3
   l_max_its = 15
  nl_max_its = 13
-  dtmin = 1e-12
+  dtmin = 0.9e-10
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.5

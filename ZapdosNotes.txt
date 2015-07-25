@@ -16,7 +16,7 @@ the step size at 1e-7 seconds is 1.6e-9
 
 Currently not able to even get to 1e-7 seconds with NEWTON. Perhaps my Jacobian is wrong. But it could also be right.
 
-Best sim fail: somewhere in the microsecond range.
+Best sim fail: somewhere in the microsecond range. Specs for this best simulation: nx = 4000, nl_rel_tol = 1e-2, hypre boomeramg, no scaling of any variables
 
 These simulation failures are fundamentally different from the problems I was having before. Before the solutions were all smooth and pretty but the solves were either diverging or just going too slowly. I believe that this was simply because my relative tolerance was too high. If making the tolerance higher doesn't introduce oscillations in the solution and it allows the time steps to be much longer, than I am absolutely going to increase the tolerance! My priority is getting a solution. I don't care if there's too much diffusion for example. I don't give a damn about that. 
 
@@ -24,8 +24,22 @@ However, now I'm seeing oscillations. Fundamentally different problem. A better 
 
 Three individual things I'm going to try (only change one variable at a time! Be patient!!!)
 
+Test suite #1
+
 1) Scale up the potential residual. Fail time: 5.50e-7 seconds
    Worse!
-2) Increase the mesh density (Increased from 4000 to 8000 elements). Petsc failed with message: "Computed Nan differencing parameter h." Fail tiem again at 1.27e-8 seconds. So all the dependent variable solutions look beautifully smooth. However, there is an oscillation in the electron temperature at the cathode. This could be relevant because the electron temperature is in the source term for the electrons and ions. There are two things that should be done here. 1) I am going to try doubling the mesh resolution again. 2) It's worth looking into whether there are suggestions in combating the "Nan differencing parameter" for Petsc. Perhaps the recent messages on the Moose message board about Petsc error on fine mesh?
+2) Increase the mesh density (Increased from 4000 to 8000 elements). Petsc failed with message: "Computed Nan differencing parameter h." Fail tiem again at 1.27e-8 seconds. So all the dependent variable solutions look beautifully smooth. However, there is an oscillation in the electron temperature at the cathode. This could be relevant because the electron temperature is in the source term for the electrons and ions. There are two things that should be done here. 1) I am going to try doubling the mesh resolution again to see if I can completely remove the oscillations. 2) It's worth looking into whether there are suggestions in combating the "Nan differencing parameter" for Petsc. Perhaps the recent messages on the Moose message board about Petsc error on fine mesh? 
+a) From the fine mesh thread, which didn't make any reference to my particular error, a guy went from using ds for -mat_mffd_type to wp and his problem worked. -mat_mffd_type is for matrix free formulations (thus the mf). There is another petsc option, -mat_fd_type, which I believe is used if you're actually forming the Jacobian matrix (perhaps Newton?). 
+b) In one thread from MOOSE mentioned the "Nan differencing parameter", John Mangeri said he was getting this error when using hypre and boomeramg. He said that when he went away from that preconditioner, he no longer experienced that problem. In a separate thread, Derek suggested that this generally means that a Nan is occurring somewhere in the residual, e.g. a divide by zero or sqrt of negative number. I personally have a hard time believing this though, especially considering my logarithmic formulation.
+
 3) Decrease the relative tolerance. (Decreased from 1e-2 to 1e-3). Petsc failed with message: "Computed Nan differencing parameter h." Fail time: 1.27e-8 seconds. I didn't check how the solutions looked when the problem failed. If there were no oscillations in the solution, then the problem wasn't with the solution.
 Way worse!
+
+Test suite #2
+
+1) Increased from 8000 to 16000 elements to see whether I can completely eliminate oscillations or see the "Nan differencing" error again. Fail time = 2.7911e-6. Reason for fail: looks like oscillations. It's always hard to know where the oscillations originate from. Is it oscillations in the bulk? Is it the oscillations at the boundary? Is it the electron temperature? Is it the electron density? Is it the argon density? The residuals of em, Arp, and mean_en are all about the same value. em is the highest. 
+
+Oscillations are my problem. Paths to solution:
+
+1) Stabilization -> Artificial diffusion
+2) Mesh refinement -> Salome tutorial
