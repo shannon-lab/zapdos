@@ -14,7 +14,7 @@ PhysicalIonBC::PhysicalIonBC(const std::string & name, InputParameters parameter
   // Variables unique to class
 
   _a(0.0),
-  _muArp(1.54/1.0e4),
+  _muArp(3.42/1e2),
 
   // coupled variables
 

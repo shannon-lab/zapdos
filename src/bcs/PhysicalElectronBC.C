@@ -23,7 +23,7 @@ PhysicalElectronBC::PhysicalElectronBC(const std::string & name, InputParameters
 
   _a(0.0),
   _b(0.0),
-  _muem(0.16),
+  _muem(380.0/1e4),
   _e(1.6e-19),
   _m_el(9.11e-31),
 

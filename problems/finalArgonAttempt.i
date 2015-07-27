@@ -64,10 +64,10 @@
 
 
 [Kernels]
-  [./el_energy_time_deriv]
-    type = TimeDerivativeElectronTemp
-    variable = mean_en
-  [../]
+  # [./el_energy_time_deriv]
+  #   type = TimeDerivativeElectronTemp
+  #   variable = mean_en
+  # [../]
   [./em_time_deriv]
     type = ElectronTimeDerivative
     variable = em
@@ -79,14 +79,14 @@
   [./electrons]
     type = ElectronKernel
     variable = em
-    mean_en = mean_en
+    # mean_en = mean_en
     potential = potential
   [../]
   [./argon_ions]
     type = ArpKernel
     variable = Arp
     em = em
-    mean_en = mean_en
+    # mean_en = mean_en
     potential = potential
   [../]
   [./potential]
@@ -95,12 +95,12 @@
     em = em
     Arp = Arp
   [../]
-  [./el_energy]
-    type = ElectronEnergyKernel
-    variable = mean_en
-    em = em
-    potential = potential
-  [../]
+  # [./el_energy]
+  #   type = ElectronEnergyKernel
+  #   variable = mean_en
+  #   em = em
+  #   potential = potential
+  # [../]
 []
 
 [Variables]
@@ -113,9 +113,9 @@
   [./Arp]
     # scaling = 1e-6
   [../]
-  [./mean_en]
-    # scaling = 1e-11
-  [../]
+  # [./mean_en]
+  #   # scaling = 1e-11
+  # [../]
 []
 
 [AuxVariables]
@@ -123,10 +123,10 @@
   [../]
   [./Arp_lin]
   [../]
-  [./energy_lin]
-  [../]
-  [./e_temp]
-  [../]
+  # [./energy_lin]
+  # [../]
+  # [./e_temp]
+  # [../]
 []
 
 [AuxKernels]
@@ -140,17 +140,17 @@
     variable = Arp_lin
     ion_density = Arp
   [../]
-  [./energy_lin]
-    type = ElectronDensity
-    variable = energy_lin
-    electron_density = mean_en
-  [../]  
-  [./e_temp]
-    type = ElectronTemperature
-    variable = e_temp
-    electron_density = em
-    mean_en = mean_en
-  [../]
+  # [./energy_lin]
+  #   type = ElectronDensity
+  #   variable = energy_lin
+  #   electron_density = mean_en
+  # [../]  
+  # [./e_temp]
+  #   type = ElectronTemperature
+  #   variable = e_temp
+  #   electron_density = em
+  #   mean_en = mean_en
+  # [../]
 []
 
 [BCs]
@@ -177,7 +177,7 @@
     variable = em
     boundary = 'left right'
     potential = potential
-    mean_en = mean_en
+    # mean_en = mean_en
   [../]
   [./Arp_physical]
     type = PhysicalIonBC
@@ -185,13 +185,13 @@
     boundary = 'left right'
     potential = potential
   [../]
-  [./mean_el_en]
-    type = PhysicalElectronEnergyBC
-    variable = mean_en
-    potential = potential
-    # em = em
-    boundary = 'left right'
-  [../]
+  # [./mean_el_en]
+  #   type = PhysicalElectronEnergyBC
+  #   variable = mean_en
+  #   potential = potential
+  #   # em = em
+  #   boundary = 'left right'
+  # [../]
 []
 
 [ICs]
@@ -210,11 +210,11 @@
     variable = Arp
     value = 29.934
   [../]
-  [./mean_el_energy_ic]
-    type = ConstantIC
-    variable = mean_en
-    value = 31.3199
-   [../]
+  # [./mean_el_energy_ic]
+  #   type = ConstantIC
+  #   variable = mean_en
+  #   value = 31.3199
+  #  [../]
   # [./mean_el_energy_ic]
   #   type = FunctionIC
   #   variable = mean_en

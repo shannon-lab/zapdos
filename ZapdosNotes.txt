@@ -45,7 +45,7 @@ Oscillations are my problem. Paths to solution:
    Back to 4000 elements. With the stabilization, fail at 2.59839e-6 seconds. It looks like a kink forms around 5.5e-7 seconds. There aren't nearly as many oscillations in this simulation as in the 16000 element simulation. 
 2) Mesh refinement -> Salome tutorial
 
-Table of fail times:
+Table of fail times for energy formulation:
 4000 elements. nl_rel_tol = 1e-2. No stabilization. Fail time = 3.0207e-6 (normal fail)
 4000 elements. nl_rel_tol = 1e-2. With stabilization. Fail time = 2.59839e-6 (normal fail)
 4000 elements. nl_rel_tol = 1e-3. With stabilization. Fail time = 9.9839e-07 (normal fail)
@@ -59,3 +59,8 @@ Table of fail times:
 Note that the current Jacobian for the electrons for the Townsend formulation is absolutely wrong because I don't really know how to take the derivative of the absolute value of the flux. If the simulation fails because of this (pending that I can determine that that was indeed the cause of the failure), then I will invest some time into figuring out how to do that derivative correctly.
 
 Running some simple tests, it looks like my scheme does indeed help stabilize. 
+
+I went back to a local field formulation. And set a new world record for simulation time with (almost) all the physics included: Fail time = 1.92576e-5 seconds. Woooo! Hahaha. Going to add some stabilization for the ions because it looks like I'm getting some kinks and maybe some stabilization would help. I don't see any kinks in the electrons. 
+
+Table of fail times for LFA formulation:
+4000 elements. nl_rel_tol = 1e-2. Electron stabilization. Fail time = 1.92576e-5 (normal fail)
