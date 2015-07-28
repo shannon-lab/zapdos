@@ -47,17 +47,17 @@ ArpKernel::computeQpResidual()
   _alpha = std::min(1.0,_Pe/6.0);
   _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
  
- return -_grad_test[_i][_qp]*(_muArp*-_grad_potential[_qp]*_u[_qp]-_DArp*_grad_u[_qp])
+  return -_grad_test[_i][_qp]*std::exp(-_u[_qp])*(_muArp*-_grad_potential[_qp]*_u[_qp]-_DArp*_grad_u[_qp])
     // -_test[_i][_qp]*_k4_const*_Ar*std::exp(_em[_qp])*std::exp(-_Eiz/(2.0/3*std::exp(_mean_en[_qp]-_em[_qp]))); // Reaction coefficient formulation
-    -_test[_i][_qp]*0.35*std::exp(-1.65e7/_grad_potential.size())*(-_muem*-_grad_potential[_qp]*_em[_qp]-_diff*_grad_em[_qp]).size() // Reaction. Townsend coefficient formulation
-	 -_grad_test[_i][_qp]*(-_delta*_grad_u[_qp]); // Diffusion stabilization
+    -_test[_i][_qp]*0.35*std::exp(-1.65e7/_grad_potential.size())*(-_muem*-_grad_potential[_qp]*std::exp(_em[_qp])-_diff*std::exp(_em[_qp])*_grad_em[_qp]).size() // Reaction. Townsend coefficient formulation
+    -_grad_test[_i][_qp]*(-_delta*std::exp(_u[_qp])*_grad_u[_qp]); // Diffusion stabilization
 }
 
 Real
 ArpKernel::computeQpJacobian()
 {
-  return -_grad_test[_i][_qp]*(_muArp*-_grad_potential[_qp]*_phi[_j][_qp]-_DArp*_grad_phi[_j][_qp])
-    -_grad_test[_i][_qp]*(-_delta*_grad_phi[_j][_qp]); // Diffusion stabilization
+  return -_grad_test[_i][_qp]*(_muArp*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]-_DArp*(std::exp(_u[_qp])*_grad_phi[_j][_qp]+std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp]))
+    -_grad_test[_i][_qp]*(-_delta*(std::exp(_u[_qp])*_grad_phi[_j][_qp]+std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp])); // Diffusion stabilization
 }
 
 Real
