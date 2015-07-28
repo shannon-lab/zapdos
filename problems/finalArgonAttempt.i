@@ -119,27 +119,95 @@
 []
 
 [AuxVariables]
-  [./em_lin]
-  [../]
-  [./Arp_lin]
-  [../]
-  # [./energy_lin]
+  # [./em_lin]
   # [../]
-  # [./e_temp]
+  # [./Arp_lin]
   # [../]
+  [./e_field]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
+  # [./advective_flux]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./diffusive_flux]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./art_diffusive_flux]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./total_flux]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./total_flux_mag]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./aux_source]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # # [./energy_lin]
+  # # [../]
+  # # [./e_temp]
+  # # [../]
 []
 
 [AuxKernels]
-  [./em_lin]
-    type = ElectronDensity
-    variable = em_lin
-    electron_density = em
+  # [./em_lin]
+  #   type = ElectronDensity
+  #   variable = em_lin
+  #   electron_density = em
+  # [../]
+  # [./Arp_lin]
+  #   type = IonDensity
+  #   variable = Arp_lin
+  #   ion_density = Arp
+  # [../]
+  [./e_field]
+    type = Efield
+    variable = e_field
+    potential = potential
   [../]
-  [./Arp_lin]
-    type = IonDensity
-    variable = Arp_lin
-    ion_density = Arp
-  [../]
+  # [./a_flux]
+  #   type = ElectronAdvectiveFlux
+  #   variable = advective_flux
+  #   electron_density = em
+  #   potential = potential
+  # [../]
+  # [./d_flux]
+  #   type = ElectronDiffusiveFlux
+  #   variable = diffusive_flux
+  #   em = em
+  # [../]
+  # [./ad_flux]
+  #   type = ElectronArtDiffusiveFlux
+  #   variable = art_diffusive_flux
+  #   potential = potential
+  #   em = em
+  # [../]
+  # [./total_flux]
+  #   type = ElectronTotalFlux
+  #   variable = total_flux
+  #   potential = potential
+  #   em = em
+  # [../]
+  # [./total_flux_mag]
+  #   type = ElectronTotalFluxMag
+  #   variable = total_flux_mag
+  #   potential = potential
+  #   em = em
+  # [../]
+  # [./source]
+  #   type = AuxSource
+  #   variable = aux_source
+  #   potential = potential
+  #   em = em
+  # [../]
   # [./energy_lin]
   #   type = ElectronDensity
   #   variable = energy_lin
