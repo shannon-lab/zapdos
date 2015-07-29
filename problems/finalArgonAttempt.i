@@ -119,10 +119,10 @@
 []
 
 [AuxVariables]
-  # [./em_lin]
-  # [../]
-  # [./Arp_lin]
-  # [../]
+  [./em_lin]
+  [../]
+  [./Arp_lin]
+  [../]
   [./e_field]
     order = CONSTANT
     family = MONOMIAL
@@ -158,16 +158,16 @@
 []
 
 [AuxKernels]
-  # [./em_lin]
-  #   type = ElectronDensity
-  #   variable = em_lin
-  #   electron_density = em
-  # [../]
-  # [./Arp_lin]
-  #   type = IonDensity
-  #   variable = Arp_lin
-  #   ion_density = Arp
-  # [../]
+  [./em_lin]
+    type = ElectronDensity
+    variable = em_lin
+    electron_density = em
+  [../]
+  [./Arp_lin]
+    type = IonDensity
+    variable = Arp_lin
+    ion_density = Arp
+  [../]
   [./e_field]
     type = Efield
     variable = e_field
