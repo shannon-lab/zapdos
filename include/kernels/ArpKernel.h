@@ -26,24 +26,24 @@ class ArpKernel : public Kernel
   VariableGradient & _grad_em;
   VariableGradient & _grad_potential;
   unsigned int _potential_id;
-  /* VariableValue & _mean_en; */
+  VariableValue & _mean_en;
+
+  // Material Properties
+
+  const MaterialProperty<Real> &  _muem;
+  const MaterialProperty<Real> &  _diffem;
+  const MaterialProperty<Real> &  _muip;
+  const MaterialProperty<Real> &  _diffip;
+  const MaterialProperty<Real> &  _Ar;
+  const MaterialProperty<Real> &  _Eiz;
+  const MaterialProperty<Real> &  _rate_coeff_ion;
 
   // Kernel members
 
-  Real _muem;
-  Real _diff;
-  Real _muArp;
-  Real _DArp;
   Real  _alpha;
   Real  _Pe;
   Real  _vd_mag;
   Real  _delta;
-   /* Real _a0; */
-  /* Real _b0; */
-  /* Real _c0; */
-  /* Real _k4_const; */
-  /* Real _Ar; */
-  /* Real _Eiz; */
 };
 
 #endif /* ARPKERNEL_H */

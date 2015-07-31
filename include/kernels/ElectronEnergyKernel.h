@@ -25,25 +25,25 @@ class ElectronEnergyKernel : public Kernel
   VariableGradient & _grad_em;
   VariableGradient & _grad_potential;
 
+  // Material properties
+
+  const MaterialProperty<Real> & _muel;
+  const MaterialProperty<Real> & _muem;
+  const MaterialProperty<Real> & _diffem;
+  const MaterialProperty<Real> & _diffel;
+  const MaterialProperty<Real> & _Ar;
+  const MaterialProperty<Real> & _mem;
+  const MaterialProperty<Real> & _mip;
+  const MaterialProperty<Real> & _Eiz;
+  const MaterialProperty<Real> & _rate_coeff_ion;
+  const MaterialProperty<Real> & _rate_coeff_elastic;
+
   // kernel members
 
-  Real _muel;
-  Real _muem;
-  Real _diff;
-  Real _diffel;
-  Real _Ar;
-  Real _mem;
-  Real _mAr;
-  Real _k4_const;
-  Real _k1_const;
-  Real _Eiz;
   Real _alpha;
   Real _Pe;
   Real _vd_mag;
   Real _delta;
-  Real _a0;
-  Real _b0;
-  Real _c0;
 };
 
 #endif /* ELECTRONENERGYKERNEL_H */

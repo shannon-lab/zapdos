@@ -22,26 +22,24 @@ class ElectronKernel : public Kernel
 
   // coupled vars
 
-  /* VariableValue & _mean_en; */
+  VariableValue & _mean_en;
   VariableGradient & _grad_potential;
   unsigned int _potential_id;
 
   // Kernel members
 
-  Real _muem;
-  Real _diff;
-  Real _Eiz;
   Real _alpha;
   Real _Pe;
   Real _vd_mag;
   Real _delta;
   RealVectorValue _flux;
   RealVectorValue _d_flux_d_u;
-  /* Real _a0; */
-  /* Real _b0; */
-  /* Real _c0; */
-  /* Real _k4_const; */
-  /* Real _Ar; */
+
+  const MaterialProperty<Real> & _muem;
+  const MaterialProperty<Real> & _diffem;
+  const MaterialProperty<Real> & _Ar;
+  const MaterialProperty<Real> & _Eiz;
+  const MaterialProperty<Real> & _rate_coeff_ion;
 };
 
 #endif /* ELECTRONKERNEL_H */
