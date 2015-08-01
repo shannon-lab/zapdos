@@ -13,7 +13,8 @@ InputParameters validParams<ElectronDiffusiveFlux>()
 ElectronDiffusiveFlux::ElectronDiffusiveFlux(const std::string & name, InputParameters parameters) :
     AuxKernel(name,parameters),
     
-    _diff(1800.0/1e4),
+    _diffem(getMaterialProperty<Real>("diffem")),
+    _em(coupledValue("em")),
     _grad_em(coupledGradient("em"))
 {
 }
@@ -21,7 +22,7 @@ ElectronDiffusiveFlux::ElectronDiffusiveFlux(const std::string & name, InputPara
 Real
 ElectronDiffusiveFlux::computeValue()
 {
-  return -_diff*_grad_em[_qp](0);
+  return -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp](0);
 }
 
  

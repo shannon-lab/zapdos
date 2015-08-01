@@ -18,7 +18,8 @@ public:
 protected:
 
   virtual Real computeValue();
-  Real _diff;
+  const MaterialProperty<Real> & _diffem;
+  VariableValue & _em;
   VariableGradient & _grad_em;
 };
 

@@ -17,9 +17,8 @@ public:
   
 protected:
 
-  Real _muem;
-  Real _diff;
-
+  const MaterialProperty<Real> & _muem;
+  const MaterialProperty<Real> & _diffem;
   VariableValue & _em;
   VariableGradient & _grad_potential;
   VariableGradient & _grad_em;

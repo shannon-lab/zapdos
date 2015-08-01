@@ -18,14 +18,14 @@ public:
 protected:
 
   virtual Real computeValue();
-  Real _muem;
-  Real _diff;
-  Real _Eiz;
+  const MaterialProperty<Real> & _muem;
+  const MaterialProperty<Real> & _diffem;
   Real _alpha;
   Real _Pe;
   Real _vd_mag;
   Real _delta;
   VariableGradient & _grad_potential;
+  VariableValue & _em;
   VariableGradient & _grad_em;
 };
 

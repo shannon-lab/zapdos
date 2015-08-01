@@ -14,8 +14,8 @@ InputParameters validParams<ElectronTotalFlux>()
 ElectronTotalFlux::ElectronTotalFlux(const std::string & name, InputParameters parameters) :
     AuxKernel(name,parameters),
 
-    _muem(380.0/1e4),
-    _diff(1800.0/1e4), // Morrow, Ebert
+    _muem(getMaterialProperty<Real>("muem")),
+    _diffem(getMaterialProperty<Real>("diffem")),
     _em(coupledValue("em")),
     _grad_potential(coupledGradient("potential")),
     _grad_em(coupledGradient("em"))
@@ -25,7 +25,7 @@ ElectronTotalFlux::ElectronTotalFlux(const std::string & name, InputParameters p
 Real
 ElectronTotalFlux::computeValue()
 {
-  return -_muem*-_grad_potential[_qp](0)*_em[_qp]-_diff*_grad_em[_qp](0);
+  return -_muem[_qp]*-_grad_potential[_qp](0)*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp](0);
 }
 
  

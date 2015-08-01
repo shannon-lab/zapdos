@@ -23,13 +23,12 @@ protected:
 
   /* const Real & _se_coeff; */
 
-  // Members unique to class  
+  const MaterialProperty<Real> & _muem;
+  const MaterialProperty<Real> & _mem;
+
 
   Real _a;
   Real _b;
-  Real _muem;
-  Real _e;
-  Real _m_el;
 
   // Coupled variables
   

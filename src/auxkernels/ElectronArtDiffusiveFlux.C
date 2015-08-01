@@ -13,14 +13,15 @@ InputParameters validParams<ElectronArtDiffusiveFlux>()
 
 ElectronArtDiffusiveFlux::ElectronArtDiffusiveFlux(const std::string & name, InputParameters parameters) :
     AuxKernel(name,parameters),
-    
-  _muem(380.0/1e4), // Morrow, Ebert
-  _diff(1800.0/1e4), // Morrow, Ebert
+
+    _muem(getMaterialProperty<Real>("muem")),
+    _diffem(getMaterialProperty<Real>("diffem")),
   _alpha(0.0),
   _Pe(0.0),
   _vd_mag(0.0),
   _delta(0.0),
     _grad_potential(coupledGradient("potential")),
+    _em(coupledValue("em")),
     _grad_em(coupledGradient("em"))
 {
 }
@@ -28,13 +29,12 @@ ElectronArtDiffusiveFlux::ElectronArtDiffusiveFlux(const std::string & name, Inp
 Real
 ElectronArtDiffusiveFlux::computeValue()
 {
-  _vd_mag = std::abs(_muem*_grad_potential[_qp].size());
-  // _Pe = _vd_mag*_current_elem->hmax()/_diff;
-  // _alpha = std::min(1.0,_Pe/6.0);
-  // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
-  _delta = _vd_mag*_current_elem->hmax()/2.0;
+  _vd_mag = std::abs(_muem[_qp]*_grad_potential[_qp].size());
+  _Pe = _vd_mag*_current_elem->hmax()/_diffem[_qp];
+  _alpha = std::min(1.0,_Pe/6.0);
+  _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
 
-  return -_delta*_grad_em[_qp](0);
+  return -_delta*std::exp(_em[_qp])*_grad_em[_qp](0);
 }
 
  

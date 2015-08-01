@@ -14,7 +14,7 @@ InputParameters validParams<ElectronAdvectiveFlux>()
 ElectronAdvectiveFlux::ElectronAdvectiveFlux(const std::string & name, InputParameters parameters) :
     AuxKernel(name,parameters),
 
-    _muem(380.0/1e4),
+    _muem(getMaterialProperty<Real>("muem")),
     _electron_density(coupledValue("electron_density")),
     _grad_potential(coupledGradient("potential"))
 {
@@ -23,7 +23,7 @@ ElectronAdvectiveFlux::ElectronAdvectiveFlux(const std::string & name, InputPara
 Real
 ElectronAdvectiveFlux::computeValue()
 {
-  return -_muem*-_grad_potential[_qp](0)*_electron_density[_qp];
+  return -_muem[_qp]*-_grad_potential[_qp](0)*std::exp(_electron_density[_qp]);
 }
 
  

@@ -19,10 +19,8 @@ protected:
    virtual Real computeQpJacobian();
   //  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
-  // Members unique to class  
-
+   const MaterialProperty<Real> & _muip;
   Real _a;
-  Real _muArp;
   
   // coupled variables
 

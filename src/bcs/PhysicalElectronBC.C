@@ -19,13 +19,11 @@ PhysicalElectronBC::PhysicalElectronBC(const std::string & name, InputParameters
 
   // _se_coeff(getParam<Real>("se_coeff")),
 
-  // Variables unique to class
+  _muem(getMaterialProperty<Real>("muem")),
+  _mem(getMaterialProperty<Real>("mem")),
 
   _a(0.0),
   _b(0.0),
-  _muem(380.0/1e4),
-  _e(1.6e-19),
-  _m_el(9.11e-31),
 
 // Coupled Variables
 
@@ -46,7 +44,7 @@ PhysicalElectronBC::computeQpResidual()
     _a = 0.0;
     // _b = 1.0;
   }
-  return _test[_i][_qp]*_a*-_muem*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp];
+  return _test[_i][_qp]*_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp];
          // + _test[_i][_qp]*_b*0.5*1.6*std::sqrt(_e*2.0/3*std::exp(_mean_en[_qp]-_u[_qp])/_m_el)*std::exp(_u[_qp]);
 			 //-_se_coeff*(_tc[_qp]*_muArp[_qp]*-_grad_potential[_qp]*_Vc[_qp]/_rc[_qp]*std::max(_Arp[_qp],0.0))*_normals[_qp]);
 
@@ -63,7 +61,7 @@ PhysicalElectronBC::computeQpJacobian()
     _a = 0.0;
     // _b = 1.0;
   }
-  return _test[_i][_qp]*_a*-_muem*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp];
+  return _test[_i][_qp]*_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp];
          // + _test[_i][_qp]*_b*0.5*1.6*(std::sqrt(_e*2.0/3*std::exp(_mean_en[_qp]-_u[_qp])/_m_el)*std::exp(_u[_qp])*_phi[_j][_qp] + std::exp(_u[_qp])*-0.408248*std::sqrt(_e*std::exp(_mean_en[_qp]-_u[_qp])/_m_el)*_phi[_j][_qp]);
 }
 
@@ -77,7 +75,7 @@ PhysicalElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
     else {
       _a = 0.0;
     }
-    return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_phi[_j][_qp]*_normals[_qp]*std::max(0.0,_u[_qp])-_se_coeff*(_muArp[_qp]*-_grad_phi[_j][_qp]*_Arp[_qp])*_normals[_qp]);
+    return _test[_i][_qp]*(_a*-_muem[_qp][_qp]*-_grad_phi[_j][_qp]*_normals[_qp]*std::max(0.0,_u[_qp])-_se_coeff*(_muArp[_qp]*-_grad_phi[_j][_qp]*_Arp[_qp])*_normals[_qp]);
     //return _test[_i][_qp]*(-_se_coeff*(_muArp[_qp]*-_grad_phi[_j][_qp]*_Arp[_qp])*_normals[_qp]);
   }
   else if (jvar == _Arp_id) {

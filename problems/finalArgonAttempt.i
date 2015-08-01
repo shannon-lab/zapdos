@@ -28,8 +28,8 @@
   type = Transient
  end_time = 1e-1
  solve_type = PJFNK
- petsc_options_iname = '-petsc_type -petsc_hypre_type -ksp_converged_reason -snes_converged_reason -snes_stol'
- petsc_options_value = 'hypre boomeramg true true 0'
+ petsc_options_iname = '-petsc_type -petsc_hypre_type -ksp_converged_reason -snes_converged_reason -snes_stol -mat_mffd_type'
+ petsc_options_value = 'hypre boomeramg true true 0 ds'
  nl_rel_tol = 1e-2
  # l_tol = 1e-3
  # trans_ss_check = true
@@ -122,22 +122,22 @@
     order = CONSTANT
     family = MONOMIAL
   [../]
-  # [./advective_flux]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
-  # [./diffusive_flux]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
-  # [./art_diffusive_flux]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
-  # [./total_flux]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
+  [./advective_flux]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
+  [./diffusive_flux]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
+  [./art_diffusive_flux]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
+  [./total_flux]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
   # [./total_flux_mag]
   #   order = CONSTANT
   #   family = MONOMIAL
@@ -168,29 +168,29 @@
     variable = e_field
     potential = potential
   [../]
-  # [./a_flux]
-  #   type = ElectronAdvectiveFlux
-  #   variable = advective_flux
-  #   electron_density = em
-  #   potential = potential
-  # [../]
-  # [./d_flux]
-  #   type = ElectronDiffusiveFlux
-  #   variable = diffusive_flux
-  #   em = em
-  # [../]
-  # [./ad_flux]
-  #   type = ElectronArtDiffusiveFlux
-  #   variable = art_diffusive_flux
-  #   potential = potential
-  #   em = em
-  # [../]
-  # [./total_flux]
-  #   type = ElectronTotalFlux
-  #   variable = total_flux
-  #   potential = potential
-  #   em = em
-  # [../]
+  [./a_flux]
+    type = ElectronAdvectiveFlux
+    variable = advective_flux
+    electron_density = em
+    potential = potential
+  [../]
+  [./d_flux]
+    type = ElectronDiffusiveFlux
+    variable = diffusive_flux
+    em = em
+  [../]
+  [./ad_flux]
+    type = ElectronArtDiffusiveFlux
+    variable = art_diffusive_flux
+    potential = potential
+    em = em
+  [../]
+  [./total_flux]
+    type = ElectronTotalFlux
+    variable = total_flux
+    potential = potential
+    em = em
+  [../]
   # [./total_flux_mag]
   #   type = ElectronTotalFluxMag
   #   variable = total_flux_mag
@@ -312,6 +312,13 @@
     type = ParsedFunction
     value = '-1000.0*tanh(1e6*t)'
   [../]
+[]
+
+[Materials]
+  [./argon]
+    block = 0
+    type = Argon
+ [../]
 []
 
 # [Adaptivity]
