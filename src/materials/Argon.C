@@ -41,7 +41,8 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
     _diffel(declareProperty<Real>("diffel")),
     _rate_coeff_elastic(declareProperty<Real>("rate_coeff_elastic")),
     _mem(declareProperty<Real>("mem")),
-  _mip(declareProperty<Real>("mip"))
+  _mip(declareProperty<Real>("mip")),
+  _se_coeff(declareProperty<Real>("se_coeff"))
 {}
 
 void
@@ -59,4 +60,5 @@ Argon::computeQpProperties()
   _rate_coeff_elastic[_qp] = 1e-13;
   _mem[_qp] = 9.11e-31;
   _mip[_qp] = 40.0*1.66e-27;
+  _se_coeff[_qp] = 0.1;
 }

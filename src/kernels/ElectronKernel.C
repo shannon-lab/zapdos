@@ -15,6 +15,7 @@ ElectronKernel::ElectronKernel(const std::string & name, InputParameters paramet
   Kernel(name, parameters),
 
   _mean_en(coupledValue("mean_en")),
+  _mean_en_id(coupled("mean_en")),
   _grad_potential(coupledGradient("potential")),
   _potential_id(coupled("potential")),
 
@@ -74,6 +75,10 @@ ElectronKernel::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id) { 
     return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muem[_qp]*-_grad_phi[_j][_qp]);
+  }
+
+  else if (jvar == _mean_en_id) {
+    return -_test[_i][_qp]*_rate_coeff_ion[_qp]*_Ar[_qp]*std::exp(-_Eiz[_qp]/(2.0/3*std::exp(_mean_en[_qp]-_u[_qp])))*std::exp(_u[_qp])*3.0/2*_Eiz[_qp]*std::exp(_u[_qp]-_mean_en[_qp])*_phi[_j][_qp]; // Reaction. Rate coefficient formulation
   }
 
   else {

@@ -25,16 +25,16 @@ protected:
 
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _mem;
-
+  const MaterialProperty<Real> & _se_coeff;
+  const MaterialProperty<Real> & _muip;
 
   Real _a;
   Real _b;
 
   // Coupled variables
   
-  /* VariableValue & _Arp; */
-  /* VariableGradient & _grad_Arp; */
-  /* VariableValue & _mean_en; */
+  VariableValue & _Arp;
+  VariableGradient & _grad_Arp;
   VariableGradient & _grad_potential;
 };
 

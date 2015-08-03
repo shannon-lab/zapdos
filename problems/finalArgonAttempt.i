@@ -29,8 +29,8 @@
  end_time = 1e-1
  solve_type = PJFNK
  petsc_options_iname = '-petsc_type -petsc_hypre_type -ksp_converged_reason -snes_converged_reason -snes_stol -mat_mffd_type'
- petsc_options_value = 'hypre boomeramg true true 0 ds'
- nl_rel_tol = 1e-2
+ petsc_options_value = 'hypre boomeramg true true 0 wp'
+ nl_rel_tol = 1e-3
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
@@ -100,13 +100,13 @@
 
 [Variables]
   [./potential]
-    # scaling = 1e12
+    scaling = 1e13
   [../]
   [./em]
-    # scaling = 1e-6
+    scaling = 1e2
   [../]
   [./Arp]
-    # scaling = 1e-6
+    scaling = 1e2
   [../]
   [./mean_en]
     # scaling = 1e-11
@@ -240,7 +240,7 @@
     variable = em
     boundary = 'left right'
     potential = potential
-    # mean_en = mean_en
+    Arp = Arp
   [../]
   [./Arp_physical]
     type = PhysicalIonBC

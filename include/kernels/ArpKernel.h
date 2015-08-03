@@ -24,9 +24,11 @@ class ArpKernel : public Kernel
 
   VariableValue & _em;
   VariableGradient & _grad_em;
+  unsigned int _em_id;
   VariableGradient & _grad_potential;
   unsigned int _potential_id;
   VariableValue & _mean_en;
+  unsigned int _mean_en_id;
 
   // Material Properties
 

@@ -4,10 +4,7 @@ template<>
 InputParameters validParams<PhysicalElectronBC>()
 {
     InputParameters params = validParams<IntegratedBC>();
-    // params.addParam<Real>("se_coeff",0.1,"The secondary electron emission coefficient for the walls.");
-    // params.addRequiredCoupledVar("Arp","The ion density");
-    //    params.addRequiredParam<std::string>("coupled_ion_name","Though redundant, this parameter determines correct mobility and diffusivity for the ions.");
-    // params.addRequiredCoupledVar("mean_en","The electron temperature");
+    params.addRequiredCoupledVar("Arp","The ion density");
     params.addRequiredCoupledVar("potential","The electric potential");
     return params;
 }
@@ -15,21 +12,18 @@ InputParameters validParams<PhysicalElectronBC>()
 PhysicalElectronBC::PhysicalElectronBC(const std::string & name, InputParameters parameters) :
   IntegratedBC(name, parameters),
 
-  // Parameters
-
-  // _se_coeff(getParam<Real>("se_coeff")),
-
   _muem(getMaterialProperty<Real>("muem")),
   _mem(getMaterialProperty<Real>("mem")),
+  _se_coeff(getMaterialProperty<Real>("se_coeff")),
+  _muip(getMaterialProperty<Real>("muip")),
 
   _a(0.0),
   _b(0.0),
 
 // Coupled Variables
 
-  // _Arp(coupledValue("Arp")),
-  // _grad_Arp(coupledGradient("Arp")),
-  // _mean_en(coupledValue("mean_en")),
+  _Arp(coupledValue("Arp")),
+  _grad_Arp(coupledGradient("Arp")),
   _grad_potential(coupledGradient("potential"))
 {}
 
@@ -38,15 +32,15 @@ PhysicalElectronBC::computeQpResidual()
 {
   if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
-    // _b = 0.0;
+    _b = 0.0;
   }
   else {
     _a = 0.0;
-    // _b = 1.0;
+    _b = 1.0;
   }
-  return _test[_i][_qp]*_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp];
+  return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp]
          // + _test[_i][_qp]*_b*0.5*1.6*std::sqrt(_e*2.0/3*std::exp(_mean_en[_qp]-_u[_qp])/_m_el)*std::exp(_u[_qp]);
-			 //-_se_coeff*(_tc[_qp]*_muArp[_qp]*-_grad_potential[_qp]*_Vc[_qp]/_rc[_qp]*std::max(_Arp[_qp],0.0))*_normals[_qp]);
+			 -_b*_se_coeff[_qp]*_muip[_qp]*-_grad_potential[_qp]*std::exp(_Arp[_qp])*_normals[_qp]);
 
 }
 
@@ -55,14 +49,11 @@ PhysicalElectronBC::computeQpJacobian()
 {
   if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
-    // _b = 0.0;
   }
   else {
     _a = 0.0;
-    // _b = 1.0;
   }
   return _test[_i][_qp]*_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp];
-         // + _test[_i][_qp]*_b*0.5*1.6*(std::sqrt(_e*2.0/3*std::exp(_mean_en[_qp]-_u[_qp])/_m_el)*std::exp(_u[_qp])*_phi[_j][_qp] + std::exp(_u[_qp])*-0.408248*std::sqrt(_e*std::exp(_mean_en[_qp]-_u[_qp])/_m_el)*_phi[_j][_qp]);
 }
 
 /*Real

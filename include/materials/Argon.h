@@ -41,6 +41,7 @@ protected:
   MaterialProperty<Real> &  _rate_coeff_elastic;
   MaterialProperty<Real> &  _mem;
   MaterialProperty<Real> &  _mip;
+  MaterialProperty<Real> &  _se_coeff;
 };
 
 #endif //ARGON_H

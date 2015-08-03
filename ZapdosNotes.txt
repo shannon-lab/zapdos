@@ -1,3 +1,7 @@
+Really good articles on the moose-user list:
+
+preconditioners (authored by Mariana Rodriguez)
+
 Joule heating is working. It simply appears that currently the energy losses due to ionzation and elastic collisions outweigh the energy gains due to Joule heating.
 
 Going to really start investigating what prevents taking long time steps. With no off diag jacobian elements for electrons and ions and off diag element for potential turned off, and with the following variable scalings:
@@ -65,3 +69,25 @@ I went back to a local field formulation. And set a new world record for simulat
 Table of fail times for LFA formulation:
 4000 elements. nl_rel_tol = 1e-2. Electron stabilization. Fail time = 1.92576e-5 (normal fail)
 4000 elements. nl_rel_tol = 1e-2. Electron and ion stabilization. Fail time = 8.15811e-5 seconds (normal fail). New world record. Lots of oscillations in the electrons and ions, particularly the ions. This is likely without having a functional source term. But do those oscillations at really low concentration numbers matter? Because MOOSE is trying to minimize the residual, and in all places we are using the exponential of the concentration, or we are multiplying times the exponential of the concentration. 
+
+I've added secondary electrons in and stuff is looking pretty damn good if I might say so myself. The problem is I got this error message after 3.8 microseconds (using ds for -mat_mffd_type):
+
+[0]PETSC ERROR: Petsc has generated inconsistent data
+[0]PETSC ERROR: Differencing parameter is not a number sum = nan dot = -nan norm = -nan
+[0]PETSC ERROR: See http://www.mcs.anl.gov/petsc/documentation/faq.html for trouble shooting.
+
+This error message occurred despite the fact that step sizes were still large, the previous time step's nonlinear solve had converged, and all the variable solutions were smooth. So if I can fix whathever problem caused the error message, I think the solver could keep going for quite a while. 
+
+With -mat_mffd_type = wp, the simulation ran until 4.0 microseconds (so a little better). Solutions still looking smooth. This is the error message:
+
+[0]PETSC ERROR: Petsc has generated inconsistent data
+[0]PETSC ERROR: Computed Nan differencing parameter h
+[0]PETSC ERROR: See http://www.mcs.anl.gov/petsc/documentation/faq.html for trouble shooting.
+
+So slightly different error message. 
+
+After scaling the potential by 1e13, the solve yielded the NaN differencing parameter at 3.071e-7 seconds (solve was proceeding well until that point.)
+
+I changed the nl_rel_tol to 1e-3 (potential scaling still 1e13). With this setting, I incur a "normal" fail, e.g. no petsc errors. Solve failed at 3.3636e-6 seconds. Why did the solve fail? It's not because of the linear solve. In one of the later diverged non-linear solves, the linear residual is dropping just fine. However, the non-linear residual drops a couple orders of magnitude immediately but then refuses to drop any more. I don't know what the best strategy to approach this is. 
+
+After scaling both the electrons and the ions by 1e2, the solve failed at 3.6097e-6 seconds, so a little later. Now when the solve is failing at the end of the simulation, the linear residuals are not dropping. Maybe this is a suggestion that I need to fix my preconditioner; well not fix, but add more terms and examine the petsc options for the preconditioner. 

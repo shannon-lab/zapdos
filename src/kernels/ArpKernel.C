@@ -16,9 +16,11 @@ ArpKernel::ArpKernel(const std::string & name, InputParameters parameters) :
 
   _em(coupledValue("em")),
   _grad_em(coupledGradient("em")),
+  _em_id(coupled("em")),
   _grad_potential(coupledGradient("potential")),
   _potential_id(coupled("potential")),
   _mean_en(coupledValue("mean_en")),
+  _mean_en_id(coupled("mean_en")),
 
   // Material Properties
 
@@ -66,6 +68,14 @@ ArpKernel::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id) {
     return -_grad_test[_i][_qp]*(_muip[_qp]*-_grad_phi[_j][_qp]*std::exp(_u[_qp]));
+  }
+
+  else if (jvar == _em_id) {
+    return -_test[_i][_qp]*_rate_coeff_ion[_qp]*_Ar[_qp]*((-3.0/2*_Eiz[_qp]*std::exp(2.0*_em[_qp]-_mean_en[_qp])+std::exp(_em[_qp]))*std::exp(-3.0/2*_Eiz[_qp]*std::exp(_em[_qp]-_mean_en[_qp]))*_phi[_j][_qp]);
+  }
+
+  else if (jvar == _mean_en_id) {
+   return -_test[_i][_qp]*_rate_coeff_ion[_qp]*_Ar[_qp]*std::exp(_em[_qp])*std::exp(-_Eiz[_qp]/(2.0/3*std::exp(_mean_en[_qp]-_em[_qp])))*3.0/2*_Eiz[_qp]*std::exp(_em[_qp]-_mean_en[_qp])*_phi[_j][_qp]; // Reaction coefficient formulation
   }
 
   else {
