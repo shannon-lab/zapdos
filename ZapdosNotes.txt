@@ -91,3 +91,17 @@ After scaling the potential by 1e13, the solve yielded the NaN differencing para
 I changed the nl_rel_tol to 1e-3 (potential scaling still 1e13). With this setting, I incur a "normal" fail, e.g. no petsc errors. Solve failed at 3.3636e-6 seconds. Why did the solve fail? It's not because of the linear solve. In one of the later diverged non-linear solves, the linear residual is dropping just fine. However, the non-linear residual drops a couple orders of magnitude immediately but then refuses to drop any more. I don't know what the best strategy to approach this is. 
 
 After scaling both the electrons and the ions by 1e2, the solve failed at 3.6097e-6 seconds, so a little later. Now when the solve is failing at the end of the simulation, the linear residuals are not dropping. Maybe this is a suggestion that I need to fix my preconditioner; well not fix, but add more terms and examine the petsc options for the preconditioner. 
+
+I implemented all the Jacobian elements that I could think of and then switched to a Newton solve. The solve failed at 3.2548e-6 seconds. A normal fail with most of the crashes occurring because of diverged line search. Observe some oscillations where the electron temperature drops to zero in the mean_en plot. However, the mean_en is not the main contributor to the residual: the Arp kernel is. However, obviously em and Arp are both functions of mean_en and the electron temperature. However, the electron temperature actually looks smooth. The solve essentially fails as soon as the electron temperature touches zero. Is that a coincidence? I think not. 
+
+Removing the ionization source term makes everything beautiful. The newton solve works beautifully...I get these nice giant implicit time steps. So it's the ionization source term that is gumming things up.
+
+At the point where the mean_en goes to its small value, the value of mean_en - em is approximately -20...this will result in exp(-Eiz/(2/3*exp(mean_en - em))) having a value of 0, e.g. it's too small foating point value to be stored (I think). 
+
+After going to 400 elements, the solve failed at 1.2209e-6 seconds. 
+
+With the perfect preconditioner (finite difference preconditioner), the solve still failed. It failed at 5.8375e-6 seconds, so that is a world record. And what's interesting is that the electron temperature didn't touch zero as quickly. Two things left to try: 1) scale the potential residual. 2) Tighten the non-linear tolerance.
+
+Scaled the potential residual: very interestingly the electron temperature touched down at zero earlier and the solve failed at 3.9943e-6 seconds as opposed to the much later time of 5.8375e-6 seconds without the potential scaling.
+
+Last attempt: tighten the non-linear tolerance. After tightening the tolerances, the solve failed at 3.6947e-6 seconds. Again occurred immediately after touchdown of the electron temperature. I think it's safe to say that the problem is with my physics or with my residual implementation of the physics. I'm using a perfect preconditioner and a Newton solve, with smart choices for my relative and absolute tolerances. The problem is with the physics. 

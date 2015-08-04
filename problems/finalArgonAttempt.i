@@ -15,26 +15,26 @@
   coord_type = RZ
 []
 
-# [Preconditioning]
-#   [./SMP]
-#     type = SMP
-#     # full = true
-#     off_diag_row = 'em'
-#     off_diag_column = 'potential'
-#   [../]
-# []
+[Preconditioning]
+  [./SMP]
+    type = FDP
+    full = true
+    # off_diag_row = 'em'
+    # off_diag_column = 'potential'
+  [../]
+[]
 
 [Executioner]
   type = Transient
  end_time = 1e-1
- solve_type = PJFNK
- petsc_options_iname = '-petsc_type -petsc_hypre_type -ksp_converged_reason -snes_converged_reason -snes_stol -mat_mffd_type'
- petsc_options_value = 'hypre boomeramg true true 0 wp'
- nl_rel_tol = 1e-3
+ solve_type = NEWTON
+ petsc_options_iname = '-snes_converged_reason -snes_stol -mat_fd_type'
+ petsc_options_value = 'true 0 wp'
+ # nl_rel_tol = 1e-3
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- # nl_abs_tol = 1e3
+ nl_abs_tol = 5e10
   l_max_its = 15
  nl_max_its = 13
   dtmin = 0.9e-10
@@ -100,7 +100,7 @@
 
 [Variables]
   [./potential]
-    scaling = 1e13
+    scaling = 1e18
   [../]
   [./em]
     scaling = 1e2

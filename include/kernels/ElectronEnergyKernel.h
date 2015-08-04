@@ -18,12 +18,15 @@ class ElectronEnergyKernel : public Kernel
   
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   // coupled vars
 
   VariableValue & _em;
   VariableGradient & _grad_em;
+  unsigned int _em_id;
   VariableGradient & _grad_potential;
+  unsigned int _potential_id;
 
   // Material properties
 

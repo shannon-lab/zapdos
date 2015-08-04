@@ -17,7 +17,7 @@ public:
 protected:
   virtual Real computeQpResidual();
    virtual Real computeQpJacobian();
-  //  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   // Input Parameters
 
@@ -34,6 +34,7 @@ protected:
   /* VariableValue & _Arp; */
   /* VariableGradient & _grad_Arp; */
   VariableGradient & _grad_potential;  
+  unsigned int _potential_id;
   /* VariableValue & _em; */
 };
 

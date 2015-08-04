@@ -1,7 +1,7 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 10
+  nx = 1
   xmin = 0
   xmax = 1
 []
@@ -14,10 +14,10 @@
   type = Transient
   dt = 0.01
  end_time = 0.5
- solve_type = PJFNK
+ solve_type = NEWTON
  scheme = 'crank-nicolson'
- petsc_options_iname = '-petsc_type -petsc_hypre_type -ksp_converged_reason -snes_converged_reason -snes_stol'
- petsc_options_value = 'hypre boomeramg true true 0'
+ petsc_options_iname = '-ksp_converged_reason -snes_converged_reason -snes_stol -snes_type'
+ petsc_options_value = 'true true 0 test'
 []
 
 [Outputs]
@@ -37,7 +37,7 @@
     variable = u
   [../]
   [./transport]
-    type = AdvectionDiffusionKernel
+    type = Diffusion
     variable = u
   [../]
 []

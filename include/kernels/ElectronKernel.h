@@ -33,8 +33,8 @@ class ElectronKernel : public Kernel
   Real _Pe;
   Real _vd_mag;
   Real _delta;
-  RealVectorValue _flux;
-  RealVectorValue _d_flux_d_u;
+  /* RealVectorValue _flux; */
+  /* RealVectorValue _d_flux_d_u; */
 
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _diffem;

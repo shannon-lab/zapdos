@@ -59,6 +59,11 @@ ArpKernel::computeQpResidual()
 Real
 ArpKernel::computeQpJacobian()
 {
+  _vd_mag = std::abs(_muip[_qp]*_grad_potential[_qp].size());
+  _Pe = _vd_mag*_current_elem->hmax()/_diffip[_qp];
+  _alpha = std::min(1.0,_Pe/6.0);
+  _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
+
   return -_grad_test[_i][_qp]*(_muip[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]-_diffip[_qp]*(std::exp(_u[_qp])*_grad_phi[_j][_qp]+std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp]))
     -_grad_test[_i][_qp]*(-_delta*(std::exp(_u[_qp])*_grad_phi[_j][_qp]+std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp])); // Diffusion stabilization
 }

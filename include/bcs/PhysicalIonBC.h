@@ -17,7 +17,7 @@ public:
 protected:
   virtual Real computeQpResidual();
    virtual Real computeQpJacobian();
-  //  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
    const MaterialProperty<Real> & _muip;
   Real _a;
@@ -25,6 +25,7 @@ protected:
   // coupled variables
 
   VariableGradient & _grad_potential;
+  unsigned int _potential_id;
 };
 
 #endif //PHYSICALIONBC_H
