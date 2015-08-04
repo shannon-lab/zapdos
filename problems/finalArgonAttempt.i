@@ -34,7 +34,7 @@
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- nl_abs_tol = 5e10
+ nl_abs_tol = 5e-3
   l_max_its = 15
  nl_max_its = 13
   dtmin = 0.9e-10
@@ -59,10 +59,10 @@
 []
 
 [Kernels]
-  [./el_energy_time_deriv]
-    type = TimeDerivativeElectronTemp
-    variable = mean_en
-  [../]
+  # [./el_energy_time_deriv]
+  #   type = TimeDerivativeElectronTemp
+  #   variable = mean_en
+  # [../]
   [./em_time_deriv]
     type = ElectronTimeDerivative
     variable = em
@@ -74,14 +74,14 @@
   [./electrons]
     type = ElectronKernel
     variable = em
-    mean_en = mean_en
+    # mean_en = mean_en
     potential = potential
   [../]
   [./argon_ions]
     type = ArpKernel
     variable = Arp
     em = em
-    mean_en = mean_en
+    # mean_en = mean_en
     potential = potential
   [../]
   [./potential]
@@ -90,27 +90,27 @@
     em = em
     Arp = Arp
   [../]
-  [./el_energy]
-    type = ElectronEnergyKernel
-    variable = mean_en
-    em = em
-    potential = potential
+  # [./el_energy]
+  #   type = ElectronEnergyKernel
+  #   variable = mean_en
+  #   em = em
+  #   potential = potential
   [../]
 []
 
 [Variables]
   [./potential]
-    scaling = 1e18
+    scaling = 1e1
   [../]
   [./em]
-    scaling = 1e2
+    scaling = 1e-18
   [../]
   [./Arp]
-    scaling = 1e2
+    scaling = 1e-15
   [../]
-  [./mean_en]
-    # scaling = 1e-11
-  [../]
+  # [./mean_en]
+  #   # scaling = 1e-11
+  # [../]
 []
 
 [AuxVariables]
@@ -146,10 +146,10 @@
   #   order = CONSTANT
   #   family = MONOMIAL
   # [../]
-  [./energy_lin]
-  [../]
-  [./e_temp]
-  [../]
+  # [./energy_lin]
+  # [../]
+  # [./e_temp]
+  # [../]
 []
 
 [AuxKernels]
@@ -203,17 +203,17 @@
   #   potential = potential
   #   em = em
   # [../]
-  [./energy_lin]
-    type = ElectronDensity
-    variable = energy_lin
-    electron_density = mean_en
-  [../]  
-  [./e_temp]
-    type = ElectronTemperature
-    variable = e_temp
-    electron_density = em
-    mean_en = mean_en
-  [../]
+  # [./energy_lin]
+  #   type = ElectronDensity
+  #   variable = energy_lin
+  #   electron_density = mean_en
+  # [../]  
+  # [./e_temp]
+  #   type = ElectronTemperature
+  #   variable = e_temp
+  #   electron_density = em
+  #   mean_en = mean_en
+  # [../]
 []
 
 [BCs]
@@ -221,7 +221,7 @@
     type = DirichletBC
     variable = potential
     boundary = left
-    value = -1000
+    value = -1e7
   [../]
   # [./potential_dirichlet_left]
   #   type = FunctionDirichletBC
@@ -248,13 +248,13 @@
     boundary = 'left right'
     potential = potential
   [../]
-  [./mean_el_en]
-    type = PhysicalElectronEnergyBC
-    variable = mean_en
-    potential = potential
-    # em = em
-    boundary = 'left right'
-  [../]
+  # [./mean_el_en]
+  #   type = PhysicalElectronEnergyBC
+  #   variable = mean_en
+  #   potential = potential
+  #   # em = em
+  #   boundary = 'left right'
+  # [../]
 []
 
 [ICs]
@@ -273,11 +273,11 @@
     variable = Arp
     value = 29.934
   [../]
-  [./mean_el_energy_ic]
-    type = ConstantIC
-    variable = mean_en
-    value = 31.3199
-   [../]
+  # [./mean_el_energy_ic]
+  #   type = ConstantIC
+  #   variable = mean_en
+  #   value = 31.3199
+  #  [../]
   # [./mean_el_energy_ic]
   #   type = FunctionIC
   #   variable = mean_en
@@ -306,7 +306,7 @@
   [../]
   [./potential_ic_function]
     type = ParsedFunction
-    value = '310.67*log(x)+930.68'
+    value = '1e7*log(.05/x)/log(.002/.05)'
   [../]
   [./potential_bc_func]
     type = ParsedFunction

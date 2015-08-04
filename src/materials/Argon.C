@@ -48,12 +48,17 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
 void
 Argon::computeQpProperties()
 {  
-  _muem[_qp] = 4.32e-2;
-  _diffem[_qp] = 3.24e-1;
+  // Argon
+  // _muem[_qp] = 4.32e-2;
+  // _diffem[_qp] = 3.24e-1;
+
+  // Air
+  _muem[_qp] = 8.86e-2;
+  _diffem[_qp] = 7.62e-2;
   _muip[_qp] = _muem[_qp]/100;
   _diffip[_qp] = _diffem[_qp]/100;
-  _rate_coeff_ion[_qp] = 5e-14;
-  _Eiz[_qp] = 12.78;
+  _rate_coeff_ion[_qp] = .35;
+  _Eiz[_qp] = 1.65e7;
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
   _diffel[_qp] = 5.0/3.0*_diffem[_qp];
