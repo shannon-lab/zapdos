@@ -19,8 +19,8 @@ PoissonKernel::PoissonKernel(const std::string & name, InputParameters parameter
   _em_id(coupled("em")),
   _Arp_id(coupled("Arp")),
 
-  _e(1.6e-19),
-  _eps(8.85e-12)
+  _e(getMaterialProperty<Real>("e")),
+  _eps(getMaterialProperty<Real>("eps"))
 {}
 
 PoissonKernel::~PoissonKernel()
@@ -30,7 +30,7 @@ Real
 PoissonKernel::computeQpResidual()
 {
   return -_grad_test[_i][_qp]*(-_grad_u[_qp])
-         -_test[_i][_qp]*_e/_eps*(std::exp(_Arp[_qp])-std::exp(_em[_qp]));
+         -_test[_i][_qp]*_e[_qp]/_eps[_qp]*(std::exp(_Arp[_qp])-std::exp(_em[_qp]));
 }
 
 Real
@@ -43,11 +43,11 @@ Real
 PoissonKernel::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _em_id) {
-    return -_test[_i][_qp]*_e/_eps*-std::exp(_em[_qp])*_phi[_j][_qp];
+    return -_test[_i][_qp]*_e[_qp]/_eps[_qp]*-std::exp(_em[_qp])*_phi[_j][_qp];
   }
 
   else if (jvar == _Arp_id) {
-    return -_test[_i][_qp]*_e/_eps*std::exp(_Arp[_qp])*_phi[_j][_qp];
+    return -_test[_i][_qp]*_e[_qp]/_eps[_qp]*std::exp(_Arp[_qp])*_phi[_j][_qp];
   }
 
   else {

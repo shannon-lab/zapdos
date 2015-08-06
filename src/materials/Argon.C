@@ -22,7 +22,7 @@ InputParameters validParams<Argon>()
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("Te", "The electron temperature.");
-  params.addCoupledVar("Arp", "The argon ion density.");
+  params.addCoupledVar("ip", "The ion density.");
   return params;
 }
 
@@ -42,7 +42,27 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
     _rate_coeff_elastic(declareProperty<Real>("rate_coeff_elastic")),
     _mem(declareProperty<Real>("mem")),
   _mip(declareProperty<Real>("mip")),
-  _se_coeff(declareProperty<Real>("se_coeff"))
+  _se_coeff(declareProperty<Real>("se_coeff")),
+  _ElectronTotalFluxMag(declareProperty<Real>("ElectronTotalFluxMag")),
+  _ElectronTotalFluxMagSizeForm(declareProperty<Real>("ElectronTotalFluxMagSizeForm")),
+  _ElectronTotalFlux(declareProperty<Real>("ElectronTotalFlux")),
+  _ElectronAdvectiveFlux(declareProperty<Real>("ElectronAdvectiveFlux")),
+  _ElectronDiffusiveFlux(declareProperty<Real>("ElectronDiffusiveFlux")),
+  _EField(declareProperty<Real>("EField")),
+  _Source_term(declareProperty<Real>("Source_term")),
+  _Source_term_coeff(declareProperty<Real>("Source_term_coeff")),
+  _electrode_area(declareProperty<Real>("electrode_area")),
+  _ballast_resist(declareProperty<Real>("ballast_resist")),
+  _e(declareProperty<Real>("e")),
+  _eps(declareProperty<Real>("eps")),
+  
+
+  _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
+  _em(isCoupled("em") ? coupledValue("em") : _zero),
+  _ip(isCoupled("ip") ? coupledValue("ip") : _zero),
+  _grad_em(isCoupled("em") ? coupledGradient("em") : _grad_zero),
+  _grad_ip(isCoupled("ip") ? coupledGradient("ip") : _grad_zero)
+
 {}
 
 void
@@ -57,8 +77,8 @@ Argon::computeQpProperties()
   _diffem[_qp] = 7.62e-2;
   _muip[_qp] = _muem[_qp]/100;
   _diffip[_qp] = _diffem[_qp]/100;
-  _rate_coeff_ion[_qp] = .35;
-  _Eiz[_qp] = 1.65e7;
+  _rate_coeff_ion[_qp] = 4.88e5; // Truly Morrow. Don't use Kang
+  _Eiz[_qp] = 1.77e7; // Truly Morrow. Don't use Kang
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
   _diffel[_qp] = 5.0/3.0*_diffem[_qp];
@@ -66,4 +86,17 @@ Argon::computeQpProperties()
   _mem[_qp] = 9.11e-31;
   _mip[_qp] = 40.0*1.66e-27;
   _se_coeff[_qp] = 0.1;
+  _electrode_area[_qp] = 1.26e-5; // in square meters. Taken from Comsol's 1D corona discharge
+  _ballast_resist[_qp] = 1e6; // Also taken from Comsol's 1D corona discharge
+  _e[_qp] = 1.6e-19;
+  _eps[_qp] = 8.85e-12;
+
+  _ElectronTotalFluxMag[_qp] = std::sqrt((-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp])*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]));
+  _ElectronTotalFluxMagSizeForm[_qp] = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
+  _ElectronTotalFlux[_qp] = -_muem[_qp]*-_grad_potential[_qp](0)*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp](0);
+  _ElectronAdvectiveFlux[_qp] = -_muem[_qp]*-_grad_potential[_qp](0)*std::exp(_em[_qp]);
+  _ElectronDiffusiveFlux[_qp] = -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp](0);
+  _EField[_qp] = _grad_potential[_qp](0);
+  _Source_term[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size())*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
+  _Source_term_coeff[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size());
 }

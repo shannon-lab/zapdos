@@ -29,8 +29,8 @@ class PoissonKernel : public Kernel
 
   // Kernel members
 
-  Real _e;
-  Real _eps;
+  const MaterialProperty<Real> &  _e;
+  const MaterialProperty<Real> &  _eps;
 };
 
 #endif /* POISSONKERNEL_H */

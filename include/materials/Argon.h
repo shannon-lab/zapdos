@@ -42,6 +42,24 @@ protected:
   MaterialProperty<Real> &  _mem;
   MaterialProperty<Real> &  _mip;
   MaterialProperty<Real> &  _se_coeff;
+  MaterialProperty<Real> & _ElectronTotalFluxMag;
+  MaterialProperty<Real> & _ElectronTotalFluxMagSizeForm;
+  MaterialProperty<Real> & _ElectronTotalFlux;
+  MaterialProperty<Real> & _ElectronAdvectiveFlux;
+  MaterialProperty<Real> & _ElectronDiffusiveFlux;
+  MaterialProperty<Real> & _EField;
+  MaterialProperty<Real> & _Source_term;
+  MaterialProperty<Real> & _Source_term_coeff;
+  MaterialProperty<Real> & _electrode_area;
+  MaterialProperty<Real> & _ballast_resist;
+  MaterialProperty<Real> & _e;
+  MaterialProperty<Real> & _eps;
+
+  VariableGradient & _grad_potential;
+  VariableValue & _em;
+  VariableValue & _ip;
+  VariableGradient & _grad_em;
+  VariableGradient & _grad_ip;
 };
 
 #endif //ARGON_H

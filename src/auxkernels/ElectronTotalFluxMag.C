@@ -14,8 +14,8 @@ InputParameters validParams<ElectronTotalFluxMag>()
 ElectronTotalFluxMag::ElectronTotalFluxMag(const std::string & name, InputParameters parameters) :
     AuxKernel(name,parameters),
 
-    _muem(380.0/1e4),
-    _diff(1800.0/1e4), // Morrow, Ebert
+    _muem(getMaterialProperty<Real>("muem")),
+    _diffem(getMaterialProperty<Real>("diffem")),
     _em(coupledValue("em")),
     _grad_potential(coupledGradient("potential")),
     _grad_em(coupledGradient("em"))
@@ -25,7 +25,7 @@ ElectronTotalFluxMag::ElectronTotalFluxMag(const std::string & name, InputParame
 Real
 ElectronTotalFluxMag::computeValue()
 {
-  return (-_muem*-_grad_potential[_qp]*_em[_qp]-_diff*_grad_em[_qp]).size();
+  return std::sqrt((-_muem[_qp]*-_grad_potential[_qp]*_em[_qp]-_diffem[_qp]*_grad_em[_qp])*(-_muem[_qp]*-_grad_potential[_qp]*_em[_qp]-_diffem[_qp]*_grad_em[_qp]));
 }
 
  

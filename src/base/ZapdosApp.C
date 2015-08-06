@@ -90,6 +90,7 @@
 #include "BlockAverageValue.h"
 
 // Boundary Conditions
+#include "CircuitVoltage.h"
 #include "NoDiffusiveFlux.h"
 #include "EFieldBC.h"
 #include "SpeciesNetFluxBC.h"
@@ -223,6 +224,7 @@ registerMaterial(Water);
 registerMaterial(Argon);
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
+  registerBoundaryCondition(CircuitVoltage);
   registerBoundaryCondition(NoDiffusiveFlux);
   registerBoundaryCondition(EFieldBC);
   registerBoundaryCondition(SpeciesNetFluxBC);
