@@ -16,6 +16,7 @@
 #define CIRCUITVOLTAGE_H
 
 #include "NodalBC.h"
+#include "ProvideMobility.h"
 
 //Forward Declarations
 class CircuitVoltage;
@@ -48,11 +49,8 @@ protected:
   Function & _func;
   VariableValue & _ip;
   VariableGradient & _grad_ip;
-  const MaterialProperty<Real> & _muip;
-  const MaterialProperty<Real> & _diffip;
-  const MaterialProperty<Real> & _electrode_area;
-  const MaterialProperty<Real> & _ballast_resist;
-  const MaterialProperty<Real> & _e;
+
+  const ProvideMobility & _data;
 };
 
 #endif //CIRCUITVOLTAGE_H

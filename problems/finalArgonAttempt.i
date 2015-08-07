@@ -12,7 +12,7 @@
 
 [Problem]
   type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
-  coord_type = RZ
+  # coord_type = RZ
 []
 
 [Preconditioning]
@@ -30,20 +30,20 @@
  solve_type = NEWTON
  petsc_options_iname = '-snes_converged_reason -snes_stol -mat_fd_type'
  petsc_options_value = 'true 0 wp'
- nl_rel_tol = 1e-5
+ nl_rel_tol = 1e-6
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- # nl_abs_tol = 5e-5
-  l_max_its = 15
- # nl_max_its = 13	
-  dtmin = 0.9e-10
+ nl_abs_tol = 1e-6
+  l_max_its = 10
+ nl_max_its = 50
+  dtmin = 0.9e-9
   [./TimeStepper]
     type = IterationAdaptiveDT
-    cutback_factor = 0.5
-    dt = 1e-10
-    growth_factor = 2.0
-   optimal_iterations = 10
+    cutback_factor = 0.4
+    dt = 1e-9
+    growth_factor = 1.2
+   optimal_iterations = 50
   [../]
 []
 
@@ -56,12 +56,18 @@
     type = Exodus
     output_material_properties = true
     # show_material_properties = 'ElectronTotalFluxMag ElectronTotalFluxMagSizeForm ElectronTotalFlux ElectronAdvectiveFlux ElectronDiffusiveFlux EField Source_term Source_term_coeff'
-    show_material_properties = 'EField'
+    show_material_properties = 'ElectronTotalFlux ElectronAdvectiveFlux ElectronDiffusiveFlux IonTotalFlux IonAdvectiveFlux IonDiffusiveFlux EField'
   [../]
 []
 
 [Debug]
   show_var_residual_norms = true
+[]
+
+[UserObjects]
+  [./data_provider]
+    type = ProvideMobility
+  [../]
 []
 
 [Kernels]
@@ -106,7 +112,7 @@
 
 [Variables]
   [./potential]
-    scaling = 1e2
+    scaling = 1e-7
   [../]
   [./em]
     scaling = 1e-18
@@ -223,17 +229,13 @@
 []
 
 [BCs]
-  # [./potential_dirichlet_left]
-  #   type = DirichletBC
-  #   variable = potential
-  #   boundary = left
-  #   value = -1e5
-  # [../]
-  [./potential_dirichlet_left]
-    type = FunctionDirichletBC
+  [./potential_left]
+    type = NeumannCircuitVoltage
     variable = potential
     boundary = left
     function = potential_bc_func
+    ip = Arp
+    data_provider = data_provider
   [../]
   [./potential_dirichlet_right]
     type = DirichletBC
@@ -316,7 +318,7 @@
   [../]
   [./potential_bc_func]
     type = ParsedFunction
-    value = '-1e5*tanh(1e6*t)'
+    value = '1e5*tanh(1e6*t)'
   [../]
 []
 
@@ -324,6 +326,7 @@
   [./argon]
     block = 0
     type = Argon
+    data_provider = data_provider
     em = em
     potential = potential
  [../]

@@ -23,6 +23,7 @@ InputParameters validParams<Argon>()
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("Te", "The electron temperature.");
   params.addCoupledVar("ip", "The ion density.");
+  params.addRequiredParam<UserObjectName>("data_provider","The name of the UserObject that can provide some data to materials, bcs, etc.");
   return params;
 }
 
@@ -48,14 +49,16 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
   _ElectronTotalFlux(declareProperty<Real>("ElectronTotalFlux")),
   _ElectronAdvectiveFlux(declareProperty<Real>("ElectronAdvectiveFlux")),
   _ElectronDiffusiveFlux(declareProperty<Real>("ElectronDiffusiveFlux")),
+  _IonTotalFlux(declareProperty<Real>("IonTotalFlux")),
+  _IonAdvectiveFlux(declareProperty<Real>("IonAdvectiveFlux")),
+  _IonDiffusiveFlux(declareProperty<Real>("IonDiffusiveFlux")),
   _EField(declareProperty<Real>("EField")),
   _Source_term(declareProperty<Real>("Source_term")),
   _Source_term_coeff(declareProperty<Real>("Source_term_coeff")),
-  _electrode_area(declareProperty<Real>("electrode_area")),
-  _ballast_resist(declareProperty<Real>("ballast_resist")),
   _e(declareProperty<Real>("e")),
   _eps(declareProperty<Real>("eps")),
   
+  _data(getUserObject<ProvideMobility>("data_provider")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
   _em(isCoupled("em") ? coupledValue("em") : _zero),
@@ -73,10 +76,10 @@ Argon::computeQpProperties()
   // _diffem[_qp] = 3.24e-1;
 
   // Air
-  _muem[_qp] = 8.86e-2;
-  _diffem[_qp] = 7.62e-2;
-  _muip[_qp] = _muem[_qp]/100;
-  _diffip[_qp] = _diffem[_qp]/100;
+  _muem[_qp] = _data.mu_em();
+  _diffem[_qp] = _data.diff_em();
+  _muip[_qp] = _data.mu_ip();
+  _diffip[_qp] = _data.diff_ip();
   _rate_coeff_ion[_qp] = 4.88e5; // Truly Morrow. Don't use Kang
   _Eiz[_qp] = 1.77e7; // Truly Morrow. Don't use Kang
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
@@ -86,9 +89,7 @@ Argon::computeQpProperties()
   _mem[_qp] = 9.11e-31;
   _mip[_qp] = 40.0*1.66e-27;
   _se_coeff[_qp] = 0.1;
-  _electrode_area[_qp] = 1.26e-5; // in square meters. Taken from Comsol's 1D corona discharge
-  _ballast_resist[_qp] = 1e6; // Also taken from Comsol's 1D corona discharge
-  _e[_qp] = 1.6e-19;
+  _e[_qp] = _data.coulomb_charge();
   _eps[_qp] = 8.85e-12;
 
   _ElectronTotalFluxMag[_qp] = std::sqrt((-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp])*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]));
@@ -96,6 +97,9 @@ Argon::computeQpProperties()
   _ElectronTotalFlux[_qp] = -_muem[_qp]*-_grad_potential[_qp](0)*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp](0);
   _ElectronAdvectiveFlux[_qp] = -_muem[_qp]*-_grad_potential[_qp](0)*std::exp(_em[_qp]);
   _ElectronDiffusiveFlux[_qp] = -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp](0);
+  _IonTotalFlux[_qp] = -_muip[_qp]*-_grad_potential[_qp](0)*std::exp(_ip[_qp])-_diffip[_qp]*std::exp(_ip[_qp])*_grad_ip[_qp](0);
+  _IonAdvectiveFlux[_qp] = -_muip[_qp]*-_grad_potential[_qp](0)*std::exp(_ip[_qp]);
+  _IonDiffusiveFlux[_qp] = -_diffip[_qp]*std::exp(_ip[_qp])*_grad_ip[_qp](0);
   _EField[_qp] = _grad_potential[_qp](0);
   _Source_term[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size())*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
   _Source_term_coeff[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size());

@@ -15,6 +15,7 @@
 #define ARGON_H_
 
 #include "Material.h"
+#include "ProvideMobility.h"
 
 class Argon;
 
@@ -47,13 +48,16 @@ protected:
   MaterialProperty<Real> & _ElectronTotalFlux;
   MaterialProperty<Real> & _ElectronAdvectiveFlux;
   MaterialProperty<Real> & _ElectronDiffusiveFlux;
+  MaterialProperty<Real> & _IonTotalFlux;
+  MaterialProperty<Real> & _IonAdvectiveFlux;
+  MaterialProperty<Real> & _IonDiffusiveFlux;
   MaterialProperty<Real> & _EField;
   MaterialProperty<Real> & _Source_term;
   MaterialProperty<Real> & _Source_term_coeff;
-  MaterialProperty<Real> & _electrode_area;
-  MaterialProperty<Real> & _ballast_resist;
   MaterialProperty<Real> & _e;
   MaterialProperty<Real> & _eps;
+
+  const ProvideMobility & _data;
 
   VariableGradient & _grad_potential;
   VariableValue & _em;

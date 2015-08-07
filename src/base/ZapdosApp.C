@@ -88,9 +88,10 @@
 
 // User Objects
 #include "BlockAverageValue.h"
+#include "ProvideMobility.h"
 
 // Boundary Conditions
-#include "CircuitVoltage.h"
+#include "NeumannCircuitVoltage.h"
 #include "NoDiffusiveFlux.h"
 #include "EFieldBC.h"
 #include "SpeciesNetFluxBC.h"
@@ -224,7 +225,8 @@ registerMaterial(Water);
 registerMaterial(Argon);
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
-  registerBoundaryCondition(CircuitVoltage);
+  registerUserObject(ProvideMobility);
+  registerBoundaryCondition(NeumannCircuitVoltage);
   registerBoundaryCondition(NoDiffusiveFlux);
   registerBoundaryCondition(EFieldBC);
   registerBoundaryCondition(SpeciesNetFluxBC);

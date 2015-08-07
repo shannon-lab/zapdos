@@ -21,6 +21,7 @@ InputParameters validParams<CircuitVoltage>()
   InputParameters params = validParams<NodalBC>();
   params.addRequiredParam<FunctionName>("function", "The forcing function.");
   params.addRequiredCoupledVar("ip","The ion density.");
+  params.addRequiredParam<UserObjectName>("data_provider","The name of the UserObject that can provide some data to materials, bcs, etc.");
   return params;
 }
 
@@ -29,11 +30,8 @@ CircuitVoltage::CircuitVoltage(const std::string & name, InputParameters paramet
     _func(getFunction("function")),
     _ip(coupledValue("ip")),
     _grad_ip(coupledGradient("ip")),
-    _muip(getMaterialProperty<Real>("muip")),
-    _diffip(getMaterialProperty<Real>("diffip")),
-    _electrode_area(getMaterialProperty<Real>("electrode_area")),
-    _ballast_resist(getMaterialProperty<Real>("ballast_resist")),
-    _e(getMaterialProperty<Real>("e"))
+
+    _data(getUserObject<ProvideMobility>("data_provider"))
 {
 }
 
@@ -46,5 +44,5 @@ CircuitVoltage::f()
 Real
 CircuitVoltage::computeQpResidual()
 {
-  return _u[_qp]+f()-_e[_qp]*(std::exp(_ip[_qp])*(_muip[_qp]*-_grad_u[_qp]-_diffip[_qp]*_grad_ip[_qp]))*_ballast_resist[_qp];
+  return _u[_qp]+f()-_data.coulomb_charge()*(std::exp(_ip[_qp])*(_data.mu_ip()*-_grad_u[_qp]-_data.diff_ip()*_grad_ip[_qp]))*_data.electrode_area()*_data.ballast_resist();
 }
