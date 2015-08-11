@@ -107,3 +107,16 @@ Scaled the potential residual: very interestingly the electron temperature touch
 Last attempt: tighten the non-linear tolerance. After tightening the tolerances, the solve failed at 3.6947e-6 seconds. Again occurred immediately after touchdown of the electron temperature. I think it's safe to say that the problem is with my physics or with my residual implementation of the physics. I'm using a perfect preconditioner and a Newton solve, with smart choices for my relative and absolute tolerances. The problem is with the physics. 
 
 I figured out why the source term wasn't having an effect on the solution: the pre-exponential factor simply wasn't large enough. If I increased it by two order of magnitude than the effects of the source were immediately apparent. Before making this change, I was using an alpha of 0.35 for air. How does that compare with number from bolos? It's incredibly small is what it is. For example, for an electric field of 1.5e7, alpha predicted by both bolos and bolsig is around 2e5. This is absurd compared to 0.35. 6 order of magnitude difference.
+
+Yea, I solved this problem. Boom. Zapdos. Boom.
+
+There's a lot of things to improve...for example Comsol took 10 minutes and 47 seconds to solve this problem on two processor. I believe that it took Zapdos 6 hours to solve on one processor. Sure, I could theoretically run Zapdos on many more processors, but then I need to fix my Jacobian. Comsol used a direct solver called MUMPS. I did not use a direct solver as far as I know. I would actually have to look at the default settings for Newton on one processor with a full preconditioning matrix formed from finite differencing of the residuals (I believe it's finite differencing of the residuals?). 
+
+When I try to run with pc_type = lu, I get an error around the simulation time of 2.7e-5 seconds. The error is a petsc error and it says:
+[0]PETSC ERROR: Zero pivot in LU factorization: http://www.mcs.anl.gov/petsc/documentation/faq.html#ZeroPivot
+[0]PETSC ERROR: Zero pivot row 1 value 6.9212e-27 tolerance 2.22045e-14
+
+I got this error twice. First time was with mat_fd_type = wp. Second time was with mat_fd_type = ds and with sub_pc_factor_shift = NONZERO. 
+
+For p = 0, Discontinuous Galerkin is identical to first-order finite volume. That's really cool!
+ 
