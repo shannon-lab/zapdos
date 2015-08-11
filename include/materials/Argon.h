@@ -16,6 +16,7 @@
 
 #include "Material.h"
 #include "ProvideMobility.h"
+#include "LinearInterpolation.h"
 
 class Argon;
 
@@ -29,6 +30,8 @@ public:
 
 protected:
   virtual void computeQpProperties();
+
+  LinearInterpolation _alpha_interpolation;
 
   MaterialProperty<Real>  & _muem;
   MaterialProperty<Real>  & _diffem;

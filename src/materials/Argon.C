@@ -71,7 +71,27 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
   _grad_em(isCoupled("em") ? coupledGradient("em") : _grad_zero),
   _grad_ip(isCoupled("ip") ? coupledGradient("ip") : _grad_zero)
 
-{}
+{
+  std::vector<Real> EField;
+  std::vector<Real> alpha;
+  std::ifstream myfile ("alpha.txt");
+  Real value;
+
+  if (myfile.is_open())
+  {
+    while ( myfile >> value )
+    {
+      EField.push_back(value);
+      myfile >> value;
+      alpha.push_back(value);
+    }
+    myfile.close();
+  }
+
+  else std::cout << "Unable to open file"; 
+
+  _alpha_interpolation.setData(EField, alpha);
+}
 
 void
 Argon::computeQpProperties()
