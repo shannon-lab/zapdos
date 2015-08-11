@@ -57,6 +57,11 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
   _Source_term_coeff(declareProperty<Real>("Source_term_coeff")),
   _e(declareProperty<Real>("e")),
   _eps(declareProperty<Real>("eps")),
+  _Tem_lfa(declareProperty<Real>("Tem_lfa")),
+  _Tip_lfa(declareProperty<Real>("Tip_lfa")),
+  _k_boltz(declareProperty<Real>("k_boltz")),
+  _vthermal_em(declareProperty<Real>("vthermal_em")),
+  _vthermal_ip(declareProperty<Real>("vthermal_ip")),
   
   _data(getUserObject<ProvideMobility>("data_provider")),
 
@@ -91,6 +96,11 @@ Argon::computeQpProperties()
   _se_coeff[_qp] = 0.1;
   _e[_qp] = _data.coulomb_charge();
   _eps[_qp] = 8.85e-12;
+  _Tem_lfa[_qp] = 1.0; // Volts
+  _Tip_lfa[_qp] = 300; // Kelvin
+  _k_boltz[_qp] = 1.38e-23;
+  _vthermal_em[_qp] = 1.6*sqrt(_e[_qp]*_Tem_lfa[_qp]/_mem[_qp]);
+  _vthermal_ip[_qp] = 1.6*sqrt(_k_boltz[_qp]*_Tip_lfa[_qp]/_mip[_qp]);
 
   _ElectronTotalFluxMag[_qp] = std::sqrt((-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp])*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]));
   _ElectronTotalFluxMagSizeForm[_qp] = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
@@ -100,7 +110,7 @@ Argon::computeQpProperties()
   _IonTotalFlux[_qp] = -_muip[_qp]*-_grad_potential[_qp](0)*std::exp(_ip[_qp])-_diffip[_qp]*std::exp(_ip[_qp])*_grad_ip[_qp](0);
   _IonAdvectiveFlux[_qp] = -_muip[_qp]*-_grad_potential[_qp](0)*std::exp(_ip[_qp]);
   _IonDiffusiveFlux[_qp] = -_diffip[_qp]*std::exp(_ip[_qp])*_grad_ip[_qp](0);
-  _EField[_qp] = _grad_potential[_qp](0);
+  _EField[_qp] = -_grad_potential[_qp](0);
   _Source_term[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size())*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
   _Source_term_coeff[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size());
 }

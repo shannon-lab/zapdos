@@ -20,7 +20,8 @@ protected:
    virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
    const MaterialProperty<Real> & _muip;
-  Real _a;
+   const MaterialProperty<Real> & _vthermal_ip;
+   Real _a;
   
   // coupled variables
 

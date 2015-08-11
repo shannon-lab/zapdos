@@ -27,6 +27,7 @@ protected:
   const MaterialProperty<Real> & _mem;
   const MaterialProperty<Real> & _se_coeff;
   const MaterialProperty<Real> & _muip;
+  const MaterialProperty<Real> & _vthermal_em;
 
   Real _a;
   Real _b;

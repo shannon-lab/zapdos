@@ -6,8 +6,8 @@
   type = GeneratedMesh
   dim = 1
   nx = 4000
-  xmin = 0.002
-  xmax = .05
+  xmin = 0.0
+  xmax = 0.0016 # Based on Park, Hicks, planar atmospheric RF discharge
 []
 
 [Problem]
@@ -28,23 +28,25 @@
   type = Transient
  end_time = 1e-1
  solve_type = NEWTON
- petsc_options_iname = '-snes_converged_reason -snes_stol -mat_fd_type -pc_type -sub_pc_factor_shift'
- petsc_options_value = 'true 0 ds lu NONZERO'
+ petsc_options_iname = '-snes_converged_reason -snes_stol -pc_type -ksp_type -pc_factor_shift_type -pc_factor_shift_amount' #-mat_fd_type'
+ petsc_options_value = 'true 0 lu preonly NONZERO 1.e-10' #wp'
  nl_rel_tol = 1e-6
+ line_search = bt
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- nl_abs_tol = 1e-6
+ nl_abs_tol = 1e-5
   l_max_its = 10
  nl_max_its = 50
-  dtmin = 0.9e-9
-  [./TimeStepper]
-    type = IterationAdaptiveDT
-    cutback_factor = 0.4
-    dt = 1e-9
-    growth_factor = 1.2
-   optimal_iterations = 50
-  [../]
+  dtmin = 1e-12
+  dt = 1e-9
+  # [./TimeStepper]
+  #   type = IterationAdaptiveDT
+  #   cutback_factor = 0.4
+  #   dt = 1e-9
+  #   growth_factor = 1.2
+  #  optimal_iterations = 50
+  # [../]
 []
 
 [Outputs]
@@ -112,7 +114,7 @@
 
 [Variables]
   [./potential]
-    scaling = 1e-7
+    scaling = 1e-2
   [../]
   [./em]
     scaling = 1e-18
@@ -230,13 +232,19 @@
 
 [BCs]
   [./potential_left]
-    type = NeumannCircuitVoltage
+    type = FunctionDirichletBC
     variable = potential
     boundary = left
     function = potential_bc_func
-    ip = Arp
-    data_provider = data_provider
   [../]
+  # [./potential_left]
+  #   type = NeumannCircuitVoltage
+  #   variable = potential
+  #   boundary = left
+  #   function = potential_bc_func
+  #   ip = Arp
+  #   data_provider = data_provider
+  # [../]
   [./potential_dirichlet_right]
     type = DirichletBC
     variable = potential
@@ -318,7 +326,7 @@
   [../]
   [./potential_bc_func]
     type = ParsedFunction
-    value = '1e5*tanh(1e6*t)'
+    value = '3e4*sin(2*pi*13.56e6*t)' # Voltage based off Park, Hicks planar atmospheric RF discharge
   [../]
 []
 

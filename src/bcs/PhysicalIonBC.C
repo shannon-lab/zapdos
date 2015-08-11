@@ -12,6 +12,7 @@ PhysicalIonBC::PhysicalIonBC(const std::string & name, InputParameters parameter
   IntegratedBC(name, parameters),
 
   _muip(getMaterialProperty<Real>("muip")),
+  _vthermal_ip(getMaterialProperty<Real>("vthermal_ip")),
   _a(0.0),
 
   // coupled variables
@@ -30,7 +31,7 @@ PhysicalIonBC::computeQpResidual()
     _a = 0.0;
   }
 
-  return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp]);
+  return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp] + 0.5*_vthermal_ip[_qp]*std::exp(_u[_qp]));
 }
 
 Real
@@ -43,7 +44,7 @@ PhysicalIonBC::computeQpJacobian()
     _a = 0.0;
   }
 
-  return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp]);
+  return _test[_i][_qp]*(_a*_muip[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp] + 0.5*_vthermal_ip[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]);
 }
 
 Real

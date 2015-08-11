@@ -119,4 +119,14 @@ When I try to run with pc_type = lu, I get an error around the simulation time o
 I got this error twice. First time was with mat_fd_type = wp. Second time was with mat_fd_type = ds and with sub_pc_factor_shift = NONZERO. 
 
 For p = 0, Discontinuous Galerkin is identical to first-order finite volume. That's really cool!
+
+Trying the RF discharge. With default line search (I don't know what the default is, the moose list would lead me to believe that it's bt), the sim starts diverging at 3.63113e-8 seconds. With line_search = basic, the sim can't even take a single time step. Using line_search = cp, the sim starts diverging at t = 7.47679e-8 seconds. So I suppose that that's better. 
+
+Reading the petsc manual, it looks like lu is the only direct solver available. To use it, use the options: -ksp_type=preonly; -pc_type=lu
+
+From petsc manual: "Sometimes one is required to solve linear systems that are singular. That is systems with the matrix has a null space. For example, the discretization of the Laplacian operator with Neumann boundary conditions as a null space of the constant functions."
+
+If trying to solve singular systems with direct solvers (or an incomplete factorization), it may still detect a zero pivot. Can run with additional options: -pc_factor_shift_type NONZERO -pc_factor_shift_amount <dampingfactor> to prevent the zero pivot. A good choice for the dampingfactor is 1.e-
+10.
+
  

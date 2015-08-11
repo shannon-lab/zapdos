@@ -16,7 +16,7 @@ PhysicalElectronBC::PhysicalElectronBC(const std::string & name, InputParameters
   _mem(getMaterialProperty<Real>("mem")),
   _se_coeff(getMaterialProperty<Real>("se_coeff")),
   _muip(getMaterialProperty<Real>("muip")),
-
+  _vthermal_em(getMaterialProperty<Real>("vthermal_em")),
   _a(0.0),
   _b(0.0),
 
@@ -41,9 +41,7 @@ PhysicalElectronBC::computeQpResidual()
     _b = 1.0;
   }
   return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp]
-			 -_b*_se_coeff[_qp]*_muip[_qp]*-_grad_potential[_qp]*std::exp(_Arp[_qp])*_normals[_qp]);
-         // + _test[_i][_qp]*_b*0.5*1.6*std::sqrt(_e*2.0/3*std::exp(_mean_en[_qp]-_u[_qp])/_m_el)*std::exp(_u[_qp]);
-
+			 -_b*_se_coeff[_qp]*_muip[_qp]*-_grad_potential[_qp]*std::exp(_Arp[_qp])*_normals[_qp] + 0.5*_vthermal_em[_qp]*std::exp(_u[_qp]));
 }
 
 Real
@@ -55,7 +53,7 @@ PhysicalElectronBC::computeQpJacobian()
   else {
     _a = 0.0;
   }
-  return _test[_i][_qp]*_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp];
+  return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp] + 0.5*_vthermal_em[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]);
 }
 
 Real

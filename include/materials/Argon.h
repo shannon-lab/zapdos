@@ -56,6 +56,11 @@ protected:
   MaterialProperty<Real> & _Source_term_coeff;
   MaterialProperty<Real> & _e;
   MaterialProperty<Real> & _eps;
+  MaterialProperty<Real> &  _Tem_lfa;
+  MaterialProperty<Real> &  _Tip_lfa;
+  MaterialProperty<Real> &  _k_boltz;
+  MaterialProperty<Real> &  _vthermal_em;
+  MaterialProperty<Real> &  _vthermal_ip;
 
   const ProvideMobility & _data;
 
