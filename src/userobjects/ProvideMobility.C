@@ -21,8 +21,8 @@ InputParameters validParams<ProvideMobility>()
   return params;
 }
 
-ProvideMobility::ProvideMobility(const std::string & name, InputParameters parameters) :
-  GeneralUserObject(name, parameters),
+ProvideMobility::ProvideMobility(const InputParameters & parameters) :
+  GeneralUserObject(parameters),
   _muem(8.86e-2), // Values for air
   _diffem(7.62e-2),
   _muip(8.86e-4),

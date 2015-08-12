@@ -26,8 +26,8 @@ InputParameters validParams<NeumannCircuitVoltage>()
   return params;
 }
 
-NeumannCircuitVoltage::NeumannCircuitVoltage(const std::string & name, InputParameters parameters) :
-    IntegratedBC(name, parameters),
+NeumannCircuitVoltage::NeumannCircuitVoltage(const InputParameters & parameters) :
+    IntegratedBC(parameters),
     _V_bat(getFunction("function")),
     _data(getUserObject<ProvideMobility>("data_provider")),
     _ip(coupledValue("ip")),

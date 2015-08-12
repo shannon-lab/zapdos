@@ -9,8 +9,8 @@ InputParameters validParams<DCElectronBC>()
     return params;
 }
 
-DCElectronBC::DCElectronBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+DCElectronBC::DCElectronBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
 
   _muem(getMaterialProperty<Real>("muem")),
   _mem(getMaterialProperty<Real>("mem")),

@@ -12,7 +12,7 @@ class RFElectronBC : public IntegratedBC
 {
 public:
 
-  RFElectronBC(const std::string & name, InputParameters parameters);
+  RFElectronBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

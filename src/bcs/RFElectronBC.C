@@ -9,8 +9,8 @@ InputParameters validParams<RFElectronBC>()
     return params;
 }
 
-RFElectronBC::RFElectronBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+RFElectronBC::RFElectronBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
 
   _muem(getMaterialProperty<Real>("muem")),
   _mem(getMaterialProperty<Real>("mem")),

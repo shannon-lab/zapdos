@@ -26,7 +26,7 @@ InputParameters validParams<ProvideMobility>();
 class ProvideMobility : public GeneralUserObject
 {
 public:
-  ProvideMobility(const std::string & name, InputParameters parameters);
+  ProvideMobility(const InputParameters & parameters);
 
   Real mu_em() const;
   Real diff_em() const;

@@ -8,8 +8,8 @@ InputParameters validParams<DCIonBC>()
     return params;
 }
 
-DCIonBC::DCIonBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+DCIonBC::DCIonBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
 
   _muip(getMaterialProperty<Real>("muip")),
   _vthermal_ip(getMaterialProperty<Real>("vthermal_ip")),

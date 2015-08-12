@@ -8,8 +8,8 @@ InputParameters validParams<RFIonBC>()
     return params;
 }
 
-RFIonBC::RFIonBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+RFIonBC::RFIonBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
 
   _muip(getMaterialProperty<Real>("muip")),
   _vthermal_ip(getMaterialProperty<Real>("vthermal_ip")),

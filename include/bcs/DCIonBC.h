@@ -12,7 +12,7 @@ class DCIonBC : public IntegratedBC
 {
 public:
 
-  DCIonBC(const std::string & name, InputParameters parameters);
+  DCIonBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

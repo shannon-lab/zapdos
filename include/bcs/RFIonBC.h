@@ -12,7 +12,7 @@ class RFIonBC : public IntegratedBC
 {
 public:
 
-  RFIonBC(const std::string & name, InputParameters parameters);
+  RFIonBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

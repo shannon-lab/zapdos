@@ -31,7 +31,7 @@ InputParameters validParams<NeumannCircuitVoltage>();
 class NeumannCircuitVoltage : public IntegratedBC
 {
 public:
-  NeumannCircuitVoltage(const std::string & name, InputParameters parameters);
+  NeumannCircuitVoltage(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

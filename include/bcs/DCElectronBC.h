@@ -12,7 +12,7 @@ class DCElectronBC : public IntegratedBC
 {
 public:
 
-  DCElectronBC(const std::string & name, InputParameters parameters);
+  DCElectronBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
