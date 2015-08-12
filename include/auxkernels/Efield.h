@@ -29,7 +29,7 @@ InputParameters validParams<Efield>();
 class Efield : public AuxKernel
 {
 public:
-  Efield(const std::string & name, InputParameters parameters);
+  Efield(const InputParameters & parameters);
 
   virtual ~Efield() {}
 

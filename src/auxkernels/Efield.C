@@ -29,8 +29,8 @@ InputParameters validParams<Efield>()
   return params;
 }
 
-Efield::Efield(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters),
+Efield::Efield(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     //_component(getParam<MooseEnum>("component")),
 

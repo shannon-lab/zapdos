@@ -15,7 +15,7 @@ InputParameters validParams<IonSrcTerm>();
 class IonSrcTerm : public AuxKernel
 {
 public:
-  IonSrcTerm(const std::string & name, InputParameters parameters);
+  IonSrcTerm(const InputParameters & parameters);
 
   virtual ~IonSrcTerm() {}
 

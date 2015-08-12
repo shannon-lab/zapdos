@@ -26,7 +26,7 @@ InputParameters validParams<TimeDerivativeSUPG>();
 class TimeDerivativeSUPG : public TimeKernel
 {
 public:
-  TimeDerivativeSUPG(const std::string & name, InputParameters parameters);
+  TimeDerivativeSUPG(const InputParameters & parameters);
 
   virtual void computeJacobian();
 

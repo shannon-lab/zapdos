@@ -27,7 +27,7 @@ InputParameters validParams<AddLotsOfTimeDerivatives>();
 class AddLotsOfTimeDerivatives : public AddVariableAction
 {
 public:
-  AddLotsOfTimeDerivatives(const std::string & name, InputParameters params);
+  AddLotsOfTimeDerivatives(InputParameters params);
 
   virtual void act();
 };

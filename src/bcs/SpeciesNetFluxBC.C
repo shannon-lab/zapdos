@@ -13,8 +13,8 @@ InputParameters validParams<SpeciesNetFluxBC>()
   return params;
 }
 
-SpeciesNetFluxBC::SpeciesNetFluxBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+SpeciesNetFluxBC::SpeciesNetFluxBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
   _x_boundary_species_current(getParam<Real>("x_boundary_species_current")),
   _y_boundary_species_current(getParam<Real>("y_boundary_species_current")),
   _z_boundary_species_current(getParam<Real>("z_boundary_species_current")),

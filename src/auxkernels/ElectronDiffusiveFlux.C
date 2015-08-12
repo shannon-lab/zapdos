@@ -10,8 +10,8 @@ InputParameters validParams<ElectronDiffusiveFlux>()
   return params;
 }
 
-ElectronDiffusiveFlux::ElectronDiffusiveFlux(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+ElectronDiffusiveFlux::ElectronDiffusiveFlux(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     _diff(1800.0/1e4),
     _grad_em(coupledGradient("em"))

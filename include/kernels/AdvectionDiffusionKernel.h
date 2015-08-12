@@ -11,7 +11,7 @@ InputParameters validParams<AdvectionDiffusionKernel>();
 class AdvectionDiffusionKernel : public Kernel
 {
   public:
-    AdvectionDiffusionKernel(const std::string & name, InputParameters parameters);
+    AdvectionDiffusionKernel(const InputParameters & parameters);
     virtual ~AdvectionDiffusionKernel();
 
   protected:

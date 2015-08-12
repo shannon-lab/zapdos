@@ -11,8 +11,8 @@ InputParameters validParams<ChargeDensity>()
   return params;
 }
 
-ChargeDensity::ChargeDensity(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+ChargeDensity::ChargeDensity(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     _e(1.6e-19),
     _electron_density(coupledValue("electron_density")),

@@ -23,7 +23,7 @@ InputParameters validParams<INSMomentum>();
 class INSMomentum : public Kernel
 {
 public:
-  INSMomentum(const std::string & name, InputParameters parameters);
+  INSMomentum(const InputParameters & parameters);
 
   virtual ~INSMomentum(){}
 

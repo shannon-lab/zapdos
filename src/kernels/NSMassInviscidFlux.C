@@ -14,8 +14,8 @@ InputParameters validParams<NSMassInviscidFlux>()
   return params;
 }
 
-NSMassInviscidFlux::NSMassInviscidFlux(const std::string & name, InputParameters parameters)
-    : NSKernel(name, parameters)
+NSMassInviscidFlux::NSMassInviscidFlux(const InputParameters & parameters)
+    : NSKernel(parameters)
 {}
 
 

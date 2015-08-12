@@ -12,7 +12,7 @@ class PhysicalElectronBC : public IntegratedBC
 {
 public:
 
-  PhysicalElectronBC(const std::string & name, InputParameters parameters);
+  PhysicalElectronBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

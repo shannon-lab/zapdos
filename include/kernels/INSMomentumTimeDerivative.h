@@ -23,7 +23,7 @@ InputParameters validParams<INSMomentumTimeDerivative>();
 class INSMomentumTimeDerivative : public TimeDerivative
 {
 public:
-  INSMomentumTimeDerivative(const std::string & name, InputParameters parameters);
+  INSMomentumTimeDerivative(const InputParameters & parameters);
 
   virtual ~INSMomentumTimeDerivative(){}
 

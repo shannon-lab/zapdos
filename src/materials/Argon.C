@@ -27,8 +27,8 @@ InputParameters validParams<Argon>()
 }
 
 
-Argon::Argon(const std::string & name, InputParameters parameters) :
-    Material(name, parameters),
+Argon::Argon(const InputParameters & parameters) :
+    Material(parameters),
 
     // Input parameters
 

@@ -29,8 +29,8 @@ InputParameters validParams<Sigma>()
   return params;
 }
 
-Sigma::Sigma(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters),
+Sigma::Sigma(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     //_component(getParam<MooseEnum>("component")),
 

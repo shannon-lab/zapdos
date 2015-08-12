@@ -23,7 +23,7 @@ InputParameters validParams<INSMass>();
 class INSMass : public Kernel
 {
 public:
-  INSMass(const std::string & name, InputParameters parameters);
+  INSMass(const InputParameters & parameters);
 
   virtual ~INSMass(){}
 

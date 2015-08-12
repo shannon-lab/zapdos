@@ -11,8 +11,8 @@ InputParameters validParams<IonSrcTerm>()
   return params;
 }
 
-IonSrcTerm::IonSrcTerm(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters),
+IonSrcTerm::IonSrcTerm(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     // Material Properties
     

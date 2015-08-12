@@ -11,8 +11,8 @@ InputParameters validParams<ElectronTemperature>()
   return params;
 }
 
-ElectronTemperature::ElectronTemperature(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+ElectronTemperature::ElectronTemperature(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     _electron_density(coupledValue("electron_density")),
     _mean_en(coupledValue("mean_en"))

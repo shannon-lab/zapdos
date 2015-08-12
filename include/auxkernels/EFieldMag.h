@@ -29,7 +29,7 @@ InputParameters validParams<EFieldMag>();
 class EFieldMag : public AuxKernel
 {
 public:
-  EFieldMag(const std::string & name, InputParameters parameters);
+  EFieldMag(const InputParameters & parameters);
 
   virtual ~EFieldMag() {}
 

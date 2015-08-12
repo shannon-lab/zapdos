@@ -31,8 +31,8 @@ InputParameters validParams<WD>()
 }
 
 
-WD::WD(const std::string & name, InputParameters parameters) :
-  Material(name, parameters),
+WD::WD(const InputParameters & parameters) :
+  Material(parameters),
 
   // Input parameters
 

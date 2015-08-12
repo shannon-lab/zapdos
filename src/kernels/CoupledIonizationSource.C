@@ -24,8 +24,8 @@ InputParameters validParams<CoupledIonizationSource>()
   return params;
 }
 
-CoupledIonizationSource::CoupledIonizationSource(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+CoupledIonizationSource::CoupledIonizationSource(const InputParameters & parameters) :
+    Kernel(parameters),
     
     // Material Properties
     

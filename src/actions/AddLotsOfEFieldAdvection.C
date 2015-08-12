@@ -53,8 +53,8 @@ InputParameters validParams<AddLotsOfEFieldAdvection>()
 }
 
 
-AddLotsOfEFieldAdvection::AddLotsOfEFieldAdvection(const std::string & name, InputParameters params) :
-  AddVariableAction(name, params)
+AddLotsOfEFieldAdvection::AddLotsOfEFieldAdvection(InputParameters params) :
+  AddVariableAction(params)
 {
 }
 

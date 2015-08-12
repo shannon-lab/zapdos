@@ -24,7 +24,7 @@ InputParameters validParams<Argon>();
 class Argon : public Material
 {
 public:
-  Argon(const std::string & name, InputParameters parameters);
+  Argon(const InputParameters & parameters);
 
 protected:
   virtual void computeQpProperties();

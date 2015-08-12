@@ -11,7 +11,7 @@ InputParameters validParams<Water>();
 class Water : public Material
 {
  public:
-  Water(const std::string & name, InputParameters parameters);
+  Water(const InputParameters & parameters);
 
  protected:
   virtual void computeQpProperties();

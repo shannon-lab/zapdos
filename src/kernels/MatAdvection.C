@@ -23,9 +23,8 @@ InputParameters validParams<MatAdvection>()
   return params;
 }
 
-MatAdvection::MatAdvection(const std::string & name,
-                       InputParameters parameters) :
-    Kernel(name, parameters),
+MatAdvection::MatAdvection(const InputParameters & parameters) :
+    Kernel(parameters),
     
     // Input file scalars
     

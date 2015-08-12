@@ -11,7 +11,7 @@ InputParameters validParams<ElectronEnergyKernel>();
 class ElectronEnergyKernel : public Kernel
 {
  public:
-  ElectronEnergyKernel(const std::string & name, InputParameters parameters);
+  ElectronEnergyKernel(const InputParameters & parameters);
   virtual ~ElectronEnergyKernel();
 
  protected:

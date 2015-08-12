@@ -33,8 +33,8 @@ InputParameters validParams<ArtificialDiff>()
 }
 
 
-ArtificialDiff::ArtificialDiff(const std::string & name, InputParameters parameters) :
-    Diffusion(name, parameters),
+ArtificialDiff::ArtificialDiff(const InputParameters & parameters) :
+    Diffusion(parameters),
     
     // Input Parameters
 

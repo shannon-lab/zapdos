@@ -12,7 +12,7 @@ class PhysicalIonBC : public IntegratedBC
 {
 public:
 
-  PhysicalIonBC(const std::string & name, InputParameters parameters);
+  PhysicalIonBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

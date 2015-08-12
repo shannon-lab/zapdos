@@ -26,7 +26,7 @@ InputParameters validParams<CoupledIonizationSource>();
 class CoupledIonizationSource : public Kernel
 {
 public:
-  CoupledIonizationSource(const std::string & name, InputParameters parameters);
+  CoupledIonizationSource(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

@@ -27,7 +27,7 @@ InputParameters validParams<PotentialDrivenArtificialDiffEnergy>();
 class PotentialDrivenArtificialDiffEnergy : public Kernel
 {
 public:
-  PotentialDrivenArtificialDiffEnergy(const std::string & name, InputParameters parameters);
+  PotentialDrivenArtificialDiffEnergy(const InputParameters & parameters);
   virtual ~PotentialDrivenArtificialDiffEnergy();
 
 protected:

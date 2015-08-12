@@ -29,8 +29,8 @@ InputParameters validParams<ConstTimesDiffusionSUPG>()
 }
 
 
-ConstTimesDiffusionSUPG::ConstTimesDiffusionSUPG(const std::string & name, InputParameters parameters) :
-    Diffusion(name, parameters),
+ConstTimesDiffusionSUPG::ConstTimesDiffusionSUPG(const InputParameters & parameters) :
+    Diffusion(parameters),
 
     _alpha(getMaterialProperty<Real>("alpha")),
     _velocity_norm(getMaterialProperty<RealVectorValue>("velocity_norm")),

@@ -27,7 +27,7 @@ InputParameters validParams<AddLotsOfVariables>();
 class AddLotsOfVariables : public AddVariableAction
 {
 public:
-  AddLotsOfVariables(const std::string & name, InputParameters params);
+  AddLotsOfVariables(InputParameters params);
 
   virtual void act();
 };

@@ -11,8 +11,8 @@ InputParameters validParams<ElectronAdvectiveFlux>()
   return params;
 }
 
-ElectronAdvectiveFlux::ElectronAdvectiveFlux(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+ElectronAdvectiveFlux::ElectronAdvectiveFlux(const InputParameters & parameters) :
+    AuxKernel(parameters),
 
     _muem(380.0/1e4),
     _electron_density(coupledValue("electron_density")),

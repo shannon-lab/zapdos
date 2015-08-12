@@ -29,8 +29,8 @@ InputParameters validParams<VelocityH>()
   return params;
 }
 
-VelocityH::VelocityH(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters),
+VelocityH::VelocityH(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     //_component(getParam<MooseEnum>("component")),
 

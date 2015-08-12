@@ -26,8 +26,8 @@ InputParameters validParams<ElectronDiffusion>()
 }
 
 
-ElectronDiffusion::ElectronDiffusion(const std::string & name, InputParameters parameters) :
-    Diffusion(name, parameters),
+ElectronDiffusion::ElectronDiffusion(const InputParameters & parameters) :
+    Diffusion(parameters),
     
     // Input Parameters
 

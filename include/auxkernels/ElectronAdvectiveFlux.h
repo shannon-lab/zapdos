@@ -11,7 +11,7 @@ InputParameters validParams<ElectronAdvectiveFlux>();
 class ElectronAdvectiveFlux : public AuxKernel
 {
 public:
-  ElectronAdvectiveFlux(const std::string & name, InputParameters parameters);
+  ElectronAdvectiveFlux(const InputParameters & parameters);
   
   virtual ~ElectronAdvectiveFlux() {}
   

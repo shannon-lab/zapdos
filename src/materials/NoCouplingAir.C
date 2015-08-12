@@ -34,8 +34,8 @@ InputParameters validParams<NoCouplingAir>()
 }
 
 
-NoCouplingAir::NoCouplingAir(const std::string & name, InputParameters parameters) :
-    Material(name, parameters),
+NoCouplingAir::NoCouplingAir(const InputParameters & parameters) :
+    Material(parameters),
 
     // Input parameters
     _velocity_multiplier(getParam<Real>("velocity_multiplier")),

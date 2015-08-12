@@ -27,7 +27,7 @@ InputParameters validParams<AddLotsOfPotentialDrivenArtificialDiff>();
 class AddLotsOfPotentialDrivenArtificialDiff : public AddVariableAction
 {
 public:
-  AddLotsOfPotentialDrivenArtificialDiff(const std::string & name, InputParameters params);
+  AddLotsOfPotentialDrivenArtificialDiff(InputParameters params);
 
   virtual void act();
 };

@@ -20,8 +20,8 @@ InputParameters validParams<CoupledBEKinetic>()
   return params;
 }
 
-CoupledBEKinetic::CoupledBEKinetic(const std::string & name, InputParameters parameters)
-  :Kernel(name,parameters),
+CoupledBEKinetic::CoupledBEKinetic(const InputParameters & parameters)
+  :Kernel(parameters),
    _reaction_coeffs(getParam<std::vector<Real> >("reaction_coeffs"))
 {
   int n = coupledComponents("v");

@@ -51,8 +51,8 @@ InputParameters validParams<AddLotsOfTimeDerivatives>()
 }
 
 
-AddLotsOfTimeDerivatives::AddLotsOfTimeDerivatives(const std::string & name, InputParameters params) :
-  AddVariableAction(name, params)
+AddLotsOfTimeDerivatives::AddLotsOfTimeDerivatives(InputParameters params) :
+  AddVariableAction(params)
 {
 }
 

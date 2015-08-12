@@ -26,7 +26,7 @@ InputParameters validParams<IonizationSource>();
 class IonizationSource : public Kernel
 {
 public:
-  IonizationSource(const std::string & name, InputParameters parameters);
+  IonizationSource(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

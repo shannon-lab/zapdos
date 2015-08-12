@@ -13,7 +13,7 @@ class SpeciesNetFluxBC : public IntegratedBC
 {
 public:
 
-  SpeciesNetFluxBC(const std::string & name, InputParameters parameters);
+  SpeciesNetFluxBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

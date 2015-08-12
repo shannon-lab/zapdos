@@ -23,8 +23,8 @@ InputParameters validParams<ElectronTemperatureTimeDerivative>()
   return params;
 }
 
-ElectronTemperatureTimeDerivative::ElectronTemperatureTimeDerivative(const std::string & name, InputParameters parameters) :
-    TimeKernel(name, parameters),
+ElectronTemperatureTimeDerivative::ElectronTemperatureTimeDerivative(const InputParameters & parameters) :
+    TimeKernel(parameters),
 
     // Input parameters
 

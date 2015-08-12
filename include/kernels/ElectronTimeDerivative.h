@@ -26,7 +26,7 @@ InputParameters validParams<ElectronTimeDerivative>();
 class ElectronTimeDerivative : public TimeKernel
 {
 public:
-  ElectronTimeDerivative(const std::string & name, InputParameters parameters);
+  ElectronTimeDerivative(const InputParameters & parameters);
 
   /* virtual void computeJacobian(); */
 

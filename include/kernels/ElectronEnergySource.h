@@ -11,7 +11,7 @@ InputParameters validParams<ElectronEnergySource>();
 class ElectronEnergySource : public Kernel
 {
  public:
-  ElectronEnergySource(const std::string & name, InputParameters parameters);
+  ElectronEnergySource(const InputParameters & parameters);
   virtual ~ElectronEnergySource();
 
  protected:

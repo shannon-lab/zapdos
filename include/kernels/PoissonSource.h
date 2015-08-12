@@ -26,7 +26,7 @@ InputParameters validParams<PoissonSource>();
 class PoissonSource : public Kernel
 {
 public:
-  PoissonSource(const std::string & name, InputParameters parameters);
+  PoissonSource(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

@@ -22,8 +22,8 @@ InputParameters validParams<SelfBinaryReaction>()
   return params;
 }
 
-SelfBinaryReaction::SelfBinaryReaction(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+SelfBinaryReaction::SelfBinaryReaction(const InputParameters & parameters) :
+    Kernel(parameters),
     
     _reaction_coeff(getParam<Real>("reaction_coeff"))
 {}

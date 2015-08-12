@@ -11,8 +11,8 @@ InputParameters validParams<ElectronEnergySource>()
   return params;
 }
 
-ElectronEnergySource::ElectronEnergySource(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+ElectronEnergySource::ElectronEnergySource(const InputParameters & parameters) :
+  Kernel(parameters),
 
   // Input Parameters
 

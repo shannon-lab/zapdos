@@ -26,7 +26,7 @@ InputParameters validParams<ConstTimesDiffusionSUPG>();
 class ConstTimesDiffusionSUPG : public Diffusion
 {
 public:
-  ConstTimesDiffusionSUPG(const std::string & name, InputParameters parameters);
+  ConstTimesDiffusionSUPG(const InputParameters & parameters);
   virtual ~ConstTimesDiffusionSUPG();
 
 protected:

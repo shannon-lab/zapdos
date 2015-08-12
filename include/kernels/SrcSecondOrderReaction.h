@@ -26,7 +26,7 @@ InputParameters validParams<SrcSecondOrderReaction>();
 class SrcSecondOrderReaction : public Kernel
 {
 public:
-  SrcSecondOrderReaction(const std::string & name, InputParameters parameters);
+  SrcSecondOrderReaction(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

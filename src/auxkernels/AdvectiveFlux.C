@@ -24,9 +24,8 @@ InputParameters validParams<AdvectiveFlux>()
   return params;
 }
 
-AdvectiveFlux::AdvectiveFlux(const std::string & name,
-                       InputParameters parameters) :
-    AuxKernel(name, parameters),
+AdvectiveFlux::AdvectiveFlux(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     // Input Parameters
     

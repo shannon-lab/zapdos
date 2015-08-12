@@ -12,7 +12,7 @@ class PhysicalElectronEnergyBC : public IntegratedBC
 {
 public:
 
-  PhysicalElectronEnergyBC(const std::string & name, InputParameters parameters);
+  PhysicalElectronEnergyBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

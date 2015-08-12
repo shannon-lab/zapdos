@@ -26,7 +26,7 @@ InputParameters validParams<NSKernel>();
 class NSKernel : public Kernel
 {
 public:
-  NSKernel(const std::string & name, InputParameters parameters);
+  NSKernel(const InputParameters & parameters);
 
   virtual ~NSKernel(){}
 

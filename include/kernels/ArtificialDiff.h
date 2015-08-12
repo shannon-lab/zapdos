@@ -27,7 +27,7 @@ InputParameters validParams<ArtificialDiff>();
 class ArtificialDiff : public Diffusion
 {
 public:
-  ArtificialDiff(const std::string & name, InputParameters parameters);
+  ArtificialDiff(const InputParameters & parameters);
   virtual ~ArtificialDiff();
 
 protected:

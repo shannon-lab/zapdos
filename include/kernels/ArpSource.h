@@ -11,7 +11,7 @@ InputParameters validParams<ArpSource>();
 class ArpSource : public Kernel
 {
  public:
-  ArpSource(const std::string & name, InputParameters parameters);
+  ArpSource(const InputParameters & parameters);
   virtual ~ArpSource();
 
  protected:

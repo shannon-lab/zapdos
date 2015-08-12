@@ -16,9 +16,8 @@ InputParameters validParams<INSTemperatureTimeDerivative>()
 }
 
 
-INSTemperatureTimeDerivative::INSTemperatureTimeDerivative(const std::string & name,
-                                                           InputParameters parameters) :
-  TimeDerivative(name,parameters),
+INSTemperatureTimeDerivative::INSTemperatureTimeDerivative(const InputParameters & parameters) :
+  TimeDerivative(parameters),
   _rho(getParam<Real>("rho")),
   _cp(getParam<Real>("cp"))
 {}

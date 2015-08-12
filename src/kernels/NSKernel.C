@@ -31,8 +31,8 @@ InputParameters validParams<NSKernel>()
 
 
 
-NSKernel::NSKernel(const std::string & name, InputParameters parameters)
-    : Kernel(name, parameters),
+NSKernel::NSKernel(const InputParameters & parameters)
+    : Kernel(parameters),
 
       // Coupled variables
       _u_vel(coupledValue("u")),

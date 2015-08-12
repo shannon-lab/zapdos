@@ -22,9 +22,8 @@ InputParameters validParams<ConstConvection>()
   return params;
 }
 
-ConstConvection::ConstConvection(const std::string & name,
-                       InputParameters parameters) :
-    Kernel(name, parameters),
+ConstConvection::ConstConvection(const InputParameters & parameters) :
+    Kernel(parameters),
     
     _velocity(1.0,0.0,0.0)
     

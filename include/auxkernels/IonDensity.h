@@ -11,7 +11,7 @@ InputParameters validParams<IonDensity>();
 class IonDensity : public AuxKernel
 {
 public:
-  IonDensity(const std::string & name, InputParameters parameters);
+  IonDensity(const InputParameters & parameters);
   
   virtual ~IonDensity() {}
   

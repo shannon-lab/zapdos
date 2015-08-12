@@ -27,7 +27,7 @@ InputParameters validParams<PotentialDrivenArtificialDiff>();
 class PotentialDrivenArtificialDiff : public Kernel
 {
 public:
-  PotentialDrivenArtificialDiff(const std::string & name, InputParameters parameters);
+  PotentialDrivenArtificialDiff(const InputParameters & parameters);
   virtual ~PotentialDrivenArtificialDiff();
 
 protected:

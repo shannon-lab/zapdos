@@ -26,7 +26,7 @@ InputParameters validParams<SrcSelfBinaryReaction>();
 class SrcSelfBinaryReaction : public Kernel
 {
 public:
-  SrcSelfBinaryReaction(const std::string & name, InputParameters parameters);
+  SrcSelfBinaryReaction(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

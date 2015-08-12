@@ -24,9 +24,8 @@ InputParameters validParams<ElectronEnergyTransport>()
   return params;
 }
 
-ElectronEnergyTransport::ElectronEnergyTransport(const std::string & name,
-                       InputParameters parameters) :
-    Kernel(name, parameters),
+ElectronEnergyTransport::ElectronEnergyTransport(const InputParameters & parameters) :
+    Kernel(parameters),
     
     // Input Parameters
     

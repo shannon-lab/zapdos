@@ -26,7 +26,7 @@ InputParameters validParams<ElectronDiffusion>();
 class ElectronDiffusion : public Diffusion
 {
 public:
-  ElectronDiffusion(const std::string & name, InputParameters parameters);
+  ElectronDiffusion(const InputParameters & parameters);
   virtual ~ElectronDiffusion();
 
 protected:

@@ -31,8 +31,8 @@ InputParameters validParams<CoeffDiffusion>()
 }
 
 
-CoeffDiffusion::CoeffDiffusion(const std::string & name, InputParameters parameters) :
-    Diffusion(name, parameters),
+CoeffDiffusion::CoeffDiffusion(const InputParameters & parameters) :
+    Diffusion(parameters),
     
     // Input Parameters
 

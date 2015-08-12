@@ -29,8 +29,8 @@ InputParameters validParams<EFieldMag>()
   return params;
 }
 
-EFieldMag::EFieldMag(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters),
+EFieldMag::EFieldMag(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     //_component(getParam<MooseEnum>("component")),
 

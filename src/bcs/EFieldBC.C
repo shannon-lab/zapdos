@@ -24,8 +24,8 @@ InputParameters validParams<EFieldBC>()
   return params;
 }
 
-EFieldBC::EFieldBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+EFieldBC::EFieldBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
   _x_boundary_e_field(getParam<Real>("x_boundary_e_field")),
   _y_boundary_e_field(getParam<Real>("y_boundary_e_field")),
   _z_boundary_e_field(getParam<Real>("z_boundary_e_field")),

@@ -11,7 +11,7 @@ InputParameters validParams<PoissonKernel>();
 class PoissonKernel : public Kernel
 {
  public:
-  PoissonKernel(const std::string & name, InputParameters parameters);
+  PoissonKernel(const InputParameters & parameters);
   virtual ~PoissonKernel();
 
  protected:

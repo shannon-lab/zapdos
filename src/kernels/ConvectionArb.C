@@ -24,8 +24,8 @@ InputParameters validParams<ConvectionArb>()
   return params;
 }
 
-ConvectionArb::ConvectionArb(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+ConvectionArb::ConvectionArb(const InputParameters & parameters) :
+    Kernel(parameters),
 
     _velocity(getFunction("velocity_function"))
 {

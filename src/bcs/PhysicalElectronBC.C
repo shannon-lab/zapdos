@@ -12,8 +12,8 @@ InputParameters validParams<PhysicalElectronBC>()
     return params;
 }
 
-PhysicalElectronBC::PhysicalElectronBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+PhysicalElectronBC::PhysicalElectronBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
 
   // Parameters
 

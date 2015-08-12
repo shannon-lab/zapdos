@@ -27,7 +27,7 @@ InputParameters validParams<AddLotsOfCoeffDiffusion>();
 class AddLotsOfCoeffDiffusion : public AddVariableAction
 {
 public:
-  AddLotsOfCoeffDiffusion(const std::string & name, InputParameters params);
+  AddLotsOfCoeffDiffusion(InputParameters params);
 
   virtual void act();
 };

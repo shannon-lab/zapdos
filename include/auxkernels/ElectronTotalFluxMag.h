@@ -11,7 +11,7 @@ InputParameters validParams<ElectronTotalFluxMag>();
 class ElectronTotalFluxMag : public AuxKernel
 {
 public:
-  ElectronTotalFluxMag(const std::string & name, InputParameters parameters);
+  ElectronTotalFluxMag(const InputParameters & parameters);
   
   virtual ~ElectronTotalFluxMag() {}
   

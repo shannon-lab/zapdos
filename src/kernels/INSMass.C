@@ -22,8 +22,8 @@ InputParameters validParams<INSMass>()
 
 
 
-INSMass::INSMass(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+INSMass::INSMass(const InputParameters & parameters) :
+  Kernel(parameters),
 
   // Gradients
   _grad_u_vel(coupledGradient("u")),

@@ -34,7 +34,7 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  EFieldBC(const std::string & name, InputParameters parameters);
+  EFieldBC(const InputParameters & parameters);
 
 
 protected:

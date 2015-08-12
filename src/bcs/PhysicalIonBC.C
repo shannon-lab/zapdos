@@ -8,8 +8,8 @@ InputParameters validParams<PhysicalIonBC>()
     return params;
 }
 
-PhysicalIonBC::PhysicalIonBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+PhysicalIonBC::PhysicalIonBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
 
   // Variables unique to class
 

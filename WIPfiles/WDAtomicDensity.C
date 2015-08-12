@@ -25,8 +25,8 @@ InputParameters validParams<WDAtomicDensity>()
   return params;
 }
 
-WDAtomicDensity::WDAtomicDensity(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters),
+WDAtomicDensity::WDAtomicDensity(const InputParameters & parameters) :
+    AuxKernel(parameters),
 
     // Get the gradient of the variable
     _grad_potential(coupledGradient("potential"))

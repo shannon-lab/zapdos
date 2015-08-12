@@ -8,8 +8,8 @@ InputParameters validParams<HSize>()
   return params;
 }
 
-HSize::HSize(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters)
+HSize::HSize(const InputParameters & parameters) :
+    AuxKernel(parameters)
 
 {
 }

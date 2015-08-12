@@ -26,7 +26,7 @@ InputParameters validParams<AddLotsOfDiffusion>();
 class AddLotsOfDiffusion : public AddVariableAction
 {
 public:
-  AddLotsOfDiffusion(const std::string & name, InputParameters params);
+  AddLotsOfDiffusion(InputParameters params);
 
   virtual void act();
 };

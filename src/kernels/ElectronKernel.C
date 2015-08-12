@@ -11,8 +11,8 @@ InputParameters validParams<ElectronKernel>()
   return params;
 }
 
-ElectronKernel::ElectronKernel(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+ElectronKernel::ElectronKernel(const InputParameters & parameters) :
+  Kernel(parameters),
 
   // _mean_en(coupledValue("mean_en")),
   _grad_potential(coupledGradient("potential")),

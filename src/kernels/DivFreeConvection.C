@@ -23,9 +23,8 @@ InputParameters validParams<DivFreeConvection>()
   return params;
 }
 
-DivFreeConvection::DivFreeConvection(const std::string & name,
-                       InputParameters parameters) :
-    Kernel(name, parameters),
+DivFreeConvection::DivFreeConvection(const InputParameters & parameters) :
+    Kernel(parameters),
     
     // Material properties
     

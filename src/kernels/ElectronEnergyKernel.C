@@ -11,8 +11,8 @@ InputParameters validParams<ElectronEnergyKernel>()
   return params;
 }
 
-ElectronEnergyKernel::ElectronEnergyKernel(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+ElectronEnergyKernel::ElectronEnergyKernel(const InputParameters & parameters) :
+  Kernel(parameters),
 
   _em(coupledValue("em")),
   _grad_em(coupledGradient("em")),

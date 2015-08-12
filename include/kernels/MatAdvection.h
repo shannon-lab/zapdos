@@ -26,8 +26,7 @@ class MatAdvection : public Kernel
 {
 public:
 
-  MatAdvection(const std::string & name,
-             InputParameters parameters);
+  MatAdvection(const InputParameters & parameters);
 
 protected:
 

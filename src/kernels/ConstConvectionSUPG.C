@@ -22,9 +22,8 @@ InputParameters validParams<ConstConvectionSUPG>()
   return params;
 }
 
-ConstConvectionSUPG::ConstConvectionSUPG(const std::string & name,
-                       InputParameters parameters) :
-    Kernel(name, parameters),
+ConstConvectionSUPG::ConstConvectionSUPG(const InputParameters & parameters) :
+    Kernel(parameters),
     
     // Input file scalars
     

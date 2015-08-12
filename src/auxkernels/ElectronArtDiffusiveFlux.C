@@ -11,8 +11,8 @@ InputParameters validParams<ElectronArtDiffusiveFlux>()
   return params;
 }
 
-ElectronArtDiffusiveFlux::ElectronArtDiffusiveFlux(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+ElectronArtDiffusiveFlux::ElectronArtDiffusiveFlux(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
   _muem(380.0/1e4), // Morrow, Ebert
   _diff(1800.0/1e4), // Morrow, Ebert
