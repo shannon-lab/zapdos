@@ -28,8 +28,8 @@
   type = Transient
  end_time = 1e-1
  solve_type = NEWTON
- petsc_options_iname = '-snes_converged_reason -snes_stol -mat_fd_type'
- petsc_options_value = 'true 0 wp'
+ petsc_options_iname = '-snes_converged_reason -snes_stol -pc_type -ksp_type -pc_factor_shift_type -pc_factor_shift_amount' #-mat_fd_type'
+ petsc_options_value = 'true 0 lu preonly NONZERO 1.e-10' #wp'
  nl_rel_tol = 1e-6
  # l_tol = 1e-3
  # trans_ss_check = true
@@ -84,13 +84,13 @@
     variable = Arp
   [../]
   [./electrons]
-    type = ElectronKernel
+    type = ElectronKernelIntTD
     variable = em
     # mean_en = mean_en
     potential = potential
   [../]
-  [./argon_ions]
-    type = ArpKernel
+  [./ions]
+    type = IonKernelIntTD
     variable = Arp
     em = em
     # mean_en = mean_en
@@ -112,7 +112,7 @@
 
 [Variables]
   [./potential]
-    scaling = 1e-7
+    scaling = 1e-2
   [../]
   [./em]
     scaling = 1e-18
@@ -325,7 +325,7 @@
 [Materials]
   [./argon]
     block = 0
-    type = Argon
+    type = InterpolateTD
     data_provider = data_provider
     em = em
     potential = potential

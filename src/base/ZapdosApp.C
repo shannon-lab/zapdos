@@ -4,6 +4,8 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "ElectronKernelIntTD.h"
+#include "IonKernelIntTD.h"
 #include "AdvectionDiffusionKernel.h"
 #include "ExampleTimeDerivative.h"
 #include "CoeffDiffusion.h"
@@ -82,6 +84,7 @@
 #include "WD.h"
 #include "Water.h"
 #include "Argon.h"
+#include "InterpolateTD.h"
 
 // Indicators
 #include "AnalyticalDiffIndicator.h"
@@ -151,6 +154,7 @@ ZapdosApp::registerApps()
 void
 ZapdosApp::registerObjects(Factory & factory)
 {
+  registerKernel(IonKernelIntTD);
   registerKernel(AdvectionDiffusionKernel);
   registerKernel(CoeffDiffusion);
   registerKernel(FirstOrderReaction);
@@ -194,6 +198,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(PoissonKernel);
   registerKernel(ExampleTimeDerivative);
   registerKernel(ElectronTimeDerivative);
+  registerKernel(ElectronKernelIntTD);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(Efield);
@@ -222,8 +227,9 @@ ZapdosApp::registerObjects(Factory & factory)
   registerMaterial(NoCouplingAir);
   registerMaterial(BlockAverageDiffusionMaterial);
   registerMaterial(WD);
-registerMaterial(Water);
-registerMaterial(Argon);
+  registerMaterial(Water);
+  registerMaterial(Argon);
+  registerMaterial(InterpolateTD);
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);

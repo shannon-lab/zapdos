@@ -7,7 +7,7 @@
   dim = 1
   nx = 4000
   xmin = 0.0
-  xmax = 0.0016 # Based on Park, Hicks, planar atmospheric RF discharge
+  xmax = 0.0254 # Based on comsol 1 torr ccp argon plasma
 []
 
 [Problem]
@@ -252,14 +252,14 @@
     value = 0
   [../]
   [./em_physical]
-    type = PhysicalElectronBC
+    type = RFElectronBC
     variable = em
     boundary = 'left right'
     potential = potential
     Arp = Arp
   [../]
   [./Arp_physical]
-    type = PhysicalIonBC
+    type = RFIonBC
     variable = Arp
     boundary = 'left right'
     potential = potential
@@ -326,7 +326,7 @@
   [../]
   [./potential_bc_func]
     type = ParsedFunction
-    value = '3e4*sin(2*pi*13.56e6*t)' # Voltage based off Park, Hicks planar atmospheric RF discharge
+    value = '3e2*sin(2*pi*13.56e6*t)' # Based on comsol 1 torr ccp argon plasma
   [../]
 []
 

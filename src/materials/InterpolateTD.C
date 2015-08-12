@@ -11,10 +11,10 @@
 /*                                                              */
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
-#include "Argon.h"
+#include "InterpolateTD.h"
 
 template<>
-InputParameters validParams<Argon>()
+InputParameters validParams<InterpolateTD>()
 {
   InputParameters params = validParams<Material>();
 
@@ -28,7 +28,7 @@ InputParameters validParams<Argon>()
 }
 
 
-Argon::Argon(const InputParameters & parameters) :
+InterpolateTD::InterpolateTD(const InputParameters & parameters) :
     Material(parameters),
 
   _muem(declareProperty<Real>("muem")),
@@ -76,7 +76,6 @@ Argon::Argon(const InputParameters & parameters) :
   std::vector<Real> mobility;
   std::vector<Real> diffusivity;
   std::vector<Real> alpha;
-  std::vector<Real> eta;
   std::ifstream myfile ("/home/alexlindsay/zapdos/src/materials/td_air.txt");
   Real value;
 
@@ -106,21 +105,12 @@ Argon::Argon(const InputParameters & parameters) :
 }
 
 void
-Argon::computeQpProperties()
+InterpolateTD::computeQpProperties()
 {  
-  // Argon
-  // _muem[_qp] = 4.32e-2;
-  // _diffem[_qp] = 3.24e-1;
-
-  // Air
   _muem[_qp] = _mobility_interpolation.sample(_grad_potential[_qp].size());
   _diffem[_qp] = _diffusivity_interpolation.sample(_grad_potential[_qp].size());
-  // _muem[_qp] = _data.mu_em();
-  // _diffem[_qp] = _data.diff_em();
   _muip[_qp] = _data.mu_ip();
   _diffip[_qp] = _data.diff_ip();
-  // _rate_coeff_ion[_qp] = 4.88e5; // Truly Morrow. Don't use Kang
-  // _Eiz[_qp] = 1.77e7; // Truly Morrow. Don't use Kang
   _rate_coeff_ion[_qp] = _alpha_interpolation.sample(_grad_potential[_qp].size()); // rate_coeff_ion is synonymous with alpha in this case. 
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
@@ -146,6 +136,6 @@ Argon::computeQpProperties()
   _IonAdvectiveFlux[_qp] = -_muip[_qp]*-_grad_potential[_qp](0)*std::exp(_ip[_qp]);
   _IonDiffusiveFlux[_qp] = -_diffip[_qp]*std::exp(_ip[_qp])*_grad_ip[_qp](0);
   _EField[_qp] = -_grad_potential[_qp](0);
-  _Source_term[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size())*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
-  _Source_term_coeff[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size());
+  _Source_term[_qp] = _rate_coeff_ion[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
+  _Source_term_coeff[_qp] = _rate_coeff_ion[_qp];
 }
