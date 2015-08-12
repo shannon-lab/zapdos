@@ -73,8 +73,11 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
 
 {
   std::vector<Real> EField;
+  std::vector<Real> mobility;
+  std::vector<Real> diffusivity;
   std::vector<Real> alpha;
-  std::ifstream myfile ("alpha.txt");
+  std::vector<Real> eta;
+  std::ifstream myfile ("td_air.txt");
   Real value;
 
   if (myfile.is_open())
@@ -83,14 +86,23 @@ Argon::Argon(const std::string & name, InputParameters parameters) :
     {
       EField.push_back(value);
       myfile >> value;
+      mobility.push_back(value);
+      myfile >> value;
+      diffusivity.push_back(value);
+      myfile >> value;
       alpha.push_back(value);
+      myfile >> value;
+      eta.push_back(value);
     }
     myfile.close();
   }
 
   else std::cout << "Unable to open file"; 
 
+  _mobility_interpolation.setData(EField, mobility);
+  _diffusivity_interpolation.setData(EField, diffusivity);
   _alpha_interpolation.setData(EField, alpha);
+  _eta_interpolation.setData(EField, eta);
 }
 
 void
@@ -101,12 +113,15 @@ Argon::computeQpProperties()
   // _diffem[_qp] = 3.24e-1;
 
   // Air
-  _muem[_qp] = _data.mu_em();
-  _diffem[_qp] = _data.diff_em();
+  _muem[_qp] = _mobility_interpolation.sample(_grad_potential[_qp].size());
+  _diffem[_qp] = _diffusivity_interpolation.sample(_grad_potential[_qp].size());
+  // _muem[_qp] = _data.mu_em();
+  // _diffem[_qp] = _data.diff_em();
   _muip[_qp] = _data.mu_ip();
   _diffip[_qp] = _data.diff_ip();
-  _rate_coeff_ion[_qp] = 4.88e5; // Truly Morrow. Don't use Kang
-  _Eiz[_qp] = 1.77e7; // Truly Morrow. Don't use Kang
+  // _rate_coeff_ion[_qp] = 4.88e5; // Truly Morrow. Don't use Kang
+  // _Eiz[_qp] = 1.77e7; // Truly Morrow. Don't use Kang
+  _rate_coeff_ion[_qp] = _alpha_interpolation.sample(_grad_potential[_qp].size()); // rate_coeff_ion is synonymous with alpha in this case. 
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
   _diffel[_qp] = 5.0/3.0*_diffem[_qp];

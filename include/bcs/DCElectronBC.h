@@ -1,18 +1,18 @@
-#ifndef PHYSICALELECTRONBC_H
-#define PHYSICALELECTRONBC_H
+#ifndef DCELECTRONBC_H
+#define DCELECTRONBC_H
 
 #include "IntegratedBC.h"
 
-class PhysicalElectronBC;
+class DCElectronBC;
 
 template<>
-InputParameters validParams<PhysicalElectronBC>();
+InputParameters validParams<DCElectronBC>();
 
-class PhysicalElectronBC : public IntegratedBC
+class DCElectronBC : public IntegratedBC
 {
 public:
 
-  PhysicalElectronBC(const std::string & name, InputParameters parameters);
+  DCElectronBC(const std::string & name, InputParameters parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -41,4 +41,4 @@ protected:
   unsigned int _potential_id;
 };
 
-#endif //PHYSICALELECTRONBC_H
+#endif //DCELECTRONBC_H

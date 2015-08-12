@@ -1,7 +1,7 @@
-#include "PhysicalElectronBC.h"
+#include "DCElectronBC.h"
 
 template<>
-InputParameters validParams<PhysicalElectronBC>()
+InputParameters validParams<DCElectronBC>()
 {
     InputParameters params = validParams<IntegratedBC>();
     params.addRequiredCoupledVar("Arp","The ion density");
@@ -9,7 +9,7 @@ InputParameters validParams<PhysicalElectronBC>()
     return params;
 }
 
-PhysicalElectronBC::PhysicalElectronBC(const std::string & name, InputParameters parameters) :
+DCElectronBC::DCElectronBC(const std::string & name, InputParameters parameters) :
   IntegratedBC(name, parameters),
 
   _muem(getMaterialProperty<Real>("muem")),
@@ -30,7 +30,7 @@ PhysicalElectronBC::PhysicalElectronBC(const std::string & name, InputParameters
 {}
 
 Real
-PhysicalElectronBC::computeQpResidual()
+DCElectronBC::computeQpResidual()
 {
   if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
@@ -41,11 +41,11 @@ PhysicalElectronBC::computeQpResidual()
     _b = 1.0;
   }
   return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp]
-			 -_b*_se_coeff[_qp]*_muip[_qp]*-_grad_potential[_qp]*std::exp(_Arp[_qp])*_normals[_qp] + 0.5*_vthermal_em[_qp]*std::exp(_u[_qp]));
+			 -_b*_se_coeff[_qp]*_muip[_qp]*-_grad_potential[_qp]*std::exp(_Arp[_qp])*_normals[_qp]);
 }
 
 Real
-PhysicalElectronBC::computeQpJacobian()
+DCElectronBC::computeQpJacobian()
 {
   if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
@@ -53,11 +53,11 @@ PhysicalElectronBC::computeQpJacobian()
   else {
     _a = 0.0;
   }
-  return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp] + 0.5*_vthermal_em[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]);
+  return _test[_i][_qp]*(_a*-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp]);
 }
 
 Real
-PhysicalElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
+DCElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id) {
     if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {

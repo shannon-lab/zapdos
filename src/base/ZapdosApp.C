@@ -96,8 +96,10 @@
 #include "EFieldBC.h"
 #include "SpeciesNetFluxBC.h"
 #include "SimpleNetFluxBC.h"
-#include "PhysicalIonBC.h"
-#include "PhysicalElectronBC.h"
+#include "RFIonBC.h"
+#include "DCIonBC.h"
+#include "RFElectronBC.h"
+#include "DCElectronBC.h"
 #include "AdvectionDoNothingBC.h"
 #include "SometimesAdvectionBC.h"
 #include "PhysicalElectronEnergyBC.h"
@@ -231,8 +233,10 @@ registerMaterial(Argon);
   registerBoundaryCondition(EFieldBC);
   registerBoundaryCondition(SpeciesNetFluxBC);
   registerBoundaryCondition(SimpleNetFluxBC);
-  registerBoundaryCondition(PhysicalIonBC);
-  registerBoundaryCondition(PhysicalElectronBC);
+  registerBoundaryCondition(RFIonBC);
+  registerBoundaryCondition(DCIonBC);
+  registerBoundaryCondition(RFElectronBC);
+  registerBoundaryCondition(DCElectronBC);
   registerBoundaryCondition(AdvectionDoNothingBC);
   registerBoundaryCondition(SometimesAdvectionBC);
   registerBoundaryCondition(PhysicalElectronEnergyBC);

@@ -1,18 +1,18 @@
-#ifndef PHYSICALIONBC_H
-#define PHYSICALIONBC_H
+#ifndef DCIONBC_H
+#define DCIONBC_H
 
 #include "IntegratedBC.h"
 
-class PhysicalIonBC;
+class DCIonBC;
 
 template<>
-InputParameters validParams<PhysicalIonBC>();
+InputParameters validParams<DCIonBC>();
 
-class PhysicalIonBC : public IntegratedBC
+class DCIonBC : public IntegratedBC
 {
 public:
 
-  PhysicalIonBC(const std::string & name, InputParameters parameters);
+  DCIonBC(const std::string & name, InputParameters parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -29,4 +29,4 @@ protected:
   unsigned int _potential_id;
 };
 
-#endif //PHYSICALIONBC_H
+#endif //DCIONBC_H

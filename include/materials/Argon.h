@@ -31,7 +31,10 @@ public:
 protected:
   virtual void computeQpProperties();
 
+  LinearInterpolation _mobility_interpolation;
+  LinearInterpolation _diffusivity_interpolation;
   LinearInterpolation _alpha_interpolation;
+  LinearInterpolation _eta_interpolation;
 
   MaterialProperty<Real>  & _muem;
   MaterialProperty<Real>  & _diffem;

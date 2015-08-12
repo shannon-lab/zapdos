@@ -1,14 +1,14 @@
-#include "PhysicalIonBC.h"
+#include "RFIonBC.h"
 
 template<>
-InputParameters validParams<PhysicalIonBC>()
+InputParameters validParams<RFIonBC>()
 {
     InputParameters params = validParams<IntegratedBC>();
     params.addRequiredCoupledVar("potential","The electrical potential");
     return params;
 }
 
-PhysicalIonBC::PhysicalIonBC(const std::string & name, InputParameters parameters) :
+RFIonBC::RFIonBC(const std::string & name, InputParameters parameters) :
   IntegratedBC(name, parameters),
 
   _muip(getMaterialProperty<Real>("muip")),
@@ -22,7 +22,7 @@ PhysicalIonBC::PhysicalIonBC(const std::string & name, InputParameters parameter
 {}
 
 Real
-PhysicalIonBC::computeQpResidual()
+RFIonBC::computeQpResidual()
 {
   if ( _normals[_qp]*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
@@ -35,7 +35,7 @@ PhysicalIonBC::computeQpResidual()
 }
 
 Real
-PhysicalIonBC::computeQpJacobian()
+RFIonBC::computeQpJacobian()
 {
   if ( _normals[_qp]*-_grad_potential[_qp] > 0.0) {
     _a = 1.0;
@@ -48,7 +48,7 @@ PhysicalIonBC::computeQpJacobian()
 }
 
 Real
-PhysicalIonBC::computeQpOffDiagJacobian(unsigned int jvar)
+RFIonBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id) {
     if ( _normals[_qp]*1.0*-_grad_potential[_qp] > 0.0) {
