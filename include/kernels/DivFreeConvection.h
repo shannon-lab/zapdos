@@ -26,8 +26,7 @@ class DivFreeConvection : public Kernel
 {
 public:
 
-  DivFreeConvection(const std::string & name,
-             InputParameters parameters);
+  DivFreeConvection(const InputParameters & parameters);
 
 protected:
 

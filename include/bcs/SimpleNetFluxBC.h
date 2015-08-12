@@ -13,7 +13,7 @@ class SimpleNetFluxBC : public IntegratedBC
 {
 public:
 
-  SimpleNetFluxBC(const std::string & name, InputParameters parameters);
+  SimpleNetFluxBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

@@ -31,7 +31,7 @@ InputParameters validParams<ConvectionArb>();
 class ConvectionArb : public Kernel
 {
 public:
-  ConvectionArb(const std::string & name, InputParameters parameters);
+  ConvectionArb(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

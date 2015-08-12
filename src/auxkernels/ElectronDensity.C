@@ -10,8 +10,8 @@ InputParameters validParams<ElectronDensity>()
   return params;
 }
 
-ElectronDensity::ElectronDensity(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+ElectronDensity::ElectronDensity(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     _electron_density(coupledValue("electron_density"))
 {

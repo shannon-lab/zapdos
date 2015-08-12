@@ -23,8 +23,8 @@ InputParameters validParams<SecondOrderReaction>()
   return params;
 }
 
-SecondOrderReaction::SecondOrderReaction(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+SecondOrderReaction::SecondOrderReaction(const InputParameters & parameters) :
+    Kernel(parameters),
     
     _reaction_coeff(getParam<Real>("reaction_coeff")),
     // Couple to the second reactant

@@ -24,9 +24,8 @@ InputParameters validParams<EFieldAdvection>()
   return params;
 }
 
-EFieldAdvection::EFieldAdvection(const std::string & name,
-                       InputParameters parameters) :
-    Kernel(name, parameters),
+EFieldAdvection::EFieldAdvection(const InputParameters & parameters) :
+    Kernel(parameters),
     
     // Input Parameters
     

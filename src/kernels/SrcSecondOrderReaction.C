@@ -25,8 +25,8 @@ InputParameters validParams<SrcSecondOrderReaction>()
   return params;
 }
 
-SrcSecondOrderReaction::SrcSecondOrderReaction(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+SrcSecondOrderReaction::SrcSecondOrderReaction(const InputParameters & parameters) :
+    Kernel(parameters),
     
     _reaction_coeff(getParam<Real>("reaction_coeff")),
     _stoich_coeff(getParam<Real>("stoich_coeff")),

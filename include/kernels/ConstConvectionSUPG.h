@@ -26,8 +26,7 @@ class ConstConvectionSUPG : public Kernel
 {
 public:
 
-  ConstConvectionSUPG(const std::string & name,
-             InputParameters parameters);
+  ConstConvectionSUPG(const InputParameters & parameters);
 
 protected:
 

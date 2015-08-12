@@ -52,8 +52,8 @@ InputParameters validParams<AddLotsOfPotentialDrivenArtificialDiff>()
 }
 
 
-AddLotsOfPotentialDrivenArtificialDiff::AddLotsOfPotentialDrivenArtificialDiff(const std::string & name, InputParameters params) :
-  AddVariableAction(name, params)
+AddLotsOfPotentialDrivenArtificialDiff::AddLotsOfPotentialDrivenArtificialDiff(InputParameters params) :
+  AddVariableAction(params)
 {
 }
 

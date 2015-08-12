@@ -11,8 +11,8 @@ InputParameters validParams<ElectronTotalFluxMag>()
   return params;
 }
 
-ElectronTotalFluxMag::ElectronTotalFluxMag(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+ElectronTotalFluxMag::ElectronTotalFluxMag(const InputParameters & parameters) :
+    AuxKernel(parameters),
 
     _muem(getMaterialProperty<Real>("muem")),
     _diffem(getMaterialProperty<Real>("diffem")),

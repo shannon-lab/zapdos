@@ -23,8 +23,8 @@ InputParameters validParams<PoissonSource>()
   return params;
 }
 
-PoissonSource::PoissonSource(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+PoissonSource::PoissonSource(const InputParameters & parameters) :
+    Kernel(parameters),
     
     // Material properties 
     

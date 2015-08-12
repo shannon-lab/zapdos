@@ -15,7 +15,7 @@ InputParameters validParams<AlphaTimesHSize>();
 class AlphaTimesHSize : public AuxKernel
 {
 public:
-  AlphaTimesHSize(const std::string & name, InputParameters parameters);
+  AlphaTimesHSize(const InputParameters & parameters);
 
   virtual ~AlphaTimesHSize() {}
 

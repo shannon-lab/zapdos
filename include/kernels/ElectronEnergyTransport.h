@@ -26,8 +26,7 @@ class ElectronEnergyTransport : public Kernel
 {
  public:
 
-  ElectronEnergyTransport(const std::string & name,
-		   InputParameters parameters);
+  ElectronEnergyTransport(const InputParameters & parameters);
 
  protected:
 

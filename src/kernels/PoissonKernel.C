@@ -11,8 +11,8 @@ InputParameters validParams<PoissonKernel>()
   return params;
 }
 
-PoissonKernel::PoissonKernel(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+PoissonKernel::PoissonKernel(const InputParameters & parameters) :
+  Kernel(parameters),
 
   _em(coupledValue("em")),
   _Arp(coupledValue("Arp")),

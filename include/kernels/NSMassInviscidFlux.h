@@ -20,7 +20,7 @@ class NSMassInviscidFlux : public NSKernel
 {
 public:
 
-  NSMassInviscidFlux(const std::string & name, InputParameters parameters);
+  NSMassInviscidFlux(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

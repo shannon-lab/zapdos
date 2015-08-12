@@ -23,8 +23,8 @@ InputParameters validParams<ArbNumSecondOrderRxns>()
   return params;
 }
 
-ArbNumSecondOrderRxns::ArbNumSecondOrderRxns(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+ArbNumSecondOrderRxns::ArbNumSecondOrderRxns(const InputParameters & parameters) :
+    Kernel(parameters),
     
     _reaction_coeff(getParam<Real>("reaction_coeff")),
     // Couple to the second reactant

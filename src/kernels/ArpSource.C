@@ -12,8 +12,8 @@ InputParameters validParams<ArpSource>()
   return params;
 }
 
-ArpSource::ArpSource(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+ArpSource::ArpSource(const InputParameters & parameters) :
+  Kernel(parameters),
 
   // Input Parameters
 

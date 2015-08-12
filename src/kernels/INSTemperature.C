@@ -26,8 +26,8 @@ InputParameters validParams<INSTemperature>()
 
 
 
-INSTemperature::INSTemperature(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+INSTemperature::INSTemperature(const InputParameters & parameters) :
+  Kernel(parameters),
 
   // Coupled variables
   _u_vel(coupledValue("u")),

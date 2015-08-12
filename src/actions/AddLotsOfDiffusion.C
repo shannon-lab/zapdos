@@ -46,8 +46,8 @@ InputParameters validParams<AddLotsOfDiffusion>()
 }
 
 
-AddLotsOfDiffusion::AddLotsOfDiffusion(const std::string & name, InputParameters params) :
-    AddVariableAction(name, params)
+AddLotsOfDiffusion::AddLotsOfDiffusion(InputParameters params) :
+    AddVariableAction(params)
 {
 }
 

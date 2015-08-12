@@ -12,8 +12,8 @@ InputParameters validParams<PotentialDrivenArtificialDiff>()
   return params;
 }
 
-PotentialDrivenArtificialDiff::PotentialDrivenArtificialDiff(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+PotentialDrivenArtificialDiff::PotentialDrivenArtificialDiff(const InputParameters & parameters) :
+    Kernel(parameters),
 
     // Input parameters
 

@@ -28,8 +28,8 @@ InputParameters validParams<Argon>()
 }
 
 
-Argon::Argon(const std::string & name, InputParameters parameters) :
-    Material(name, parameters),
+Argon::Argon(const InputParameters & parameters) :
+    Material(parameters),
 
   _muem(declareProperty<Real>("muem")),
     _diffem(declareProperty<Real>("diffem")),

@@ -11,7 +11,7 @@ InputParameters validParams<UnitySource>();
 class UnitySource : public Kernel
 {
  public:
-  UnitySource(const std::string & name, InputParameters parameters);
+  UnitySource(const InputParameters & parameters);
   virtual ~UnitySource();
 
  protected:

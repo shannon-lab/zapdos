@@ -13,8 +13,8 @@ InputParameters validParams<PhysicalElectronEnergyBC>()
     return params;
 }
 
-PhysicalElectronEnergyBC::PhysicalElectronEnergyBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+PhysicalElectronEnergyBC::PhysicalElectronEnergyBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
 
   // Parameters
 

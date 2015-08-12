@@ -9,8 +9,8 @@ InputParameters validParams<Source>()
   return params;
 }
 
-Source::Source(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+Source::Source(const InputParameters & parameters) :
+  Kernel(parameters),
 
   // Input Parameters
 

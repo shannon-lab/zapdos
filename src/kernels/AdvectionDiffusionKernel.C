@@ -7,8 +7,8 @@ InputParameters validParams<AdvectionDiffusionKernel>()
   return params;
 }
 
-AdvectionDiffusionKernel::AdvectionDiffusionKernel(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+AdvectionDiffusionKernel::AdvectionDiffusionKernel(const InputParameters & parameters) :
+  Kernel(parameters),
 
   _a(1.0,0.0,0.0),
   _diff(0.0),

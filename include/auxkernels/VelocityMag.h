@@ -29,7 +29,7 @@ InputParameters validParams<VelocityMag>();
 class VelocityMag : public AuxKernel
 {
 public:
-  VelocityMag(const std::string & name, InputParameters parameters);
+  VelocityMag(const InputParameters & parameters);
 
   virtual ~VelocityMag() {}
 

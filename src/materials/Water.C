@@ -27,8 +27,8 @@ InputParameters validParams<Water>()
   return params;
 }
 
-Water::Water(const std::string & name, InputParameters parameters) :
-  Material(name,parameters),
+Water::Water(const InputParameters & parameters) :
+  Material(parameters),
 
   // Retrieve input parameters
 

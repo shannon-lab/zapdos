@@ -33,7 +33,7 @@ InputParameters validParams<Air>();
 class Air : public Material
 {
 public:
-  Air(const std::string & name, InputParameters parameters);
+  Air(const InputParameters & parameters);
 
 protected:
   /**

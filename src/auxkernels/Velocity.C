@@ -29,8 +29,8 @@ InputParameters validParams<Velocity>()
   return params;
 }
 
-Velocity::Velocity(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters),
+Velocity::Velocity(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     //_component(getParam<MooseEnum>("component")),
 

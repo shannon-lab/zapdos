@@ -10,8 +10,8 @@ InputParameters validParams<AlphaTimesHSize>()
   return params;
 }
 
-AlphaTimesHSize::AlphaTimesHSize(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters),
+AlphaTimesHSize::AlphaTimesHSize(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     // Material Properties
     

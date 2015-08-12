@@ -24,8 +24,8 @@ InputParameters validParams<TimeDerivativeSUPG>()
   return params;
 }
 
-TimeDerivativeSUPG::TimeDerivativeSUPG(const std::string & name, InputParameters parameters) :
-    TimeKernel(name, parameters),
+TimeDerivativeSUPG::TimeDerivativeSUPG(const InputParameters & parameters) :
+    TimeKernel(parameters),
     _lumping(getParam<bool>("lumping")),
     _crosswind(getParam<bool>("crosswind")),
     _epsilon(getParam<Real>("epsilon")),

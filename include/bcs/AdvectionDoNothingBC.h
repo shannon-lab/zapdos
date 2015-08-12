@@ -12,7 +12,7 @@ class AdvectionDoNothingBC : public IntegratedBC
 {
 public:
 
-  AdvectionDoNothingBC(const std::string & name, InputParameters parameters);
+  AdvectionDoNothingBC(const InputParameters & parameters);
 
 protected:
   // Input Parameters

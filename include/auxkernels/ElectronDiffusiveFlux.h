@@ -11,7 +11,7 @@ InputParameters validParams<ElectronDiffusiveFlux>();
 class ElectronDiffusiveFlux : public AuxKernel
 {
 public:
-  ElectronDiffusiveFlux(const std::string & name, InputParameters parameters);
+  ElectronDiffusiveFlux(const InputParameters & parameters);
   
   virtual ~ElectronDiffusiveFlux() {}
   

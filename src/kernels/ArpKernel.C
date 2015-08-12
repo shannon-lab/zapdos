@@ -11,8 +11,8 @@ InputParameters validParams<ArpKernel>()
   return params;
 }
 
-ArpKernel::ArpKernel(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+ArpKernel::ArpKernel(const InputParameters & parameters) :
+  Kernel(parameters),
 
   _em(coupledValue("em")),
   _grad_em(coupledGradient("em")),

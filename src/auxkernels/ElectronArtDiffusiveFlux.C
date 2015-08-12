@@ -11,15 +11,15 @@ InputParameters validParams<ElectronArtDiffusiveFlux>()
   return params;
 }
 
-ElectronArtDiffusiveFlux::ElectronArtDiffusiveFlux(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+ElectronArtDiffusiveFlux::ElectronArtDiffusiveFlux(const InputParameters & parameters) :
+    AuxKernel(parameters),
 
     _muem(getMaterialProperty<Real>("muem")),
     _diffem(getMaterialProperty<Real>("diffem")),
-  _alpha(0.0),
-  _Pe(0.0),
-  _vd_mag(0.0),
-  _delta(0.0),
+    _alpha(0.0),
+    _Pe(0.0),
+    _vd_mag(0.0),
+    _delta(0.0),
     _grad_potential(coupledGradient("potential")),
     _em(coupledValue("em")),
     _grad_em(coupledGradient("em"))

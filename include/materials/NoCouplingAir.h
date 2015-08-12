@@ -33,7 +33,7 @@ InputParameters validParams<NoCouplingAir>();
 class NoCouplingAir : public Material
 {
 public:
-  NoCouplingAir(const std::string & name, InputParameters parameters);
+  NoCouplingAir(const InputParameters & parameters);
 
 protected:
   /**

@@ -11,7 +11,7 @@ InputParameters validParams<AuxSource>();
 class AuxSource : public AuxKernel
 {
 public:
-  AuxSource(const std::string & name, InputParameters parameters);
+  AuxSource(const InputParameters & parameters);
   
   virtual ~AuxSource() {}
   

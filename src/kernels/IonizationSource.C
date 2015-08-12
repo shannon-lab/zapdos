@@ -23,8 +23,8 @@ InputParameters validParams<IonizationSource>()
   return params;
 }
 
-IonizationSource::IonizationSource(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+IonizationSource::IonizationSource(const InputParameters & parameters) :
+    Kernel(parameters),
     
     // Material properties
 

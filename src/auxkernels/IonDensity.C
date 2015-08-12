@@ -10,8 +10,8 @@ InputParameters validParams<IonDensity>()
   return params;
 }
 
-IonDensity::IonDensity(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+IonDensity::IonDensity(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     _ion_density(coupledValue("ion_density"))
 {

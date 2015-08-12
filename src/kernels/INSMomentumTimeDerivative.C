@@ -15,9 +15,8 @@ InputParameters validParams<INSMomentumTimeDerivative>()
 }
 
 
-INSMomentumTimeDerivative::INSMomentumTimeDerivative(const std::string & name,
-                                                     InputParameters parameters) :
-  TimeDerivative(name,parameters),
+INSMomentumTimeDerivative::INSMomentumTimeDerivative(const InputParameters & parameters) :
+  TimeDerivative(parameters),
   _rho(getParam<Real>("rho"))
 {}
 

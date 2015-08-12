@@ -27,7 +27,7 @@ InputParameters validParams<AddLotsOfSources>();
 class AddLotsOfSources : public AddVariableAction
 {
 public:
-  AddLotsOfSources(const std::string & name, InputParameters params);
+  AddLotsOfSources(InputParameters params);
 
   virtual void act();
 };

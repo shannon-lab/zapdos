@@ -30,8 +30,8 @@ InputParameters validParams<Air>()
 }
 
 
-Air::Air(const std::string & name, InputParameters parameters) :
-    Material(name, parameters),
+Air::Air(const InputParameters & parameters) :
+    Material(parameters),
 
     // Input parameters
 

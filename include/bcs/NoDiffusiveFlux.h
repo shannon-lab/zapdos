@@ -33,7 +33,7 @@ public:
    * Factory constructor, takes parameters so that all derived classes can be built using the same
    * constructor.
    */
-  NoDiffusiveFlux(const std::string & name, InputParameters parameters);
+  NoDiffusiveFlux(const InputParameters & parameters);
 
 
 protected:

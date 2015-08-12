@@ -29,7 +29,7 @@ InputParameters validParams<Velocity>();
 class Velocity : public AuxKernel
 {
 public:
-  Velocity(const std::string & name, InputParameters parameters);
+  Velocity(const InputParameters & parameters);
 
   virtual ~Velocity() {}
 

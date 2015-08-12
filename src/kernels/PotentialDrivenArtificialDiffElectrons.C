@@ -13,8 +13,8 @@ InputParameters validParams<PotentialDrivenArtificialDiffElectrons>()
   return params;
 }
 
-PotentialDrivenArtificialDiffElectrons::PotentialDrivenArtificialDiffElectrons(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+PotentialDrivenArtificialDiffElectrons::PotentialDrivenArtificialDiffElectrons(const InputParameters & parameters) :
+    Kernel(parameters),
 
     // Input parameters
 

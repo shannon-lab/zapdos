@@ -33,7 +33,7 @@ InputParameters validParams<WD>();
 class WD : public Material
 {
 public:
-  WD(const std::string & name, InputParameters parameters);
+  WD(const InputParameters & parameters);
 
 protected:
   /**

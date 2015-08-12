@@ -15,7 +15,7 @@ InputParameters validParams<HSize>();
 class HSize : public AuxKernel
 {
 public:
-  HSize(const std::string & name, InputParameters parameters);
+  HSize(const InputParameters & parameters);
 
   virtual ~HSize() {}
 

@@ -9,8 +9,8 @@ InputParameters validParams<AdvectionDoNothingBC>()
     return params;
 }
 
-AdvectionDoNothingBC::AdvectionDoNothingBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+AdvectionDoNothingBC::AdvectionDoNothingBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
 
   // Parameters
   _velocity(getFunction("velocity_function"))

@@ -11,7 +11,7 @@ InputParameters validParams<ArpKernel>();
 class ArpKernel : public Kernel
 {
  public:
-  ArpKernel(const std::string & name, InputParameters parameters);
+  ArpKernel(const InputParameters & parameters);
   virtual ~ArpKernel();
 
  protected:

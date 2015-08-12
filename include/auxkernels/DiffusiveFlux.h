@@ -12,8 +12,7 @@ class DiffusiveFlux : public AuxKernel
 {
  public:
 
-  DiffusiveFlux(const std::string & name,
-		   InputParameters parameters);
+  DiffusiveFlux(const InputParameters & parameters);
 
  protected:
 

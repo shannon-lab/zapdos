@@ -12,7 +12,7 @@ class SometimesAdvectionBC : public IntegratedBC
 {
 public:
 
-  SometimesAdvectionBC(const std::string & name, InputParameters parameters);
+  SometimesAdvectionBC(const InputParameters & parameters);
 
 protected:
   // Input Parameters

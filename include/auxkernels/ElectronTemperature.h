@@ -11,7 +11,7 @@ InputParameters validParams<ElectronTemperature>();
 class ElectronTemperature : public AuxKernel
 {
 public:
-  ElectronTemperature(const std::string & name, InputParameters parameters);
+  ElectronTemperature(const InputParameters & parameters);
   
   virtual ~ElectronTemperature() {}
   

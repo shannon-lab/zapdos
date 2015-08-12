@@ -29,8 +29,8 @@ InputParameters validParams<Ex>()
   return params;
 }
 
-Ex::Ex(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters),
+Ex::Ex(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     //_component(getParam<MooseEnum>("component")),
 

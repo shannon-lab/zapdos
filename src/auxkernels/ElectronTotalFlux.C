@@ -11,8 +11,8 @@ InputParameters validParams<ElectronTotalFlux>()
   return params;
 }
 
-ElectronTotalFlux::ElectronTotalFlux(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+ElectronTotalFlux::ElectronTotalFlux(const InputParameters & parameters) :
+    AuxKernel(parameters),
 
     _muem(getMaterialProperty<Real>("muem")),
     _diffem(getMaterialProperty<Real>("diffem")),

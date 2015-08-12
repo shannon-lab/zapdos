@@ -11,7 +11,7 @@ InputParameters validParams<ArsSource>();
 class ArsSource : public Kernel
 {
  public:
-  ArsSource(const std::string & name, InputParameters parameters);
+  ArsSource(const InputParameters & parameters);
   virtual ~ArsSource();
 
  protected:

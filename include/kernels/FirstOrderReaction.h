@@ -26,7 +26,7 @@ InputParameters validParams<FirstOrderReaction>();
 class FirstOrderReaction : public Kernel
 {
 public:
-  FirstOrderReaction(const std::string & name, InputParameters parameters);
+  FirstOrderReaction(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

@@ -22,7 +22,7 @@ InputParameters validParams<INSTemperature>();
 class INSTemperature : public Kernel
 {
 public:
-  INSTemperature(const std::string & name, InputParameters parameters);
+  INSTemperature(const InputParameters & parameters);
 
   virtual ~INSTemperature(){}
 

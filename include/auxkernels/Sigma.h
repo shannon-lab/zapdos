@@ -29,7 +29,7 @@ InputParameters validParams<Sigma>();
 class Sigma : public AuxKernel
 {
 public:
-  Sigma(const std::string & name, InputParameters parameters);
+  Sigma(const InputParameters & parameters);
 
   virtual ~Sigma() {}
 

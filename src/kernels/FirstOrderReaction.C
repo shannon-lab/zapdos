@@ -22,8 +22,8 @@ InputParameters validParams<FirstOrderReaction>()
   return params;
 }
 
-FirstOrderReaction::FirstOrderReaction(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+FirstOrderReaction::FirstOrderReaction(const InputParameters & parameters) :
+    Kernel(parameters),
     
     _reaction_coeff(getParam<Real>("reaction_coeff"))
 {}

@@ -27,7 +27,7 @@ InputParameters validParams<PotentialDrivenArtificialDiffElectrons>();
 class PotentialDrivenArtificialDiffElectrons : public Kernel
 {
 public:
-  PotentialDrivenArtificialDiffElectrons(const std::string & name, InputParameters parameters);
+  PotentialDrivenArtificialDiffElectrons(const InputParameters & parameters);
   virtual ~PotentialDrivenArtificialDiffElectrons();
 
 protected:

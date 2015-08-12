@@ -24,8 +24,8 @@ InputParameters validParams<SrcSelfBinaryReaction>()
   return params;
 }
 
-SrcSelfBinaryReaction::SrcSelfBinaryReaction(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+SrcSelfBinaryReaction::SrcSelfBinaryReaction(const InputParameters & parameters) :
+    Kernel(parameters),
     
     _reaction_coeff(getParam<Real>("reaction_coeff")),
     _stoich_coeff(getParam<Real>("stoich_coeff")),

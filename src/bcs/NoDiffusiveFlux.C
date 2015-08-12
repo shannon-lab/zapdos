@@ -21,8 +21,8 @@ InputParameters validParams<NoDiffusiveFlux>()
   return params;
 }
 
-NoDiffusiveFlux::NoDiffusiveFlux(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+NoDiffusiveFlux::NoDiffusiveFlux(const InputParameters & parameters) :
+  IntegratedBC(parameters),
 
   // Material Properties
 

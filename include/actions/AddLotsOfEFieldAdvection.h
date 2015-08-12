@@ -27,7 +27,7 @@ InputParameters validParams<AddLotsOfEFieldAdvection>();
 class AddLotsOfEFieldAdvection : public AddVariableAction
 {
 public:
-  AddLotsOfEFieldAdvection(const std::string & name, InputParameters params);
+  AddLotsOfEFieldAdvection(InputParameters params);
 
   virtual void act();
 };

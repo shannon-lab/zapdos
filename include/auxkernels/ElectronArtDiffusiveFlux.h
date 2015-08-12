@@ -11,7 +11,7 @@ InputParameters validParams<ElectronArtDiffusiveFlux>();
 class ElectronArtDiffusiveFlux : public AuxKernel
 {
 public:
-  ElectronArtDiffusiveFlux(const std::string & name, InputParameters parameters);
+  ElectronArtDiffusiveFlux(const InputParameters & parameters);
   
   virtual ~ElectronArtDiffusiveFlux() {}
   

@@ -12,8 +12,8 @@ InputParameters validParams<SimpleNetFluxBC>()
   return params;
 }
 
-SimpleNetFluxBC::SimpleNetFluxBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+SimpleNetFluxBC::SimpleNetFluxBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
   _x_boundary_species_current(getParam<Real>("x_boundary_species_current")),
   _y_boundary_species_current(getParam<Real>("y_boundary_species_current")),
   _z_boundary_species_current(getParam<Real>("z_boundary_species_current"))

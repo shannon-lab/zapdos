@@ -11,7 +11,7 @@ InputParameters validParams<ChargeDensity>();
 class ChargeDensity : public AuxKernel
 {
 public:
-  ChargeDensity(const std::string & name, InputParameters parameters);
+  ChargeDensity(const InputParameters & parameters);
   
   virtual ~ChargeDensity() {}
   

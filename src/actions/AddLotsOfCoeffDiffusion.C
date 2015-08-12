@@ -53,8 +53,8 @@ InputParameters validParams<AddLotsOfCoeffDiffusion>()
 }
 
 
-AddLotsOfCoeffDiffusion::AddLotsOfCoeffDiffusion(const std::string & name, InputParameters params) :
-  AddVariableAction(name, params)
+AddLotsOfCoeffDiffusion::AddLotsOfCoeffDiffusion(InputParameters params) :
+  AddVariableAction(params)
 {
 }
 

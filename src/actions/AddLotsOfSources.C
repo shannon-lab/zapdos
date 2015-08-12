@@ -53,8 +53,8 @@ InputParameters validParams<AddLotsOfSources>()
 }
 
 
-AddLotsOfSources::AddLotsOfSources(const std::string & name, InputParameters params) :
-  AddVariableAction(name, params)
+AddLotsOfSources::AddLotsOfSources(InputParameters params) :
+  AddVariableAction(params)
 {
 }
 

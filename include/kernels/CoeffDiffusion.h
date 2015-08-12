@@ -26,7 +26,7 @@ InputParameters validParams<CoeffDiffusion>();
 class CoeffDiffusion : public Diffusion
 {
 public:
-  CoeffDiffusion(const std::string & name, InputParameters parameters);
+  CoeffDiffusion(const InputParameters & parameters);
   virtual ~CoeffDiffusion();
 
 protected:

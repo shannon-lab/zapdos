@@ -23,8 +23,8 @@ InputParameters validParams<AnalyticalDiffIndicator>()
 }
 
 
-AnalyticalDiffIndicator::AnalyticalDiffIndicator(const std::string & name, InputParameters parameters) :
-    ElementIntegralIndicator(name, parameters),
+AnalyticalDiffIndicator::AnalyticalDiffIndicator(const InputParameters & parameters) :
+    ElementIntegralIndicator(parameters),
     _func(getFunction("function"))
 {
 }

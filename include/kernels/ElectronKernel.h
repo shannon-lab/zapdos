@@ -11,7 +11,7 @@ InputParameters validParams<ElectronKernel>();
 class ElectronKernel : public Kernel
 {
  public:
-  ElectronKernel(const std::string & name, InputParameters parameters);
+  ElectronKernel(const InputParameters & parameters);
   virtual ~ElectronKernel();
 
  protected:

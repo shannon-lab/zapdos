@@ -9,8 +9,8 @@ InputParameters validParams<SometimesAdvectionBC>()
     return params;
 }
 
-SometimesAdvectionBC::SometimesAdvectionBC(const std::string & name, InputParameters parameters) :
-  IntegratedBC(name, parameters),
+SometimesAdvectionBC::SometimesAdvectionBC(const InputParameters & parameters) :
+  IntegratedBC(parameters),
 
   // Parameters
   _velocity(getFunction("velocity_function")),

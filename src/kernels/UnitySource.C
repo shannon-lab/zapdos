@@ -7,8 +7,8 @@ InputParameters validParams<UnitySource>()
   return params;
 }
 
-UnitySource::UnitySource(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters)
+UnitySource::UnitySource(const InputParameters & parameters) :
+  Kernel(parameters)
 {
 }
 

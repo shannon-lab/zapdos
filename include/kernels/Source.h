@@ -11,7 +11,7 @@ InputParameters validParams<Source>();
 class Source : public Kernel
 {
  public:
-  Source(const std::string & name, InputParameters parameters);
+  Source(const InputParameters & parameters);
   virtual ~Source();
 
  protected:

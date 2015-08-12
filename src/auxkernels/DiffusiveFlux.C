@@ -23,9 +23,8 @@ InputParameters validParams<DiffusiveFlux>()
   return params;
 }
 
-DiffusiveFlux::DiffusiveFlux(const std::string & name,
-                       InputParameters parameters) :
-    AuxKernel(name, parameters),
+DiffusiveFlux::DiffusiveFlux(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     // Input Parameters
     

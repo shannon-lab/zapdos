@@ -26,8 +26,7 @@ class AdvectiveFlux : public AuxKernel
 {
  public:
 
-  AdvectiveFlux(const std::string & name,
-		   InputParameters parameters);
+  AdvectiveFlux(const InputParameters & parameters);
 
  protected:
 

@@ -26,7 +26,7 @@ class AnalyticalDiffIndicator :
   public ElementIntegralIndicator
 {
 public:
-  AnalyticalDiffIndicator(const std::string & name, InputParameters parameters);
+  AnalyticalDiffIndicator(const InputParameters & parameters);
   virtual ~AnalyticalDiffIndicator(){};
 
 protected:

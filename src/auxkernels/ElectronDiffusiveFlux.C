@@ -10,8 +10,8 @@ InputParameters validParams<ElectronDiffusiveFlux>()
   return params;
 }
 
-ElectronDiffusiveFlux::ElectronDiffusiveFlux(const std::string & name, InputParameters parameters) :
-    AuxKernel(name,parameters),
+ElectronDiffusiveFlux::ElectronDiffusiveFlux(const InputParameters & parameters) :
+    AuxKernel(parameters),
     
     _diffem(getMaterialProperty<Real>("diffem")),
     _em(coupledValue("em")),

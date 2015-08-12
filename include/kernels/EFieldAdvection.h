@@ -26,8 +26,7 @@ class EFieldAdvection : public Kernel
 {
  public:
 
-  EFieldAdvection(const std::string & name,
-		   InputParameters parameters);
+  EFieldAdvection(const InputParameters & parameters);
 
  protected:
 

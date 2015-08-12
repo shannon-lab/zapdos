@@ -13,8 +13,8 @@ InputParameters validParams<PotentialDrivenArtificialDiffEnergy>()
   return params;
 }
 
-PotentialDrivenArtificialDiffEnergy::PotentialDrivenArtificialDiffEnergy(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+PotentialDrivenArtificialDiffEnergy::PotentialDrivenArtificialDiffEnergy(const InputParameters & parameters) :
+    Kernel(parameters),
 
     // Input parameters
 

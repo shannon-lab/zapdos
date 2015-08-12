@@ -11,8 +11,8 @@ InputParameters validParams<ArsSource>()
   return params;
 }
 
-ArsSource::ArsSource(const std::string & name, InputParameters parameters) :
-  Kernel(name, parameters),
+ArsSource::ArsSource(const InputParameters & parameters) :
+  Kernel(parameters),
 
   // Input Parameters
 

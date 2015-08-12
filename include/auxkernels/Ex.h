@@ -29,7 +29,7 @@ InputParameters validParams<Ex>();
 class Ex : public AuxKernel
 {
 public:
-  Ex(const std::string & name, InputParameters parameters);
+  Ex(const InputParameters & parameters);
 
   virtual ~Ex() {}
 

@@ -11,7 +11,7 @@ InputParameters validParams<ZapdosApp>();
 class ZapdosApp : public MooseApp
 {
 public:
-  ZapdosApp(const std::string & name, InputParameters parameters);
+  ZapdosApp(InputParameters parameters);
   virtual ~ZapdosApp();
 
   static void registerApps();

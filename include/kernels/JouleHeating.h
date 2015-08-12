@@ -26,8 +26,7 @@ class JouleHeating : public Kernel
 {
  public:
 
-  JouleHeating(const std::string & name,
-		   InputParameters parameters);
+  JouleHeating(const InputParameters & parameters);
 
  protected:
 

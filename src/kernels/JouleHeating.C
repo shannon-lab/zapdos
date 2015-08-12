@@ -24,9 +24,8 @@ InputParameters validParams<JouleHeating>()
   return params;
 }
 
-JouleHeating::JouleHeating(const std::string & name,
-                       InputParameters parameters) :
-    Kernel(name, parameters),
+JouleHeating::JouleHeating(const InputParameters & parameters) :
+    Kernel(parameters),
     
     // Input Parameters
     

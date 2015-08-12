@@ -22,8 +22,8 @@ InputParameters validParams<ElectronTimeDerivative>()
   return params;
 }
 
-ElectronTimeDerivative::ElectronTimeDerivative(const std::string & name, InputParameters parameters) :
-    TimeKernel(name, parameters),
+ElectronTimeDerivative::ElectronTimeDerivative(const InputParameters & parameters) :
+    TimeKernel(parameters),
     _lumping(getParam<bool>("lumping"))
 
 {

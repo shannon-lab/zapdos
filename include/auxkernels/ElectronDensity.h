@@ -11,7 +11,7 @@ InputParameters validParams<ElectronDensity>();
 class ElectronDensity : public AuxKernel
 {
 public:
-  ElectronDensity(const std::string & name, InputParameters parameters);
+  ElectronDensity(const InputParameters & parameters);
   
   virtual ~ElectronDensity() {}
   
