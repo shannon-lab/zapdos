@@ -17,8 +17,8 @@ class ArpKernel : public Kernel
  protected:
   
   virtual Real computeQpResidual();
-  /* virtual Real computeQpJacobian(); */
-  /* virtual Real computeQpOffDiagJacobian(unsigned int jvar); */
+  virtual Real computeQpJacobian();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   // coupled vars
 
@@ -27,8 +27,6 @@ class ArpKernel : public Kernel
   unsigned int _em_id;
   VariableGradient & _grad_potential;
   unsigned int _potential_id;
-  /* VariableValue & _mean_en; */
-  /* unsigned int _mean_en_id; */
 
   // Material Properties
 
@@ -46,6 +44,9 @@ class ArpKernel : public Kernel
   Real  _Pe;
   Real  _vd_mag;
   Real  _delta;
+  RealVectorValue _em_flux;
+  RealVectorValue _d_em_flux_d_em;
+  RealVectorValue _d_em_flux_d_potential;
 };
 
 #endif /* ARPKERNEL_H */

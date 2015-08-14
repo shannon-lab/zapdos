@@ -17,8 +17,8 @@ class ElectronKernel : public Kernel
  protected:
   
   virtual Real computeQpResidual();
-  /* virtual Real computeQpJacobian(); */
-  /* virtual Real computeQpOffDiagJacobian(unsigned int jvar); */
+  virtual Real computeQpJacobian();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   // coupled vars
 
@@ -33,8 +33,9 @@ class ElectronKernel : public Kernel
   Real _Pe;
   Real _vd_mag;
   Real _delta;
-  /* RealVectorValue _flux; */
-  /* RealVectorValue _d_flux_d_u; */
+  RealVectorValue _flux;
+  RealVectorValue _d_flux_d_u;
+  RealVectorValue _d_flux_d_potential;
 
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _diffem;

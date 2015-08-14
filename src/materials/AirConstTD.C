@@ -11,10 +11,10 @@
 /*                                                              */
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
-#include "InterpolateTD.h"
+#include "AirConstTD.h"
 
 template<>
-InputParameters validParams<InterpolateTD>()
+InputParameters validParams<AirConstTD>()
 {
   InputParameters params = validParams<Material>();
 
@@ -28,7 +28,7 @@ InputParameters validParams<InterpolateTD>()
 }
 
 
-InterpolateTD::InterpolateTD(const InputParameters & parameters) :
+AirConstTD::AirConstTD(const InputParameters & parameters) :
     Material(parameters),
 
   _muem(declareProperty<Real>("muem")),
@@ -62,6 +62,7 @@ InterpolateTD::InterpolateTD(const InputParameters & parameters) :
   _k_boltz(declareProperty<Real>("k_boltz")),
   _vthermal_em(declareProperty<Real>("vthermal_em")),
   _vthermal_ip(declareProperty<Real>("vthermal_ip")),
+  
   _data(getUserObject<ProvideMobility>("data_provider")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
@@ -75,6 +76,7 @@ InterpolateTD::InterpolateTD(const InputParameters & parameters) :
   std::vector<Real> mobility;
   std::vector<Real> diffusivity;
   std::vector<Real> alpha;
+  std::vector<Real> eta;
   std::ifstream myfile ("/home/alexlindsay/zapdos/src/materials/td_air.txt");
   Real value;
 
@@ -89,6 +91,8 @@ InterpolateTD::InterpolateTD(const InputParameters & parameters) :
       diffusivity.push_back(value);
       myfile >> value;
       alpha.push_back(value);
+      myfile >> value;
+      eta.push_back(value);
     }
     myfile.close();
   }
@@ -98,16 +102,18 @@ InterpolateTD::InterpolateTD(const InputParameters & parameters) :
   _mobility_interpolation.setData(EField, mobility);
   _diffusivity_interpolation.setData(EField, diffusivity);
   _alpha_interpolation.setData(EField, alpha);
+  _eta_interpolation.setData(EField, eta);
 }
 
 void
-InterpolateTD::computeQpProperties()
+AirConstTD::computeQpProperties()
 {  
-  _muem[_qp] = _mobility_interpolation.sample(_grad_potential[_qp].size());
-  _diffem[_qp] = _diffusivity_interpolation.sample(_grad_potential[_qp].size());
+  _muem[_qp] = _data.mu_em();
+  _diffem[_qp] = _data.diff_em();
   _muip[_qp] = _data.mu_ip();
   _diffip[_qp] = _data.diff_ip();
-  _rate_coeff_ion[_qp] = _alpha_interpolation.sample(_grad_potential[_qp].size()); // rate_coeff_ion is synonymous with alpha in this case. 
+  _rate_coeff_ion[_qp] = 4.88e5; // Truly Morrow. Don't use Kang
+  _Eiz[_qp] = 1.77e7; // Truly Morrow. Don't use Kang
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
   _diffel[_qp] = 5.0/3.0*_diffem[_qp];
@@ -132,6 +138,6 @@ InterpolateTD::computeQpProperties()
   _IonAdvectiveFlux[_qp] = -_muip[_qp]*-_grad_potential[_qp](0)*std::exp(_ip[_qp]);
   _IonDiffusiveFlux[_qp] = -_diffip[_qp]*std::exp(_ip[_qp])*_grad_ip[_qp](0);
   _EField[_qp] = -_grad_potential[_qp](0);
-  _Source_term[_qp] = _rate_coeff_ion[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
-  _Source_term_coeff[_qp] = _rate_coeff_ion[_qp];
+  _Source_term[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size())*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
+  _Source_term_coeff[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size());
 }

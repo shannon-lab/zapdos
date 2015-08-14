@@ -79,6 +79,7 @@
 
 // Materials
 #include "Air.h"
+#include "AirConstTD.h"
 #include "NoCouplingAir.h"
 #include "BlockAverageDiffusionMaterial.h"
 #include "WD.h"
@@ -224,6 +225,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(AdvectiveFlux);
   registerAux(DiffusiveFlux);
   registerMaterial(Air);
+  registerMaterial(AirConstTD);
   registerMaterial(NoCouplingAir);
   registerMaterial(BlockAverageDiffusionMaterial);
   registerMaterial(WD);

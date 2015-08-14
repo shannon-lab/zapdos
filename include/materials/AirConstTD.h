@@ -11,22 +11,22 @@
 /*                                                              */
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
-#ifndef INTERPOLATETD_H_
-#define INTERPOLATETD_H_
+#ifndef AIRCONSTTD_H_
+#define AIRCONSTTD_H_
 
 #include "Material.h"
 #include "ProvideMobility.h"
 #include "LinearInterpolation.h"
 
-class InterpolateTD;
+class AirConstTD;
 
 template<>
-InputParameters validParams<InterpolateTD>();
+InputParameters validParams<AirConstTD>();
 
-class InterpolateTD : public Material
+class AirConstTD : public Material
 {
 public:
-  InterpolateTD(const InputParameters & parameters);
+  AirConstTD(const InputParameters & parameters);
 
 protected:
   virtual void computeQpProperties();
@@ -34,6 +34,7 @@ protected:
   LinearInterpolation _mobility_interpolation;
   LinearInterpolation _diffusivity_interpolation;
   LinearInterpolation _alpha_interpolation;
+  LinearInterpolation _eta_interpolation;
 
   MaterialProperty<Real>  & _muem;
   MaterialProperty<Real>  & _diffem;
@@ -76,4 +77,4 @@ protected:
   VariableGradient & _grad_ip;
 };
 
-#endif //INTERPOLATETD_H
+#endif //AIRCONSTTD_H

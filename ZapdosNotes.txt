@@ -132,3 +132,79 @@ If trying to solve singular systems with direct solvers (or an incomplete factor
 Files I need to fix after constructor update: RFIon, DCIon, RFElectron, DCElectron (both C and h files)
 
 So for the RF plasma, keep in mind that I only calculated transport parameters for an electric field ranging from 1e3 to 1e6 V/m. There are problems with convergence for alpha with high electric fields (for this low pressure case of 1 torr). So after simulating, check and see whether the electric field stayed within those bounds. 
+
+Here is Comsol's electron and electron energy stabilization terms:
+
+N_A_const*exp(-Ne*ccp.zeta)*test(Ne)
+N_A_const*exp(-En*ccp.zeta)*test(En)
+
+Simple and elegant. Only becomes large when Ne or En is small. Remember that Ne and En are the log of the actual density and total electron energy. This can be easily implemented when I return to an energy equation formulation. (Hell it could be implemented right now if I wanted to). Zeta is a parameter set by the user. Please start using user parameters again.
+
+Having a lot of problems with diverged line search when the solution approaches steady state.
+
+We want to solve F<mat>(x<vec>) = 0 where F is a nonlinear system of equations. (n equations, n unknowns in x<vec>)
+
+Newton's method: x_k+1<vec> = x_k<vec> - J_inverse<mat>(x_k<vec>) * F<mat>(x_k<vec>)
+
+J = F_prime, e.g. the Jacobian is the derivative of F with respect to the system variables (x)
+
+In order to use this method, the Jacobian must be invertible, e.g. it cannot be singular. Singular matrices cannot be inverted. 
+
+Analytic expressions for the Jacobian can be provided by the user, or they can be calculated somewhat automatically (and approximately) by finite differencing F (the residuals). 
+
+For a Newton solve in which the Jacobian elements are provided by the user, the -mat_fd_type makes no sense. The only time -mat_fd_type makes sense is when the Jacobian is calculated with finite differencing. One can also use a matrix free formulation, and then the option is -mat_mffd_type. 
+
+To my mind the Jacobian and preconditioning matrices are two different matrices. But I'm not sure. 
+
+Pre-conditioning is done in iterative linear solves. LU is a direct solver; it's a full inversion of the Jacobian matrix. Thus, if we're using LU, there is no preconditioning. 
+
+From Wikipedia for solving the system:
+
+A*x = b, we instead solve A*P_inverse*y = b, where y = P*x (right preconditioning) or P_inverse*(A*x-b) = 0 (left preconditioning, apparently more common). 
+
+"Typically there is a trade-off in the choice of P. Since the operator P^{-1} must be applied at each step of the iterative linear solver, it should have a small cost (computing time) of applying the P^{-1} operation. The cheapest preconditioner would therefore be P=I since then P^{-1}=I. Clearly, this results in the original linear system and the preconditioner does nothing. At the other extreme, the choice P=A gives P^{-1}A = AP^{-1} = I, which has optimal condition number of 1, requiring a single iteration for convergence; however in this case P^{-1}=A^{-1}, and applying the preconditioner is as difficult as solving the original system. One therefore chooses P as somewhere between these two extremes, in an attempt to achieve a minimal number of linear iterations while keeping the operator P^{-1} as simple as possible. Some examples of typical preconditioning approaches are detailed below."
+
+Thus to give the minimal number of linear iterations, P should equal A. (However, minimal number of linear iterations probably is not your only criteria for an efficient, accurate simulation). So A, wikipedia's notation, is actually the Jacobian in my problems. Thus the perfect preconditioner (in terms of least numer of linear iterations) for the linear solve, would actually be the Jacobian itself!; using the Jacobian itself would result in only one linear iteration. 
+
+-snes_mf_operator: Activates default matrix-free Jacobian-vector products, and a user-provided preconditioning matrix as set by SNESSetJacobian() 
+
+MOOSE delineates two things: the preconditioning matrix, and the preconditioning process. 
+
+Oh, very interesting. Looking at the doco for SNESSetJacobian, there are two input matrices: A, the Jacobian matrix, and B, the preconditioner matrix, which "is usually the same as the Jacobian."
+
+Thus Jed Brown's suggestion of using: "-snes_mf_operator -pc_type lu to see if the Jacobian you are
+using is wrong." still doesn't make total sense to me. Ok, I think all of it is mostly making sense now. -snes_mf_operator activates default matrix-free Jacobian-vector products, and a user-provided preconditioning matrix as set by SNESSetJacobian(). As soon as we move to a matrix-free formulation, I believe we have to be using iterative linear solves. And that means using a preconditioner. How do we create the preconditioning matrix? By default it just uses the diagonals, e.g. whatever diagonal jacobian elements we've coded. Using SMP, full=true, we can say to build the entire preconditioning matrix, setting it equal (hopefully) to the Jacobian. However, we can also create the preconditioning matrix using finite differencing of the residual statements in the hope of creating a good approximation of the jacobian.
+
+My hypothesis if I turn off the FDP preconditioner and use Jed's -snes_mf_operator -pc_type lu is that my preconditioning matrix will be formed from my diagonal jacobians (which are not well coded) and then I will be doing a "direct" matrix-free solve using lu. So I think that's what I saw; I saw some linear solves that were quite terrible. I hypothesize that that's because my preconditioning matrix was terrible. However, something that was quite interesting, and that makes me kind of happy, is that with Jed's options, it only took one non-linear iteration to solve the first time step. I'm not sure that I've seen that before. The solve failed at 2.94834e-6 seconds. Ok, now I'm going to try with Jed's options but with my preconditiong matrix set equal to the finite differenced jacobian. I'm hoping that this eliminates any bad linear solves. That's my hypothesis at least. 
+
+When doing direct matrix solves, the Jacobian affects the nonlinear solution strategy. However, in matrix free solves, the Jacobian is not actually present. It's only loosely present in that you use some emulation of the Jacobian in constructing your preconditioner that's used in the linear iterative solve. So in a Newton matrix solve, the effect of the Jacobian will be pronounced in the non-linear steps. In a New matrix free solve, the effect of the Jacobian will be pronounced in the linear steps. So I could play around with -mat_mffd_type
+
+I believe that in any matrix free formulation is going to involve finite differences and a differencing parameter. E.g. the action of the Jacobian on a vector is approximated using finite differences! So I believe I actually have two finite differencing operations coming into play: 1) I am constructing my Jacobian/Preconditionig matrix using finite differencing of my residuals. 2) Then I am approximating the action of my Jacoban/Preconditioning matrix on a vector using finite differences. #2 comes into play when I decide to go to a matrix free formulation. It's possible to have no finite differencing in your problem: 1) construct your jacobian using analytical expressions 2) don't use a matrix free formulation. Simulation using the FDP preconditioner seems quite stable. It would probably go all the way to completion if I let it run. First divergence occurred at 1.14239e-5 seconds. Going to go back to direct LU and see when first divergence occurs. With direct LU, first divergence occurs at 1.37097e-5 seconds, so a little better.
+
+The default KSP type is GMRES with a restart of 30, using modified Gram-Schmidt orthogonalization. 
+
+With default differencing parameter (I believe wp), here's Jacobian results:
+
+Norm of matrix ratio 4.08771e-07 difference 0.0207982 (user-defined state)
+Norm of matrix ratio 6.25133e-09 difference 8.56263e+09 (constant state -1.0)
+Norm of matrix ratio 5.08948e-09 difference 9.62509e+08 (constant state 1.0)
+
+With mat_fd_type=ds, Jacobian results:
+
+Norm of matrix ratio 0.00932033 difference 474.28 (user-defined state)
+Norm of matrix ratio 6.4317e-29 difference 8.80968e-11 (constant state -1.0)
+Norm of matrix ratio 3.21208e-27 difference 6.0746e-10 (constant state 1.0)
+
+With mat_fd_type=ds, mat_fd_coloring_err=1e-6, Jacobian results:
+
+Norm of matrix ratio 7.87438e-05 difference 4.00641 (user-defined state)
+Norm of matrix ratio 4.66307e-07 difference 6.38715e+11 (constant state -1.0)
+Norm of matrix ratio 5.01161e-07 difference 9.47782e+10 (constant state 1.0)
+
+I'm curious what the default mat_fd_coloring_err is, or if there is a default So if low numbers are generally better, maybe I should try ds? The two constant states are amazing but the user-defined state doesn't seem to be as good as wp. Again, I don't know what that means. -snes_type = test, can only be run if solve_type is set to NEWTON. It cannot be used JFNK. (matrix free methods). 
+
+With ds, the solve first diverged at 1.37097e-5 seconds, so it appears to have been identical to wp. With mat_fd_coloring_err=1e-6, the solve crashed almost immediately. So that pretty well reflected the Jacobian results!
+
+In the IntTD.C materials file, I took away eta, so all input files need to be free of an eta column.
+
+So I've coded the Jacobians for the kernels; I forgot about the bloody boundary conditions!!!

@@ -5,7 +5,7 @@
   # boundary_name = 'left right'
   type = GeneratedMesh
   dim = 1
-  nx = 4000
+  nx = 100
   xmin = 0.002
   xmax = .05
 []
@@ -16,11 +16,9 @@
 []
 
 [Preconditioning]
-  [./SMP]
-    type = FDP
+  [./smp]
+    type = SMP
     full = true
-    # off_diag_row = 'em'
-    # off_diag_column = 'potential'
   [../]
 []
 
@@ -28,13 +26,17 @@
   type = Transient
  end_time = 1e-1
  solve_type = NEWTON
- petsc_options_iname = '-snes_converged_reason -snes_stol -pc_type -ksp_type -pc_factor_shift_type -pc_factor_shift_amount' #-mat_fd_type'
- petsc_options_value = 'true 0 lu preonly NONZERO 1.e-10' #wp'
+ # petsc_options_iname = '-snes_converged_reason -snes_stol -pc_type -pc_factor_shift_type -pc_factor_shift_amount' #-mat_fd_type'
+ # petsc_options_value = 'true 0 lu NONZERO 1.e-10' #wp'
+ # petsc_options_iname = '-snes_converged_reason -snes_stol -snes_mf_operator -pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_converged_reason'
+ # petsc_options_value = 'true 0 true lu NONZERO 1.e-10 true'
+ petsc_options_iname = '-snes_converged_reason -ksp_type -pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_converged_reason -snes_type'
+ petsc_options_value = 'true preonly lu NONZERO 1.e-10 true test'
  nl_rel_tol = 1e-6
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- nl_abs_tol = 1e-6
+ nl_abs_tol = 1e-5
   l_max_its = 10
  nl_max_its = 50
   dtmin = 0.9e-9
@@ -55,8 +57,8 @@
   [./out]
     type = Exodus
     output_material_properties = true
-    # show_material_properties = 'ElectronTotalFluxMag ElectronTotalFluxMagSizeForm ElectronTotalFlux ElectronAdvectiveFlux ElectronDiffusiveFlux EField Source_term Source_term_coeff'
-    show_material_properties = 'ElectronTotalFlux ElectronAdvectiveFlux ElectronDiffusiveFlux IonTotalFlux IonAdvectiveFlux IonDiffusiveFlux EField'
+    show_material_properties = 'EField'
+    # show_material_properties = 'ElectronTotalFlux ElectronAdvectiveFlux ElectronDiffusiveFlux IonTotalFlux IonAdvectiveFlux IonDiffusiveFlux EField'
   [../]
 []
 
@@ -84,13 +86,13 @@
     variable = Arp
   [../]
   [./electrons]
-    type = ElectronKernelIntTD
+    type = ElectronKernel
     variable = em
     # mean_en = mean_en
     potential = potential
   [../]
   [./ions]
-    type = IonKernelIntTD
+    type = ArpKernel
     variable = Arp
     em = em
     # mean_en = mean_en
@@ -112,7 +114,7 @@
 
 [Variables]
   [./potential]
-    scaling = 1e-2
+    scaling = 1e-5
   [../]
   [./em]
     scaling = 1e-18
@@ -323,9 +325,9 @@
 []
 
 [Materials]
-  [./argon]
+  [./air]
     block = 0
-    type = InterpolateTD
+    type = AirConstTD
     data_provider = data_provider
     em = em
     potential = potential
