@@ -31,6 +31,7 @@ NeumannCircuitVoltage::NeumannCircuitVoltage(const InputParameters & parameters)
     _V_bat(getFunction("function")),
     _data(getUserObject<ProvideMobility>("data_provider")),
     _ip(coupledValue("ip")),
+    _ip_id(coupled("ip")),
     _se_coeff(getMaterialProperty<Real>("se_coeff")),
     _muip(getMaterialProperty<Real>("muip"))
 {
@@ -40,4 +41,21 @@ Real
 NeumannCircuitVoltage::computeQpResidual()
 {
   return _test[_i][_qp] * (_u[_qp] + _V_bat.value(_t, _q_point[_qp]))/((1+_se_coeff[_qp])*_data.coulomb_charge()*_muip[_qp]*std::exp(_ip[_qp])*_data.ballast_resist()*_data.electrode_area());
+}
+
+Real
+NeumannCircuitVoltage::computeQpJacobian()
+{
+  return _test[_i][_qp] * (_phi[_j][_qp])/((1+_se_coeff[_qp])*_data.coulomb_charge()*_muip[_qp]*std::exp(_ip[_qp])*_data.ballast_resist()*_data.electrode_area());
+}
+
+Real
+NeumannCircuitVoltage::computeQpOffDiagJacobian(unsigned int jvar)
+{
+  if (jvar == _ip_id) {
+
+    return _test[_i][_qp] * (_u[_qp] + _V_bat.value(_t, _q_point[_qp]))/((1+_se_coeff[_qp])*_data.coulomb_charge()*_muip[_qp]*_data.ballast_resist()*_data.electrode_area())*std::exp(-_ip[_qp])*-_phi[_j][_qp];
+  }
+  else
+    return 0.0;
 }

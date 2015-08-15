@@ -35,13 +35,16 @@ public:
 
 protected:
   virtual Real computeQpResidual();
+  virtual Real computeQpJacobian();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   /// The function being used for setting the value
   Function & _V_bat;
   const ProvideMobility & _data;
-VariableValue & _ip;
-const MaterialProperty<Real> & _se_coeff;
-const MaterialProperty<Real> & _muip;
+  VariableValue & _ip;
+  unsigned int _ip_id;
+  const MaterialProperty<Real> & _se_coeff;
+  const MaterialProperty<Real> & _muip;
 };
 
 #endif // NEUMANNCIRCUITVOLTAGE_H
