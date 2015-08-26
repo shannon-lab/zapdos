@@ -210,3 +210,69 @@ In the IntTD.C materials file, I took away eta, so all input files need to be fr
 So I've coded the Jacobians for the kernels; I forgot about the bloody boundary conditions!!!
 
 A huge damn victory for Moose and Zapdos tonight!!!!!! Using my analytical jacobian, a Newton solve, a direct LU method, I solved the problem to steady state in 168 seconds :-) Take that comsol!!!!
+
+Testing Jacobian after adding back in the Electron Energy equation. Hand-coded Jacobian:
+
+Norm of matrix ratio 0.00756585 difference 384.97 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+FDP Jacobian:
+
+Norm of matrix ratio 3.78445e-06 difference 0.192568 (user-defined state)
+Norm of matrix ratio 1.21061e-07 difference 1.65821e+11 (constant state -1.0)
+Norm of matrix ratio 1.22993e-07 difference 2.326e+10 (constant state 1.0)
+
+Without BCs:
+
+Norm of matrix ratio 0.00756585 difference 384.97 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+Without electron energy time derivative:
+
+Norm of matrix ratio 0.00756608 difference 384.97 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+Without electron energy kernel:
+
+Norm of matrix ratio 3.96561e-06 difference 0.201765 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+That last test kind of reveals where the error is, doesn't it?
+
+After maybe modifying the source terms in the ElectronEnergyKernel:
+
+Norm of matrix ratio 0.00756585 difference 384.97 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+After removing Joule heating:
+
+Norm of matrix ratio 0.00756585 difference 384.97 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+After removing all but advection and diffusion:
+
+Norm of matrix ratio 9.24413e-06 difference 0.470329 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+Same but using FDP:
+
+Norm of matrix ratio 3.78303e-06 difference 0.192476 (user-defined state)
+Norm of matrix ratio 1.21061e-07 difference 1.65821e+11 (constant state -1.0)
+Norm of matrix ratio 1.22993e-07 difference 2.326e+10 (constant state 1.0)
+
+With all physics in ElectronEnergyKernel removed:
+
+Norm of matrix ratio 3.96561e-06 difference 0.201765 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+Two things to do:
+1) Make a couple of results summary slides of what I've done so far in Zapdos
+2) 5 modules (kernels, BCs) I would want to add to make Zapdos/Moose relevant for broader LTP community

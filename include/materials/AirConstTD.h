@@ -42,6 +42,8 @@ protected:
   MaterialProperty<Real>  & _diffip;
   MaterialProperty<Real>  & _rate_coeff_ion;
   MaterialProperty<Real>  & _Eiz;
+  MaterialProperty<Real>  & _rate_coeff_ion_en;
+  MaterialProperty<Real>  & _Eiz_en;
   MaterialProperty<Real>  & _Ar;
   MaterialProperty<Real> &  _muel;
   MaterialProperty<Real> &  _diffel;
@@ -67,6 +69,7 @@ protected:
   MaterialProperty<Real> &  _k_boltz;
   MaterialProperty<Real> &  _vthermal_em;
   MaterialProperty<Real> &  _vthermal_ip;
+  MaterialProperty<Real> &  _N_A;
 
   const ProvideMobility & _data;
 

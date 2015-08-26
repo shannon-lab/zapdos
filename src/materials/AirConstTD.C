@@ -37,6 +37,8 @@ AirConstTD::AirConstTD(const InputParameters & parameters) :
     _diffip(declareProperty<Real>("diffip")),
     _rate_coeff_ion(declareProperty<Real>("rate_coeff_ion")),
     _Eiz(declareProperty<Real>("Eiz")),
+    _rate_coeff_ion_en(declareProperty<Real>("rate_coeff_ion_en")),
+    _Eiz_en(declareProperty<Real>("Eiz_en")),    
     _Ar(declareProperty<Real>("Ar")),
     _muel(declareProperty<Real>("muel")),
     _diffel(declareProperty<Real>("diffel")),
@@ -62,6 +64,7 @@ AirConstTD::AirConstTD(const InputParameters & parameters) :
   _k_boltz(declareProperty<Real>("k_boltz")),
   _vthermal_em(declareProperty<Real>("vthermal_em")),
   _vthermal_ip(declareProperty<Real>("vthermal_ip")),
+  _N_A(declareProperty<Real>("N_A")),
   
   _data(getUserObject<ProvideMobility>("data_provider")),
 
@@ -71,39 +74,7 @@ AirConstTD::AirConstTD(const InputParameters & parameters) :
   _grad_em(isCoupled("em") ? coupledGradient("em") : _grad_zero),
   _grad_ip(isCoupled("ip") ? coupledGradient("ip") : _grad_zero)
 
-{
-  std::vector<Real> EField;
-  std::vector<Real> mobility;
-  std::vector<Real> diffusivity;
-  std::vector<Real> alpha;
-  std::vector<Real> eta;
-  std::ifstream myfile ("/home/alexlindsay/zapdos/src/materials/td_air.txt");
-  Real value;
-
-  if (myfile.is_open())
-  {
-    while ( myfile >> value )
-    {
-      EField.push_back(value);
-      myfile >> value;
-      mobility.push_back(value);
-      myfile >> value;
-      diffusivity.push_back(value);
-      myfile >> value;
-      alpha.push_back(value);
-      myfile >> value;
-      eta.push_back(value);
-    }
-    myfile.close();
-  }
-
-  else std::cout << "Unable to open file"; 
-
-  _mobility_interpolation.setData(EField, mobility);
-  _diffusivity_interpolation.setData(EField, diffusivity);
-  _alpha_interpolation.setData(EField, alpha);
-  _eta_interpolation.setData(EField, eta);
-}
+{}
 
 void
 AirConstTD::computeQpProperties()
@@ -112,8 +83,10 @@ AirConstTD::computeQpProperties()
   _diffem[_qp] = _data.diff_em();
   _muip[_qp] = _data.mu_ip();
   _diffip[_qp] = _data.diff_ip();
-  _rate_coeff_ion[_qp] = 4.88e5; // Truly Morrow. Don't use Kang
-  _Eiz[_qp] = 1.77e7; // Truly Morrow. Don't use Kang
+  _rate_coeff_ion[_qp] = 4.88e5; // Truly Morrow. Don't use Kang. LFA
+  _Eiz[_qp] = 1.77e7; // Truly Morrow. Don't use Kang. LFA
+  _rate_coeff_ion_en[_qp] = 1e-15; // Arbitrary choice
+  _Eiz_en[_qp] = 12.0; // Arbitrary choice
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
   _diffel[_qp] = 5.0/3.0*_diffem[_qp];
@@ -128,6 +101,7 @@ AirConstTD::computeQpProperties()
   _k_boltz[_qp] = 1.38e-23;
   _vthermal_em[_qp] = 1.6*sqrt(_e[_qp]*_Tem_lfa[_qp]/_mem[_qp]);
   _vthermal_ip[_qp] = 1.6*sqrt(_k_boltz[_qp]*_Tip_lfa[_qp]/_mip[_qp]);
+  _N_A[_qp] = 6.02e23; 
 
   _ElectronTotalFluxMag[_qp] = std::sqrt((-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp])*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]));
   _ElectronTotalFluxMagSizeForm[_qp] = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();

@@ -4,6 +4,8 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "IonKernelEnergyForm.h"
+#include "ElectronKernelEnergyForm.h"
 #include "ElectronKernelIntTD.h"
 #include "IonKernelIntTD.h"
 #include "AdvectionDiffusionKernel.h"
@@ -155,6 +157,8 @@ ZapdosApp::registerApps()
 void
 ZapdosApp::registerObjects(Factory & factory)
 {
+  registerKernel(ElectronKernelEnergyForm);
+  registerKernel(IonKernelEnergyForm);
   registerKernel(IonKernelIntTD);
   registerKernel(AdvectionDiffusionKernel);
   registerKernel(CoeffDiffusion);

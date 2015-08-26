@@ -29,16 +29,17 @@ ElectronEnergyKernel::ElectronEnergyKernel(const InputParameters & parameters) :
   _Ar(getMaterialProperty<Real>("Ar")),
   _mem(getMaterialProperty<Real>("mem")),
   _mip(getMaterialProperty<Real>("mip")),
-  _Eiz(getMaterialProperty<Real>("Eiz")),
-  _rate_coeff_ion(getMaterialProperty<Real>("rate_coeff_ion")),
+  _Eiz_en(getMaterialProperty<Real>("Eiz_en")),
+  _rate_coeff_ion_en(getMaterialProperty<Real>("rate_coeff_ion_en")),
   _rate_coeff_elastic(getMaterialProperty<Real>("rate_coeff_elastic")),
+  _N_A(getMaterialProperty<Real>("N_A"))
 
 // Kernel members
 
-  _alpha(0.0),
-  _Pe(0.0),
-  _vd_mag(0.0),
-  _delta(0.0)
+  // _alpha(0.0),
+  // _Pe(0.0),
+  // _vd_mag(0.0),
+  // _delta(0.0)
 {}
 
 ElectronEnergyKernel::~ElectronEnergyKernel()
@@ -47,33 +48,37 @@ ElectronEnergyKernel::~ElectronEnergyKernel()
 Real
 ElectronEnergyKernel::computeQpResidual()
 {
-  _vd_mag = std::abs(_muel[_qp]*_grad_potential[_qp].size());
-  _Pe = _vd_mag*_current_elem->hmax()/_diffel[_qp];
-  _alpha = std::min(1.0,_Pe/6.0);
-  _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
+  // _vd_mag = std::abs(_muel[_qp]*_grad_potential[_qp].size());
+  // _Pe = _vd_mag*_current_elem->hmax()/_diffel[_qp];
+  // _alpha = std::min(1.0,_Pe/6.0);
+  // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
   
-  return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muel[_qp]*-_grad_potential[_qp] // Advective motion
-						 -_diffel[_qp]*_grad_u[_qp]) // Diffusive motion
-         +_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_potential[_qp] // Joule Heating
-						 -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]) // Joule Heating
-	 -_test[_i][_qp]*_rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/(2.0/3*std::exp(_u[_qp]-_em[_qp])))*_Ar[_qp]*std::exp(_em[_qp])*-_Eiz[_qp] // Energy loss from ionization. Reaction rate formulation
-         -_test[_i][_qp]*-_rate_coeff_elastic[_qp]*_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]) // Energy loss from elastic collisions
-	 -_grad_test[_i][_qp]*(-_delta*std::exp(_u[_qp])*_grad_u[_qp]); // Diffusion stabilization
+  // return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muel[_qp]*-_grad_potential[_qp] // Advective motion
+						 // -_diffel[_qp]*_grad_u[_qp]); // Diffusive motion
+         // +_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_potential[_qp] // Joule Heating
+						 // -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]) // Joule Heating
+	 // -_test[_i][_qp]*_rate_coeff_ion_en[_qp]*std::exp(-_Eiz_en[_qp]/(2.0/3*std::exp(_u[_qp]-_em[_qp])))*_Ar[_qp]*std::exp(_em[_qp])*-_Eiz_en[_qp] // Energy loss from ionization. Reaction rate formulation
+         // -_test[_i][_qp]*-_rate_coeff_elastic[_qp]*_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]) // Energy loss from elastic collisions
+    // -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp]); // Source stabilization
+	 // -_grad_test[_i][_qp]*(-_delta*std::exp(_u[_qp])*_grad_u[_qp]); // Diffusion stabilization
+  return 0.0;
 }
 
 Real
 ElectronEnergyKernel::computeQpJacobian()
 {
-  _vd_mag = std::abs(_muel[_qp]*_grad_potential[_qp].size());
-  _Pe = _vd_mag*_current_elem->hmax()/_diffel[_qp];
-  _alpha = std::min(1.0,_Pe/6.0);
-  _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
+  // _vd_mag = std::abs(_muel[_qp]*_grad_potential[_qp].size());
+  // _Pe = _vd_mag*_current_elem->hmax()/_diffel[_qp];
+  // _alpha = std::min(1.0,_Pe/6.0);
+  // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
   
-  return -_grad_test[_i][_qp]*(-_muel[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp] // Advective motion
-						 -_diffel[_qp]*_grad_phi[_j][_qp]*std::exp(_u[_qp])-_diffel[_qp]*_grad_u[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]) // Diffusive motion
-	 -_test[_i][_qp]*_rate_coeff_ion[_qp]*3.0/2*_Eiz[_qp]*std::exp(-_Eiz[_qp]/(2.0/3*std::exp(_u[_qp]-_em[_qp])))*std::exp(_em[_qp]-_u[_qp])*_phi[_j][_qp]*_Ar[_qp]*std::exp(_em[_qp])*-_Eiz[_qp] // Energy loss from ionization
-         -_test[_i][_qp]*-_rate_coeff_elastic[_qp]*_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp])*_phi[_j][_qp] // Energy loss from elastic collisions
-	 -_grad_test[_i][_qp]*(-_delta*(std::exp(_u[_qp])*_grad_phi[_j][_qp]+std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp])); // Diffusion stabilization
+  // return -_grad_test[_i][_qp]*(-_muel[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp] // Advective motion
+			       // -_diffel[_qp]*_grad_phi[_j][_qp]*std::exp(_u[_qp])-_diffel[_qp]*_grad_u[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]); // Diffusive motion
+    // -_test[_i][_qp]*_rate_coeff_ion_en[_qp]*_Ar[_qp]*std::exp(_em[_qp])*3.0/2*_Eiz_en[_qp]*std::exp(-_Eiz_en[_qp]/(2.0/3*std::exp(_u[_qp]-_em[_qp])))*std::exp(_em[_qp]-_u[_qp])*_phi[_j][_qp]*-_Eiz_en[_qp] // Reaction source
+         // -_test[_i][_qp]*-_rate_coeff_elastic[_qp]*_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp])*_phi[_j][_qp] // Energy loss from elastic collisions
+    // -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp])*-1.0*_phi[_j][_qp]; // Source stabilization
+	 // -_grad_test[_i][_qp]*(-_delta*(std::exp(_u[_qp])*_grad_phi[_j][_qp]+std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp])); // Diffusion stabilization
+  return 0.0;
 }
 
 Real
@@ -81,18 +86,19 @@ ElectronEnergyKernel::computeQpOffDiagJacobian(unsigned int jvar)
 {
 
   if (jvar == _potential_id) {
-    return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muel[_qp]*-_grad_phi[_j][_qp]) // Advective motion
-           +_test[_i][_qp]*(-_grad_phi[_j][_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_potential[_qp] // Joule Heating
-						 -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]) // Joule Heating
-			    -_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_phi[_j][_qp]));
+    // return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muel[_qp]*-_grad_phi[_j][_qp]); // Advective motion
+           // +_test[_i][_qp]*(-_grad_phi[_j][_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_potential[_qp] // Joule Heating
+						 // -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]) // Joule Heating
+			    // -_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_phi[_j][_qp])); // Joule Heating
+    return 0.0;
   }
 
   else if (jvar == _em_id) {
   
-    return +_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]*-_grad_potential[_qp] // Joule Heating
-  	       					-_diffem[_qp]*(std::exp(_em[_qp])*_grad_phi[_j][_qp]+std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp])) // Joule Heating
-  	   -_test[_i][_qp]*_rate_coeff_ion[_qp]*((-3.0/2*_Eiz[_qp]*std::exp(2.0*_em[_qp]-_u[_qp])+std::exp(_em[_qp]))*std::exp(-3.0/2*_Eiz[_qp]*std::exp(_em[_qp]-_u[_qp]))*_phi[_j][_qp])*-_Eiz[_qp]; // Energy loss from ionization. Reaction rate formulation
-    
+    // return +_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]*-_grad_potential[_qp] // Joule Heating
+  	       					// -_diffem[_qp]*(std::exp(_em[_qp])*_grad_phi[_j][_qp]+std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp])) // Joule Heating
+// return      -_test[_i][_qp]*_rate_coeff_ion_en[_qp]*_Ar[_qp]*(std::exp(_em[_qp])*std::exp(-_Eiz_en[_qp]/(2.0/3*std::exp(_u[_qp]-_em[_qp]))) + std::exp(_em[_qp])*-3.0/2*_Eiz_en[_qp]*std::exp(-3.0/2*_Eiz_en[_qp]*std::exp(_em[_qp]-_u[_qp]))*std::exp(_em[_qp]-_u[_qp]))*_phi[_j][_qp]*_Eiz_en[_qp]; // Reaction source
+    return 0.0;
   }
 
   else {

@@ -37,16 +37,17 @@ class ElectronEnergyKernel : public Kernel
   const MaterialProperty<Real> & _Ar;
   const MaterialProperty<Real> & _mem;
   const MaterialProperty<Real> & _mip;
-  const MaterialProperty<Real> & _Eiz;
-  const MaterialProperty<Real> & _rate_coeff_ion;
+  const MaterialProperty<Real> & _Eiz_en;
+  const MaterialProperty<Real> & _rate_coeff_ion_en;
   const MaterialProperty<Real> & _rate_coeff_elastic;
+  const MaterialProperty<Real> & _N_A;
 
   // kernel members
 
-  Real _alpha;
-  Real _Pe;
-  Real _vd_mag;
-  Real _delta;
+  /* Real _alpha; */
+  /* Real _Pe; */
+  /* Real _vd_mag; */
+  /* Real _delta; */
 };
 
 #endif /* ELECTRONENERGYKERNEL_H */

@@ -5,7 +5,7 @@
   # boundary_name = 'left right'
   type = GeneratedMesh
   dim = 1
-  nx = 4000
+  nx = 100
   xmin = 0.002
   xmax = .05
 []
@@ -26,8 +26,8 @@
   type = Transient
   end_time = 1e-1
   solve_type = NEWTON
-  petsc_options_iname = '-snes_converged_reason -pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_converged_reason -ksp_type'
-  petsc_options_value = 'true lu NONZERO 1.e-10 true preonly'
+  petsc_options_iname = '-snes_converged_reason -pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_converged_reason -ksp_type -snes_type'
+  petsc_options_value = 'true lu NONZERO 1.e-10 true preonly test'
  # nl_rel_tol = 1e-8
  # l_tol = 1e-3
  # trans_ss_check = true
@@ -69,10 +69,10 @@
 []
 
 [Kernels]
-  # [./el_energy_time_deriv]
-  #   type = TimeDerivativeElectronTemp
-  #   variable = mean_en
-  # [../]
+  [./el_energy_time_deriv]
+    type = ElectronTimeDerivative
+    variable = mean_en
+  [../]
   [./em_time_deriv]
     type = ElectronTimeDerivative
     variable = em
@@ -82,16 +82,16 @@
     variable = Arp
   [../]
   [./electrons]
-    type = ElectronKernel
+    type = ElectronKernelEnergyForm
     variable = em
-    # mean_en = mean_en
+    mean_en = mean_en
     potential = potential
   [../]
   [./ions]
-    type = ArpKernel
+    type = IonKernelEnergyForm
     variable = Arp
     em = em
-    # mean_en = mean_en
+    mean_en = mean_en
     potential = potential
   [../]
   [./potential]
@@ -100,11 +100,11 @@
     em = em
     Arp = Arp
   [../]
-  # [./el_energy]
-  #   type = ElectronEnergyKernel
-  #   variable = mean_en
-  #   em = em
-  #   potential = potential
+  [./el_energy]
+    type = ElectronEnergyKernel
+    variable = mean_en
+    em = em
+    potential = potential
   [../]
 []
 
@@ -118,9 +118,9 @@
   [./Arp]
     scaling = 1e-18
   [../]
-  # [./mean_en]
-  #   # scaling = 1e-11
-  # [../]
+  [./mean_en]
+    scaling = 1e-18
+  [../]
 []
 
 [AuxVariables]
@@ -158,8 +158,8 @@
   # [../]
   # [./energy_lin]
   # [../]
-  # [./e_temp]
-  # [../]
+  [./e_temp]
+  [../]
 []
 
 [AuxKernels]
@@ -218,12 +218,12 @@
   #   variable = energy_lin
   #   electron_density = mean_en
   # [../]  
-  # [./e_temp]
-  #   type = ElectronTemperature
-  #   variable = e_temp
-  #   electron_density = em
-  #   mean_en = mean_en
-  # [../]
+  [./e_temp]
+    type = ElectronTemperature
+    variable = e_temp
+    electron_density = em
+    mean_en = mean_en
+  [../]
 []
 
 [BCs]
@@ -254,13 +254,13 @@
     boundary = 'left right'
     potential = potential
   [../]
-  # [./mean_el_en]
-  #   type = PhysicalElectronEnergyBC
-  #   variable = mean_en
-  #   potential = potential
-  #   # em = em
-  #   boundary = 'left right'
-  # [../]
+  [./mean_el_en]
+    type = PhysicalElectronEnergyBC
+    variable = mean_en
+    potential = potential
+    # em = em
+    boundary = 'left right'
+  [../]
 []
 
 [ICs]
@@ -279,11 +279,11 @@
     variable = Arp
     value = 29.934
   [../]
-  # [./mean_el_energy_ic]
-  #   type = ConstantIC
-  #   variable = mean_en
-  #   value = 31.3199
-  #  [../]
+  [./mean_el_energy_ic]
+    type = ConstantIC
+    variable = mean_en
+    value = 31.3199
+   [../]
   # [./mean_el_energy_ic]
   #   type = FunctionIC
   #   variable = mean_en
