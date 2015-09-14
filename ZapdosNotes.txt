@@ -276,3 +276,42 @@ Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
 Two things to do:
 1) Make a couple of results summary slides of what I've done so far in Zapdos
 2) 5 modules (kernels, BCs) I would want to add to make Zapdos/Moose relevant for broader LTP community
+
+The steady state electron density as determined by zapdos does not differ based on whether an iterative or direct solve is used. The peak electron density for zapdos (both direct and iterative solutions) and the peak electron density for comsol differ by 5.1% (Which is actually fairly significant I suppose). 
+
+MKL PARDISO: Intel Math Kernel Library PARallel Direct SOlver
+
+PARDISO in Intel MKL was originally developed by the Department of Computer Scienc at the University of Basel. It can be obtained at http://www.pardiso-project.org
+
+After adding back in advection and diffusion and on-diagonal jacobians. I've reviewed these residuals and jacobians and they are exactly correct.
+
+Norm of matrix ratio 7.10444e-06 difference 0.361464 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+After adding back advection off-diag jacobian. After review, this looks perfect.
+
+Norm of matrix ratio 9.24413e-06 difference 0.470329 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+After adding in Joule-heating and associated potential off-diag jacobian:
+
+Norm of matrix ratio 9.24413e-06 difference 0.470329 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+After adding in Joule-heating and associated em off-diag jacobian:
+
+Norm of matrix ratio 9.24413e-06 difference 0.470329 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+After adding back reaction source and on-diag jacobian:
+
+Norm of matrix ratio 0.00756587 difference 384.97 (user-defined state)
+Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
+Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
+
+
+

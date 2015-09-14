@@ -5,7 +5,7 @@
   # boundary_name = 'left right'
   type = GeneratedMesh
   dim = 1
-  nx = 100
+  nx = 1
   xmin = 0.002
   xmax = .05
 []
@@ -26,8 +26,8 @@
   type = Transient
   end_time = 1e-1
   solve_type = NEWTON
-  petsc_options_iname = '-snes_converged_reason -pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_converged_reason -ksp_type -snes_type'
-  petsc_options_value = 'true lu NONZERO 1.e-10 true preonly test'
+  petsc_options_iname = '-snes_converged_reason -pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_converged_reason -ksp_type -snes_type -snes_test_display'
+  petsc_options_value = 'true lu NONZERO 1.e-10 true preonly test true'
  # nl_rel_tol = 1e-8
  # l_tol = 1e-3
  # trans_ss_check = true
@@ -123,108 +123,108 @@
   [../]
 []
 
-[AuxVariables]
-  [./em_lin]
-  [../]
-  [./Arp_lin]
-  [../]
-  # [./e_field]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
-  # [./advective_flux]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
-  # [./diffusive_flux]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
-  # [./art_diffusive_flux]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
-  # [./total_flux]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
-  # [./total_flux_mag]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
-  # [./aux_source]
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
-  # [./energy_lin]
-  # [../]
-  [./e_temp]
-  [../]
-[]
+# [AuxVariables]
+#   [./em_lin]
+#   [../]
+#   [./Arp_lin]
+#   [../]
+#   # [./e_field]
+#   #   order = CONSTANT
+#   #   family = MONOMIAL
+#   # [../]
+#   # [./advective_flux]
+#   #   order = CONSTANT
+#   #   family = MONOMIAL
+#   # [../]
+#   # [./diffusive_flux]
+#   #   order = CONSTANT
+#   #   family = MONOMIAL
+#   # [../]
+#   # [./art_diffusive_flux]
+#   #   order = CONSTANT
+#   #   family = MONOMIAL
+#   # [../]
+#   # [./total_flux]
+#   #   order = CONSTANT
+#   #   family = MONOMIAL
+#   # [../]
+#   # [./total_flux_mag]
+#   #   order = CONSTANT
+#   #   family = MONOMIAL
+#   # [../]
+#   # [./aux_source]
+#   #   order = CONSTANT
+#   #   family = MONOMIAL
+#   # [../]
+#   # [./energy_lin]
+#   # [../]
+#   [./e_temp]
+#   [../]
+# []
 
-[AuxKernels]
-  [./em_lin]
-    type = ElectronDensity
-    variable = em_lin
-    electron_density = em
-  [../]
-  [./Arp_lin]
-    type = IonDensity
-    variable = Arp_lin
-    ion_density = Arp
-  [../]
-  # [./e_field]
-  #   type = Efield
-  #   variable = e_field
-  #   potential = potential
-  # [../]
-  # [./a_flux]
-  #   type = ElectronAdvectiveFlux
-  #   variable = advective_flux
-  #   electron_density = em
-  #   potential = potential
-  # [../]
-  # [./d_flux]
-  #   type = ElectronDiffusiveFlux
-  #   variable = diffusive_flux
-  #   em = em
-  # [../]
-  # [./ad_flux]
-  #   type = ElectronArtDiffusiveFlux
-  #   variable = art_diffusive_flux
-  #   potential = potential
-  #   em = em
-  # [../]
-  # [./total_flux]
-  #   type = ElectronTotalFlux
-  #   variable = total_flux
-  #   potential = potential
-  #   em = em
-  # [../]
-  # [./total_flux_mag]
-  #   type = ElectronTotalFluxMag
-  #   variable = total_flux_mag
-  #   potential = potential
-  #   em = em
-  # [../]
-  # [./source]
-  #   type = AuxSource
-  #   variable = aux_source
-  #   potential = potential
-  #   em = em
-  # [../]
-  # [./energy_lin]
-  #   type = ElectronDensity
-  #   variable = energy_lin
-  #   electron_density = mean_en
-  # [../]  
-  [./e_temp]
-    type = ElectronTemperature
-    variable = e_temp
-    electron_density = em
-    mean_en = mean_en
-  [../]
-[]
+# [AuxKernels]
+#   [./em_lin]
+#     type = ElectronDensity
+#     variable = em_lin
+#     electron_density = em
+#   [../]
+#   [./Arp_lin]
+#     type = IonDensity
+#     variable = Arp_lin
+#     ion_density = Arp
+#   [../]
+#   # [./e_field]
+#   #   type = Efield
+#   #   variable = e_field
+#   #   potential = potential
+#   # [../]
+#   # [./a_flux]
+#   #   type = ElectronAdvectiveFlux
+#   #   variable = advective_flux
+#   #   electron_density = em
+#   #   potential = potential
+#   # [../]
+#   # [./d_flux]
+#   #   type = ElectronDiffusiveFlux
+#   #   variable = diffusive_flux
+#   #   em = em
+#   # [../]
+#   # [./ad_flux]
+#   #   type = ElectronArtDiffusiveFlux
+#   #   variable = art_diffusive_flux
+#   #   potential = potential
+#   #   em = em
+#   # [../]
+#   # [./total_flux]
+#   #   type = ElectronTotalFlux
+#   #   variable = total_flux
+#   #   potential = potential
+#   #   em = em
+#   # [../]
+#   # [./total_flux_mag]
+#   #   type = ElectronTotalFluxMag
+#   #   variable = total_flux_mag
+#   #   potential = potential
+#   #   em = em
+#   # [../]
+#   # [./source]
+#   #   type = AuxSource
+#   #   variable = aux_source
+#   #   potential = potential
+#   #   em = em
+#   # [../]
+#   # [./energy_lin]
+#   #   type = ElectronDensity
+#   #   variable = energy_lin
+#   #   electron_density = mean_en
+#   # [../]  
+#   [./e_temp]
+#     type = ElectronTemperature
+#     variable = e_temp
+#     electron_density = em
+#     mean_en = mean_en
+#   [../]
+# []
 
 [BCs]
   [./potential_left]
