@@ -53,7 +53,7 @@ ArpKernel::computeQpResidual()
   // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
  
   return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(_muip[_qp]*-_grad_potential[_qp]-_diffip[_qp]*_grad_u[_qp])
-    -_test[_i][_qp]*_rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size())*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size(); // Reaction. Townsend coefficient formulation
+    -_test[_i][_qp]*_rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon()))*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size(); // Reaction. Townsend coefficient formulation
     // -_grad_test[_i][_qp]*(-_delta*std::exp(_u[_qp])*_grad_u[_qp]); // Diffusion stabilization
 }
 
@@ -77,14 +77,14 @@ ArpKernel::computeQpOffDiagJacobian(unsigned int jvar)
     _d_em_flux_d_potential = -_muem[_qp]*-_grad_phi[_j][_qp]*std::exp(_em[_qp]);
 
     return -_grad_test[_i][_qp]*(_muip[_qp]*-_grad_phi[_j][_qp]*std::exp(_u[_qp]))
-      -_test[_i][_qp]*_rate_coeff_ion[_qp]*(std::exp(-_Eiz[_qp]/(1e-15+_grad_potential[_qp].size()))*_Eiz[_qp]*_grad_potential[_qp]*_grad_phi[_j][_qp]/(1e-15+std::pow(_grad_potential[_qp].size(),3))*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size() + std::exp(-_Eiz[_qp]/(1e-15+_grad_potential[_qp].size()))*_em_flux*_d_em_flux_d_potential/(_em_flux.size()+1e-15)); // Reaction. Townsend coefficient formulation
+      -_test[_i][_qp]*_rate_coeff_ion[_qp]*(std::exp(-_Eiz[_qp]/(std::numeric_limits<double>::epsilon()+_grad_potential[_qp].size()))*_Eiz[_qp]*_grad_potential[_qp]*_grad_phi[_j][_qp]/(std::numeric_limits<double>::epsilon()+std::pow(_grad_potential[_qp].size(),3))*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size() + std::exp(-_Eiz[_qp]/(std::numeric_limits<double>::epsilon()+_grad_potential[_qp].size()))*_em_flux*_d_em_flux_d_potential/(_em_flux.size()+std::numeric_limits<double>::epsilon())); // Reaction. Townsend coefficient formulation
   }
 
   else if (jvar == _em_id) {
     _em_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
     _d_em_flux_d_em = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]-_diffem[_qp]*(std::exp(_em[_qp])*_grad_phi[_j][_qp]+std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp]);
 
-    return -_test[_i][_qp]*_rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/(1e-15+_grad_potential[_qp].size()))*_em_flux*_d_em_flux_d_em/(_em_flux.size()+1e-15); // Reaction. Townsend coefficient formulation
+    return -_test[_i][_qp]*_rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/(std::numeric_limits<double>::epsilon()+_grad_potential[_qp].size()))*_em_flux*_d_em_flux_d_em/(_em_flux.size()+std::numeric_limits<double>::epsilon()); // Reaction. Townsend coefficient formulation
 
   }
 

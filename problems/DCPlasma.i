@@ -26,8 +26,8 @@
   type = Transient
   end_time = 1e-1
   solve_type = NEWTON
-  petsc_options_iname = '-snes_converged_reason -pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_converged_reason -ksp_type -snes_type -snes_test_display'
-  petsc_options_value = 'true lu NONZERO 1.e-10 true preonly test true'
+  petsc_options_iname = '-snes_converged_reason -pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_converged_reason -ksp_type -snes_type' # -snes_test_display'
+  petsc_options_value = 'true lu NONZERO 1.e-10 true preonly test' # true'
  # nl_rel_tol = 1e-8
  # l_tol = 1e-3
  # trans_ss_check = true

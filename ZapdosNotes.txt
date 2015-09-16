@@ -313,5 +313,38 @@ Norm of matrix ratio 0.00756587 difference 384.97 (user-defined state)
 Norm of matrix ratio 1.57362e-07 difference 2.15543e+11 (constant state -1.0)
 Norm of matrix ratio 1.56667e-07 difference 2.96284e+10 (constant state 1.0)
 
+When trying to solve using super lu, I keep getting diverged_line_search after 0 iterations when I use the default line search. If I set line_search='none', then the initial divergence occurs at (at least approximately) the same time step, but the divergence message is: diverged_fnorm_nan. 
 
+When solving in parallel with moose's default parallel iterative options, the solve fails at 1.69359e-7 seconds. The final divergence reason is given by:
+
+  Linear solve did not converge due to DIVERGED_NANORINF iterations 0
+Nonlinear solve did not converge due to DIVERGED_LINEAR_SOLVE iterations 2
+
+Looking at all the divergences, the DIVERGED_LINEAR_SOLVE was about as frequent as DIVERGED_LINE_SEARCH.
+
+Just confirming that in this test problem the Jacobian is good, when I run the fast_solve_parallel_iterative_attempt in test mode, with a mesh size of 1, here's what the results look like:
+
+Norm of matrix ratio 4.44187e-08 difference 0.00226001 (user-defined state)
+Norm of matrix ratio 2.33137e-08 difference 3.19335e+10 (constant state -1.0)
+Norm of matrix ratio 2.20073e-08 difference 4.16197e+09 (constant state 1.0)
+
+So excellent. When I change the mesh size to 100, here are the results (still good):
+
+Norm of matrix ratio 1.58941e-07 difference 0.00808669 (user-defined state)
+Norm of matrix ratio 3.48091e-08 difference 4.7679e+10 (constant state -1.0)
+Norm of matrix ratio 3.26732e-08 difference 6.17907e+09 (constant state 1.0)
+
+What am I trying to do right now? I'm trying to get my gold_serial_case to solve in parallel mode, using 1) iterative methods and 2) direct methods. Another thing that I've been working on is adding back an electron energy equation; I'm currently debugging the Jacobian for that.
+
+I'm looking at the iterative solve right now. If I run with one mesh element, I get a floating point exception which appears to occur at line 52 in ElectronKernel.C. However, if I run with 100 mesh elements, than I no longer get any FPEs/program breaks when running ./zapdos-dbg (without gdb --args). 
+
+I ran the direct solve with one mesh element (./zapdos-dbg) and got no FPEs.
+
+Don't forget how to print values in the debugger:
+
+p <variable>
+
+or 
+
+print <variable>
 

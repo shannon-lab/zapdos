@@ -5,7 +5,7 @@
   # boundary_name = 'left right'
   type = GeneratedMesh
   dim = 1
-  nx = 4000
+  nx = 1
   xmin = 0.002
   xmax = .05
 []
@@ -26,16 +26,17 @@
   type = Transient
   end_time = 1e-1
   solve_type = NEWTON
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type'
-  petsc_options_value = 'lu NONZERO 1.e-10 preonly'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO 1.e-10 preonly superlu_dist'
  # nl_rel_tol = 1e-8
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- nl_abs_tol = 1e-6
+ # nl_abs_tol = 1e-6
   l_max_its = 10
  nl_max_its = 50
   dtmin = 0.9e-9
+  line_search = 'none'
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
@@ -110,7 +111,7 @@
 
 [Variables]
   [./potential]
-    scaling = 1e-5
+    scaling = 1e-11
   [../]
   [./em]
     scaling = 1e-18
