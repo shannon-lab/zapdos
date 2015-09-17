@@ -386,3 +386,14 @@ Oh heck yea: solved my problem in parallel!!!!!!!!! Wooooooooooooooooooooooo!!!!
 And here is the execution summary: | Zapdos Performance: Alive time=133.099, Active time=131.212
 
 So having the parallel solve didn't really speed up the solution, but it's a demonstration of principle gosh darn it!!!
+
+Ok, this is really freaking weird. I went back to an old commit where there was no ZapdosRevision.h file, but presumably there should have been no new source code changes to compile, and when I typed make -j4, here's the first output: 
+
+MOOSE Generating Header /home/lindsayad/projects/zapdos/include/ZapdosRevision.h...
+
+Then it proceeds to compile zapdos source files (presumably it was going to compile all of them before I manually stopped it.)
+
+However, when I reset my pointer to point at the newest commit (where ZapdosRevision.h is included), it still recompiled all my source code, only this time it didn't have that first line: 
+
+MOOSE Generating Header /home/lindsayad/projects/zapdos/include/ZapdosRevision.h...
+
