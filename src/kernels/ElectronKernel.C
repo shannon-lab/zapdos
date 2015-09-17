@@ -48,7 +48,7 @@ ElectronKernel::computeQpResidual()
   // _Pe = _vd_mag*_current_elem->hmax()/_diffem[_qp];
   // _alpha = std::min(1.0,_Pe/6.0);
   // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
-  
+
   return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muem[_qp]*-_grad_potential[_qp]-_diffem[_qp]*_grad_u[_qp]) // Transport
     -_test[_i][_qp]*_rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/(1e-15+_grad_potential[_qp].size()))*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])-_diffem[_qp]*std::exp(_u[_qp])*_grad_u[_qp]).size(); // Reaction. Townsend coefficient formulation
 	 // -_grad_test[_i][_qp]*(-_delta*std::exp(_u[_qp])*_grad_u[_qp]); // Diffusion stabilization

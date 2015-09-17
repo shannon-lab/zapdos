@@ -336,7 +336,7 @@ Norm of matrix ratio 3.26732e-08 difference 6.17907e+09 (constant state 1.0)
 
 What am I trying to do right now? I'm trying to get my gold_serial_case to solve in parallel mode, using 1) iterative methods and 2) direct methods. Another thing that I've been working on is adding back an electron energy equation; I'm currently debugging the Jacobian for that.
 
-I'm looking at the iterative solve right now. If I run with one mesh element, I get a floating point exception which appears to occur at line 52 in ElectronKernel.C. However, if I run with 100 mesh elements, than I no longer get any FPEs/program breaks when running ./zapdos-dbg (without gdb --args). 
+I'm looking at the iterative solve right now. If I run with one mesh element, I get a floating point exception which appears to occur at line 52 in ElectronKernel.C. However, if I run with 100 mesh elements, than I no longer get any FPEs/program breaks when running ./zapdos-dbg (without gdb --args). So the FPE does indeed come from an exponential overflow. The last value of _u[_qp] before the floating point exception is signalled is: 7.88655e+07. Since I know that exp(1000) produces inf, then obviously 7.89e7 will also produce an inf. This exercise kind of just goes to show that you need an appropriate number of mesh elements or else your solution will have major problems.
 
 I ran the direct solve with one mesh element (./zapdos-dbg) and got no FPEs.
 
@@ -348,3 +348,32 @@ or
 
 print <variable>
 
+Ok, using default MOOSE iterative with mpirun and an abs tolerance of 1e-6 (e.g. all the parameters the same from the fast serial lu gold solve except for the solve type), the solve fails at 2.49633e-07 seconds. All the divergence reasons are: DIVERGED_LINE_SEARCH. First divergence occurs at: 4.84966e-08 seconds. No line_search option specified for the settings in this passage (so default). Now the iterative solve has major problems with its solution variables, and this could easily explain why this solve fails. There are clear spikes at L/4, L/2, and 3L/4 in the dependent variable Arp and in the auxiliary variable EField. So again, parallel iterative solves are failing. 
+
+Using direct super LU with line_search='none', first divergence is at 1.28117e-07 seconds, and the message is DIVERGED_FNORM_NAN. All the divergence messages are DIVERGED_FNORM_NAN. Final failure occurs at 2.40013e-07 seconds. (So fairly comparable to the iterative attempt). With default line_serach, first divergence is identically at 1.28117e-07 seconds. All divergence reasons are DIVERGED_LINE_SEARCH. Final failure identically occurs at 2.40013e-07 seconds. So my initial intuitive reaction was correct: despite the change in line_search, the solve patterns are the exact same. Looking at the default line search results in paraview, every solution variable looks just fine at the premature end of the simulation: all variable profiles are smooth and continuous, so any reason for the solve fail can't really be found there.
+
+The fun part now in both direct and iterative cases is to figure out: what's causing the diverged line search???
+
+Alright, doing some cool stuff. Did a serial iterative solve. | Zapdos Performance: Alive time=150.776, Active time=149.795. pc_type=ilu, ksp_type=gmres, snes_type=newtonls. Results look perfect. 
+
+With pc_type=gamg, the problem wasn't even able to take a single time step.
+
+hypre is meant for massively parallel computing (taken from its homepage). 
+
+With pc_type=asm, sub_pc_type=ilu, the problem solves. Solution summary: | Zapdos Performance: Alive time=159.017, Active time=158.009. 
+
+With:
+
+  petsc_options_iname = '-pc_type -sub_pc_type -sub_pc_factor_shift_type -sub_pc_factor_shift_amount'
+  petsc_options_value = 'asm lu NONZERO 1.e-10'
+
+Solution summary: | Zapdos Performance: Alive time=153.569, Active time=152.56
+
+With pc_type=bjacobi, the problem solves. Solution summary: | Zapdos Performance: Alive time=149.462, Active time=148.471 (Record)
+
+Next step: try suggestions from petsc email for direct solves.
+
+ This should be my compiler environment the next time I update_and_rebuild libmesh and recompile MOOSE and Zapdos:
+ export CC="ccache mpicc"
+ export CXX="ccache mpicxx"
+ export CCACHE_SLOPPINESS=time_macros

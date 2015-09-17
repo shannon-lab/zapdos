@@ -26,8 +26,8 @@
   type = Transient
   end_time = 1e-1
   solve_type = NEWTON
-  # petsc_options_iname = '-snes_type'
-  # petsc_options_value = 'test'
+  petsc_options_iname = '-pc_type'
+  petsc_options_value = 'bjacobi'
  # nl_rel_tol = 1e-8
  # l_tol = 1e-3
  # trans_ss_check = true

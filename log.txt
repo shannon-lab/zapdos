@@ -1,12 +1,132 @@
+--------------------------------------------------------------------------
+Petsc Release Version 3.5.2, Sep, 08, 2014 
+       The PETSc Team
+    petsc-maint@mcs.anl.gov
+ http://www.mcs.anl.gov/petsc/
+See docs/changes/index.html for recent updates.
+See docs/faq.html for problems.
+See docs/manualpages/index.html for help. 
+Libraries linked from /opt/moose/petsc/openmpi_petsc-3.5.2/gcc-opt-superlu/lib
+--------------------------------------------------------------------------
+Options for all PETSc programs:
+ -help: prints help method for each option
+ -on_error_abort: cause an abort when an error is detected. Useful 
+        only when run in the debugger
+ -on_error_attach_debugger [gdb,dbx,xxgdb,ups,noxterm]
+       start the debugger in new xterm
+       unless noxterm is given
+ -start_in_debugger [gdb,dbx,xxgdb,ups,noxterm]
+       start all processes in the debugger
+ -on_error_emacs <machinename>
+    emacs jumps to error file
+ -debugger_nodes [n1,n2,..] Nodes to start in debugger
+ -debugger_pause [m] : delay (in seconds) to attach debugger
+ -stop_for_debugger : prints message on how to attach debugger manually
+                      waits the delay for you to attach
+ -display display: Location where X window graphics and debuggers are displayed
+ -no_signal_handler: do not trap error signals
+ -mpi_return_on_error: MPI returns error code, rather than abort on internal error
+ -fp_trap: stop on floating point exceptions
+           note on IBM RS6000 this slows run greatly
+ -malloc_dump <optional filename>: dump list of unfreed memory at conclusion
+ -malloc: use our error checking malloc
+ -malloc no: don't use error checking malloc
+ -malloc_info: prints total memory usage
+ -malloc_log: keeps log of all memory allocations
+ -malloc_debug: enables extended checking for memory corruption
+ -options_table: dump list of options inputted
+ -options_left: dump list of unused options
+ -options_left no: don't dump list of unused options
+ -tmp tmpdir: alternative /tmp directory
+ -shared_tmp: tmp directory is shared by all processors
+ -not_shared_tmp: each processor has separate tmp directory
+ -memory_info: print memory usage at end of run
+ -server <port>: Run PETSc webserver (default port is 8080) see PetscWebServe()
+ -get_total_flops: total flops over all processors
+ -log[_summary _summary_python]: logging objects and events
+ -log_trace [filename]: prints trace of all PETSc calls
+ -info <optional filename>: print informative messages about the calculations
+ -v: prints PETSc version number and release date
+ -options_file <file>: reads options from file
+ -petsc_sleep n: sleeps n seconds before running program
+-----------------------------------------------
+------Additional PETSc component options--------
+ -log_summary_exclude: <vec,mat,pc.ksp,snes>
+ -info_exclude: <null,vec,mat,pc,ksp,snes,ts>
+-----------------------------------------------
+Options database options -------------------------------------------------
+  -options_monitor <stdout>: Monitor options database (PetscOptionsMonitorSet)
+  -options_monitor_cancel: <FALSE> Cancel all options database monitors (PetscOptionsMonitorCancel)
 
+Thread comm - setting number of threads -------------------------------------------------
+  -threadcomm_nthreads <1>: number of threads to use in the thread communicator (PetscThreadCommSetNThreads)
+Thread comm - setting thread affinities -------------------------------------------------
+  -threadcomm_affinities <-2006497320>: Set core affinities of threads (PetscThreadCommSetAffinities)
+Thread comm - setting number of kernels -------------------------------------------------
+  -threadcomm_nkernels <16>: number of kernels that can be launched simultaneously ()
+Thread comm - setting threading model -------------------------------------------------
+  -threadcomm_type <nothread>: Thread communicator model (one of) nothread (PetscThreadCommSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Options for SEQAIJ matrix -------------------------------------------------
+  -mat_no_unroll: <FALSE> Do not optimize for inodes (slower) (None)
+  -mat_no_inode: <FALSE> Do not optimize for inodes -slower- (None)
+  -mat_inode_limit <5>: Do not use inodes larger then this value (None)
+Matrix (Mat) options -------------------------------------------------
+  -mat_block_size <-1>: Set the blocksize used to store the matrix (MatSetBlockSize)
+  -mat_type <aij>: Matrix type (one of) mffd mpimaij seqmaij maij is shell composite mpiaij
+      seqaij mpiaijperm seqaijperm seqaijcrl mpiaijcrl mpibaij seqbaij mpisbaij seqsbaij mpibstrm seqbstrm mpisbstrm seqsbstrm mpidense seqdense mpiadj scatter blockmat nest (MatSetType)
+  -mat_is_symmetric: Checks if mat is symmetric on MatAssemblyEnd() (MatIsSymmetric)
+  -mat_is_symmetric <0>: Checks if mat is symmetric on MatAssemblyEnd() (MatIsSymmetric)
+  -mat_null_space_test: <FALSE> Checks if provided null space is correct in MatAssemblyEnd() (MatSetNullSpaceTest)
+  -mat_new_nonzero_location_err: <FALSE> Generate an error if new nonzeros are created in the matrix structure (useful to test preallocation) (MatSetOption)
+  -mat_new_nonzero_allocation_err: <FALSE> Generate an error if new nonzeros are allocated in the matrix structure (useful to test preallocation) (MatSetOption)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
 Framework Information:
-MOOSE version:           git commit 0ef408a on 2015-09-11
-PETSc Version:           3.6.0
-Current Time:            Tue Sep 15 16:12:45 2015
-Executable Timestamp:    Tue Sep 15 15:42:18 2015
+MOOSE version:           git commit 58050a1 on 2015-08-31
+PETSc Version:           3.5.2
+Current Time:            Wed Sep 16 11:47:09 2015
+Executable Timestamp:    Wed Sep 16 09:37:38 2015
 
 Parallelism:
-  Num Processors:          4
+  Num Processors:          1
   Num Threads:             1
 
 Mesh: 
@@ -14,25 +134,24 @@ Mesh:
   Mesh Dimension:          1
   Spatial Dimension:       3
   Nodes:                   
-    Total:                 101
-    Local:                 26
+    Total:                 4001
+    Local:                 4001
   Elems:                   
-    Total:                 100
-    Local:                 25
+    Total:                 4000
+    Local:                 4000
   Num Subdomains:          1
-  Num Partitions:          4
-  Partitioner:             metis
+  Num Partitions:          1
 
 Nonlinear System:
-  Num DOFs:                303
-  Num Local DOFs:          78
+  Num DOFs:                12003
+  Num Local DOFs:          12003
   Variables:               { "potential" "em" "Arp" } 
   Finite Element Types:    "LAGRANGE" 
   Approximation Orders:    "FIRST" 
 
 Auxiliary System:
-  Num DOFs:                302
-  Num Local DOFs:          77
+  Num DOFs:                12002
+  Num Local DOFs:          12002
   Variables:               { "em_lin" "Arp_lin" } "EField" 
   Finite Element Types:    "LAGRANGE" "MONOMIAL" 
   Approximation Orders:    "FIRST" "CONSTANT" 
@@ -44,1590 +163,247 @@ Execution Information:
 
 
 
+    |residual|_2 of individual variables:
+                  potential: 0
+                  em:        0
+                  Arp:       0
+
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
+Vector (Vec) options -------------------------------------------------
+  -vec_type <mpi>: Vector type (one of) seq mpi standard shared (VecSetType)
 
 Time Step  0, time = 0
                 dt = 0
 
 Time Step  1, time = 1e-09
                 dt = 1e-09
+Distribution Manager (DM) options -------------------------------------------------
+  -dm_preallocate_only: <FALSE> only preallocate matrix, but do not set column indices (DMSetMatrixPreallocateOnly)
+  -dm_vec_type <standard>: Vector type used for created vectors (one of) seq mpi standard shared (DMSetVecType)
+  -dm_mat_type <aij>: Matrix type used for created matrices (one of) mffd mpimaij seqmaij maij is shell composite mpiaij
+      seqaij mpiaijperm seqaijperm seqaijcrl mpiaijcrl mpibaij seqbaij mpisbaij seqsbaij mpibstrm seqbstrm mpisbstrm seqsbstrm mpidense seqdense mpiadj scatter blockmat nest hyprestruct (DMSetMatType)
+  -dm_is_coloring_type <global> (choose one of) global ghosted (ISColoringType)
+Preconditioner (PC) options -------------------------------------------------
+  -pc_type <ilu>: Preconditioner (one of) none jacobi pbjacobi bjacobi sor lu shell mg
+      eisenstat ilu icc cholesky asm gasm ksp composite redundant nn mat fieldsplit galerkin exotic cp lsc redistribute svd gamg kaczmarz hypre pfmg syspfmg tfs (PCSetType)
+  -pc_use_amat: <FALSE> use Amat (instead of Pmat) to define preconditioner in nested inner solves (PCSetUseAmat)
+  LU options
+  -pc_factor_in_place: <FALSE> Form factored matrix in the same memory as the matrix (PCFactorSetUseInPlace)
+  -pc_factor_fill <5>: Expected non-zeros in factored matrix (PCFactorSetFill)
+  -pc_factor_shift_type <NONE> (choose one of) NONE NONZERO POSITIVE_DEFINITE INBLOCKS (PCFactorSetShiftType)
+  -pc_factor_shift_amount <2.22045e-14>: Shift added to diagonal (PCFactorSetShiftAmount)
+  -pc_factor_zeropivot <2.22045e-14>: Pivot is considered zero if less than (PCFactorSetZeroPivot)
+  -pc_factor_column_pivot <1e-06>: Column pivot tolerance (used only for some factorization) (PCFactorSetColumnPivot)
+  -pc_factor_pivot_in_blocks: <TRUE> Pivot inside matrix dense blocks for BAIJ and SBAIJ (PCFactorSetPivotInBlocks)
+  -pc_factor_reuse_fill: <FALSE> Use fill from previous factorization (PCFactorSetReuseFill)
+  -pc_factor_reuse_ordering: <FALSE> Reuse ordering from previous factorization (PCFactorSetReuseOrdering)
+  -pc_factor_mat_ordering_type <nd>: Reordering to reduce nonzeros in factored matrix (one of) natural nd 1wd rcm qmd rowlength wbm spectral
+      (PCFactorSetMatOrderingType)
+  -pc_factor_mat_solver_package <petsc>: Specific direct solver to use (MatGetFactor)
+  -pc_factor_nonzeros_along_diagonal: Reorder to remove zeros from diagonal (PCFactorReorderForNonzeroDiagonal)
+Krylov Method (KSP) options -------------------------------------------------
+  -ksp_type <gmres>: Krylov method (one of) cg groppcg pipecg cgne nash stcg gltr richardson
+      chebyshev gmres tcqmr bcgs ibcgs fbcgs fbcgsr bcgsl cgs tfqmr cr pipecr lsqr preonly qcg bicg fgmres minres symmlq lgmres lcd gcr pgmres specest dgmres (KSPSetType)
+  -ksp_max_it <10>: Maximum number of iterations (KSPSetTolerances)
+  -ksp_rtol <1e-05>: Relative decrease in residual norm (KSPSetTolerances)
+  -ksp_atol <1e-50>: Absolute value of residual norm (KSPSetTolerances)
+  -ksp_divtol <10000>: Residual norm increase cause divergence (KSPSetTolerances)
+  -ksp_converged_use_initial_residual_norm: <FALSE> Use initial residual residual norm for computing relative convergence (KSPConvergedDefaultSetUIRNorm)
+  -ksp_converged_use_min_initial_residual_norm: <FALSE> Use minimum of initial residual norm and b for computing relative convergence (KSPConvergedDefaultSetUMIRNorm)
+  -ksp_initial_guess_nonzero: <FALSE> Use the contents of the solution vector for initial guess (KSPSetInitialNonzero)
+  -ksp_knoll: <FALSE> Use preconditioner applied to b for initial guess (KSPSetInitialGuessKnoll)
+  -ksp_error_if_not_converged: <FALSE> Generate error if solver does not converge (KSPSetErrorIfNotConverged)
+  -ksp_fischer_guess <0>: Use Paul Fischer's algorithm for initial guess (KSPSetUseFischerGuess)
+  -ksp_convergence_test <default> (choose one of) default skip (KSPSetConvergenceTest)
+  -ksp_norm_type <NONE> (choose one of) NONE PRECONDITIONED UNPRECONDITIONED NATURAL (KSPSetNormType)
+  -ksp_check_norm_iteration <-1>: First iteration to compute residual norm (KSPSetCheckNormIteration)
+  -ksp_lag_norm: <FALSE> Lag the calculation of the residual norm (KSPSetLagNorm)
+  -ksp_diagonal_scale: <FALSE> Diagonal scale matrix before building preconditioner (KSPSetDiagonalScale)
+  -ksp_diagonal_scale_fix: <FALSE> Fix diagonally scaled matrix after solve (KSPSetDiagonalScaleFix)
+  -ksp_constant_null_space: <FALSE> Add constant null space to Krylov solver (KSPSetNullSpace)
+  -ksp_converged_reason: <FALSE> Print reason for converged or diverged (KSPSolve)
+  -ksp_monitor_cancel: <FALSE> Remove any hardwired monitor routines (KSPMonitorCancel)
+  -ksp_monitor <stdout>: Monitor preconditioned residual norm (KSPMonitorSet)
+  -ksp_monitor_range <stdout>: Monitor percent of residual entries more than 10 percent of max (KSPMonitorRange)
+  -ksp_monitor_solution: <FALSE> Monitor solution graphically (KSPMonitorSet)
+  -ksp_monitor_true_residual <stdout>: Monitor true residual norm (KSPMonitorSet)
+  -ksp_monitor_max <stdout>: Monitor true residual max norm (KSPMonitorSet)
+  -ksp_monitor_singular_value <stdout>: Monitor singular values (KSPMonitorSet)
+  -ksp_monitor_short <stdout>: Monitor preconditioned residual norm with fewer digits (KSPMonitorSet)
+  -ksp_monitor_python <(null)>: Use Python function (KSPMonitorSet)
+  -ksp_monitor_lg_residualnorm: <FALSE> Monitor graphically preconditioned residual norm (KSPMonitorSet)
+  -ksp_monitor_lg_true_residualnorm: <FALSE> Monitor graphically true residual norm (KSPMonitorSet)
+  -ksp_monitor_lg_range: <FALSE> Monitor graphically range of preconditioned residual norm (KSPMonitorSet)
+  -ksp_pc_side <RIGHT> (choose one of) LEFT RIGHT SYMMETRIC (KSPSetPCSide)
+  -ksp_compute_singularvalues: <FALSE> Compute singular values of preconditioned operator (KSPSetComputeSingularValues)
+  -ksp_compute_eigenvalues: <FALSE> Compute eigenvalues of preconditioned operator (KSPSetComputeSingularValues)
+  -ksp_plot_eigenvalues: <FALSE> Scatter plot extreme eigenvalues (KSPSetComputeSingularValues)
+Nonlinear solver (SNES) options -------------------------------------------------
+  -snes_type <newtonls>: Nonlinear solver method (one of) newtonls newtontr test nrichardson ksponly vinewtonrsls vinewtonssls ngmres
+      qn shell ngs ncg fas ms nasm anderson aspin composite (SNESSetType)
+  -snes_stol <1e-50>: Stop if step length less than (SNESSetTolerances)
+  -snes_atol <1e-06>: Stop if function norm less than (SNESSetTolerances)
+  -snes_rtol <1e-08>: Stop if decrease in function norm less than (SNESSetTolerances)
+  -snes_max_it <50>: Maximum iterations (SNESSetTolerances)
+  -snes_max_funcs <10000>: Maximum function evaluations (SNESSetTolerances)
+  -snes_max_fail <1>: Maximum nonlinear step failures (SNESSetMaxNonlinearStepFailures)
+  -snes_max_linear_solve_fail <1000000>: Maximum failures in linear solves allowed (SNESSetMaxLinearSolveFailures)
+  -snes_error_if_not_converged: <FALSE> Generate error if solver does not converge (SNESSetErrorIfNotConverged)
+  -snes_lag_preconditioner <1>: How often to rebuild preconditioner (SNESSetLagPreconditioner)
+  -snes_lag_preconditioner_persists: <FALSE> Preconditioner lagging through multiple solves (SNESSetLagPreconditionerPersists)
+  -snes_lag_jacobian <1>: How often to rebuild Jacobian (SNESSetLagJacobian)
+  -snes_lag_jacobian_persists: <FALSE> Jacobian lagging through multiple solves (SNESSetLagJacobianPersists)
+  -snes_grid_sequence <0>: Use grid sequencing to generate initial guess (SNESSetGridSequence)
+  -snes_convergence_test <default> (choose one of) default skip (SNESSetConvergenceTest)
+  -snes_converged_reason: <FALSE> Print reason for converged or diverged (SNESSolve)
+  -snes_norm_schedule <function> (choose one of) NONE ALWAYS INITIALONLY FINALONLY INITIALFINALONLY (SNESSetNormSchedule)
+  -snes_function_type <unpreconditioned> (choose one of) UNPRECONDITIONED PRECONDITIONED (SNESSetFunctionType)
+  -snes_ksp_ew: <FALSE> Use Eisentat-Walker linear system convergence test (SNESKSPSetUseEW)
+  -snes_ksp_ew_version <2>: Version 1, 2 or 3 (SNESKSPSetParametersEW)
+  -snes_ksp_ew_rtol0 <0.3>: 0 <= rtol0 < 1 (SNESKSPSetParametersEW)
+  -snes_ksp_ew_rtolmax <0.9>: 0 <= rtolmax < 1 (SNESKSPSetParametersEW)
+  -snes_ksp_ew_gamma <1>: 0 <= gamma <= 1 (SNESKSPSetParametersEW)
+  -snes_ksp_ew_alpha <1.61803>: 1 < alpha <= 2 (SNESKSPSetParametersEW)
+  -snes_ksp_ew_alpha2 <1.61803>: alpha2 (SNESKSPSetParametersEW)
+  -snes_ksp_ew_threshold <0.1>: 0 < threshold < 1 (SNESKSPSetParametersEW)
+  -snes_check_jacobian: <FALSE> Check each Jacobian with a differenced one (SNESUpdateCheckJacobian)
+  -snes_monitor_cancel: <FALSE> Remove all monitors (SNESMonitorCancel)
+  -snes_monitor <stdout>: Monitor norm of function (SNESMonitorSet)
+  -snes_monitor_range <stdout>: Monitor range of elements of function (SNESMonitorSet)
+  -snes_ratiomonitor <stdout>: Monitor ratios of norms of function (SNESMonitorSetRatio)
+  -snes_monitor_short <stdout>: Monitor norm of function (fewer digits) (SNESMonitorSet)
+  -snes_monitor_python <(null)>: Use Python function (SNESMonitorSet)
+  -snes_monitor_solution: <FALSE> Plot solution at each iteration (SNESMonitorSolution)
+  -snes_monitor_solution_update: <FALSE> Plot correction at each iteration (SNESMonitorSolutionUpdate)
+  -snes_monitor_residual: <FALSE> Plot residual at each iteration (SNESMonitorResidual)
+  -snes_monitor_lg_residualnorm: <FALSE> Plot function norm at each iteration (SNESMonitorLGResidualNorm)
+  -snes_monitor_lg_range: <FALSE> Plot function range at each iteration (SNESMonitorLGRange)
+  -snes_monitor_jacupdate_spectrum: <FALSE> Print the change in the spectrum of the Jacobian (SNESMonitorJacUpdateSpectrum)
+  -snes_monitor_fields <stdout>: Monitor norm of function per field (SNESMonitorSet)
+  -snes_fd: <FALSE> Use finite differences (slow) to compute Jacobian (SNESComputeJacobianDefault)
+  -snes_fd_function: <FALSE> Use finite differences (slow) to compute function from user objective (SNESObjectiveComputeFunctionDefaultFD)
+  -snes_fd_color: <FALSE> Use finite differences with coloring to compute Jacobian (SNESComputeJacobianDefaultColor)
+  -snes_mf_operator: <FALSE> Use a Matrix-Free Jacobian with user-provided preconditioner matrix (MatCreateSNESMF)
+  -snes_mf: <FALSE> Use a Matrix-Free Jacobian with no preconditioner matrix (MatCreateSNESMF)
+  -snes_mf_version <1>: Matrix-Free routines version 1 or 2 (None)
+  -snes_npc_side <RIGHT> (choose one of) LEFT RIGHT SYMMETRIC (SNESSetNPCSide)
+Linesearch (SNESLineSearch) options -------------------------------------------------
+  -snes_linesearch_type <bt>: Linesearch type (one of) shell basic l2 bt cp (SNESLineSearchSetType)
+  -snes_linesearch_monitor: <FALSE> Print progress of line searches (SNESSNESLineSearchSetMonitor)
+  -snes_linesearch_minlambda <1e-12>: Minimum step length (SNESLineSearchSetTolerances)
+  -snes_linesearch_maxstep <1e+08>: Maximum step size (SNESLineSearchSetTolerances)
+  -snes_linesearch_rtol <1e-08>: Relative tolerance for iterative line search (SNESLineSearchSetTolerances)
+  -snes_linesearch_atol <1e-15>: Absolute tolerance for iterative line search (SNESLineSearchSetTolerances)
+  -snes_linesearch_ltol <1e-08>: Change in lambda tolerance for iterative line search (SNESLineSearchSetTolerances)
+  -snes_linesearch_max_it <40>: Maximum iterations for iterative line searches (SNESLineSearchSetTolerances)
+  -snes_linesearch_damping <1>: Line search damping and initial step guess (SNESLineSearchSetDamping)
+  -snes_linesearch_keeplambda: <FALSE> Use previous lambda as damping (SNESLineSearchSetKeepLambda)
+  -snes_linesearch_precheck_picard: <FALSE> Use a correction that sometimes improves convergence of Picard iteration (SNESLineSearchPreCheckPicard)
+  -snes_linesearch_order <3>: Order of approximation used in the line search (SNESLineSearchSetOrder)
+  -snes_linesearch_norms: <TRUE> Compute final norms in line search (SNESLineSearchSetComputeNorms)
+  SNESLineSearch BT options
+  -snes_linesearch_alpha <0.0001>: Descent tolerance (SNESLineSearchBT)
     |residual|_2 of individual variables:
                   potential: 50875.9
                   em:        0
                   Arp:       0
 
  0 Nonlinear |R| = 5.087588e+04
-      0 Linear |R| = 5.087588e+04
-      1 Linear |R| = 8.365544e-02
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 2.71183
-                  em:        0.0073859
-                  Arp:       0.000104455
-
- 1 Nonlinear |R| = 2.711840e+00
-      0 Linear |R| = 2.711840e+00
-      1 Linear |R| = 8.058106e-02
-      2 Linear |R| = 5.583265e-02
-      3 Linear |R| = 3.212482e-02
-      4 Linear |R| = 2.449981e-02
-      5 Linear |R| = 1.785641e-02
-      6 Linear |R| = 1.478285e-02
-      7 Linear |R| = 2.161305e-13
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 0.000147748
-                  em:        0.00184815
-                  Arp:       5.31337e-09
-
- 2 Nonlinear |R| = 1.854043e-03
-      0 Linear |R| = 1.854043e-03
-      1 Linear |R| = 3.123093e-10
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 3.15917e-10
-                  em:        1.89215e-06
-                  Arp:       2.76152e-13
-
- 3 Nonlinear |R| = 1.892152e-06
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 3
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 1.892152e-06
-
-Time Step  2, time = 2.2e-09
-                dt = 1.2e-09
-    |residual|_2 of individual variables:
-                  potential: 61050.9
-                  em:        0.00184115
-                  Arp:       1.84652e-05
-
- 0 Nonlinear |R| = 6.105091e+04
-      0 Linear |R| = 6.105091e+04
-      1 Linear |R| = 1.003916e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.0999996
-                  em:        0.00886377
-                  Arp:       8.86345e-05
-
- 1 Nonlinear |R| = 1.003917e-01
-      0 Linear |R| = 1.003917e-01
-      1 Linear |R| = 6.966254e-02
-      2 Linear |R| = 3.912800e-02
-      3 Linear |R| = 3.010659e-02
-      4 Linear |R| = 2.304485e-02
-      5 Linear |R| = 1.855700e-02
-      6 Linear |R| = 1.769843e-02
-      7 Linear |R| = 1.776687e-13
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 3.17335e-09
-                  em:        3.05213e-05
-                  Arp:       3.4391e-10
-
- 2 Nonlinear |R| = 3.052128e-05
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 3.052128e-05
-
-Time Step  3, time = 3.64e-09
-                dt = 1.44e-09
-    |residual|_2 of individual variables:
-                  potential: 73260.6
-                  em:        0.00404155
-                  Arp:       4.06225e-05
-
- 0 Nonlinear |R| = 7.326065e+04
-      0 Linear |R| = 7.326065e+04
-      1 Linear |R| = 1.204692e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.119999
-                  em:        0.0106374
-                  Arp:       0.000106361
-
- 1 Nonlinear |R| = 1.204694e-01
-      0 Linear |R| = 1.204694e-01
-      1 Linear |R| = 8.359457e-02
-      2 Linear |R| = 4.696714e-02
-      3 Linear |R| = 3.613399e-02
-      4 Linear |R| = 2.940182e-02
-      5 Linear |R| = 2.315114e-02
-      6 Linear |R| = 2.127234e-02
-      7 Linear |R| = 5.598403e-13
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 6.48875e-09
-                  em:        5.21578e-05
-                  Arp:       5.9429e-10
-
- 2 Nonlinear |R| = 5.215785e-05
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 5.215785e-05
-
-Time Step  4, time = 5.368e-09
-                dt = 1.728e-09
-    |residual|_2 of individual variables:
-                  potential: 87911.7
-                  em:        0.0066626
-                  Arp:       6.72092e-05
-
- 0 Nonlinear |R| = 8.791174e+04
-      0 Linear |R| = 8.791174e+04
-      1 Linear |R| = 1.445614e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.143997
-                  em:        0.0127677
-                  Arp:       0.000127631
-
- 1 Nonlinear |R| = 1.445618e-01
-      0 Linear |R| = 1.445618e-01
-      1 Linear |R| = 1.003124e-01
-      2 Linear |R| = 5.640592e-02
-      3 Linear |R| = 4.338122e-02
-      4 Linear |R| = 3.801623e-02
-      5 Linear |R| = 2.905842e-02
-      6 Linear |R| = 2.553820e-02
-      7 Linear |R| = 2.146480e-12
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 1.32533e-08
-                  em:        8.84605e-05
-                  Arp:       1.02698e-09
-
- 2 Nonlinear |R| = 8.846048e-05
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 8.846048e-05
-
-Time Step  5, time = 7.4416e-09
-                dt = 2.0736e-09
-    |residual|_2 of individual variables:
-                  potential: 105492
-                  em:        0.00976899
-                  Arp:       9.91087e-05
-
- 0 Nonlinear |R| = 1.054919e+05
-      0 Linear |R| = 1.054919e+05
-      1 Linear |R| = 1.734700e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.172793
-                  em:        0.0153301
-                  Arp:       0.000153155
-
- 1 Nonlinear |R| = 1.734713e-01
-      0 Linear |R| = 1.734713e-01
-      1 Linear |R| = 1.203726e-01
-      2 Linear |R| = 6.782548e-02
-      3 Linear |R| = 5.211988e-02
-      4 Linear |R| = 4.818626e-02
-      5 Linear |R| = 3.597666e-02
-      6 Linear |R| = 3.064972e-02
-      7 Linear |R| = 2.831592e-12
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 2.66587e-08
-                  em:        0.000148308
-                  Arp:       1.77479e-09
-
- 2 Nonlinear |R| = 1.483081e-04
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 1.483081e-04
-
-Time Step  6, time = 9.92992e-09
-                dt = 2.48832e-09
-    |residual|_2 of individual variables:
-                  potential: 126586
-                  em:        0.0134228
-                  Arp:       0.00013738
-
- 0 Nonlinear |R| = 1.265859e+05
-      0 Linear |R| = 1.265859e+05
-      1 Linear |R| = 2.081568e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.207344
-                  em:        0.0184214
-                  Arp:       0.000183779
-
- 1 Nonlinear |R| = 2.081607e-01
-      0 Linear |R| = 2.081607e-01
-      1 Linear |R| = 1.444429e-01
-      2 Linear |R| = 8.177930e-02
-      3 Linear |R| = 6.271884e-02
-      4 Linear |R| = 5.951149e-02
-      5 Linear |R| = 4.386036e-02
-      6 Linear |R| = 3.678033e-02
-      7 Linear |R| = 5.680662e-12
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 5.26087e-08
-                  em:        0.000244314
-                  Arp:       3.06739e-09
-
- 2 Nonlinear |R| = 2.443136e-04
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 2.443136e-04
-
-Time Step  7, time = 1.29159e-08
-                dt = 2.98598e-09
-    |residual|_2 of individual variables:
-                  potential: 151895
-                  em:        0.017673
-                  Arp:       0.000183288
-
- 0 Nonlinear |R| = 1.518947e+05
-      0 Linear |R| = 1.518947e+05
-      1 Linear |R| = 2.497744e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.248799
-                  em:        0.0221725
-                  Arp:       0.000220523
-
- 1 Nonlinear |R| = 2.497851e-01
-      0 Linear |R| = 2.497851e-01
-      1 Linear |R| = 1.733239e-01
-      2 Linear |R| = 9.914119e-02
-      3 Linear |R| = 7.571181e-02
-      4 Linear |R| = 7.235241e-02
-      5 Linear |R| = 5.300347e-02
-      6 Linear |R| = 4.413484e-02
-      7 Linear |R| = 1.230414e-11
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 1.01e-07
-                  em:        0.000391804
-                  Arp:       5.30213e-09
-
- 2 Nonlinear |R| = 3.918043e-04
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 3.918043e-04
-
-Time Step  8, time = 1.64991e-08
-                dt = 3.58318e-09
-    |residual|_2 of individual variables:
-                  potential: 182258
-                  em:        0.0225375
-                  Arp:       0.000238348
-
- 0 Nonlinear |R| = 1.822579e+05
-      0 Linear |R| = 1.822579e+05
-      1 Linear |R| = 2.997034e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.298533
-                  em:        0.0267696
-                  Arp:       0.000264604
-
- 1 Nonlinear |R| = 2.997313e-01
-      0 Linear |R| = 2.997313e-01
-      1 Linear |R| = 2.079758e-01
-      2 Linear |R| = 1.213542e-01
-      3 Linear |R| = 9.189971e-02
-      4 Linear |R| = 8.731967e-02
-      5 Linear |R| = 6.379613e-02
-      6 Linear |R| = 5.295768e-02
-      7 Linear |R| = 6.398216e-11
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 1.85211e-07
-                  em:        0.000602868
-                  Arp:       9.1668e-09
-
- 2 Nonlinear |R| = 6.028682e-04
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 6.028682e-04
-
-Time Step  9, time = 2.07989e-08
-                dt = 4.29982e-09
-    |residual|_2 of individual variables:
-                  potential: 218681
-                  em:        0.0279804
-                  Arp:       0.000304365
-
- 0 Nonlinear |R| = 2.186806e+05
-      0 Linear |R| = 2.186806e+05
-      1 Linear |R| = 3.595966e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.358197
-                  em:        0.0324817
-                  Arp:       0.000317483
-
- 1 Nonlinear |R| = 3.596664e-01
-      0 Linear |R| = 3.596664e-01
-      1 Linear |R| = 2.495501e-01
-      2 Linear |R| = 1.508526e-01
-      3 Linear |R| = 1.124919e-01
-      4 Linear |R| = 1.050468e-01
-      5 Linear |R| = 7.665309e-02
-      6 Linear |R| = 6.354105e-02
-      7 Linear |R| = 2.754897e-10
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 3.14519e-07
-                  em:        0.000869701
-                  Arp:       1.58532e-08
-
- 2 Nonlinear |R| = 8.697006e-04
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 8.697006e-04
-
-Time Step 10, time = 2.59587e-08
-                dt = 5.15978e-09
-    |residual|_2 of individual variables:
-                  potential: 262364
-                  em:        0.0338941
-                  Arp:       0.000383484
-
- 0 Nonlinear |R| = 2.623644e+05
-      0 Linear |R| = 2.623644e+05
-      1 Linear |R| = 4.314296e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.429783
-                  em:        0.0396684
-                  Arp:       0.000380904
-
- 1 Nonlinear |R| = 4.316095e-01
-      0 Linear |R| = 4.316095e-01
-      1 Linear |R| = 2.994323e-01
-      2 Linear |R| = 1.925508e-01
-      3 Linear |R| = 1.395598e-01
-      4 Linear |R| = 1.261975e-01
-      5 Linear |R| = 9.202997e-02
-      6 Linear |R| = 7.623416e-02
-      7 Linear |R| = 3.349307e-09
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 4.65607e-07
-                  em:        0.00113395
-                  Arp:       2.7429e-08
-
- 2 Nonlinear |R| = 1.133950e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 1.133950e-03
-
-Time Step 11, time = 3.21504e-08
-                dt = 6.19174e-09
-    |residual|_2 of individual variables:
-                  potential: 314743
-                  em:        0.040134
-                  Arp:       0.000478249
-
- 0 Nonlinear |R| = 3.147433e+05
-      0 Linear |R| = 3.147433e+05
-      1 Linear |R| = 5.175606e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.515847
-                  em:        0.0487046
-                  Arp:       0.000456948
-
- 1 Nonlinear |R| = 5.181414e-01
-      0 Linear |R| = 5.181414e-01
-      1 Linear |R| = 3.593330e-01
-      2 Linear |R| = 2.597932e-01
-      3 Linear |R| = 1.774687e-01
-      4 Linear |R| = 1.515020e-01
-      5 Linear |R| = 1.104457e-01
-      6 Linear |R| = 9.145370e-02
-      7 Linear |R| = 3.580549e-08
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 5.23288e-07
-                  em:        0.0012646
-                  Arp:       4.74887e-08
-
- 2 Nonlinear |R| = 1.264601e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 1.264601e-03
-
-Time Step 12, time = 3.95805e-08
-                dt = 7.43008e-09
-    |residual|_2 of individual variables:
-                  potential: 377525
-                  em:        0.0467435
-                  Arp:       0.000591649
-
- 0 Nonlinear |R| = 3.775246e+05
-      0 Linear |R| = 3.775246e+05
-      1 Linear |R| = 6.207964e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.620687
-                  em:        0.059792
-                  Arp:       0.000548095
-
- 1 Nonlinear |R| = 6.235603e-01
-      0 Linear |R| = 6.235603e-01
-      1 Linear |R| = 4.316952e-01
-      2 Linear |R| = 3.669298e-01
-      3 Linear |R| = 2.282306e-01
-      4 Linear |R| = 1.817802e-01
-      5 Linear |R| = 1.324987e-01
-      6 Linear |R| = 1.096957e-01
-      7 Linear |R| = 7.363417e-07
-  Linear solve converged due to CONVERGED_RTOL iterations 7
-    |residual|_2 of individual variables:
-                  potential: 3.05457e-07
-                  em:        0.00109365
-                  Arp:       8.22997e-08
-
- 2 Nonlinear |R| = 1.093653e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 1.093653e-03
-
-Time Step 13, time = 4.84966e-08
-                dt = 8.9161e-09
-    |residual|_2 of individual variables:
-                  potential: 452733
-                  em:        0.054595
-                  Arp:       0.000727169
-
- 0 Nonlinear |R| = 4.527329e+05
-      0 Linear |R| = 4.527329e+05
-      1 Linear |R| = 7.444659e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.757052
-                  em:        0.073033
-                  Arp:       0.000657285
-
- 1 Nonlinear |R| = 7.605667e-01
-      0 Linear |R| = 7.605667e-01
-      1 Linear |R| = 5.218798e-01
-      2 Linear |R| = 4.818276e-01
-      3 Linear |R| = 2.829322e-01
-      4 Linear |R| = 2.180116e-01
-      5 Linear |R| = 1.589013e-01
-      6 Linear |R| = 1.315483e-01
-      7 Linear |R| = 2.404353e-05
-      8 Linear |R| = 1.238411e-06
-  Linear solve converged due to CONVERGED_RTOL iterations 8
-    |residual|_2 of individual variables:
-                  potential: 1.35526e-07
-                  em:        0.000681771
-                  Arp:       1.42835e-07
-
- 2 Nonlinear |R| = 6.817713e-04
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 6.817713e-04
-
-Time Step 14, time = 5.91959e-08
-                dt = 1.06993e-08
-    |residual|_2 of individual variables:
-                  potential: 542757
-                  em:        0.0656443
-                  Arp:       0.000888813
-
- 0 Nonlinear |R| = 5.427569e+05
-      0 Linear |R| = 5.427569e+05
-      1 Linear |R| = 8.924949e-01
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 0.972018
-                  em:        0.0892737
-                  Arp:       0.000787987
-
- 1 Nonlinear |R| = 9.761089e-01
-      0 Linear |R| = 9.761089e-01
-      1 Linear |R| = 6.453072e-01
-      2 Linear |R| = 5.913614e-01
-      3 Linear |R| = 3.419067e-01
-      4 Linear |R| = 2.613650e-01
-      5 Linear |R| = 1.904990e-01
-      6 Linear |R| = 1.577051e-01
-      7 Linear |R| = 9.398496e-05
-      8 Linear |R| = 5.105207e-06
-  Linear solve converged due to CONVERGED_RTOL iterations 8
-    |residual|_2 of individual variables:
-                  potential: 6.32367e-07
-                  em:        0.00162495
-                  Arp:       2.48425e-07
-
- 2 Nonlinear |R| = 1.624953e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 1.624953e-03
-
-Time Step 15, time = 7.20351e-08
-                dt = 1.28392e-08
-    |residual|_2 of individual variables:
-                  potential: 650391
-                  em:        0.0782249
-                  Arp:       0.00108108
-
- 0 Nonlinear |R| = 6.503912e+05
-      0 Linear |R| = 6.503912e+05
-      1 Linear |R| = 1.069476e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 1.35766
-                  em:        0.108061
-                  Arp:       0.000944264
-
- 1 Nonlinear |R| = 1.361951e+00
-      0 Linear |R| = 1.361951e+00
-      1 Linear |R| = 8.218347e-01
-      2 Linear |R| = 7.120993e-01
-      3 Linear |R| = 4.103755e-01
-      4 Linear |R| = 3.131934e-01
-      5 Linear |R| = 2.282753e-01
-      6 Linear |R| = 1.889775e-01
-      7 Linear |R| = 4.346904e-04
-      8 Linear |R| = 2.907139e-04
-      9 Linear |R| = 1.378063e-08
-  Linear solve converged due to CONVERGED_RTOL iterations 9
-    |residual|_2 of individual variables:
-                  potential: 1.04778e-06
-                  em:        0.00204643
-                  Arp:       4.33425e-07
-
- 2 Nonlinear |R| = 2.046427e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 2.046427e-03
-
-Time Step 16, time = 8.74421e-08
-                dt = 1.5407e-08
-    |residual|_2 of individual variables:
-                  potential: 778866
-                  em:        0.0854596
-                  Arp:       0.00130883
-
- 0 Nonlinear |R| = 7.788662e+05
-      0 Linear |R| = 7.788662e+05
-      1 Linear |R| = 1.280713e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 1.87157
-                  em:        0.127297
-                  Arp:       0.00113082
-
- 1 Nonlinear |R| = 1.875899e+00
-      0 Linear |R| = 1.875899e+00
-      1 Linear |R| = 1.031043e+00
-      2 Linear |R| = 8.536299e-01
-      3 Linear |R| = 4.916023e-01
-      4 Linear |R| = 3.750521e-01
-      5 Linear |R| = 2.733629e-01
-      6 Linear |R| = 2.263027e-01
-      7 Linear |R| = 2.429472e-03
-      8 Linear |R| = 1.568469e-03
-      9 Linear |R| = 1.797347e-07
-  Linear solve converged due to CONVERGED_RTOL iterations 9
-    |residual|_2 of individual variables:
-                  potential: 2.65305e-06
-                  em:        0.00452408
-                  Arp:       7.59695e-07
-
- 2 Nonlinear |R| = 4.524080e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 4.524079e-03
-
-Time Step 17, time = 1.05931e-07
-                dt = 1.84884e-08
-    |residual|_2 of individual variables:
-                  potential: 931847
-                  em:        0.0914699
-                  Arp:       0.00157706
-
- 0 Nonlinear |R| = 9.318470e+05
-      0 Linear |R| = 9.318470e+05
-      1 Linear |R| = 1.532218e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 2.36826
-                  em:        0.14879
-                  Arp:       0.00135302
-
- 1 Nonlinear |R| = 2.372929e+00
-      0 Linear |R| = 2.372929e+00
-      1 Linear |R| = 1.253648e+00
-      2 Linear |R| = 1.021471e+00
-      3 Linear |R| = 5.881884e-01
-      4 Linear |R| = 4.486999e-01
-      5 Linear |R| = 3.270456e-01
-      6 Linear |R| = 2.707429e-01
-      7 Linear |R| = 7.891955e-03
-      8 Linear |R| = 6.219645e-03
-      9 Linear |R| = 1.174656e-05
-  Linear solve converged due to CONVERGED_RTOL iterations 9
-    |residual|_2 of individual variables:
-                  potential: 4.45204e-06
-                  em:        0.00572903
-                  Arp:       1.34065e-06
-
- 2 Nonlinear |R| = 5.729030e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 5.729028e-03
-
-Time Step 18, time = 1.28117e-07
-                dt = 2.21861e-08
-    |residual|_2 of individual variables:
-                  potential: 1.11337e+06
-                  em:        0.095042
-                  Arp:       0.00189027
-
- 0 Nonlinear |R| = 1.113370e+06
-      0 Linear |R| = 1.113370e+06
-      1 Linear |R| = 1.830595e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 2.9269
-                  em:        0.173493
-                  Arp:       0.00161682
-
- 1 Nonlinear |R| = 2.932033e+00
-      0 Linear |R| = 2.932033e+00
-      1 Linear |R| = 1.511553e+00
-      2 Linear |R| = 1.220470e+00
-      3 Linear |R| = 7.027589e-01
-      4 Linear |R| = 5.360670e-01
-      5 Linear |R| = 3.907178e-01
-      6 Linear |R| = 3.234670e-01
-      7 Linear |R| = 6.159773e-02
-      8 Linear |R| = 5.769009e-02
-      9 Linear |R| = 3.674666e-03
-     10 Linear |R| = 1.421889e-03
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.00011995
-                  em:        0.00678222
-                  Arp:       2.39308e-06
-
- 2 Nonlinear |R| = 6.783284e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 2
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 6.782223e-03
-
-Time Step 19, time = 1.5474e-07
-                dt = 2.66233e-08
-    |residual|_2 of individual variables:
-                  potential: 1.32767e+06
-                  em:        0.0969284
-                  Arp:       0.0022517
-
- 0 Nonlinear |R| = 1.327666e+06
-      0 Linear |R| = 1.327666e+06
-      1 Linear |R| = 2.182729e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 3.49833
-                  em:        0.202819
-                  Arp:       0.00192859
-
- 1 Nonlinear |R| = 3.504205e+00
-      0 Linear |R| = 3.504205e+00
-      1 Linear |R| = 1.803394e+00
-      2 Linear |R| = 1.455154e+00
-      3 Linear |R| = 8.380661e-01
-      4 Linear |R| = 6.391039e-01
-      5 Linear |R| = 4.775066e-01
-      6 Linear |R| = 4.273620e-01
-      7 Linear |R| = 4.164766e-01
-      8 Linear |R| = 3.794404e-01
-      9 Linear |R| = 3.693963e-01
-     10 Linear |R| = 3.288459e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.284679
-                  em:        0.156161
-                  Arp:       0.000252273
-
- 2 Nonlinear |R| = 3.246975e-01
-      0 Linear |R| = 3.246975e-01
-      1 Linear |R| = 3.176076e-01
-      2 Linear |R| = 2.791171e-01
-      3 Linear |R| = 2.713850e-01
-      4 Linear |R| = 2.280058e-01
-      5 Linear |R| = 1.828100e-01
-      6 Linear |R| = 1.695645e-01
-      7 Linear |R| = 1.604184e-01
-      8 Linear |R| = 1.474794e-01
-      9 Linear |R| = 7.778567e-02
-     10 Linear |R| = 7.061333e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0661535
-                  em:        0.101848
-                  Arp:       5.8651e-05
-
- 3 Nonlinear |R| = 1.214464e-01
-      0 Linear |R| = 1.214464e-01
-      1 Linear |R| = 8.610703e-02
-      2 Linear |R| = 6.362503e-02
-      3 Linear |R| = 5.950186e-02
-      4 Linear |R| = 5.000039e-02
-      5 Linear |R| = 3.133303e-02
-      6 Linear |R| = 2.767752e-02
-      7 Linear |R| = 2.631003e-02
-      8 Linear |R| = 2.317213e-02
-      9 Linear |R| = 1.624465e-02
-     10 Linear |R| = 1.591292e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.015771
-                  em:        0.0143198
-                  Arp:       1.37404e-05
-
- 4 Nonlinear |R| = 2.130214e-02
-      0 Linear |R| = 2.130214e-02
-      1 Linear |R| = 1.808282e-02
-      2 Linear |R| = 1.539090e-02
-      3 Linear |R| = 1.473538e-02
-      4 Linear |R| = 1.277326e-02
-      5 Linear |R| = 9.240868e-03
-      6 Linear |R| = 8.990718e-03
-      7 Linear |R| = 8.361467e-03
-      8 Linear |R| = 6.717553e-03
-      9 Linear |R| = 3.898587e-03
-     10 Linear |R| = 3.335261e-03
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.00331598
-                  em:        0.000561206
-                  Arp:       1.59938e-05
-
- 5 Nonlinear |R| = 3.363175e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 5
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  potential: 3.315982e-03
-
-Time Step 20, time = 1.86688e-07
-                dt = 3.1948e-08
-    |residual|_2 of individual variables:
-                  potential: 1.57878e+06
-                  em:        0.101323
-                  Arp:       0.00266031
-
- 0 Nonlinear |R| = 1.578780e+06
-      0 Linear |R| = 1.578780e+06
-      1 Linear |R| = 2.597326e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 3.82044
-                  em:        0.238148
-                  Arp:       0.00229666
-
- 1 Nonlinear |R| = 3.827856e+00
-      0 Linear |R| = 3.827856e+00
-      1 Linear |R| = 2.095447e+00
-      2 Linear |R| = 1.732340e+00
-      3 Linear |R| = 1.016011e+00
-      4 Linear |R| = 8.235083e-01
-      5 Linear |R| = 8.000662e-01
-      6 Linear |R| = 7.489736e-01
-      7 Linear |R| = 5.475878e-01
-      8 Linear |R| = 4.536539e-01
-      9 Linear |R| = 4.102787e-01
-     10 Linear |R| = 3.232287e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.221725
-                  em:        0.194189
-                  Arp:       0.00019666
-
- 2 Nonlinear |R| = 2.947394e-01
-      0 Linear |R| = 2.947394e-01
-      1 Linear |R| = 2.658254e-01
-      2 Linear |R| = 2.204621e-01
-      3 Linear |R| = 2.155002e-01
-      4 Linear |R| = 2.082257e-01
-      5 Linear |R| = 1.980061e-01
-      6 Linear |R| = 1.489528e-01
-      7 Linear |R| = 1.303304e-01
-      8 Linear |R| = 1.249625e-01
-      9 Linear |R| = 1.195482e-01
-     10 Linear |R| = 9.866617e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.093063
-                  em:        0.187978
-                  Arp:       8.90235e-05
-
- 3 Nonlinear |R| = 2.097532e-01
-      0 Linear |R| = 2.097532e-01
-      1 Linear |R| = 1.381049e-01
-      2 Linear |R| = 8.845649e-02
-      3 Linear |R| = 7.853917e-02
-      4 Linear |R| = 7.496227e-02
-      5 Linear |R| = 6.456853e-02
-      6 Linear |R| = 5.446600e-02
-      7 Linear |R| = 4.772401e-02
-      8 Linear |R| = 4.510969e-02
-      9 Linear |R| = 3.753840e-02
-     10 Linear |R| = 3.062229e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0248098
-                  em:        0.0383156
-                  Arp:       8.20918e-05
-
- 4 Nonlinear |R| = 4.564669e-02
-      0 Linear |R| = 4.564669e-02
-      1 Linear |R| = 3.494643e-02
-      2 Linear |R| = 2.444161e-02
-      3 Linear |R| = 2.349382e-02
-      4 Linear |R| = 2.237462e-02
-      5 Linear |R| = 1.787379e-02
-      6 Linear |R| = 1.475463e-02
-      7 Linear |R| = 1.235869e-02
-      8 Linear |R| = 1.208512e-02
-      9 Linear |R| = 5.261991e-03
-     10 Linear |R| = 4.198568e-03
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0035785
-                  em:        0.00275914
-                  Arp:       0.000536854
-
- 5 Nonlinear |R| = 4.550463e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 5
- Solve Converged!
-
-Time Step 21, time = 2.25026e-07
-                dt = 3.83376e-08
-    |residual|_2 of individual variables:
-                  potential: 1.86986e+06
-                  em:        0.102934
-                  Arp:       0.0031129
-
- 0 Nonlinear |R| = 1.869861e+06
-      0 Linear |R| = 1.869861e+06
-      1 Linear |R| = 3.073809e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 3.54367
-                  em:        0.263178
-                  Arp:       0.00272265
-
- 1 Nonlinear |R| = 3.553426e+00
-      0 Linear |R| = 3.553426e+00
-      1 Linear |R| = 2.276227e+00
-      2 Linear |R| = 2.054419e+00
-      3 Linear |R| = 1.776139e+00
-      4 Linear |R| = 1.768353e+00
-      5 Linear |R| = 1.147409e+00
-      6 Linear |R| = 8.903754e-01
-      7 Linear |R| = 6.868298e-01
-      8 Linear |R| = 5.700309e-01
-      9 Linear |R| = 5.390926e-01
-     10 Linear |R| = 5.212495e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.519307
-                  em:        0.0546208
-                  Arp:       0.000455712
-
- 2 Nonlinear |R| = 5.221716e-01
-      0 Linear |R| = 5.221716e-01
-      1 Linear |R| = 5.161407e-01
-      2 Linear |R| = 5.075206e-01
-      3 Linear |R| = 4.604064e-01
-      4 Linear |R| = 3.222109e-01
-      5 Linear |R| = 3.039544e-01
-      6 Linear |R| = 2.986844e-01
-      7 Linear |R| = 2.858768e-01
-      8 Linear |R| = 2.377852e-01
-      9 Linear |R| = 1.278773e-01
-     10 Linear |R| = 1.216757e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.119849
-                  em:        0.0200803
-                  Arp:       0.000108042
-
- 3 Nonlinear |R| = 1.215195e-01
-      0 Linear |R| = 1.215195e-01
-      1 Linear |R| = 1.182208e-01
-      2 Linear |R| = 1.134846e-01
-      3 Linear |R| = 9.084099e-02
-      4 Linear |R| = 5.563509e-02
-      5 Linear |R| = 4.915527e-02
-      6 Linear |R| = 4.709873e-02
-      7 Linear |R| = 4.562283e-02
-      8 Linear |R| = 3.621766e-02
-      9 Linear |R| = 2.877205e-02
-     10 Linear |R| = 2.775239e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0273885
-                  em:        0.00453897
-                  Arp:       0.000224514
-
- 4 Nonlinear |R| = 2.776295e-02
-      0 Linear |R| = 2.776295e-02
-      1 Linear |R| = 2.726498e-02
-      2 Linear |R| = 2.686147e-02
-      3 Linear |R| = 2.594101e-02
-      4 Linear |R| = 1.914390e-02
-      5 Linear |R| = 1.663983e-02
-      6 Linear |R| = 1.594275e-02
-      7 Linear |R| = 1.542295e-02
-      8 Linear |R| = 1.389932e-02
-      9 Linear |R| = 9.234967e-03
-     10 Linear |R| = 7.513060e-03
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.00663395
-                  em:        0.00349281
-                  Arp:       0.000359904
-
- 5 Nonlinear |R| = 7.505896e-03
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 5
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  potential: 6.633946e-03
-
-Time Step 22, time = 2.71031e-07
-                dt = 4.60051e-08
-    |residual|_2 of individual variables:
-                  potential: 2.20192e+06
-                  em:        0.103996
-                  Arp:       0.00359829
-
- 0 Nonlinear |R| = 2.201920e+06
-      0 Linear |R| = 2.201920e+06
-      1 Linear |R| = 3.613827e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 4.02781
-                  em:        0.162939
-                  Arp:       0.00321555
-
- 1 Nonlinear |R| = 4.031103e+00
-      0 Linear |R| = 4.031103e+00
-      1 Linear |R| = 2.644329e+00
-      2 Linear |R| = 2.440733e+00
-      3 Linear |R| = 2.334243e+00
-      4 Linear |R| = 2.282977e+00
-      5 Linear |R| = 1.356902e+00
-      6 Linear |R| = 1.046484e+00
-      7 Linear |R| = 7.792772e-01
-      8 Linear |R| = 6.493986e-01
-      9 Linear |R| = 6.351580e-01
-     10 Linear |R| = 6.116942e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.607403
-                  em:        0.0973327
-                  Arp:       0.00052908
-
- 2 Nonlinear |R| = 6.151521e-01
-      0 Linear |R| = 6.151521e-01
-      1 Linear |R| = 6.008826e-01
-      2 Linear |R| = 5.963563e-01
-      3 Linear |R| = 5.661758e-01
-      4 Linear |R| = 5.027706e-01
-      5 Linear |R| = 4.315287e-01
-      6 Linear |R| = 3.614442e-01
-      7 Linear |R| = 3.427310e-01
-      8 Linear |R| = 3.293117e-01
-      9 Linear |R| = 3.081751e-01
-     10 Linear |R| = 2.147196e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.177367
-                  em:        0.541453
-                  Arp:       0.000170502
-
- 3 Nonlinear |R| = 5.697634e-01
-      0 Linear |R| = 5.697634e-01
-      1 Linear |R| = 2.299402e-01
-      2 Linear |R| = 1.996922e-01
-      3 Linear |R| = 1.673408e-01
-      4 Linear |R| = 1.593687e-01
-      5 Linear |R| = 1.148710e-01
-      6 Linear |R| = 9.778710e-02
-      7 Linear |R| = 8.593306e-02
-      8 Linear |R| = 8.124704e-02
-      9 Linear |R| = 2.300292e-02
-     10 Linear |R| = 2.156811e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0206287
-                  em:        0.183206
-                  Arp:       0.000601245
-
- 4 Nonlinear |R| = 1.843644e-01
-      0 Linear |R| = 1.843644e-01
-      1 Linear |R| = 6.812467e-02
-      2 Linear |R| = 4.921543e-02
-      3 Linear |R| = 1.785130e-02
-      4 Linear |R| = 1.677097e-02
-      5 Linear |R| = 6.349905e-03
-      6 Linear |R| = 5.483960e-03
-      7 Linear |R| = 4.742948e-03
-      8 Linear |R| = 4.667972e-03
-      9 Linear |R| = 3.822608e-03
-     10 Linear |R| = 2.821257e-03
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0025793
-                  em:        0.0621637
-                  Arp:       0.00057448
-
- 5 Nonlinear |R| = 6.221984e-02
-      0 Linear |R| = 6.221984e-02
-      1 Linear |R| = 3.228670e-02
-      2 Linear |R| = 2.340160e-02
-      3 Linear |R| = 2.200752e-03
-      4 Linear |R| = 1.925838e-03
-      5 Linear |R| = 1.882949e-03
-      6 Linear |R| = 1.828014e-03
-      7 Linear |R| = 1.399185e-03
-      8 Linear |R| = 1.037196e-03
-      9 Linear |R| = 9.077561e-04
-     10 Linear |R| = 8.267357e-04
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.000791908
-                  em:        0.0206742
-                  Arp:       0.000240946
-
- 6 Nonlinear |R| = 2.069077e-02
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 6
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  em: 2.067420e-02
-
-Time Step 23, time = 3.26237e-07
-                dt = 5.52061e-08
-    |residual|_2 of individual variables:
-                  potential: 2.57182e+06
-                  em:        0.0996059
-                  Arp:       0.00410456
-
- 0 Nonlinear |R| = 2.571825e+06
-      0 Linear |R| = 2.571825e+06
-      1 Linear |R| = 4.210262e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 11.2711
-                  em:        0.0566546
-                  Arp:       0.00376696
-
- 1 Nonlinear |R| = 1.127121e+01
-      0 Linear |R| = 1.127121e+01
-      1 Linear |R| = 3.829926e+00
-      2 Linear |R| = 2.823135e+00
-      3 Linear |R| = 2.677531e+00
-      4 Linear |R| = 2.574938e+00
-      5 Linear |R| = 1.575056e+00
-      6 Linear |R| = 1.212033e+00
-      7 Linear |R| = 1.136164e+00
-      8 Linear |R| = 1.052786e+00
-      9 Linear |R| = 8.348196e-01
-     10 Linear |R| = 7.194151e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.717592
-                  em:        0.0575518
-                  Arp:       0.000622862
-
- 2 Nonlinear |R| = 7.198960e-01
-      0 Linear |R| = 7.198960e-01
-      1 Linear |R| = 7.087699e-01
-      2 Linear |R| = 6.941627e-01
-      3 Linear |R| = 6.412512e-01
-      4 Linear |R| = 5.708055e-01
-      5 Linear |R| = 4.816299e-01
-      6 Linear |R| = 4.196431e-01
-      7 Linear |R| = 4.045514e-01
-      8 Linear |R| = 3.421925e-01
-      9 Linear |R| = 2.652370e-01
-     10 Linear |R| = 2.159498e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.182862
-                  em:        0.139276
-                  Arp:       0.000361025
-
- 3 Nonlinear |R| = 2.298621e-01
-      0 Linear |R| = 2.298621e-01
-      1 Linear |R| = 1.981142e-01
-      2 Linear |R| = 1.836525e-01
-      3 Linear |R| = 1.728223e-01
-      4 Linear |R| = 1.647256e-01
-      5 Linear |R| = 1.566703e-01
-      6 Linear |R| = 1.320131e-01
-      7 Linear |R| = 9.273409e-02
-      8 Linear |R| = 8.880461e-02
-      9 Linear |R| = 8.506151e-02
-     10 Linear |R| = 8.246603e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.08231
-                  em:        0.0201798
-                  Arp:       8.61492e-05
-
- 4 Nonlinear |R| = 8.474764e-02
-      0 Linear |R| = 8.474764e-02
-      1 Linear |R| = 8.350573e-02
-      2 Linear |R| = 8.260258e-02
-      3 Linear |R| = 7.908245e-02
-      4 Linear |R| = 7.594840e-02
-      5 Linear |R| = 7.021289e-02
-      6 Linear |R| = 6.446066e-02
-      7 Linear |R| = 5.221078e-02
-      8 Linear |R| = 5.037837e-02
-      9 Linear |R| = 4.553804e-02
-     10 Linear |R| = 3.763213e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0295001
-                  em:        0.0232199
-                  Arp:       0.000223544
-
- 5 Nonlinear |R| = 3.754285e-02
-      0 Linear |R| = 3.754285e-02
-      1 Linear |R| = 3.485617e-02
-      2 Linear |R| = 3.139501e-02
-      3 Linear |R| = 2.691238e-02
-      4 Linear |R| = 2.552504e-02
-      5 Linear |R| = 2.482907e-02
-      6 Linear |R| = 2.391050e-02
-      7 Linear |R| = 1.833532e-02
-      8 Linear |R| = 1.730185e-02
-      9 Linear |R| = 1.667469e-02
-     10 Linear |R| = 1.649682e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0164092
-                  em:        0.00287882
-                  Arp:       3.07814e-05
-
- 6 Nonlinear |R| = 1.665982e-02
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 6
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  potential: 1.640918e-02
-
-Time Step 24, time = 3.92484e-07
-                dt = 6.62474e-08
-    |residual|_2 of individual variables:
-                  potential: 2.9693e+06
-                  em:        0.101319
-                  Arp:       0.00461315
-
- 0 Nonlinear |R| = 2.969304e+06
-      0 Linear |R| = 2.969304e+06
-      1 Linear |R| = 4.866581e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 28.6756
-                  em:        0.0813366
-                  Arp:       0.00437402
-
- 1 Nonlinear |R| = 2.867575e+01
-      0 Linear |R| = 2.867575e+01
-      1 Linear |R| = 4.629225e+00
-      2 Linear |R| = 3.249195e+00
-      3 Linear |R| = 2.548007e+00
-      4 Linear |R| = 2.085416e+00
-      5 Linear |R| = 1.720506e+00
-      6 Linear |R| = 1.401123e+00
-      7 Linear |R| = 1.376423e+00
-      8 Linear |R| = 1.354047e+00
-      9 Linear |R| = 1.035958e+00
-     10 Linear |R| = 8.541711e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.831326
-                  em:        0.24514
-                  Arp:       0.00072335
-
- 2 Nonlinear |R| = 8.667166e-01
-      0 Linear |R| = 8.667166e-01
-      1 Linear |R| = 8.346540e-01
-      2 Linear |R| = 8.173251e-01
-      3 Linear |R| = 8.045021e-01
-      4 Linear |R| = 7.839753e-01
-      5 Linear |R| = 7.048544e-01
-      6 Linear |R| = 6.004521e-01
-      7 Linear |R| = 5.577825e-01
-      8 Linear |R| = 4.682960e-01
-      9 Linear |R| = 4.487174e-01
-     10 Linear |R| = 3.709670e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.363044
-                  em:        0.121485
-                  Arp:       0.000646987
-
- 3 Nonlinear |R| = 3.828312e-01
-      0 Linear |R| = 3.828312e-01
-      1 Linear |R| = 3.292580e-01
-      2 Linear |R| = 3.265660e-01
-      3 Linear |R| = 3.132335e-01
-      4 Linear |R| = 2.994518e-01
-      5 Linear |R| = 2.909169e-01
-      6 Linear |R| = 2.737445e-01
-      7 Linear |R| = 2.108897e-01
-      8 Linear |R| = 1.843086e-01
-      9 Linear |R| = 1.763269e-01
-     10 Linear |R| = 1.717473e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.171452
-                  em:        0.0283403
-                  Arp:       0.000199291
-
- 4 Nonlinear |R| = 1.737781e-01
-      0 Linear |R| = 1.737781e-01
-      1 Linear |R| = 1.719324e-01
-      2 Linear |R| = 1.706071e-01
-      3 Linear |R| = 1.635114e-01
-      4 Linear |R| = 1.581730e-01
-      5 Linear |R| = 1.507566e-01
-      6 Linear |R| = 1.370345e-01
-      7 Linear |R| = 1.099797e-01
-      8 Linear |R| = 1.074870e-01
-      9 Linear |R| = 1.058119e-01
-     10 Linear |R| = 9.430963e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0932165
-                  em:        0.0150295
-                  Arp:       0.000426425
-
- 5 Nonlinear |R| = 9.442127e-02
-      0 Linear |R| = 9.442127e-02
-      1 Linear |R| = 8.551841e-02
-      2 Linear |R| = 8.461840e-02
-      3 Linear |R| = 8.237797e-02
-      4 Linear |R| = 7.847334e-02
-      5 Linear |R| = 7.542856e-02
-      6 Linear |R| = 6.970551e-02
-      7 Linear |R| = 6.161545e-02
-      8 Linear |R| = 5.707165e-02
-      9 Linear |R| = 5.378867e-02
-     10 Linear |R| = 5.221082e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0520577
-                  em:        0.00469437
-                  Arp:       1.93618e-05
-
- 6 Nonlinear |R| = 5.226892e-02
-      0 Linear |R| = 5.226892e-02
-      1 Linear |R| = 5.196014e-02
-      2 Linear |R| = 5.168201e-02
-      3 Linear |R| = 5.057359e-02
-      4 Linear |R| = 4.807140e-02
-      5 Linear |R| = 4.514586e-02
-      6 Linear |R| = 3.880945e-02
-      7 Linear |R| = 3.438828e-02
-      8 Linear |R| = 3.403746e-02
-      9 Linear |R| = 3.298361e-02
-     10 Linear |R| = 2.872997e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0285649
-                  em:        0.00268433
-                  Arp:       0.000301389
-
- 7 Nonlinear |R| = 2.869234e-02
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 7
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  potential: 2.856491e-02
-
-Time Step 25, time = 4.71981e-07
-                dt = 7.94968e-08
-    |residual|_2 of individual variables:
-                  potential: 3.37298e+06
-                  em:        0.101747
-                  Arp:       0.00519043
-
- 0 Nonlinear |R| = 3.372976e+06
-      0 Linear |R| = 3.372976e+06
-      1 Linear |R| = 5.538261e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 59.8124
-                  em:        0.15961
-                  Arp:       0.0050223
-
- 1 Nonlinear |R| = 5.981262e+01
-      0 Linear |R| = 5.981262e+01
-      1 Linear |R| = 5.315747e+00
-      2 Linear |R| = 3.694559e+00
-      3 Linear |R| = 2.806884e+00
-      4 Linear |R| = 2.181529e+00
-      5 Linear |R| = 1.884247e+00
-      6 Linear |R| = 1.598840e+00
-      7 Linear |R| = 1.559092e+00
-      8 Linear |R| = 1.523445e+00
-      9 Linear |R| = 1.169734e+00
-     10 Linear |R| = 9.846024e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 53.8329
-                  em:        0.146651
-                  Arp:       0.0045377
-
- 2 Nonlinear |R| = 5.383310e+01
-      0 Linear |R| = 5.383310e+01
-      1 Linear |R| = 4.804905e+00
-      2 Linear |R| = 3.352849e+00
-      3 Linear |R| = 2.633442e+00
-      4 Linear |R| = 2.219085e+00
-      5 Linear |R| = 1.910358e+00
-      6 Linear |R| = 1.539203e+00
-      7 Linear |R| = 1.490335e+00
-      8 Linear |R| = 1.447683e+00
-      9 Linear |R| = 1.336241e+00
-     10 Linear |R| = 1.232658e+00
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 1.10118
-                  em:        0.507351
-                  Arp:       0.000970703
-
- 3 Nonlinear |R| = 1.212441e+00
-      0 Linear |R| = 1.212441e+00
-      1 Linear |R| = 1.212324e+00
-      2 Linear |R| = 1.107285e+00
-      3 Linear |R| = 1.093812e+00
-      4 Linear |R| = 1.076008e+00
-      5 Linear |R| = 1.051034e+00
-      6 Linear |R| = 9.900939e-01
-      7 Linear |R| = 7.404304e-01
-      8 Linear |R| = 6.506563e-01
-      9 Linear |R| = 6.067992e-01
-     10 Linear |R| = 5.287902e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.92798
-                  em:        0.381001
-                  Arp:       0.000835259
-
- 4 Nonlinear |R| = 1.003150e+00
-      0 Linear |R| = 1.003150e+00
-      1 Linear |R| = 9.713710e-01
-      2 Linear |R| = 9.216211e-01
-      3 Linear |R| = 9.088225e-01
-      4 Linear |R| = 8.911089e-01
-      5 Linear |R| = 8.809675e-01
-      6 Linear |R| = 8.286154e-01
-      7 Linear |R| = 5.318832e-01
-      8 Linear |R| = 4.514818e-01
-      9 Linear |R| = 3.959590e-01
-     10 Linear |R| = 3.321806e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.325156
-                  em:        0.0916835
-                  Arp:       0.00066792
-
- 5 Nonlinear |R| = 3.378352e-01
-      0 Linear |R| = 3.378352e-01
-      1 Linear |R| = 3.014066e-01
-      2 Linear |R| = 2.929258e-01
-      3 Linear |R| = 2.689361e-01
-      4 Linear |R| = 2.446519e-01
-      5 Linear |R| = 2.382869e-01
-      6 Linear |R| = 1.971865e-01
-      7 Linear |R| = 1.307138e-01
-      8 Linear |R| = 1.229248e-01
-      9 Linear |R| = 1.193704e-01
-     10 Linear |R| = 1.179418e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.117385
-                  em:        0.0211101
-                  Arp:       0.000111322
-
- 6 Nonlinear |R| = 1.192681e-01
-      0 Linear |R| = 1.192681e-01
-      1 Linear |R| = 1.188333e-01
-      2 Linear |R| = 1.179907e-01
-      3 Linear |R| = 1.163777e-01
-      4 Linear |R| = 1.131532e-01
-      5 Linear |R| = 1.103000e-01
-      6 Linear |R| = 1.023224e-01
-      7 Linear |R| = 8.295061e-02
-      8 Linear |R| = 7.762930e-02
-      9 Linear |R| = 5.115476e-02
-     10 Linear |R| = 4.265517e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0425619
-                  em:        0.00404125
-                  Arp:       5.73995e-05
-
- 7 Nonlinear |R| = 4.275332e-02
-      0 Linear |R| = 4.275332e-02
-      1 Linear |R| = 3.617234e-02
-      2 Linear |R| = 3.592876e-02
-      3 Linear |R| = 3.473134e-02
-      4 Linear |R| = 3.204589e-02
-      5 Linear |R| = 3.037821e-02
-      6 Linear |R| = 2.105937e-02
-      7 Linear |R| = 2.030565e-02
-      8 Linear |R| = 1.701644e-02
-      9 Linear |R| = 1.571685e-02
-     10 Linear |R| = 1.537085e-02
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.0152578
-                  em:        0.0013681
-                  Arp:       1.99624e-05
-
- 8 Nonlinear |R| = 1.531899e-02
-Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 8
- Solve Converged!
-
-Outlier Variable Residual Norms:
-  potential: 1.525776e-02
-
-Time Step 26, time = 5.67377e-07
-                dt = 9.53962e-08
-    |residual|_2 of individual variables:
-                  potential: 3.7461e+06
-                  em:        0.100804
-                  Arp:       0.00597354
-
- 0 Nonlinear |R| = 3.746098e+06
-      0 Linear |R| = 3.746098e+06
-      1 Linear |R| = 6.143837e+00
-  Linear solve converged due to CONVERGED_RTOL iterations 1
-    |residual|_2 of individual variables:
-                  potential: 105.269
-                  em:        0.178342
-                  Arp:       0.00559271
-
- 1 Nonlinear |R| = 1.052691e+02
-      0 Linear |R| = 1.052691e+02
-      1 Linear |R| = 5.910345e+00
-      2 Linear |R| = 4.102008e+00
-      3 Linear |R| = 3.029828e+00
-      4 Linear |R| = 2.348839e+00
-      5 Linear |R| = 2.015674e+00
-      6 Linear |R| = 1.759637e+00
-      7 Linear |R| = 1.692261e+00
-      8 Linear |R| = 1.635238e+00
-      9 Linear |R| = 1.411160e+00
-     10 Linear |R| = 1.136207e+00
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 94.7435
-                  em:        0.691175
-                  Arp:       0.00504518
-
- 2 Nonlinear |R| = 9.474605e+01
-      0 Linear |R| = 9.474605e+01
-      1 Linear |R| = 5.343948e+00
-      2 Linear |R| = 3.724747e+00
-      3 Linear |R| = 2.748294e+00
-      4 Linear |R| = 2.177226e+00
-      5 Linear |R| = 1.897054e+00
-      6 Linear |R| = 1.664654e+00
-      7 Linear |R| = 1.626411e+00
-      8 Linear |R| = 1.581685e+00
-      9 Linear |R| = 1.241559e+00
-     10 Linear |R| = 1.009506e+00
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 85.2698
-                  em:        0.620207
-                  Arp:       0.00455518
-
- 3 Nonlinear |R| = 8.527206e+01
-      0 Linear |R| = 8.527206e+01
-      1 Linear |R| = 4.830912e+00
-      2 Linear |R| = 3.380903e+00
-      3 Linear |R| = 2.550523e+00
-      4 Linear |R| = 2.053079e+00
-      5 Linear |R| = 1.780620e+00
-      6 Linear |R| = 1.553550e+00
-      7 Linear |R| = 1.519956e+00
-      8 Linear |R| = 1.480152e+00
-      9 Linear |R| = 1.134598e+00
-     10 Linear |R| = 9.271169e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
-    |residual|_2 of individual variables:
-                  potential: 0.904727
-                  em:        0.181767
-                  Arp:       0.000837154
-
- 4 Nonlinear |R| = 9.228060e-01
-      0 Linear |R| = 9.228060e-01
-      1 Linear |R| = 8.906714e-01
-      2 Linear |R| = 8.683370e-01
-      3 Linear |R| = 8.434720e-01
-      4 Linear |R| = 8.053635e-01
-      5 Linear |R| = 6.879654e-01
-      6 Linear |R| = 6.019026e-01
-      7 Linear |R| = 5.045662e-01
-      8 Linear |R| = 4.714156e-01
-      9 Linear |R| = 2.966278e-01
-     10 Linear |R| = 2.141814e-01
-  Linear solve converged due to CONVERGED_ITS iterations 10
 --------------------------------------------------------------------------
-MPI_ABORT was invoked on rank 1 in communicator MPI_COMM_WORLD 
-with errorcode 1.
+MPI_ABORT was invoked on rank 0 in communicator MPI_COMM_WORLD 
+with errorcode 56.
 
 NOTE: invoking MPI_ABORT causes Open MPI to kill all MPI processes.
 You may or may not see output from other processes, depending on
 exactly when Open MPI kills them.
 --------------------------------------------------------------------------
+
+ -----------------------------------------------------------------
+| Time:           Wed Sep 16 11:47:09 2015                        |
+| OS:             Linux                                           |
+| HostName:       lindsayad-Inspiron-5437                         |
+| OS Release:     3.13.0-62-generic                               |
+| OS Version:     #102-Ubuntu SMP Tue Aug 11 14:29:36 UTC 2015    |
+| Machine:        x86_64                                          |
+| Username:       lindsayad                                       |
+| Configuration:  ../configure  '--with-methods=opt oprof dbg'    |
+|  '--prefix=/home/lindsayad/moose/scripts/../libmesh/installed'  |
+|  '--enable-silent-rules'                                        |
+|  '--enable-unique-id'                                           |
+|  '--disable-warnings'                                           |
+|  '--disable-cxx11'                                              |
+|  '--enable-unique-ptr'                                          |
+|  '--enable-openmp'                                              |
+|  '--disable-timestamps'                                         |
+|  'METHODS=opt oprof dbg'                                        |
+|  'PETSC_DIR=/opt/moose/petsc/openmpi_petsc-3.5.2/gcc-opt-superlu'|
+|  '--disable-testsets'                                           |
+|  'CXX=ccache clang++'                                           |
+|  'CC=ccache clang'                                              |
+|  'F77=mpif77'                                                   |
+|  'FC=ccache mpif90'                                             |
+|  'CPPFLAGS= '                                                   |
+|  'LIBS=-L/lib -lhdf5 -Wl,-rpath,/lib -ldl '                     |
+ -----------------------------------------------------------------
+ ------------------------------------------------------------------------------------------------------------
+| Zapdos Performance: Alive time=0.281476, Active time=0.14643                                               |
+ ------------------------------------------------------------------------------------------------------------
+| Event                         nCalls     Total Time  Avg Time    Total Time  Avg Time    % of Active Time  |
+|                                          w/o Sub     w/o Sub     With Sub    With Sub    w/o S    With S   |
+|------------------------------------------------------------------------------------------------------------|
+|                                                                                                            |
+|                                                                                                            |
+| Exodus                                                                                                     |
+|   output()                    1          0.0188      0.018838    0.0188      0.018838    12.86    12.86    |
+|                                                                                                            |
+| Solve                                                                                                      |
+|   ComputeResidualThread       2          0.0402      0.020121    0.0402      0.020121    27.48    27.48    |
+|   computeDiracContributions() 3          0.0000      0.000002    0.0000      0.000002    0.00     0.00     |
+|   compute_jacobian()          1          0.0740      0.073963    0.0740      0.073965    50.51    50.51    |
+|   compute_residual()          2          0.0002      0.000088    0.0405      0.020230    0.12     27.63    |
+|   compute_user_objects()      10         0.0000      0.000002    0.0000      0.000002    0.01     0.01     |
+|   residual.close3()           2          0.0000      0.000013    0.0000      0.000013    0.02     0.02     |
+|   residual.close4()           2          0.0000      0.000005    0.0000      0.000005    0.01     0.01     |
+|   solve()                     1          0.0058      0.005829    0.0000      0.000000    3.98     0.00     |
+|   update_aux_vars_elemental() 5          0.0000      0.000001    0.0000      0.000001    0.00     0.00     |
+|   update_aux_vars_nodal()     5          0.0072      0.001443    0.0072      0.001443    4.93     4.93     |
+|   update_aux_vars_nodal_bcs() 5          0.0001      0.000020    0.0001      0.000020    0.07     0.07     |
+ ------------------------------------------------------------------------------------------------------------
+| Totals:                       39         0.1464                                          100.00            |
+ ------------------------------------------------------------------------------------------------------------
+
+ -------------------------------------------------------------------------------------------------------------------------
+| Setup Performance: Alive time=0.282321, Active time=0.062933                                                            |
+ -------------------------------------------------------------------------------------------------------------------------
+| Event                                      nCalls     Total Time  Avg Time    Total Time  Avg Time    % of Active Time  |
+|                                                       w/o Sub     w/o Sub     With Sub    With Sub    w/o S    With S   |
+|-------------------------------------------------------------------------------------------------------------------------|
+|                                                                                                                         |
+|                                                                                                                         |
+| Setup                                                                                                                   |
+|   Create Executioner                       1          0.0003      0.000319    0.0003      0.000319    0.51     0.51     |
+|   FEProblem::init::meshChanged()           1          0.0012      0.001242    0.0012      0.001242    1.97     1.97     |
+|   Initial computeUserObjects()             1          0.0000      0.000039    0.0000      0.000039    0.06     0.06     |
+|   Initial execMultiApps()                  1          0.0000      0.000001    0.0000      0.000001    0.00     0.00     |
+|   Initial execTransfers()                  1          0.0000      0.000001    0.0000      0.000001    0.00     0.00     |
+|   Initial updateActiveSemiLocalNodeRange() 1          0.0010      0.001020    0.0010      0.001020    1.62     1.62     |
+|   Initial updateGeomSearch()               2          0.0000      0.000001    0.0000      0.000001    0.00     0.00     |
+|   NonlinearSystem::update()                1          0.0001      0.000070    0.0001      0.000070    0.11     0.11     |
+|   Output Initial Condition                 1          0.0233      0.023348    0.0233      0.023348    37.10    37.10    |
+|   Prepare Mesh                             1          0.0014      0.001433    0.0014      0.001433    2.28     2.28     |
+|   copySolutionsBackwards()                 1          0.0001      0.000078    0.0001      0.000078    0.12     0.12     |
+|   eq.init()                                1          0.0351      0.035120    0.0351      0.035120    55.81    55.81    |
+|   getMinQuadratureOrder()                  1          0.0000      0.000004    0.0000      0.000004    0.01     0.01     |
+|   initial adaptivity                       1          0.0000      0.000001    0.0000      0.000001    0.00     0.00     |
+|   maxQps()                                 1          0.0003      0.000252    0.0003      0.000252    0.40     0.40     |
+|   reinit() after updateGeomSearch()        1          0.0000      0.000001    0.0000      0.000001    0.00     0.00     |
+|                                                                                                                         |
+| ghostGhostedBoundaries                                                                                                  |
+|   eq.init()                                1          0.0000      0.000002    0.0000      0.000002    0.00     0.00     |
+ -------------------------------------------------------------------------------------------------------------------------
+| Totals:                                    18         0.0629                                          100.00            |
+ -------------------------------------------------------------------------------------------------------------------------
+
