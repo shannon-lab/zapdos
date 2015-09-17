@@ -48,19 +48,19 @@
 [Outputs]
   # exodus = true
   print_perf_log = true
-  print_linear_residuals = true
+  # print_linear_residuals = true
   output_initial = true
-  [./out]
-    type = Exodus
-    output_material_properties = true
-    show_material_properties = 'EField'
-    # show_material_properties = 'ElectronTotalFlux ElectronAdvectiveFlux ElectronDiffusiveFlux IonTotalFlux IonAdvectiveFlux IonDiffusiveFlux EField'
-  [../]
+  # [./out]
+  #   type = Exodus
+  #   output_material_properties = true
+  #   show_material_properties = 'EField'
+  #   # show_material_properties = 'ElectronTotalFlux ElectronAdvectiveFlux ElectronDiffusiveFlux IonTotalFlux IonAdvectiveFlux IonDiffusiveFlux EField'
+  # [../]
 []
 
-[Debug]
-  show_var_residual_norms = true
-[]
+# [Debug]
+#   show_var_residual_norms = true
+# []
 
 [UserObjects]
   [./data_provider]

@@ -5,7 +5,7 @@
   # boundary_name = 'left right'
   type = GeneratedMesh
   dim = 1
-  nx = 1
+  nx = 4000
   xmin = 0.002
   xmax = .05
 []
@@ -26,8 +26,8 @@
   type = Transient
   end_time = 1e-1
   solve_type = NEWTON
-  petsc_options_iname = '-snes_converged_reason -pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_converged_reason -ksp_type -snes_type' # -snes_test_display'
-  petsc_options_value = 'true lu NONZERO 1.e-10 true preonly test' # true'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type'
+  petsc_options_value = 'lu NONZERO 1.e-10 preonly'
  # nl_rel_tol = 1e-8
  # l_tol = 1e-3
  # trans_ss_check = true
@@ -123,44 +123,44 @@
   [../]
 []
 
-# [AuxVariables]
-#   [./em_lin]
-#   [../]
-#   [./Arp_lin]
-#   [../]
-#   # [./e_field]
-#   #   order = CONSTANT
-#   #   family = MONOMIAL
-#   # [../]
-#   # [./advective_flux]
-#   #   order = CONSTANT
-#   #   family = MONOMIAL
-#   # [../]
-#   # [./diffusive_flux]
-#   #   order = CONSTANT
-#   #   family = MONOMIAL
-#   # [../]
-#   # [./art_diffusive_flux]
-#   #   order = CONSTANT
-#   #   family = MONOMIAL
-#   # [../]
-#   # [./total_flux]
-#   #   order = CONSTANT
-#   #   family = MONOMIAL
-#   # [../]
-#   # [./total_flux_mag]
-#   #   order = CONSTANT
-#   #   family = MONOMIAL
-#   # [../]
-#   # [./aux_source]
-#   #   order = CONSTANT
-#   #   family = MONOMIAL
-#   # [../]
-#   # [./energy_lin]
-#   # [../]
-#   [./e_temp]
-#   [../]
-# []
+[AuxVariables]
+  [./em_lin]
+  [../]
+  [./Arp_lin]
+  [../]
+  # [./e_field]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./advective_flux]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./diffusive_flux]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./art_diffusive_flux]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./total_flux]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./total_flux_mag]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./aux_source]
+  #   order = CONSTANT
+  #   family = MONOMIAL
+  # [../]
+  # [./energy_lin]
+  # [../]
+  [./e_temp]
+  [../]
+[]
 
 # [AuxKernels]
 #   [./em_lin]

@@ -404,3 +404,56 @@ Using parallel Bjacobi with lu as the sub_pc_type, the solve failed at 2.35183e-
 However, when I went to 2 processors the problem solved! Performance summary: | Zapdos Performance: Alive time=111.615, Active time=110.712 (Record!)
 
 In early time steps, I could still see some kinks in the Arp solution and occasionally even in the em solution. However, at longer time steps the kinks disappeared. I would hypothesize that these kinks only appear when the potential is almost perfectly linear and the electric field is incredibly uniform such that any tiny miscommunication between the processors will induce a very noted change in the electrostatics on an automatic scale. And these kinks in the electrostatics directly impact the particle drift motion. However, on longer time scales when the particles begin to affect the electric field, these affects are much stronger and on a much larger scale than the processor miscommunication so that the processor miscommunication no longer becomes a problem.
+
+With that same run as the one immediately above on the desktop, the problem solved in 97 seconds with console output to the screen. When I tried running with 4 processors, I got the same crash that I've come to know. It also occurred at 2.35183e-07 seconds. So the success of running on 2 cores comes not from having the correct number of physical cores but from the formulation of the problem.
+
+Reducing the amount of output to the log file doesn't seem to have helped the problem solve any faster. Scaling comparison:
+
+2 processors: 97.0632 seconds
+1 processor: 141.503 seconds
+
+So computation time was reduced by 31%. E.g. it took 69% as long with 2 processors as it did with 1. With perfect parallelization that 69 number would be 50.
+
+Here's the Jacobian test output for this ionization source residual and corresponding Jacobian: 
+
+    -_test[_i][_qp]*_rate_coeff_ion_en[_qp]*_Ar[_qp]*-_Eiz_en[_qp]*_em[_qp]
+
+Norm of matrix ratio 7.86836e-08 difference 0.00400463 (user-defined state)
+Norm of matrix ratio 1.76423e-08 difference 2.41652e+10 (constant state -1.0)
+Norm of matrix ratio 1.9803e-08 difference 3.74509e+09 (constant state 1.0)
+
+Here's the Jacobian test output for this ionization source residual and corresponding Jacobian: 
+
+    -_test[_i][_qp]*_rate_coeff_ion_en[_qp]*_Ar[_qp]*-_Eiz_en[_qp]*_em[_qp]*em[_qp]
+
+Norm of matrix ratio 7.86836e-08 difference 0.00400463 (user-defined state)
+Norm of matrix ratio 1.76423e-08 difference 2.41652e+10 (constant state -1.0)
+Norm of matrix ratio 1.9803e-08 difference 3.74509e+09 (constant state 1.0)
+
+Here's the Jacobian test output for this ionization source residual and corresponding Jacobian: 
+
+    -_test[_i][_qp]*_rate_coeff_ion_en[_qp]*_Ar[_qp]*-_Eiz_en[_qp]*std::sqrt(_em[_qp])
+
+Norm of matrix ratio 7.86834e-08 difference 0.00400462 (user-defined state)
+Norm of matrix ratio -nan difference -nan (constant state -1.0)
+Norm of matrix ratio 1.9803e-08 difference 3.74509e+09 (constant state 1.0)
+
+Here's the Jacobian test output for this ionization source residual and corresponding Jacobian: 
+
+    -_test[_i][_qp]*_rate_coeff_ion_en[_qp]*_Ar[_qp]*-_Eiz_en[_qp]*std::exp(_em[_qp])
+
+Norm of matrix ratio 1.45574 difference 74090.6 (user-defined state)
+Norm of matrix ratio 1.76423e-08 difference 2.41652e+10 (constant state -1.0)
+Norm of matrix ratio 1.9803e-08 difference 3.74509e+09 (constant state 1.0)
+
+Here's the Jacobian test output for this ionization source residual and corresponding Jacobian: 
+
+    -_test[_i][_qp]*_rate_coeff_ion_en[_qp]*_Ar[_qp]*-_Eiz_en[_qp]*std::exp(_u[_qp])
+
+Norm of matrix ratio 4.08685e-08 difference 0.0123279 (user-defined state)
+Norm of matrix ratio 1.76423e-08 difference 2.41652e+10 (constant state -1.0)
+Norm of matrix ratio 1.9803e-08 difference 3.74509e+09 (constant state 1.0)
+
+I think I'm figuring out what the constant states mean in the Jacobian test. I believe that constant state 1.0 is where all the dependent variables are set to 1.0 (an IC). User-defined state would be with my defined ICs. Yes my hypothesis is confirmed. So if I set all my variables to ICs of 1 or -1, my Jacobian looks really damn good!
+
+It should also be noted that the variable scaling affects the "Norm of matrix ratios."
