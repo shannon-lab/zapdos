@@ -272,17 +272,17 @@
   [./em_ic]
     type = ConstantIC
     variable = em
-    value = 29.934
+    value = 16.12
   [../]
   [./ip_ic]
     type = ConstantIC
     variable = Arp
-    value = 29.934
+    value = 16.12
   [../]
   [./mean_el_energy_ic]
     type = ConstantIC
     variable = mean_en
-    value = 31.3199
+    value = 16.12
    [../]
   # [./mean_el_energy_ic]
   #   type = FunctionIC
@@ -316,7 +316,7 @@
   [../]
   [./potential_bc_func]
     type = ParsedFunction
-    value = '1e5*tanh(1e6*t)'
+    value = '1e4*tanh(1e6*t)'
   [../]
 []
 

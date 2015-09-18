@@ -23,7 +23,7 @@ PhysicalElectronEnergyBC::PhysicalElectronEnergyBC(const InputParameters & param
 
   _muel(getMaterialProperty<Real>("muel")),
   _mem(getMaterialProperty<Real>("mem")),
-  _a(0.0),
+  _a(1.0),
   _b(0.0),
 
 // Coupled Variables
@@ -39,14 +39,14 @@ Real
 PhysicalElectronEnergyBC::computeQpResidual()
 {
 
-  if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
-    _a = 1.0;
-    // _b = 0.0;
-  }
-  else {
-    _a = 0.0;
-    // _b = 1.0;
-  }
+  // if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+  //   _a = 1.0;
+  //   // _b = 0.0;
+  // }
+  // else {
+  //   _a = 0.0;
+  //   // _b = 1.0;
+  // }
 
   return _test[_i][_qp]*_a*-_muel[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_normals[_qp];
          // + _test[_i][_qp]*_b*5.0/6*1.6*std::sqrt(_e*2.0/3*std::exp(_u[_qp]-_em[_qp])/_m_el)*std::exp(_u[_qp]);
@@ -55,14 +55,14 @@ PhysicalElectronEnergyBC::computeQpResidual()
 Real
 PhysicalElectronEnergyBC::computeQpJacobian()
 {
-  if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
-    _a = 1.0;
-    // _b = 0.0;
-  }
-  else {
-    _a = 0.0;
-    // _b = 1.0;
-  }
+  // if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+  //   _a = 1.0;
+  //   // _b = 0.0;
+  // }
+  // else {
+  //   _a = 0.0;
+  //   // _b = 1.0;
+  // }
 
   return _test[_i][_qp]*_a*-_muel[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*_normals[_qp];
          // + _test[_i][_qp]*_b*5.0/6*1.6*(std::sqrt(_e*2.0/3*std::exp(_u[_qp]-_em[_qp])/_m_el)*std::exp(_u[_qp])*_phi[_j][_qp] + std::exp(_u[_qp])*0.408248*std::sqrt(_e*std::exp(_u[_qp]-_em[_qp])/_m_el)*_phi[_j][_qp]);
@@ -73,14 +73,15 @@ PhysicalElectronEnergyBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
     {
-      if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
-	_a = 1.0;
-	// _b = 0.0;
-      }
-      else {
-	_a = 0.0;
-	// _b = 1.0;
-      }
+      // if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+      // 	_a = 1.0;
+      // 	// _b = 0.0;
+      // }
+      // else {
+      // 	_a = 0.0;
+      // 	// _b = 1.0;
+      // }
+
       return _test[_i][_qp]*_a*-_muel[_qp]*-_grad_phi[_j][_qp]*std::exp(_u[_qp])*_normals[_qp];
     }
   else {
