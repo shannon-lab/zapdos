@@ -457,3 +457,30 @@ Norm of matrix ratio 1.9803e-08 difference 3.74509e+09 (constant state 1.0)
 I think I'm figuring out what the constant states mean in the Jacobian test. I believe that constant state 1.0 is where all the dependent variables are set to 1.0 (an IC). User-defined state would be with my defined ICs. Yes my hypothesis is confirmed. So if I set all my variables to ICs of 1 or -1, my Jacobian looks really damn good!
 
 It should also be noted that the variable scaling affects the "Norm of matrix ratios."
+
+Trying with electron energy formulation again. Solve failed at 1.05637-07 seconds. All the variables look pretty nice and smooth, so I don't really know what the problem is. Divergence reasons were fairly evenly split between diverged_max_its and diverged_line_search. At the last convergence step, here were the variable residual norms:
+
+                  potential: 4.042e-10
+                  em:        2.6627e-08
+                  Arp:       3.20928e-10
+                  mean_en:   0.000475877
+
+With an abs_tolerance=1e-2 and using mumps in parallel, the solve still failed at 1.05637e-07 seconds. With the ionization source terms elimination in the electron energy equation, the solve actually failed earlier at 7.59991e-08 seconds. This actually makes since because I still have physical production of electrons and ions in their respective kernels. Dumb me.
+
+Tried again with electron energy formulation, but using PJFNK instead of NEWTON. Solve got a bit farther this time: failed at 3.39951e-07 seconds. Instead of any DIVERGED_LINE_SEARCH, all fails were due to DIVERGED_MAX_IT. i think diverged_line_search only really appears when doing Newton solves. The only reason it went farther is because I forgot to turn the ionization terms in the em and ion kernels back on again. With those turned back on, the solve fails at 1.08282e-07 seconds. Again, looking at the solution variables, I can see no reason why the solve should fail. However, if I look at the log, the linear residuals don't seem to be coming down nearly fast enough, suggesting to my continued bewilderment, that my Jacobian is somehow wrong. I'm going to try to solve using FDP.
+
+Using FDP and a direct LU solve, the solve failes at 1.113e-07 seconds. Record, wooo! Haha...no. Why the hell does it fail? All the variables are gosh darn smooth! I don't see any oscillations anywhere!
+
+With block-jacobi:
+
+ 9 Nonlinear |R| = 5.601308e-06
+Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 9
+ Solve Converged!
+
+With asm:
+
+ 9 Nonlinear |R| = 5.601308e-06
+Nonlinear solve converged due to CONVERGED_FNORM_RELATIVE iterations 9
+ Solve Converged!
+
+So I have no bloody idea whether my command line petsc options are working. Actually it most certainly appears to not be working because when I pass -ksp_type=preonly on the command line, linear iterations still appear in the log file. Petsc options are still working from the input file, however. Another thing that appears to not be working is that when I pass the -help option on the command line, the values that appear in <> for the petsc variables don't represent the values being used in my program. Rather they appear to represent the defaults. This is strange because I feel like I have a memory of being able to see my values represented in <>. 

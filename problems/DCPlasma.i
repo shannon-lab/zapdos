@@ -17,7 +17,7 @@
 
 [Preconditioning]
   [./smp]
-    type = SMP
+    type = FDP
     full = true
   [../]
 []
@@ -162,17 +162,17 @@
   [../]
 []
 
-# [AuxKernels]
-#   [./em_lin]
-#     type = ElectronDensity
-#     variable = em_lin
-#     electron_density = em
-#   [../]
-#   [./Arp_lin]
-#     type = IonDensity
-#     variable = Arp_lin
-#     ion_density = Arp
-#   [../]
+[AuxKernels]
+  [./em_lin]
+    type = ElectronDensity
+    variable = em_lin
+    electron_density = em
+  [../]
+  [./Arp_lin]
+    type = IonDensity
+    variable = Arp_lin
+    ion_density = Arp
+  [../]
 #   # [./e_field]
 #   #   type = Efield
 #   #   variable = e_field
@@ -218,13 +218,13 @@
 #   #   variable = energy_lin
 #   #   electron_density = mean_en
 #   # [../]  
-#   [./e_temp]
-#     type = ElectronTemperature
-#     variable = e_temp
-#     electron_density = em
-#     mean_en = mean_en
-#   [../]
-# []
+  [./e_temp]
+    type = ElectronTemperature
+    variable = e_temp
+    electron_density = em
+    mean_en = mean_en
+  [../]
+[]
 
 [BCs]
   [./potential_left]
