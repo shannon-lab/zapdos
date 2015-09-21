@@ -7,7 +7,7 @@
   [./electron_density]
 #    Adds a Linear Lagrange variable by default
 #    scaling = 1e-14
-    initial_from_file_var = electron_density 
+    initial_from_file_var = electron_density
     initial_from_file_timestep = 7
   [../]
   [./ion_density]
@@ -29,7 +29,7 @@
     order = CONSTANT
     family = MONOMIAL
     initial_from_file_var = e_field_mag
-    initial_from_file_timestep = 7    
+    initial_from_file_timestep = 7
   [../]
   [./velocity_mag]
     order = CONSTANT
@@ -39,7 +39,7 @@
   [../]
   [./charge_density]
     order = CONSTANT
-    family = MONOMIAL    
+    family = MONOMIAL
     initial_from_file_var = charge_density
     initial_from_file_timestep = 7
   [../]
@@ -190,7 +190,7 @@
   [../]
 []
 
-[BCs] 
+[BCs]
   [./anode]
     type = DirichletBC # Simple u=value BC
     variable = potential
@@ -205,10 +205,10 @@
   [../]
 []
 
-[Problem]   
-  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE   
-  # coord_type = XYZ # Cartesian   
-[]   
+[Problem]
+  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
+  # coord_type = XYZ # Cartesian
+[]
 
 #[Preconditioning]
 #  [./SMP_jfnk_full]
@@ -303,9 +303,5 @@
 []
 
 [Outputs]
-  output_initial = true # Output initial condiiton
   exodus = true # Output Exodus format
-  print_perf_log = true # Show performance log information on screen
-  print_linear_residuals = true # Display linear residuals on screen
 []
-

@@ -47,9 +47,6 @@
 
 [Outputs]
   # exodus = true
-  print_perf_log = true
-  print_linear_residuals = true
-  output_initial = true
   [./out]
     type = Exodus
     output_material_properties = true
