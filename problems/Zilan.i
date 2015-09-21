@@ -42,7 +42,7 @@
   [./outlet]
     type = VacuumBC
     variable = n_concentration
-    alpha = 0.001048 # 1/m 
+    alpha = 0.001048 # 1/m
     boundary = right
     # value = 0 # Outlet concentration
   [../]
@@ -112,8 +112,5 @@
 # []
 
 [Outputs]
-  output_initial = true # Output initial condiiton
   exodus = true # Output Exodus format
-  print_perf_log = true # Show performance log information on screen
-  print_linear_residuals = true # Display linear residuals on screen
 []
