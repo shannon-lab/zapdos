@@ -17,7 +17,7 @@
 
 [Preconditioning]
   [./smp]
-    type = FDP
+    type = SMP
     full = true
   [../]
 []
@@ -26,13 +26,13 @@
   type = Transient
   end_time = 1e-1
   solve_type = NEWTON
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type'
-  petsc_options_value = 'lu NONZERO 1.e-10 preonly'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO 1.e-10 preonly mumps'
  # nl_rel_tol = 1e-8
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- nl_abs_tol = 1e-6
+ nl_abs_tol = 1e-5
   l_max_its = 10
  nl_max_its = 50
   dtmin = 0.9e-9
@@ -316,7 +316,7 @@
   [../]
   [./potential_bc_func]
     type = ParsedFunction
-    value = '1e4*tanh(1e6*t)'
+    value = '2e3*tanh(1e6*t)'
   [../]
 []
 
