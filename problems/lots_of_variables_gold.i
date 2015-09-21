@@ -37,9 +37,6 @@
 
 [Outputs]
   exodus = true
-  print_perf_log = true
-  print_linear_residuals = true
-  output_initial = true
   interval = 5
 []
 

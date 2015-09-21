@@ -97,7 +97,7 @@
 #  [../]
 #[]
 
-[BCs] 
+[BCs]
   active = 'left_wall right_wall'
   [./left_wall]
     type = DirichletBC # Simple u=value BC
@@ -124,10 +124,10 @@
   [../]
 []
 
-[Problem]   
-  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE   
-  # coord_type = XYZ # Cartesian   
-[]   
+[Problem]
+  type = FEProblem # This is the "normal" type of Finite Element Problem in MOOSE
+  # coord_type = XYZ # Cartesian
+[]
 
 [Executioner]
   type = Transient
@@ -212,8 +212,5 @@
 []
 
 [Outputs]
-  output_initial = true # Output initial condiiton
   exodus = true # Output Exodus format
-  print_perf_log = true # Show performance log information on screen
-  print_linear_residuals = true # Display linear residuals on screen
 []
