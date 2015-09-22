@@ -97,6 +97,8 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "MultipliedValueBC.h"
+#include "CoupledIntegratedBC.h"
 #include "NeumannCircuitVoltage.h"
 #include "NoDiffusiveFlux.h"
 #include "EFieldBC.h"
@@ -240,7 +242,9 @@ ZapdosApp::registerObjects(Factory & factory)
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
+  registerBoundaryCondition(MultipliedValueBC);
   registerBoundaryCondition(NeumannCircuitVoltage);
+  registerBoundaryCondition(CoupledIntegratedBC);
   registerBoundaryCondition(NoDiffusiveFlux);
   registerBoundaryCondition(EFieldBC);
   registerBoundaryCondition(SpeciesNetFluxBC);

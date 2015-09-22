@@ -524,3 +524,7 @@ Maybe there could have been one thing different about my Jacobians: I had _a set
 4 mesh elements, 1 processor, no mpirun: Norm of matrix ratio 2.35982e-08 difference 13.4026 (user-defined state)
 
 Woooooooooooooooooooooooooooooooooooooooooooooooooooooo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! This truly represents the conquering of one of my bullet points in my MOOSE strategic plan. I got the electron energy formulation problem to solve in ~11 minutes :-) What was the trick? There's always a trick...the trick was to do as is oft repeated on the Moose discussion forum: don't allow outlier residual norms. Previously, my electron energy residual was 5 orders of magnitude larger than my em residual. After scaling it back by 5 orders of magnitude, I saw the orders of magnitude speed-up in my calculation.
+
+Perhaps the only thing that I can anticipate people complaining about is that I'm only applying 350 Volts over 1 cm: 3.5e2/1e-2 = 3.5e4 V/m. In Go's paper, he uses 210 V/1 mm = 2.1e2/1e-3 = 2.1e5 V/m. Reasons to explain this discrepancy: no possible attachment or recombination processes included in my model. Also, the transport/rate coefficient parameters were somewhat arbitrarily chosen.
+
+So I see that my CoupledIntegratedBC is apparently having absolutely zero effect. Having the matched values BC causes v to match the value of u. u is 1 in it's whole domain (block 0). If the matched values BC is not active, then v is 0 everywhere in its domain.
