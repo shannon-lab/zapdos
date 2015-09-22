@@ -26,8 +26,8 @@
   type = Transient
   end_time = 1e-1
   solve_type = NEWTON
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -pc_factor_mat_solver_package -snes_type'
-  petsc_options_value = 'lu NONZERO 1.e-10 preonly mumps test'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO 1.e-10 preonly mumps'
  # nl_rel_tol = 1e-8
  # l_tol = 1e-3
  # trans_ss_check = true

@@ -517,3 +517,10 @@ With potential at 5e3, solve failed at 1.6731e-06 seconds, so better.
 With potential at 1e3, the solve succeeded but only because the potential was below breakdown.
 
 Maybe there could have been one thing different about my Jacobians: I had _a set to 1.0 for all boundaries in the Electron energy boundary condition source file. This is a change that should be in my simulation, but it's too far along right now for me to want to stop it. 
+
+1 mesh element, 4 processors: Norm of matrix ratio 2.05868e-08 difference 11.6923 (user-defined state)
+4 mesh elements, 4 processors: Norm of matrix ratio 2.35982e-08 difference 13.4026 (user-defined state)
+4 mesh elements, 1 processor, mpirun: Norm of matrix ratio 2.35982e-08 difference 13.4026 (user-defined state)
+4 mesh elements, 1 processor, no mpirun: Norm of matrix ratio 2.35982e-08 difference 13.4026 (user-defined state)
+
+Woooooooooooooooooooooooooooooooooooooooooooooooooooooo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! This truly represents the conquering of one of my bullet points in my MOOSE strategic plan. I got the electron energy formulation problem to solve in ~11 minutes :-) What was the trick? There's always a trick...the trick was to do as is oft repeated on the Moose discussion forum: don't allow outlier residual norms. Previously, my electron energy residual was 5 orders of magnitude larger than my em residual. After scaling it back by 5 orders of magnitude, I saw the orders of magnitude speed-up in my calculation.

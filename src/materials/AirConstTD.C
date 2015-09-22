@@ -79,18 +79,20 @@ AirConstTD::AirConstTD(const InputParameters & parameters) :
 void
 AirConstTD::computeQpProperties()
 {  
+  // The data currently coming from ProvideMobility.C is for air, which is good.
   _muem[_qp] = _data.mu_em();
   _diffem[_qp] = _data.diff_em();
   _muip[_qp] = _data.mu_ip();
   _diffip[_qp] = _data.diff_ip();
+
   _rate_coeff_ion[_qp] = 4.88e5; // Truly Morrow. Don't use Kang. LFA
   _Eiz[_qp] = 1.77e7; // Truly Morrow. Don't use Kang. LFA
-  _rate_coeff_ion_en[_qp] = 1e-15; // Arbitrary choice
-  _Eiz_en[_qp] = 12.0; // Arbitrary choice
+  _rate_coeff_ion_en[_qp] = 1e-15; // Arbitrary choice. The Kiz0 for Argon is 5e-14 m^3/s. 
+  _Eiz_en[_qp] = 12.0; // Arbitrary choice. The ionization energy for argon is 15.76 eV. The excitation energy for argon is 12.14 eV. I don't know what the "average" ionization energy is for air.
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
   _diffel[_qp] = 5.0/3.0*_diffem[_qp];
-  _rate_coeff_elastic[_qp] = 1e-13;
+  _rate_coeff_elastic[_qp] = 1e-13 // Taken from the collision rate for Argon;
   _mem[_qp] = 9.11e-31;
   _mip[_qp] = 40.0*1.66e-27;
   _se_coeff[_qp] = 0.1;
