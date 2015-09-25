@@ -18,8 +18,8 @@ template<>
 InputParameters validParams<MultipliedValueBC>()
 {
   InputParameters params = validParams<NodalBC>();
-  params.addRequiredCoupledVar("v", "The variable whose value we are to match.");
-  params.addRequiredParam<Real>("mult","The multiplication factor.");
+  params.addRequiredCoupledVar("v", "The variable whose value we are to multiply.");
+  params.addRequiredParam<Real>("mult","The multiplication factor. (1.0 if simply matching)");
   return params;
 }
 

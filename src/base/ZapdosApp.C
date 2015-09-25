@@ -4,6 +4,7 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "GAdvection.h"
 #include "IonKernelEnergyForm.h"
 #include "ElectronKernelEnergyForm.h"
 #include "ElectronKernelIntTD.h"
@@ -46,6 +47,7 @@
 #include "ElectronEnergyTransport.h"
 #include "PotentialDrivenArtificialDiffElectrons.h"
 #include "PotentialDrivenArtificialDiffEnergy.h"
+#include "CoefTimeDerivative.h"
 #include "ElectronKernel.h"
 #include "ArpKernel.h"
 #include "ElectronEnergyKernel.h"
@@ -111,6 +113,7 @@
 #include "AdvectionDoNothingBC.h"
 #include "SometimesAdvectionBC.h"
 #include "PhysicalElectronEnergyBC.h"
+#include "DGFluxBC.h"
 
 // Actions
 
@@ -121,6 +124,10 @@
 #include "AddLotsOfTimeDerivatives.h"
 #include "AddLotsOfEFieldAdvection.h"
 #include "AddLotsOfPotentialDrivenArtificialDiff.h"
+
+// DGKernels
+
+#include "DGAdvection.h"
 
 template<>
 InputParameters validParams<ZapdosApp>()
@@ -160,6 +167,8 @@ ZapdosApp::registerApps()
 void
 ZapdosApp::registerObjects(Factory & factory)
 {
+  registerKernel(CoefTimeDerivative);
+  registerKernel(GAdvection);
   registerKernel(ElectronKernelEnergyForm);
   registerKernel(IonKernelEnergyForm);
   registerKernel(IonKernelIntTD);
@@ -242,6 +251,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
+  registerBoundaryCondition(DGFluxBC);
   registerBoundaryCondition(MultipliedValueBC);
   registerBoundaryCondition(NeumannCircuitVoltage);
   registerBoundaryCondition(CoupledIntegratedBC);
@@ -256,6 +266,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(AdvectionDoNothingBC);
   registerBoundaryCondition(SometimesAdvectionBC);
   registerBoundaryCondition(PhysicalElectronEnergyBC);
+  registerDGKernel(DGAdvection);
 }
 
 void
