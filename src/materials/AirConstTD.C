@@ -92,7 +92,7 @@ AirConstTD::computeQpProperties()
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
   _diffel[_qp] = 5.0/3.0*_diffem[_qp];
-  _rate_coeff_elastic[_qp] = 1e-13 // Taken from the collision rate for Argon;
+  _rate_coeff_elastic[_qp] = 1e-13; // Taken from the collision rate for Argon
   _mem[_qp] = 9.11e-31;
   _mip[_qp] = 40.0*1.66e-27;
   _se_coeff[_qp] = 0.1;
