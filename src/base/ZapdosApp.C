@@ -129,6 +129,14 @@
 
 #include "DGAdvection.h"
 
+// Constraints
+
+#include "EqualGradientConstraint.h"
+
+// Mesh modifiers
+
+#include "NodeAndSidesetBetweenSubdomains.h"
+
 template<>
 InputParameters validParams<ZapdosApp>()
 {
@@ -167,6 +175,7 @@ ZapdosApp::registerApps()
 void
 ZapdosApp::registerObjects(Factory & factory)
 {
+  registerMeshModifier(NodeAndSidesetBetweenSubdomains);
   registerKernel(CoefTimeDerivative);
   registerKernel(GAdvection);
   registerKernel(ElectronKernelEnergyForm);
@@ -267,6 +276,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(SometimesAdvectionBC);
   registerBoundaryCondition(PhysicalElectronEnergyBC);
   registerDGKernel(DGAdvection);
+  registerConstraint(EqualGradientConstraint);
 }
 
 void

@@ -1,3 +1,13 @@
+Here are my three threads I'm working concurrently on in the hope that one/some/all of them lead me to my goal of interfacing two physics domains (or as Yaqi I think aptly calls them InteriorNodalBC and InteriorIntegratedBC):
+
+https://groups.google.com/forum/#!topic/moose-users/011fudvdHng (MeshModifiers)
+https://groups.google.com/forum/#!topic/moose-users/u3qZrEXQvSg (Boundary ID in DGKernel)
+https://groups.google.com/forum/#!topic/moose-users/iALxx76WhnU (Multiple-block, multiple-variable interface test)
+
+Universal File Datasets Summaries:
+http://www.sdrl.uc.edu/sdrl/referenceinfo/universalfileformats/file-format-storehouse/universal-file-datasets-summary
+https://docs.plm.automation.siemens.com/tdoc/nx/10/nx_help/#uid:index_advanced:xid602249:id625716:id625821
+
 Really good articles on the moose-user list:
 
 preconditioners (authored by Mariana Rodriguez)
@@ -756,3 +766,143 @@ bnd_id : ID of the boundary we are at
 onBoundary gets called when doing boundary assembling
 
 I might have been wrong about where the magic happens. The magic might happen in NonlinearSystem::computeResidual. I may return to this, but from Yaqi it sounds like Mortar could be what I need. 
+
+Sideset and nodeset naming are described in the MOOSE FAQ. 
+
+FaceFaceConstraint has available Params: "variable" ==> This is substituted with Lagrange multiplier; "master_variable" ==> This is the variable on the master side of the mortar interface, e.g. 'u'; "slave_variable" ==> This is the variable on the slave side of the mortar interface, e.g. 'v', however, if the "slave_variable" is not specified, then it is set to "master_variable".  Very cool
+
+ NeighborCoupleable(parameters, nodal, neighbor_nodal)
+
+nodal and neighbor_nodal are both of type bool. 
+
+NodeFaceConstraint actually has _grad in it
+
+EqualValueConstraint inherits from FaceFaceConstraint
+TiedValueConstraint inherits from NodeFaceConstraint
+CoupledTiedValueConstraint also inherits from NodeFaceConstraint
+
+getValue comes from the MooseVariable class
+
+There are three fundamental constraints in the moose framework:
+
+NodalConstraint
+NodeFaceConstraint
+FaceFaceConstraint
+
+FaceFaceConstraint has to be the most natural fit for what I want to do right??????
+
+NodeFaceConstraint has a grad definition. Nodal and FaceFace do not. The derivatives of NodeFaceConstraint are TiedValueConstraint and CoupledTiedValueConstraint. Neither of these have grad in them. None of the module source files that inherit from NodeFaceConstraint have grad in them either. 
+
+I think that I need to think about C++, arrays, and initialization. After declaration, access the values of the arrya using:
+
+name[index]
+
+MooseVariable::gradSln() returns _grad_u, e.g. it returns a VariableGradient
+
+What does it mean when I do _grad_u_master[_qp] = _master_var.gradSln() ??
+
+That just doesn't seem right to me.
+
+It appears that my MeshModifier sidesets and nodesets don't get created until after my application is executed. E.g. they don't appear in peacock_run_tmp_mesh.e
+
+Yes it appears that in the mesh file for conforming_two_var.i, there is a pre-existing subdomain called "Unnamed block ID: 1000 Type: EDGE2"
+
+Recall that these mesh files are in the exodus format
+
+After executing the conforming_two_var.i file, the mortar subdomain simply becomes "middle" which is its short name.
+
+It's become apparent that SubdomainBoundingBox only works if you draw a box, e.g. you cannot try and pass a line and try and build a subdomain with it.
+
+It looks like I either need to use an external package or write some new MooseModifier code. 
+
+I need type EDGE2
+
+By default, when salome exports a mesh, it doesn't export any side or node sets. What should happen is that the side set and node set ids should be the same right? And there should be a set for every boundary/interface.
+
+In the *.unv file, there are coordinates for each node. And perhaps the node ID is given as the first piece of information for each node. 
+
+2411 denotes nodes
+2412 denotes elements
+2467 denotes groups (of elements or nodes)
+
+In the elements description, the description of 2D face elements differs from the description of 1D edge elements.
+
+In my 3x3 mesh case example, there are 16 nodes. There are 9 face elements and 12 edge elements for a total of 21 elements. There appear to be 11 numbers that describe the face elements and 10 numbers that describe the edge elements. 
+
+A decent thread on the UNV file format: http://www.code-aster.org/forum2/viewtopic.php?id=14355
+
+So much to learn here. Not quite sure why I seem to be struggling so much. Programmatic learning:
+
+I'm looking at between.i. It loads a file mesh with element blocks 'left' and 'right.' Without conducting any mesh modification, no sidesets or nodesets appear when I load the _in.e file in paraview. However, when SideSetsBetweenSubdomains is called as a MeshModifier, a single sideset called in_between is created as well as a Nodeset called "Unnamed set ID: 1". So my question is: why the nodeset creation??
+
+Full-dimensional elements have sides. But not all sides are what we consider "boundaries." Looking at the code in SideSetsBetweenSubdomains, it looks like a single side can be given multiple boundary IDs and correspondingly multiple boundary names. That seems a little peculiar to me but whatever. There are various versions of the function getBoundaryIDs, but the one I'm looking at is passed the arguments "boundary_names" and "true". True indicates that the getBoundaryIDs function needs to create ids for the boundary_names being passed because in our case we are creating a brand new boundary that doesn't have any ID yet. 
+
+
+add_side 	( 	const dof_id_type  	elem,
+		const unsigned short int  	side,
+		const boundary_id_type  	id 
+	) 	
+
+Add side side of element number elem with boundary id id to the boundary information data structure.
+
+std::string& libMesh::BoundaryInfo::sideset_name 	( 	boundary_id_type  	id	) 	
+
+Returns a writable reference for setting an optional name for a sideset.
+
+
+std::string & libMesh::BoundaryInfo::nodeset_name 	( 	boundary_id_type  	id	) 	
+
+Returns a writable reference for setting an optional name for a nodeset.
+
+The actions on boundary_info in SideSetsBetweenSubdomains are boundary.info.add_side and boundary_info.sideset_name.
+
+Perhaps any time a boundary is created by adding sides, both a sideset and a nodeset are created. 
+
+Hell fffiinng yea, I think I'm starting to be able to read C++ and Moose better. I managed to successfully add a nodeset name!!
+
+Alright, trying to add multiple sidesets at the same location does not work. What I imagine happening is that initially the sides are looped over and given the first name, then the same sides are looped over again and the first name is replaced with the second name. You have to think at the geomtric level! A set of sides is a sideset. A set of nodes is a nodeset. Two elements can share the same side. That happens at the interface between blocks left and right. Similarly, I envision that when I compound meshes in Salome, the meshes are physically joined such that we have the same case where elements on different blocks share the same side at the interface. Similarly we do not have an extra domain where the Lagrange multiplier variables live. The edge elements at the interface are the sides shared by the two blocks. Cannot create something out of nothing. Perhaps it's appropriate to think that a geomtric entity can only be used/named/given-an-id once. Perhaps.
+
+Sideset and Nodeset names when viewed in paraview should absolutely match!!! This is because their name is taken from the boundary_name, which the sideset and nodeset should share.
+
+In dump.txt:
+
+      master                     = (required)                  # Master side ID
+      slave                      = (required)                  # Slave side ID
+      subdomain                  = (required)                  # Subdomain name that is the mortar interface
+
+# Master side ID ==> More clearly, this is the boundary ID on the master side of the mortar interface
+# Slave side ID ==> More clearly, this is the boundary ID on the slave side of the mortar interface
+
+Left side slope: 3/0.5 = 6
+Right side slope: -2/0.5 = -4
+
+Difference in slopes = 6--4 = 10
+Very weird hahaha
+
+LHS slope = 5.5/0.5 = 11
+RHS slope = -4.5/0.5 = -9
+Difference in slopes = 11--9 = 20
+
+So the computer's doing exactly what it's told, although it's apparently being told something quite different from the instructions that I thought I was giving. Apparently I was specifiying the change in the gradient...wouldn't that be kind of like the laplacian?? Whatever, this isn't what I'm trying to investigate.
+
+An additional important note: it appears that only one BC can be specified for any given variable on a boundary. This would make sense since we are in the business of solving boundary value problems.
+
+Either nodeset_name or sideset_name can be called in order to connect the boundary IDs with the boundary names in SideSetsBetweenSubdomains. And as soon as either of those naming functions has been called, the boundary ID-name connection has been made. Then regardless of whether nodeset_name or sideset_name was used, both IntegratedBC and NodalBC can access the required respective sideset or nodeset using the boundary name -> boundaryID -> sideset or nodeset connected to that boundaryID.
+
+It's funny, sideset_name can be called even if you didn't add a sideset. Like with AddExtraNodeset, no sideset was added (you can't find one in the mesh file), but you can call sideset_name to make the connection between boundaryIDs and boundaryNames. That's the only purpose of sideset_name and nodeset_name that I can see, is making the connection between boundary_ids and boundary_names. Almost seems redundant to have both methods. Obviously sideset_name will only added a named sideset entity in the mesh file if a sideset was actually created. 
+
+As expected trying to implement a NeumannBC on a boundary that has no corresponding sideset does nothing. It's very important to remember then that if a boundary ID/name exists but there's not a corresponding sideset/nodeset, then MOOSE will not tell you that anything is wrong, but it will not enforce your Integrated/Nodal BC. 
+
+Very neat conversation on an Elmer forum originating from a guy wanting to do something very similar to me (includes mention of DG, mortar, mesh interfacing, etc.)
+
+In the conforming_two_var_out.i test, u ranges from 0 to 1 and v ranges from 0 to 0.0388393. Do the lagrange multipliers actually play a role in the dependent variable solution? lm_u ranges from -4.68841 to 2.49956 and lm_v ranges from -0.353036 to 0.127077. 
+
+My test conclusively shows that my .unv file is not being read correctly. Specifically, I can change the mortar subdomain from 'Interface' (a group of edges on my mesh in Salome that should exist when read in by Moose) to 'Jabroni' (a totally fictional non-existent thing) and the problem computes the exact same results.
+
+When creating libraries that may eventually be linked, The -fPIC flag enables the compilers to create position independent code, needed for shared libraries in Ubuntu on a 64 bit Intel processor. So in order to make exodus link with netcdf (I compiled netcdf before exodus), I had to make sure I configured netcdf to use CFLAGS=CXXFLAGS=CPPFLAGS=F90FLAGS=FFLAGS="-fPIC". Just using CFLAGS="-fPIC" did not do the trick. My guess would be that CPPFLAGS was the necessary addition, but I'm not going to spend the time to go check it out. The PIC in -fPIC stands for position independent code.
+
+I believe first declaration of _all_objects (found by using my etags table) is in Warehouse.h. Here's the declaration line:
+
+  /// All instances of objects (raw pointers)
+  std::vector<T *> _all_objects;
+
