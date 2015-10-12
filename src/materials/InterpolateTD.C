@@ -23,7 +23,6 @@ InputParameters validParams<InterpolateTD>()
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("Te", "The electron temperature.");
   params.addCoupledVar("ip", "The ion density.");
-  params.addRequiredParam<UserObjectName>("data_provider","The name of the UserObject that can provide some data to materials, bcs, etc.");
   return params;
 }
 
@@ -62,7 +61,6 @@ InterpolateTD::InterpolateTD(const InputParameters & parameters) :
   _k_boltz(declareProperty<Real>("k_boltz")),
   _vthermal_em(declareProperty<Real>("vthermal_em")),
   _vthermal_ip(declareProperty<Real>("vthermal_ip")),
-  _data(getUserObject<ProvideMobility>("data_provider")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
   _em(isCoupled("em") ? coupledValue("em") : _zero),
@@ -105,8 +103,8 @@ InterpolateTD::computeQpProperties()
 {  
   _muem[_qp] = _mobility_interpolation.sample(_grad_potential[_qp].size());
   _diffem[_qp] = _diffusivity_interpolation.sample(_grad_potential[_qp].size());
-  _muip[_qp] = _data.mu_ip();
-  _diffip[_qp] = _data.diff_ip();
+  _muip[_qp] = _muem[_qp]/100.0;
+  _diffip[_qp] = -_diffem[_qp]/100.0;
   _rate_coeff_ion[_qp] = _alpha_interpolation.sample(_grad_potential[_qp].size()); // rate_coeff_ion is synonymous with alpha in this case. 
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
@@ -115,7 +113,7 @@ InterpolateTD::computeQpProperties()
   _mem[_qp] = 9.11e-31;
   _mip[_qp] = 40.0*1.66e-27;
   _se_coeff[_qp] = 0.1;
-  _e[_qp] = _data.coulomb_charge();
+  _e[_qp] = 1.6e-19;
   _eps[_qp] = 8.85e-12;
   _Tem_lfa[_qp] = 1.0; // Volts
   _Tip_lfa[_qp] = 300; // Kelvin

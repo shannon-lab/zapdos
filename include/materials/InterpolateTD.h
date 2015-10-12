@@ -15,7 +15,6 @@
 #define INTERPOLATETD_H_
 
 #include "Material.h"
-#include "ProvideMobility.h"
 #include "LinearInterpolation.h"
 
 class InterpolateTD;
@@ -66,8 +65,6 @@ protected:
   MaterialProperty<Real> &  _k_boltz;
   MaterialProperty<Real> &  _vthermal_em;
   MaterialProperty<Real> &  _vthermal_ip;
-
-  const ProvideMobility & _data;
 
   VariableGradient & _grad_potential;
   VariableValue & _em;

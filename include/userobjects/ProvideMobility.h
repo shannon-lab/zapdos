@@ -28,10 +28,6 @@ class ProvideMobility : public GeneralUserObject
 public:
   ProvideMobility(const InputParameters & parameters);
 
-  Real mu_em() const;
-  Real diff_em() const;
-  Real mu_ip() const;
-  Real diff_ip() const;
   Real electrode_area() const;
   Real ballast_resist() const;
   Real coulomb_charge() const;
@@ -44,10 +40,6 @@ public:
 
 protected:
 
-  Real _muem;
-  Real _diffem;
-  Real _muip;
-  Real _diffip;
   Real _electrode_area;
   Real _ballast_resist;
   Real _e;

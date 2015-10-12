@@ -15,7 +15,6 @@
 #define AIRCONSTTD_H_
 
 #include "Material.h"
-#include "ProvideMobility.h"
 #include "LinearInterpolation.h"
 
 class AirConstTD;
@@ -70,8 +69,6 @@ protected:
   MaterialProperty<Real> &  _vthermal_em;
   MaterialProperty<Real> &  _vthermal_ip;
   MaterialProperty<Real> &  _N_A;
-
-  const ProvideMobility & _data;
 
   VariableGradient & _grad_potential;
   VariableValue & _em;

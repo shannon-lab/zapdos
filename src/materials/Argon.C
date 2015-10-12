@@ -23,7 +23,6 @@ InputParameters validParams<Argon>()
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("Te", "The electron temperature.");
   params.addCoupledVar("ip", "The ion density.");
-  params.addRequiredParam<UserObjectName>("data_provider","The name of the UserObject that can provide some data to materials, bcs, etc.");
   return params;
 }
 
@@ -63,8 +62,6 @@ Argon::Argon(const InputParameters & parameters) :
   _vthermal_em(declareProperty<Real>("vthermal_em")),
   _vthermal_ip(declareProperty<Real>("vthermal_ip")),
   
-  _data(getUserObject<ProvideMobility>("data_provider")),
-
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
   _em(isCoupled("em") ? coupledValue("em") : _zero),
   _ip(isCoupled("ip") ? coupledValue("ip") : _zero),
@@ -108,19 +105,10 @@ Argon::Argon(const InputParameters & parameters) :
 void
 Argon::computeQpProperties()
 {  
-  // Argon
-  // _muem[_qp] = 4.32e-2;
-  // _diffem[_qp] = 3.24e-1;
-
-  // Air
   _muem[_qp] = _mobility_interpolation.sample(_grad_potential[_qp].size());
   _diffem[_qp] = _diffusivity_interpolation.sample(_grad_potential[_qp].size());
-  // _muem[_qp] = _data.mu_em();
-  // _diffem[_qp] = _data.diff_em();
-  _muip[_qp] = _data.mu_ip();
-  _diffip[_qp] = _data.diff_ip();
-  // _rate_coeff_ion[_qp] = 4.88e5; // Truly Morrow. Don't use Kang
-  // _Eiz[_qp] = 1.77e7; // Truly Morrow. Don't use Kang
+  _muip[_qp] = _muem[_qp]/100.0;
+  _diffip[_qp] = -_diffem[_qp]/100.0;
   _rate_coeff_ion[_qp] = _alpha_interpolation.sample(_grad_potential[_qp].size()); // rate_coeff_ion is synonymous with alpha in this case. 
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
@@ -129,7 +117,7 @@ Argon::computeQpProperties()
   _mem[_qp] = 9.11e-31;
   _mip[_qp] = 40.0*1.66e-27;
   _se_coeff[_qp] = 0.1;
-  _e[_qp] = _data.coulomb_charge();
+  _e[_qp] = 1.6e-19;
   _eps[_qp] = 8.85e-12;
   _Tem_lfa[_qp] = 1.0; // Volts
   _Tip_lfa[_qp] = 300; // Kelvin

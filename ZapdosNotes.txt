@@ -8,6 +8,9 @@ Universal File Datasets Summaries:
 http://www.sdrl.uc.edu/sdrl/referenceinfo/universalfileformats/file-format-storehouse/universal-file-datasets-summary
 https://docs.plm.automation.siemens.com/tdoc/nx/10/nx_help/#uid:index_advanced:xid602249:id625716:id625821
 
+Roundtrip, flying in on Saturday: 354.70
+Roundtrip, flying in on Friday: 354.70
+
 Really good articles on the moose-user list:
 
 preconditioners (authored by Mariana Rodriguez)
@@ -906,3 +909,571 @@ I believe first declaration of _all_objects (found by using my etags table) is i
   /// All instances of objects (raw pointers)
   std::vector<T *> _all_objects;
 
+Declaration vs definition: When you declare a variable, a function, or even a class all you are doing is saying: there is something with this name, and it has this type. Defining something means providing all of the necessary information to create that thing in its entirety. Defining a function means providing a function body; defining a class means giving all of the methods of the class and the fields. Once something is defined, that also counts as declaring it; so you can often both declare and define a function, class or variable at the same time. But you don't have to.
+
+For example, having a declaration is often good enough for the compiler.
+
+There are twelve tags of _dg_kernels. The declaration/definition is on line 508 of include/base/NonlinearSystem.h: 
+
+  std::vector<DGKernelWarehouse> _dg_kernels;
+
+On line 655 of NonlinearSystem.C in the function NonlinearSystem::addDGKernel, we have _dg_kernels[tid].addDGKernel(dg_kernel)
+
+So here's the thing: there are three definitions of addDGKernel. There's FEProblem::addDGKernel, NonlinearSystem::addDGKernel, and DGKernelWarehouse::addDGKernel. Which definition gets called?
+
+All the operations on the _dg_kernels variable occur in the NonlinearSystem.C file (there are 11 operations). _dg_kernels is a protected member of the NonlinearSystem class. 
+
+Class variables and functions are both class "members." Members of a derived class can access protected members of the base class but not private members of the base class. Members who aren't in the derived or base class cannot access protected or private members of the base class. Public members can be accessed by members outside the class. 
+
+The keyword "this" represents a pointer to the object whose member function is being executed. It is used within a class's member function to refer to the object itself.
+
+After the declarations of Rectangle and rect, any of the public members of object rect can be accessed (in Main or in other classes) as if they were normal functions or normal variables, by simply inserting a dot (.) between object name and member name. The only members of rect that cannot be accessed from outside the class are width and height, since they have private access and they can only be referred to from within other members of that same class.
+
+
+    private members of a class are accessible only from within other members of the same class (or from their "friends").
+    protected members are accessible from other members of the same class (or from their "friends"), but also from members of their derived classes.
+    Finally, public members are accessible from anywhere where the object is visible.
+
+Recall that _dg_kernels is a vector. This vector contains values of type DGKernelWarehouse. So _dg_kernels is a vector of objects of type (class) DGKernelWarehouse.
+
+The class DGKernelWarehouse has a public member function updateActiveDGKernels(Real t, Real dt). It makes sense that this is public, otherwise we couldn't execute the command:
+
+_dg_kernels[tid].updateActiveDGKernels(t, dt);
+
+on line 2400 of NonlinearSystem.C (there is no friendship between DGKernelWarehouse and NonlinearSystem)
+
+Note that _dg_kernels[tid] simply has the type DGKernelWarehouse because we've accessed an index of the vector. 
+
+void
+DGKernelWarehouse::addDGKernel(MooseSharedPointer<DGKernel> & dg_kernel)
+{
+  _all_ptrs.push_back(dg_kernel);
+  _all_objects.push_back(dg_kernel.get());
+}
+
+Where are the calls to addDGKernel? 
+
+void
+FEProblem::addDGKernel(const std::string & dg_kernel_name, const std::string & name, InputParameters parameters)
+{
+  parameters.set<FEProblem *>("_fe_problem") = this;
+  if (_displaced_problem != NULL && parameters.get<bool>("use_displaced_mesh"))
+  {
+    parameters.set<SubProblem *>("_subproblem") = _displaced_problem.get();
+    parameters.set<SystemBase *>("_sys") = &_displaced_problem->nlSys();
+    _reinit_displaced_face = true;
+  }
+  else
+  {
+    parameters.set<SubProblem *>("_subproblem") = this;
+    parameters.set<SystemBase *>("_sys") = &_nl;
+  }
+  _nl.addDGKernel(dg_kernel_name, name, parameters);
+}
+
+So this is from the FEProblem class and it calls the addDGKernel function of the NonlinearSystem class. As expected, the addDGKernel member of the NonlinearSystem class is public. (It had to be.)
+
+void
+AddDGKernelAction::act()
+{
+  _problem->addDGKernel(_type, _name, _moose_object_pars);
+}
+
+I'm guessing that this calls the addDGKernel function in the FEProblem class. 
+
+void
+NonlinearSystem::addDGKernel(std::string dg_kernel_name, const std::string & name, InputParameters parameters)
+{
+  for (THREAD_ID tid = 0; tid < libMesh::n_threads(); ++tid)
+  {
+    parameters.set<MaterialData *>("_material_data") = _fe_problem._bnd_material_data[tid];
+    parameters.set<MaterialData *>("_neighbor_material_data") = _fe_problem._neighbor_material_data[tid];
+
+    MooseSharedPointer<DGKernel> dg_kernel = MooseSharedNamespace::static_pointer_cast<DGKernel>(_factory.create(dg_kernel_name, name, parameters, tid));
+
+    _dg_kernels[tid].addDGKernel(dg_kernel);
+  }
+
+  _doing_dg = true;
+}
+
+So recall that programming is logical and sequential. How do I think adding a DGKernel progresses at this point?:
+
+AddDGKernelAction::act() ==> FEProblem::addDGKernel ==> NonlinearSystem::addDGKernel ==> DGKernelWarehouse::addDGKernel
+
+There are of course 63 references to the function act(). There are also 57 definitions. All of the definitions are in the src/actions directory.
+
+6 extra references (references that aren't simply declarations). 5 of these are in the ActionWarehouse.C. One is in the parent class Action.h
+
+foo->bar is equivalent to (*foo).bar, i.e. it gets the member called bar from the struct that foo points to.
+
+So foo points to an object of a class. foo->bar gets the member called bar from the class object that foo points to. 
+
+class Action : public ConsoleStreamInterface
+{
+public:
+  Action(InputParameters parameters);
+  virtual ~Action() {}                  // empty virtual destructor for proper memory release
+
+
+act is a point that points to type/class Action
+
+What are we doing when we do act->type(); ??
+
+What this looks like to me is an attempt to access the member function type() of the class Action. The problem is that there is no member function type() in the class Action. However in the constructor of Action we have the line   Action(InputParameters parameters);
+
+And the class InputParameters does have a member function type that returns std::string. However, it also accepts const std::string &name, and there doesn't appear to be any passing in act->type();
+
+Man this is a heavy dose of c++. 
+
+      for (std::vector<Action *>::const_iterator k = _action_blocks.at(*j).begin(); k != _action_blocks.at(*j).end(); ++k)
+
+k is a constant iterator over a vector of pointers that point to actions. That's my attempt at translating. Don't know whether it's right. 
+
+C++ STL is the C++ Standard Template Library. 
+
+std::vector is a sequence container that encapsulates dynamic size arrays
+
+An interator is a pointer. You can think of an iterator as pointing to an item that is part of a larger container of items.  For instance, all containers support a function called begin, which will return an iterator pointing to the beginning of the container (the first element) and function, end, that returns an iterator corresponding to having reached the end of the container. In fact, you can access the element by "dereferencing" the iterator with a *, just as you would dereference a pointer. 
+
+A pointer is a variable which stores the address of another variable. 
+
+int firstvalue, secondvalue;
+  int * mypointer;
+
+  mypointer = &firstvalue;
+  *mypointer = 10;
+
+
+    & is the address-of operator, and can be read simply as "address of"
+    * is the dereference operator, and can be read as "value pointed to by"
+
+        Action * act = *k;
+
+The above line means that the Action pointed to by act is equal to the Action pointed to by the const_iterator k
+
+I'm conducting a sleuth hunt. There are four places where type() is defined: MaterialProperty.h, RestartableData.h, ArbitraryQuadrature.C, and InputParameters.C
+
+global -v --result=grep --color=always --path-style=shorter --from-here=149:src/actions/ActionWarehouse.C type
+include/materials/MaterialProperty.h:216:MaterialProperty<T>::type ()
+include/restart/RestartableData.h:142:RestartableData<T>::type ()
+src/utils/ArbitraryQuadrature.C:28:ArbitraryQuadrature::type() const
+src/utils/InputParameters.C:444:InputParameters::type(const std::string &name)
+4 objects located (using '/home/lindsayad/projects/moose/framework/GTAGS').
+
+Global found 4 definitions at Mon Oct  5 16:59:56
+
+Type Action does not have a "definition" of a member type() as determined by ggtags, but a quick search in the Action.h file reveals:
+
+  const std::string & type() const { return _action_type; }
+
+ggtags likely considers this to be a declaration as opposed to a definition, and unfortunately there are 783 references to type(). However, we know that the member type() either has to be defined (in the real sense, not the ggtags interpretation), in the Action class or in one of the parent classes of Action. We have to exercise our knowledge!
+
+Action inherits from ConsoleStreamInterface.
+
+act->type is executed in ActionWarehouse.C
+
+ActionWarehouse inherits from Warehouse. If we assume that Action and ActionWarehouse don't share any inheritance, then we could have deduced that the member function type() of class Action had to be public (which it is). 
+
+All this knowledge gathering stems from me trying to determine when AddDGKernelAction::act() gets called. It has to get called in 
+
+void
+ActionWarehouse::executeActionsWithAction(const std::string & task)
+{
+  // Set the current task name
+  _current_task = task;
+
+  for (ActionIterator act_iter = actionBlocksWithActionBegin(task);
+       act_iter != actionBlocksWithActionEnd(task);
+       ++act_iter)
+  {
+    if (_show_actions)
+    {
+      _console << "[DBG][ACT] "
+               << "TASK (" << COLOR_YELLOW << std::setw (24) << task << COLOR_DEFAULT << ") "
+               << "TYPE (" << COLOR_YELLOW << std::setw (32) << (*act_iter)->type() << COLOR_DEFAULT << ") "
+               << "NAME (" << COLOR_YELLOW << std::setw (16) << (*act_iter)->getShortName() << COLOR_DEFAULT << ") ";
+
+      (*act_iter)->act();
+    }
+    else
+      (*act_iter)->act();
+  }
+}
+
+I'm looking at actionBlocksWithActionBegin(task) ==> 
+
+ActionIterator
+ActionWarehouse::actionBlocksWithActionBegin(const std::string & task)
+{
+  return _action_blocks[task].begin();
+}
+
+  /// Pointers to the actual parsed input file blocks
+  std::map<std::string, std::vector<Action *> > _action_blocks;
+
+So looks like we've gone all the way back to the parsing of the input file (which is one of the things I wanted to do!). I knew that the problem was translated from the input file into the Moose executable and problem solving using Actions. (Actions are input blocks right? I mean yes they bloody are. When I created new actions, I created new input blocks, with proper input block syntax specified. Yes input file syntax is done in ZapdosApp::associateSyntax, and one of the arguments we pass is action_factory.)
+
+executeActionsWithAction is referenced in the following places:
+
+include/actions/ActionWarehouse.h:119:  void executeActionsWithAction(const std::string & name);
+src/actions/ActionWarehouse.C:308:    executeActionsWithAction(task);
+src/base/MooseApp.C:457:  _action_warehouse.executeActionsWithAction("set_global_params");
+src/base/MooseApp.C:458:  _action_warehouse.executeActionsWithAction("setup_mesh");
+src/base/MooseApp.C:459:  _action_warehouse.executeActionsWithAction("prepare_mesh");
+src/base/MooseApp.C:460:  _action_warehouse.executeActionsWithAction("add_mesh_modifier");
+src/base/MooseApp.C:461:  _action_warehouse.executeActionsWithAction("execute_mesh_modifiers");
+src/base/MooseApp.C:462:  _action_warehouse.executeActionsWithAction("uniform_refine_mesh");
+src/base/MooseApp.C:463:  _action_warehouse.executeActionsWithAction("setup_mesh_complete");
+
+Something that's interesting to note is that in:
+
+ActionWarehouse::executeAllActions()
+{
+  if (_show_actions)
+  {
+    _console << "[DBG][ACT] Action Dependency Sets:\n";
+    printActionDependencySets();
+
+    _console << "\n[DBG][ACT] Executing actions:" << std::endl;
+  }
+
+  for (std::vector<std::string>::iterator it = _ordered_names.begin(); it != _ordered_names.end(); ++it)
+  {
+    std::string task = *it;
+    executeActionsWithAction(task);
+  }
+}
+
+the executeActionsWithAction member function of ActionWarehouse is called without any '.' or '->' or '::'. This is because there is no ambiguity about what namespace we are using because we are within a member function of ActionWarehouse calling a fellow member function of ActionWarehouse. 
+
+It looks like the actions of adding kernels is conducted during mesh preparation, and this process is initiated from lines 457-463 of MooseApp.C, which is within the meshOnly member function of MooseApp
+
+meshOnly is executed only if user specifies --mesh-only when running his executable from the command line. Thus the important call of executeActionsWithAction happens in executeAllActions() which is called from MooseApp::runInputFile(), which is called from MooseApp::run(), which is called from these lines in the main.C file of Zapdos:
+
+  // This creates dynamic memory that we're responsible for deleting
+  MooseApp * app = AppFactory::createApp("ZapdosApp", argc, argv);
+
+  // Execute the application
+  app->run();
+
+Wooooo!!!!!!!!!! We traced it all the way back to the beginning using the power of the ggtags!!!!!! Good day :-) The power of C++ is being channelled into my mind!!!!!!!!
+
+There are three places where computeResidual gets called in ComputeResidualThread: in onElement (kernels), onBoundary (integrated BCs), and onInternalSide (DGKernels)
+
+In ThreadedElementLoopBase we have the calls:
+
+      onElement(elem);
+
+      for (unsigned int side=0; side<elem->n_sides(); side++)
+      {
+        std::vector<BoundaryID> boundary_ids = _mesh.boundaryIDs(elem, side);
+
+        if (boundary_ids.size() > 0)
+          for (std::vector<BoundaryID>::iterator it = boundary_ids.begin(); it != boundary_ids.end(); ++it)
+            onBoundary(elem, side, *it);
+
+        if (elem->neighbor(side) != NULL)
+          onInternalSide(elem, side);
+      } // sides
+      postElement(elem);
+
+Need to investigate how ComputeResidualThread::onElement might get called here
+
+Or need to say if there are other places where computeResidual gets called
+
+There are 14 definitions of onElement as defined by ggtags:
+
+include/base/ThreadedElementLoopBase.h:199:ThreadedElementLoopBase<RangeType>::onElement(const Elem * /*elem*/)
+src/base/CacheChangedListsThread.C:34:CacheChangedListsThread::onElement(const Elem *elem)
+src/base/ComputeDampingThread.C:44:ComputeDampingThread::onElement(const Elem *elem)
+src/base/ComputeDiracThread.C:71:ComputeDiracThread::onElement(const Elem * elem)
+src/base/ComputeElemAuxVarsThread.C:75:ComputeElemAuxVarsThread::onElement(const Elem * elem)
+src/base/ComputeIndicatorThread.C:83:ComputeIndicatorThread::onElement(const Elem *elem)
+src/base/ComputeJacobianThread.C:148:ComputeJacobianThread::onElement(const Elem *elem)
+src/base/ComputeMarkerThread.C:76:ComputeMarkerThread::onElement(const Elem *elem)
+src/base/ComputeMaterialsObjectThread.C:78:ComputeMaterialsObjectThread::onElement(const Elem *elem)
+src/base/ComputeResidualThread.C:99:ComputeResidualThread::onElement(const Elem *elem)
+src/base/ComputeUserObjectsThread.C:164:ComputeUserObjectsThread::onElement(const Elem * elem)
+src/base/FlagElementsThread.C:57:FlagElementsThread::onElement(const Elem *elem)
+src/base/ProjectMaterialProperties.C:75:ProjectMaterialProperties::onElement(const Elem *elem)
+src/base/UpdateErrorVectorsThread.C:57:UpdateErrorVectorsThread::onElement(const Elem *elem)
+
+kernel->computeResidual() in NonlinearSystem::computeResdiaulInternal(Moose::KernelType type) which is called from:
+
+void
+NonlinearSystem::computeResidual(NumericVector<Number> & residual, Moose::KernelType type)
+
+computeResidual is called in several places as we have seen. 
+
+Let's understand polymorphism. Looking at our polymorphism example, ppoly1->area()
+
+ppoly is defined as a pointer that points to an object of type Polygon, that in this case is assigned to the address of the the object Rectangle rect (this assignment is fine because rect is a Rectangle but it is also a Polygon), so ppoly1->area() accesses the area() member function of Rectangle rect. Because ppoly is defined as a pointer that points to an object of type Polygon, only members inherited from Polygon can be accessed using -> . Member functions defined in a base class but taggged with virtual can be re-defined in a derived class, and then those derived class function members can be accessed through a pointer to the base class. However, if the virtual tag was not given in the base class, then a member function with the same name in a derived class would be unaccessible through a pointer to the base class. 
+
+computeResidual calls:
+
+src/base/ComputeDiracThread.C:113:          dirac_kernel->computeResidual(); ==> DiracKernel::computeResidual()
+src/base/ComputeResidualThread.C:114:    (*it)->computeResidual(); ==> it points to type KernelBase. ==> KernelBase::computeResidual()
+src/base/ComputeResidualThread.C:144:        bc->computeResidual(); ==> IntegratedBC::computeResidual
+src/base/ComputeResidualThread.C:180:        dg->computeResidual(); ==> DGKernel::computeResidual
+src/base/FEProblem.C:3281:  computeResidual(sys, u, residual); ==> FEProblem::computeResidual
+src/base/FEProblem.C:3330:  _nl.computeResidual(residual, type); ==> _nl is of type NonlinearSystem, thus this calls ==> NonlinearSystem::computeResidual
+src/base/FEProblem.C:3386:    computeResidual(sys, soln, *sys.rhs); ==> FEProblem::computeResidual
+src/base/NonlinearSystem.C:86:    p->computeResidual(sys, soln, residual); ==> FEProblem::computeResidual
+src/base/NonlinearSystem.C:233:    _fe_problem.computeResidual(_sys, *_current_solution, *_sys.rhs); ==> FEProblem::computeResidual
+src/base/NonlinearSystem.C:866:        nc->computeResidual(residual); ==> nc points to a NodalConstraint ==> NodalConstratin::computeResidual
+src/base/NonlinearSystem.C:1073:                nfc->computeResidual(); ==> NodeFaceConstraint::computeResidual
+src/base/NonlinearSystem.C:1159:          ffc->computeResidual(); ==> FaceFaceConstraint:computeResidual
+src/base/NonlinearSystem.C:1228:        kernel->computeResidual(); ==> ScalarKernel::computeResidual()
+src/base/NonlinearSystem.C:1309:            bc->computeResidual(residual); ==> NodalBC::computeResidual()
+src/bcs/NodalNormalBC.C:49:  NodalBC::computeResidual(residual);
+
+computeResidual complete definitions (as defined by ggtags):
+
+src/base/FEProblem.C:3263:FEProblem::computeResidual(NonlinearImplicitSystem &/*sys*/, const NumericVector<Number> & soln, NumericVector<Number> & residual)
+src/base/NonlinearSystem.C:702:NonlinearSystem::computeResidual(NumericVector<Number> & residual, Moose::KernelType type)
+src/bcs/IntegratedBC.C:102:IntegratedBC::computeResidual()
+src/bcs/NodalBC.C:73:NodalBC::computeResidual(NumericVector<Number> & residual)
+src/bcs/NodalNormalBC.C:45:NodalNormalBC::computeResidual(NumericVector<Number> & residual)
+src/constraints/FaceFaceConstraint.C:122:FaceFaceConstraint::computeResidual()
+src/constraints/NodalConstraint.C:48:NodalConstraint::computeResidual(NumericVector<Number> & residual)
+src/constraints/NodeFaceConstraint.C:108:NodeFaceConstraint::computeResidual()
+src/dgkernels/DGKernel.C:130:DGKernel::computeResidual()
+src/dirackernels/DiracKernel.C:81:DiracKernel::computeResidual()
+src/kernels/EigenKernel.C:71:EigenKernel::computeResidual()
+src/kernels/Kernel.C:47:Kernel::computeResidual()
+src/kernels/KernelGrad.C:37:KernelGrad::computeResidual()
+src/kernels/KernelValue.C:37:KernelValue::computeResidual()
+src/kernels/NodalEqualValueConstraint.C:46:NodalEqualValueConstraint::computeResidual()
+src/kernels/ODEKernel.C:40:ODEKernel::computeResidual()
+src/kernels/TimeKernel.C:34:TimeKernel::computeResidual()
+
+Kernel is a direct child of KernelBase
+
+I want to understand this function:
+
+void
+ComputeResidualThread::onElement(const Elem *elem)
+{
+  _fe_problem.prepare(elem, _tid);
+  _fe_problem.reinitElem(elem, _tid);
+  _fe_problem.reinitMaterials(_subdomain, _tid);
+
+  const std::vector<KernelBase *> * kernels = NULL;
+  switch (_kernel_type)
+  // _kernel type is obviously a member variable of ComputeResidualThread and it is of type Moose::KernelType
+  // _kernel_type is initialized in the constructor
+  {
+  case Moose::KT_ALL: kernels = & _sys.getKernelWarehouse(_tid).active(); break;
+  case Moose::KT_TIME: kernels = & _sys.getKernelWarehouse(_tid).activeTime(); break;
+  case Moose::KT_NONTIME: kernels = & _sys.getKernelWarehouse(_tid).activeNonTime(); break;
+  }
+  for (std::vector<KernelBase *>::const_iterator it = kernels->begin(); it != kernels->end(); ++it)
+  {
+    (*it)->computeResidual();
+  }
+
+  _fe_problem.swapBackMaterials(_tid);
+}
+
+The constructor tells us how to construct the class. (How about that ?!)
+
+As an example:
+
+ComputeResidualThread::ComputeResidualThread(FEProblem & fe_problem, NonlinearSystem & sys, Moose::KernelType type) :
+    ThreadedElementLoop<ConstElemRange>(fe_problem, sys),
+    _sys(sys),
+    _kernel_type(type),
+    _num_cached(0)
+{
+}
+
+So when an object of type ComputeResidualThread is declared in another piece of code, it must be initialized with three arguments matching: (FEProblem & fe_problem, NonlinearSystem & sys, Moose::KernelType type)
+
+Now ComputeResidualThread has three data members: _sys, _kernel_type, and _num_cached. It also publicly inherits the members of ThreadedElementLoop<ConstElemRange>. The constructor tells us that _sys should be set equal to sys passed by the user, _kernel_type should be set equal to tyoe passed by the user, and _num_cached should be set equal to zero (not passed by the user). Finally the members of ThreadedElementLoop can be created by passing the user supplied variables fe_problem and sys. 
+
+Now I recognize that in order to be able to use _kernel_type in ComputeResidualThread::onElement, an object of type ComputeResidualThread must have been created prior to that such that _kernel_type has been initialized. 
+
+And in fact, there is one place where an ComputeResdiaul object is created: in NonlinearSystem::computeResidualInternal(Moose::KernelType type) :
+
+    ComputeResidualThread cr(_fe_problem, *this, type);
+
+NonlinearSystem::computeResidualInternal is called from NonlinearSystem::computeResidual
+
+_nl must be a data member of FEProblem. Sure enough on line 904 of FEProblem.h, I see the protected variable declaration:
+
+NonlinearSystem & _nl;
+
+Here's where _nl is initialized in the constructor of FEProblem:
+
+     _nl(getParam<bool>("use_nonlinear") ? *(new NonlinearSystem(*this, name_sys("nl", _n))) : *(new EigenSystem(*this, name_sys("nl", _n)))),
+
+The keyword this represents a pointer to the object whose member function is being executed. It is used within a class's member function to refer to the object itself. The only object that the FEProblem::FEProblem constructor reads in is const InputParameters & parameters. 
+
+I believe that * in the _nl case is dereferencing. 
+
+What does the initialization statement actually mean? It means this:
+
+NonlinearSystem & _nl = getParam<bool>("use_nonlinear") ? *(new NonlinearSystem(*this, name_sys("nl", _n))) : *(new EigenSystem(*this, name_sys("nl", _n)))
+
+Dynamic memory is allocated using operator new. new is followed by a data type specifier and, if a sequence of more than one element is required, the number of these within brackets []. It returns a pointer to the beginning of the new block of memory allocated. Its syntax is:
+
+pointer = new type
+pointer = new type [number_of_elements]
+
+C++ references allow you to create a second name for the a variable that you can use to read or modify the original data stored in that variable. While this may not sound appealing at first, what this means is that when you declare a reference and assign it a variable, it will allow you to treat the reference exactly as though it were the original variable for the purpose of accessing and modifying the value of the original variable--even if the second name (the reference) is located within a different scope. This means, for instance, that if you make your function arguments references, and you will effectively have a way to change the original data passed into the function. This is quite different from how C++ normally works, where you have arguments to a function copied into new variables. It also allows you to dramatically reduce the amount of copying that takes place behind the scenes, both with functions and in other areas of C++, like catch clauses. 
+
+So _nl is a reference! 
+
+Ampersand on the LHS of an assignment ==> creating a reference
+Ampersand on the RHS of an assignment ==> creating a pointer
+
+Recall the NonlinearSystem constructor:
+
+NonlinearSystem::NonlinearSystem(FEProblem & fe_problem, const std::string & name)
+
+More assignments:
+
+FEProblem & fe_problem = *this
+const std::string & name = name_sys("nl", _n)
+
+Alright so 'this' in this context is the pointer to the FEProblem object.
+
+So when we construct a FEProblem object, we create a new NonlinearSystem. This NonlinearSystem and FEProblem are closely coupled because when we create the new NonlinearSystem, we pass it the FEProblem object that we're concurrently constructing. name_sys is a simple function that returns type std::string. I don't know whether it has to be included in the FEProblem.C file in order for the FEProblem contsructor to call it. It either has to be in that source file or in another included file. (It has to be somewhere!!)
+
+The fe_problem might be created on line 338 of MooseApp.C within the runInputFile member function:
+
+    MooseSharedPointer<FEProblem> fe_problem= _action_warehouse.problem();
+
+_action_warehouse is a data member of MooseApp. It's initialized in the following way:
+
+    _action_warehouse(*this, _syntax, _action_factory),
+
+'this' is a pointer to a MooseApp object
+
+ActionWarehouse::ActionWarehouse(MooseApp & app, Syntax & syntax, ActionFactory & factory)
+
+ActionWarehouse (or one of its parents) must have a member function problem()
+
+Here it is:
+
+  MooseSharedPointer<FEProblem> & problem() { return _problem; }
+
+This returns a reference to a MooseSharePointer<FEProblem> called _problem
+
+I'm a little perplexed by the ActionWarehouse class. It has a protected data member:
+
+MooseSharedPointer<FEProblem> _problem
+
+Does that data member get initialized by the constructor?? Ah I see. It's not illegal to create data members that aren't initialized by constructors. It's just that if we try to do something with those declared variables before we define them we will get an undetermined result. 
+
+Forward declaration
+
+A declaration of the following form
+class-key attr identifier ; 		
+
+Declares a class type which will be defined later in this scope. Until the definition appears, this class name has incomplete type. This allows classes that refer to each other: 
+
+class Vector; // forward declaration
+class Matrix {
+    // ...
+    friend Vector operator*(const Matrix&, const Vector&);
+};
+class Vector {
+    // ...
+    friend Vector operator*(const Matrix&, const Vector&);
+};
+
+In ScalarKernel.h we have this:
+
+  virtual void computeResidual() = 0;
+
+There are children of the class ScalarKernel that define computeResidual and thus would override the virtual computeResidual() in ScalarKernel. On line 1225, I think it's conceivable that *it could dereference to children of ScalarKernels, and thus because of the use of the virtual computeResidual, those children's computeResidual function definitions could get called. The exact same reasoning is true for KernelBase. We have this line in KernelBase.h:
+
+  virtual void computeResidual() = 0;
+
+In fact of the all the computeResidual declarations in header files, only ScalarKernel and KernelBase have the = 0 assignments, such that the system is completely defined. This coding is beautiful.
+
+Departing briefly from the beautiful moose framework, I am building my AVS talk. 
+
+I'm trying to compare energy and LFA formulations. In order to do that, I need to make sure I'm using corresponding transport and rate coefficients between the two cases. I'm going to use argon as my gas. I'm only going to consider elastic and ionization reactions. In order to make my energy formulation more closely aligned with physical reality, I need to examine the following parameters:
+
+_Eiz_en ==> 15.76 eV (Lieberman)
+_rate_coeff_ion_en ==> 5e-14 m^3/s (Lieberman)
+_muem ==> TBD
+_diffem ==> TBD
+_muip ==> TBD
+_diffip ==> TBD
+_rate_coeff_elastic ==> Already correct (Lieberman)
+Potential ==> -2.5 kV (Go experiment at atmosphere with argon)
+Ballast resistor ==> 8.1 kOhm (Go experiment at atmosphere with argon)
+Gap distance ==> 1-2 mm (Go experiment at atmosphere with argon)
+
+Keep in mind that some of these params may have to be adjusted for the simulation (I have to be sure I can get convergence!). Whatever params I adjust though should be params that can also be adjusted for the LFA simulation. There may even be a physical reason to say reduce the applied potential or increase/decrease the area of the plasma such that it puts less stress on the numerical system. If a measure of stress on the system is the concentration of ions at the cathode, then there are several ways to decrease that stress:
+
+Decrease applied potential
+Increase ion mobility 
+Increase ballast resistance
+Increase electrode/plasma area (==> this could derive a bit from what Go was saying, if a certain increase in curent is required and the potential is constant, then the diameter of the plasma must increase ==> Current = current density (should be constant?) * area (variable?))
+
+I believe that in order for thunderbird to match a name to a email address, I must have received or sent an email from/to that person while I've had the thunderbird application installed on the particular computer. That's fair.
+
+Again I note that bolos reproduces bolsig results. Figure 3.16 on pg. 80 of Lieberman looks kind of like a big sack of horse-poo compared to the results I predict with bolos or bolsig. Perhaps this is because of the 2-term approximation used in bolsig and currently in my bolos calculations. But it seems like Lieberman predicts much higher rates of ionization than bolos/bolsig does. What to do?
+
+See here's a conundrum. The current functional form I've been using for my source terms is alpha s porportional to exp(-A/|Field|) or Kiz is proportional to exp(-B/|Te|). Neither of those functional forms are actually physically correct, e.g. both those terms continue to grow respectively with the field and the electron temperature. They most certainly do not plateau at some threshold value. I don't want to take the time to try and navigate any possible additional complexity introduced by lookup tables right now. There's also the pain in the ass realization that if I alter the functional forms of alpha and Kiz, I'm going to have to implement new Jacobians and new residuals.
+
+For a p=5 polynomial fit of EField vs. alpha, without a penalty for negative model values (with initial guess of 1.e-14 for all coefficients): (a0,a1....,a5)
+[  1.00000000e-14,  -7.33794821e-03,   1.02893016e-08,
+        -1.50362990e-15,   1.09634198e-22,  -3.16558448e-30]
+
+With a penalty for negative values:
+[  1.00000000e-14,  -7.23069891e-03,   9.41410909e-09,
+        -1.18445467e-15,   6.90018879e-23,  -1.43863034e-30]
+
+Now I want to try fitting A*T^B*exp(-C/T)
+
+Alright, I got a frieking awesome curve fit with the Lieberman function. Fit values for the electric field vs alpha:
+
+[  1.43171672e-01,   9.05925536e-01,   3.04958892e+06]
+
+Using the stupid function. Fit values for the electric field vs alpha:
+
+array([  485001.06154102,  8073212.48740293])
+
+Curve fit for mean_energy vs. kArIz, Lieberman function:
+array([  1.43878529e-11,  -2.70610234e-01,   7.64727794e+01])
+
+Curve fit for mean_energy vs. kArIz, stupid function:
+array([  6.24642728e-12,   7.43060838e+01])
+
+The mean_energy curve fit is not nearly as good as the EField curve fit. And the exponential factor of 76 Volts makes absolutely no sense. It could be because we're not assuming a Maxwellian distribution??
+
+With a mesh size of 100, solve failed at 1.29159e-08 seconds because of oscillations in the ions. With 200 elements the result is even worse. Oscillations immediately. Solve fails after 3 steps at 3.64e-09 seconds. 
+
+With my sweet spot of 4000 elements, still see some spectacular oscillations. Solve fails at 4.54e-09 seconds. 
+
+I went back to 100 elements, and decreased the voltage by a factor of 100. This time the onset of oscillations in the ions was a little delayed but they did indeed appear, and the solve failed at 2.25989e-08 sconds. Going back to 4000 elements, still with the decreased voltage: oscillations witnessed and solve fails at 1.08299e-08 seconds. 
+
+The reason for the above failures is that I had a negative diffusion coefficient for the ions: dope!! With that fixed, the solve appears to start chugging along fine until it reaches around 1e-6 seconds (when the potential is rising at a rapid rate towards its max value), and then I get a terrible MUMPS error: 
+
+[3]PETSC ERROR: [0]PETSC ERROR: --------------------- Error Message --------------------------------------------------------------
+[0]PETSC ERROR: Error in external library
+[0]PETSC ERROR: Error reported by MUMPS in numerical factorization phase: INFO(1)=-1, INFO(2)=1
+
+[0]PETSC ERROR: See http://www.mcs.anl.gov/petsc/documentation/faq.html for trouble shooting.
+[0]PETSC ERROR: Petsc Release Version 3.6.0, Jun, 09, 2015 
+[0]PETSC ERROR: ./zapdos-opt on a arch-linux2-c-opt named lindsayad-OptiPlex-990 by lindsayad Mon Oct 12 16:05:03 2015
+[0]PETSC ERROR: Configure options --prefix=/opt/moose/petsc/openmpi_petsc-3.6.0/gcc-opt --download-hypre=1 --with-ssl=0 --with-debugging=no --with-pic=1 --with-shared-libraries=1 --with-cc=mpicc --with-cxx=mpicxx --with-fc=mpif90 --download-fblaslapack=1 --download-metis=1 --download-parmetis=1 --download-superlu_dist=1 --download-scalapack=1 --download-mumps=1 CC=mpicc CXX=mpicxx FC=mpif90 F77=mpif77 F90=mpif90 CFLAGS="-fPIC -fopenmp" CXXFLAGS="-fPIC -fopenmp" FFLAGS="-fPIC -fopenmp" FCFLAGS="-fPIC -fopenmp" F90FLAGS="-fPIC -fopenmp" F77FLAGS="-fPIC -fopenmp" PETSC_DIR=/home/lindsayad/projects/src/petsc-3.6.0
+
+
+My translation: the problem started getting very hard.
+
+With the potential decreased by a factor of 10, we appear to be below the ionization threshold.
+
+Alright potential halved from experimental value to 1.25e3. Then we are above the ionization threshold, but the solve still fails with the MUMPS error, this time at 8.53805e-06 seconds (so it made it a bit farther this time.)
+
+After increasing the ballast resistance by a factor of two, absolutely nothing changed. Well that's not true. Although the time at which the simulation failed didn't change, the residuals did change. An important thing to note: the very previous time step, the solve converged in just 6 nonlinear iterations and reached a final residual of 1e-10. 
+
+By moving just a little farther in the time domain (went to a uniprocessor solve without MUMPS), e.g. solve failed at 8.67973e-06 seconds, I think I can see why the MUMPS simulation was failing. Looks like we're starting to get steep gradients at the boundary that may be unresolved by the mesh. Good to see the potential at the left bound starting to decrease. I think that means that our applied potential is not too large if we're able to simulate out a point where the potential starts decreasing. 
+
+Yea, I would say I've come quite a ways in being able to diagnose, identify, and rectify problems in my simulation. Less than an hour, I solved a brand new implementation of my DC LFA problem. Woooo!!!!!!!!!!!!!!!!!!!!!!!!!! Alive time = 28.6948 seconds. Active time = 28.4932 seconds. 

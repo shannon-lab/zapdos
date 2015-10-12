@@ -11,21 +11,21 @@
 /*                                                              */
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
-#ifndef ARGON_H_
-#define ARGON_H_
+#ifndef ARGONCONSTTD_H_
+#define ARGONCONSTTD_H_
 
 #include "Material.h"
 #include "LinearInterpolation.h"
 
-class Argon;
+class ArgonConstTD;
 
 template<>
-InputParameters validParams<Argon>();
+InputParameters validParams<ArgonConstTD>();
 
-class Argon : public Material
+class ArgonConstTD : public Material
 {
 public:
-  Argon(const InputParameters & parameters);
+  ArgonConstTD(const InputParameters & parameters);
 
 protected:
   virtual void computeQpProperties();
@@ -66,6 +66,12 @@ protected:
   MaterialProperty<Real> &  _k_boltz;
   MaterialProperty<Real> &  _vthermal_em;
   MaterialProperty<Real> &  _vthermal_ip;
+  MaterialProperty<Real> &  _iz_coeff_efield_a;
+  MaterialProperty<Real> &  _iz_coeff_efield_b;
+  MaterialProperty<Real> &  _iz_coeff_efield_c;
+  MaterialProperty<Real> &  _iz_coeff_energy_a;
+  MaterialProperty<Real> &  _iz_coeff_energy_b;
+  MaterialProperty<Real> &  _iz_coeff_energy_c;
 
   VariableGradient & _grad_potential;
   VariableValue & _em;
@@ -74,4 +80,4 @@ protected:
   VariableGradient & _grad_ip;
 };
 
-#endif //ARGON_H
+#endif //ARGONCONSTTD_H

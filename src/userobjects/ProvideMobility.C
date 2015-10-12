@@ -18,41 +18,21 @@ template<>
 InputParameters validParams<ProvideMobility>()
 {
   InputParameters params = validParams<GeneralUserObject>();
+  params.addRequiredParam<Real>("electrode_area","The area of the electrode or plasma.");
+  params.addRequiredParam<Real>("ballast_resist","The magnitude of the ballasting resistance.");
   return params;
 }
 
 ProvideMobility::ProvideMobility(const InputParameters & parameters) :
   GeneralUserObject(parameters),
-  _muem(8.86e-2), // Values for air
-  _diffem(7.62e-2),
-  _muip(8.86e-4),
-  _diffip(7.62e-4),
-  _electrode_area(1.26e-5), // in square meters. Taken from Comsol's 1D corona discharge
-  _ballast_resist(1e6), // Also taken from Comsol's 1D corona discharge
+  _electrode_area(getParam<Real>("electrode_area")), // in square meters. Taken from Comsol's 1D corona discharge
+  _ballast_resist(getParam<Real>("ballast_resist")), // Also taken from Comsol's 1D corona discharge
+  // _electrode_area(1.26e-5), // in square meters. Taken from Comsol's 1D corona discharge. Used in my golden simulation results
+  // _ballast_resist(1e6), // Also taken from Comsol's 1D corona discharge. Used in my golden simulation results
   _e(1.6e-19)
 {
 }
 
-Real
-ProvideMobility::mu_em() const
-{
-  return _muem;
-}
-Real
-ProvideMobility::diff_em() const
-{
-  return _diffem;
-}
-Real
-ProvideMobility::mu_ip() const
-{
-  return _muip;
-}
-Real
-ProvideMobility::diff_ip() const
-{
-  return _diffip;
-}
 Real
 ProvideMobility::electrode_area() const
 {

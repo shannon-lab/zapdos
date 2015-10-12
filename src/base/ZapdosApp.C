@@ -4,6 +4,8 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "IonBolosKernel.h"
+#include "ElectronBolosKernel.h"
 #include "GAdvection.h"
 #include "IonKernelEnergyForm.h"
 #include "ElectronKernelEnergyForm.h"
@@ -84,6 +86,7 @@
 // Materials
 #include "Air.h"
 #include "AirConstTD.h"
+#include "ArgonConstTD.h"
 #include "NoCouplingAir.h"
 #include "BlockAverageDiffusionMaterial.h"
 #include "WD.h"
@@ -176,6 +179,8 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(IonBolosKernel);
+  registerKernel(ElectronBolosKernel);
   registerKernel(CoefTimeDerivative);
   registerKernel(GAdvection);
   registerKernel(ElectronKernelEnergyForm);
@@ -251,6 +256,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(DiffusiveFlux);
   registerMaterial(Air);
   registerMaterial(AirConstTD);
+  registerMaterial(ArgonConstTD);
   registerMaterial(NoCouplingAir);
   registerMaterial(BlockAverageDiffusionMaterial);
   registerMaterial(WD);
