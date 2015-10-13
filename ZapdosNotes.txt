@@ -1477,3 +1477,57 @@ After increasing the ballast resistance by a factor of two, absolutely nothing c
 By moving just a little farther in the time domain (went to a uniprocessor solve without MUMPS), e.g. solve failed at 8.67973e-06 seconds, I think I can see why the MUMPS simulation was failing. Looks like we're starting to get steep gradients at the boundary that may be unresolved by the mesh. Good to see the potential at the left bound starting to decrease. I think that means that our applied potential is not too large if we're able to simulate out a point where the potential starts decreasing. 
 
 Yea, I would say I've come quite a ways in being able to diagnose, identify, and rectify problems in my simulation. Less than an hour, I solved a brand new implementation of my DC LFA problem. Woooo!!!!!!!!!!!!!!!!!!!!!!!!!! Alive time = 28.6948 seconds. Active time = 28.4932 seconds. 
+
+Not looking good. Mean energy simulation dies at 2.49269e-07 seconds with no obvious problems in the solutions. Everything looks nice and smooth. Thus I think the problem must be the transient I'm introducing in the boundary condition.
+
+After changing 1/tau to 1e5, the simulation now fails at 2.02422e-06 seconds. The potential reaches -250 V. I believe it was around -350 when using 1/tau = 1e6. The solutions still look pretty and smooth. 
+
+With potential scaling changed to 1e0 (initial value 1e-5), the solve fails at 1.2981e-06 seconds.
+With potential scaling changed to 1e-1 (initial value 1e-5), the solve fails at 1.2981e-06 seconds.
+With potential scaling changed to 1e-2 (initial value 1e-5), the solve fails at 1.2981e-06 seconds.
+With potential scaling changed to 1e-3 (initial value 1e-5), the solve fails at 1.2981e-06 seconds.
+With potential scaling changed to 1e-4 (initial value 1e-5), the solve fails at 2.02298e-06 seconds. (just a tiny bit worse than when scaling set to 1e5)
+
+With absolute tolerance set to 1e-2, problem failed at 2.02924e-06 seconds. A little better.
+
+mean_en scaling at 1e-23, solve fails at 1.22402-07 seconds (a_tol = 1e-1, tau = 1e-6)
+mean_en scaling at 1e-20, solve fails at 1.22402-07 seconds (a_tol = 1e-1, tau = 1e-6)
+
+The ability to solve and the result of the solve is very much dependent on the voltage rise time. For the lfa formulation, I could not get a converged solution for tau = 1e-3 & 1e-4 seconds, but I can for 1e-6 seconds. For the mean_energy formulation, I could not get a converged solution for tau = 1e-6 or 1e-5 seconds, but I got a converged solution for tau = 1e-3 seconds. What appeared to help the energy form was giving the charged species enough time to form a significant enough current such that the voltage at the left boundary never went too high. With respect to the lfa form, if I wait too long such that all the electrons and ions disappear from the domain before I apply the potential, then the problem won't converge.
+
+I was also able to get convergence with lfa for tau = 1e-5 seconds. There appears to be no difference in the results between the 1e-6 and 1e-5 cases. 
+
+I'm unable to get convergence using a ballast resistance of 1e6, and a rise time of 1e-5 seconds (voltage of 1.25e3, 600, 300, or 150 V) with the electron energy formulation.
+
+It simply appears that it's way easier to create ionization using my energy functional formulation than it is using my lfa functional formulation. I don't quite know why that is. 
+
+There are a couple of things that are different in my ionization source term between lfa and energy: lfa uses a coefficient that is a function of the electric field and multiplies the electron flux. Energy uses a coefficient that is a function of the electron energy and multiplies the electron density. 
+
+Got quite a few options for trying to fit alpha vs mean_energy:
+
+Letting all three parameters of Liberman's be variable:
+array([  7.00485613e+07,  -3.54236666e-02,   5.31700097e+01])
+
+Setting c = 15.76:
+array([ 42.04011787,   4.588541  ])
+
+Setting b = 1, c = 15.76 (looks terrible):
+array([ 78868.24191509])
+
+If instead of deleting the elements in alpha that are less than a certain value (1e-15 in this case), I set those elements equal to zero, the heres the three parameter fit for the Lieberman function:
+array([  1.52165930e+08,  -2.87277596e-01,   5.51972192e+01])
+
+Fit virtually doesn't change, and I still see an overshoot of the data in the 6-7 eV range.
+
+While I was revamping my code to allow for a source flux energy formulation, I realized that my electron energy kernel was wrong: I didn't have energy being lost per ionization collision: in fact I was actually gaining energy from ionization collisions! So hopefully I fixed that.
+
+With the revamped code, the solve fails at 7.93437e-07 seconds which is much better performance relative to tau (1e-06). Reducing the rel_tol actually hurt the solve: solve failed at 7.03832e-07 seconds. Returning rel_tol to default and changin abs_tol from 1e-1 to 1e1, the solve reached 8.85438e-07 seconds.
+
+From the Comsol Plasma Module manual, recall thaat the Electron energy can change on scales less than a ns. 
+
+I got the energy formulation to solve with a rise time of 1e-6 seconds. The key was simply to decrease dtmin. (Use your knowledge of the physical time scales!!! That's where being a physicist/engineer is of greatest benefit! Knowing the physics! (Time & length scales. Dependent variable scales also)). The shape of the 1e-3 and 1e-6 rise time simulations are exactly the same. And quantitatively, they are also quite similar. This would lead me to believe that the dominant path for energy loss is through elastic collisions. This would also be supported by the fact that I was able to solve with the 1e-3 rise time a problem where I had actually configured my residuals such that ionziation collisions would actually create energy!
+
+Zapdos active time = 1063.31 seconds ==> 17.7 minutes. Not bad I would say. (using all 4 processors)
+
+Went to the flux formulation of the energy formulation ==> Active time = 593.726 seconds = less than 10 minutes. Took 603 time steps as opposed to 1272 time steps in the case of the rate coefficient formulation of the energy formulation. I guess it is true that townsend in DC discharges is more stable than rate coefficients!!
+

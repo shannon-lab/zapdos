@@ -35,6 +35,8 @@ protected:
   LinearInterpolation _alpha_interpolation;
   LinearInterpolation _eta_interpolation;
 
+  bool _townsend;
+
   MaterialProperty<Real>  & _muem;
   MaterialProperty<Real>  & _diffem;
   MaterialProperty<Real>  & _muip;
@@ -72,6 +74,7 @@ protected:
   MaterialProperty<Real> &  _iz_coeff_energy_a;
   MaterialProperty<Real> &  _iz_coeff_energy_b;
   MaterialProperty<Real> &  _iz_coeff_energy_c;
+  MaterialProperty<Real> &  _N_A;
 
   VariableGradient & _grad_potential;
   VariableValue & _em;

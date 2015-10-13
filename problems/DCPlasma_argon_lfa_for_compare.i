@@ -59,7 +59,7 @@
   [./data_provider]
     type = ProvideMobility
     electrode_area = 3.14e-6
-    ballast_resist = 8.1e3
+    ballast_resist = 1e6
   [../]
 []
 
@@ -242,7 +242,7 @@
 [Functions]
   [./potential_bc_func]
     type = ParsedFunction
-    value = '1.25e3*tanh(1e6*t)'
+    value = '1.25e3*tanh(1e5*t)'
   [../]
 []
 

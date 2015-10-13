@@ -6,6 +6,9 @@
 // Kernels
 #include "IonBolosKernel.h"
 #include "ElectronBolosKernel.h"
+#include "IonBolosKernelEnergyForm.h"
+#include "ElectronBolosKernelEnergyForm.h"
+#include "ElectronEnergyBolosKernel.h"
 #include "GAdvection.h"
 #include "IonKernelEnergyForm.h"
 #include "ElectronKernelEnergyForm.h"
@@ -181,6 +184,9 @@ ZapdosApp::registerObjects(Factory & factory)
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
   registerKernel(IonBolosKernel);
   registerKernel(ElectronBolosKernel);
+  registerKernel(IonBolosKernelEnergyForm);
+  registerKernel(ElectronBolosKernelEnergyForm);
+  registerKernel(ElectronEnergyBolosKernel);
   registerKernel(CoefTimeDerivative);
   registerKernel(GAdvection);
   registerKernel(ElectronKernelEnergyForm);

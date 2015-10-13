@@ -19,6 +19,7 @@ InputParameters validParams<ArgonConstTD>()
   InputParameters params = validParams<Material>();
 
   params.addParam<Real>("user_relative_permittivity", 1.0, "Multiplies the permittivity of free space.");
+  params.addParam<bool>("townsend",false,"Whether to use the townsend formulation for the ionization term.");
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("Te", "The electron temperature.");
@@ -29,6 +30,7 @@ InputParameters validParams<ArgonConstTD>()
 
 ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
     Material(parameters),
+    _townsend(getParam<bool>("townsend")),
 
   _muem(declareProperty<Real>("muem")),
     _diffem(declareProperty<Real>("diffem")),
@@ -67,6 +69,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
   _iz_coeff_energy_a(declareProperty<Real>("iz_coeff_energy_a")),
   _iz_coeff_energy_b(declareProperty<Real>("iz_coeff_energy_b")),
   _iz_coeff_energy_c(declareProperty<Real>("iz_coeff_energy_c")),
+  _N_A(declareProperty<Real>("N_A")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
   _em(isCoupled("em") ? coupledValue("em") : _zero),
@@ -92,11 +95,22 @@ ArgonConstTD::computeQpProperties()
   _iz_coeff_efield_a[_qp] = 1.43171672e-1;
   _iz_coeff_efield_b[_qp] = 9.05925536e-1;
   _iz_coeff_efield_c[_qp] = 3.04958892e+6;
-  _iz_coeff_energy_a[_qp] = 1.43878529e-11;
-  _iz_coeff_energy_b[_qp] = -2.70610234e-1;
-  _iz_coeff_energy_c[_qp] = 7.64727794e+1;
 
+  if (_townsend) {
+    _iz_coeff_energy_a[_qp] = 1.52165930e+8;
+    _iz_coeff_energy_b[_qp] = -2.87277596e-1;
+    _iz_coeff_energy_c[_qp] = 5.51972192e+1;
+  }
+  else {
+    _iz_coeff_energy_a[_qp] = 1.43878529e-11;
+    _iz_coeff_energy_b[_qp] = -2.70610234e-1;
+    _iz_coeff_energy_c[_qp] = 7.64727794e+1;
+  }
+
+  _N_A[_qp] = 6.02e23;
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
+  _Eiz[_qp] = 15.76;
+
   _muel[_qp] = 5.0/3.0*_muem[_qp];
   _diffel[_qp] = 5.0/3.0*_diffem[_qp];
   _rate_coeff_elastic[_qp] = 1e-13;
