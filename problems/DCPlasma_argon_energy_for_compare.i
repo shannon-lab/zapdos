@@ -1,3 +1,8 @@
+[GlobalParams]
+  townsend = true 
+  use_interp_for_townsend = true
+[]
+
 [Mesh]
   type = GeneratedMesh
   dim = 1
@@ -27,7 +32,7 @@
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- nl_abs_tol = 1e-5
+ nl_abs_tol = 1e-4
   l_max_its = 10
  nl_max_its = 50
   dtmin = 1e-12
@@ -80,7 +85,6 @@
     variable = em
     mean_en = mean_en
     potential = potential
-    townsend = true
   [../]
   [./ions]
     type = IonBolosKernelEnergyForm
@@ -88,7 +92,6 @@
     em = em
     mean_en = mean_en
     potential = potential
-    townsend = true
   [../]
   [./potential]
     type = PoissonKernel
@@ -101,7 +104,7 @@
     variable = mean_en
     em = em
     potential = potential
-    townsend = true
+    const_elastic_coeff = false
   [../]
 []
 
@@ -116,7 +119,7 @@
     scaling = 1e-18
   [../]
   [./mean_en]
-    scaling = 1e-25
+    scaling = 1e-30
   [../]
 []
 
@@ -296,6 +299,6 @@
     type = ArgonConstTD
     em = em
     potential = potential
-    townsend = true
+    mean_en = mean_en
  [../]
 []

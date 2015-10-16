@@ -7,7 +7,10 @@ InputParameters validParams<ElectronEnergyBolosKernel>()
 
   params.addRequiredCoupledVar("em", "The electron density");
   params.addRequiredCoupledVar("potential","The electric potential");
-  params.addParam<bool>("townsend",false,"Whether to use the townsend formulation for the ionization term.");
+  params.addRequiredParam<bool>("townsend","Whether to use the townsend formulation for the ionization term.");
+  params.addRequiredParam<bool>("use_interp_for_townsend","Whether to use interpolated data as opposed to a model functional fit for the townsend coeffient.");
+  params.addRequiredParam<bool>("const_elastic_coeff","Whether to use a constant elastic collision rate coefficient.");
+  // params.addRequiredParam<bool>("estim_jac_with_function","If using interpolation for townsend, whether to use inexact function to estimate Jacobian.");
 
   return params;
 }
@@ -36,6 +39,11 @@ ElectronEnergyBolosKernel::ElectronEnergyBolosKernel(const InputParameters & par
   _rate_coeff_elastic(getMaterialProperty<Real>("rate_coeff_elastic")),
   _N_A(getMaterialProperty<Real>("N_A")),
   _Eiz(getMaterialProperty<Real>("Eiz")),
+  _el_coeff_energy_a(getMaterialProperty<Real>("el_coeff_energy_a")),
+  _el_coeff_energy_b(getMaterialProperty<Real>("el_coeff_energy_b")),
+  _el_coeff_energy_c(getMaterialProperty<Real>("el_coeff_energy_c")),
+  _alpha_iz(getMaterialProperty<Real>("alpha_iz")),
+  _d_iz_d_actual_mean_en(getMaterialProperty<Real>("d_iz_d_actual_mean_en")),
 
 // Kernel members
 
@@ -44,9 +52,12 @@ ElectronEnergyBolosKernel::ElectronEnergyBolosKernel(const InputParameters & par
   // _vd_mag(0.0),
   // _delta(0.0)
   _townsend(getParam<bool>("townsend")),
+  _use_interp_for_townsend(getParam<bool>("use_interp_for_townsend")),
+  // _estim_jac_with_function(getParam<bool>("estim_jac_with_function")),
+  _const_elastic_coeff(getParam<bool>("const_elastic_coeff")),
   _actual_mean_en(0.0),
   _iz(0.0),
-  _d_iz_d_actual_mean_en(0.0),
+  _d_iz_d_actual_mean_en_member(0.0),
   _d_actual_mean_en_d_em(0.0),
   _d_actual_mean_en_d_mean_en(0.0),
   _d_iz_d_em(0.0),
@@ -60,8 +71,17 @@ ElectronEnergyBolosKernel::ElectronEnergyBolosKernel(const InputParameters & par
   _source_term(0.0),
   _d_source_term_d_em(0.0),
   _d_source_term_d_mean_en(0.0),
-  _d_source_term_d_potential(0.0)
-{}
+  _d_source_term_d_potential(0.0),
+  _el(0.0),
+  _d_el_d_actual_mean_en(0.0),
+  _d_el_d_mean_en(0.0),
+  _d_el_d_em(0.0),
+  _d_elastic_term_d_mean_en(0.0),
+  _d_elastic_term_d_em(0.0)
+{
+  if ( !_townsend && _use_interp_for_townsend )
+    std::cerr << "Not a consistent specification of the ionization problem." << std::endl;
+}
 
 ElectronEnergyBolosKernel::~ElectronEnergyBolosKernel()
 {}
@@ -74,7 +94,16 @@ ElectronEnergyBolosKernel::computeQpResidual()
   // _alpha = std::min(1.0,_Pe/6.0);
   // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
   _actual_mean_en = std::exp(_u[_qp]-_em[_qp]);
-  _iz = _iz_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
+
+  if (_use_interp_for_townsend)
+    _iz = _alpha_iz[_qp];
+  else
+    _iz = _iz_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
+
+  if (_const_elastic_coeff)
+    _el = _rate_coeff_elastic[_qp];
+  else
+    _el = _el_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_el_coeff_energy_b[_qp])*std::exp(-_el_coeff_energy_c[_qp]/_actual_mean_en);
 
   if ( _townsend ) {
     _electron_flux_mag = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
@@ -88,7 +117,7 @@ ElectronEnergyBolosKernel::computeQpResidual()
     +_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_potential[_qp] // Joule Heating
   						-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]) // Joule Heating
          -_test[_i][_qp]*_source_term*-_Eiz[_qp] // Ionization term
-         -_test[_i][_qp]*-_rate_coeff_elastic[_qp]*_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]) // Energy loss from elastic collisions
+         -_test[_i][_qp]*-_el*_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]) // Energy loss from elastic collisions
     -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp]); // Source stabilization
   	 // -_grad_test[_i][_qp]*(-_delta*std::exp(_u[_qp])*_grad_u[_qp]); // Diffusion stabilization
 }
@@ -101,10 +130,30 @@ ElectronEnergyBolosKernel::computeQpJacobian()
   // _alpha = std::min(1.0,_Pe/6.0);
   // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
   _actual_mean_en = std::exp(_u[_qp]-_em[_qp]);
-  _iz = _iz_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
-  _d_iz_d_actual_mean_en = std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp]-2.0)*_iz_coeff_energy_a[_qp]*(_actual_mean_en*_iz_coeff_energy_b[_qp] + _iz_coeff_energy_c[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
+
+  if (_use_interp_for_townsend) {
+    _iz = _alpha_iz[_qp];
+    _d_iz_d_actual_mean_en_member = _d_iz_d_actual_mean_en[_qp];
+  }
+  else {
+    _iz = _iz_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
+    _d_iz_d_actual_mean_en_member = std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp]-2.0)*_iz_coeff_energy_a[_qp]*(_actual_mean_en*_iz_coeff_energy_b[_qp] + _iz_coeff_energy_c[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
+  }
+
   _d_actual_mean_en_d_mean_en = std::exp(_u[_qp]-_em[_qp])*_phi[_j][_qp];
-  _d_iz_d_mean_en = _d_iz_d_actual_mean_en * _d_actual_mean_en_d_mean_en;
+  _d_iz_d_mean_en = _d_iz_d_actual_mean_en_member * _d_actual_mean_en_d_mean_en;
+
+  if (_const_elastic_coeff) {
+    _el = _rate_coeff_elastic[_qp];
+    _d_el_d_mean_en = 0.0;
+    _d_elastic_term_d_mean_en = -_rate_coeff_elastic[_qp]*_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp])*_phi[_j][_qp];
+  }
+  else {
+    _el = _el_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_el_coeff_energy_b[_qp])*std::exp(-_el_coeff_energy_c[_qp]/_actual_mean_en);
+    _d_el_d_actual_mean_en = std::pow(_actual_mean_en,_el_coeff_energy_b[_qp]-2.0)*_el_coeff_energy_a[_qp]*(_actual_mean_en*_el_coeff_energy_b[_qp] + _el_coeff_energy_c[_qp])*std::exp(-_el_coeff_energy_c[_qp]/_actual_mean_en);
+    _d_el_d_mean_en = _d_el_d_actual_mean_en * _d_actual_mean_en_d_mean_en;
+    _d_elastic_term_d_mean_en = -_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*(_el*std::exp(_u[_qp])*_phi[_j][_qp] + std::exp(_u[_qp])*_d_el_d_mean_en);
+  }
 
   if ( _townsend ) {
     _electron_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
@@ -120,7 +169,7 @@ ElectronEnergyBolosKernel::computeQpJacobian()
   return  -_grad_test[_i][_qp]*(-_muel[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp] // Advective motion
   			       -_diffel[_qp]*_grad_phi[_j][_qp]*std::exp(_u[_qp])-_diffel[_qp]*_grad_u[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]) // Diffusive motion
     -_test[_i][_qp] * _d_source_term_d_mean_en * -_Eiz[_qp]
-    -_test[_i][_qp]*-_rate_coeff_elastic[_qp]*_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp])*_phi[_j][_qp] // Energy loss from elastic collisions
+    -_test[_i][_qp] * _d_elastic_term_d_mean_en
     -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp])*-1.0*_phi[_j][_qp]; // Source stabilization
   	 // -_grad_test[_i][_qp]*(-_delta*(std::exp(_u[_qp])*_grad_phi[_j][_qp]+std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp])); // Diffusion stabilization
 }
@@ -129,10 +178,30 @@ Real
 ElectronEnergyBolosKernel::computeQpOffDiagJacobian(unsigned int jvar)
 {
   _actual_mean_en = std::exp(_u[_qp]-_em[_qp]);
-  _iz = _iz_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
-  _d_iz_d_actual_mean_en = std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp]-2.0)*_iz_coeff_energy_a[_qp]*(_actual_mean_en*_iz_coeff_energy_b[_qp] + _iz_coeff_energy_c[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
+
+  if (_use_interp_for_townsend) {
+    _iz = _alpha_iz[_qp];
+    _d_iz_d_actual_mean_en_member = _d_iz_d_actual_mean_en[_qp];
+  }
+  else {
+    _iz = _iz_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
+    _d_iz_d_actual_mean_en_member = std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp]-2.0)*_iz_coeff_energy_a[_qp]*(_actual_mean_en*_iz_coeff_energy_b[_qp] + _iz_coeff_energy_c[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
+  }
+
   _d_actual_mean_en_d_em = -std::exp(_u[_qp]-_em[_qp])*_phi[_j][_qp];
-  _d_iz_d_em = _d_iz_d_actual_mean_en * _d_actual_mean_en_d_em;
+  _d_iz_d_em = _d_iz_d_actual_mean_en_member * _d_actual_mean_en_d_em;
+
+  if (_const_elastic_coeff) {
+    _el = _rate_coeff_elastic[_qp];
+    _d_el_d_em = 0.0;
+    _d_elastic_term_d_em = 0.0;
+  }
+  else {
+    _el = _el_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_el_coeff_energy_b[_qp])*std::exp(-_el_coeff_energy_c[_qp]/_actual_mean_en);
+    _d_el_d_actual_mean_en = std::pow(_actual_mean_en,_el_coeff_energy_b[_qp]-2.0)*_el_coeff_energy_a[_qp]*(_actual_mean_en*_el_coeff_energy_b[_qp] + _el_coeff_energy_c[_qp])*std::exp(-_el_coeff_energy_c[_qp]/_actual_mean_en);
+    _d_el_d_em = _d_el_d_actual_mean_en * _d_actual_mean_en_d_em;
+    _d_elastic_term_d_em = -_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*(std::exp(_u[_qp])*_d_el_d_em);
+  }
 
   if ( _townsend ) {
     _electron_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
@@ -156,13 +225,14 @@ ElectronEnergyBolosKernel::computeQpOffDiagJacobian(unsigned int jvar)
            +_test[_i][_qp]*(-_grad_phi[_j][_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_potential[_qp] // Joule Heating
     						 -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]) // Joule Heating
     			    -_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_phi[_j][_qp])) // Joule Heating
-	     -_test[_i][_qp] * _d_source_term_d_potential * -_Eiz[_qp];
+      -_test[_i][_qp] * _d_source_term_d_potential * -_Eiz[_qp]; // Ionization term
   }
 
   else if (jvar == _em_id) {
     return +_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]*-_grad_potential[_qp] // Joule Heating
     						  -_diffem[_qp]*(std::exp(_em[_qp])*_grad_phi[_j][_qp]+std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp])) // Joule Heating
-      -_test[_i][_qp] * _d_source_term_d_em * -_Eiz[_qp];
+      -_test[_i][_qp] * _d_source_term_d_em * -_Eiz[_qp] // Ionization term
+      -_test[_i][_qp] * _d_elastic_term_d_em; // Elastic term
   }
 
   else {

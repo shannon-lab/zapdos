@@ -19,10 +19,10 @@ InputParameters validParams<ArgonConstTD>()
   InputParameters params = validParams<Material>();
 
   params.addParam<Real>("user_relative_permittivity", 1.0, "Multiplies the permittivity of free space.");
-  params.addParam<bool>("townsend",false,"Whether to use the townsend formulation for the ionization term.");
+  params.addRequiredParam<bool>("townsend","Whether to use the townsend formulation for the ionization term.");
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
-  params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
-  params.addCoupledVar("Te", "The electron temperature.");
+  params.addRequiredCoupledVar("em", "Species concentration needed to calculate the poisson source");
+  params.addRequiredCoupledVar("mean_en", "The electron mean energy in log form.");
   params.addCoupledVar("ip", "The ion density.");
   return params;
 }
@@ -70,14 +70,46 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
   _iz_coeff_energy_b(declareProperty<Real>("iz_coeff_energy_b")),
   _iz_coeff_energy_c(declareProperty<Real>("iz_coeff_energy_c")),
   _N_A(declareProperty<Real>("N_A")),
+  _el_coeff_energy_a(declareProperty<Real>("el_coeff_energy_a")),
+  _el_coeff_energy_b(declareProperty<Real>("el_coeff_energy_b")),
+  _el_coeff_energy_c(declareProperty<Real>("el_coeff_energy_c")),
+  _alpha_iz(declareProperty<Real>("alpha_iz")),
+  _d_iz_d_actual_mean_en(declareProperty<Real>("d_iz_d_actual_mean_en")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
   _em(isCoupled("em") ? coupledValue("em") : _zero),
   _ip(isCoupled("ip") ? coupledValue("ip") : _zero),
   _grad_em(isCoupled("em") ? coupledGradient("em") : _grad_zero),
-  _grad_ip(isCoupled("ip") ? coupledGradient("ip") : _grad_zero)
-
+  _grad_ip(isCoupled("ip") ? coupledGradient("ip") : _grad_zero),
+  _mean_en(coupledValue("mean_en"))
 {
+  std::vector<Real> actual_mean_energy;
+  std::vector<Real> alpha;
+  std::vector<Real> d_alpha_d_actual_mean_energy;
+  std::string zapDir = getenv("ZAPDIR");
+  std::string tdPath = "/src/materials/td_argon_mean_en.txt";
+  std::string path = zapDir + tdPath;
+  const char *charPath = path.c_str();
+  std::ifstream myfile (charPath);
+  Real value;
+
+  if (myfile.is_open())
+  {
+    while ( myfile >> value )
+    {
+      actual_mean_energy.push_back(value);
+      myfile >> value;
+      alpha.push_back(value);
+      myfile >> value;
+      d_alpha_d_actual_mean_energy.push_back(value);
+    }
+    myfile.close();
+  }
+
+  else std::cerr << "Unable to open file" << std::endl; 
+
+  _alpha_interpolation.setData(actual_mean_energy, alpha);
+  _d_alpha_d_actual_mean_energy_interpolation.setData(actual_mean_energy, d_alpha_d_actual_mean_energy);
 }
 
 void
@@ -106,6 +138,13 @@ ArgonConstTD::computeQpProperties()
     _iz_coeff_energy_b[_qp] = -2.70610234e-1;
     _iz_coeff_energy_c[_qp] = 7.64727794e+1;
   }
+
+  _alpha_iz[_qp] = _alpha_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+  _d_iz_d_actual_mean_en[_qp] = _d_alpha_d_actual_mean_energy_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+
+  _el_coeff_energy_a[_qp] = 1.60638169e-13;
+  _el_coeff_energy_b[_qp] = 3.17917979e-1;
+  _el_coeff_energy_c[_qp] = 4.66301096;
 
   _N_A[_qp] = 6.02e23;
   _Ar[_qp] = 1.01e5/(300*1.38e-23);

@@ -1531,3 +1531,76 @@ Zapdos active time = 1063.31 seconds ==> 17.7 minutes. Not bad I would say. (usi
 
 Went to the flux formulation of the energy formulation ==> Active time = 593.726 seconds = less than 10 minutes. Took 603 time steps as opposed to 1272 time steps in the case of the rate coefficient formulation of the energy formulation. I guess it is true that townsend in DC discharges is more stable than rate coefficients!!
 
+For elastic collision rate fit:
+array([  1.60638169e-13,   3.17917979e-01,   4.66301096e+00])
+
+Ran with variable elastic collisions and the peak density actually increased :-( Zapdos active time = 575.026 seconds < 10 minutes (Had to change the absolute tolerance because it was stalling (diverged line searches after great initial residual reduction) at a few percent over 1e-5) The reason it was stalling at a slightly higher value is likely because the peak densities were a few percent higher. With the absolute tolerance change, the number of steps went from many thousands to 505.
+
+Better fit for mean_en vs. kArIz:     y = p[0]*x**p[1]*exp(p[2]*x**p[3])
+
+[  9.61505373e-15   1.56694111e-01  -3.62336868e+03  -3.39520538e+00]
+
+If I can't get a good model fit...why not just use the raw data?!
+
+There are Standard Stream Objects for Console I/O: (cout, cin, cerr, clog, etc.) A 'stream' is internally nothing but a series of characters.
+
+std::cout - Regular output (console output)
+std::cerr - Error output (console error)
+std::clog - Nobody cares (console log)
+
+When writing error messages, use cerr rather than cout. In simple examples, the two appear to be the same. However, they behave differently when you use Unix redirection operators when you run your program. In particular, if you redirect output to a file, error messages printed to cerr will still appear on the user's terminal whereas error messages printed to cout will be mixed into the output file. 
+
+So running the interpolation problem with Newton...after about a half hour we were at time = 7.69011e-07 seconds after 1141 time steps. 
+
+Very peculiarly, when I tried running two different zapdos simulations, each one on two cores, my process scheduler scheduled the sapdos simulations to both run on the same two cores! So two cores were just sitting there doing nothing!
+
+As might be expected from the above passage, solving the same case as argon_energy_mumps_tau_1e-6_townsend_variable_elastic_coeff took about four times as long as the gold run. Not surprising since I was running on half the processors and theoretically it was only being executed half the time (two processes running on the two processors). Number of time steps were essentially the same. 
+
+With jacobian_estimation (and residual given by linear interpolation, so jacob and residual not the same):
+
+Time Step 100, time = 7.42153e-07
+                dt = 4.92521e-11
+Time Step 200, time = 7.4892e-07
+                dt = 9.47565e-11
+Time Step 300, time = 7.53893e-07
+                dt = 6.07676e-11
+Time Step 400, time = 7.57823e-07
+                dt = 3.89705e-11
+Time Step 500, time = 7.64239e-07
+                dt = 5.45626e-11
+Time Step 600, time = 7.67041e-07
+                dt = 2.82938e-12
+Time Step 875, time = 7.68072e-07
+                dt = 4.98006e-12
+
+Without jacobian_estimation:
+
+Time Step 100, time = 2.94026e-07
+                dt = 2.30869e-09
+Time Step 200, time = 3.55389e-07
+                dt = 5.92228e-10
+Time Step 300, time = 3.82268e-07
+                dt = 3.79798e-10
+Time Step 600, time = 4.64467e-07
+                dt = 3.00513e-10
+Time Step 800, time = 5.15558e-07
+                dt = 2.14569e-10
+
+So yes it looks much worse without the jacobian_estimation
+
+With jacob_estimation and residual the same
+Time Step 100, time = 8.34043e-07
+                dt = 7.2944e-11
+Time Step 200, time = 8.38448e-07
+                dt = 3.48495e-11
+Time Step 300, time = 8.40077e-07
+                dt = 6.38499e-12
+Time Step 400, time = 8.59315e-07
+                dt = 2.98505e-09
+Time Step 500, time = 0.0457816
+                dt = 0.00763011
+
+So as expected the problem solves better when the residual and jacobian match. Who would have guessed?! The problem with that match is that my residuals don't define the right problem! And when I do define the right problem with my residuals, I can't define a matching Jacobian!!
+
+I tried defining a matching Jacobian my doing second order differencing mean_energy vs alpha. I am using a linear interpolation for alpha in the residuals, and a linear interpolation of d_alpha_d_mean_en in the jacobians. However, Andy Wilkins suggested that in his experience linear interpolations in conjuction with implicit solves can lead to terrible convergence. I am in fact seeing terrible convergence. He gave me a reference for cubic splines. My only question then is what to do for the derivatives.
+

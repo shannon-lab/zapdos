@@ -30,10 +30,8 @@ public:
 protected:
   virtual void computeQpProperties();
 
-  LinearInterpolation _mobility_interpolation;
-  LinearInterpolation _diffusivity_interpolation;
   LinearInterpolation _alpha_interpolation;
-  LinearInterpolation _eta_interpolation;
+  LinearInterpolation _d_alpha_d_actual_mean_energy_interpolation;
 
   bool _townsend;
 
@@ -75,12 +73,18 @@ protected:
   MaterialProperty<Real> &  _iz_coeff_energy_b;
   MaterialProperty<Real> &  _iz_coeff_energy_c;
   MaterialProperty<Real> &  _N_A;
+  MaterialProperty<Real> & _el_coeff_energy_a;
+  MaterialProperty<Real> & _el_coeff_energy_b;
+  MaterialProperty<Real> & _el_coeff_energy_c;
+  MaterialProperty<Real> & _alpha_iz;
+  MaterialProperty<Real> & _d_iz_d_actual_mean_en;
 
   VariableGradient & _grad_potential;
   VariableValue & _em;
   VariableValue & _ip;
   VariableGradient & _grad_em;
   VariableGradient & _grad_ip;
+  VariableValue & _mean_en;
 };
 
 #endif //ARGONCONSTTD_H

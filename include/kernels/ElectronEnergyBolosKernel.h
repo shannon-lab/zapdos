@@ -43,6 +43,11 @@ class ElectronEnergyBolosKernel : public Kernel
   const MaterialProperty<Real> & _rate_coeff_elastic;
   const MaterialProperty<Real> & _N_A;
   const MaterialProperty<Real> & _Eiz;
+  const MaterialProperty<Real> & _el_coeff_energy_a;
+  const MaterialProperty<Real> & _el_coeff_energy_b;
+  const MaterialProperty<Real> & _el_coeff_energy_c;
+  const MaterialProperty<Real> & _alpha_iz;
+  const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
 
   // kernel members
 
@@ -51,9 +56,12 @@ class ElectronEnergyBolosKernel : public Kernel
   /* Real _vd_mag; */
   /* Real _delta; */
   bool _townsend;
+  bool _use_interp_for_townsend;
+  /* bool _estim_jac_with_function; */
+  bool _const_elastic_coeff;
   Real  _actual_mean_en;
   Real  _iz;
-  Real  _d_iz_d_actual_mean_en;
+  Real  _d_iz_d_actual_mean_en_member;
   Real  _d_actual_mean_en_d_em;
   Real  _d_actual_mean_en_d_mean_en;
   Real  _d_iz_d_em;
@@ -68,6 +76,12 @@ class ElectronEnergyBolosKernel : public Kernel
   Real  _d_source_term_d_em;
   Real  _d_source_term_d_mean_en;
   Real  _d_source_term_d_potential;
+  Real  _el;
+  Real  _d_el_d_actual_mean_en;
+  Real  _d_el_d_mean_en;
+  Real  _d_el_d_em;
+  Real  _d_elastic_term_d_mean_en;
+  Real  _d_elastic_term_d_em;
 };
 
 #endif /* ELECTRONENERGYBOLOSKERNEL_H */

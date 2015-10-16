@@ -34,9 +34,11 @@ class ElectronBolosKernelEnergyForm : public Kernel
   /* Real _vd_mag; */
   /* Real _delta; */
   bool _townsend;
+  bool _use_interp_for_townsend;
+  /* bool _estim_jac_with_function; */
   Real  _actual_mean_en;
   Real  _iz;
-  Real  _d_iz_d_actual_mean_en;
+  Real  _d_iz_d_actual_mean_en_member;
   Real  _d_actual_mean_en_d_em;
   Real  _d_actual_mean_en_d_mean_en;
   Real  _d_iz_d_em;
@@ -59,6 +61,8 @@ class ElectronBolosKernelEnergyForm : public Kernel
   const MaterialProperty<Real> & _iz_coeff_energy_b;
   const MaterialProperty<Real> & _iz_coeff_energy_c;
   const MaterialProperty<Real> & _N_A;
+  const MaterialProperty<Real> & _alpha_iz;
+  const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
 };
 
 #endif /* ELECTRONBOLOSKERNELENERGYFORM_H */
