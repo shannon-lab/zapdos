@@ -109,7 +109,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
   else std::cerr << "Unable to open file" << std::endl; 
 
   _alpha_interpolation.setData(actual_mean_energy, alpha);
-  _d_alpha_d_actual_mean_energy_interpolation.setData(actual_mean_energy, d_alpha_d_actual_mean_energy);
+  // _d_alpha_d_actual_mean_energy_interpolation.setData(actual_mean_energy, d_alpha_d_actual_mean_energy);
 }
 
 void
@@ -140,7 +140,8 @@ ArgonConstTD::computeQpProperties()
   }
 
   _alpha_iz[_qp] = _alpha_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
-  _d_iz_d_actual_mean_en[_qp] = _d_alpha_d_actual_mean_energy_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+  _d_iz_d_actual_mean_en[_qp] = _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
+  // _d_iz_d_actual_mean_en[_qp] = _d_alpha_d_actual_mean_energy_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
 
   _el_coeff_energy_a[_qp] = 1.60638169e-13;
   _el_coeff_energy_b[_qp] = 3.17917979e-1;

@@ -104,7 +104,7 @@
     variable = mean_en
     em = em
     potential = potential
-    const_elastic_coeff = false
+    const_elastic_coeff = true
   [../]
 []
 
@@ -119,7 +119,7 @@
     scaling = 1e-18
   [../]
   [./mean_en]
-    scaling = 1e-30
+    scaling = 1e-25
   [../]
 []
 

@@ -15,7 +15,8 @@
 #define ARGONCONSTTD_H_
 
 #include "Material.h"
-#include "LinearInterpolation.h"
+/* #include "LinearInterpolation.h" */
+#include "SplineInterpolation.h"
 
 class ArgonConstTD;
 
@@ -30,8 +31,8 @@ public:
 protected:
   virtual void computeQpProperties();
 
-  LinearInterpolation _alpha_interpolation;
-  LinearInterpolation _d_alpha_d_actual_mean_energy_interpolation;
+  SplineInterpolation _alpha_interpolation;
+  /* LinearInterpolation _d_alpha_d_actual_mean_energy_interpolation; */
 
   bool _townsend;
 
