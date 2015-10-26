@@ -85,8 +85,20 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
 {
   std::vector<Real> actual_mean_energy;
   std::vector<Real> alpha;
-  std::vector<Real> d_alpha_d_actual_mean_energy;
-  std::string zapDir = getenv("ZAPDIR");
+  // std::vector<Real> d_alpha_d_actual_mean_energy;
+  // std::cerr << "About to get the environment variable." << std::endl;
+  char* zapDirPoint;
+  zapDirPoint = getenv("ZAPDIR");
+  std::string zapDir;
+
+  if (zapDirPoint == NULL) {
+    std::cerr << "Environment variable ZAPDIR not defined." << std::endl;
+    std::exit(1);
+  }
+  else {
+    zapDir = std::string(zapDirPoint);
+  }
+
   std::string tdPath = "/src/materials/td_argon_mean_en.txt";
   std::string path = zapDir + tdPath;
   const char *charPath = path.c_str();
@@ -100,8 +112,8 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
       actual_mean_energy.push_back(value);
       myfile >> value;
       alpha.push_back(value);
-      myfile >> value;
-      d_alpha_d_actual_mean_energy.push_back(value);
+      // myfile >> value;
+      // d_alpha_d_actual_mean_energy.push_back(value);
     }
     myfile.close();
   }

@@ -1605,3 +1605,11 @@ So as expected the problem solves better when the residual and jacobian match. W
 I tried defining a matching Jacobian my doing second order differencing mean_energy vs alpha. I am using a linear interpolation for alpha in the residuals, and a linear interpolation of d_alpha_d_mean_en in the jacobians. However, Andy Wilkins suggested that in his experience linear interpolations in conjuction with implicit solves can lead to terrible convergence. I am in fact seeing terrible convergence. He gave me a reference for cubic splines. My only question then is what to do for the derivatives.
 
 What are the coefficients that are variable? a_k, b_k, c_k, K
+
+0,1,2 3,4,5 6,7,8 8,10,11
+12,13,14
+
+So when I run through the debugger, I get the error: Solving for an empty SplineInterpolation.
+
+This could be the problem that's causing MPI to abort immediately.  
+
