@@ -1611,5 +1611,44 @@ What are the coefficients that are variable? a_k, b_k, c_k, K
 
 So when I run through the debugger, I get the error: Solving for an empty SplineInterpolation.
 
-This could be the problem that's causing MPI to abort immediately.  
+This could be the problem that's causing MPI to abort immediately. Nope. It was because of getEnv.
 
+A get function/method is defined in the Parameters class in files included from libmesh. It's that inheritance.
+
+When I tried using set in DGInterface with _boundary_id, I got this warning:
+
+/home/lindsayad/moose/framework/src/dgkernels/DGInterface.C:26:42: warning: overflow in implicit constant conversion [-Woverflow]
+   params.set<BoundaryID>("_boundary_id") = 78910;
+
+  /**
+   * Inserts a new Parameter into the object but does not return
+   * a writable reference.  The value of the newly inserted
+   * parameter may not be valid.
+   */
+  template <typename T>
+  void insert (const std::string&);
+
+The Elem class (from libmesh) has a function level:
+
+  /**
+   * @returns the refinement level of the current element.  If the
+   * element's parent is \p NULL then by convention it is at
+   * level 0, otherwise it is simply at one level greater than
+   * its parent.
+   */
+  unsigned int level () const;
+
+And then elem inherits members of dof_object. dof_object has a member function id ():
+
+  /**
+   * \returns the \p id for this \p DofObject
+   */
+  dof_id_type id () const;
+
+Still just kind of working and navigating through the code here. 
+
+Should I think about everyone or just think about myself?
+
+I feel like my changes should just be limited to DGKernel parts of the framework, and even then the changes should be as minimal as possible.
+
+I think that my DGKernel should mimic an IntegratedBC as much as possible.
