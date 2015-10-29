@@ -32,6 +32,7 @@ protected:
   virtual void computeQpProperties();
 
   SplineInterpolation _alpha_interpolation;
+  SplineInterpolation _alphaEx_interpolation;
   /* LinearInterpolation _d_alpha_d_actual_mean_energy_interpolation; */
 
   bool _townsend;
@@ -42,6 +43,7 @@ protected:
   MaterialProperty<Real>  & _diffip;
   MaterialProperty<Real>  & _rate_coeff_ion;
   MaterialProperty<Real>  & _Eiz;
+  MaterialProperty<Real>  & _Eex;
   MaterialProperty<Real>  & _Ar;
   MaterialProperty<Real> &  _muel;
   MaterialProperty<Real> &  _diffel;
@@ -79,6 +81,8 @@ protected:
   MaterialProperty<Real> & _el_coeff_energy_c;
   MaterialProperty<Real> & _alpha_iz;
   MaterialProperty<Real> & _d_iz_d_actual_mean_en;
+  MaterialProperty<Real> & _alpha_ex;
+  MaterialProperty<Real> & _d_ex_d_actual_mean_en;
 
   VariableGradient & _grad_potential;
   VariableValue & _em;

@@ -4,6 +4,12 @@ https://groups.google.com/forum/#!topic/moose-users/011fudvdHng (MeshModifiers)
 https://groups.google.com/forum/#!topic/moose-users/u3qZrEXQvSg (Boundary ID in DGKernel)
 https://groups.google.com/forum/#!topic/moose-users/iALxx76WhnU (Multiple-block, multiple-variable interface test)
 
+More moose-user threads of interest:
+
+Trying to get slope limiting into DG: https://groups.google.com/forum/#!search/yaqi$20convection/moose-users/EYaTNUsSkss/VZzZ-wZEdoQJ
+Solving scalar pure advection problem, including DG and FV: https://groups.google.com/forum/#!searchin/moose-users/DG$20finite$20volume/moose-users/p6h7PqZNOrA/TZfG_cfUAwAJ
+
+
 Universal File Datasets Summaries:
 http://www.sdrl.uc.edu/sdrl/referenceinfo/universalfileformats/file-format-storehouse/universal-file-datasets-summary
 https://docs.plm.automation.siemens.com/tdoc/nx/10/nx_help/#uid:index_advanced:xid602249:id625716:id625821
@@ -1652,3 +1658,23 @@ Should I think about everyone or just think about myself?
 I feel like my changes should just be limited to DGKernel parts of the framework, and even then the changes should be as minimal as possible.
 
 I think that my DGKernel should mimic an IntegratedBC as much as possible.
+
+It's clear that I don't know what combining CG and DG in MOOSE does.
+
+Current task: figure out what's going on with EArray vs. alpha.
+
+Nothing wrong with EArray vs. alpha. Fit is still perfection incarnate.
+
+A pure CG problem with MONOMIAL basis functions will not converge; at least not when I was twiddling around with the 2d_diffusion_dg_test case. DGFunctionDiffusionDirichletBC contains the necessary DG residuals from diffusion. This BC must contain those contributions because DGDiffusion is only executed on internal sides; thus to be complete, those residual contributions must be added to the boundary condition. Then the epsilon and sigma terms are added. These almost exactly analagous to the internal epsilon and sigma terms, except u_neighbor is modified to be equal to the desired boundary value (e.g. the value of our boundary condition). Similarly, since there is no test function on the other side of the boundary, {test} = test, [test]=test, {normals*grad_test} = normals*grad_test.
+
+Also, in MOOSE, any time a DG kernel is used for transport, a corresponding CG kernel must be used because the CG kernel actually computes the necessary element integrals (e.g. it adds the residual contribution of the element volume integrals.) DG appears to converge with both monomials and lagrange functions.
+
+Penalty terms are essentially artificial dissipative terms. Reference: http://scicomp.stackexchange.com/questions/10928/in-what-regime-do-the-continuous-and-discontinuous-galerkin-method-become-unstab. 
+
+DG does not require that the solution be continuous at nodes, but rather introduces a jump penalty term that adds an amount to the residual proportional to the solution jump discontinuity. CG is a limit of DG for some particular case of epsilon and sigma (I can't recall what the settings are. I know it's just taking one of the parameters to infinity, sigma I believe).
+
+DG does not require solution continuity, however, the solution can be continuous. Thus Lagrange shape functions can be used. CG requires continuity, so Lagrange shape functions are desirable because they are continuous at the nodes.  
+
+The idea of using argon excitation to bring down the electron density is a bust. It does bring down the electron density...but way too much. This makes sense because for all energies in the domain, the excitation coefficient is larger than the ionization coefficient. Thus excitation processes will occur at a greater rate, bringing down the electron energy such that there is never appreciable ionization. This is not a problem in LFA where an excitation event wouldn't destroy the quantity that ionization depends on. 
+
+This morning's analysis validates Bolos IMHO. Now can proceed with introducing mean_energy dependent transport and rate parameters.

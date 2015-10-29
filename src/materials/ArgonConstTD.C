@@ -38,6 +38,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
     _diffip(declareProperty<Real>("diffip")),
     _rate_coeff_ion(declareProperty<Real>("rate_coeff_ion")),
     _Eiz(declareProperty<Real>("Eiz")),
+    _Eex(declareProperty<Real>("Eex")),
     _Ar(declareProperty<Real>("Ar")),
     _muel(declareProperty<Real>("muel")),
     _diffel(declareProperty<Real>("diffel")),
@@ -75,6 +76,8 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
   _el_coeff_energy_c(declareProperty<Real>("el_coeff_energy_c")),
   _alpha_iz(declareProperty<Real>("alpha_iz")),
   _d_iz_d_actual_mean_en(declareProperty<Real>("d_iz_d_actual_mean_en")),
+  _alpha_ex(declareProperty<Real>("alpha_ex")),
+  _d_ex_d_actual_mean_en(declareProperty<Real>("d_ex_d_actual_mean_en")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
   _em(isCoupled("em") ? coupledValue("em") : _zero),
@@ -85,6 +88,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
 {
   std::vector<Real> actual_mean_energy;
   std::vector<Real> alpha;
+  std::vector<Real> alphaEx;
   // std::vector<Real> d_alpha_d_actual_mean_energy;
   // std::cerr << "About to get the environment variable." << std::endl;
   char* zapDirPoint;
@@ -114,6 +118,8 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
       alpha.push_back(value);
       // myfile >> value;
       // d_alpha_d_actual_mean_energy.push_back(value);
+      myfile >> value;
+      alphaEx.push_back(value);
     }
     myfile.close();
   }
@@ -122,6 +128,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
 
   _alpha_interpolation.setData(actual_mean_energy, alpha);
   // _d_alpha_d_actual_mean_energy_interpolation.setData(actual_mean_energy, d_alpha_d_actual_mean_energy);
+  _alphaEx_interpolation.setData(actual_mean_energy, alphaEx);
 }
 
 void
@@ -154,6 +161,9 @@ ArgonConstTD::computeQpProperties()
   _alpha_iz[_qp] = _alpha_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
   _d_iz_d_actual_mean_en[_qp] = _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
   // _d_iz_d_actual_mean_en[_qp] = _d_alpha_d_actual_mean_energy_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+  _alpha_ex[_qp] = _alphaEx_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+  _d_ex_d_actual_mean_en[_qp] = _alphaEx_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
+
 
   _el_coeff_energy_a[_qp] = 1.60638169e-13;
   _el_coeff_energy_b[_qp] = 3.17917979e-1;
@@ -162,6 +172,7 @@ ArgonConstTD::computeQpProperties()
   _N_A[_qp] = 6.02e23;
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _Eiz[_qp] = 15.76;
+  _Eex[_qp] = 11.5;
 
   _muel[_qp] = 5.0/3.0*_muem[_qp];
   _diffel[_qp] = 5.0/3.0*_diffem[_qp];
