@@ -33,12 +33,18 @@ protected:
 
   SplineInterpolation _alpha_interpolation;
   SplineInterpolation _alphaEx_interpolation;
+  SplineInterpolation _alphaEl_interpolation;
+  SplineInterpolation _mu_interpolation;
+  SplineInterpolation _diff_interpolation;
   /* LinearInterpolation _d_alpha_d_actual_mean_energy_interpolation; */
 
-  bool _townsend;
+  /* bool _townsend; */
+  bool _interp_trans_coeffs;
 
   MaterialProperty<Real>  & _muem;
+  MaterialProperty<Real>  & _d_muem_d_actual_mean_en;
   MaterialProperty<Real>  & _diffem;
+  MaterialProperty<Real>  & _d_diffem_d_actual_mean_en;
   MaterialProperty<Real>  & _muip;
   MaterialProperty<Real>  & _diffip;
   MaterialProperty<Real>  & _rate_coeff_ion;
@@ -46,7 +52,9 @@ protected:
   MaterialProperty<Real>  & _Eex;
   MaterialProperty<Real>  & _Ar;
   MaterialProperty<Real> &  _muel;
+  MaterialProperty<Real> &  _d_muel_d_actual_mean_en;
   MaterialProperty<Real> &  _diffel;
+  MaterialProperty<Real> &  _d_diffel_d_actual_mean_en;
   MaterialProperty<Real> &  _rate_coeff_elastic;
   MaterialProperty<Real> &  _mem;
   MaterialProperty<Real> &  _mip;
@@ -83,6 +91,10 @@ protected:
   MaterialProperty<Real> & _d_iz_d_actual_mean_en;
   MaterialProperty<Real> & _alpha_ex;
   MaterialProperty<Real> & _d_ex_d_actual_mean_en;
+  MaterialProperty<Real> & _alpha_el;
+  MaterialProperty<Real> & _d_el_d_actual_mean_en;
+  MaterialProperty<Real> & _diffusivity;
+  MaterialProperty<Real> & _d_diffusivity_d_u;
 
   VariableGradient & _grad_potential;
   VariableValue & _em;

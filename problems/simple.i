@@ -1,7 +1,7 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 1
+  nx = 10
   xmin = 0
   xmax = 1
 []
@@ -11,13 +11,8 @@
 []
 
 [Executioner]
-  type = Transient
-  dt = 0.01
- end_time = 0.5
+  type = Steady
  solve_type = NEWTON
- scheme = 'crank-nicolson'
- petsc_options_iname = '-ksp_converged_reason -snes_converged_reason -snes_stol -snes_type'
- petsc_options_value = 'true true 0 test'
 []
 
 [Outputs]
@@ -29,12 +24,13 @@
 []
 
 [Kernels]
+  active = 'transport'
   [./time_deriv]
     type = TimeDerivative
     variable = u
   [../]
   [./transport]
-    type = Diffusion
+    type = CoupledDiffusion
     variable = u
   [../]
 []
@@ -50,6 +46,21 @@
     variable = u
     boundary = left
     value = 1
+  [../]
+  [./u_right]
+    type = DirichletBC
+    variable = u
+    boundary = right
+    value = 0
+  [../]
+[]
+
+[Materials]
+  [./dummy]
+    type = ArgonConstTD
+    block = 0
+    mean_en = u
+    interp_trans_coeffs = true
   [../]
 []
 

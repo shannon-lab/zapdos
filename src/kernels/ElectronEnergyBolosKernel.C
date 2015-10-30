@@ -7,11 +7,6 @@ InputParameters validParams<ElectronEnergyBolosKernel>()
 
   params.addRequiredCoupledVar("em", "The electron density");
   params.addRequiredCoupledVar("potential","The electric potential");
-  params.addRequiredParam<bool>("townsend","Whether to use the townsend formulation for the ionization term.");
-  params.addRequiredParam<bool>("use_interp_for_townsend","Whether to use interpolated data as opposed to a model functional fit for the townsend coeffient.");
-  params.addRequiredParam<bool>("const_elastic_coeff","Whether to use a constant elastic collision rate coefficient.");
-  // params.addRequiredParam<bool>("estim_jac_with_function","If using interpolation for townsend, whether to use inexact function to estimate Jacobian.");
-
   return params;
 }
 
@@ -47,51 +42,13 @@ ElectronEnergyBolosKernel::ElectronEnergyBolosKernel(const InputParameters & par
   _d_iz_d_actual_mean_en(getMaterialProperty<Real>("d_iz_d_actual_mean_en")),
   _alpha_ex(getMaterialProperty<Real>("alpha_ex")),
   _d_ex_d_actual_mean_en(getMaterialProperty<Real>("d_ex_d_actual_mean_en")),
-
-// Kernel members
-
-  // _alpha(0.0),
-  // _Pe(0.0),
-  // _vd_mag(0.0),
-  // _delta(0.0)
-  _townsend(getParam<bool>("townsend")),
-  _use_interp_for_townsend(getParam<bool>("use_interp_for_townsend")),
-  // _estim_jac_with_function(getParam<bool>("estim_jac_with_function")),
-  _const_elastic_coeff(getParam<bool>("const_elastic_coeff"))
-  // _actual_mean_en(0.0),
-  // _iz(0.0),
-  // _d_iz_d_actual_mean_en_member(0.0),
-  // _d_actual_mean_en_d_em(0.0),
-  // _d_actual_mean_en_d_mean_en(0.0),
-  // _d_iz_d_em(0.0),
-  // _d_iz_d_mean_en(0.0),
-  // _d_ex_d_em(0.0),
-  // _d_ex_d_mean_en(0.0),
-  // _electron_flux(0.0,0.0,0.0),
-  // _d_electron_flux_d_potential(0.0,0.0,0.0),
-  // _d_electron_flux_d_em(0.0,0.0,0.0),
-  // _electron_flux_mag(0.0),
-  // _d_electron_flux_mag_d_potential(0.0),
-  // _d_electron_flux_mag_d_em(0.0),
-  // _source_term(0.0),
-  // _ex_term(0.0),
-  // _d_source_term_d_em(0.0),
-  // _d_source_term_d_mean_en(0.0),
-  // _d_source_term_d_potential(0.0),
-  // _d_ex_term_d_em(0.0),
-  // _d_ex_term_d_mean_en(0.0),
-  // _d_ex_term_d_potential(0.0),
-  // _el(0.0),
-  // _d_el_d_actual_mean_en(0.0),
-  // _d_el_d_mean_en(0.0),
-  // _d_el_d_em(0.0),
-  // _d_elastic_term_d_mean_en(0.0),
-  // _d_elastic_term_d_em(0.0)
+  _d_el_d_actual_mean_en(getMaterialProperty<Real>("d_el_d_actual_mean_en")),
+  _d_muem_d_actual_mean_en(getMaterialProperty<Real>("d_muem_d_actual_mean_en")),
+  _d_diffem_d_actual_mean_en(getMaterialProperty<Real>("d_diffem_d_actual_mean_en")),
+  _d_muel_d_actual_mean_en(getMaterialProperty<Real>("d_muel_d_actual_mean_en")),
+  _d_diffel_d_actual_mean_en(getMaterialProperty<Real>("d_diffel_d_actual_mean_en")),
+  _alpha_el(getMaterialProperty<Real>("alpha_el"))
 {
-  if ( !_townsend && _use_interp_for_townsend ) {
-    std::cerr << "Not a consistent specification of the ionization problem." << std::endl;
-    std::exit(1);
-  }
 }
 
 ElectronEnergyBolosKernel::~ElectronEnergyBolosKernel()
@@ -100,113 +57,58 @@ ElectronEnergyBolosKernel::~ElectronEnergyBolosKernel()
 Real
 ElectronEnergyBolosKernel::computeQpResidual()
 {
-  // _vd_mag = std::abs(_muel[_qp]*_grad_potential[_qp].size());
-  // _Pe = _vd_mag*_current_elem->hmax()/_diffel[_qp];
-  // _alpha = std::min(1.0,_Pe/6.0);
-  // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
-  Real _actual_mean_en = std::exp(_u[_qp]-_em[_qp]);
+  Real _electron_flux_mag = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
+  Real _iz_term = _alpha_iz[_qp] * _electron_flux_mag * -_Eiz[_qp];
+  Real _ex_term = _alpha_ex[_qp] * _electron_flux_mag * -_Eex[_qp];
+  Real _Eel = 3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp]);
+  Real _el_term = _alpha_el[_qp] * _electron_flux_mag * -_Eel;
 
-  Real _iz;
-  if (_use_interp_for_townsend)
-    _iz = _alpha_iz[_qp];
-  else
-    _iz = _iz_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
-
-  Real _el;
-  if (_const_elastic_coeff)
-    _el = _rate_coeff_elastic[_qp];
-  else
-    _el = _el_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_el_coeff_energy_b[_qp])*std::exp(-_el_coeff_energy_c[_qp]/_actual_mean_en);
-
-  Real _electron_flux_mag;
-  Real _source_term;
-  Real _ex_term;
-  if ( _townsend ) {
-    _electron_flux_mag = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
-    _source_term = _iz * _electron_flux_mag;
-    _ex_term = _alpha_ex[_qp] * _electron_flux_mag;
-  }
-  else {
-    // _source_term = _iz * _Ar[_qp] * std::exp(_em[_qp]);
-    std::cerr << "Currently Zapdos is only accepting townsend formulations." << std::endl;
-    std::exit(1);
-  }
- 
-  return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muel[_qp]*-_grad_potential[_qp] // Advective motion
-  						 -_diffel[_qp]*_grad_u[_qp]) // Diffusive motion
-    +_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_potential[_qp] // Joule Heating
-  						-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]) // Joule Heating
-         -_test[_i][_qp]*_source_term*-_Eiz[_qp] // Ionization term
-         -_test[_i][_qp]*_ex_term*-_Eex[_qp]
-         -_test[_i][_qp]*-_el*_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]) // Energy loss from elastic collisions
-    -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp]); // Source stabilization
-  	 // -_grad_test[_i][_qp]*(-_delta*std::exp(_u[_qp])*_grad_u[_qp]); // Diffusion stabilization
+  return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muel[_qp]*-_grad_potential[_qp]
+  						 -_diffel[_qp]*_grad_u[_qp])
+    +_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_potential[_qp]
+					   -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp])
+    -_test[_i][_qp]*_iz_term
+    // -_test[_i][_qp]*_ex_term
+    -_test[_i][_qp]*_el_term
+    -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp]);
+  // -_grad_test[_i][_qp]*(-_delta*std::exp(_u[_qp])*_grad_u[_qp]);
 }
 
 Real
 ElectronEnergyBolosKernel::computeQpJacobian()
 {
-  // _vd_mag = std::abs(_muel[_qp]*_grad_potential[_qp].size());
-  // _Pe = _vd_mag*_current_elem->hmax()/_diffel[_qp];
-  // _alpha = std::min(1.0,_Pe/6.0);
-  // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
   Real _actual_mean_en = std::exp(_u[_qp]-_em[_qp]);
-
-  Real _iz;
-  Real _d_iz_d_actual_mean_en_member;
-  if (_use_interp_for_townsend) {
-    _iz = _alpha_iz[_qp];
-    _d_iz_d_actual_mean_en_member = _d_iz_d_actual_mean_en[_qp];
-  }
-  else {
-    _iz = _iz_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
-    _d_iz_d_actual_mean_en_member = std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp]-2.0)*_iz_coeff_energy_a[_qp]*(_actual_mean_en*_iz_coeff_energy_b[_qp] + _iz_coeff_energy_c[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
-  }
-
   Real _d_actual_mean_en_d_mean_en = std::exp(_u[_qp]-_em[_qp])*_phi[_j][_qp];
-  Real _d_iz_d_mean_en = _d_iz_d_actual_mean_en_member * _d_actual_mean_en_d_mean_en;
+  Real _d_iz_d_mean_en = _d_iz_d_actual_mean_en[_qp] * _d_actual_mean_en_d_mean_en;
   Real _d_ex_d_mean_en = _d_ex_d_actual_mean_en[_qp] * _d_actual_mean_en_d_mean_en;
+  Real _d_el_d_mean_en = _d_el_d_actual_mean_en[_qp] * _d_actual_mean_en_d_mean_en;
+  Real _d_muem_d_mean_en = _d_muem_d_actual_mean_en[_qp] * _d_actual_mean_en_d_mean_en;
+  Real _d_diffem_d_mean_en = _d_diffem_d_actual_mean_en[_qp] * _d_actual_mean_en_d_mean_en;
+  Real _d_muel_d_mean_en = _d_muel_d_actual_mean_en[_qp] * _d_actual_mean_en_d_mean_en;
+  Real _d_diffel_d_mean_en = _d_diffel_d_actual_mean_en[_qp] * _d_actual_mean_en_d_mean_en;
 
-  Real _el;
-  Real _d_el_d_actual_mean_en;
-  Real _d_el_d_mean_en;
-  Real _d_elastic_term_d_mean_en;
-  if (_const_elastic_coeff) {
-    _el = _rate_coeff_elastic[_qp];
-    _d_el_d_mean_en = 0.0;
-    _d_elastic_term_d_mean_en = -_rate_coeff_elastic[_qp]*_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp])*_phi[_j][_qp];
-  }
-  else {
-    _el = _el_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_el_coeff_energy_b[_qp])*std::exp(-_el_coeff_energy_c[_qp]/_actual_mean_en);
-    _d_el_d_actual_mean_en = std::pow(_actual_mean_en,_el_coeff_energy_b[_qp]-2.0)*_el_coeff_energy_a[_qp]*(_actual_mean_en*_el_coeff_energy_b[_qp] + _el_coeff_energy_c[_qp])*std::exp(-_el_coeff_energy_c[_qp]/_actual_mean_en);
-    _d_el_d_mean_en = _d_el_d_actual_mean_en * _d_actual_mean_en_d_mean_en;
-    _d_elastic_term_d_mean_en = -_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*(_el*std::exp(_u[_qp])*_phi[_j][_qp] + std::exp(_u[_qp])*_d_el_d_mean_en);
-  }
+  RealVectorValue _electron_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
+  RealVectorValue _d_electron_flux_d_mean_en = -_d_muem_d_mean_en*-_grad_potential[_qp]*std::exp(_em[_qp])-_d_diffem_d_mean_en*std::exp(_em[_qp])*_grad_em[_qp];
+  Real _electron_flux_mag = _electron_flux.size();
+  Real _d_electron_flux_mag_d_mean_en = _electron_flux*_d_electron_flux_d_mean_en/(_electron_flux_mag+std::numeric_limits<double>::epsilon());
 
-  RealVectorValue _electron_flux;
-  Real _electron_flux_mag;
-  Real _d_source_term_d_mean_en;
-  Real _d_ex_term_d_mean_en;
-  if ( _townsend ) {
-    _electron_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
-    _electron_flux_mag = _electron_flux.size();
+  Real _d_Joule_d_mean_en = -_grad_potential[_qp] * _d_electron_flux_d_mean_en;
 
-    _d_source_term_d_mean_en = _electron_flux_mag * _d_iz_d_mean_en;
-    _d_ex_term_d_mean_en = _electron_flux_mag * _d_ex_d_mean_en;
-  }
+  Real _elastic_loss = -3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp]);
+  Real _d_elastic_loss_d_mean_en = -3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp])*_phi[_j][_qp];
 
-  else {
-    std::cerr << "Currently Zapdos is only accepting townsend formulations." << std::endl;
-    std::exit(1);
-    // _d_source_term_d_mean_en = std::exp(_em[_qp]) * _Ar[_qp] * _d_iz_d_mean_en;
-  }
+  Real _d_iz_term_d_mean_en = -_Eiz[_qp]*(_electron_flux_mag * _d_iz_d_mean_en + _alpha_iz[_qp] * _d_electron_flux_mag_d_mean_en);
+  Real _d_ex_term_d_mean_en = -_Eex[_qp]*(_electron_flux_mag * _d_ex_d_mean_en + _alpha_ex[_qp] * _d_electron_flux_mag_d_mean_en);
+  Real _d_el_term_d_mean_en = (_electron_flux_mag * _d_el_d_mean_en + _alpha_el[_qp] * _d_electron_flux_mag_d_mean_en)*_elastic_loss + _electron_flux_mag*_alpha_el[_qp]*_d_elastic_loss_d_mean_en;
+  RealVectorValue _d_en_adflux_d_mean_en = _grad_potential[_qp]*(_d_muel_d_mean_en*std::exp(_u[_qp]) + _muel[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]);
+  RealVectorValue _d_en_difflux_d_mean_en = -(_d_diffel_d_mean_en*std::exp(_u[_qp])*_grad_u[_qp] + _diffel[_qp]*(std::exp(_u[_qp])*_grad_phi[_j][_qp] + _grad_u[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]));
 
-  return  -_grad_test[_i][_qp]*(-_muel[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp] // Advective motion
-  			       -_diffel[_qp]*_grad_phi[_j][_qp]*std::exp(_u[_qp])-_diffel[_qp]*_grad_u[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]) // Diffusive motion
-    -_test[_i][_qp] * _d_source_term_d_mean_en * -_Eiz[_qp]
-    -_test[_i][_qp] * _d_ex_term_d_mean_en * -_Eex[_qp]
-    -_test[_i][_qp] * _d_elastic_term_d_mean_en
-    -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp])*-1.0*_phi[_j][_qp]; // Source stabilization
+  return  -_grad_test[_i][_qp]*(_d_en_adflux_d_mean_en + _d_en_difflux_d_mean_en)
+    +_test[_i][_qp] * _d_Joule_d_mean_en
+    -_test[_i][_qp] * _d_iz_term_d_mean_en
+    // -_test[_i][_qp] * _d_ex_term_d_mean_en
+    -_test[_i][_qp] * _d_el_term_d_mean_en
+    -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp])*-1.0*_phi[_j][_qp]; 
   	 // -_grad_test[_i][_qp]*(-_delta*(std::exp(_u[_qp])*_grad_phi[_j][_qp]+std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp])); // Diffusion stabilization
 }
 
@@ -214,84 +116,58 @@ Real
 ElectronEnergyBolosKernel::computeQpOffDiagJacobian(unsigned int jvar)
 {
   Real _actual_mean_en = std::exp(_u[_qp]-_em[_qp]);
-
-  Real _iz;
-  Real _d_iz_d_actual_mean_en_member;
-  if (_use_interp_for_townsend) {
-    _iz = _alpha_iz[_qp];
-    _d_iz_d_actual_mean_en_member = _d_iz_d_actual_mean_en[_qp];
-  }
-  else {
-    _iz = _iz_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
-    _d_iz_d_actual_mean_en_member = std::pow(_actual_mean_en,_iz_coeff_energy_b[_qp]-2.0)*_iz_coeff_energy_a[_qp]*(_actual_mean_en*_iz_coeff_energy_b[_qp] + _iz_coeff_energy_c[_qp])*std::exp(-_iz_coeff_energy_c[_qp]/_actual_mean_en);
-  }
-
   Real _d_actual_mean_en_d_em = -std::exp(_u[_qp]-_em[_qp])*_phi[_j][_qp];
-  Real _d_iz_d_em = _d_iz_d_actual_mean_en_member * _d_actual_mean_en_d_em;
+  Real _d_iz_d_em = _d_iz_d_actual_mean_en[_qp] * _d_actual_mean_en_d_em;
   Real _d_ex_d_em = _d_ex_d_actual_mean_en[_qp] * _d_actual_mean_en_d_em;
+  Real _d_el_d_em = _d_el_d_actual_mean_en[_qp] * _d_actual_mean_en_d_em;
+  Real _d_muem_d_em = _d_muem_d_actual_mean_en[_qp] * _d_actual_mean_en_d_em;
+  Real _d_diffem_d_em = _d_diffem_d_actual_mean_en[_qp] * _d_actual_mean_en_d_em;
+  Real _d_muel_d_em = _d_muel_d_actual_mean_en[_qp] * _d_actual_mean_en_d_em;
+  Real _d_diffel_d_em = _d_diffel_d_actual_mean_en[_qp] * _d_actual_mean_en_d_em;
 
-  Real _el;
-  Real _d_el_d_actual_mean_en;
-  Real _d_el_d_em;
-  Real _d_elastic_term_d_em;
-  if (_const_elastic_coeff) {
-    _el = _rate_coeff_elastic[_qp];
-    _d_el_d_em = 0.0;
-    _d_elastic_term_d_em = 0.0;
-  }
-  else {
-    _el = _el_coeff_energy_a[_qp]*std::pow(_actual_mean_en,_el_coeff_energy_b[_qp])*std::exp(-_el_coeff_energy_c[_qp]/_actual_mean_en);
-    _d_el_d_actual_mean_en = std::pow(_actual_mean_en,_el_coeff_energy_b[_qp]-2.0)*_el_coeff_energy_a[_qp]*(_actual_mean_en*_el_coeff_energy_b[_qp] + _el_coeff_energy_c[_qp])*std::exp(-_el_coeff_energy_c[_qp]/_actual_mean_en);
-    _d_el_d_em = _d_el_d_actual_mean_en * _d_actual_mean_en_d_em;
-    _d_elastic_term_d_em = -_Ar[_qp]*3.0*_mem[_qp]/_mip[_qp]*2.0/3*(std::exp(_u[_qp])*_d_el_d_em);
-  }
+  RealVectorValue _d_en_adflux_d_em = -_d_muel_d_em*-_grad_potential[_qp]*std::exp(_u[_qp]);
+  RealVectorValue _d_en_adflux_d_potential = -_muel[_qp]*-_grad_phi[_j][_qp]*std::exp(_u[_qp]);
 
-  RealVectorValue _electron_flux;
-  RealVectorValue _d_electron_flux_d_potential;
-  RealVectorValue _d_electron_flux_d_em;
-  Real _electron_flux_mag;
-  Real _d_electron_flux_mag_d_potential;
-  Real _d_electron_flux_mag_d_em;
-  Real _d_source_term_d_em;
-  Real _d_source_term_d_potential;
-  Real _d_ex_term_d_em;
-  Real _d_ex_term_d_potential;
-  if ( _townsend ) {
-    _electron_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
-    _d_electron_flux_d_potential = -_muem[_qp]*-_grad_phi[_j][_qp]*std::exp(_em[_qp]);
-    _d_electron_flux_d_em = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]-_diffem[_qp]*(std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp]+std::exp(_em[_qp])*_grad_phi[_j][_qp]);
-    _electron_flux_mag = _electron_flux.size();
-    _d_electron_flux_mag_d_potential = _electron_flux*_d_electron_flux_d_potential/(_electron_flux_mag+std::numeric_limits<double>::epsilon());
-    _d_electron_flux_mag_d_em = _electron_flux*_d_electron_flux_d_em/(_electron_flux_mag+std::numeric_limits<double>::epsilon());
+  RealVectorValue _d_en_difflux_d_em = -_d_diffel_d_em*std::exp(_u[_qp])*_grad_u[_qp];
+  RealVectorValue _d_en_difflux_d_potential = 0.0;
 
-    _d_source_term_d_em = _iz * _d_electron_flux_mag_d_em + _electron_flux_mag * _d_iz_d_em;
-    _d_source_term_d_potential = _iz * _d_electron_flux_mag_d_potential;
-    _d_ex_term_d_em = _alpha_ex[_qp] * _d_electron_flux_mag_d_em + _electron_flux_mag * _d_ex_d_em;
-    _d_ex_term_d_potential = _alpha_ex[_qp] * _d_electron_flux_mag_d_potential;
-  }
+  RealVectorValue _electron_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
+  RealVectorValue _d_electron_flux_d_em = -_d_muem_d_em*-_grad_potential[_qp]*std::exp(_em[_qp])-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]-_d_diffem_d_em*std::exp(_em[_qp])*_grad_em[_qp]-_diffem[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp]-_diffem[_qp]*std::exp(_em[_qp])*_grad_phi[_j][_qp];
+  RealVectorValue _d_electron_flux_d_potential = -_muem[_qp]*-_grad_phi[_j][_qp]*std::exp(_em[_qp]);
+  Real _electron_flux_mag = _electron_flux.size();
+  Real _d_electron_flux_mag_d_em = _electron_flux*_d_electron_flux_d_em/(_electron_flux_mag+std::numeric_limits<double>::epsilon());
+  Real _d_electron_flux_mag_d_potential = _electron_flux*_d_electron_flux_d_potential/(_electron_flux_mag+std::numeric_limits<double>::epsilon());
 
-  else {
-    std::cerr << "Currently Zapdos is only accepting townsend formulations." << std::endl;
-    std::exit(1);
-    // _d_source_term_d_em = std::exp(_em[_qp]) * _Ar[_qp] * _d_iz_d_em + _iz * _Ar[_qp] * std::exp(_em[_qp]) * _phi[_j][_qp];
-    // _d_source_term_d_potential = 0.0;
-  }
+  Real _d_Joule_d_potential = -_grad_phi[_j][_qp]*_electron_flux - _grad_potential[_qp]*_d_electron_flux_d_potential;
+  Real _d_Joule_d_em = -_grad_potential[_qp]*_d_electron_flux_d_em;
+
+  Real _d_iz_term_d_em = -_Eiz[_qp]*(_electron_flux_mag * _d_iz_d_em + _alpha_iz[_qp] * _d_electron_flux_mag_d_em);
+  Real _d_iz_term_d_potential = -_Eiz[_qp]*(_alpha_iz[_qp] * _d_electron_flux_mag_d_potential);
+
+  Real _d_ex_term_d_em = -_Eex[_qp]*(_electron_flux_mag * _d_ex_d_em + _alpha_ex[_qp] * _d_electron_flux_mag_d_em);
+  Real _d_ex_term_d_potential = -_Eex[_qp]*(_alpha_ex[_qp] * _d_electron_flux_mag_d_potential);
+
+  Real _elastic_loss = -3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp]);
+  Real _d_elastic_loss_d_em = -3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp])*-_phi[_j][_qp];
+  Real _d_elastic_loss_d_potential = 0.0;
+
+  Real _d_el_term_d_em = (_electron_flux_mag * _d_el_d_em + _alpha_el[_qp] * _d_electron_flux_mag_d_em)*_elastic_loss + _electron_flux_mag*_alpha_el[_qp]*_d_elastic_loss_d_em;
+  Real _d_el_term_d_potential = (_alpha_el[_qp] * _d_electron_flux_mag_d_potential)*_elastic_loss + _electron_flux_mag*_alpha_el[_qp]*_d_elastic_loss_d_potential;
 
   if (jvar == _potential_id) {
-    return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muel[_qp]*-_grad_phi[_j][_qp]) // Advective motion
-           +_test[_i][_qp]*(-_grad_phi[_j][_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_potential[_qp] // Joule Heating
-    						 -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]) // Joule Heating
-    			    -_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_phi[_j][_qp])) // Joule Heating
-      -_test[_i][_qp] * _d_source_term_d_potential * -_Eiz[_qp] // Ionization term
-      -_test[_i][_qp] * _d_ex_term_d_potential * -_Eex[_qp]; // Excitation term
+    return -_grad_test[_i][_qp]*(_d_en_adflux_d_potential + _d_en_difflux_d_potential)
+      +_test[_i][_qp]*_d_Joule_d_potential
+      -_test[_i][_qp] * _d_iz_term_d_potential
+      // -_test[_i][_qp] * _d_ex_term_d_potential
+      -_test[_i][_qp] * _d_el_term_d_potential;
   }
 
   else if (jvar == _em_id) {
-    return +_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]*-_grad_potential[_qp] // Joule Heating
-    						  -_diffem[_qp]*(std::exp(_em[_qp])*_grad_phi[_j][_qp]+std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp])) // Joule Heating
-      -_test[_i][_qp] * _d_source_term_d_em * -_Eiz[_qp] // Ionization term
-      -_test[_i][_qp] * _d_ex_term_d_em * -_Eex[_qp] // Excitation term
-      -_test[_i][_qp] * _d_elastic_term_d_em; // Elastic term
+    return -_grad_test[_i][_qp]*(_d_en_adflux_d_em + _d_en_difflux_d_em)
+      +_test[_i][_qp]*_d_Joule_d_em
+      -_test[_i][_qp] * _d_iz_term_d_em
+      // -_test[_i][_qp] * _d_ex_term_d_em
+      -_test[_i][_qp] * _d_el_term_d_em;
   }
 
   else {

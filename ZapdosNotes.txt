@@ -1678,3 +1678,49 @@ DG does not require solution continuity, however, the solution can be continuous
 The idea of using argon excitation to bring down the electron density is a bust. It does bring down the electron density...but way too much. This makes sense because for all energies in the domain, the excitation coefficient is larger than the ionization coefficient. Thus excitation processes will occur at a greater rate, bringing down the electron energy such that there is never appreciable ionization. This is not a problem in LFA where an excitation event wouldn't destroy the quantity that ionization depends on. 
 
 This morning's analysis validates Bolos IMHO. Now can proceed with introducing mean_energy dependent transport and rate parameters.
+
+Hagelaar's paper is truly an excellent paper. I lot of excellent mathematical physics content. In our Boltzmann solver, the electron energy distribution is a function of E/N which is a function of E. E varies over our domain, thus our EEDF varies over the domain. D(EEDF(E(z))) -> thus in equation 54 of Hagelaar (the drift-diffusion coefficient), the diffusion coefficient shouldn't be extracted from the partial derivative. But to make my technical job easier, I might do just that. By doing this I'm essentially straying from the true physics. My residuals represent my physics. 
+
+In my GeneralUserObject, when I try and compile it, I get these errors: 
+
+/home/lindsayad/projects/zapdos/src/userobjects/ResidAndJacobTerms.C:27:22: error: 'coupledValue' was not declared in this scope
+   _u(coupledValue("u")),
+                      ^
+/home/lindsayad/projects/zapdos/src/userobjects/ResidAndJacobTerms.C:28:30: error: 'coupledGradient' was not declared in this scope
+   _grad_u(coupledGradient("u"))
+
+I do not apparently have access to the functions coupledValue and coupledGraident. However, ElementIntegralVariableUserObject, obviously has access to it. How and why does it have access?
+
+Where is the coupledValue function defined? It's defined in Coupleable.C. Thus I think that ElementIntegralVariableUserObject must somehow be a child of Coupleable. Looking at the inheritance diagram, this is exactly what we see:
+
+Coupleable <- ElementUserObject <- ElementIntegralUserObject <- ElementIntegralVariableUserObject.
+
+BlockAverageValue inherits from ElementIntegralVariablePostprocessor. ElementIntegralVariablePostprocessor -> ElementIntegralPostprocessor -> ElementPostprocessor -> ElementUserObject & Postprocessor
+
+computeIntegral is defined in ElementIntegralPostprocessor:
+
+  Real sum = 0;
+   60 
+   61   for (_qp=0; _qp<_qrule->n_points(); _qp++)
+   62     sum += _JxW[_qp]*_coord[_qp]*computeQpIntegral();
+   63   return sum;
+
+computeQpIntegral() is defined in ElementIntegralVariablePostprocessor:
+
+38  return _u[_qp];
+
+Combining, computeIntegral executes: 
+
+  Real sum = 0;
+    
+      for (_qp=0; _qp<_qrule->n_points(); _qp++)
+        sum += _JxW[_qp]*_coord[_qp]*_u[_qp];
+      return sum;
+
+Children can override parent functions. 
+
+gatherSum() is a function defined in UserObject.C and looks like this:
+
+  _communicator.sum(value);
+
+In the header file for libmesh::ParallelObject, there are three different options for constructing an object of type ParallelObject because there are three different constructors. That's all I'm going to write down for now. Have to walk a fine line between learning important c++ knowledge and not falling down a rabbit hole away from what I need to be focusing on. 

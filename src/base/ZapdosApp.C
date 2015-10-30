@@ -17,6 +17,7 @@
 #include "AdvectionDiffusionKernel.h"
 #include "ExampleTimeDerivative.h"
 #include "CoeffDiffusion.h"
+#include "CoupledDiffusion.h"
 #include "FirstOrderReaction.h"
 #include "SecondOrderReaction.h"
 #include "SelfBinaryReaction.h"
@@ -103,6 +104,7 @@
 // User Objects
 #include "BlockAverageValue.h"
 #include "ProvideMobility.h"
+#include "ResidAndJacobTerms.h"
 
 // Boundary Conditions
 #include "MultipliedValueBC.h"
@@ -194,6 +196,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(IonKernelIntTD);
   registerKernel(AdvectionDiffusionKernel);
   registerKernel(CoeffDiffusion);
+  registerKernel(CoupledDiffusion);
   registerKernel(FirstOrderReaction);
   registerKernel(SecondOrderReaction);
   registerKernel(SelfBinaryReaction);
@@ -272,6 +275,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
+  registerUserObject(ResidAndJacobTerms);
   registerBoundaryCondition(DGFluxBC);
   registerBoundaryCondition(MultipliedValueBC);
   registerBoundaryCondition(NeumannCircuitVoltage);

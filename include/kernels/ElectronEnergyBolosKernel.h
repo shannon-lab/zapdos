@@ -51,45 +51,12 @@ class ElectronEnergyBolosKernel : public Kernel
   const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
   const MaterialProperty<Real> & _alpha_ex;
   const MaterialProperty<Real> & _d_ex_d_actual_mean_en;
-
-  // kernel members
-
-  /* Real _alpha; */
-  /* Real _Pe; */
-  /* Real _vd_mag; */
-  /* Real _delta; */
-  bool _townsend;
-  bool _use_interp_for_townsend;
-  /* bool _estim_jac_with_function; */
-  bool _const_elastic_coeff;
-  /* Real  _actual_mean_en; */
-  /* Real  _iz; */
-  /* Real  _d_iz_d_actual_mean_en_member; */
-  /* Real  _d_actual_mean_en_d_em; */
-  /* Real  _d_actual_mean_en_d_mean_en; */
-  /* Real  _d_iz_d_em; */
-  /* Real  _d_iz_d_mean_en; */
-  /* Real  _d_ex_d_em; */
-  /* Real  _d_ex_d_mean_en; */
-  /* RealVectorValue  _electron_flux; */
-  /* RealVectorValue  _d_electron_flux_d_potential; */
-  /* RealVectorValue  _d_electron_flux_d_em; */
-  /* Real  _electron_flux_mag; */
-  /* Real  _d_electron_flux_mag_d_potential; */
-  /* Real  _d_electron_flux_mag_d_em; */
-  /* Real  _source_term; */
-  /* Real  _d_source_term_d_em; */
-  /* Real  _d_source_term_d_mean_en; */
-  /* Real  _d_source_term_d_potential; */
-  /* Real  _d_ex_term_d_em; */
-  /* Real  _d_ex_term_d_mean_en; */
-  /* Real  _d_ex_term_d_potential; */
-  /* Real  _el; */
-  /* Real  _d_el_d_actual_mean_en; */
-  /* Real  _d_el_d_mean_en; */
-  /* Real  _d_el_d_em; */
-  /* Real  _d_elastic_term_d_mean_en; */
-  /* Real  _d_elastic_term_d_em; */
+  const MaterialProperty<Real> & _d_el_d_actual_mean_en;
+  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
+  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
+  const MaterialProperty<Real> & _d_muel_d_actual_mean_en;
+  const MaterialProperty<Real> & _d_diffel_d_actual_mean_en;
+  const MaterialProperty<Real> & _alpha_el;
 };
 
 #endif /* ELECTRONENERGYBOLOSKERNEL_H */
