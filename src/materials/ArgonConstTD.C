@@ -22,7 +22,7 @@ InputParameters validParams<ArgonConstTD>()
   // params.addRequiredParam<bool>("townsend","Whether to use the townsend formulation for the rate terms.");
   params.addRequiredParam<bool>("interp_trans_coeffs", "Whether to interpolate transport coefficients as a function of the mean energy. If false, coeffs are constant.");
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
-  params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
+  params.addRequiredCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addRequiredCoupledVar("mean_en", "The electron mean energy in log form.");
   params.addCoupledVar("ip", "The ion density.");
   return params;
@@ -86,13 +86,13 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
   _d_ex_d_actual_mean_en(declareProperty<Real>("d_ex_d_actual_mean_en")),
   _alpha_el(declareProperty<Real>("alpha_el")),
   _d_el_d_actual_mean_en(declareProperty<Real>("d_el_d_actual_mean_en")),
-  _diffusivity(declareProperty<Real>("diffusivity")),
-  _d_diffusivity_d_u(declareProperty<Real>("d_diffusivity_d_u")),
+  // _diffusivity(declareProperty<Real>("diffusivity")),
+  // _d_diffusivity_d_u(declareProperty<Real>("d_diffusivity_d_u")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
-  _em(isCoupled("em") ? coupledValue("em") : _zero),
+  _em(coupledValue("em")),
   _ip(isCoupled("ip") ? coupledValue("ip") : _zero),
-  _grad_em(isCoupled("em") ? coupledGradient("em") : _grad_zero),
+  _grad_em(coupledGradient("em")),
   _grad_ip(isCoupled("ip") ? coupledGradient("ip") : _grad_zero),
   _mean_en(coupledValue("mean_en"))
 {
@@ -157,8 +157,8 @@ void
 ArgonConstTD::computeQpProperties()
 {
   // This is just a dummy material property for some simple functionality testing
-  _diffusivity[_qp] = _mean_en[_qp] + 1.;
-  _d_diffusivity_d_u[_qp] = 1.;
+  // _diffusivity[_qp] = _mean_en[_qp] + 1.;
+  // _d_diffusivity_d_u[_qp] = 1.;
 
   // With the exception of perhaps temperature/energy (perhaps in eV), all properties are in standard SI units
 
@@ -171,7 +171,9 @@ ArgonConstTD::computeQpProperties()
   }
   else {
     _muem[_qp] = 0.0352103411399;
+    _d_muem_d_actual_mean_en[_qp] = 0.0;
     _diffem[_qp] = 0.297951680159;
+    _d_diffem_d_actual_mean_en[_qp] = 0.0;
   }
 
   // From Richards and Sawin, muip*pressure = 1444 cm^2*Torr/(V*s) and diffip*pressure = 40 cm^2*Torr/s. Use pressure = 760 torr.

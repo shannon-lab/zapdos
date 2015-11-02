@@ -44,11 +44,12 @@ protected:
   const VariableGradient & _grad_u;
   const MaterialProperty<Real> & _diffusivity;
   const MaterialProperty<Real> & _d_diffusivity_d_u;
-  Real _DiffusionResid;
-  Real _DiffusionJac;
+  RealVectorValue _DiffusionResid;
+  RealVectorValue _DiffusionJac;
   FEType _fe_type;
   const VariablePhiGradient & _grad_phi;
   const VariablePhiValue & _phi;
+  unsigned int _qp;
 };
 
 #endif

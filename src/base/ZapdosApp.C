@@ -104,7 +104,6 @@
 // User Objects
 #include "BlockAverageValue.h"
 #include "ProvideMobility.h"
-#include "ResidAndJacobTerms.h"
 
 // Boundary Conditions
 #include "MultipliedValueBC.h"
@@ -275,7 +274,6 @@ ZapdosApp::registerObjects(Factory & factory)
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
-  registerUserObject(ResidAndJacobTerms);
   registerBoundaryCondition(DGFluxBC);
   registerBoundaryCondition(MultipliedValueBC);
   registerBoundaryCondition(NeumannCircuitVoltage);

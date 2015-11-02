@@ -1724,3 +1724,14 @@ gatherSum() is a function defined in UserObject.C and looks like this:
   _communicator.sum(value);
 
 In the header file for libmesh::ParallelObject, there are three different options for constructing an object of type ParallelObject because there are three different constructors. That's all I'm going to write down for now. Have to walk a fine line between learning important c++ knowledge and not falling down a rabbit hole away from what I need to be focusing on. 
+
+I want to be able to access _phi and _grad_phi. I need _assembly and _fe_type (this comes from looking at NodalNormalsPreprocessor).
+
+_assembly is in UserObject -> Covered
+_fe_type: first defined in Nodal... so I have to figure out how Nodal... got it
+
+  /// Transformed Jacobian weights
+  const MooseArray<Real> & _JxW;
+  const MooseArray<Real> & _coord;
+
+Active time for Zapdos with reduced ion diffusivity, variable electron energy coeff, and variable ionization coeff = 1911.58 seconds = 32 minutes. 

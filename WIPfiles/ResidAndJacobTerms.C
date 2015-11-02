@@ -30,19 +30,20 @@ ResidAndJacobTerms::ResidAndJacobTerms(const InputParameters & parameters) :
   _grad_u(coupledGradient("u")),
   _diffusivity(getMaterialProperty<Real>("diffusivity")),
   _d_diffusivity_d_u(getMaterialProperty<Real>("d_diffusivity_d_u")),
-  _DiffusionResid(0),
-  _DiffusionJac(0),
+  _DiffusionResid(0,0,0),
+  _DiffusionJac(0,0,0),
   _fe_type(getParam<Order>("fe_order"), getParam<FEFamily>("fe_family")),
   _grad_phi(_assembly.feGradPhi(_fe_type)),
-  _phi(_assembly.fePhi(_fe_type))
+  _phi(_assembly.fePhi(_fe_type)),
+  _qp(0)
 {
 }
 
-// Real
-// ResidAndJacobTerms::electrode_area() const
-// {
-//   return _electrode_area;
-// }
+RealVectorValue
+ResidAndJacobTerms::getTerm(std::string term_name, const unsigned int j, const unsigned int qp)
+{
+  return _electrode_area;
+}
 
 void
 ResidAndJacobTerms::initialize()
@@ -52,8 +53,10 @@ ResidAndJacobTerms::initialize()
 void
 ResidAndJacobTerms::execute()
 {
-  _DiffusionResid = -_diffusivity[_qp]*_grad_u[_qp];
-  _DiffusionJac = -_d_diffusivity_d_u[_qp] * _grad_u[_qp] -_diffusivity[_qp]*_grad_phi[_qp];
+  for (_qp=0; _qp<_qrule->n_points(); _qp++) {
+    _DiffusionResid = -_diffusivity[_qp]*_grad_u[_qp];
+    // _DiffusionJac = -_d_diffusivity_d_u[_qp] * _grad_u[_qp] -_diffusivity[_qp]*_grad_phi[_qp];
+  }
 }
 
 void

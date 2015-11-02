@@ -43,6 +43,8 @@ class IonBolosKernelEnergyForm : public Kernel
   const MaterialProperty<Real> &  _N_A;
   const MaterialProperty<Real> &  _alpha_iz;
   const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
+  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
+  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
 
   // Kernel members
 

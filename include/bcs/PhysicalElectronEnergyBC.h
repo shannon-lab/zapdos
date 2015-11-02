@@ -25,6 +25,7 @@ protected:
   /* const Real _se_coeff; */
 
    const MaterialProperty<Real> & _muel;
+   const MaterialProperty<Real> & _d_muel_d_actual_mean_en;
    const MaterialProperty<Real> & _mem;
   Real _a;
   Real _b;
@@ -35,7 +36,8 @@ protected:
   /* VariableGradient & _grad_Arp; */
   VariableGradient & _grad_potential;  
   unsigned int _potential_id;
-  /* VariableValue & _em; */
+  VariableValue & _em;
+  unsigned int _em_id;
 };
 
 #endif //PHYSICALELECTRONENERGYBC_H
