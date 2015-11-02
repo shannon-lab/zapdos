@@ -1735,3 +1735,9 @@ _fe_type: first defined in Nodal... so I have to figure out how Nodal... got it
   const MooseArray<Real> & _coord;
 
 Active time for Zapdos with reduced ion diffusivity, variable electron energy coeff, and variable ionization coeff = 1911.58 seconds = 32 minutes. 
+
+I need to figure out why I'm getting a ramped density in the middle of the domain for my electron energy formulation. It makes no sense to me. From PIC we know that the density profile in the center should be flat.
+
+Just one small typo in a Jacobian statement (using _u insteand of _em in the Ion kernel), can mess things up. And that mess up may not appear in the simple -snes_type=test configuration.
+
+After correcting the Jacobian, the problem solved in a standard amount of time: 439 time steps, 24MB output file.

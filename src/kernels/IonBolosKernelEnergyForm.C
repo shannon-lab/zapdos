@@ -104,7 +104,7 @@ IonBolosKernelEnergyForm::computeQpOffDiagJacobian(unsigned int jvar)
   Real _d_iz_d_mean_en = _d_iz_d_actual_mean_en[_qp] * _d_actual_mean_en_d_mean_en;
   Real _d_muem_d_mean_en = _d_muem_d_actual_mean_en[_qp] * _d_actual_mean_en_d_mean_en;
   Real _d_diffem_d_mean_en = _d_diffem_d_actual_mean_en[_qp] * _d_actual_mean_en_d_mean_en;
-  Real _d_actual_mean_en_d_em = -std::exp(_mean_en[_qp]-_u[_qp])*_phi[_j][_qp];
+  Real _d_actual_mean_en_d_em = -std::exp(_mean_en[_qp]-_em[_qp])*_phi[_j][_qp];
   Real _d_iz_d_em = _d_iz_d_actual_mean_en[_qp] * _d_actual_mean_en_d_em;
   Real _d_muem_d_em = _d_muem_d_actual_mean_en[_qp] * _d_actual_mean_en_d_em;
   Real _d_diffem_d_em = _d_diffem_d_actual_mean_en[_qp] * _d_actual_mean_en_d_em;

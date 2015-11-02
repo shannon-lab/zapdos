@@ -61,8 +61,8 @@
 [UserObjects]
   [./data_provider]
     type = ProvideMobility
-    # electrode_area = 3.14e-6 # Formerly 3.14e-6
-    electrode_area = 5.02e-7 # Formerly 3.14e-6
+    electrode_area = 3.14e-6 # Formerly 3.14e-6
+    # electrode_area = 5.02e-7 # Formerly 3.14e-6
     ballast_resist = 8.1e3
   [../]
 []
@@ -297,7 +297,7 @@
 [Materials]
   [./argon]
     interp_trans_coeffs = false
-    interp_elastic_coeff = true
+    interp_elastic_coeff = false
     block = 0
     type = ArgonConstTD
     em = em

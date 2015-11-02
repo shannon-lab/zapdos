@@ -89,6 +89,7 @@ DCElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
     }
     return _test[_i][_qp]*(-_b*_se_coeff[_qp]*_muip[_qp]*-_grad_potential[_qp]*std::exp(_Arp[_qp])*_phi[_j][_qp]*_normals[_qp]);
   }
+
   else if (jvar == _mean_en_id) {
     if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
       _a = 1.0;

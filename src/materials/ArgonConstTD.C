@@ -21,6 +21,7 @@ InputParameters validParams<ArgonConstTD>()
   params.addParam<Real>("user_relative_permittivity", 1.0, "Multiplies the permittivity of free space.");
   // params.addRequiredParam<bool>("townsend","Whether to use the townsend formulation for the rate terms.");
   params.addRequiredParam<bool>("interp_trans_coeffs", "Whether to interpolate transport coefficients as a function of the mean energy. If false, coeffs are constant.");
+  params.addRequiredParam<bool>("interp_elastic_coeff", "Whether to interpolate the elastic collision townsend coefficient as a function of the mean energy. If false, coeffs are constant.");
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
   params.addRequiredCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addRequiredCoupledVar("mean_en", "The electron mean energy in log form.");
@@ -33,6 +34,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
     Material(parameters),
     // _townsend(getParam<bool>("townsend")),
     _interp_trans_coeffs(getParam<bool>("interp_trans_coeffs")),
+    _interp_elastic_coeff(getParam<bool>("interp_elastic_coeff")),
 
     _muem(declareProperty<Real>("muem")),
     _d_muem_d_actual_mean_en(declareProperty<Real>("d_muem_d_actual_mean_en")),
@@ -180,6 +182,10 @@ ArgonConstTD::computeQpProperties()
   _muip[_qp] = 1.9e-4;
   _diffip[_qp] = 5.26e-6;
 
+  // 100 times less than electrons
+  // _muip[_qp] = 3.52e-4;
+  // _diffip[_qp] = 2.98e-3;
+
   // From curve fitting with bolos
   _iz_coeff_efield_a[_qp] = 1.43171672e-1;
   _iz_coeff_efield_b[_qp] = 9.05925536e-1;
@@ -201,8 +207,14 @@ ArgonConstTD::computeQpProperties()
   // _d_iz_d_actual_mean_en[_qp] = _d_alpha_d_actual_mean_energy_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
   _alpha_ex[_qp] = _alphaEx_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
   _d_ex_d_actual_mean_en[_qp] = _alphaEx_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
-  _alpha_el[_qp] = _alphaEl_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
-  _d_el_d_actual_mean_en[_qp] = _alphaEl_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
+  if (_interp_elastic_coeff) {
+    _alpha_el[_qp] = _alphaEl_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+    _d_el_d_actual_mean_en[_qp] = _alphaEl_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
+  }
+  else {
+    _alpha_el[_qp] = 5e8;
+    _d_el_d_actual_mean_en[_qp] = 0.0;
+  }
 
   _el_coeff_energy_a[_qp] = 1.60638169e-13;
   _el_coeff_energy_b[_qp] = 3.17917979e-1;

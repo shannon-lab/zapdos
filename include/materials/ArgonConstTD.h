@@ -40,6 +40,7 @@ protected:
 
   /* bool _townsend; */
   bool _interp_trans_coeffs;
+  bool _interp_elastic_coeff;
 
   MaterialProperty<Real>  & _muem;
   MaterialProperty<Real>  & _d_muem_d_actual_mean_en;
