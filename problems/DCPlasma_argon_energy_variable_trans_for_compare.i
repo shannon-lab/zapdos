@@ -32,7 +32,7 @@
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- nl_abs_tol = 3.16e-4
+ nl_abs_tol = 1e-3
   l_max_its = 10
  nl_max_its = 50
   dtmin = 1e-12
