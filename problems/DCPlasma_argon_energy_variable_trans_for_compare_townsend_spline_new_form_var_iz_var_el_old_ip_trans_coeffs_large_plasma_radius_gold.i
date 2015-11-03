@@ -32,7 +32,7 @@
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- nl_abs_tol = 3.16e-4
+ nl_abs_tol = 1e-4
   l_max_its = 10
  nl_max_its = 50
   dtmin = 1e-12
@@ -61,8 +61,8 @@
 [UserObjects]
   [./data_provider]
     type = ProvideMobility
-    # electrode_area = 3.14e-6 # Formerly 3.14e-6
-    electrode_area = 5.02e-7 # Formerly 3.14e-6
+    electrode_area = 3.14e-6 # Formerly 3.14e-6
+    # electrode_area = 5.02e-7 # Formerly 3.14e-6
     ballast_resist = 8.1e3
   [../]
 []

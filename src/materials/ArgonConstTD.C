@@ -179,12 +179,12 @@ ArgonConstTD::computeQpProperties()
   }
 
   // From Richards and Sawin, muip*pressure = 1444 cm^2*Torr/(V*s) and diffip*pressure = 40 cm^2*Torr/s. Use pressure = 760 torr.
-  _muip[_qp] = 1.9e-4;
-  _diffip[_qp] = 5.26e-6;
+  // _muip[_qp] = 1.9e-4;
+  // _diffip[_qp] = 5.26e-6;
 
   // 100 times less than electrons
-  // _muip[_qp] = 3.52e-4;
-  // _diffip[_qp] = 2.98e-3;
+  _muip[_qp] = 3.52e-4;
+  _diffip[_qp] = 2.98e-3;
 
   // From curve fitting with bolos
   _iz_coeff_efield_a[_qp] = 1.43171672e-1;

@@ -78,22 +78,27 @@ IonBolosKernelEnergyForm::~IonBolosKernelEnergyForm()
 Real
 IonBolosKernelEnergyForm::computeQpResidual()
 {
-  Real _electron_flux_mag = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
+  Real  vd_mag = _muip[_qp]*_grad_potential[_qp].size();
+  Real  delta = vd_mag*_current_elem->hmax()/2.0;
+
+  Real  _electron_flux_mag = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
   Real _iz_term = _alpha_iz[_qp] * _electron_flux_mag;
 
   return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(_muip[_qp]*-_grad_potential[_qp]-_diffip[_qp]*_grad_u[_qp])
     -_test[_i][_qp]*_iz_term // Ionization term
-    -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp]); // Source stabilization
-    // -_grad_test[_i][_qp]*(-_delta*std::exp(_u[_qp])*_grad_u[_qp]); // Diffusion stabilization
+    -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp]) // Source stabilization
+    -_grad_test[_i][_qp]*(-delta*std::exp(_u[_qp])*_grad_u[_qp]); // Diffusion stabilization
 }
 
 Real
 IonBolosKernelEnergyForm::computeQpJacobian()
 {
+  Real  vd_mag = _muip[_qp]*_grad_potential[_qp].size();
+  Real  delta = vd_mag*_current_elem->hmax()/2.0;
 
   return -_grad_test[_i][_qp]*(_muip[_qp]*-_grad_potential[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]-_diffip[_qp]*(std::exp(_u[_qp])*_grad_phi[_j][_qp]+std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp]))
-    -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp])*-1.0*_phi[_j][_qp]; // Source stabilization
-    // -_grad_test[_i][_qp]*(-_delta*(std::exp(_u[_qp])*_grad_phi[_j][_qp]+std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp])); // Diffusion stabilization
+    -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp])*-1.0*_phi[_j][_qp] // Source stabilization
+    -_grad_test[_i][_qp]*(-delta*std::exp(_u[_qp])*_grad_phi[_j][_qp]-delta*std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp]); // Diffusion stabilization
 }
 
 Real
@@ -122,8 +127,14 @@ IonBolosKernelEnergyForm::computeQpOffDiagJacobian(unsigned int jvar)
   Real _d_iz_term_d_mean_en = (_electron_flux_mag * _d_iz_d_mean_en + _alpha_iz[_qp] * _d_electron_flux_mag_d_mean_en);
   Real _d_iz_term_d_em = (_electron_flux_mag * _d_iz_d_em + _alpha_iz[_qp] * _d_electron_flux_mag_d_em);
 
+  Real  vd_mag = _muip[_qp]*_grad_potential[_qp].size();
+  Real  d_vd_mag_d_potential = _muip[_qp]*_grad_potential[_qp]*_grad_phi[_j][_qp]/(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon());
+  Real d_delta_d_potential = _current_elem->hmax()/2.0*d_vd_mag_d_potential;
+
   if (jvar == _potential_id)
-    return -_grad_test[_i][_qp]*(_muip[_qp]*-_grad_phi[_j][_qp]*std::exp(_u[_qp])) - _test[_i][_qp] * _d_iz_term_d_potential;
+    return -_grad_test[_i][_qp]*(_muip[_qp]*-_grad_phi[_j][_qp]*std::exp(_u[_qp])) 
+      - _test[_i][_qp] * _d_iz_term_d_potential
+      -_grad_test[_i][_qp] * -d_delta_d_potential * std::exp(_u[_qp]) * _grad_u[_qp];
 
   else if (jvar == _em_id)
     return -_test[_i][_qp] * _d_iz_term_d_em; // Ionization term

@@ -1741,3 +1741,7 @@ I need to figure out why I'm getting a ramped density in the middle of the domai
 Just one small typo in a Jacobian statement (using _u insteand of _em in the Ion kernel), can mess things up. And that mess up may not appear in the simple -snes_type=test configuration.
 
 After correcting the Jacobian, the problem solved in a standard amount of time: 439 time steps, 24MB output file.
+
+Adding variable elastic coefficient: 442 time steps, active time = 698.753 seconds, output file size = 24 MB
+
+Reducing the plasma radius (still high mobility and diffusivity ions): 455 steps, active time = 755.409 seconds, output file size = 25 MB. Reducing the plasma radius has the effect of increasing the charged particle densities (same potential, same ballast resistor ==> in order to have the same current with a decreased cross sectional area, the current density must increase), which means that the magnitude of the residuals increases. Consequently, in order to get the simulation to converge like it should, I had to increase the nl_abs_tol from 1e-4 to 3.14e-4. One could see the problem by looking at the logs: excellent decrease in the residuals until it hit around 1.1e-4 and then the residuals stopped decreasing. Newton convergence should be initially linear and then quadratic, so if I notice non-Newton behavior, it's because I've set the absolute tolerance too low.
