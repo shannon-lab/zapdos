@@ -1744,6 +1744,7 @@ Adding variable elastic coefficient: 442 time steps, active time = 698.753 secon
 
 Reducing the plasma radius (still high mobility and diffusivity ions): 455 steps, active time = 755.409 seconds, output file size = 25 MB. Reducing the plasma radius has the effect of increasing the charged particle densities (same potential, same ballast resistor ==> in order to have the same current with a decreased cross sectional area, the current density must increase), which means that the magnitude of the residuals increases. Consequently, in order to get the simulation to converge like it should, I had to increase the nl_abs_tol from 1e-4 to 3.14e-4. One could see the problem by looking at the logs: excellent decrease in the residuals until it hit around 1.1e-4 and then the residuals stopped decreasing. Newton convergence should be initially linear and then quadratic, so if I notice non-Newton behavior, it's because I've set the absolute tolerance too low.
 
+Going with low transport values for ions now: 868 time steps, active time = 1561.72 seconds, output file = 47 MB. Peak densities are again higher, so in order for the simulation to solve in a reasonable time, I upped the nl_abs_tol to 1e-3. I really should investigate whether there is an intelligent way to set nl_abs_tol as opposed to manually "guessing"; manual "guessing" in which I am informed mostly by the log files.
 
 Looking at a convergence series:
 
