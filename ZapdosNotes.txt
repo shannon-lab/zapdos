@@ -23,6 +23,21 @@ Joule heating is working. It simply appears that currently the energy losses due
 
 Going to really start investigating what prevents taking long time steps. With no off diag jacobian elements for electrons and ions and off diag element for potential turned off, and with the following variable scalings:
 
+EMACS COMMANDS:
+just move the point to the end of any sexp and press C-xC-e to execute just that sexp. Usually it's not necessary to reload the whole file if you're just changing a line or two.
+
+If you take care when choosing what keys to rebind, these will never conflict with keybindings of modes. When there is such a conflict, however, the more specific mode keymap will take precedence, and your global keybinding will be temporarily shadowed. If you do not care about the mode’s keybinding, or want a keybinding for a specific mode only, you need to guess the mode’s keymap name and add the binding to that map:
+
+    (define-key text-mode-map (kbd "'") 'maybe-open-apostrophe)
+
+No need to guess. If you want to find out the current active keymap in a given situation, like in the gnus group buffer, use this command:
+
+    M-: (mapcar (lambda(x)(car(rassq x minor-mode-map-alist)))(current-minor-mode-maps))
+
+To get the keybinding of something, do C-h k
+
+Also, major and minor mode keybindings override global key bindings. Also, in order for changes in el library sources to take effect, they must be recompiled
+
 em: 1e-11
 Arp: 1e-6
 potential: 1e4
@@ -1752,3 +1767,150 @@ Looking at a convergence series:
 
 x = x_k
 y = x_(k+1)
+
+Functions which reference _bcs: 
+activeBoundaries() ==> This function has no references, so I'm not going to worry about implementing an analogue for _intcs (no references either through MOOSE doxygen or ggtags)
+activeIntegrated() ==> Referenced by ComputeFullJacobianThread::computeFaceJacobian(), ComputeJacobianThread::computeFaceJacobian(), ComputeJacobianThread::onBoundary(), ComputeResidualThread::onBoundary(), ComputeJacobianThread::subdomainChanged(), and ComputeResidualThread::subdomainChanged(), and NonlinearSystem::needMaterialOnSide() ==> Hmm, a lot of work to do here lol
+addBC() ==> NonlinearSystem::addBoundaryCondition()
+getBCs() ==> Referenced by ComputeFullJacobianThread::computeFaceJacobian().
+initialSetup() ==> NonlinearSystem::initialSetupBCs()
+jacobianSetup()==> NonlinearSystem::computeJacobianInternal()
+residualSetup()==> NonlinearSystem::computeResidualInternal()
+timestepSetup()==> NonlinearSystem::timestepSetup()
+
+What I was going to write here before I got sidetracked into figuring out how to not exit navigation mode with RET, was that when I search for references to addBC() with ggtags, I find references. On the MOOSE doxygen page, there were no references given.
+
+I think I am trying to do too much. I think that the implementation process doesn't have to be as large as I was preparing to make it.
+
+DGKernelWarehouse::active() just returns _active_dg_kernels (type std::vector<DGKernel *>)
+
+There are only two places that _active_dg_kernels is modified, and they're both in DGKernelWarehouse::updateActiveDGKernels:
+
+  for (std::vector<DGKernel *>::const_iterator it = _all_objects.begin(); it != _all_objects.end(); ++it)
+  {
+    DGKernel * dg_kernel = *it;
+    // FIXME: add startTime/stopTime to DGKernel
+//    if (dg_kernel->startTime() <= t + (1e-6 * dt) && dg_kernel->stopTime() >= t + (1e-6 * dt))
+      _active_dg_kernels.push_back(dg_kernel);
+  }
+
+Now what about _all_objects ? Comes from DGKernelWarehouse::addDGKernel:
+
+{
+  _all_ptrs.push_back(dg_kernel);
+  _all_objects.push_back(dg_kernel.get());
+}
+
+DGKernelWarehouse::addDGKernel is called from NonlinearSystem::addDGKernel:
+
+    MooseSharedPointer<DGKernel> dg_kernel = MooseSharedNamespace::static_pointer_cast<DGKernel>(_factory.create(dg_kernel_name, name, parameters, tid));
+
+    _dg_kernels[tid].addDGKernel(dg_kernel);
+
+I think that the static_pointer_cast is useful for casting children types to parent type. That's just a hypothesis though. 
+
+Going from _nl.addDGKernel to _problem->addDGKernel(_type, _name, _moose_object_pars) in AddDGKernelACtion::act(). _type refers to the DGKernel child type, e.g. it's communicating what type of DGKernel to build. Anyways, all child types of DGKernel are lumped together into the _all_objects class member in DGKernelWarehouse.
+
+_sys.getDGKernelWarehouse(_tid).active() in ComputeResidualThread will summon all the DGKernel children from the input file (unless I have something to say about it!!!)
+
+_boundary_id is an attribute that all children of DGKernel will have.
+
+boundary is not a parameter that's introduced in the leaf children of BoundaryCondition (I use leaf to refere to children that themselves have no children). It's a parameter defined farther up the tree. So the boundary parameter could be and probably should be defined in the base DGKernel. For identifying whether to use BoundaryID or BoundaryName refer to the BoundaryCondition. The "boundary" parameter is not set in BoundaryCondition but rather in the ancestor of BoundaryCondition: BoundaryRestrictableRequired, and in the ancestor of BoundaryRestrictableRequired: BoundaryRestrictable. The difference between the two ancestors is that "boundary" is a RequiredParam in for types inheriting from BoundaryRestrictableREquired, whereas "boundary" is an optional parameter for types inheriting from BoundaryRestrictable. So DGKernel should inherit the parameters of BoundaryRestrictable and it should inherits the attributes and functions of BoundaryRestrictable as well.
+
+Unrelated to Moose, I'm looking at my cpu usage by Thunderbird. If I look at the top command in the command line, the cpu usage referes to the percent of one cpu being used. If I press (shift + i) while top is running, then I can show the percent of total cpus running. This number will match much more closely with the number shown by the "System Monitor" application. Number of emails will be different from gmail to Thunderbird because, gmail displays it's number count as the "number of conversations." Thunderbird displays every message individually. 
+
+Each folder on the gmail web page has a matching folder on Thunderbird. This makes sense because all of these folders are subfolders of the locked adlinds3@ncsu.edu folder. 
+
+A member that I think will be very important for DGKernel: _boundary_restricted
+
+We will inherit this member from BoundaryRestrictable. By default it is initialized to be false, unless the user does pass the parameter boundary. There is a problem, however. _boundary_restricted is a private attribute. But this is not a problem because there is a public member function of BoundaryRestrictable that returns _boundary_restricted! The function name is boundaryRestricted()  
+
+Potentially important code in ComputeResidualThread::onBoundary:
+
+    // Set the active boundary id so that BoundaryRestrictable::_boundary_id is correct
+    _fe_problem.setCurrentBoundaryID(bnd_id);
+
+In class declaration of BoundaryRestrictable, under the protected attributes:
+
+  /// Reference to active boundary id
+  const BoundaryID & _current_boundary_id;
+
+if _bnd_feproblem == NULL, then _current_boundary_id is a constant reference (constant alias) to _invalid_boundary_id (a private member of BoundaryRestrictable of type const BoundaryID). If _bnd_feproblem != NULL, the _current_boundary_id is a constant reference (constant alias) to _bnd_feproblem->getCurrentBoundaryID().
+
+_bnd_feproblem is a pointer to type FEProblem.
+
+_invalid_boundary_id is assigned to be equal to Moose::INVALID_BOUNDARY_ID in the standard BoundaryRestrictable constructor. 
+
+I believe that _bnd_ids is the data member in BoundaryRestrictable that holds the boundary ids where the object that is of my DGInterface type (and thus is also of the BoundaryRestrictable type) is active. I would probably name my DGInterface object something stupid like dg_interface. _bnd_ids are the the boundary ids where dg_interface lives. 
+
+_bnd_ids is a private member of BoundaryRestrictable, which means that even children of BoundaryRestrictable are unable to access _bnd_ids. But once again, there is a public member function called boundaryIDs, which does this:
+
+const std::set<BoundaryID> &
+BoundaryRestrictable::boundaryIDs() const
+{
+  return _bnd_ids;
+}
+
+This returns a constant alias for a set of BoundaryID's. It's the _bnd_ids where my dg_interface lives. Recall that const at the end of a type/class's method/function indicates that the method does not modify any of the class's data members. 
+
+_current_boundary_id: protected member of BoundaryRestrictable ==> passed onto DGInterface
+_bnd_ids: private member of BoundaryRestrictable ==> not passed onto DGInterface
+
+There's a method that returns the boundaryID's that dg_interface lives on (inherited from BoundaryRestrictable), but not a method that returns the _current_boundary_id. This makes sense because the current_boundary_id is not really owned by dg_interface; it's more owned by the finite element problem (rotating around looking at different piecies of the problem, different boundaries, etc.). However, the boundaries where dg_interface lives is entirely owned by dg_interface. 
+
+In FEProblem class declaration:
+
+  void setCurrentBoundaryID(BoundaryID id){ _current_boundary_id = id; }
+
+Protected member of FEProblem class:
+
+  BoundaryID _current_boundary_id;
+
+In constructor of BoundaryRestrictable:
+
+    _current_boundary_id(_bnd_feproblem == NULL ? _invalid_boundary_id : _bnd_feproblem->getCurrentBoundaryID())
+
+In FEProblem class declaration:
+
+  const BoundaryID & getCurrentBoundaryID(){ return _current_boundary_id; }
+
+As far as I can tell, the current_boundary_id doesn't really actually mean anything. Maybe it's just a way of monitoring whether things are happening at various bnd_id's during the program execution. 
+
+My question is whether as soon as setCurrentBoundaryID is run, does getCurrentBoundaryID() run for all the BoundaryRestrictable constructors? How would the computer know to do that? I'm so used to thinking of computers doing things sequentially, i.e. computers are dumb and they don't just guess that you need something to be done; you have to tell them that something needs to be done. 
+
+The answer is that Alex is dumb :-) All the _current_boundary_id's for all the BoundaryRestrictable objects created are references to the _current_boundary_id variable defined in the FEProblem class. Essentially, all the _current_boundary_id's belonging to the BC objects are slaves to the master FEProblem _current_boundary_id
+
+MooseSharedNamespace:: = std:: or boost::
+MooseSharedPointer:: = std::shared_ptr:: or boost::shared_ptr::
+
+_factory.create(...) returns a MooseObjectPtr
+
+from Factory.h: 
+
+typedef MooseSharedPtr<MooseObject> MooseObjectPtr;
+
+
+Places where getDGKernelWarehouse.active() is called:
+
+line 167 of ComputeFullJacobianThread -> Added analogous method to ComputeFullJacobianThread::computeInternalFaceJacobian. This means I need to track down all the original calls. 
+line 80 of ComputeJacobianThread
+line 135 of ComputeJacobianThread
+line 194 of ComputeJacobianThread
+src/base/ComputeResidualThread.C:86 --> Check
+src/base/ComputeResidualThread.C:198 --> This is the ComputeResidualThread::onInternalSide method for entire-domain DGKernels. I wrote an analogous method for restricted DGKernels. Because I wrote a new analogous method, that meant that I had to find where the original method was called and add the new method call. This is done. Check
+src/base/ComputeResidualThread.C:211 --> This is in the same method as above. Check
+
+Don't get carried away, doing more things than necessary!!!
+
+My DGKernelWarehouse method names:
+
+activeRestrictedDG(BoundaryID boundary_id, std::vector<DGKernel *> & active_restrictedDG) const
+addRestrictedDG(const std::set<BoundaryID> & boundary_ids, MooseSharedPointer<DGKernel> & restricted_dg)
+
+Unanswered question: since I'm putting my interface between subdomains, will the code I added in ComputeResidualThread::subdomainChanged() be effective?
+
+ComputeFullJacobianThread is a child of ComputeJacobianThread. computeFaceJacobian is defined both in the parent ComputeJacobianThread and in the child ComputeFullJacobianThread. ComputeFullJacobianThread inherits onBoundary from ComputeJacobianThread. So if a ComputeFullJacThread object is created, a call to onBoundary will subsequently the ComputeFullJacThread computeFaceJacobian method. 
+
+From where is computeFaceJacobian called? It is only called in ComputeJacobianThread::onBoundary. 
+
+I'm not sure if this matters or not: in onBoundary in ResidThread, BoundaryID is set to invalid after the swapping of MaterialFace, whereas in JacThread, the boundary is set to invalid before the swapping of MaterialsFace. The fact that they're different between the two files suggests that the order of those stamements doesn't matter.

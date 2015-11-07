@@ -4,6 +4,7 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "CoeffParamDiffusion.h"
 #include "IonBolosKernel.h"
 #include "ElectronBolosKernel.h"
 #include "IonBolosKernelEnergyForm.h"
@@ -203,6 +204,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(SrcSecondOrderReaction);
   registerKernel(PoissonSource);
   registerKernel(MatAdvection);
+  registerKernel(CoeffParamDiffusion);
   registerKernel(IonizationSource);
   registerKernel(DivFreeConvection);
   registerKernel(CoupledIonizationSource);
