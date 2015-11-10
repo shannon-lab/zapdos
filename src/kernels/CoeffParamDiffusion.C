@@ -41,7 +41,7 @@ CoeffParamDiffusion::~CoeffParamDiffusion()
 Real
 CoeffParamDiffusion::computeQpResidual()
 {
-  // Use the MaterialProperty references we stored earlier
+  // std::cout << "Entering CoeffParamDiffusion residual." << std::endl;
   return _D * _grad_u[_qp] * _grad_test[_i][_qp];
 }
 

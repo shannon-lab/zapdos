@@ -84,7 +84,7 @@ ElectronEnergyKernel::computeQpOffDiagJacobian(unsigned int jvar)
 {
 
   if (jvar == _potential_id) {
-    return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muel[_qp]*-_grad_phi[_j][_qp]); // Advective motion
+    return -_grad_test[_i][_qp]*std::exp(_u[_qp])*(-_muel[_qp]*-_grad_phi[_j][_qp]) // Advective motion
            +_test[_i][_qp]*(-_grad_phi[_j][_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_potential[_qp] // Joule Heating
     						 -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]) // Joule Heating
     			    -_grad_potential[_qp]*(-_muem[_qp]*std::exp(_em[_qp])*-_grad_phi[_j][_qp])); // Joule Heating

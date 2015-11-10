@@ -1913,4 +1913,101 @@ ComputeFullJacobianThread is a child of ComputeJacobianThread. computeFaceJacobi
 
 From where is computeFaceJacobian called? It is only called in ComputeJacobianThread::onBoundary. 
 
-I'm not sure if this matters or not: in onBoundary in ResidThread, BoundaryID is set to invalid after the swapping of MaterialFace, whereas in JacThread, the boundary is set to invalid before the swapping of MaterialsFace. The fact that they're different between the two files suggests that the order of those stamements doesn't matter.
+I'm not sure if this matters or not: in onBoundary in ResidThread, BoundaryID is set to invalid after the swapping of MaterialFace, whereas in JacThread, the boundary is set to invalid before the swapping of MaterialsFace. The fact that they're different between the two files suggests that the order of those stamements doesn't matter. But does it matter for dg where we have computeResidualNeighbor? Or some method like that. 
+
+Oh heavens, the only place where onInternalSide() and its analogous methods are actually called is in the base class ThreadedElementLoopBase. That means that there must be an onInterface() method defined in the ThreadedElementLoopBase class. 
+
+Public member functions of ComputeJacobianThread:
+
+  	ComputeJacobianThread (FEProblem &fe_problem, NonlinearSystem &sys, SparseMatrix< Number > &jacobian)
+ 
+ 	ComputeJacobianThread (ComputeJacobianThread &x, Threads::split split)
+ 
+virtual 	~ComputeJacobianThread ()
+ 
+virtual void 	subdomainChanged ()
+ 	Called every time the current subdomain changes (i.e. More...
+ 
+virtual void 	onElement (const Elem *elem)
+ 	Assembly of the element (not including surface assembly) More...
+ 
+virtual void 	onBoundary (const Elem *elem, unsigned int side, BoundaryID bnd_id)
+ 	Called when doing boundary assembling. More...
+ 
+virtual void 	onInternalSide (const Elem *elem, unsigned int side)
+ 	Called when doing internal edge assembling. More...
+ 
+virtual void 	postElement (const Elem *)
+ 	Called after the element assembly is done (including surface assembling) More...
+ 
+virtual void 	post ()
+ 	Called after the element range loop. More...
+ 
+void 	join (const ComputeJacobianThread &)
+ 
+virtual void 	caughtMooseException (MooseException &e)
+ 	Called if a MooseException is caught anywhere during the computation. More...
+ 
+virtual bool 	keepGoing ()
+ 	Whether or not the loop should continue. More...
+ 
+void 	operator() (const ConstElemRange &range, bool bypass_threading=false)
+ 
+virtual void 	pre ()
+ 	Called before the element range loop. More...
+
+Public member functions of ThreadedElementLoopBase:
+
+ 	ThreadedElementLoopBase (MooseMesh &mesh)
+ 
+ 	ThreadedElementLoopBase (ThreadedElementLoopBase &x, Threads::split split)
+ 
+virtual 	~ThreadedElementLoopBase ()
+ 
+void 	operator() (const RangeType &range, bool bypass_threading=false)
+ 
+virtual void 	pre ()
+ 	Called before the element range loop. More...
+ 
+virtual void 	post ()
+ 	Called after the element range loop. More...
+ 
+virtual void 	onElement (const Elem *elem)
+ 	Assembly of the element (not including surface assembly) More...
+ 
+virtual void 	postElement (const Elem *elem)
+ 	Called after the element assembly is done (including surface assembling) More...
+ 
+virtual void 	onBoundary (const Elem *elem, unsigned int side, BoundaryID bnd_id)
+ 	Called when doing boundary assembling. More...
+ 
+virtual void 	onInternalSide (const Elem *elem, unsigned int side)
+ 	Called when doing internal edge assembling. More...
+ 
+virtual void 	subdomainChanged ()
+ 	Called every time the current subdomain changes (i.e. More...
+ 
+virtual void 	caughtMooseException (MooseException &)
+ 	Called if a MooseException is caught anywhere during the computation. More...
+ 
+virtual bool 	keepGoing ()
+ 	Whether or not the loop should continue. More...
+
+number() returns _var_num from MooseVariableBase.h. _var_num is the variable number (from libMesh)
+
+ElementElement or ElementNeighbor: i ==> master
+NeighborElement or NeighborNeighbor: i ==> slave/neighbor
+	       
+ElementElement or NeighborElement: j ==> master
+ElementNeighbor or NeighborNeighbor: j ==> slave/neighbor
+
+_sub_Kee, _sub_Ken, _sub_Kne, and _sub_Knn are all of type
+
+  std::vector<std::vector<DenseMatrix<Number> > >
+
+Reponse from JW Peterson about recompiling Moose code: "Your best bet is to settle on the interface early, thereby only changing Assembly.h once, and then as you develop the function in Assembly.C you will only have to recompile that one file."
+
+Takeaway: limit modifications of .h files (e.g. decide on components of function declaration early so the .h file only has to be modified once), and then do all other function modifications (e.g. body modifications) in the .C files.
+
+This is because the .h files are included all over the place, and wherever that .h file is included...that file will need to be recompiled, and then if that new file was a .h file, then any files that depend on the new .h file will have to be recompiled.
+

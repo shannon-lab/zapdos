@@ -1,7 +1,7 @@
 [Mesh]
   type = GeneratedMesh
   dim = 2
-  nx = 10
+  nx = 100
   ny = 10
   xmax = 1
   ymax = 1
@@ -21,13 +21,13 @@
     paired_block = '1'
     new_boundary = 'master0_interface'
   [../]
-  # [./interface_again]
-  #   type = SideSetsBetweenSubdomains
-  #   depends_on = subdomain1
-  #   master_block = '1'
-  #   paired_block = '0'
-  #   new_boundary = 'master1_interface'
-  # [../]
+  [./interface_again]
+    type = SideSetsBetweenSubdomains
+    depends_on = subdomain1
+    master_block = '1'
+    paired_block = '0'
+    new_boundary = 'master1_interface'
+  [../]
 []
 
 [Variables]
@@ -56,8 +56,21 @@
   [./diff_v]
     type = CoeffParamDiffusion
     variable = v
-    D = 2
+    D = 3
     block = 0
+  [../]
+[]
+
+[DGKernels]
+  [./dg_interface]
+    type = DGDiffusionInterface
+    epsilon = 0
+    sigma = 0
+    variable = u
+    neighbor_var = v
+    boundary = master1_interface
+    D = 1
+    D_neighbor = 3
   [../]
 []
 
@@ -65,7 +78,7 @@
   [./value]
     type = CoupledTiedValueConstraint
     variable = u
-    slave = master0_interface
+    slave = master1_interface
     master = master0_interface
     master_variable = v
   [../]
@@ -85,6 +98,8 @@
     value = 1
   [../]
 []
+
+
 
 [Executioner]
   type = Steady
