@@ -11,30 +11,26 @@
 /*                                                              */
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
-
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
-
-#include "Diffusion.h"
-
-class CoeffDiffusion;
+#include "Test.h"
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
-
-class CoeffDiffusion : public Diffusion
+InputParameters validParams<Test>()
 {
-public:
-  CoeffDiffusion(const InputParameters & parameters);
-  virtual ~CoeffDiffusion();
-
-protected:
-
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-
-  const MaterialProperty<Real> & _diffusivity;
-};
+  InputParameters params = validParams<Material>();
+  return params;
+}
 
 
-#endif /* COEFFDIFFUSION_H */
+Test::Test(const InputParameters & parameters) :
+  Material(parameters),
+
+  // Declare material properties. 
+  _diff(declareProperty<Real>("diff"))
+{
+}
+
+void
+Test::computeQpProperties()
+{
+  _diff[_qp] = 1.;
+}

@@ -94,6 +94,7 @@ protected:
   MaterialProperty<Real> & _d_ex_d_actual_mean_en;
   MaterialProperty<Real> & _alpha_el;
   MaterialProperty<Real> & _d_el_d_actual_mean_en;
+  MaterialProperty<Real> & _sgnem;
   /* MaterialProperty<Real> & _diffusivity; */
   /* MaterialProperty<Real> & _d_diffusivity_d_u; */
 

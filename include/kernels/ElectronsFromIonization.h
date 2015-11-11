@@ -12,29 +12,40 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
+#ifndef ELECTRONSFROMIONIZATION_H
+#define ELECTRONSFROMIONIZATION_H
 
-#include "Diffusion.h"
+#include "Kernel.h"
 
-class CoeffDiffusion;
+class ElectronsFromIonization;
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
+InputParameters validParams<ElectronsFromIonization>();
 
-class CoeffDiffusion : public Diffusion
+class ElectronsFromIonization : public Kernel
 {
 public:
-  CoeffDiffusion(const InputParameters & parameters);
-  virtual ~CoeffDiffusion();
+  ElectronsFromIonization(const InputParameters & parameters);
+  virtual ~ElectronsFromIonization();
 
 protected:
 
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
-  const MaterialProperty<Real> & _diffusivity;
+  const MaterialProperty<Real> & _diffem;
+  const MaterialProperty<Real> & _muem;
+  const MaterialProperty<Real> & _alpha_iz;
+  const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
+  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
+  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
+
+  VariableValue & _mean_en;
+  VariableGradient & _grad_potential;
+  unsigned int _mean_en_id;
+  unsigned int _potential_id;
 };
 
 
-#endif /* COEFFDIFFUSION_H */
+#endif /* ELECTRONSFROMIONIZATION_H */

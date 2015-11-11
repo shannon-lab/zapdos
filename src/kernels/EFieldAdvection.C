@@ -18,8 +18,6 @@ template<>
 InputParameters validParams<EFieldAdvection>()
 {
   InputParameters params = validParams<Kernel>();
-  //params.addRequiredParam<std::string>("mobility","What mobility to use");
-  params.addRequiredParam<std::string>("var_name_string","The name of the kernel variable. Required to import the correct advection_coefficient from the material properties file.");
   params.addRequiredCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
   return params;
 }
@@ -27,11 +25,8 @@ InputParameters validParams<EFieldAdvection>()
 EFieldAdvection::EFieldAdvection(const InputParameters & parameters) :
     Kernel(parameters),
     
-    // Input Parameters
-    
-    // Material properties
-
-    _advection_coeff(getMaterialProperty<Real>("EFieldAdvectionCoeff_"+getParam<std::string>("var_name_string"))),
+    _mu(getMaterialProperty<Real>("mu" + _var.name())),
+    _sign(getMaterialProperty<Real>("sgn" + _var.name())),
     
     // Coupled variables
     
@@ -41,20 +36,21 @@ EFieldAdvection::EFieldAdvection(const InputParameters & parameters) :
 
 Real EFieldAdvection::computeQpResidual()
 {   
-  return _advection_coeff[_qp]*_u[_qp]*-_grad_potential[_qp]*-_grad_test[_i][_qp];
+  return _mu[_qp]*_sign[_qp]*std::exp(_u[_qp])*-_grad_potential[_qp]*-_grad_test[_i][_qp];
 }
 
 Real EFieldAdvection::computeQpJacobian()
 {
-  return _advection_coeff[_qp]*_phi[_j][_qp]*-_grad_potential[_qp]*-_grad_test[_i][_qp];
+  return _mu[_qp]*_sign[_qp]*std::exp(_u[_qp])*_phi[_j][_qp]*-_grad_potential[_qp]*-_grad_test[_i][_qp];
 }
 
 Real EFieldAdvection::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
   {
-  return _advection_coeff[_qp]*_u[_qp]*-_grad_phi[_j][_qp]*-_grad_test[_i][_qp];
+    return _mu[_qp]*_sign[_qp]*std::exp(_u[_qp])*-_grad_phi[_j][_qp]*-_grad_test[_i][_qp];
   }
-  return 0.0; 
+  else
+    return 0.0; 
 }
 

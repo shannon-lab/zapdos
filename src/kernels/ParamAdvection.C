@@ -12,29 +12,30 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
-
-#include "Diffusion.h"
-
-class CoeffDiffusion;
+#include "ParamAdvection.h"
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
-
-class CoeffDiffusion : public Diffusion
+InputParameters validParams<ParamAdvection>()
 {
-public:
-  CoeffDiffusion(const InputParameters & parameters);
-  virtual ~CoeffDiffusion();
+  InputParameters params = validParams<Kernel>();
+  params.addRequiredParam<Real>("vx","Velocity in x direction.");
+  params.addRequiredParam<Real>("vy","Velocity in y direction.");
+  params.addRequiredParam<Real>("vz","Velocity in z direction.");
+  return params;
+}
 
-protected:
+ParamAdvection::ParamAdvection(const InputParameters & parameters) :
+    Kernel(parameters),
+    
+    _velocity(getParam<Real>("vx"), getParam<Real>("vy"), getParam<Real>("vz"))
+{}
 
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+Real ParamAdvection::computeQpResidual()
+{   
+  return _velocity*_u[_qp]*-_grad_test[_i][_qp];
+}
 
-  const MaterialProperty<Real> & _diffusivity;
-};
-
-
-#endif /* COEFFDIFFUSION_H */
+Real ParamAdvection::computeQpJacobian()
+{
+  return _velocity*_phi[_j][_qp]*-_grad_test[_i][_qp];
+}

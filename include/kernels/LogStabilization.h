@@ -12,29 +12,29 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
+#ifndef LOGSTABILIZATION_H
+#define LOGSTABILIZATION_H
 
-#include "Diffusion.h"
+#include "Kernel.h"
 
-class CoeffDiffusion;
+class LogStabilization;
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
+InputParameters validParams<LogStabilization>();
 
-class CoeffDiffusion : public Diffusion
+class LogStabilization : public Kernel
 {
 public:
-  CoeffDiffusion(const InputParameters & parameters);
-  virtual ~CoeffDiffusion();
+  LogStabilization(const InputParameters & parameters);
+  virtual ~LogStabilization();
 
 protected:
 
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
 
-  const MaterialProperty<Real> & _diffusivity;
+  const MaterialProperty<Real> & _N_A;
 };
 
 
-#endif /* COEFFDIFFUSION_H */
+#endif /* LOGSTABILIZATION_H */

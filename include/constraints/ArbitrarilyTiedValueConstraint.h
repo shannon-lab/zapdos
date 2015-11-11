@@ -12,29 +12,38 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
+#ifndef ARBITRARILYTIEDVALUECONSTRAINT_H
+#define ARBITRARILYTIEDVALUECONSTRAINT_H
 
-#include "Diffusion.h"
+//MOOSE includes
+#include "NodeFaceConstraint.h"
 
-class CoeffDiffusion;
+//Forward Declarations
+class ArbitrarilyTiedValueConstraint;
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
+InputParameters validParams<ArbitrarilyTiedValueConstraint>();
 
-class CoeffDiffusion : public Diffusion
+/**
+ * A ArbitrarilyTiedValueConstraint forces the value of a variable to be the same on both sides of an interface.
+ */
+class ArbitrarilyTiedValueConstraint :
+  public NodeFaceConstraint
 {
 public:
-  CoeffDiffusion(const InputParameters & parameters);
-  virtual ~CoeffDiffusion();
+  ArbitrarilyTiedValueConstraint(const InputParameters & parameters);
+  virtual ~ArbitrarilyTiedValueConstraint(){}
 
+  virtual Real computeQpSlaveValue();
+
+  virtual Real computeQpResidual(Moose::ConstraintType type);
+
+  virtual Real computeQpJacobian(Moose::ConstraintJacobianType type);
 protected:
-
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-
-  const MaterialProperty<Real> & _diffusivity;
+  const Real _scaling;
+  const Real _H;
+  NumericVector<Number> & _residual_copy;
 };
 
+#endif
 
-#endif /* COEFFDIFFUSION_H */

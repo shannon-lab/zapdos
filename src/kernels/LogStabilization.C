@@ -12,29 +12,36 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
+#include "LogStabilization.h"
 
-#include "Diffusion.h"
-
-class CoeffDiffusion;
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
-
-class CoeffDiffusion : public Diffusion
+InputParameters validParams<LogStabilization>()
 {
-public:
-  CoeffDiffusion(const InputParameters & parameters);
-  virtual ~CoeffDiffusion();
-
-protected:
-
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-
-  const MaterialProperty<Real> & _diffusivity;
-};
+  InputParameters params = validParams<Kernel>();
+  return params;
+}
 
 
-#endif /* COEFFDIFFUSION_H */
+LogStabilization::LogStabilization(const InputParameters & parameters) :
+    Kernel(parameters),
+    
+    _N_A(getMaterialProperty<Real>("N_A"))
+{
+}
+
+LogStabilization::~LogStabilization()
+{
+}
+
+Real
+LogStabilization::computeQpResidual()
+{
+  return -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp]);
+}
+
+Real
+LogStabilization::computeQpJacobian()
+{
+  return -_test[_i][_qp]*_N_A[_qp]*std::exp(-_u[_qp])*-_phi[_j][_qp];
+}

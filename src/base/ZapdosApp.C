@@ -4,6 +4,9 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "LogStabilization.h"
+#include "ElectronsFromIonization.h"
+#include "ParamAdvection.h"
 #include "CoeffParamDiffusion.h"
 #include "IonBolosKernel.h"
 #include "ElectronBolosKernel.h"
@@ -89,6 +92,8 @@
 #include "Efield.h"
 
 // Materials
+#include "Test.h"
+#include "Test2.h"
 #include "Air.h"
 #include "AirConstTD.h"
 #include "ArgonConstTD.h"
@@ -140,6 +145,7 @@
 // Constraints
 
 #include "EqualGradientConstraint.h"
+#include "ArbitrarilyTiedValueConstraint.h"
 
 // Mesh modifiers
 
@@ -184,6 +190,7 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(LogStabilization);
   registerKernel(IonBolosKernel);
   registerKernel(ElectronBolosKernel);
   registerKernel(IonBolosKernelEnergyForm);
@@ -240,6 +247,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ExampleTimeDerivative);
   registerKernel(ElectronTimeDerivative);
   registerKernel(ElectronKernelIntTD);
+  registerKernel(ParamAdvection);
+  registerKernel(ElectronsFromIonization);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(Efield);
@@ -265,6 +274,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(AdvectiveFlux);
   registerAux(DiffusiveFlux);
   registerMaterial(Air);
+  registerMaterial(Test);
+  registerMaterial(Test2);
   registerMaterial(AirConstTD);
   registerMaterial(ArgonConstTD);
   registerMaterial(NoCouplingAir);
@@ -293,6 +304,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(PhysicalElectronEnergyBC);
   registerDGKernel(DGAdvection);
   registerConstraint(EqualGradientConstraint);
+  registerConstraint(ArbitrarilyTiedValueConstraint);
 }
 
 void

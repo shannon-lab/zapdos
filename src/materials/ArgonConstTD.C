@@ -88,6 +88,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
   _d_ex_d_actual_mean_en(declareProperty<Real>("d_ex_d_actual_mean_en")),
   _alpha_el(declareProperty<Real>("alpha_el")),
   _d_el_d_actual_mean_en(declareProperty<Real>("d_el_d_actual_mean_en")),
+  _sgnem(declareProperty<Real>("sgnem")),
   // _diffusivity(declareProperty<Real>("diffusivity")),
   // _d_diffusivity_d_u(declareProperty<Real>("d_diffusivity_d_u")),
 
@@ -164,7 +165,6 @@ ArgonConstTD::computeQpProperties()
 
   // With the exception of perhaps temperature/energy (perhaps in eV), all properties are in standard SI units
 
-  // From bolos at atmospheric pressure and an EField of 2e5 V/m
   if (_interp_trans_coeffs) {  
     _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
     _d_muem_d_actual_mean_en[_qp] = _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
@@ -172,6 +172,7 @@ ArgonConstTD::computeQpProperties()
     _d_diffem_d_actual_mean_en[_qp] = _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
   }
   else {
+    // From bolos at atmospheric pressure and an EField of 2e5 V/m
     _muem[_qp] = 0.0352103411399;
     _d_muem_d_actual_mean_en[_qp] = 0.0;
     _diffem[_qp] = 0.297951680159;
@@ -248,6 +249,7 @@ ArgonConstTD::computeQpProperties()
   _k_boltz[_qp] = 1.38e-23;
   // _vthermal_em[_qp] = 1.6*sqrt(_e[_qp]*_Tem_lfa[_qp]/_mem[_qp]);
   // _vthermal_ip[_qp] = 1.6*sqrt(_k_boltz[_qp]*_Tip_lfa[_qp]/_mip[_qp]);
+  _sgnem[_qp] = -1.;
 
   _ElectronTotalFluxMag[_qp] = std::sqrt((-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp])*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]));
   _ElectronTotalFluxMagSizeForm[_qp] = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();

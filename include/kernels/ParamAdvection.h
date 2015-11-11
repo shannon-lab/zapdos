@@ -12,29 +12,28 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
+#ifndef PARAMADVECTION_H
+#define PARAMADVECTION_H
 
-#include "Diffusion.h"
+#include "Kernel.h"
 
-class CoeffDiffusion;
+class ParamAdvection;
 
 template<>
-InputParameters validParams<CoeffDiffusion>();
+InputParameters validParams<ParamAdvection>();
 
-class CoeffDiffusion : public Diffusion
+class ParamAdvection : public Kernel
 {
-public:
-  CoeffDiffusion(const InputParameters & parameters);
-  virtual ~CoeffDiffusion();
+ public:
 
-protected:
+  ParamAdvection(const InputParameters & parameters);
+
+ protected:
 
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
 
-  const MaterialProperty<Real> & _diffusivity;
+  RealVectorValue _velocity;
 };
 
-
-#endif /* COEFFDIFFUSION_H */
+#endif //PARAMADVECTION_H

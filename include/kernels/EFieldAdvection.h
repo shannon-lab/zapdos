@@ -31,23 +31,18 @@ class EFieldAdvection : public Kernel
  protected:
 
   virtual Real computeQpResidual();
-
   virtual Real computeQpJacobian();
-  
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  
-  // Input file scalars
   
   // Material properties
 
-  const MaterialProperty<Real> & _advection_coeff;
-
-  // Coupled variables
-  
-  unsigned int _potential_id;
+  const MaterialProperty<Real> & _mu;
+  const MaterialProperty<Real> & _sign;
 
  private:
 
+  // Coupled variables  
+  unsigned int _potential_id;
   VariableGradient & _grad_potential;
 };
 
