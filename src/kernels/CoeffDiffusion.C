@@ -22,6 +22,7 @@ InputParameters validParams<CoeffDiffusion>()
   return params;
 }
 
+// This diffusion kernel should only be used with species whose values are in the logarithmic form.
 
 CoeffDiffusion::CoeffDiffusion(const InputParameters & parameters) :
     Diffusion(parameters),

@@ -32,6 +32,7 @@ JouleHeating::JouleHeating(const InputParameters & parameters) :
     // Material properties
     
     _muem(getMaterialProperty<Real>("muem")),
+    _diffem(getMaterialProperty<Real>("diffem")),
 
     // Coupled variables
     
@@ -46,23 +47,23 @@ JouleHeating::JouleHeating(const InputParameters & parameters) :
 
 Real JouleHeating::computeQpResidual()
 {
-  return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*_em[_qp]-_muem[_qp]*_u[_qp]*_grad_em[_qp]);
+  return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]);
 }
 
 Real JouleHeating::computeQpJacobian()
 {
-  return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*_phi[_j][_qp]*_grad_em[_qp]);
+  return 0.0;
 }
 
 Real JouleHeating::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
     {
-      return _test[_i][_qp]*-_grad_phi[_j][_qp]*(-_muem[_qp]*-_grad_potential[_qp]*_em[_qp]-_muem[_qp]*_u[_qp]*_grad_em[_qp])+_test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_phi[_j][_qp]*_em[_qp]);
+      return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_phi[_j][_qp]*std::exp(_em[_qp])) + _test[_i][_qp]*-_grad_phi[_j][_qp]*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]);
     }
   else if (jvar == _em_id)
     {
-      return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*_phi[_j][_qp]-_muem[_qp]*_u[_qp]*_grad_phi[_j][_qp]);
+      return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]-_diffem[_qp]*(std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp]+std::exp(_em[_qp])*_grad_phi[_j][_qp]));
     }
   else
     {

@@ -41,6 +41,7 @@ protected:
   /// The function being used for setting the value
   Function & _V_bat;
   const ProvideMobility & _data;
+  MooseVariable & _ip_var;
   VariableValue & _ip;
   unsigned int _ip_id;
   const MaterialProperty<Real> & _se_coeff;

@@ -4,6 +4,11 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "ChargeSource.h"
+#include "ElectronEnergyLossFromIonization.h"
+#include "ElectronEnergyLossFromElastic.h"
+#include "IonsFromIonization.h"
+#include "EFieldArtDiff.h"
 #include "LogStabilization.h"
 #include "ElectronsFromIonization.h"
 #include "ParamAdvection.h"
@@ -190,6 +195,11 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(IonsFromIonization);
+  registerKernel(EFieldArtDiff);
+  registerKernel(ElectronEnergyLossFromIonization);
+  registerKernel(ElectronEnergyLossFromElastic);
+  registerKernel(ChargeSource);
   registerKernel(LogStabilization);
   registerKernel(IonBolosKernel);
   registerKernel(ElectronBolosKernel);

@@ -30,10 +30,11 @@ NeumannCircuitVoltage::NeumannCircuitVoltage(const InputParameters & parameters)
     IntegratedBC(parameters),
     _V_bat(getFunction("function")),
     _data(getUserObject<ProvideMobility>("data_provider")),
+    _ip_var(*getVar("ip",0)),
     _ip(coupledValue("ip")),
     _ip_id(coupled("ip")),
     _se_coeff(getMaterialProperty<Real>("se_coeff")),
-    _muip(getMaterialProperty<Real>("muip"))
+    _muip(getMaterialProperty<Real>("mu"+_ip_var.name()))
 {
 }
 

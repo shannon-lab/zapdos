@@ -2014,3 +2014,45 @@ This is because the .h files are included all over the place, and wherever that 
 After successfully merging AlexDev into fork-devel (the local branch of the development branch of my Moose fork), zapdos-opt compiles as does moose-test-opt. However, I can't perform ./run_tests. Asked the list about this. Current state of things.
 
 With 1e6 ballast resistor, low mobility and diffusivity ions, small plasma radius, no interpolation of transport parameters or the elastic rate coefficient, nl_abs_tol = 1e-4: 743 time steps, Active time = 656 seconds, output file size = 40 MB. 
+
+Material Property Checking occurs around line 325 of framework/src/base/SubProblem.C.
+
+The "really cool" python script for comparing moose and sage was in the ~/gdrive/MooseOutput directory; well part of it was. All that was there was the matplotlib section. More importantly I recall that that work was done in the sage notebook after doing numpy and matplotlib imports. 
+
+New simulation with modular form (denoted by Coupling_plasma_liquid):
+
+townsend_var_iz_const_el_old_ip_lg_plasma_radius_lg_b_resist_lg_abs_tol
+# time steps = 911
+Active time = 725 seconds (a little over 10 minutes)
+Output file size = 49 MB
+
+townsend_var_iz_const_el_old_ip_lg_plasma_radius_lg_b_resist_sm_abs_tol
+# time steps = 1143
+
+Solutions between the two look the exact same. Decreasing the tolerance did not speed the simulation up. It actually slowed the simulation down. The reason I tried speeding up this simulation is that 911 time steps seems like a lot. I thought that these might be very easy conditions that should solve quickly. However, it's possible that that is not the case. To illustrate, I just tried applying the modular form to an old test case:
+
+Modular form
+townsend_var_iz_const_el_old_ip_lg_plasma_radius_sm_b_resist
+# time steps = 213
+
+Old lumped form. All residuals lumped together for each variable.
+townsend_var_iz_const_el_old_ip_lg_plasma_radius_sm_b_resist
+# time steps = 439
+
+Solutions to the two cases look the exact same. In other words it looks like I'm solving the exact same physics. In order words it looks like my residuals may be coded the exact same. That is great as long as I've coded the correct physics in both cases. However, since the # time steps is different, this suggests to me that the Jacobians are different, and that actually the jacobians in the modular form might be better. As a last test, I'm going to take this case:
+
+townsend_var_iz_const_el_old_ip_lg_plasma_radius_lg_b_resist
+
+and try running it with the old lumped form
+
+The number of rows/columns in the Jacobian matrix is equal to: num_vars * num_nodes. In other words, it's equal to the number of test_functions i, times the number of variables j. Arp1, em1, pot1, en1, Arp2, em2, pot2, en2 ==> These are the values of each variable at the nodes for linear Lagrange and are also the coefficients of the basis functions, equal to the test functions for Continuous Galerkin. 
+
+Residuals: RArp1, Rem1, Rpot1, Ren1, RArp2, Rem2, Rpot2, Ren2
+
+Can think of the residual RArp1 as being: the PDE (e.g. governing/conservation equaton) for Arp multipled by the test function 1, and then integrated over the domain
+
+64 total elements obtained by differentiating each of the 8 residual terms, by each of the 8 coefficients. 
+
+# dofs = num_vars * num_nodes = num_sln_coefficients
+
+List order is: pot1, em1, Arp1, en1, pot2, em2, Arp2, en2

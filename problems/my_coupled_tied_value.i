@@ -2,7 +2,7 @@
   type = GeneratedMesh
   dim = 2
   nx = 100
-  ny = 10
+  ny = 1
   xmax = 1
   ymax = 1
 []
@@ -66,11 +66,11 @@
     type = DGDiffusionInterface
     epsilon = 0
     sigma = 0
-    variable = u
-    neighbor_var = v
-    boundary = master1_interface
-    D = 1
-    D_neighbor = 3
+    variable = v
+    neighbor_var = u
+    boundary = master0_interface
+    D = 3
+    D_neighbor = 1
   [../]
 []
 

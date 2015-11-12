@@ -24,8 +24,8 @@ protected:
   /* const Real _se_energy; */
   /* const Real _se_coeff; */
 
-   const MaterialProperty<Real> & _muel;
-   const MaterialProperty<Real> & _d_muel_d_actual_mean_en;
+   const MaterialProperty<Real> & _mumean_en;
+   const MaterialProperty<Real> & _d_mumean_en_d_actual_mean_en;
    const MaterialProperty<Real> & _mem;
   Real _a;
   Real _b;

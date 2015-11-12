@@ -22,6 +22,8 @@ class CoeffDiffusion;
 template<>
 InputParameters validParams<CoeffDiffusion>();
 
+// This diffusion kernel should only be used with species whose values are in the logarithmic form.
+
 class CoeffDiffusion : public Diffusion
 {
 public:

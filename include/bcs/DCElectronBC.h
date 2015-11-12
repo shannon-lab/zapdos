@@ -19,9 +19,16 @@ protected:
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
-  // Input Parameters
+  // Coupled variables
 
-  /* const Real & _se_coeff; */
+  MooseVariable & _ip_var;
+  VariableValue & _ip;
+  unsigned int _ip_id;
+  VariableGradient & _grad_ip;
+  VariableGradient & _grad_potential;
+  unsigned int _potential_id;
+  VariableValue & _mean_en;
+  unsigned int _mean_en_id;
 
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
@@ -33,15 +40,6 @@ protected:
   Real _a;
   Real _b;
 
-  // Coupled variables
-  
-  VariableValue & _Arp;
-  unsigned int _Arp_id;
-  VariableGradient & _grad_Arp;
-  VariableGradient & _grad_potential;
-  unsigned int _potential_id;
-  VariableValue & _mean_en;
-  unsigned int _mean_en_id;
 };
 
 #endif //DCELECTRONBC_H

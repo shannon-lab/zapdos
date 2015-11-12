@@ -46,19 +46,19 @@ protected:
   MaterialProperty<Real>  & _d_muem_d_actual_mean_en;
   MaterialProperty<Real>  & _diffem;
   MaterialProperty<Real>  & _d_diffem_d_actual_mean_en;
-  MaterialProperty<Real>  & _muip;
-  MaterialProperty<Real>  & _diffip;
+  MaterialProperty<Real>  & _muArp;
+  MaterialProperty<Real>  & _diffArp;
   MaterialProperty<Real>  & _rate_coeff_ion;
   MaterialProperty<Real>  & _Eiz;
   MaterialProperty<Real>  & _Eex;
   MaterialProperty<Real>  & _Ar;
-  MaterialProperty<Real> &  _muel;
-  MaterialProperty<Real> &  _d_muel_d_actual_mean_en;
-  MaterialProperty<Real> &  _diffel;
-  MaterialProperty<Real> &  _d_diffel_d_actual_mean_en;
+  MaterialProperty<Real> &  _mumean_en;
+  MaterialProperty<Real> &  _d_mumean_en_d_actual_mean_en;
+  MaterialProperty<Real> &  _diffmean_en;
+  MaterialProperty<Real> &  _d_diffmean_en_d_actual_mean_en;
   MaterialProperty<Real> &  _rate_coeff_elastic;
   MaterialProperty<Real> &  _mem;
-  MaterialProperty<Real> &  _mip;
+  MaterialProperty<Real> &  _mGas;
   MaterialProperty<Real> &  _se_coeff;
   MaterialProperty<Real> & _ElectronTotalFluxMag;
   MaterialProperty<Real> & _ElectronTotalFluxMagSizeForm;
@@ -95,6 +95,10 @@ protected:
   MaterialProperty<Real> & _alpha_el;
   MaterialProperty<Real> & _d_el_d_actual_mean_en;
   MaterialProperty<Real> & _sgnem;
+  MaterialProperty<Real> & _sgnmean_en;
+  MaterialProperty<Real> & _sgnArp;
+  MaterialProperty<Real> & _diffpotential;
+
   /* MaterialProperty<Real> & _diffusivity; */
   /* MaterialProperty<Real> & _d_diffusivity_d_u; */
 

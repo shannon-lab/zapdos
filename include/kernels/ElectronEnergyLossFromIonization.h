@@ -12,49 +12,42 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef JOULEHEATING_H
-#define JOULEHEATING_H
+#ifndef ELECTRONENERGYLOSSFROMIONIZATION_H
+#define ELECTRONENERGYLOSSFROMIONIZATION_H
 
 #include "Kernel.h"
 
-class JouleHeating;
+class ElectronEnergyLossFromIonization;
 
 template<>
-InputParameters validParams<JouleHeating>();
+InputParameters validParams<ElectronEnergyLossFromIonization>();
 
-class JouleHeating : public Kernel
+class ElectronEnergyLossFromIonization : public Kernel
 {
- public:
+public:
+  ElectronEnergyLossFromIonization(const InputParameters & parameters);
+  virtual ~ElectronEnergyLossFromIonization();
 
-  JouleHeating(const InputParameters & parameters);
-
- protected:
+protected:
 
   virtual Real computeQpResidual();
-
   virtual Real computeQpJacobian();
-  
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  
-  // Input file scalars
-  
-  // Material properties
 
-  const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _diffem;
+  const MaterialProperty<Real> & _muem;
+  const MaterialProperty<Real> & _alpha_iz;
+  const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
+  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
+  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
+  const MaterialProperty<Real> & _Eiz;
 
-  // Coupled variables
-  
-  unsigned int _potential_id;
   VariableGradient & _grad_potential;
   VariableValue & _em;
   VariableGradient & _grad_em;
+  unsigned int _potential_id;
   unsigned int _em_id;
-
-  // Unique variables
-
-  Real _T_em;
-  Real _D_em;
 };
 
-#endif //JOULEHEATING_H
+
+#endif /* ELECTRONENERGYLOSSFROMIONIZATION_H */

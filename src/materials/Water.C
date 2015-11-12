@@ -6,8 +6,8 @@ InputParameters validParams<Water>()
   InputParameters params = validParams<Material>();
 
   params.addParam<Real>("user_relative_permittivity",78.5,"The relative permittivity of the medium.");
-  params.addRequiredParam<Real>("user_potential_mult","Scaling for the potential.");
-  params.addRequiredParam<Real>("user_electron_mult","Scaling for the electrons.");
+  params.addParam<Real>("user_potential_mult",1,"Scaling for the potential.");
+  params.addParam<Real>("user_electron_mult",1,"Scaling for the electrons.");
   params.addCoupledVar("em", "electrons");
   params.addCoupledVar("H", "hydrogen atoms");
   params.addCoupledVar("OHm", "hydroxide ions");

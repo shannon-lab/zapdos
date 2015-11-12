@@ -12,49 +12,39 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef JOULEHEATING_H
-#define JOULEHEATING_H
+#ifndef EFIELDARTDIFF_H
+#define EFIELDARTDIFF_H
 
+// Including the "Diffusion" Kernel here so we can extend it
 #include "Kernel.h"
 
-class JouleHeating;
+class EFieldArtDiff;
 
 template<>
-InputParameters validParams<JouleHeating>();
+InputParameters validParams<EFieldArtDiff>();
 
-class JouleHeating : public Kernel
+
+class EFieldArtDiff : public Kernel
 {
- public:
+public:
+  EFieldArtDiff(const InputParameters & parameters);
+  virtual ~EFieldArtDiff();
 
-  JouleHeating(const InputParameters & parameters);
-
- protected:
+protected:
 
   virtual Real computeQpResidual();
-
   virtual Real computeQpJacobian();
-  
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  
-  // Input file scalars
-  
-  // Material properties
-
-  const MaterialProperty<Real> & _muem;
-  const MaterialProperty<Real> & _diffem;
 
   // Coupled variables
-  
-  unsigned int _potential_id;
+
   VariableGradient & _grad_potential;
-  VariableValue & _em;
-  VariableGradient & _grad_em;
-  unsigned int _em_id;
-
-  // Unique variables
-
-  Real _T_em;
-  Real _D_em;
+  unsigned int _potential_id;
+  
+  // Material Properties
+  
+  const MaterialProperty<Real> & _mu;
 };
 
-#endif //JOULEHEATING_H
+
+#endif /* EFIELDARTDIFF_H */
