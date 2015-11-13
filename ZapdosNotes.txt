@@ -2056,3 +2056,13 @@ Can think of the residual RArp1 as being: the PDE (e.g. governing/conservation e
 # dofs = num_vars * num_nodes = num_sln_coefficients
 
 List order is: pot1, em1, Arp1, en1, pot2, em2, Arp2, en2
+
+Alright, using the finite difference jacobian just really embarrassed me. The problem solve in 265 time steps and the active time was 308.822 seconds. Wowzers, that's like five minutes. So where is the Jacobian wrong??
+
+How did I get such awesome performance out of the FDP preconditioner when it's always been so slow in the past? My hypothesis is that in the past I always tried FDP with iterative solves where the barrier to convergence was the problem with the threading and really had nothing to do with the Jacobians. 
+
+Alright, so if I want to rapidly develop my physics (residuals), it looks like the best way to go is to just use FDP! But the fact that this problem solved perfectly, and matched my old lumped form's physics tells me that the 1) modular form residuals are the exact same as the old lumped form's residuals. This is also supported by the fact that I've been able to solve other problems today with the new modular form (in some cases better than the old lumped form, in some cases worse) and the final DC solutions have looked identical between the two cases. The second thing that this FDP exercise told me is that 2) whether the new modular form jacobians are better or worse than the old lumped form Jacobians, neither of them are perfect; e.g. the FDP performed way better than either of them. 
+
+Alright so the apparent plebian of the world is me because apparently I can't take derivatives to create jacobians. And the clear Jedi Master of the world is the FDP preconditioner combined with a direct LU solve. It doesn't even bloody matter that it's only one one processor. Power to the math and to efficiency! Down with the massive CPU clusters! Yep with the LFA formulation, the problem solved with the FDP preconditioner in 82.5272 seconds and only took 153 time steps. Jedi fucking master. With this unstoppable force, I'm tempted to try some other things: like Crank-Nicolson or higher order elements...however, I need to focus on getting results for now. Optimizing results can combe after obtaining results. For my thesis I need results...that's all I care about right now is results. I don't care whether I have beautiful analytic Jacobians which would then allow me to run on multiple cpu. For now I only care about results whether it's on one or many processors.
+
+In the future I will return to my Jacobians. Remember that the world is computable!

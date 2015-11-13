@@ -5,6 +5,7 @@
 
 // Kernels
 #include "ElectronsFromIonizationLFA.h"
+#include "IonsFromIonizationLFA.h"
 #include "ChargeSource.h"
 #include "ElectronEnergyLossFromIonization.h"
 #include "ElectronEnergyLossFromElastic.h"
@@ -197,6 +198,7 @@ ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
   registerKernel(IonsFromIonization);
+  registerKernel(IonsFromIonizationLFA);
   registerKernel(ElectronsFromIonizationLFA);
   registerKernel(EFieldArtDiff);
   registerKernel(ElectronEnergyLossFromIonization);
