@@ -4,6 +4,7 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "ReactantAARxn.h"
 #include "ElectronsFromIonizationLFA.h"
 #include "IonsFromIonizationLFA.h"
 #include "ChargeSource.h"
@@ -30,6 +31,7 @@
 #include "CoeffDiffusion.h"
 #include "CoupledDiffusion.h"
 #include "FirstOrderReaction.h"
+#include "ReactantFirstOrderRxn.h"
 #include "SecondOrderReaction.h"
 #include "SelfBinaryReaction.h"
 #include "SrcSelfBinaryReaction.h"
@@ -119,6 +121,7 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "MatchedValueLogBC.h"
 #include "MultipliedValueBC.h"
 #include "CoupledIntegratedBC.h"
 #include "NeumannCircuitVoltage.h"
@@ -148,6 +151,9 @@
 // DGKernels
 
 #include "DGAdvection.h"
+#include "DGAdvectionInterface.h"
+#include "DGMatDiffusionInt.h"
+#include "DGMatDiffusionLogInt.h"
 
 // Constraints
 
@@ -197,6 +203,8 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(ReactantFirstOrderRxn);
+  registerKernel(ReactantAARxn);
   registerKernel(IonsFromIonization);
   registerKernel(IonsFromIonizationLFA);
   registerKernel(ElectronsFromIonizationLFA);
@@ -308,6 +316,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(NoDiffusiveFlux);
   registerBoundaryCondition(EFieldBC);
   registerBoundaryCondition(SpeciesNetFluxBC);
+  registerBoundaryCondition(MatchedValueLogBC);
   registerBoundaryCondition(SimpleNetFluxBC);
   registerBoundaryCondition(RFIonBC);
   registerBoundaryCondition(DCIonBC);
@@ -317,6 +326,9 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(SometimesAdvectionBC);
   registerBoundaryCondition(PhysicalElectronEnergyBC);
   registerDGKernel(DGAdvection);
+  registerDGKernel(DGAdvectionInterface);
+  registerDGKernel(DGMatDiffusionInt);
+  registerDGKernel(DGMatDiffusionLogInt);
   registerConstraint(EqualGradientConstraint);
   registerConstraint(ArbitrarilyTiedValueConstraint);
 }

@@ -307,6 +307,31 @@
   [../]
 []
 
+[DGKernels]
+  [./em_dg_advection_interface]
+    type = DGAdvectionInterface
+    variable = em
+    neighbor_var = emliq
+    boundary = master0_interface
+    potential = potential
+    potential_neighbor = potentialliq
+  [../]
+  [./em_dg_diffusion_interface]
+    type = DGMatDiffusionLogInt
+    variable = em
+    neighbor_var = emliq
+    boundary = master0_interface
+  [../]
+  
+  [./potential_dg_diffusion_interface]
+   type = DGMatDiffusionInt
+   variable = em
+   neighbor_var = emliq
+   boundary = master0_interface
+ [../]
+[]
+
+
 [Variables]
   [./potential]
     scaling = 1e-5
@@ -376,6 +401,12 @@
     boundary = right
     value = 0
   [../]
+  [./potential_interface]
+    type = MatchedValueBC
+    variable = potentialliq
+    boundary = master1_interface
+    v = potential
+  [../]
   # [./potential_dirichlet_left]
   #   type = DirichletBC
   #   variable = potential
@@ -389,6 +420,9 @@
     potential = potential
     ip = Arp
   [../]
+  [./em_interface]
+    type = MatchedValueBC
+    
   [./Arp_physical]
     type = DCIonBC
     variable = Arp

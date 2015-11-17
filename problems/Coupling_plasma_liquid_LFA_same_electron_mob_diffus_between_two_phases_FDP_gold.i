@@ -219,37 +219,6 @@
     block = '1'
   [../]
 
-  [./emliq_time_deriv]
-    type = ElectronTimeDerivative
-    variable = emliq
-    block = 1
-  [../]
-  [./emliq_advection]
-    type = EFieldAdvection
-    variable = emliq
-    potential = potential
-    block = '1'
-  [../]
-  [./emliq_diffusion]
-    type = CoeffDiffusion
-    variable = em
-    block = '1'
-  [../]
-  [./emliq_log_stabilization]
-    type = LogStabilization
-    variable = emliq
-    block = '1'
-  [../]
-  # [./emliq_water_mono_sink]
-  #   type = ReactantFirstOrderRxn
-  #   variable = emliq
-  #   block = 1
-  # [../]
-  # [./emliq_water_bi_sink]
-  #   type = ReactantAARxn
-  #   variable = emliq
-  #   block = 1
-  # [../]
   [./OHm_time_deriv]
     type = ElectronTimeDerivative
     variable = OHm
@@ -269,12 +238,6 @@
   [./OHm_log_stabilization]
     type = LogStabilization
     variable = OHm
-    block = 1
-  [../]
-  [./OHm_advection_stabilization]
-    type = EFieldArtDiff
-    variable = OHm
-    potential = potential
     block = 1
   [../]
 
@@ -299,12 +262,6 @@
     variable = H3Op
     block = 1
   [../]
-  [./H3Op_advection_stabilization]
-    type = EFieldArtDiff
-    variable = H3Op
-    potential = potential
-    block = 1
-  [../]
 []
 
 [Variables]
@@ -314,16 +271,12 @@
   [../]
   [./em]
     scaling = 1e-18
-    block = 0
+    block = '0 1'
   [../]
   [./Arp]
     scaling = 1e-18
     block = 0
   [../]
-
-  [./emliq]
-    scaling = 1e-18
-    block = 1
   [./OHm]
     scaling = 1e-18
     block = 1

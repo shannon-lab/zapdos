@@ -33,8 +33,8 @@ class Water : public Material
   MaterialProperty<Real> & _e;
   MaterialProperty<Real> & _k;
   MaterialProperty<Real> & _T;
-  MaterialProperty<Real> & _k1;
-  MaterialProperty<Real> & _k2;
+  MaterialProperty<Real> & _kemliq;
+  MaterialProperty<Real> & _kemliqemliq;
   MaterialProperty<Real> & _k3;
   MaterialProperty<Real> & _k4;
   MaterialProperty<Real> & _k5;
@@ -72,14 +72,14 @@ class Water : public Material
   MaterialProperty<Real> & _k37;
   MaterialProperty<Real> & _k38;
   MaterialProperty<Real> & _k39;
-  MaterialProperty<Real> & _Dem;
+  MaterialProperty<Real> & _diffemliq;
   MaterialProperty<Real> & _DH;
-  MaterialProperty<Real> & _DOHm;
+  MaterialProperty<Real> & _diffOHm;
   MaterialProperty<Real> & _DH2Op;
   MaterialProperty<Real> & _DOH;
   MaterialProperty<Real> & _DH2;
   MaterialProperty<Real> & _DOm;
-  MaterialProperty<Real> & _DH3Op;
+  MaterialProperty<Real> & _diffH3Op;
   MaterialProperty<Real> & _DH2O2;
   MaterialProperty<Real> & _DHO2m;
   MaterialProperty<Real> & _DO2;
@@ -104,7 +104,7 @@ class Water : public Material
   MaterialProperty<Real> & _zHO2;
   MaterialProperty<Real> & _zO3;
   MaterialProperty<Real> & _zO3m;
-  MaterialProperty<Real> & _muem;
+  MaterialProperty<Real> & _muemliq;
   MaterialProperty<Real> & _muH;
   MaterialProperty<Real> & _muOHm;
   MaterialProperty<Real> & _muH2Op;
@@ -196,10 +196,17 @@ class Water : public Material
   MaterialProperty<Real> & _Jac_O3;
   MaterialProperty<Real> & _Jac_O3m;
   MaterialProperty<Real> & _Jac_potential;
+  MaterialProperty<Real> & _eps;
+  MaterialProperty<Real> & _sgnemliq;
+  MaterialProperty<Real> & _sgnOHm;
+  MaterialProperty<Real> & _sgnH3Op;
+  MaterialProperty<Real> & _EField;
+  MaterialProperty<Real> & _OHm_lin;
+  MaterialProperty<Real> & _H3Op_lin;
 
  private:
 
-  VariableValue & _em;
+  VariableValue & _emliq;
   VariableValue & _H;
   VariableValue & _OHm;
   VariableValue & _H2Op;
@@ -215,6 +222,7 @@ class Water : public Material
   VariableValue & _HO2;
   VariableValue & _O3;
   VariableValue & _O3m;
+  VariableGradient & _grad_potential;
 };	      
 		      
 #endif //WATER_H

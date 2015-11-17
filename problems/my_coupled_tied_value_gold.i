@@ -76,7 +76,7 @@
 # At the interface, u has a lower element ID (because it's on the LHS of the domain) than v
 
 # # For reasons unknown to me, this block currently produces a seg fault. It used to work.
-# # I don't know what changed. Perhaps because I'm now based on devel instead of master
+# # I don't know what changed.
 # [Constraints]
 #   [./value]
 #     type = CoupledTiedValueConstraint

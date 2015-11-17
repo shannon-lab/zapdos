@@ -98,8 +98,10 @@ ElectronEnergyLossFromIonization::computeQpOffDiagJacobian(unsigned int jvar)
     return -_test[_i][_qp]*d_iz_term_d_potential * -_Eiz[_qp];
 
   else if (jvar == _em_id)
+  {
     return -_test[_i][_qp] * d_iz_term_d_em * -_Eiz[_qp];
-  
+  }
+
   else
     return 0.0;
 }

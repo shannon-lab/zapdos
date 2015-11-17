@@ -2066,3 +2066,44 @@ Alright, so if I want to rapidly develop my physics (residuals), it looks like t
 Alright so the apparent plebian of the world is me because apparently I can't take derivatives to create jacobians. And the clear Jedi Master of the world is the FDP preconditioner combined with a direct LU solve. It doesn't even bloody matter that it's only one one processor. Power to the math and to efficiency! Down with the massive CPU clusters! Yep with the LFA formulation, the problem solved with the FDP preconditioner in 82.5272 seconds and only took 153 time steps. Jedi fucking master. With this unstoppable force, I'm tempted to try some other things: like Crank-Nicolson or higher order elements...however, I need to focus on getting results for now. Optimizing results can combe after obtaining results. For my thesis I need results...that's all I care about right now is results. I don't care whether I have beautiful analytic Jacobians which would then allow me to run on multiple cpu. For now I only care about results whether it's on one or many processors.
 
 In the future I will return to my Jacobians. Remember that the world is computable!
+
+Some things make sense a little more with respect to the jacobian debugging script. If the sum of all the jacobians is 0.0, then you will get the error message: a Jacobian needs to be implented.
+
+Simulation failed at 2.07923e-06 seconds for no reason that I can see. All the solution variables are beautiful and smooth. The residual from the Newton solve is coming down beautifully. I really don't have much of a clue why MUMPS exited with a big old error message:
+
+[0]PETSC ERROR: --------------------- Error Message --------------------------------------------------------------
+[0]PETSC ERROR: Error in external library
+[0]PETSC ERROR: Error reported by MUMPS in numerical factorization phase: INFO(1)=-9, INFO(2)=8
+
+[0]PETSC ERROR: See http://www.mcs.anl.gov/petsc/documentation/faq.html for trouble shooting.
+[0]PETSC ERROR: Petsc Release Version 3.6.0, Jun, 09, 2015 
+[0]PETSC ERROR: ./zapdos-opt on a arch-linux2-c-opt named lindsayad-OptiPlex-990 by lindsayad Mon Nov 16 15:32:49 2015
+[0]PETSC ERROR: Configure options --prefix=/opt/moose/petsc/openmpi_petsc-3.6.0/gcc-opt --download-hypre=1 --with-ssl=0 --with-debugging=no --with-pic=1 --with-shared-libraries=1 --with-cc=mpicc --with-cxx=mpicxx --with-fc=mpif90 --download-fblaslapack=1 --download-metis=1 --download-parmetis=1 --download-superlu_dist=1 --download-scalapack=1 --download-mumps=1 CC=mpicc CXX=mpicxx FC=mpif90 F77=mpif77 F90=mpif90 CFLAGS="-fPIC -fopenmp" CXXFLAGS="-fPIC -fopenmp" FFLAGS="-fPIC -fopenmp" FCFLAGS="-fPIC -fopenmp" F90FLAGS="-fPIC -fopenmp" F77FLAGS="-fPIC -fopenmp" PETSC_DIR=/home/lindsayad/projects/src/petsc-3.6.0
+[0]PETSC ERROR: #1 MatFactorNumeric_MUMPS() line 1172 in /home/lindsayad/projects/src/petsc-3.6.0/src/mat/impls/aij/mpi/mumps/mumps.c
+[0]PETSC ERROR: #2 MatLUFactorNumeric() line 2948 in /home/lindsayad/projects/src/petsc-3.6.0/src/mat/interface/matrix.c
+[0]PETSC ERROR: #3 PCSetUp_LU() line 152 in /home/lindsayad/projects/src/petsc-3.6.0/src/ksp/pc/impls/factor/lu/lu.c
+[0]PETSC ERROR: #4 PCSetUp() line 982 in /home/lindsayad/projects/src/petsc-3.6.0/src/ksp/pc/interface/precon.c
+[0]PETSC ERROR: #5 KSPSetUp() line 332 in /home/lindsayad/projects/src/petsc-3.6.0/src/ksp/ksp/interface/itfunc.c
+[0]PETSC ERROR: #6 KSPSolve() line 546 in /home/lindsayad/projects/src/petsc-3.6.0/src/ksp/ksp/interface/itfunc.c
+[0]PETSC ERROR: #7 SNESSolve_NEWTONLS() line 233 in /home/lindsayad/projects/src/petsc-3.6.0/src/snes/impls/ls/ls.c
+[0]PETSC ERROR: #8 SNESSolve() line 3894 in /home/lindsayad/projects/src/petsc-3.6.0/src/snes/interface/snes.c
+
+Alright, I'm pretty confident that the reason the solve is failing is because of the mean_energy and specifically because of the mean_energy interface (right boundary) condition. I'm essentially abandoning the energy boundary condition while at the same not abandoning the electron boundary condition. That just doesn't seem to make much sense. Going to LFA.
+
+Solve converges great with LFA with electron mobility and diffusivity the same between the two phases. Obviously that's not physically realistic.
+
+Going back to more physically realistic transport coefficients in the liquid phase. Solve fails at 1.54524e-07 seconds and after 457 time steps. Solve fails because of diverged line search. I'm using an FDP preconditioner, so the Jacobian should be perfect. When the solve fails, here are the last set of variable residuals:
+
+ 4 Nonlinear |R| = 3.728681e+02
+    |residual|_2 of individual variables:
+                  potential: 7.1762e-07
+                  em:        2.91941e-12
+                  Arp:       4.63375e-13
+                  OHm:       372.697
+                  H3Op:      0.000331611
+
+ 5 Nonlinear |R| = 3.726967e+02
+
+I think the solve could be failing for a couple of reasons: 1) the large disparity in variable residuals 2) There are some oscillations in the OHm and H3Op densities. 
+
+I'm going to try adding some stabilization to OHm and H3Op and see if that changes the solve fail time (for the better).
