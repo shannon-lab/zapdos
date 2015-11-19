@@ -2,7 +2,7 @@
   type = GeneratedMesh
   dim = 1
   nx = 100
-  ny = 1
+  ny = 10
   xmax = 1
   ymax = 1
 []
@@ -44,6 +44,9 @@
     block = '0'
   [../]
 
+  [./w]
+    block = '0 1'
+  [../]
 []
 
 [Kernels]
@@ -58,6 +61,11 @@
     variable = v
     D = 3
     block = 0
+  [../]
+  [./diff_w]
+    type = Diffusion
+    variable = w
+    block = '0 1'
   [../]
 []
 

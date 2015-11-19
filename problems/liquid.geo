@@ -1,0 +1,25 @@
+l1nm = 1e-9;
+l10nm = 1e-8;
+l100nm = 1e-7;
+l1um = 1e-6;
+l10um = 1e-5;
+l50um = 5e-5;
+l100um = 1e-4;
+
+Point(1) = {0, 0, 0, l1um};
+Point(2) = {1e-4, 0, 0, l10um};
+Line(1) = {1,2};
+Point(3) = {9e-4, 0, 0, l10um};
+Line(3) = {2,3};
+Point(4) = {1e-3, 0, 0, l1um};
+Line(4) = {3,4};
+Point(5) = {1e-3+l1nm, 0, 0, l1nm};
+Line(8) = {4,5};
+Point(6) = {1.0001e-3, 0, 0, l10nm};
+Line(5) = {5,6};
+Point(7) = {1.001e-3, 0, 0, l100nm};
+Line(6) = {6,7};
+Point(8) = {1.05e-3, 0, 0, l1um};
+Line(7) = {7,8};
+Physical Line(0) = {1,3,4};
+Physical Line(1) = {8,5,6,7};

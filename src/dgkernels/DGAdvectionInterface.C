@@ -33,9 +33,9 @@ DGAdvectionInterface::DGAdvectionInterface(const InputParameters & parameters) :
     _grad_potential_neighbor(_potential_neighbor_var.gradSlnNeighbor()),
 
     _mu(getMaterialProperty<Real>("mu" + _var.name())),
-    _mu_neighbor(getMaterialProperty<Real>("mu" + _neighbor_var.name())),
+    _mu_neighbor(getNeighborMaterialProperty<Real>("mu" + _neighbor_var.name())),
     _sgn(getMaterialProperty<Real>("sgn" + _var.name())),
-    _sgn_neighbor(getMaterialProperty<Real>("sgn" + _neighbor_var.name()))
+    _sgn_neighbor(getNeighborMaterialProperty<Real>("sgn" + _neighbor_var.name()))
 {
   if (!parameters.isParamValid("boundary"))
   {
@@ -46,6 +46,9 @@ DGAdvectionInterface::DGAdvectionInterface(const InputParameters & parameters) :
 Real
 DGAdvectionInterface::computeQpResidual(Moose::DGResidualType type)
 {
+  if (_mu_neighbor[_qp] < std::numeric_limits<double>::epsilon() || std::abs(_sgn_neighbor[_qp]) < std::numeric_limits<double>::epsilon())
+    mooseError("It doesn't appear that DG material properties got passed.");
+
   Real r = 0;
 
   switch (type)

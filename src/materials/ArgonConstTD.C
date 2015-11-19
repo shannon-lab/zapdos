@@ -23,7 +23,7 @@ InputParameters validParams<ArgonConstTD>()
   params.addRequiredParam<bool>("interp_trans_coeffs", "Whether to interpolate transport coefficients as a function of the mean energy. If false, coeffs are constant.");
   params.addRequiredParam<bool>("interp_elastic_coeff", "Whether to interpolate the elastic collision townsend coefficient as a function of the mean energy. If false, coeffs are constant.");
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
-  params.addRequiredCoupledVar("em", "Species concentration needed to calculate the poisson source");
+  params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("mean_en", "The electron mean energy in log form.");
   params.addCoupledVar("ip", "The ion density.");
   return params;
@@ -96,9 +96,9 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
   // _d_diffusivity_d_u(declareProperty<Real>("d_diffusivity_d_u")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
-  _em(coupledValue("em")),
+  _em(isCoupled("em") ? coupledValue("em") : _zero),
   _ip(isCoupled("ip") ? coupledValue("ip") : _zero),
-  _grad_em(coupledGradient("em")),
+  _grad_em(isCoupled("em") ? coupledGradient("em") : _grad_zero),
   _grad_ip(isCoupled("ip") ? coupledGradient("ip") : _grad_zero),
   _mean_en(isCoupled("mean_en") ? coupledValue("mean_en") : _zero)
 {
@@ -247,11 +247,7 @@ ArgonConstTD::computeQpProperties()
   _se_coeff[_qp] = 0.1;
   _e[_qp] = 1.6e-19;
   _eps[_qp] = 8.85e-12;
-  // _Tem_lfa[_qp] = 1.0; // Volts
-  // _Tip_lfa[_qp] = 300; // Kelvin
   _k_boltz[_qp] = 1.38e-23;
-  // _vthermal_em[_qp] = 1.6*sqrt(_e[_qp]*_Tem_lfa[_qp]/_mem[_qp]);
-  // _vthermal_ip[_qp] = 1.6*sqrt(_k_boltz[_qp]*_Tip_lfa[_qp]/_mGas[_qp]);
   _sgnem[_qp] = -1.;
   _sgnmean_en[_qp] = -1.;
   _sgnArp[_qp] = 1.;

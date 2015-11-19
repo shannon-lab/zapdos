@@ -2,53 +2,46 @@
 []
 
 [Mesh]
-  type = FileMesh
-  file = 'liquid.msh'
+  # type = FileMesh
   # file = 'Plasma_liquid.unv'
-  # type = GeneratedMesh
-  # dim = 1
-  # nx = 105
-  # xmin = 0
-  # xmax = 1.05e-3
+  type = GeneratedMesh
+  dim = 1
+  nx = 105
+  xmin = 0
+  xmax = 1.05e-3
 []
 
 [MeshModifiers]
-  # [./subdomain0]
-  #   type = SubdomainBoundingBox
-  #   bottom_left = '0 0 0'
-  #   top_right = '1e-3 1. 0'
-  #   block_id = 0
-  # [../]
-  # [./subdomain1]
-  #   type = SubdomainBoundingBox
-  #   bottom_left = '1e-3 0 0'
-  #   block_id = 1
-  #   top_right = '1.05e-3 1.0 0'
-  # [../]
+  [./subdomain1]
+    type = SubdomainBoundingBox
+    bottom_left = '1e-3 0 0'
+    block_id = 1
+    top_right = '1.05e-3 1.0 0'
+  [../]
   [./interface]
     type = SideSetsBetweenSubdomains
-    # depends_on = 'subdomain0 subdomain1'
+    depends_on = subdomain1
     master_block = '0'
     paired_block = '1'
     new_boundary = 'master0_interface'
   [../]
   [./interface_again]
     type = SideSetsBetweenSubdomains
-    # depends_on = 'subdomain0 subdomain1'
+    depends_on = subdomain1
     master_block = '1'
     paired_block = '0'
     new_boundary = 'master1_interface'
   [../]
-  [./left]
-    type = SideSetsFromPoints
-    new_boundary = 'left'
-    points = '0.0 0 0'
-  [../]
-  [./right]
-    type = SideSetsFromPoints
-    new_boundary = 'right'
-    points = '0.00105 0 0'
-  [../]
+  # [./left]
+  #   type = SideSetsFromPoints
+  #   new_boundary = 'left'
+  #   points = '0.0 0 0'
+  # [../]
+  # [./right]
+  #   type = SideSetsFromPoints
+  #   new_boundary = 'right'
+  #   points = '0.00105 0 0'
+  # [../]
   # [./left]
   #   type = AddExtraNodeset
   #   new_boundary = 'left'
@@ -76,9 +69,9 @@
 []
 
 [Executioner]
-  type = Transient
-  # type = Steady
-  end_time = 1e-1
+  # type = Transient
+  type = Steady
+  # end_time = 1e-1
   # solve_type = NEWTON
   # petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type' # -pc_factor_mat_solver_package'
   # petsc_options_value = 'lu NONZERO 1.e-10 preonly' # mumps'
@@ -89,14 +82,14 @@
  nl_abs_tol = 1e-3
   l_max_its = 10
  nl_max_its = 50
-  dtmin = 1e-12
-  [./TimeStepper]
-    type = IterationAdaptiveDT
-    cutback_factor = 0.4
-    dt = 1e-9
-    growth_factor = 1.2
-   optimal_iterations = 50
-  [../]
+  # dtmin = 1e-12
+  # [./TimeStepper]
+  #   type = IterationAdaptiveDT
+  #   cutback_factor = 0.4
+  #   dt = 1e-9
+  #   growth_factor = 1.2
+  #  optimal_iterations = 50
+  # [../]
 []
 
 [Outputs]
@@ -125,56 +118,56 @@
 
 [Kernels]
   # em block	
-  [./em_time_deriv]
-    type = ElectronTimeDerivative
-    variable = em
-    block = 0
-  [../]
-  [./em_advection]
-    type = EFieldAdvection
-    variable = em
-    potential = potential
-    block = 0
-  [../]
-  [./em_diffusion]
-    type = CoeffDiffusion
-    variable = em
-    block = 0
-  [../]
+  # [./em_time_deriv]
+  #   type = ElectronTimeDerivative
+  #   variable = em
+  #   block = 0
+  # [../]
+  # [./em_advection]
+  #   type = EFieldAdvection
+  #   variable = em
+  #   potential = potential
+  #   block = 0
+  # [../]
+  # [./em_diffusion]
+  #   type = CoeffDiffusion
+  #   variable = em
+  #   block = 0
+  # [../]
   # [./em_ionization]
   #   type = ElectronsFromIonizationLFA
   #   variable = em
   #   potential = potential
   #   block = 0
   # [../]
-  [./em_log_stabilization]
-    type = LogStabilization
-    variable = em
-    block = 0
-  [../]
+  # [./em_log_stabilization]
+  #   type = LogStabilization
+  #   variable = em
+  #   block = 0
+  # [../]
   
   # emliq block
-  [./emliq_time_deriv]
-    type = ElectronTimeDerivative
-    variable = emliq
-    block = 1
-  [../]
-  [./emliq_advection]
-    type = EFieldAdvection
-    variable = emliq
-    potential = potentialliq
-    block = 1
-  [../]
-  [./emliq_diffusion]
-    type = CoeffDiffusion
-    variable = emliq
-    block = 1
-  [../]
-  [./emliq_log_stabilization]
-    type = LogStabilization
-    variable = emliq
-    block = '1'
-  [../]
+  # [./emliq_time_deriv]
+  #   type = ElectronTimeDerivative
+  #   variable = emliq
+  #   block = 1
+  # [../]
+  # [./emliq_advection]
+  #   type = EFieldAdvection
+  #   variable = emliq
+  #   potential = potentialliq
+  #   block = 1
+  # [../]
+  # [./emliq_diffusion]
+  #   type = CoeffDiffusion
+  #   variable = emliq
+  #   block = 1
+  # [../]
+  # [./emliq_log_stabilization]
+  #   type = LogStabilization
+  #   variable = emliq
+  #   block = '1'
+  # [../]
   # [./emliq_water_mono_sink]
   #   type = ReactantFirstOrderRxn
   #   variable = emliq
@@ -325,20 +318,20 @@
 []
 
 [DGKernels]
-  [./em_dg_advection_interface]
-    type = DGAdvectionInterface
-    variable = em
-    neighbor_var = emliq
-    boundary = master0_interface
-    potential = potential
-    potential_neighbor = potentialliq
-  [../]
-  [./em_dg_diffusion_interface]
-    type = DGMatDiffusionLogInt
-    variable = em
-    neighbor_var = emliq
-    boundary = master0_interface
-  [../]
+  # [./em_dg_advection_interface]
+  #   type = DGAdvectionInterface
+  #   variable = em
+  #   neighbor_var = emliq
+  #   boundary = master0_interface
+  #   potential = potential
+  #   potential_neighbor = potentialliq
+  # [../]
+  # [./em_dg_diffusion_interface]
+  #   type = DGMatDiffusionLogInt
+  #   variable = em
+  #   neighbor_var = emliq
+  #   boundary = master0_interface
+  # [../]
   
   [./potential_dg_diffusion_interface]
    type = DGMatDiffusionInt
@@ -362,14 +355,14 @@
     block = 1
   [../]
 
-  [./em]
-    scaling = 1e-18
-    block = 0
-  [../]
-  [./emliq]
-    scaling = 1e-18
-    block = 1
-  [../]
+  # [./em]
+  #   scaling = 1e-18
+  #   block = 0
+  # [../]
+  # [./emliq]
+  #   scaling = 1e-18
+  #   block = 1
+  # [../]
 
   # [./Arp]
   #   scaling = 1e-18
@@ -387,14 +380,14 @@
 []
 
 [AuxVariables]
-  [./em_lin]
-    block = 0
-  [../]
-  [./emliq_lin]
-    block = 1
-  [../]
+  # [./em_lin]
+  #   block = 0
+  # [../]
   # [./Arp_lin]
   #   block = 0
+  # [../]
+  # [./emliq_lin]
+  #   block = 1
   # [../]
   # [./OHm_lin]
   #   block = 1
@@ -415,23 +408,23 @@
 []
 
 [AuxKernels]
-  [./em_lin]
-    type = Density
-    variable = em_lin
-    density_log = em
-    block = 0
-  [../]
-  [./emliq_lin]
-    type = Density
-    variable = emliq_lin
-    density_log = emliq
-    block = 1
-  [../]
+  # [./em_lin]
+  #   type = Density
+  #   variable = em_lin
+  #   density_log = em
+  #   block = 0
+  # [../]
   # [./Arp_lin]
   #   type = Density
   #   variable = Arp_lin
   #   density_log = Arp
   #   block = 0
+  # [../]
+  # [./emliq_lin]
+  #   type = Density
+  #   variable = emliq_lin
+  #   density_log = emliq
+  #   block = 1
   # [../]
   # [./OHm_lin]
   #   type = Density
@@ -487,30 +480,30 @@
     v = potential
   [../]
   # [./em_left]
+  #   type = DCIonBC
+  #   variable = em
+  #   boundary = left
+  #   potential = potential
+  # [../]
+  # [./em_left]
   #   type = DCElectronBC
   #   variable = em
   #   boundary = left
   #   potential = potential
   #   ip = Arp
   # [../]
-  [./em_left]
-    type = DCIonBC
-    variable = em
-    boundary = left
-    potential = potential
-  [../]
-  [./emliq_right]
-    type = DCIonBC
-    variable = emliq
-    boundary = right
-    potential = potentialliq
-  [../]
-  [./em_interface]
-    type = MatchedValueLogBC
-    variable = emliq
-    boundary = master1_interface
-    v = em
-  [../]
+  # [./emliq_right]
+  #   type = DCIonBC
+  #   variable = emliq
+  #   boundary = right
+  #   potential = potentialliq
+  # [../]
+  # [./em_interface]
+  #   type = MatchedValueLogBC
+  #   variable = emliq
+  #   boundary = master1_interface
+  #   v = em
+  # [../]
     
   # [./Arp_physical]
   #   type = DCIonBC
@@ -527,18 +520,12 @@
 []
 
 [ICs]
-  [./em_ic]
-    type = ConstantIC
-    variable = em
-    value = 29.934
-    block = 0
-  [../]
-  [./emliq_ic]
-    type = ConstantIC
-    variable = emliq
-    value = 29.934
-    block = 1
-  [../]
+  # [./em_ic]
+  #   type = ConstantIC
+  #   variable = em
+  #   value = 29.934
+  #   block = 0
+  # [../]
   # [./Arp_ic]
   #   type = ConstantIC
   #   variable = Arp
@@ -558,6 +545,12 @@
     block = 0
   [../]
 
+  # [./emliq_ic]
+  #   type = ConstantIC
+  #   variable = emliq
+  #   value = 29.934
+  #   block = 1
+  # [../]
   # [./OHm_ic]
   #   type = ConstantIC
   #   variable = OHm
@@ -601,7 +594,7 @@
     interp_elastic_coeff = true
     block = 0
     type = ArgonConstTD
-    em = em
+    # em = em
     potential = potential
     # ip = Arp
  [../]

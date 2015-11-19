@@ -2,53 +2,46 @@
 []
 
 [Mesh]
-  type = FileMesh
-  file = 'liquid.msh'
+  # type = FileMesh
   # file = 'Plasma_liquid.unv'
-  # type = GeneratedMesh
-  # dim = 1
-  # nx = 105
-  # xmin = 0
-  # xmax = 1.05e-3
+  type = GeneratedMesh
+  dim = 1
+  nx = 105
+  xmin = 0
+  xmax = 1.05e-3
 []
 
 [MeshModifiers]
-  # [./subdomain0]
-  #   type = SubdomainBoundingBox
-  #   bottom_left = '0 0 0'
-  #   top_right = '1e-3 1. 0'
-  #   block_id = 0
-  # [../]
-  # [./subdomain1]
-  #   type = SubdomainBoundingBox
-  #   bottom_left = '1e-3 0 0'
-  #   block_id = 1
-  #   top_right = '1.05e-3 1.0 0'
-  # [../]
+  [./subdomain1]
+    type = SubdomainBoundingBox
+    bottom_left = '1e-3 0 0'
+    block_id = 1
+    top_right = '1.05e-3 1.0 0'
+  [../]
   [./interface]
     type = SideSetsBetweenSubdomains
-    # depends_on = 'subdomain0 subdomain1'
+    depends_on = subdomain1
     master_block = '0'
     paired_block = '1'
     new_boundary = 'master0_interface'
   [../]
   [./interface_again]
     type = SideSetsBetweenSubdomains
-    # depends_on = 'subdomain0 subdomain1'
+    depends_on = subdomain1
     master_block = '1'
     paired_block = '0'
     new_boundary = 'master1_interface'
   [../]
-  [./left]
-    type = SideSetsFromPoints
-    new_boundary = 'left'
-    points = '0.0 0 0'
-  [../]
-  [./right]
-    type = SideSetsFromPoints
-    new_boundary = 'right'
-    points = '0.00105 0 0'
-  [../]
+  # [./left]
+  #   type = SideSetsFromPoints
+  #   new_boundary = 'left'
+  #   points = '0.0 0 0'
+  # [../]
+  # [./right]
+  #   type = SideSetsFromPoints
+  #   new_boundary = 'right'
+  #   points = '0.00105 0 0'
+  # [../]
   # [./left]
   #   type = AddExtraNodeset
   #   new_boundary = 'left'

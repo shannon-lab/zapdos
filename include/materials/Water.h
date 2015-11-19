@@ -73,6 +73,7 @@ class Water : public Material
   MaterialProperty<Real> & _k38;
   MaterialProperty<Real> & _k39;
   MaterialProperty<Real> & _diffemliq;
+  MaterialProperty<Real> & _diffpotentialliq;
   MaterialProperty<Real> & _DH;
   MaterialProperty<Real> & _diffOHm;
   MaterialProperty<Real> & _DH2Op;

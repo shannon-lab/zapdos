@@ -28,7 +28,7 @@ InputParameters validParams<DGMatDiffusionInt>()
 DGMatDiffusionInt::DGMatDiffusionInt(const InputParameters & parameters) :
     DGInterface(parameters),
     _D(getMaterialProperty<Real>("diff" + _var.name())),
-    _D_neighbor(getMaterialProperty<Real>("diff" + _neighbor_var.name()))
+    _D_neighbor(getNeighborMaterialProperty<Real>("diff" + _neighbor_var.name()))
 {
   if (!parameters.isParamValid("boundary"))
   {
@@ -39,6 +39,9 @@ DGMatDiffusionInt::DGMatDiffusionInt(const InputParameters & parameters) :
 Real
 DGMatDiffusionInt::computeQpResidual(Moose::DGResidualType type)
 {
+  if (_D_neighbor[_qp] < std::numeric_limits<double>::epsilon())
+    mooseError("It doesn't appear that DG material properties got passed.");
+
   Real r = 0;
 
   switch (type)

@@ -29,7 +29,6 @@ class ChargeSource : public Kernel
   // Kernel members
 
   const MaterialProperty<Real> &  _e;
-  const MaterialProperty<Real> &  _eps;
   const MaterialProperty<Real> &  _sgn;
 };
 

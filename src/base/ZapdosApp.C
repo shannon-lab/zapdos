@@ -4,6 +4,7 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "CoeffDiffusionLin.h"
 #include "ReactantAARxn.h"
 #include "ElectronsFromIonizationLFA.h"
 #include "IonsFromIonizationLFA.h"
@@ -97,7 +98,7 @@
 #include "Ex.h"
 #include "AdvectiveFlux.h"
 #include "DiffusiveFlux.h"
-#include "ElectronDensity.h"
+#include "Density.h"
 #include "Efield.h"
 
 // Materials
@@ -150,6 +151,7 @@
 
 // DGKernels
 
+#include "DGDiffusionInt.h"
 #include "DGAdvection.h"
 #include "DGAdvectionInterface.h"
 #include "DGMatDiffusionInt.h"
@@ -271,6 +273,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ElectronKernelIntTD);
   registerKernel(ParamAdvection);
   registerKernel(ElectronsFromIonization);
+  registerKernel(CoeffDiffusionLin);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(Efield);
@@ -282,7 +285,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(ElectronArtDiffusiveFlux);
   registerAux(IonDensity);
   registerAux(ElectronTemperature);
-  registerAux(ElectronDensity);
+  registerAux(Density);
   registerAux(EFieldMag);
   registerAux(VelocityMag);
   registerAux(ChargeDensity);
@@ -326,6 +329,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(SometimesAdvectionBC);
   registerBoundaryCondition(PhysicalElectronEnergyBC);
   registerDGKernel(DGAdvection);
+  registerDGKernel(DGDiffusionInt);
   registerDGKernel(DGAdvectionInterface);
   registerDGKernel(DGMatDiffusionInt);
   registerDGKernel(DGMatDiffusionLogInt);

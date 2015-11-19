@@ -87,6 +87,7 @@ Water::Water(const InputParameters & parameters) :
  _k38(declareProperty<Real>("k38")),
  _k39(declareProperty<Real>("k39")),
  _diffemliq(declareProperty<Real>("diffemliq")),
+ _diffpotentialliq(declareProperty<Real>("diffpotentialliq")),
  _DH(declareProperty<Real>("DH")),
  _diffOHm(declareProperty<Real>("diffOHm")),
  _DH2Op(declareProperty<Real>("DH2Op")),
@@ -249,7 +250,8 @@ Water::computeQpProperties()
   _electron_mult[_qp] = _user_electron_mult;
   _potential_mult[_qp] = _user_potential_mult;
   _N_A[_qp] = 6.02e23;
-  _eps_r[_qp]   = 80.;
+  // _eps_r[_qp]   = 80.;
+  _eps_r[_qp] = 5.;
   _eps_0[_qp]   = 8.85e-12;
   _eps[_qp] = _eps_r[_qp] * _eps_0[_qp];
   _e[_qp]	= 1.6e-19;  // coulombic charge
@@ -295,7 +297,8 @@ Water::computeQpProperties()
   _k38[_qp]	= 2.0e3;  // HO2 + H2O --> H3O+ + O2-
   _k39[_qp]	= 6.0e1;  // H3O+ O2- --> HO2 + H2O
   _diffemliq[_qp]	= 4.5e-9;	// diffusivity of hydrated electron
-  // _diffemliq[_qp] = 0.297951680159;
+  _diffpotentialliq[_qp] = _eps[_qp];
+  // _diffemliq[_qp] = 0.297951680159/4;
   _DH[_qp]	= 5e-9;		// H radical
   _diffOHm[_qp]	= 5.27e-9;	// OH- ion
   // _diffOHm[_qp] = 2.98e-3; // Temporary high diffusivity taken from gas phase argon
@@ -332,8 +335,8 @@ Water::computeQpProperties()
   _sgnemliq[_qp]   = -1;
   _sgnOHm[_qp] = -1;
   _sgnH3Op[_qp] = 1;
-  _muemliq[_qp]	= _zem[_qp]*_e[_qp]*_diffemliq[_qp]/_k[_qp]/_T[_qp];	// mobility of hydrated electron
-  // _muemliq[_qp] = 0.0352103411399;
+  _muemliq[_qp]	= std::abs(_zem[_qp])*_e[_qp]*_diffemliq[_qp]/_k[_qp]/_T[_qp];	// mobility of hydrated electron
+  // _muemliq[_qp] = 0.0352103411399/4;
   _muH[_qp]	= _zH[_qp]*_e[_qp]*_DH[_qp]/_k[_qp]/_T[_qp];	// H radical
   // _muOHm[_qp]	= _zOHm[_qp]*_e[_qp]*_DOHm[_qp]/_k[_qp]/_T[_qp];	// OH- ion
   _muOHm[_qp] = 3.52e-4;
@@ -354,6 +357,12 @@ Water::computeQpProperties()
   _Dunity[_qp] = 1.0;
   _muunity[_qp] = 1.0;
   _munegunity[_qp] = -1.0;
+
+  // Material version of aux variables
+
+  _EField[_qp] = -_grad_potential[_qp](0);
+  _OHm_lin[_qp] = std::exp(_OHm[_qp]);
+  _H3Op_lin[_qp] = std::exp(_H3Op[_qp]);
 
   // Reaction rates
 
@@ -442,8 +451,4 @@ Water::computeQpProperties()
   // // On-diagonal elements for the potential source
 
   // _Jac_potential[_qp] = 0.0;
-
-  _EField[_qp] = -_grad_potential[_qp](0);
-  _OHm_lin[_qp] = std::exp(_OHm[_qp]);
-  _H3Op_lin[_qp] = std::exp(_H3Op[_qp]);
 }

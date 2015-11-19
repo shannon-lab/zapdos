@@ -16,7 +16,6 @@ ChargeSource::ChargeSource(const InputParameters & parameters) :
   _charged_id(coupled("charged")),
 
   _e(getMaterialProperty<Real>("e")),
-  _eps(getMaterialProperty<Real>("eps")),
   _sgn(getMaterialProperty<Real>("sgn"+_charged_var.name()))
 {}
 
@@ -26,7 +25,7 @@ ChargeSource::~ChargeSource()
 Real
 ChargeSource::computeQpResidual()
 {
-  return -_test[_i][_qp] *_e[_qp] / _eps[_qp] *_sgn[_qp] * std::exp(_charged[_qp]);
+  return -_test[_i][_qp] *_e[_qp] *_sgn[_qp] * std::exp(_charged[_qp]);
 }
 
 Real
@@ -39,7 +38,7 @@ Real
 ChargeSource::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _charged_id) 
-    return -_test[_i][_qp] * _e[_qp] / _eps[_qp] * _sgn[_qp] * std::exp(_charged[_qp]) * _phi[_j][_qp];
+    return -_test[_i][_qp] * _e[_qp] * _sgn[_qp] * std::exp(_charged[_qp]) * _phi[_j][_qp];
   else
     return 0.0;
 }
