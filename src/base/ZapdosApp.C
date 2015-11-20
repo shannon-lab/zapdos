@@ -78,6 +78,8 @@
 
 // AuxKernels
 
+#include "EFieldAdvAux.h"
+#include "TotalFlux.h"
 #include "ElectronTotalFlux.h"
 #include "ElectronTotalFluxMag.h"
 #include "AuxSource.h"
@@ -276,6 +278,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(CoeffDiffusionLin);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
+  registerAux(TotalFlux);
   registerAux(Efield);
   registerAux(AuxSource);
   registerAux(ElectronTotalFlux);
@@ -298,6 +301,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(Ex);
   registerAux(AdvectiveFlux);
   registerAux(DiffusiveFlux);
+  registerAux(EFieldAdvAux);
   registerMaterial(Air);
   registerMaterial(Test);
   registerMaterial(Test2);

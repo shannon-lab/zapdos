@@ -12,31 +12,36 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "DiffusiveFlux.h"
+#ifndef EFIELDADVAUX_H
+#define EFIELDADVAUX_H
+
+#include "AuxKernel.h"
+
+class EFieldAdvAux;
 
 template<>
-InputParameters validParams<DiffusiveFlux>()
+InputParameters validParams<EFieldAdvAux>();
+
+class EFieldAdvAux : public AuxKernel
 {
-  InputParameters params = validParams<AuxKernel>();
-  params.addRequiredCoupledVar("density_log","The variable representing the log of the density.");
-  return params;
-}
+ public:
 
-DiffusiveFlux::DiffusiveFlux(const InputParameters & parameters) :
-    AuxKernel(parameters),
-    
-    // Coupled variables
+  EFieldAdvAux(const InputParameters & parameters);
 
-    _grad_density_log(coupledGradient("density_log")),
-    _density_var(*getVar("density_log",0)),
-    _density_log(coupledValue("density_log")),
-    
-    // Material properties
+ protected:
 
-    _diff(getMaterialProperty<Real>("diff" + _density_var.name()))    
-{}
+  virtual Real computeValue();
+  
+  // Coupled variables
 
-Real DiffusiveFlux::computeValue()
-{  
-  return -_diff[_qp] * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0);
-}
+  MooseVariable & _density_var;
+  VariableValue & _density_log;
+  VariableGradient & _grad_potential;
+
+  // Material properties
+
+  const MaterialProperty<Real> & _mu;
+  const MaterialProperty<Real> & _sgn;
+};
+
+#endif //EFIELDADVAUX_H

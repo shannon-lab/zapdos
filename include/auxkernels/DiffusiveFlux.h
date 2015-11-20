@@ -18,17 +18,15 @@ class DiffusiveFlux : public AuxKernel
 
   virtual Real computeValue();
   
-  // Input file scalars
-  
-  // Material properties
-
-  const MaterialProperty<Real> & _diffusivity;
-  const MaterialProperty<Real> & _electron_mult;
-  
   // Coupled variables
 
- private:
-  VariableGradient & _grad_electron_density;
+  VariableGradient & _grad_density_log;
+  MooseVariable & _density_var;
+  VariableValue & _density_log;
+
+  // Material properties
+
+  const MaterialProperty<Real> & _diff;  
 };
 
 #endif //DIFFUSIVEFLUX_H

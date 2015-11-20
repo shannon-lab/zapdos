@@ -46,6 +46,7 @@ protected:
   unsigned int _ip_id;
   const MaterialProperty<Real> & _se_coeff;
   const MaterialProperty<Real> & _muip;
+  const MaterialProperty<Real> & _eps;
 };
 
 #endif // NEUMANNCIRCUITVOLTAGE_H

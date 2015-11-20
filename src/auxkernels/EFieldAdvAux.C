@@ -12,31 +12,33 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "DiffusiveFlux.h"
+#include "EFieldAdvAux.h"
 
 template<>
-InputParameters validParams<DiffusiveFlux>()
+InputParameters validParams<EFieldAdvAux>()
 {
   InputParameters params = validParams<AuxKernel>();
+  params.addRequiredCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredCoupledVar("density_log","The variable representing the log of the density.");
   return params;
 }
 
-DiffusiveFlux::DiffusiveFlux(const InputParameters & parameters) :
+EFieldAdvAux::EFieldAdvAux(const InputParameters & parameters) :
     AuxKernel(parameters),
     
     // Coupled variables
 
-    _grad_density_log(coupledGradient("density_log")),
     _density_var(*getVar("density_log",0)),
     _density_log(coupledValue("density_log")),
-    
+    _grad_potential(coupledGradient("potential")),
+
     // Material properties
 
-    _diff(getMaterialProperty<Real>("diff" + _density_var.name()))    
+    _mu(getMaterialProperty<Real>("mu" + _density_var.name())),
+    _sgn(getMaterialProperty<Real>("sgn" + _density_var.name()))
 {}
 
-Real DiffusiveFlux::computeValue()
+Real EFieldAdvAux::computeValue()
 {  
-  return -_diff[_qp] * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0);
+  return _sgn[_qp] * _mu[_qp] * std::exp(_density_log[_qp]) * -_grad_potential[_qp](0);
 }
