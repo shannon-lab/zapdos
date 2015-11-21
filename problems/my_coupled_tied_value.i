@@ -2,9 +2,9 @@
   type = GeneratedMesh
   dim = 1
   nx = 100
-  ny = 10
+  # ny = 10
   xmax = 1
-  ymax = 1
+  # ymax = 1
 []
 
 [MeshModifiers]
@@ -44,9 +44,9 @@
     block = '0'
   [../]
 
-  [./w]
-    block = '0 1'
-  [../]
+  # [./w]
+  #   block = '0 1'
+  # [../]
 []
 
 [Kernels]
@@ -62,11 +62,11 @@
     D = 3
     block = 0
   [../]
-  [./diff_w]
-    type = Diffusion
-    variable = w
-    block = '0 1'
-  [../]
+  # [./diff_w]
+  #   type = Diffusion
+  #   variable = w
+  #   block = '0 1'
+  # [../]
 []
 
 [DGKernels]
@@ -108,7 +108,7 @@
     boundary = 'right'
     value = 1
   [../]
-  # Appears that I can achieve the same functionality as a constraint with this boundary condition
+#  Appears that I can achieve the same functionality as a constraint with this boundary condition
   [./middle]
     type = MatchedValueBC
     variable = v
@@ -117,14 +117,28 @@
   [../]
 []
 
-
+[Preconditioning]
+  [./fdp]
+    type = FDP
+    full = true
+  [../]
+[]
 
 [Executioner]
   type = Steady
-  # nl_rel_tol = 1e-12
-  # l_tol = 1e-12
+  solve_type = PJFNK
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_monitor_true_residual -ksp_converged_reason'
+  # petsc_options = '-pc_svd_monitor -snes_converged_reason -snes_linesearch_monitor -ksp_diagonal_scale -ksp_diagonal_scale_fix'
+  # petsc_options_iname = '-pc_type'
+  # petsc_options_value = 'svd'
+  # petsc_options_iname = '-pc_type'
+  # petsc_options_value = 'ilu'
+  petsc_options_iname = '-pc_type'
+  petsc_options_value = 'lu'
+  # line_search = none
 []
 
 [Outputs]
   exodus = true
+  print_linear_residuals = false
 []
