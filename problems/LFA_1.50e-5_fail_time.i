@@ -79,18 +79,21 @@
   type = Transient
   # type = Steady
   end_time = 1e-1
-  solve_type = PJFNK
-  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_monitor_true_residual -ksp_converged_reason'
-  # petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_monitor_true_residual -ksp_converged_reason'
-  # petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type' # -pc_factor_mat_solver_package'
-  # petsc_options_value = 'lu NONZERO 1.e-10 preonly' # mumps'
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason -ksp_monitor_true_residual'
+  # petsc_options_iname = '-snes_mf_type -mat_mffd_compute_normu'
+  # petsc_options_value = 'wp false'
+  # petsc_options_iname = '-ksp_pc_side'
+  # petsc_options_value = 'left'
   # petsc_options_iname = '-pc_type'
   # petsc_options_value = 'svd'
- # nl_rel_tol = 1e-1
+  solve_type = NEWTON
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_mf_type -mat_mffd_compute_normu' # -pc_factor_mat_solver_package'
+  petsc_options_value = 'lu NONZERO 1.e-10 preonly wp false' # mumps'
+ # nl_rel_tol = 1e-6
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- # nl_abs_tol = 1e-3
+ # nl_abs_tol = 1e-11
   l_max_its = 10
  nl_max_its = 15
   dtmin = 1e-12
@@ -146,12 +149,12 @@
     variable = em
     block = 0
   [../]
-  # [./em_ionization]
-  #   type = ElectronsFromIonizationLFA
-  #   variable = em
-  #   potential = potential
-  #   block = 0
-  # [../]
+  [./em_ionization]
+    type = ElectronsFromIonizationLFA
+    variable = em
+    potential = potential
+    block = 0
+  [../]
   [./em_log_stabilization]
     type = LogStabilization
     variable = em
@@ -198,18 +201,18 @@
     variable = potential
     block = 0
   [../]
-  # [./Arp_charge_source]
-  #   type = ChargeSource
-  #   variable = potential
-  #   charged = Arp
-  #   block = 0
-  # [../]
-  # [./em_charge_source]
-  #   type = ChargeSource
-  #   variable = potential
-  #   charged = em
-  #   block = 0
-  # [../]
+  [./Arp_charge_source]
+    type = ChargeSource
+    variable = potential
+    charged = Arp
+    block = 0
+  [../]
+  [./em_charge_source]
+    type = ChargeSource
+    variable = potential
+    charged = em
+    block = 0
+  [../]
 
   # potentialliq block
   [./potentialliq_diffusion]
@@ -218,24 +221,24 @@
     variable = potentialliq
     block = 1
   [../]
-  # [./emliq_charge_source]
-  #   type = ChargeSource
-  #   variable = potentialliq
-  #   charged = emliq
-  #   block = 1
-  # [../]
-  # [./OHm_charge_source]
-  #   type = ChargeSource
-  #   variable = potentialliq
-  #   charged = OHm
-  #   block = 1
-  # [../]
-  # [./H3Op_charge_source]
-  #   type = ChargeSource
-  #   variable = potentialliq
-  #   charged = H3Op
-  #   block = 1
-  # [../]
+  [./emliq_charge_source]
+    type = ChargeSource
+    variable = potentialliq
+    charged = emliq
+    block = 1
+  [../]
+  [./OHm_charge_source]
+    type = ChargeSource
+    variable = potentialliq
+    charged = OHm
+    block = 1
+  [../]
+  [./H3Op_charge_source]
+    type = ChargeSource
+    variable = potentialliq
+    charged = H3Op
+    block = 1
+  [../]
 
   [./Arp_time_deriv]
     type = ElectronTimeDerivative
@@ -253,13 +256,13 @@
     variable = Arp
     block = 0
   [../]
-  # [./Arp_ionization]
-  #   type = IonsFromIonizationLFA
-  #   variable = Arp
-  #   potential = potential
-  #   em = em
-  #   block = 0
-  # [../]
+  [./Arp_ionization]
+    type = IonsFromIonizationLFA
+    variable = Arp
+    potential = potential
+    em = em
+    block = 0
+  [../]
   [./Arp_log_stabilization]
     type = LogStabilization
     variable = Arp
@@ -272,61 +275,61 @@
     block = 0
   [../]
 
-  # [./OHm_time_deriv]
-  #   type = ElectronTimeDerivative
-  #   variable = OHm
-  #   block = 1
-  # [../]
-  # [./OHm_advection]
-  #   type = EFieldAdvection
-  #   variable = OHm
-  #   potential = potentialliq
-  #   block = 1
-  # [../]
-  # [./OHm_diffusion]
-  #   type = CoeffDiffusion
-  #   variable = OHm
-  #   block = 1
-  # [../]
-  # [./OHm_log_stabilization]
-  #   type = LogStabilization
-  #   variable = OHm
-  #   block = 1
-  # [../]
-  # [./OHm_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = OHm
-  #   potential = potentialliq
-  #   block = 1
-  # [../]
+  [./OHm_time_deriv]
+    type = ElectronTimeDerivative
+    variable = OHm
+    block = 1
+  [../]
+  [./OHm_advection]
+    type = EFieldAdvection
+    variable = OHm
+    potential = potentialliq
+    block = 1
+  [../]
+  [./OHm_diffusion]
+    type = CoeffDiffusion
+    variable = OHm
+    block = 1
+  [../]
+  [./OHm_log_stabilization]
+    type = LogStabilization
+    variable = OHm
+    block = 1
+  [../]
+  [./OHm_advection_stabilization]
+    type = EFieldArtDiff
+    variable = OHm
+    potential = potentialliq
+    block = 1
+  [../]
 
-  # [./H3Op_time_deriv]
-  #   type = ElectronTimeDerivative
-  #   variable = H3Op
-  #   block = 1
-  # [../]
-  # [./H3Op_advection]
-  #   type = EFieldAdvection
-  #   variable = H3Op
-  #   potential = potentialliq
-  #   block = 1
-  # [../]
-  # [./H3Op_diffusion]
-  #   type = CoeffDiffusion
-  #   variable = H3Op
-  #   block = 1
-  # [../]
-  # [./H3Op_log_stabilization]
-  #   type = LogStabilization
-  #   variable = H3Op
-  #   block = 1
-  # [../]
-  # [./H3Op_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = H3Op
-  #   potential = potentialliq
-  #   block = 1
-  # [../]
+  [./H3Op_time_deriv]
+    type = ElectronTimeDerivative
+    variable = H3Op
+    block = 1
+  [../]
+  [./H3Op_advection]
+    type = EFieldAdvection
+    variable = H3Op
+    potential = potentialliq
+    block = 1
+  [../]
+  [./H3Op_diffusion]
+    type = CoeffDiffusion
+    variable = H3Op
+    block = 1
+  [../]
+  [./H3Op_log_stabilization]
+    type = LogStabilization
+    variable = H3Op
+    block = 1
+  [../]
+  [./H3Op_advection_stabilization]
+    type = EFieldArtDiff
+    variable = H3Op
+    potential = potentialliq
+    block = 1
+  [../]
 []
 
 [DGKernels]
@@ -357,39 +360,38 @@
 
 [Variables]
   [./potential]
-    # scaling = 1e-3
-    # scaling = 1e-12
+    scaling = 1e8
+    # scaling = 1e-4
     block = 0
   [../]
   [./potentialliq]
-    # scaling = 1e-3
-    # scaling = 1e0
+    # scaling = 1e9
+    scaling = 1e8
     block = 1
   [../]
 
   [./em]
-    # scaling = 1e-18
+    scaling = 1e-12
     block = 0
   [../]
   [./emliq]
-    # scaling = 1e-18
-    # scaling = 1e-15
+    scaling = 1e-8
     block = 1
   [../]
 
   [./Arp]
-    # scaling = 1e-18
+    scaling = 1e-12
     block = 0
   [../]
 
-  # [./OHm]
-  #   scaling = 1e-21
-  #   block = 1
-  # [../]
-  # [./H3Op]
-  #   scaling = 1e-21
-  #   block = 1
-  # [../]
+  [./OHm]
+    scaling = 1e-17
+    block = 1
+  [../]
+  [./H3Op]
+    scaling = 1e-19
+    block = 1
+  [../]
 []
 
 [AuxVariables]
@@ -402,12 +404,12 @@
   [./Arp_lin]
     block = 0
   [../]
-  # [./OHm_lin]
-  #   block = 1
-  # [../]
-  # [./H3Op_lin]
-  #   block = 1
-  # [../]
+  [./OHm_lin]
+    block = 1
+  [../]
+  [./H3Op_lin]
+    block = 1
+  [../]
   [./Efield_gas]
     block = 0
     order = CONSTANT
@@ -469,18 +471,18 @@
     density_log = Arp
     block = 0
   [../]
-  # [./OHm_lin]
-  #   type = Density
-  #   variable = OHm_lin
-  #   density_log = OHm
-  #   block = 1
-  # [../]
-  # [./H3Op_lin]
-  #   type = Density
-  #   variable = H3Op_lin
-  #   density_log = H3Op
-  #   block = 1
-  # [../]
+  [./OHm_lin]
+    type = Density
+    variable = OHm_lin
+    density_log = OHm
+    block = 1
+  [../]
+  [./H3Op_lin]
+    type = Density
+    variable = H3Op_lin
+    density_log = H3Op
+    block = 1
+  [../]
   [./Efield_gas]
     type = Efield
     potential = potential
@@ -536,20 +538,20 @@
 []
 
 [BCs]
-  # [./potential_left]
-  #   type = NeumannCircuitVoltage
-  #   variable = potential
-  #   boundary = left
-  #   function = potential_bc_func
-  #   ip = Arp
-  #   data_provider = data_provider
-  # [../]
-  [./potential_dirichlet_left]
-    type = DirichletBC
+  [./potential_left]
+    type = NeumannCircuitVoltage
     variable = potential
     boundary = left
-    value = -1.25e3
+    function = potential_bc_func
+    ip = Arp
+    data_provider = data_provider
   [../]
+  # [./potential_dirichlet_left]
+  #   type = DirichletBC
+  #   variable = potential
+  #   boundary = left
+  #   value = -1.25e3
+  # [../]
   [./potential_dirichlet_right]
     type = DirichletBC
     variable = potentialliq
@@ -558,10 +560,16 @@
   [../]
   [./potential_interface]
     type = MatchedValueBC
-    variable = potentialliq
+    variable = potential
     boundary = master1_interface
-    v = potential
+    v = potentialliq
   [../]
+  # [./potential_interface]
+  #   type = MatchedValueBC
+  #   variable = potentialliq
+  #   boundary = master1_interface
+  #   v = potential
+  # [../]
   [./em_left]
     type = DCElectronBC
     variable = em
@@ -591,34 +599,41 @@
   [./Arp_physical]
     type = DCIonBC
     variable = Arp
-    boundary = 'left master0_interface'
+    # boundary = 'left master0_interface'
+    boundary = 'left'
     potential = potential
   [../]
-  # [./OHm_physical]
-  #   type = DCIonBC
-  #   variable = OHm
-  #   boundary = 'right'
-  #   potential = potentialliq
-  # [../]
+  [./OHm_physical]
+    type = DCIonBC
+    variable = OHm
+    boundary = 'right'
+    potential = potentialliq
+  [../]
+  [./H3Op_physical]
+    type = DCIonBC
+    variable = H3Op
+    boundary = 'right'
+    potential = potentialliq
+  [../]
 []
 
 [ICs]
   [./em_ic]
     type = ConstantIC
     variable = em
-    value = 19.934
+    value = 29.934
     block = 0
   [../]
   [./emliq_ic]
     type = ConstantIC
     variable = emliq
-    value = 19.934
+    value = 29.934
     block = 1
   [../]
   [./Arp_ic]
     type = ConstantIC
     variable = Arp
-    value = 19.934
+    value = 29.934
     block = 0
   [../]
   [./potential_ic]
@@ -634,18 +649,18 @@
   #   block = 0
   # [../]
 
-  # [./OHm_ic]
-  #   type = ConstantIC
-  #   variable = OHm
-  #   value = 45.54
-  #   block = 1
-  # [../]
-  # [./H3Op_ic]
-  #   type = ConstantIC
-  #   variable = H3Op
-  #   value = 45.54
-  #   block = 1
-  # [../]
+  [./OHm_ic]
+    type = ConstantIC
+    variable = OHm
+    value = 45.54
+    block = 1
+  [../]
+  [./H3Op_ic]
+    type = ConstantIC
+    variable = H3Op
+    value = 45.54
+    block = 1
+  [../]
   # [./potentialliq_ic]
   #   type = ConstantIC
   #   variable = potentialliq
@@ -663,8 +678,8 @@
 [Functions]
   [./potential_bc_func]
     type = ParsedFunction
-    # value = '1.25e3*tanh(1e6*t)'
-    value = 1.25e3
+    value = '1.25e3*tanh(1e6*t)'
+    # value = 1.25e3
   [../]
   [./potential_ic_func]
     type = ParsedFunction
@@ -685,8 +700,8 @@
  [./water_block]
    type = Water
    block = 1
-   # OHm = OHm
-   # H3Op = H3Op
+   OHm = OHm
+   H3Op = H3Op
    potential = potentialliq
  [../]
 []

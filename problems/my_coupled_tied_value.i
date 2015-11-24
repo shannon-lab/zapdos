@@ -111,10 +111,16 @@
 #  Appears that I can achieve the same functionality as a constraint with this boundary condition
   [./middle]
     type = MatchedValueBC
-    variable = v
+    variable = u
     boundary = 'master0_interface'
-    v = u
+    v = v
   [../]
+  # [./middle]
+  #   type = MatchedValueBC
+  #   variable = v
+  #   boundary = 'master0_interface'
+  #   v = u
+  # [../]
 []
 
 [Preconditioning]
@@ -126,15 +132,15 @@
 
 [Executioner]
   type = Steady
-  solve_type = PJFNK
+  solve_type = NEWTON
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_monitor_true_residual -ksp_converged_reason'
   # petsc_options = '-pc_svd_monitor -snes_converged_reason -snes_linesearch_monitor -ksp_diagonal_scale -ksp_diagonal_scale_fix'
   # petsc_options_iname = '-pc_type'
   # petsc_options_value = 'svd'
   # petsc_options_iname = '-pc_type'
   # petsc_options_value = 'ilu'
-  petsc_options_iname = '-pc_type'
-  petsc_options_value = 'lu'
+  # petsc_options_iname = '-pc_type'
+  # petsc_options_value = 'lu'
   # line_search = none
 []
 

@@ -79,6 +79,11 @@
   type = Transient
   # type = Steady
   end_time = 1e-1
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_monitor_true_residual -ksp_converged_reason'
+  # petsc_options_iname = '-ksp_pc_side'
+  # petsc_options_value = 'left'
+  # petsc_options_iname = '-pc_type'
+  # petsc_options_value = 'svd'
   # solve_type = NEWTON
   # petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type' # -pc_factor_mat_solver_package'
   # petsc_options_value = 'lu NONZERO 1.e-10 preonly' # mumps'
@@ -101,6 +106,7 @@
 
 [Outputs]
   print_perf_log = true
+  print_linear_residuals = false
   [./out]
     type = Exodus
     # output_material_properties = true

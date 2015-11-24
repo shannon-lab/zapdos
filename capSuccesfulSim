@@ -1,15 +1,15 @@
 #!/bin/bash
 
 ZAPPROBDIR="/home/lindsayad/projects/zapdos/problems/"
-INSTRING="Coupling_plasma_liquid_LFA_dg"
-ROOTSTRING="Coupling_plasma_liquid_LFA_dg"
-OUTSTRING=$ROOTSTRING"_with_ionization_sim_out_to_5.41e-07_seconds"
+INSTRING="LFA_different_scaling"
+ROOTSTRING=$INSTRING
+OUTSTRING=$ROOTSTRING"_3.03e-5_fail_time"
 
 # # mv "log.txt" $ZAPPROBDIR"MooseLogs/log_"$OUTSTRING"_gold.txt"
 # cp $ZAPPROBDIR$INSTRING".i" $ZAPPROBDIR$OUTSTRING"_gold.i"
 # mv $ZAPPROBDIR$INSTRING"_out.e" $ZAPPROBDIR"MooseOutput/"$OUTSTRING"_gold_out.e" 
 
-mv "log.txt" $ZAPPROBDIR"MooseLogs/log_"$OUTSTRING".txt"
+mv $ZAPPROBDIR"logDiffScaling.txt" $ZAPPROBDIR"MooseLogs/log_"$OUTSTRING".txt"
 cp $ZAPPROBDIR$INSTRING".i" $ZAPPROBDIR$OUTSTRING".i"
 mv $ZAPPROBDIR$INSTRING"_out.e" $ZAPPROBDIR"MooseOutput/"$OUTSTRING"_out.e" 
 
