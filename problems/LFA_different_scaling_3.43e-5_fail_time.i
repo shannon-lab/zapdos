@@ -383,25 +383,16 @@
   [../]
 
   [./OHm]
-    scaling = 1e-22
+    scaling = 1e-18
     block = 1
   [../]
   [./H3Op]
-    scaling = 1e-30
+    scaling = 1e-26
     block = 1
   [../]
 []
 
 [AuxVariables]
-  [./h_size]
-    block = '0 1'
-  [../]
-  [./rho]
-    block = 0
-  [../]
-  [./rholiq]
-    block = 1
-  [../]
   [./em_lin]
     block = 0
   [../]
@@ -460,24 +451,6 @@
 []
 
 [AuxKernels]
-  [./h_size]
-    type = HSize
-    variable = h_size
-  [../]
-  [./rho]
-    type = ParsedAux
-    variable = rho
-    args = 'em_lin Arp_lin'
-    function = 'Arp_lin - em_lin'
-    execute_on = 'timestep_end'
-  [../]
-  [./rholiq]
-    type = ParsedAux
-    variable = rholiq
-    args = 'emliq_lin OHm_lin H3Op_lin'
-    function = 'H3Op_lin - emliq_lin - OHm_lin'
-    execute_on = 'timestep_end'
-  [../]
   [./em_lin]
     type = Density
     variable = em_lin
@@ -628,18 +601,18 @@
     boundary = 'left'
     potential = potential
   [../]
-  # [./OHm_physical]
-  #   type = DCIonBC
-  #   variable = OHm
-  #   boundary = 'right'
-  #   potential = potentialliq
-  # [../]
-  # [./H3Op_physical]
-  #   type = DCIonBC
-  #   variable = H3Op
-  #   boundary = 'right'
-  #   potential = potentialliq
-  # [../]
+  [./OHm_physical]
+    type = DCIonBC
+    variable = OHm
+    boundary = 'right'
+    potential = potentialliq
+  [../]
+  [./H3Op_physical]
+    type = DCIonBC
+    variable = H3Op
+    boundary = 'right'
+    potential = potentialliq
+  [../]
 []
 
 [ICs]
@@ -677,13 +650,13 @@
   [./OHm_ic]
     type = ConstantIC
     variable = OHm
-    value = 54.8
+    value = 45.54
     block = 1
   [../]
   [./H3Op_ic]
     type = ConstantIC
     variable = H3Op
-    value = 54.8
+    value = 45.54
     block = 1
   [../]
   # [./potentialliq_ic]

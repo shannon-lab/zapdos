@@ -250,8 +250,8 @@ Water::computeQpProperties()
   _electron_mult[_qp] = _user_electron_mult;
   _potential_mult[_qp] = _user_potential_mult;
   _N_A[_qp] = 6.02e23;
-  // _eps_r[_qp]   = 80.;
-  _eps_r[_qp] = 5.;
+  _eps_r[_qp]   = 80.;
+  // _eps_r[_qp] = 5.;
   _eps_0[_qp]   = 8.85e-12;
   _eps[_qp] = _eps_r[_qp] * _eps_0[_qp];
   _e[_qp]	= 1.6e-19;  // coulombic charge
