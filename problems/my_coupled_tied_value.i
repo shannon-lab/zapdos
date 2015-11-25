@@ -35,6 +35,7 @@
     order = FIRST
     family = LAGRANGE
     block = '1'
+    scaling = .1
   [../]
 
 
@@ -42,6 +43,7 @@
     order = FIRST
     family = LAGRANGE
     block = '0'
+    scaling = 1
   [../]
 
   # [./w]
@@ -100,20 +102,20 @@
     type = DirichletBC
     variable = u
     boundary = 'left'
-    value = 0
+    value = 1
   [../]
   [./right]
     type = DirichletBC
     variable = v
     boundary = 'right'
-    value = 1
+    value = 0
   [../]
 #  Appears that I can achieve the same functionality as a constraint with this boundary condition
   [./middle]
     type = MatchedValueBC
-    variable = u
+    variable = v
     boundary = 'master0_interface'
-    v = v
+    v = u
   [../]
   # [./middle]
   #   type = MatchedValueBC
@@ -125,7 +127,7 @@
 
 [Preconditioning]
   [./fdp]
-    type = FDP
+    type = SMP
     full = true
   [../]
 []
@@ -133,18 +135,22 @@
 [Executioner]
   type = Steady
   solve_type = NEWTON
-  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_monitor_true_residual -ksp_converged_reason'
+  petsc_options = '-snes_converged_reason -pc_svd_monitor'
   # petsc_options = '-pc_svd_monitor -snes_converged_reason -snes_linesearch_monitor -ksp_diagonal_scale -ksp_diagonal_scale_fix'
-  # petsc_options_iname = '-pc_type'
-  # petsc_options_value = 'svd'
+  petsc_options_iname = '-pc_type'
+  petsc_options_value = 'svd'
   # petsc_options_iname = '-pc_type'
   # petsc_options_value = 'ilu'
-  # petsc_options_iname = '-pc_type'
-  # petsc_options_value = 'lu'
+  # petsc_options_iname = '-pc_type -ksp_type'
+  # petsc_options_value = 'lu ksp'
   # line_search = none
 []
 
 [Outputs]
   exodus = true
   print_linear_residuals = false
+[]
+
+[Debug]
+  show_var_residual_norms = true
 []

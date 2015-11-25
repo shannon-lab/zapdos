@@ -79,7 +79,7 @@
   type = Transient
   # type = Steady
   end_time = 1e-1
-  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason -ksp_monitor_true_residual'
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason -ksp_monitor_true_residual -snes_monitor'
   # petsc_options_iname = '-snes_mf_type -mat_mffd_compute_normu'
   # petsc_options_value = 'wp false'
   # petsc_options_iname = '-ksp_pc_side'
@@ -95,7 +95,7 @@
  # ss_check_tol = 1e-7
  # nl_abs_tol = 1e-11
   l_max_its = 10
- nl_max_its = 15
+ nl_max_its = 50
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -373,7 +373,7 @@
     block = 0
   [../]
   [./emliq]
-    scaling = 1e-13
+    scaling = 1e-15
     block = 1
   [../]
 
@@ -387,7 +387,7 @@
     block = 1
   [../]
   [./H3Op]
-    scaling = 1e-30
+    scaling = 1e-22
     block = 1
   [../]
 []
