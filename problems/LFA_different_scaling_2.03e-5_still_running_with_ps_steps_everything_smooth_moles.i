@@ -97,7 +97,6 @@
   l_max_its = 10
  nl_max_its = 10
   dtmin = 1e-12
-  line_search = cp
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4

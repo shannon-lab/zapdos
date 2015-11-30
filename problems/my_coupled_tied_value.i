@@ -1,7 +1,7 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 100
+  nx = 4
   # ny = 10
   xmax = 1
   # ymax = 1
@@ -135,15 +135,14 @@
 [Executioner]
   type = Steady
   solve_type = NEWTON
-  petsc_options = '-snes_converged_reason -pc_svd_monitor'
-  # petsc_options = '-pc_svd_monitor -snes_converged_reason -snes_linesearch_monitor -ksp_diagonal_scale -ksp_diagonal_scale_fix'
+  petsc_options = '-snes_converged_reason -pc_svd_monitor -snes_linesearch_monitor -ksp_view_mat -pc_svd_monitor'
   petsc_options_iname = '-pc_type'
   petsc_options_value = 'svd'
   # petsc_options_iname = '-pc_type'
   # petsc_options_value = 'ilu'
   # petsc_options_iname = '-pc_type -ksp_type'
   # petsc_options_value = 'lu ksp'
-  # line_search = none
+  line_search = cp
 []
 
 [Outputs]

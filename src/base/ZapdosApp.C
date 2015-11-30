@@ -4,6 +4,8 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "LogStabilizationMoles.h"
+#include "ChargeSourceMoles.h"
 #include "CoeffDiffusionLin.h"
 #include "ReactantAARxn.h"
 #include "ElectronsFromIonizationLFA.h"
@@ -128,6 +130,7 @@
 #include "MultipliedValueBC.h"
 #include "CoupledIntegratedBC.h"
 #include "NeumannCircuitVoltage.h"
+#include "NeumannCircuitVoltageMoles.h"
 #include "NoDiffusiveFlux.h"
 #include "EFieldBC.h"
 #include "SpeciesNetFluxBC.h"
@@ -207,6 +210,7 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(ChargeSourceMoles);
   registerKernel(ReactantFirstOrderRxn);
   registerKernel(ReactantAARxn);
   registerKernel(IonsFromIonization);
@@ -276,6 +280,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ParamAdvection);
   registerKernel(ElectronsFromIonization);
   registerKernel(CoeffDiffusionLin);
+  registerKernel(LogStabilizationMoles);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(TotalFlux);
@@ -319,6 +324,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(DGFluxBC);
   registerBoundaryCondition(MultipliedValueBC);
   registerBoundaryCondition(NeumannCircuitVoltage);
+  registerBoundaryCondition(NeumannCircuitVoltageMoles);
   registerBoundaryCondition(CoupledIntegratedBC);
   registerBoundaryCondition(NoDiffusiveFlux);
   registerBoundaryCondition(EFieldBC);
