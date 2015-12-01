@@ -151,7 +151,7 @@
     block = 0
   [../]
   [./em_ionization]
-    type = ElectronsFromIonizationLFA_KV
+    type = ElectronsFromIonizationLFA
     variable = em
     potential = potential
     block = 0
@@ -258,7 +258,7 @@
     block = 0
   [../]
   [./Arp_ionization]
-    type = IonsFromIonizationLFA_KV
+    type = IonsFromIonizationLFA
     variable = Arp
     potential = potential
     em = em

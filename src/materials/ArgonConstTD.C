@@ -176,14 +176,14 @@ ArgonConstTD::computeQpProperties()
   }
   else {
     // From bolos at atmospheric pressure and an EField of 2e5 V/m
-    _muem[_qp] = 0.0352103411399;
+    _muem[_qp] = 0.0352103411399 * 1000.; // units of m^2/(kV*s)
     _d_muem_d_actual_mean_en[_qp] = 0.0;
     _diffem[_qp] = 0.297951680159;
     _d_diffem_d_actual_mean_en[_qp] = 0.0;
   }
 
   // From Richards and Sawin, muArp*pressure = 1444 cm^2*Torr/(V*s) and diffArp*pressure = 40 cm^2*Torr/s. Use pressure = 760 torr.
-  _muArp[_qp] = 1.9e-4;
+  _muArp[_qp] = 1.9e-4 * 1000.; // units of m^2/(kV*s)
   _diffArp[_qp] = 5.26e-6;
 
   // 100 times less than electrons
