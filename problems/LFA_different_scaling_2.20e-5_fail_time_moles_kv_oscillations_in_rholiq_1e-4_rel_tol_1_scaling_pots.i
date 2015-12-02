@@ -381,11 +381,11 @@
 
 [Variables]
   [./potential]
-    scaling = 1e4
+    scaling = 1e1
     block = 0
   [../]
   [./potentialliq]
-    scaling = 1e4
+    scaling = 1e1
     block = 1
   [../]
 

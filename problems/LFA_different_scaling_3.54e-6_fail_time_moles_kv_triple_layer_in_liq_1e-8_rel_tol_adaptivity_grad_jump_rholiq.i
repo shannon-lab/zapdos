@@ -109,7 +109,7 @@
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type' # -pc_factor_mat_solver_package'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly' # mumps'
- nl_rel_tol = 1e-4
+ # nl_rel_tol = 1e-4
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
@@ -381,11 +381,11 @@
 
 [Variables]
   [./potential]
-    scaling = 1e4
+    # scaling = 1e6
     block = 0
   [../]
   [./potentialliq]
-    scaling = 1e4
+    # scaling = 1e4
     block = 1
   [../]
 
@@ -752,22 +752,22 @@
  [../]
 []
 
-# [Adaptivity]
-#   marker = error_frac
-#   max_h_level = 3
-#   [./Indicators]
-#     [./temp_jump]
-#       type = GradientJumpIndicator
-#       variable = rholiq
-#       scale_by_flux_faces = true
-#     [../]
-#   [../]
-#   [./Markers]
-#     [./error_frac]
-#       type = ErrorFractionMarker
-#       coarsen = 0.1
-#       indicator = temp_jump
-#       refine = 0.6
-#     [../]
-#   [../]
-# []
+[Adaptivity]
+  marker = error_frac
+  max_h_level = 3
+  [./Indicators]
+    [./temp_jump]
+      type = GradientJumpIndicator
+      variable = rholiq
+      scale_by_flux_faces = true
+    [../]
+  [../]
+  [./Markers]
+    [./error_frac]
+      type = ErrorFractionMarker
+      coarsen = 0.1
+      indicator = temp_jump
+      refine = 0.6
+    [../]
+  [../]
+[]

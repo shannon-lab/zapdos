@@ -85,14 +85,14 @@
 []
 
 [Preconditioning]
-  [./smp]
-    type = SMP
-    full = true
-  [../]
-  # [./fdp]
-  #   type = FDP
+  # [./smp]
+  #   type = SMP
   #   full = true
   # [../]
+  [./fdp]
+    type = FDP
+    full = true
+  [../]
 []
 
 [Executioner]
@@ -381,11 +381,11 @@
 
 [Variables]
   [./potential]
-    scaling = 1e4
+    # scaling = 1e6
     block = 0
   [../]
   [./potentialliq]
-    scaling = 1e4
+    # scaling = 1e4
     block = 1
   [../]
 
@@ -751,23 +751,3 @@
    potential = potentialliq
  [../]
 []
-
-# [Adaptivity]
-#   marker = error_frac
-#   max_h_level = 3
-#   [./Indicators]
-#     [./temp_jump]
-#       type = GradientJumpIndicator
-#       variable = rholiq
-#       scale_by_flux_faces = true
-#     [../]
-#   [../]
-#   [./Markers]
-#     [./error_frac]
-#       type = ErrorFractionMarker
-#       coarsen = 0.1
-#       indicator = temp_jump
-#       refine = 0.6
-#     [../]
-#   [../]
-# []
