@@ -135,14 +135,13 @@
 [Executioner]
   type = Steady
   solve_type = NEWTON
-  petsc_options = '-snes_converged_reason -pc_svd_monitor -snes_linesearch_monitor -ksp_view_mat -pc_svd_monitor'
+  # petsc_options = '-snes_converged_reason -pc_svd_monitor -snes_linesearch_monitor -ksp_view_mat -pc_svd_monitor -ksp_view_solution -snes_monitor_solution_update'
+  # petsc_options_iname = '-pc_type -ksp_view_solution'
+  # petsc_options_value = 'svd ascii:solution_unscaled.txt:ascii_matlab:append'
+  petsc_options = '-snes_converged_reason  -pc_svd_monitor -snes_linesearch_monitor -ksp_view_solution -snes_monitor_solution_update -options_left'
   petsc_options_iname = '-pc_type'
   petsc_options_value = 'svd'
-  # petsc_options_iname = '-pc_type'
-  # petsc_options_value = 'ilu'
-  # petsc_options_iname = '-pc_type -ksp_type'
-  # petsc_options_value = 'lu ksp'
-  line_search = cp
+  # line_search = cp
 []
 
 [Outputs]
