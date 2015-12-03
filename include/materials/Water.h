@@ -201,6 +201,13 @@ class Water : public Material
   MaterialProperty<Real> & _sgnemliq;
   MaterialProperty<Real> & _sgnOHm;
   MaterialProperty<Real> & _sgnH3Op;
+  MaterialProperty<Real> &  _sgnNap;
+  MaterialProperty<Real> &  _sgnClm;
+  MaterialProperty<Real> &  _muNap;
+  MaterialProperty<Real> &  _muClm;
+  MaterialProperty<Real> &  _diffNap;
+  MaterialProperty<Real> &  _diffClm;
+
   MaterialProperty<Real> & _EField;
   MaterialProperty<Real> & _OHm_lin;
   MaterialProperty<Real> & _H3Op_lin;

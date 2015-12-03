@@ -4,6 +4,8 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "ProductAABBRxn.h"
+#include "ProductFirstOrderRxn.h"
 #include "ElectronsFromIonizationLFA_KV.h"
 #include "IonsFromIonizationLFA_KV.h"
 #include "LogStabilizationMoles.h"
@@ -289,6 +291,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ElectronsFromIonization);
   registerKernel(CoeffDiffusionLin);
   registerKernel(LogStabilizationMoles);
+  registerKernel(ProductFirstOrderRxn);
+  registerKernel(ProductAABBRxn);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(TotalFlux);

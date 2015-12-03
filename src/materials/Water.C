@@ -215,6 +215,13 @@ Water::Water(const InputParameters & parameters) :
   _sgnemliq(declareProperty<Real>("sgnemliq")),
   _sgnOHm(declareProperty<Real>("sgnOHm")),
   _sgnH3Op(declareProperty<Real>("sgnH3Op")),
+  _sgnNap(declareProperty<Real>("sgnNap")),
+  _sgnClm(declareProperty<Real>("sgnClm")),
+  _muNap(declareProperty<Real>("muNap")),
+  _muClm(declareProperty<Real>("muClm")),
+  _diffNap(declareProperty<Real>("diffNap")),
+  _diffClm(declareProperty<Real>("diffClm")),
+  
 
 // My materials version of aux variables
   _EField(declareProperty<Real>("EField")),
@@ -258,8 +265,8 @@ Water::computeQpProperties()
   _k[_qp]	= 1.38e-23; // Boltzmanns constant
   _T[_qp]	= 300;      // Simulation temperature
   _kemliq[_qp]	= 1.9e1 * _cw[_qp];   // e + H2O-->H + OH-
-  _kemliqemliq[_qp]	= 6e11 * _cw[_qp] * _cw[_qp] / (_N_A[_qp] * 1000.);     // e + H2Op-->H + OH
-  _k3[_qp]	= 1e8;      // 2e + 2H2O-->H2 + 2OH-
+  // _kemliqemliq[_qp]	= 6e11 * _cw[_qp] * _cw[_qp] / (_N_A[_qp] * 1000.);     // e + H2Op-->H + OH
+  _kemliqemliq[_qp]	= 1e8 * _cw[_qp] * _cw[_qp] / 1000.;      // 2e + 2H2O-->H2 + 2OH-. Now has units of m^3 / (mol * s)
   _k4[_qp]	= 2.5e10;   // e + H + H2O-->H2 + OH-
   _k5[_qp]	= 3e10;     // e + OH-->OH-
   _k6[_qp]	= 2.2e10;   // e + O- + H2O --> 2OH-
@@ -302,12 +309,14 @@ Water::computeQpProperties()
   _DH[_qp]	= 5e-9;		// H radical
   _diffOHm[_qp]	= 5.27e-9;	// OH- ion
   // _diffOHm[_qp] = 2.98e-3; // Temporary high diffusivity taken from gas phase argon
+  _diffClm[_qp] = _diffOHm[_qp];
   _DH2Op[_qp]	= 5e-9;		// H2O+ ion
   _DOH[_qp]	= 5e-9;		// OH radical
   _DH2[_qp]	= 4.5e-9;	// H2 molecule
   _DOm[_qp]	= 5e-9;		// O- ion
   _diffH3Op[_qp] = 9.3e-9;	// H3O+ ion
   // _diffH3Op[_qp] = 2.98e-3;
+  _diffNap[_qp] = _diffH3Op[_qp];
   _DH2O2[_qp]	= 5e-9;		// H2O2 molecule
   _DHO2m[_qp]	= 5e-9;		// HO2- ion
   _DO2[_qp]	= 2e-9;		// O2 molecule
@@ -335,16 +344,20 @@ Water::computeQpProperties()
   _sgnemliq[_qp]   = -1;
   _sgnOHm[_qp] = -1;
   _sgnH3Op[_qp] = 1;
+  _sgnClm[_qp] = -1;
+  _sgnNap[_qp] = 1;
   _muemliq[_qp]	= std::abs(_zem[_qp])*_e[_qp]*_diffemliq[_qp]/_k[_qp]/_T[_qp] * 1000.;	// mobility of hydrated electron
   // _muemliq[_qp] = 0.0352103411399/4;
   _muH[_qp]	= _zH[_qp]*_e[_qp]*_DH[_qp]/_k[_qp]/_T[_qp];	// H radical
   _muOHm[_qp]	= _zOHm[_qp]*_e[_qp]*_diffOHm[_qp]/_k[_qp]/_T[_qp] * 1000.;	// OH- ion
+  _muClm[_qp] = _muOHm[_qp];
   // _muOHm[_qp] = 3.52e-4;
   _muH2Op[_qp]	= _zH2Op[_qp]*_e[_qp]*_DH2Op[_qp]/_k[_qp]/_T[_qp];	// H2O+ ion
   _muOH[_qp]	= _zOH[_qp]*_e[_qp]*_DOH[_qp]/_k[_qp]/_T[_qp];	// OH radical
   _muH2[_qp]	= _zH2[_qp]*_e[_qp]*_DH2[_qp]/_k[_qp]/_T[_qp];	// H2 molecule
   _muOm[_qp]	= _zOm[_qp]*_e[_qp]*_DOm[_qp]/_k[_qp]/_T[_qp];	// O- ion
   _muH3Op[_qp]	= _zH3Op[_qp]*_e[_qp]*_diffH3Op[_qp]/_k[_qp]/_T[_qp] * 1000.;	// H3O+ ion
+  _muNap[_qp] = _muH3Op[_qp];
   // _muH3Op[_qp] = 3.52e-4;
   _muH2O2[_qp]	= _zH2O2[_qp]*_e[_qp]*_DH2O2[_qp]/_k[_qp]/_T[_qp];	// H2O2 molecule
   _muHO2m[_qp]	= _zHO2m[_qp]*_e[_qp]*_DHO2m[_qp]/_k[_qp]/_T[_qp];	// HO2- ion

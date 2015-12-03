@@ -209,11 +209,11 @@
     variable = emliq
     block = 1
   [../]
-  [./emliq_water_bi_sink]
-    type = ReactantAARxn
-    variable = emliq
-    block = 1
-  [../]
+  # [./emliq_water_bi_sink]
+  #   type = ReactantAARxn
+  #   variable = emliq
+  #   block = 1
+  # [../]
 
   # potential block
   [./potential_diffusion]
@@ -359,12 +359,6 @@
   [../]
   [./OHm_product_first_order_rxn]
     type = ProductFirstOrderRxn
-    variable = OHm
-    v = emliq
-    block = 1
-  [../]
-  [./OHm_product_aabb_rxn]
-    type = ProductAABBRxn
     variable = OHm
     v = emliq
     block = 1

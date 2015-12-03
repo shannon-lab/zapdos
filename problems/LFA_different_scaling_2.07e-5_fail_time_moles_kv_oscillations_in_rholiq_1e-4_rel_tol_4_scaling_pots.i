@@ -109,7 +109,7 @@
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type' # -pc_factor_mat_solver_package'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly' # mumps'
- nl_rel_tol = 1e-4
+ nl_rel_tol = 1e-3
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
@@ -204,16 +204,16 @@
     variable = emliq
     block = '1'
   [../]
-  [./emliq_reactant_first_order_rxn]
-    type = ReactantFirstOrderRxn
-    variable = emliq
-    block = 1
-  [../]
-  [./emliq_water_bi_sink]
-    type = ReactantAARxn
-    variable = emliq
-    block = 1
-  [../]
+  # [./emliq_water_mono_sink]
+  #   type = ReactantFirstOrderRxn
+  #   variable = emliq
+  #   block = 1
+  # [../]
+  # [./emliq_water_bi_sink]
+  #   type = ReactantAARxn
+  #   variable = emliq
+  #   block = 1
+  # [../]
 
   # potential block
   [./potential_diffusion]
@@ -248,22 +248,16 @@
     charged = emliq
     block = 1
   [../]
-  [./Clm_charge_source]
-    type = ChargeSourceMoles_KV
-    variable = potentialliq
-    charged = Clm
-    block = 1
-  [../]
   [./OHm_charge_source]
     type = ChargeSourceMoles_KV
     variable = potentialliq
     charged = OHm
     block = 1
   [../]
-  [./Nap_charge_source]
+  [./H3Op_charge_source]
     type = ChargeSourceMoles_KV
     variable = potentialliq
-    charged = Nap
+    charged = H3Op
     block = 1
   [../]
 
@@ -302,34 +296,6 @@
     block = 0
   [../]
 
-  [./Clm_time_deriv]
-    type = ElectronTimeDerivative
-    variable = Clm
-    block = 1
-  [../]
-  [./Clm_advection]
-    type = EFieldAdvection
-    variable = Clm
-    potential = potentialliq
-    block = 1
-  [../]
-  [./Clm_diffusion]
-    type = CoeffDiffusion
-    variable = Clm
-    block = 1
-  [../]
-  [./Clm_log_stabilization]
-    type = LogStabilizationMoles
-    variable = Clm
-    block = 1
-  [../]
-  [./Clm_advection_stabilization]
-    type = EFieldArtDiff
-    variable = Clm
-    potential = potentialliq
-    block = 1
-  [../]
-
   [./OHm_time_deriv]
     type = ElectronTimeDerivative
     variable = OHm
@@ -357,43 +323,31 @@
     potential = potentialliq
     block = 1
   [../]
-  [./OHm_product_first_order_rxn]
-    type = ProductFirstOrderRxn
-    variable = OHm
-    v = emliq
-    block = 1
-  [../]
-  [./OHm_product_aabb_rxn]
-    type = ProductAABBRxn
-    variable = OHm
-    v = emliq
-    block = 1
-  [../]
 
-  [./Nap_time_deriv]
+  [./H3Op_time_deriv]
     type = ElectronTimeDerivative
-    variable = Nap
+    variable = H3Op
     block = 1
   [../]
-  [./Nap_advection]
+  [./H3Op_advection]
     type = EFieldAdvection
-    variable = Nap
+    variable = H3Op
     potential = potentialliq
     block = 1
   [../]
-  [./Nap_diffusion]
+  [./H3Op_diffusion]
     type = CoeffDiffusion
-    variable = Nap
+    variable = H3Op
     block = 1
   [../]
-  [./Nap_log_stabilization]
+  [./H3Op_log_stabilization]
     type = LogStabilizationMoles
-    variable = Nap
+    variable = H3Op
     block = 1
   [../]
-  [./Nap_advection_stabilization]
+  [./H3Op_advection_stabilization]
     type = EFieldArtDiff
-    variable = Nap
+    variable = H3Op
     potential = potentialliq
     block = 1
   [../]
@@ -427,11 +381,11 @@
 
 [Variables]
   [./potential]
-    scaling = 1e1
+    scaling = 1e4
     block = 0
   [../]
   [./potentialliq]
-    scaling = 1e1
+    scaling = 1e4
     block = 1
   [../]
 
@@ -449,15 +403,11 @@
     block = 0
   [../]
 
-  [./Clm]
-    # scaling = 1e-22
-    block = 1
-  [../]
   [./OHm]
     # scaling = 1e-22
     block = 1
   [../]
-  [./Nap]
+  [./H3Op]
     # scaling = 1e-22
     block = 1
   [../]
@@ -482,13 +432,10 @@
   [./Arp_lin]
     block = 0
   [../]
-  [./Clm_lin]
-    block = 1
-  [../]
   [./OHm_lin]
     block = 1
   [../]
-  [./Nap_lin]
+  [./H3Op_lin]
     block = 1
   [../]
   # [./Efield_gas]
@@ -548,8 +495,8 @@
   [./rholiq]
     type = ParsedAux
     variable = rholiq
-    args = 'emliq_lin Clm_lin Nap_lin OHm_lin'
-    function = 'Nap_lin - emliq_lin - Clm_lin - OHm_lin'
+    args = 'emliq_lin OHm_lin H3Op_lin'
+    function = 'H3Op_lin - emliq_lin - OHm_lin'
     execute_on = 'timestep_end'
   [../]
   [./em_lin]
@@ -570,22 +517,16 @@
     density_log = Arp
     block = 0
   [../]
-  [./Clm_lin]
-    type = Density
-    variable = Clm_lin
-    density_log = Clm
-    block = 1
-  [../]
   [./OHm_lin]
     type = Density
     variable = OHm_lin
     density_log = OHm
     block = 1
   [../]
-  [./Nap_lin]
+  [./H3Op_lin]
     type = Density
-    variable = Nap_lin
-    density_log = Nap
+    variable = H3Op_lin
+    density_log = H3Op
     block = 1
   [../]
   # [./Efield_gas]
@@ -708,21 +649,15 @@
     boundary = 'left'
     potential = potential
   [../]
-  # [./Clm_physical]
+  # [./OHm_physical]
   #   type = DCIonBC
-  #   variable = Clm
+  #   variable = OHm
   #   boundary = 'right'
   #   potential = potentialliq
   # [../]
-  [./OHm_physical]
-    type = DCIonBC
-    variable = OHm
-    boundary = 'right'
-    potential = potentialliq
-  [../]
-  # [./Nap_physical]
+  # [./H3Op_physical]
   #   type = DCIonBC
-  #   variable = Nap
+  #   variable = H3Op
   #   boundary = 'right'
   #   potential = potentialliq
   # [../]
@@ -760,21 +695,15 @@
   #   block = 0
   # [../]
 
-  [./Clm_ic]
-    type = ConstantIC
-    variable = Clm
-    value = .0455
-    block = 1
-  [../]
   [./OHm_ic]
     type = ConstantIC
     variable = OHm
-    value = -25
+    value = .0455
     block = 1
   [../]
-  [./Nap_ic]
+  [./H3Op_ic]
     type = ConstantIC
-    variable = Nap
+    variable = H3Op
     value = .0455
     block = 1
   [../]
@@ -817,6 +746,8 @@
  [./water_block]
    type = Water
    block = 1
+   OHm = OHm
+   H3Op = H3Op
    potential = potentialliq
  [../]
 []
