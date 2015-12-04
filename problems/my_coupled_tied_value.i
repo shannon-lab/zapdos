@@ -1,18 +1,18 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 4
+  nx = 2
   # ny = 10
-  xmax = 1
+  xmax = 2
   # ymax = 1
 []
 
 [MeshModifiers]
   [./subdomain1]
     type = SubdomainBoundingBox
-    bottom_left = '0 0 0'
+    bottom_left = '1.0 0 0'
     block_id = 1
-    top_right = '0.5 1.0 0'
+    top_right = '2.0 1.0 0'
   [../]
   [./interface]
     type = SideSetsBetweenSubdomains
@@ -34,16 +34,16 @@
   [./u]
     order = FIRST
     family = LAGRANGE
-    block = '1'
-    scaling = .1
+    block = '0'
+    # scaling = .1
   [../]
 
 
   [./v]
     order = FIRST
     family = LAGRANGE
-    block = '0'
-    scaling = 1
+    block = '1'
+    # scaling = 1
   [../]
 
   # [./w]
@@ -55,14 +55,14 @@
   [./diff_u]
     type = CoeffParamDiffusion
     variable = u
-    D = 1
-    block = 1
+    D = 4
+    block = 0
   [../]
   [./diff_v]
     type = CoeffParamDiffusion
     variable = v
-    D = 3
-    block = 0
+    D = 2
+    block = 1
   [../]
   # [./diff_w]
   #   type = Diffusion
@@ -76,9 +76,9 @@
     type = DGDiffusionInterface
     variable = u
     neighbor_var = v
-    boundary = master1_interface
-    D = 1
-    D_neighbor = 3
+    boundary = master0_interface
+    D = 4
+    D_neighbor = 2
   [../]
 []
 
@@ -138,9 +138,9 @@
   # petsc_options = '-snes_converged_reason -pc_svd_monitor -snes_linesearch_monitor -ksp_view_mat -pc_svd_monitor -ksp_view_solution -snes_monitor_solution_update'
   # petsc_options_iname = '-pc_type -ksp_view_solution'
   # petsc_options_value = 'svd ascii:solution_unscaled.txt:ascii_matlab:append'
-  petsc_options = '-snes_converged_reason  -pc_svd_monitor -snes_linesearch_monitor -ksp_view_solution -snes_monitor_solution_update -options_left'
-  petsc_options_iname = '-pc_type'
-  petsc_options_value = 'svd'
+  petsc_options = '-snes_converged_reason  -pc_svd_monitor -snes_linesearch_monitor -options_left -snes_test_display'
+  petsc_options_iname = '-pc_type -snes_type' #  -ksp_view_mat
+  petsc_options_value = 'svd test' #  ascii:sans_dg_kernels.txt
   # line_search = cp
 []
 
