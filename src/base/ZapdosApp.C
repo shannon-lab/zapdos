@@ -111,6 +111,7 @@
 #include "Efield.h"
 
 // Materials
+#include "JacMat.h"
 #include "Test.h"
 #include "Test2.h"
 #include "Air.h"
@@ -319,6 +320,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(AdvectiveFlux);
   registerAux(DiffusiveFlux);
   registerAux(EFieldAdvAux);
+  registerMaterial(JacMat);
   registerMaterial(Air);
   registerMaterial(Test);
   registerMaterial(Test2);

@@ -15,6 +15,7 @@
 #include "NodeAndSidesetBetweenSubdomains.h"
 #include "InputParameters.h"
 #include "MooseTypes.h"
+#include "MooseMesh.h"
 
 template<>
 InputParameters validParams<NodeAndSidesetBetweenSubdomains>()
@@ -76,4 +77,3 @@ NodeAndSidesetBetweenSubdomains::modify()
     boundary_info.nodeset_name(boundary_ids[i]) = boundary_names[i];
   }
 }
-

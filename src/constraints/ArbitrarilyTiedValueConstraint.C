@@ -14,6 +14,7 @@
 #include "ArbitrarilyTiedValueConstraint.h"
 
 #include "SystemBase.h"
+#include "libmesh/sparse_matrix.h"
 
 template<>
 InputParameters validParams<ArbitrarilyTiedValueConstraint>()
@@ -83,4 +84,3 @@ ArbitrarilyTiedValueConstraint::computeQpJacobian(Moose::ConstraintJacobianType 
   }
   return retVal;
 }
-

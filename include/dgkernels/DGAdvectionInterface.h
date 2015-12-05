@@ -34,11 +34,14 @@ public:
 protected:
   virtual Real computeQpResidual(Moose::DGResidualType type);
   virtual Real computeQpJacobian(Moose::DGJacobianType type);
+  virtual Real computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar);
 
   MooseVariable & _potential_var;
   MooseVariable & _potential_neighbor_var;
   VariableGradient & _grad_potential;
   VariableGradient & _grad_potential_neighbor;
+  unsigned int _potential_id;
+  unsigned int _potential_neighbor_id;
 
   const MaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _mu_neighbor;

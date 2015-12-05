@@ -46,9 +46,12 @@
     # scaling = 1
   [../]
 
-  # [./w]
-  #   block = '0 1'
-  # [../]
+  [./w]
+    block = '0'
+  [../]
+  [./p]
+    block = '1'
+  [../]
 []
 
 [Kernels]
@@ -64,11 +67,16 @@
     D = 2
     block = 1
   [../]
-  # [./diff_w]
-  #   type = Diffusion
-  #   variable = w
-  #   block = '0 1'
-  # [../]
+  [./diff_w]
+    type = Diffusion
+    variable = w
+    block = '0'
+  [../]
+  [./diff_p]
+    type = Diffusion
+    variable = p
+    block = '1'
+  [../]
 []
 
 [DGKernels]
@@ -80,22 +88,15 @@
     D = 4
     D_neighbor = 2
   [../]
+  [./em_dg_advection_interface]
+    type = DGAdvectionInterface
+    variable = u
+    neighbor_var = v
+    boundary = master0_interface
+    potential = w
+    potential_neighbor = p
+  [../]
 []
-
-# u is block 1, v is block 0
-# At the interface, u has a lower element ID (because it's on the LHS of the domain) than v
-
-# # For reasons unknown to me, this block currently produces a seg fault. It used to work.
-# # I don't know what changed. Perhaps because I'm now based on devel instead of master
-# [Constraints]
-#   [./value]
-#     type = CoupledTiedValueConstraint
-#     variable = v
-#     slave = master0_interface
-#     master = master1_interface
-#     master_variable = u
-#   [../]
-# []
 
 [BCs]
   [./left]
@@ -111,18 +112,25 @@
     value = 0
   [../]
 #  Appears that I can achieve the same functionality as a constraint with this boundary condition
-  [./middle]
-    type = MatchedValueBC
-    variable = v
-    boundary = 'master0_interface'
-    v = u
-  [../]
   # [./middle]
   #   type = MatchedValueBC
   #   variable = v
   #   boundary = 'master0_interface'
   #   v = u
   # [../]
+  # [./middle]
+  #   type = MatchedValueBC
+  #   variable = v
+  #   boundary = 'master0_interface'
+  #   v = u
+  # [../]
+[]
+
+[Materials]
+  [./jac]
+    block = '0 1'
+    type = JacMat
+  [../]
 []
 
 [Preconditioning]

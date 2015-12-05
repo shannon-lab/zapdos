@@ -13,6 +13,10 @@
 /****************************************************************/
 
 #include "TimeDerivativeSUPG.h"
+#include "Assembly.h"
+
+// libMesh includes
+#include "libmesh/quadrature.h"
 
 template<>
 InputParameters validParams<TimeDerivativeSUPG>()
@@ -74,7 +78,7 @@ TimeDerivativeSUPG::computeQpResidual()
 	  return (_tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp] + _sigma*_velocity_h * _grad_test[_i][_qp] )  * _u_dot[_qp];
 	}
     }
-  else 
+  else
     {
       return _tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp]*_u_dot[_qp];
     }

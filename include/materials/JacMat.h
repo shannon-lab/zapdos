@@ -11,28 +11,35 @@
 /*                                                              */
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
+#ifndef JACMAT_H_
+#define JACMAT_H_
 
-#include "AnalyticalDiffIndicator.h"
-#include "Function.h"
+#include "Material.h"
+
+class JacMat;
 
 template<>
-InputParameters validParams<AnalyticalDiffIndicator>()
-{
-  InputParameters params = validParams<ElementIntegralIndicator>();
-  params.addRequiredParam<FunctionName>("function", "The analytic solution to compare against");
-  return params;
-}
+InputParameters validParams<JacMat>();
 
-
-AnalyticalDiffIndicator::AnalyticalDiffIndicator(const InputParameters & parameters) :
-    ElementIntegralIndicator(parameters),
-    _func(getFunction("function"))
+class JacMat : public Material
 {
-}
+public:
+  JacMat(const InputParameters & parameters);
 
-Real
-AnalyticalDiffIndicator::computeQpIntegral()
-{
-  Real diff = _u[_qp]-_func.value(_t, _q_point[_qp]);
-  return diff;
-}
+protected:
+  virtual void computeQpProperties();
+
+  MaterialProperty<Real> & _muu;
+  MaterialProperty<Real> & _muv;
+  MaterialProperty<Real> & _sgnu;
+  MaterialProperty<Real> & _sgnv;
+  MaterialProperty<Real> & _diffu;
+  MaterialProperty<Real> & _diffem;
+  MaterialProperty<Real> & _muem;
+  MaterialProperty<Real> & _iz_coeff_efield_a;
+  MaterialProperty<Real> & _iz_coeff_efield_b;
+  MaterialProperty<Real> & _iz_coeff_efield_c;
+
+};
+
+#endif //JACMAT_H

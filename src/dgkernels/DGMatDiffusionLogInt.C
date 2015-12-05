@@ -20,8 +20,6 @@ template<>
 InputParameters validParams<DGMatDiffusionLogInt>()
 {
   InputParameters params = validParams<DGInterface>();
-  params.addParam<Real>("D",1.,"The diffusion coefficient.");
-  params.addParam<Real>("D_neighbor",1.,"The neighboring diffusion coefficient.");
   return params;
 }
 
@@ -67,16 +65,16 @@ DGMatDiffusionLogInt::computeQpJacobian(Moose::DGJacobianType type)
   {
 
   case Moose::ElementElement:
-    jac -= 0.5 * _D[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] + std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) * _normals[_qp] * _test[_i][_qp];
+    jac += 0.5 * -_D[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] + std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) * _normals[_qp] * _test[_i][_qp];
     break;
 
-  case Moose::ElementNeighbor:
-    jac -= 0.5 * _D_neighbor[_qp] * (std::exp(_neighbor_value[_qp]) * _grad_phi_neighbor[_j][_qp] + std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _grad_neighbor_value[_qp]) * _normals[_qp] * _test[_i][_qp];
-    break;
+  // case Moose::ElementNeighbor:
+  //   jac -= 0.5 * _D_neighbor[_qp] * (std::exp(_neighbor_value[_qp]) * _grad_phi_neighbor[_j][_qp] + std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _grad_neighbor_value[_qp]) * _normals[_qp] * _test[_i][_qp];
+  //   break;
 
-  case Moose::NeighborElement:
-    jac += 0.5 * _D[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] + std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) * _normals[_qp] * _test_neighbor[_i][_qp];
-    break;
+  // case Moose::NeighborElement:
+  //   jac += 0.5 * _D[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] + std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) * _normals[_qp] * _test_neighbor[_i][_qp];
+  //   break;
 
   case Moose::NeighborNeighbor:
     jac += 0.5 * _D_neighbor[_qp] * (std::exp(_neighbor_value[_qp]) * _grad_phi_neighbor[_j][_qp] + std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _grad_neighbor_value[_qp]) * _normals[_qp] * _test_neighbor[_i][_qp];
@@ -84,4 +82,19 @@ DGMatDiffusionLogInt::computeQpJacobian(Moose::DGJacobianType type)
   }
 
   return jac;
+}
+
+Real
+DGMatDiffusionLogInt::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar)
+{
+
+  if (jvar == _var.number())
+    return 0.5 * (_D[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] + std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) * _normals[_qp]) * _test_neighbor[_i][_qp];
+
+  else if (jvar == _neighbor_var.number())
+    return 0.5 * (-_D_neighbor[_qp] * (std::exp(_neighbor_value[_qp]) * _grad_phi_neighbor[_j][_qp] + std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _grad_neighbor_value[_qp]) * _normals[_qp]) * _test[_i][_qp];
+
+  else
+    return 0.;
+
 }

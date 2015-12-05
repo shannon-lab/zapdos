@@ -31,6 +31,8 @@ DGAdvectionInterface::DGAdvectionInterface(const InputParameters & parameters) :
     _potential_neighbor_var(*getVar("potential_neighbor",0)),
     _grad_potential(_potential_var.gradSln()),
     _grad_potential_neighbor(_potential_neighbor_var.gradSlnNeighbor()),
+    _potential_id(coupled("potential")),
+    _potential_neighbor_id(coupled("potential_neighbor")),
 
     _mu(getMaterialProperty<Real>("mu" + _var.name())),
     _mu_neighbor(getNeighborMaterialProperty<Real>("mu" + _neighbor_var.name())),
@@ -77,13 +79,13 @@ DGAdvectionInterface::computeQpJacobian(Moose::DGJacobianType type)
     jac += 0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]) * _test[_i][_qp];
     break;
 
-  case Moose::ElementNeighbor:
-    jac += 0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp]) * _test[_i][_qp];
-    break;
+  // case Moose::ElementNeighbor:
+  //   jac += 0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp]) * _test[_i][_qp];
+  //   break;
 
-  case Moose::NeighborElement:
-    jac += -0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]) * _test_neighbor[_i][_qp];
-    break;
+  // case Moose::NeighborElement:
+  //   jac += -0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]) * _test_neighbor[_i][_qp];
+  //   break;
 
   case Moose::NeighborNeighbor:
     jac += -0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp]) * _test_neighbor[_i][_qp];
@@ -91,4 +93,61 @@ DGAdvectionInterface::computeQpJacobian(Moose::DGJacobianType type)
   }
 
   return jac;
+}
+
+Real
+DGAdvectionInterface::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar)
+{
+
+  if (jvar == _var.number() && type == Moose::NeighborElement)
+    return -0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]) * _test_neighbor[_i][_qp];
+
+  else if (jvar == _neighbor_var.number() && type == Moose::ElementNeighbor)
+    return 0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp]) * _test[_i][_qp];
+
+  else if (jvar == _potential_id)
+  {
+    switch (type)
+    {
+
+      case Moose::ElementElement:
+        return  0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_phi[_j][_qp] * std::exp(_u[_qp]) * _normals[_qp]) * _test[_i][_qp];
+
+      case Moose::ElementNeighbor:
+        return 0.;
+
+      case Moose::NeighborElement:
+        return  -0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_phi[_j][_qp] * std::exp(_u[_qp]) * _normals[_qp]) * _test_neighbor[_i][_qp];
+
+      case Moose::NeighborNeighbor:
+        return 0.;
+
+    }
+    return 0.;
+  }
+
+  else if (jvar == _potential_neighbor_id)
+  {
+    switch (type)
+    {
+
+      case Moose::ElementElement:
+        return 0.;
+
+      case Moose::ElementNeighbor:
+        return  0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _normals[_qp]) * _test[_i][_qp];
+
+      case Moose::NeighborElement:
+        return 0.;
+
+      case Moose::NeighborNeighbor:
+        return  -0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _normals[_qp]) * _test_neighbor[_i][_qp];
+
+    }
+    return 0.;
+  }
+
+  else
+    return 0.;
+
 }

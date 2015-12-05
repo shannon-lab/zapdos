@@ -24,9 +24,13 @@ J_H_new = np.mat('1 0 0 0; 0 0 2 -2; -2 2 2 -2; 0 0 0 1')
 J_H_delta = J_H_new - J_H_old
 print J_H_delta
 
-''' Gold Jacobians:
-DGDiffusionInterface
-Diffusion
-DirichletBC
-MatchedValueBC
+''' Confident Jacobians:
+m-DGDiffusionInterface
+m-Diffusion
+m-DirichletBC
+m-MatchedValueBC
+z-DGAdvectionInterface
+z-ElectronTimeDerivative
+z-EFieldAdvection
+z-CoeffDiffusion
 '''
