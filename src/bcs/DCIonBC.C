@@ -25,7 +25,7 @@ DCIonBC::DCIonBC(const InputParameters & parameters) :
 Real
 DCIonBC::computeQpResidual()
 {
-  if ( _normals[_qp]*_sgn[_qp]*-_grad_potential[_qp] > 0.0) {
+  if ( _normals[_qp] * _sgn[_qp] * -_grad_potential[_qp] > 0.0) {
     _a = 1.0;
   }
   else {
@@ -38,7 +38,7 @@ DCIonBC::computeQpResidual()
 Real
 DCIonBC::computeQpJacobian()
 {
-  if ( _normals[_qp]*_sgn[_qp]*-_grad_potential[_qp] > 0.0) {
+  if ( _normals[_qp] * _sgn[_qp] * -_grad_potential[_qp] > 0.0) {
     _a = 1.0;
   }
   else {
@@ -52,7 +52,7 @@ Real
 DCIonBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id) {
-    if ( _normals[_qp]*_sgn[_qp]*-_grad_potential[_qp] > 0.0) {
+    if ( _normals[_qp] * _sgn[_qp] * -_grad_potential[_qp] > 0.0) {
       _a = 1.0;
     }
     else {

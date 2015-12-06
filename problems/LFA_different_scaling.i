@@ -148,12 +148,13 @@
     # electrode_area = 3.14e-6 # Formerly 3.14e-6
     electrode_area = 5.02e-7 # Formerly 3.14e-6
     ballast_resist = 8.1e3
+    e = 1.6e-19
     # ballast_resist = 1e6
   [../]
 []
 
 [Kernels]
-  # em block	
+  # em block
   [./em_time_deriv]
     type = ElectronTimeDerivative
     variable = em
@@ -179,9 +180,10 @@
   [./em_log_stabilization]
     type = LogStabilizationMoles
     variable = em
+    offset = 50
     block = 0
   [../]
-  
+
   # emliq block
   [./emliq_time_deriv]
     type = ElectronTimeDerivative
@@ -201,6 +203,7 @@
   [../]
   [./emliq_log_stabilization]
     type = LogStabilizationMoles
+    offset = 50
     variable = emliq
     block = '1'
   [../]
@@ -292,6 +295,7 @@
   [../]
   [./Arp_log_stabilization]
     type = LogStabilizationMoles
+    offset = 50
     variable = Arp
     block = 0
   [../]
@@ -320,6 +324,7 @@
   [../]
   [./Clm_log_stabilization]
     type = LogStabilizationMoles
+    offset = 50
     variable = Clm
     block = 1
   [../]
@@ -348,6 +353,7 @@
   [../]
   [./OHm_log_stabilization]
     type = LogStabilizationMoles
+    offset = 50
     variable = OHm
     block = 1
   [../]
@@ -388,6 +394,7 @@
   [../]
   [./Nap_log_stabilization]
     type = LogStabilizationMoles
+    offset = 50
     variable = Nap
     block = 1
   [../]
@@ -414,7 +421,7 @@
     neighbor_var = emliq
     boundary = master0_interface
   [../]
-  
+
   [./potential_dg_diffusion_interface]
    type = DGMatDiffusionInt
    # type = DGDiffusionInt
@@ -700,7 +707,7 @@
     boundary = master1_interface
     v = em
   [../]
-    
+
   [./Arp_physical]
     type = DCIonBC
     variable = Arp

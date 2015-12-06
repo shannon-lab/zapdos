@@ -32,7 +32,19 @@ JacMat::JacMat(const InputParameters & parameters) :
     _muem(declareProperty<Real>("muem")),
     _iz_coeff_efield_a(declareProperty<Real>("iz_coeff_efield_a")),
     _iz_coeff_efield_b(declareProperty<Real>("iz_coeff_efield_b")),
-    _iz_coeff_efield_c(declareProperty<Real>("iz_coeff_efield_c"))
+    _iz_coeff_efield_c(declareProperty<Real>("iz_coeff_efield_c")),
+    _ku(declareProperty<Real>("ku")),
+  _kuu(declareProperty<Real>("kuu")),
+  _N_A(declareProperty<Real>("N_A")),
+  _e(declareProperty<Real>("e")),
+    _kv(declareProperty<Real>("kv")),
+  _kvv(declareProperty<Real>("kvv")),
+  _diffu1(declareProperty<Real>("diffu1")),
+  _diffu2(declareProperty<Real>("diffu2")),
+  _se_coeff(declareProperty<Real>("se_coeff")),
+  _eps(declareProperty<Real>("eps")),
+  _mem(declareProperty<Real>("mem"))
+
 {
 }
 
@@ -49,4 +61,15 @@ JacMat::computeQpProperties()
   _iz_coeff_efield_a[_qp] = 1.1;
   _iz_coeff_efield_b[_qp] = 1.1;
   _iz_coeff_efield_c[_qp] = 1.1;
+  _ku[_qp] = 1.1;
+  _kuu[_qp] = 1.1;
+  _N_A[_qp] = 1.1;
+  _e[_qp] = 1.1;
+  _kv[_qp] = 1.1;
+  _kvv[_qp] = 1.1;
+  _diffu1[_qp] = 1.1;
+  _diffu2[_qp] = 1.1;
+  _se_coeff[_qp] = 0.1;
+  _eps[_qp] = 1.1;
+  _mem[_qp] = 1.1;
 }

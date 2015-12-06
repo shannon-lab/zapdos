@@ -68,14 +68,6 @@ DGMatDiffusionLogInt::computeQpJacobian(Moose::DGJacobianType type)
     jac += 0.5 * -_D[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] + std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) * _normals[_qp] * _test[_i][_qp];
     break;
 
-  // case Moose::ElementNeighbor:
-  //   jac -= 0.5 * _D_neighbor[_qp] * (std::exp(_neighbor_value[_qp]) * _grad_phi_neighbor[_j][_qp] + std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _grad_neighbor_value[_qp]) * _normals[_qp] * _test[_i][_qp];
-  //   break;
-
-  // case Moose::NeighborElement:
-  //   jac += 0.5 * _D[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] + std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) * _normals[_qp] * _test_neighbor[_i][_qp];
-  //   break;
-
   case Moose::NeighborNeighbor:
     jac += 0.5 * _D_neighbor[_qp] * (std::exp(_neighbor_value[_qp]) * _grad_phi_neighbor[_j][_qp] + std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _grad_neighbor_value[_qp]) * _normals[_qp] * _test_neighbor[_i][_qp];
     break;

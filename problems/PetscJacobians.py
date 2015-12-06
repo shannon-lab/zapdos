@@ -34,4 +34,19 @@ z-ElectronTimeDerivative
 z-EFieldAdvection
 z-CoeffDiffusion
 z-ElectronsFromIonizationLFA_KV Woooo!!!
+z-LogStabilizationMoles
+z-ReactantFirstOrderRxn
+z-ReactantAARxn
+z-CoeffDiffusionLin
+z-ChargeSourceMoles_KV
+z-IonsFromIonizationLFA_KV
+z-EFieldArtDiff
+z-ProductFirstOrderRxn
+z-ProductAABBRxn
+z-DGMatDiffusionLogInt
+z-DGMatDiffusionInt
+z-NeumannCircuitVoltageMoles_KV
+z-DCElectronBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
+z-DCIonBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
+z-MatchedValueLogBC
 '''

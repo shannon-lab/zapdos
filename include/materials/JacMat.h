@@ -39,7 +39,17 @@ protected:
   MaterialProperty<Real> & _iz_coeff_efield_a;
   MaterialProperty<Real> & _iz_coeff_efield_b;
   MaterialProperty<Real> & _iz_coeff_efield_c;
-
+  MaterialProperty<Real> & _ku;
+  MaterialProperty<Real> & _kuu;
+  MaterialProperty<Real> & _N_A;
+  MaterialProperty<Real> & _e;
+  MaterialProperty<Real> & _kv;
+  MaterialProperty<Real> & _kvv;
+  MaterialProperty<Real> & _diffu1;
+  MaterialProperty<Real> & _diffu2;
+  MaterialProperty<Real> & _se_coeff;
+  MaterialProperty<Real> & _eps;
+  MaterialProperty<Real> & _mem;
 };
 
 #endif //JACMAT_H

@@ -1,7 +1,7 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 2
+  nx = 1
   xmax = 1
 []
 
@@ -11,12 +11,26 @@
     order = FIRST
     family = LAGRANGE
   [../]
+  [./v]
+  [../]
+  [./w]
+  [../]
 []
 
 [Kernels]
   [./test_u]
-    type = CoeffDiffusionLin
+    type = IonsFromIonizationLFA_KV
     variable = u
+    potential = v
+    em = w
+  [../]
+  [./diff_v]
+    type = Diffusion
+    variable = v
+  [../]
+  [./diff_w]
+    type = Diffusion
+    variable = w
   [../]
 []
 
@@ -39,6 +53,14 @@
   [./u_ic]
     type = RandomIC
     variable = u
+  [../]
+  [./v_ic]
+    type = RandomIC
+    variable = v
+  [../]
+  [./w_ic]
+    type = RandomIC
+    variable = w
   [../]
 []
 

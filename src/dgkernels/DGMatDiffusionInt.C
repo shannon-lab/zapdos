@@ -70,18 +70,25 @@ DGMatDiffusionInt::computeQpJacobian(Moose::DGJacobianType type)
     jac -= 0.5 * _D[_qp] * _grad_phi[_j][_qp] * _normals[_qp] * _test[_i][_qp];
     break;
 
-  case Moose::ElementNeighbor:
-    jac -= 0.5 * _D_neighbor[_qp] * _grad_phi_neighbor[_j][_qp] * _normals[_qp] * _test[_i][_qp];
-    break;
-
-  case Moose::NeighborElement:
-    jac += 0.5 * _D[_qp] * _grad_phi[_j][_qp] * _normals[_qp] * _test_neighbor[_i][_qp];
-    break;
-
   case Moose::NeighborNeighbor:
     jac += 0.5 * _D_neighbor[_qp] * _grad_phi_neighbor[_j][_qp] * _normals[_qp] * _test_neighbor[_i][_qp];
     break;
   }
 
   return jac;
+}
+
+Real
+DGMatDiffusionInt::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar)
+{
+
+  if (jvar == _var.number())
+    return  0.5 * (_D[_qp] * _grad_phi[_j][_qp] * _normals[_qp]) * _test_neighbor[_i][_qp];
+
+  else if (jvar == _neighbor_var.number())
+    return  0.5 * (-_D_neighbor[_qp] * _grad_phi_neighbor[_j][_qp] * _normals[_qp]) * _test[_i][_qp];
+
+  else
+    return 0.;
+
 }

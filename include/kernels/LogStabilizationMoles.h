@@ -33,6 +33,7 @@ protected:
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
 
+  Real _offset;
 };
 
 

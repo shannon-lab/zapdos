@@ -20,6 +20,7 @@ InputParameters validParams<ProvideMobility>()
   InputParameters params = validParams<GeneralUserObject>();
   params.addRequiredParam<Real>("electrode_area","The area of the electrode or plasma.");
   params.addRequiredParam<Real>("ballast_resist","The magnitude of the ballasting resistance.");
+  params.addRequiredParam<Real>("e","The Coulomb charge");
   return params;
 }
 
@@ -29,7 +30,7 @@ ProvideMobility::ProvideMobility(const InputParameters & parameters) :
   _ballast_resist(getParam<Real>("ballast_resist")), // Also taken from Comsol's 1D corona discharge
   // _electrode_area(1.26e-5), // in square meters. Taken from Comsol's 1D corona discharge. Used in my golden simulation results
   // _ballast_resist(1e6), // Also taken from Comsol's 1D corona discharge. Used in my golden simulation results
-  _e(1.6e-19)
+  _e(getParam<Real>("e"))
 {
 }
 

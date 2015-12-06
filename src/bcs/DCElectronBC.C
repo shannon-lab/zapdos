@@ -29,14 +29,14 @@ DCElectronBC::DCElectronBC(const InputParameters & parameters) :
   _se_coeff(getMaterialProperty<Real>("se_coeff")),
   _muip(getMaterialProperty<Real>("mu"+_ip_var.name())),
   _vthermal_em(getMaterialProperty<Real>("vthermal_em")),
-  _a(0.0),
-  _b(0.0)
+  _a(0.5),
+  _b(0.5)
 {}
 
 Real
 DCElectronBC::computeQpResidual()
 {
-  if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+  if ( _normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0) {
     _a = 1.0;
     _b = 0.0;
   }
@@ -51,11 +51,13 @@ DCElectronBC::computeQpResidual()
 Real
 DCElectronBC::computeQpJacobian()
 {
-  if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+  if ( _normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0) {
     _a = 1.0;
+    _b = 0.0;
   }
   else {
     _a = 0.0;
+    _b = 1.0;
   }
   Real _actual_mean_en = std::exp(_mean_en[_qp]-_u[_qp]);
   Real _d_actual_mean_en_d_em = _actual_mean_en*-_phi[_j][_qp];
@@ -68,7 +70,7 @@ Real
 DCElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id) {
-    if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+    if ( _normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0) {
       _a = 1.0;
       _b = 0.0;
     }
@@ -81,21 +83,25 @@ DCElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
   }
 
   else if (jvar == _ip_id) {
-    if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+    if ( _normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0) {
+      _a = 1.0;
       _b = 0.0;
     }
     else {
+      _a = 0.0;
       _b = 1.0;
     }
     return _test[_i][_qp]*(-_b*_se_coeff[_qp]*_muip[_qp]*-_grad_potential[_qp]*std::exp(_ip[_qp])*_phi[_j][_qp]*_normals[_qp]);
   }
 
   else if (jvar == _mean_en_id) {
-    if ( _normals[_qp]*-1.0*-_grad_potential[_qp] > 0.0) {
+    if ( _normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0) {
       _a = 1.0;
+      _b = 0.0;
     }
     else {
       _a = 0.0;
+      _b = 1.0;
     }
     Real _actual_mean_en = std::exp(_mean_en[_qp]-_u[_qp]);
     Real _d_actual_mean_en_d_mean_en = _actual_mean_en*_phi[_j][_qp];

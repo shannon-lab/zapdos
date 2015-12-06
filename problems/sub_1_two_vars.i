@@ -17,9 +17,9 @@
 
 [Kernels]
   [./test_u]
-    type = ElectronsFromIonizationLFA_KV
+    type = ProductAABBRxn
     variable = u
-    potential = v
+    v = v
   [../]
   [./diff_v]
     type = Diffusion
