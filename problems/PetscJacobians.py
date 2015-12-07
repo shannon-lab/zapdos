@@ -49,4 +49,5 @@ z-NeumannCircuitVoltageMoles_KV
 z-DCElectronBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
 z-DCIonBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
 z-MatchedValueLogBC
+z-DGPenaltyTiedValue
 '''

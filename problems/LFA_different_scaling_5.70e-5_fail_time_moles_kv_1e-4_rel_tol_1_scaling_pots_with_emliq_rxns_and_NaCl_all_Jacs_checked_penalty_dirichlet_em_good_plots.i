@@ -109,13 +109,13 @@
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type' # -pc_factor_mat_solver_package'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly' # mumps'
- nl_rel_tol = 1e-20
+ nl_rel_tol = 1e-4
  # l_tol = 1e-3
  # trans_ss_check = true
  # ss_check_tol = 1e-7
- nl_abs_tol = 3e-8
+ # nl_abs_tol = 1e-8
   l_max_its = 10
- nl_max_its = 20
+ nl_max_its = 10
   dtmin = 1e-12
   # line_search = cp
   [./TimeStepper]
@@ -299,12 +299,12 @@
     variable = Arp
     block = 0
   [../]
-  # [./Arp_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = Arp
-  #   potential = potential
-  #   block = 0
-  # [../]
+  [./Arp_advection_stabilization]
+    type = EFieldArtDiff
+    variable = Arp
+    potential = potential
+    block = 0
+  [../]
 
   [./Clm_time_deriv]
     type = ElectronTimeDerivative
@@ -328,13 +328,12 @@
     variable = Clm
     block = 1
   [../]
-  # [./Clm_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = Clm
-  #   potential = potentialliq
-  #   block = 1
-  #   scale = 10
-  # [../]
+  [./Clm_advection_stabilization]
+    type = EFieldArtDiff
+    variable = Clm
+    potential = potentialliq
+    block = 1
+  [../]
 
   [./OHm_time_deriv]
     type = ElectronTimeDerivative
@@ -358,12 +357,12 @@
     variable = OHm
     block = 1
   [../]
-  # [./OHm_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = OHm
-  #   potential = potentialliq
-  #   block = 1
-  # [../]
+  [./OHm_advection_stabilization]
+    type = EFieldArtDiff
+    variable = OHm
+    potential = potentialliq
+    block = 1
+  [../]
   [./OHm_product_first_order_rxn]
     type = ProductFirstOrderRxn
     variable = OHm
@@ -399,13 +398,12 @@
     variable = Nap
     block = 1
   [../]
-  # [./Nap_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = Nap
-  #   potential = potentialliq
-  #   block = 1
-  #   scale = 10
-  # [../]
+  [./Nap_advection_stabilization]
+    type = EFieldArtDiff
+    variable = Nap
+    potential = potentialliq
+    block = 1
+  [../]
 []
 
 [DGKernels]
@@ -442,17 +440,16 @@
 
 [Variables]
   [./potential]
-    # scaling = 1e1
+    scaling = 1e1
     block = 0
   [../]
   [./potentialliq]
-    # scaling = 1e1
+    scaling = 1e1
     block = 1
   [../]
 
   [./em]
     # scaling = 1e-19
-    # scaling = 1e-2
     block = 0
   [../]
   [./emliq]
@@ -461,20 +458,20 @@
   [../]
 
   [./Arp]
-    # scaling = 1e3
+    # scaling = 1e-19
     block = 0
   [../]
 
   [./Clm]
-    # scaling = 1e4
+    # scaling = 1e-22
     block = 1
   [../]
   [./OHm]
-    # scaling = 1e8
+    # scaling = 1e-22
     block = 1
   [../]
   [./Nap]
-    # scaling = 1e3
+    # scaling = 1e-22
     block = 1
   [../]
 []

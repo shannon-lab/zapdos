@@ -90,6 +90,7 @@
 #include "ElectronTotalFlux.h"
 #include "ElectronTotalFluxMag.h"
 #include "AuxSource.h"
+#include "Position.h"
 #include "ElectronAdvectiveFlux.h"
 #include "ElectronDiffusiveFlux.h"
 #include "ElectronArtDiffusiveFlux.h"
@@ -133,6 +134,8 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "OutflowBC.h"
+#include "InflowBC.h"
 #include "MatchedValueLogBC.h"
 #include "MultipliedValueBC.h"
 #include "CoupledIntegratedBC.h"
@@ -164,6 +167,8 @@
 
 // DGKernels
 
+#include "DGEFieldAdvection.h"
+#include "DGPenaltyTiedValue.h"
 #include "DGDiffusionInt.h"
 #include "DGAdvection.h"
 #include "DGAdvectionInterface.h"
@@ -297,6 +302,7 @@ ZapdosApp::registerObjects(Factory & factory)
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
   registerAux(TotalFlux);
+  registerAux(Position);
   registerAux(Efield);
   registerAux(AuxSource);
   registerAux(ElectronTotalFlux);
@@ -337,6 +343,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
   registerBoundaryCondition(DGFluxBC);
+  registerBoundaryCondition(InflowBC);
   registerBoundaryCondition(MultipliedValueBC);
   registerBoundaryCondition(NeumannCircuitVoltage);
   registerBoundaryCondition(NeumannCircuitVoltageMoles);
@@ -354,7 +361,10 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(AdvectionDoNothingBC);
   registerBoundaryCondition(SometimesAdvectionBC);
   registerBoundaryCondition(PhysicalElectronEnergyBC);
+  registerBoundaryCondition(OutflowBC);
   registerDGKernel(DGAdvection);
+  registerDGKernel(DGEFieldAdvection);
+  registerDGKernel(DGPenaltyTiedValue);
   registerDGKernel(DGDiffusionInt);
   registerDGKernel(DGAdvectionInterface);
   registerDGKernel(DGMatDiffusionInt);

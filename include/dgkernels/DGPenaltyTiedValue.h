@@ -12,41 +12,31 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef EFIELDARTDIFF_H
-#define EFIELDARTDIFF_H
+#ifndef DGPENALTYTIEDVALUE_H
+#define DGPENALTYTIEDVALUE_H
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Kernel.h"
+#include "DGInterface.h"
 
-class EFieldArtDiff;
+//Forward Declarations
+class DGPenaltyTiedValue;
 
 template<>
-InputParameters validParams<EFieldArtDiff>();
+InputParameters validParams<DGPenaltyTiedValue>();
 
-
-class EFieldArtDiff : public Kernel
+/**
+ * DG kernel for interfacing diffusion between two variables on adjacent blocks
+ */
+class DGPenaltyTiedValue : public DGInterface
 {
 public:
-  EFieldArtDiff(const InputParameters & parameters);
-  virtual ~EFieldArtDiff();
+  DGPenaltyTiedValue(const InputParameters & parameters);
 
 protected:
+  virtual Real computeQpResidual(Moose::DGResidualType type);
+  virtual Real computeQpJacobian(Moose::DGJacobianType type);
+  virtual Real computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar);
 
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-
-  // Coupled variables
-
-  VariableGradient & _grad_potential;
-  unsigned int _potential_id;
-
-  Real _scale;
-
-  // Material Properties
-
-  const MaterialProperty<Real> & _mu;
+  Real _scale_factor;
 };
 
-
-#endif /* EFIELDARTDIFF_H */
+#endif

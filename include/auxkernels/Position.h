@@ -12,41 +12,34 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef EFIELDARTDIFF_H
-#define EFIELDARTDIFF_H
+#ifndef POSITION_H
+#define POSITION_H
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Kernel.h"
+#include "AuxKernel.h"
 
-class EFieldArtDiff;
+//Forward Declarations
+class Position;
 
 template<>
-InputParameters validParams<EFieldArtDiff>();
+InputParameters validParams<Position>();
 
-
-class EFieldArtDiff : public Kernel
+/**
+ * Function auxiliary value
+ */
+class Position : public AuxKernel
 {
 public:
-  EFieldArtDiff(const InputParameters & parameters);
-  virtual ~EFieldArtDiff();
+  /**
+   * Factory constructor, takes parameters so that all derived classes can be built using the same
+   * constructor.
+   */
+  Position(const InputParameters & parameters);
+
+  virtual ~Position() {}
 
 protected:
+  virtual Real computeValue();
 
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-
-  // Coupled variables
-
-  VariableGradient & _grad_potential;
-  unsigned int _potential_id;
-
-  Real _scale;
-
-  // Material Properties
-
-  const MaterialProperty<Real> & _mu;
 };
 
-
-#endif /* EFIELDARTDIFF_H */
+#endif // POSITION_H

@@ -12,14 +12,15 @@ class Density : public AuxKernel
 {
 public:
   Density(const InputParameters & parameters);
-  
+
   virtual ~Density() {}
-  
+
 protected:
 
   virtual Real computeValue();
-  
+
   VariableValue & _density_log;
+  const MaterialProperty<Real> & _N_A;
 };
 
 #endif //DENSITY_H

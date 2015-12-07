@@ -1,35 +1,30 @@
-#include "DGAdvection.h"
+#include "DGEFieldAdvection.h"
 
 template<>
-InputParameters validParams<DGAdvection>()
+InputParameters validParams<DGEFieldAdvection>()
 {
 	InputParameters params = validParams<DGKernel>();
-	params.addParam<Real>("vx",0,"x-component of velocity vector");
-	params.addParam<Real>("vy",0,"y-component of velocity vector");
-	params.addParam<Real>("vz",0,"z-component of velocity vector");
 	return params;
 }
 
-DGAdvection::DGAdvection(const InputParameters & parameters) :
-DGKernel(parameters),
-_vx(getParam<Real>("vx")),
-_vy(getParam<Real>("vy")),
-_vz(getParam<Real>("vz"))
+DGEFieldAdvection::DGEFieldAdvection(const InputParameters & parameters) :
+    DGKernel(parameters),
+
+    _mu(getMaterialProperty<Real>("mu" + _var.name())),
+    _sgn(getMaterialProperty<Real>("sgn" + _var.name())),
+    _mu_neighbor(getNeighborMaterialProperty<Real>("mu" + _var.name())),
+    _sgn_neighbor(getNeighborMaterialProperty<Real>("sgn" + _var.name())),
+    _potential_id(coupled("potential")),
+    _grad_potential(coupledGradient("potential"))
 {
-	_velocity(0)=_vx;
-	_velocity(1)=_vy;
-	_velocity(2)=_vz;
 }
 
 Real
-DGAdvection::computeQpResidual(Moose::DGResidualType type)
+DGEFieldAdvection::computeQpResidual(Moose::DGResidualType type)
 {
-  // std::cout << "Current side is " << _current_side << std::endl;
-  // std::cout << "Current element volume is " << _current_elem_volume << std::endl;
-  // std::cout << "Current side volume is " << _current_side_volume << std::endl;
 	Real r = 0;
-
-	switch (type)
+        RealVectorValue _velocity = _mu[_qp] * _sgn[_qp] * -_grad_potential[_qp];
+ 	switch (type)
 	{
 		case Moose::Element:
 			if ( (_velocity * _normals[_qp]) >= 0.0)
@@ -49,9 +44,10 @@ DGAdvection::computeQpResidual(Moose::DGResidualType type)
 }
 
 Real
-DGAdvection::computeQpJacobian(Moose::DGJacobianType type)
+DGEFieldAdvection::computeQpJacobian(Moose::DGJacobianType type)
 {
 	Real r = 0;
+        RealVectorValue _velocity = _mu[_qp] * _sgn[_qp] * -_grad_potential[_qp];
 
 	switch (type)
 	{

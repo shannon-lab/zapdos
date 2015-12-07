@@ -12,44 +12,41 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "DGMatDiffusionInt.h"
+#include "DGPenaltyTiedValue.h"
 
 #include <cmath>
 
 template<>
-InputParameters validParams<DGMatDiffusionInt>()
+InputParameters validParams<DGPenaltyTiedValue>()
 {
   InputParameters params = validParams<DGInterface>();
+  params.addParam<Real>("scale_factor",1.,"The amount by which to scale this penalty condition.");
   return params;
 }
 
-DGMatDiffusionInt::DGMatDiffusionInt(const InputParameters & parameters) :
+DGPenaltyTiedValue::DGPenaltyTiedValue(const InputParameters & parameters) :
     DGInterface(parameters),
-    _D(getMaterialProperty<Real>("diff" + _var.name())),
-    _D_neighbor(getNeighborMaterialProperty<Real>("diff" + _neighbor_var.name()))
+    _scale_factor(getParam<Real>("scale_factor"))
 {
   if (!parameters.isParamValid("boundary"))
   {
-    mooseError("In order to use the DGMatDiffusionInt dgkernel, you must specify a boundary where it will live.");
+    mooseError("In order to use the DGPenaltyTiedValue dgkernel, you must specify a boundary where it will live.");
   }
 }
 
 Real
-DGMatDiffusionInt::computeQpResidual(Moose::DGResidualType type)
+DGPenaltyTiedValue::computeQpResidual(Moose::DGResidualType type)
 {
-  if (_D_neighbor[_qp] < std::numeric_limits<double>::epsilon())
-    mooseError("It doesn't appear that DG material properties got passed.");
-
   Real r = 0;
 
   switch (type)
   {
   case Moose::Element:
-    r += 0.5 * (-_D[_qp] * _grad_u[_qp] * _normals[_qp] + -_D_neighbor[_qp] * _grad_neighbor_value[_qp] * _normals[_qp]) * _test[_i][_qp];
+    r += 0.5 * (_u[_qp] - _neighbor_value[_qp]) * _scale_factor * _test[_i][_qp];
     break;
 
   case Moose::Neighbor:
-    r += 0.5 * (_D[_qp] * _grad_u[_qp] * _normals[_qp] + _D_neighbor[_qp] * _grad_neighbor_value[_qp] * _normals[_qp]) * _test_neighbor[_i][_qp];
+    r += 0.5 * (_u[_qp] - _neighbor_value[_qp]) * _scale_factor * _test_neighbor[_i][_qp];
     break;
   }
 
@@ -57,7 +54,7 @@ DGMatDiffusionInt::computeQpResidual(Moose::DGResidualType type)
 }
 
 Real
-DGMatDiffusionInt::computeQpJacobian(Moose::DGJacobianType type)
+DGPenaltyTiedValue::computeQpJacobian(Moose::DGJacobianType type)
 {
   Real jac = 0;
 
@@ -65,11 +62,11 @@ DGMatDiffusionInt::computeQpJacobian(Moose::DGJacobianType type)
   {
 
   case Moose::ElementElement:
-    jac -= 0.5 * _D[_qp] * _grad_phi[_j][_qp] * _normals[_qp] * _test[_i][_qp];
+    jac +=  0.5 * (_phi[_j][_qp]) * _scale_factor * _test[_i][_qp];
     break;
 
   case Moose::NeighborNeighbor:
-    jac += 0.5 * _D_neighbor[_qp] * _grad_phi_neighbor[_j][_qp] * _normals[_qp] * _test_neighbor[_i][_qp];
+    jac += 0.5 * (- _phi_neighbor[_j][_qp]) * _scale_factor * _test_neighbor[_i][_qp];
     break;
   }
 
@@ -77,14 +74,14 @@ DGMatDiffusionInt::computeQpJacobian(Moose::DGJacobianType type)
 }
 
 Real
-DGMatDiffusionInt::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar)
+DGPenaltyTiedValue::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar)
 {
 
   if (jvar == _var.number())
-    return  0.5 * (_D[_qp] * _grad_phi[_j][_qp] * _normals[_qp]) * _test_neighbor[_i][_qp];
+    return 0.5 * (_phi[_j][_qp]) * _scale_factor * _test_neighbor[_i][_qp];
 
   else if (jvar == _neighbor_var.number())
-    return  0.5 * (-_D_neighbor[_qp] * _grad_phi_neighbor[_j][_qp] * _normals[_qp]) * _test[_i][_qp];
+    return 0.5 * (- _phi_neighbor[_j][_qp]) * _scale_factor * _test[_i][_qp];
 
   else
     return 0.;

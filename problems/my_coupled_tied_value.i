@@ -46,12 +46,12 @@
     # scaling = 1
   [../]
 
-  [./w]
-    block = '0'
-  [../]
-  [./p]
-    block = '1'
-  [../]
+  # [./w]
+  #   block = '0'
+  # [../]
+  # [./p]
+  #   block = '1'
+  # [../]
 []
 
 [Kernels]
@@ -67,16 +67,16 @@
     D = 2
     block = 1
   [../]
-  [./diff_w]
-    type = Diffusion
-    variable = w
-    block = '0'
-  [../]
-  [./diff_p]
-    type = Diffusion
-    variable = p
-    block = '1'
-  [../]
+  # [./diff_w]
+  #   type = Diffusion
+  #   variable = w
+  #   block = '0'
+  # [../]
+  # [./diff_p]
+  #   type = Diffusion
+  #   variable = p
+  #   block = '1'
+  # [../]
 []
 
 [DGKernels]
@@ -88,14 +88,21 @@
     D = 4
     D_neighbor = 2
   [../]
-  [./em_dg_advection_interface]
-    type = DGAdvectionInterface
+  [./dg_penalty]
+    type = DGPenaltyTiedValue
     variable = u
     neighbor_var = v
     boundary = master0_interface
-    potential = w
-    potential_neighbor = p
+    scale_factor = .001
   [../]
+  # [./em_dg_advection_interface]
+  #   type = DGAdvectionInterface
+  #   variable = u
+  #   neighbor_var = v
+  #   boundary = master0_interface
+  #   potential = w
+  #   potential_neighbor = p
+  # [../]
 []
 
 [BCs]
@@ -133,6 +140,20 @@
   [../]
 []
 
+[ICs]
+  [./u]
+    type = ConstantIC
+    variable = u
+    value = 1
+  [../]
+  [./v]
+    type = ConstantIC
+    variable = v
+    value = 1
+  [../]
+[]
+
+
 [Preconditioning]
   [./fdp]
     type = SMP
@@ -147,9 +168,11 @@
   # petsc_options_iname = '-pc_type -ksp_view_solution'
   # petsc_options_value = 'svd ascii:solution_unscaled.txt:ascii_matlab:append'
   petsc_options = '-snes_converged_reason  -pc_svd_monitor -snes_linesearch_monitor -options_left -snes_test_display'
-  petsc_options_iname = '-pc_type -snes_type' #  -ksp_view_mat
-  petsc_options_value = 'svd test' #  ascii:sans_dg_kernels.txt
+  # petsc_options_iname = '-pc_type -snes_type' #  -ksp_view_mat
+  # petsc_options_value = 'svd test' #  ascii:sans_dg_kernels.txt
   # line_search = cp
+  petsc_options_iname = '-pc_type -ksp_type'
+  petsc_options_value = 'lu preonly'
 []
 
 [Outputs]

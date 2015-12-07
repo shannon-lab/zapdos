@@ -12,41 +12,25 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef EFIELDARTDIFF_H
-#define EFIELDARTDIFF_H
-
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Kernel.h"
-
-class EFieldArtDiff;
+#include "Position.h"
 
 template<>
-InputParameters validParams<EFieldArtDiff>();
-
-
-class EFieldArtDiff : public Kernel
+InputParameters validParams<Position>()
 {
-public:
-  EFieldArtDiff(const InputParameters & parameters);
-  virtual ~EFieldArtDiff();
+  InputParameters params = validParams<AuxKernel>();
+  return params;
+}
 
-protected:
+Position::Position(const InputParameters & parameters) :
+    AuxKernel(parameters)
+{
+}
 
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-
-  // Coupled variables
-
-  VariableGradient & _grad_potential;
-  unsigned int _potential_id;
-
-  Real _scale;
-
-  // Material Properties
-
-  const MaterialProperty<Real> & _mu;
-};
-
-
-#endif /* EFIELDARTDIFF_H */
+Real
+Position::computeValue()
+{
+  if (isNodal())
+    return (*_current_node)(0);
+  else
+    return _q_point[_qp](0);
+}
