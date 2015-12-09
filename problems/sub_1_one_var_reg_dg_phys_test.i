@@ -1,12 +1,16 @@
 [Mesh]
   type = GeneratedMesh
   dim = 1
-  nx = 10
+  nx = 100
   xmax = 1
 []
 
 
 [Variables]
+  # [./u]
+  #   order = FIRST
+  #   family = LAGRANGE
+  # [../]
   [./u]
     order = FIRST
     family = MONOMIAL
@@ -25,7 +29,7 @@
   [./adv_u]
     type = GAdvection
     variable = u
-    vx = 1
+    vx = 10000
     vy = 0
     vz = 0
   [../]
@@ -35,53 +39,75 @@
   [./dg_advection]
     type = DGAdvection
     variable = u
-    vx = 1
+    vx = 10000
     vy = 0
     vz = 0
   [../]
   [./dg_diffusion]
     type = DGDiffusion
     variable = u
-    sigma = 6
+    sigma = 0
     epsilon = -1
   [../]
 []
 
 [BCs]
-  # [./left]
-  #   type = InflowBC
-  #   variable = u
-  #   boundary = 'left'
-  #   inlet_conc = 1
-  #   vx = 1
-  # [../]
   [./left]
-   type = PenaltyDirichletBC
-   penalty = 10000
-   value = 1
-   boundary = left
-   variable = u
- [../]
+    type = InflowBC
+    variable = u
+    boundary = 'left'
+    inlet_conc = 2
+    vx = 10000
+  [../]
+ #  [./left]
+ #   type = PenaltyDirichletBC
+ #   penalty = 1e6
+ #   value = 1
+ #   boundary = left
+ #   variable = u
+ # [../]
+ #  [./right]
+ #   type = RobinBC
+ #   boundary = right
+ #   variable = u
+ #   vx = 1000
+ # [../]
+ #  [./right]
+ #   type = PenaltyDirichletBC
+ #   penalty = 10000
+ #   value = 0
+ #   boundary = right
+ #   variable = u
+ # [../]
   [./right]
-   type = PenaltyDirichletBC
-   penalty = 10000
-   value = 0
-   boundary = right
-   variable = u
- [../]
-  # [./right]
-  #   type = OutflowBC
-  #   variable = u
-  #   boundary = 'right'
-  #   vx = 1
-  # [../]
+    type = OutflowBC
+    variable = u
+    boundary = 'right'
+    vx = 10000
+  [../]
 []
 
 [ICs]
+  # [./u_ic]
+  #   type = RandomIC
+  #   variable = u
+  # [../]
+  # [./u_ic]
+  #   type = FunctionIC
+  #   variable = u
+  #   function = init_func
+  # [../]
   [./u_ic]
     type = ConstantIC
     variable = u
     value = 0
+  [../]
+[]
+
+[Functions]
+  [./init_func]
+    type = ParsedFunction
+    value = '1*(1-x)'
   [../]
 []
 
@@ -101,10 +127,11 @@
 
 [Executioner]
   type = Transient
-  dt = 0.1
-  end_time = 1
-  dtmin = 0.001
+  dt = 0.000001
+  end_time = .0001
+  dtmin = 0.0000001
   nl_abs_tol = 1e-12
+  scheme = crank-nicolson
   # type = Steady
   solve_type = NEWTON
   petsc_options = '-snes_converged_reason  -pc_svd_monitor -snes_linesearch_monitor -options_left -snes_test_display'

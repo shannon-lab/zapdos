@@ -16,16 +16,21 @@ public:
 	DGEFieldAdvection(const InputParameters & parameters);
 
 protected:
-	virtual Real computeQpResidual(Moose::DGResidualType type);
-	virtual Real computeQpJacobian(Moose::DGJacobianType type);
+  virtual Real computeQpResidual(Moose::DGResidualType type);
+  virtual Real computeQpJacobian(Moose::DGJacobianType type);
+  virtual Real computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar);
 
   const MaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sgn;
   const MaterialProperty<Real> & _mu_neighbor;
   const MaterialProperty<Real> & _sgn_neighbor;
 
+  MooseVariable & _potential_var;
   unsigned int _potential_id;
   VariableGradient & _grad_potential;
+  VariableGradient & _grad_potential_neighbor;
+  const VariablePhiGradient & _grad_phi_pot;
+  const VariablePhiGradient & _grad_phi_neighbor_pot;
 
 private:
 

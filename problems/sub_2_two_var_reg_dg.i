@@ -2,14 +2,42 @@
   type = GeneratedMesh
   dim = 1
   nx = 2
-  xmax = 1
+  xmax = 2
 []
 
+[MeshModifiers]
+  [./subdomain1]
+    type = SubdomainBoundingBox
+    bottom_left = '1.0 0 0'
+    block_id = 1
+    top_right = '2.0 1.0 0'
+  [../]
+  [./interface]
+    type = SideSetsBetweenSubdomains
+    depends_on = subdomain1
+    master_block = '0'
+    paired_block = '1'
+    new_boundary = 'master0_interface'
+  [../]
+  [./interface_again]
+    type = SideSetsBetweenSubdomains
+    depends_on = subdomain1
+    master_block = '1'
+    paired_block = '0'
+    new_boundary = 'master1_interface'
+  [../]
+[]
 
 [Variables]
   [./u]
     order = FIRST
     family = MONOMIAL
+    block = 0
+  [../]
+  [./v]
+    order = FIRST
+    family = MONOMIAL
+    block = 1
   [../]
 []
 
@@ -17,15 +45,29 @@
   [./test_u]
     type = Diffusion
     variable = u
+    block = 0
+  [../]
+  [./dummy_v]
+    type = Diffusion
+    variable = v
+    block = 1
   [../]
 []
 
 [DGKernels]
-  [./dg_advection]
-    type = DGCoeffDiffusion
-    epsilon = -1
-    sigma = 6
+  [./dg_diffus_u]
+    type = DGDiffusion
     variable = u
+    sigma = 6
+    epsilon = -1
+    block = 0
+  [../]
+  [./dg_diffus_v]
+    type = DGDiffusion
+    variable = v
+    sigma = 6
+    epsilon = -1
+    block = 1
   [../]
 []
 
@@ -48,12 +90,18 @@
   [./u_ic]
     type = RandomIC
     variable = u
+    block = 0
+  [../]
+  [./v_ic]
+    type = RandomIC
+    variable = v
+    block = 1
   [../]
 []
 
 [Materials]
   [./jac]
-    block = '0'
+    block = '0 1'
     type = JacMat
   [../]
 []

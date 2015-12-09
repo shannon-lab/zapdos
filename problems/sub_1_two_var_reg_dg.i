@@ -11,6 +11,8 @@
     order = FIRST
     family = MONOMIAL
   [../]
+  [./v]
+  [../]
 []
 
 [Kernels]
@@ -18,14 +20,17 @@
     type = Diffusion
     variable = u
   [../]
+  [./dummy_v]
+    type = Diffusion
+    variable = v
+  [../]
 []
 
 [DGKernels]
   [./dg_advection]
-    type = DGCoeffDiffusion
-    epsilon = -1
-    sigma = 6
+    type = DGEFieldAdvection
     variable = u
+    potential = v
   [../]
 []
 
@@ -48,6 +53,10 @@
   [./u_ic]
     type = RandomIC
     variable = u
+  [../]
+  [./v_ic]
+    type = RandomIC
+    variable = v
   [../]
 []
 

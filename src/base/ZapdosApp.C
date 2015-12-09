@@ -134,6 +134,7 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "RobinBC.h"
 #include "OutflowBC.h"
 #include "InflowBC.h"
 #include "MatchedValueLogBC.h"
@@ -167,6 +168,7 @@
 
 // DGKernels
 
+#include "DGCoeffDiffusion.h"
 #include "DGEFieldAdvection.h"
 #include "DGPenaltyTiedValue.h"
 #include "DGDiffusionInt.h"
@@ -362,7 +364,9 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(SometimesAdvectionBC);
   registerBoundaryCondition(PhysicalElectronEnergyBC);
   registerBoundaryCondition(OutflowBC);
+  registerBoundaryCondition(RobinBC);
   registerDGKernel(DGAdvection);
+  registerDGKernel(DGCoeffDiffusion);
   registerDGKernel(DGEFieldAdvection);
   registerDGKernel(DGPenaltyTiedValue);
   registerDGKernel(DGDiffusionInt);

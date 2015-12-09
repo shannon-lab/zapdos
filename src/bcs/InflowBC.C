@@ -23,7 +23,10 @@ InflowBC::computeQpResidual()
 {
   Real vy = 0.;
   Real vz = 0.;
-  RealVectorValue velocity = (_vx, vy, vz);
+  RealVectorValue velocity;
+  velocity(0) = _vx;
+  velocity(1) = vy;
+  velocity(2) = vz;
 
   return _test[_i][_qp] * _inlet_conc * velocity * _normals[_qp];
 }

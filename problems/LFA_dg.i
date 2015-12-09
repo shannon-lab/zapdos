@@ -437,6 +437,50 @@
    neighbor_var = potentialliq
    boundary = master0_interface
  [../]
+
+ [./Clm_dg_advection]
+   type = DGEFieldAdvection
+   variable = Clm
+   potential = potentialliq
+   block = 1
+ [../]
+ [./Clm_dg_diffusion]
+   type = DGCoeffDiffusion
+   sigma = 0
+   epsilon = -1
+   variable = Clm
+   block = 1
+ [../]
+
+ [./OHm_dg_advection]
+   type = DGEFieldAdvection
+   variable = OHm
+   potential = potentialliq
+   block = 1
+ [../]
+ [./OHm_dg_diffusion]
+   type = DGCoeffDiffusion
+   sigma = 0
+   epsilon = -1
+   variable = OHm
+   block = 1
+ [../]
+
+ [./Nap_dg_advection]
+   type = DGEFieldAdvection
+   variable = Nap
+   potential = potentialliq
+   block = 1
+ [../]
+ [./Nap_dg_diffusion]
+   type = DGCoeffDiffusion
+   sigma = 0
+   epsilon = -1
+   variable = Nap
+   block = 1
+ [../]
+
+
 []
 
 
@@ -468,220 +512,226 @@
   [./Clm]
     # scaling = 1e4
     block = 1
+    order = FIRST
+    family = MONOMIAL
   [../]
   [./OHm]
     # scaling = 1e8
     block = 1
+    order = FIRST
+    family = MONOMIAL
   [../]
   [./Nap]
     # scaling = 1e3
     block = 1
-  [../]
-[]
-
-[AuxVariables]
-  # [./h_size]
-  #   block = '0 1'
-  # [../]
-  [./x]
-    block = '0 1'
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./rho]
-    block = 0
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./rholiq]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./em_lin]
-    block = 0
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./emliq_lin]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./Arp_lin]
-    block = 0
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./Clm_lin]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./OHm_lin]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./Nap_lin]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./Efield_gas]
-    block = 0
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./Efield_liq]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./TotalFlux_em]
-    block = 0
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./TotalFlux_emliq]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./EFieldAdvAux_em]
-    block = 0
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./EFieldAdvAux_emliq]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./DiffusiveFlux_em]
-    block = 0
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./DiffusiveFlux_emliq]
-    block = 1
-    order = CONSTANT
+    order = FIRST
     family = MONOMIAL
   [../]
 []
 
-[AuxKernels]
-  # [./h_size]
-  #   type = HSize
-  #   variable = h_size
-  # [../]
-  [./x]
-    type = Position
-    variable = x
-  [../]
-  [./rho]
-    type = ParsedAux
-    variable = rho
-    args = 'em_lin Arp_lin'
-    function = 'Arp_lin - em_lin'
-    execute_on = 'timestep_end'
-  [../]
-  [./rholiq]
-    type = ParsedAux
-    variable = rholiq
-    args = 'emliq_lin Clm_lin Nap_lin OHm_lin'
-    function = 'Nap_lin - emliq_lin - Clm_lin - OHm_lin'
-    execute_on = 'timestep_end'
-  [../]
-  [./em_lin]
-    type = Density
-    variable = em_lin
-    density_log = em
-    block = 0
-  [../]
-  [./emliq_lin]
-    type = Density
-    variable = emliq_lin
-    density_log = emliq
-    block = 1
-  [../]
-  [./Arp_lin]
-    type = Density
-    variable = Arp_lin
-    density_log = Arp
-    block = 0
-  [../]
-  [./Clm_lin]
-    type = Density
-    variable = Clm_lin
-    density_log = Clm
-    block = 1
-  [../]
-  [./OHm_lin]
-    type = Density
-    variable = OHm_lin
-    density_log = OHm
-    block = 1
-  [../]
-  [./Nap_lin]
-    type = Density
-    variable = Nap_lin
-    density_log = Nap
-    block = 1
-  [../]
-  [./Efield_gas]
-    type = Efield
-    potential = potential
-    variable = Efield_gas
-    block = 0
-  [../]
-  [./Efield_liq]
-    type = Efield
-    potential = potentialliq
-    variable = Efield_liq
-    block = 1
-  [../]
-  [./TotalFlux_em]
-    block = 0
-    type = TotalFlux
-    potential = potential
-    density_log = em
-    variable = TotalFlux_em
-  [../]
-  [./TotalFlux_emliq]
-    block = 1
-    type = TotalFlux
-    potential = potentialliq
-    density_log = emliq
-    variable = TotalFlux_emliq
-  [../]
-  [./EFieldAdvAux_em]
-    block = 0
-    type = EFieldAdvAux
-    potential = potential
-    density_log = em
-    variable = EFieldAdvAux_em
-  [../]
-  [./EFieldAdvAux_emliq]
-    block = 1
-    type = EFieldAdvAux
-    potential = potentialliq
-    density_log = emliq
-    variable = EFieldAdvAux_emliq
-  [../]
-  [./DiffusiveFlux_em]
-    block = 0
-    type = DiffusiveFlux
-    density_log = em
-    variable = DiffusiveFlux_em
-  [../]
-  [./DiffusiveFlux_emliq]
-    block = 1
-    type = DiffusiveFlux
-    density_log = emliq
-    variable = DiffusiveFlux_emliq
-  [../]
-[]
+# [AuxVariables]
+#   # [./h_size]
+#   #   block = '0 1'
+#   # [../]
+#   [./x]
+#     block = '0 1'
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./rho]
+#     block = 0
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./rholiq]
+#     block = 1
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./em_lin]
+#     block = 0
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./emliq_lin]
+#     block = 1
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./Arp_lin]
+#     block = 0
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./Clm_lin]
+#     block = 1
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./OHm_lin]
+#     block = 1
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./Nap_lin]
+#     block = 1
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./Efield_gas]
+#     block = 0
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./Efield_liq]
+#     block = 1
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./TotalFlux_em]
+#     block = 0
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./TotalFlux_emliq]
+#     block = 1
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./EFieldAdvAux_em]
+#     block = 0
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./EFieldAdvAux_emliq]
+#     block = 1
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./DiffusiveFlux_em]
+#     block = 0
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+#   [./DiffusiveFlux_emliq]
+#     block = 1
+#     order = CONSTANT
+#     family = MONOMIAL
+#   [../]
+# []
+
+# [AuxKernels]
+#   # [./h_size]
+#   #   type = HSize
+#   #   variable = h_size
+#   # [../]
+#   [./x]
+#     type = Position
+#     variable = x
+#   [../]
+#   [./rho]
+#     type = ParsedAux
+#     variable = rho
+#     args = 'em_lin Arp_lin'
+#     function = 'Arp_lin - em_lin'
+#     execute_on = 'timestep_end'
+#   [../]
+#   [./rholiq]
+#     type = ParsedAux
+#     variable = rholiq
+#     args = 'emliq_lin Clm_lin Nap_lin OHm_lin'
+#     function = 'Nap_lin - emliq_lin - Clm_lin - OHm_lin'
+#     execute_on = 'timestep_end'
+#   [../]
+#   [./em_lin]
+#     type = Density
+#     variable = em_lin
+#     density_log = em
+#     block = 0
+#   [../]
+#   [./emliq_lin]
+#     type = Density
+#     variable = emliq_lin
+#     density_log = emliq
+#     block = 1
+#   [../]
+#   [./Arp_lin]
+#     type = Density
+#     variable = Arp_lin
+#     density_log = Arp
+#     block = 0
+#   [../]
+#   [./Clm_lin]
+#     type = Density
+#     variable = Clm_lin
+#     density_log = Clm
+#     block = 1
+#   [../]
+#   [./OHm_lin]
+#     type = Density
+#     variable = OHm_lin
+#     density_log = OHm
+#     block = 1
+#   [../]
+#   [./Nap_lin]
+#     type = Density
+#     variable = Nap_lin
+#     density_log = Nap
+#     block = 1
+#   [../]
+#   [./Efield_gas]
+#     type = Efield
+#     potential = potential
+#     variable = Efield_gas
+#     block = 0
+#   [../]
+#   [./Efield_liq]
+#     type = Efield
+#     potential = potentialliq
+#     variable = Efield_liq
+#     block = 1
+#   [../]
+#   [./TotalFlux_em]
+#     block = 0
+#     type = TotalFlux
+#     potential = potential
+#     density_log = em
+#     variable = TotalFlux_em
+#   [../]
+#   [./TotalFlux_emliq]
+#     block = 1
+#     type = TotalFlux
+#     potential = potentialliq
+#     density_log = emliq
+#     variable = TotalFlux_emliq
+#   [../]
+#   [./EFieldAdvAux_em]
+#     block = 0
+#     type = EFieldAdvAux
+#     potential = potential
+#     density_log = em
+#     variable = EFieldAdvAux_em
+#   [../]
+#   [./EFieldAdvAux_emliq]
+#     block = 1
+#     type = EFieldAdvAux
+#     potential = potentialliq
+#     density_log = emliq
+#     variable = EFieldAdvAux_emliq
+#   [../]
+#   [./DiffusiveFlux_em]
+#     block = 0
+#     type = DiffusiveFlux
+#     density_log = em
+#     variable = DiffusiveFlux_em
+#   [../]
+#   [./DiffusiveFlux_emliq]
+#     block = 1
+#     type = DiffusiveFlux
+#     density_log = emliq
+#     variable = DiffusiveFlux_emliq
+#   [../]
+# []
 
 [BCs]
   [./potential_left]
