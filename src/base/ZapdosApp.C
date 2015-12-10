@@ -1,6 +1,7 @@
 #include "ZapdosApp.h"
 #include "Moose.h"
 #include "AppFactory.h"
+#include "MooseSyntax.h"
 // #include "ModulesApp.h"
 
 // Kernels
