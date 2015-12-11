@@ -29,7 +29,7 @@
   [./adv_u]
     type = GAdvection
     variable = u
-    vx = 10000
+    vx = 1
     vy = 0
     vz = 0
   [../]
@@ -39,7 +39,7 @@
   [./dg_advection]
     type = DGAdvection
     variable = u
-    vx = 10000
+    vx = 1
     vy = 0
     vz = 0
   [../]
@@ -57,7 +57,7 @@
     variable = u
     boundary = 'left'
     inlet_conc = 2
-    vx = 10000
+    vx = 1
   [../]
  #  [./left]
  #   type = PenaltyDirichletBC
@@ -70,7 +70,7 @@
  #   type = RobinBC
  #   boundary = right
  #   variable = u
- #   vx = 1000
+ #   vx = 1
  # [../]
  #  [./right]
  #   type = PenaltyDirichletBC
@@ -83,7 +83,7 @@
     type = OutflowBC
     variable = u
     boundary = 'right'
-    vx = 10000
+    vx = 1
   [../]
 []
 
@@ -127,11 +127,11 @@
 
 [Executioner]
   type = Transient
-  dt = 0.000001
-  end_time = .0001
-  dtmin = 0.0000001
+  dt = 0.1
+  end_time = 1
+  dtmin = 0.01
   nl_abs_tol = 1e-12
-  scheme = crank-nicolson
+  # scheme = crank-nicolson
   # type = Steady
   solve_type = NEWTON
   petsc_options = '-snes_converged_reason  -pc_svd_monitor -snes_linesearch_monitor -options_left -snes_test_display'
