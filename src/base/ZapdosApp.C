@@ -86,6 +86,7 @@
 
 // AuxKernels
 
+#include "Current.h"
 #include "EFieldAdvAux.h"
 #include "TotalFlux.h"
 #include "ElectronTotalFlux.h"
@@ -304,6 +305,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ProductAABBRxn);
 //  registerKernel(NSMassInviscidFlux);
 //  registerKernel(NSKernel);
+  registerAux(Current);
   registerAux(TotalFlux);
   registerAux(Position);
   registerAux(Efield);

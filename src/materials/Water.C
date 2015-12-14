@@ -40,13 +40,13 @@ Water::Water(const InputParameters & parameters) :
   // Declare material properties
   _cw(declareProperty<Real>("cw")),
   _electron_mult(declareProperty<Real>("electron_mult")),
-  _potential_mult(declareProperty<Real>("potential_mult")),  
+  _potential_mult(declareProperty<Real>("potential_mult")),
   _N_A(declareProperty<Real>("N_A")),
   _eps_r(declareProperty<Real>("eps_r")),
   _eps_0(declareProperty<Real>("eps_0")),
   _e(declareProperty<Real>("e")),
-  _k(declareProperty<Real>("k")),           
-  _T(declareProperty<Real>("T")),            
+  _k(declareProperty<Real>("k")),
+  _T(declareProperty<Real>("T")),
   _kemliq(declareProperty<Real>("kemliq")),
  _kemliqemliq(declareProperty<Real>("kemliqemliq")),
  _k3(declareProperty<Real>("k3")),
@@ -221,7 +221,7 @@ Water::Water(const InputParameters & parameters) :
   _muClm(declareProperty<Real>("muClm")),
   _diffNap(declareProperty<Real>("diffNap")),
   _diffClm(declareProperty<Real>("diffClm")),
-  
+
 
 // My materials version of aux variables
   _EField(declareProperty<Real>("EField")),
@@ -346,17 +346,17 @@ Water::computeQpProperties()
   _sgnH3Op[_qp] = 1;
   _sgnClm[_qp] = -1;
   _sgnNap[_qp] = 1;
-  _muemliq[_qp]	= std::abs(_zem[_qp])*_e[_qp]*_diffemliq[_qp]/_k[_qp]/_T[_qp] * 1000.;	// mobility of hydrated electron
+  _muemliq[_qp]	= _e[_qp]*_diffemliq[_qp]/_k[_qp]/_T[_qp] * 1000.;	// mobility of hydrated electron
   // _muemliq[_qp] = 0.0352103411399/4;
   _muH[_qp]	= _zH[_qp]*_e[_qp]*_DH[_qp]/_k[_qp]/_T[_qp];	// H radical
-  _muOHm[_qp]	= _zOHm[_qp]*_e[_qp]*_diffOHm[_qp]/_k[_qp]/_T[_qp] * 1000.;	// OH- ion
+  _muOHm[_qp]	= _e[_qp]*_diffOHm[_qp]/_k[_qp]/_T[_qp] * 1000.;	// OH- ion
   _muClm[_qp] = _muOHm[_qp];
   // _muOHm[_qp] = 3.52e-4;
   _muH2Op[_qp]	= _zH2Op[_qp]*_e[_qp]*_DH2Op[_qp]/_k[_qp]/_T[_qp];	// H2O+ ion
   _muOH[_qp]	= _zOH[_qp]*_e[_qp]*_DOH[_qp]/_k[_qp]/_T[_qp];	// OH radical
   _muH2[_qp]	= _zH2[_qp]*_e[_qp]*_DH2[_qp]/_k[_qp]/_T[_qp];	// H2 molecule
   _muOm[_qp]	= _zOm[_qp]*_e[_qp]*_DOm[_qp]/_k[_qp]/_T[_qp];	// O- ion
-  _muH3Op[_qp]	= _zH3Op[_qp]*_e[_qp]*_diffH3Op[_qp]/_k[_qp]/_T[_qp] * 1000.;	// H3O+ ion
+  _muH3Op[_qp]	= _e[_qp]*_diffH3Op[_qp]/_k[_qp]/_T[_qp] * 1000.;	// H3O+ ion
   _muNap[_qp] = _muH3Op[_qp];
   // _muH3Op[_qp] = 3.52e-4;
   _muH2O2[_qp]	= _zH2O2[_qp]*_e[_qp]*_DH2O2[_qp]/_k[_qp]/_T[_qp];	// H2O2 molecule
@@ -379,45 +379,45 @@ Water::computeQpProperties()
 
   // Reaction rates
 
-  // _rxn1[_qp]	= _k1[_qp]*std::max(_em[_qp],0.0)*std::max(_cw[_qp],0.0);                                              // e + H2O-->H + OH-          
-  // _rxn2[_qp]	= _k2[_qp]*std::max(_em[_qp],0.0)*std::max(_H2Op[_qp],0.0);					       // e + H2Op-->H + OH           
-  // _rxn3[_qp]	= _k3[_qp]*std::max(_em[_qp],0.0)*std::max(_em[_qp],0.0)*std::max(_cw[_qp],0.0)*std::max(_cw[_qp],0.0);// 2e + 2H2O-->H2 + 2OH-      
-  // _rxn4[_qp]	= _k4[_qp]*std::max(_em[_qp],0.0)*std::max(_H[_qp],0.0)*std::max(_cw[_qp],0.0);			       // e + H + H2O-->H2 + OH-     
-  // _rxn5[_qp]	= _k5[_qp]*std::max(_em[_qp],0.0)*std::max(_OH[_qp],0.0);					       // e + OH-->OH-               
-  // _rxn6[_qp]	= _k6[_qp]*std::max(_em[_qp],0.0)*std::max(_Om[_qp],0.0)*std::max(_cw[_qp],0.0);		       // e + O- + H2O --> 2OH-      
-  // _rxn7[_qp]	= _k7[_qp]*std::max(_em[_qp],0.0)*std::max(_H3Op[_qp],0.0);					       // e + H3O+ --> H2 + H2O      
-  // _rxn8[_qp]	= _k8[_qp]*std::max(_em[_qp],0.0)*std::max(_H2O2[_qp],0.0);					       // e + H2O2 --> OH + OH-      
+  // _rxn1[_qp]	= _k1[_qp]*std::max(_em[_qp],0.0)*std::max(_cw[_qp],0.0);                                              // e + H2O-->H + OH-
+  // _rxn2[_qp]	= _k2[_qp]*std::max(_em[_qp],0.0)*std::max(_H2Op[_qp],0.0);					       // e + H2Op-->H + OH
+  // _rxn3[_qp]	= _k3[_qp]*std::max(_em[_qp],0.0)*std::max(_em[_qp],0.0)*std::max(_cw[_qp],0.0)*std::max(_cw[_qp],0.0);// 2e + 2H2O-->H2 + 2OH-
+  // _rxn4[_qp]	= _k4[_qp]*std::max(_em[_qp],0.0)*std::max(_H[_qp],0.0)*std::max(_cw[_qp],0.0);			       // e + H + H2O-->H2 + OH-
+  // _rxn5[_qp]	= _k5[_qp]*std::max(_em[_qp],0.0)*std::max(_OH[_qp],0.0);					       // e + OH-->OH-
+  // _rxn6[_qp]	= _k6[_qp]*std::max(_em[_qp],0.0)*std::max(_Om[_qp],0.0)*std::max(_cw[_qp],0.0);		       // e + O- + H2O --> 2OH-
+  // _rxn7[_qp]	= _k7[_qp]*std::max(_em[_qp],0.0)*std::max(_H3Op[_qp],0.0);					       // e + H3O+ --> H2 + H2O
+  // _rxn8[_qp]	= _k8[_qp]*std::max(_em[_qp],0.0)*std::max(_H2O2[_qp],0.0);					       // e + H2O2 --> OH + OH-
   // _rxn9[_qp]	= _k9[_qp]*std::max(_em[_qp],0.0)*std::max(_HO2m[_qp],0.0)*std::max(_cw[_qp],0.0);		       // e + HO2- + H2O --> OH + 2OH-
-  // _rxn10[_qp]	= _k10[_qp]*std::max(_em[_qp],0.0)*std::max(_O2[_qp],0.0);					       // e + O2 --> O2-             
-  // _rxn11[_qp]	= _k11[_qp]*std::max(_em[_qp],0.0)*std::max(_O[_qp],0.0);					       // e + O --> O-               
-  // _rxn12[_qp]	= _k12[_qp]*std::max(_H[_qp],0.0)*std::max(_cw[_qp],0.0);					       // H + H2O --> H2 + OH        
-  // _rxn13[_qp]	= _k13[_qp]*std::max(_H[_qp],0.0)*std::max(_H[_qp],0.0);					       // 2H --> H2                  
-  // _rxn14[_qp]	= _k14[_qp]*std::max(_H[_qp],0.0)*std::max(_OH[_qp],0.0);					       // H + OH --> H2O             
-  // _rxn15[_qp]	= _k15[_qp]*std::max(_H[_qp],0.0)*std::max(_OHm[_qp],0.0);					       // H + OH- --> H2O + e        
-  // _rxn16[_qp]	= _k16[_qp]*std::max(_H[_qp],0.0)*std::max(_H2O2[_qp],0.0);					       // H + H2O2 --> OH + H2O      
-  // _rxn17[_qp]	= _k17[_qp]*std::max(_H2[_qp],0.0)*std::max(_H2O2[_qp],0.0);					       // H2 + H2O2 --> H + OH + H2O 
-  // _rxn18[_qp]	= _k18[_qp]*std::max(_H[_qp],0.0)*std::max(_O2[_qp],0.0);					       // H + O2 --> HO2             
-  // _rxn19[_qp]	= _k19[_qp]*std::max(_H[_qp],0.0)*std::max(_HO2[_qp],0.0);					       // H + HO2 --> H2O2           
-  // _rxn20[_qp]	= _k20[_qp]*std::max(_O[_qp],0.0)*std::max(_cw[_qp],0.0);					       // O + H2O --> 2OH            
-  // _rxn21[_qp]	= _k21[_qp]*std::max(_O[_qp],0.0)*std::max(_O2[_qp],0.0);					       // O + O2 --> O3              
-  // _rxn22[_qp]	= _k22[_qp]*std::max(_OH[_qp],0.0)*std::max(_OH[_qp],0.0);					       // 2OH --> H2O2               
-  // _rxn23[_qp]	= _k23[_qp]*std::max(_OH[_qp],0.0)*std::max(_Om[_qp],0.0);					       // OH + O- --> HO2-           
-  // _rxn24[_qp]	= _k24[_qp]*std::max(_OH[_qp],0.0)*std::max(_H2[_qp],0.0);					       // OH + H2 --> H + H2O        
-  // _rxn25[_qp]	= _k25[_qp]*std::max(_OH[_qp],0.0)*std::max(_OHm[_qp],0.0);					       // OH + OH- --> O- + H2O      
-  // _rxn26[_qp]	= _k26[_qp]*std::max(_OH[_qp],0.0)*std::max(_HO2[_qp],0.0);					       // OH + HO2 --> H2O + O2      
-  // _rxn27[_qp]	= _k27[_qp]*std::max(_OH[_qp],0.0)*std::max(_O2m[_qp],0.0);					       // OH + O2- --> OH- + O2      
-  // _rxn28[_qp]	= _k28[_qp]*std::max(_Om[_qp],0.0)*std::max(_cw[_qp],0.0);					       // ] O- + H2O --> OH- + OH    
-  // _rxn29[_qp]	= _k29[_qp]*std::max(_Om[_qp],0.0)*std::max(_H2[_qp],0.0);					       // O- + H2 --> OH- + H        
-  // _rxn30[_qp]	= _k30[_qp]*std::max(_Om[_qp],0.0)*std::max(_H2O2[_qp],0.0);					       // O- + H2O2 --> O2- + H2O    
-  // _rxn31[_qp]	= _k31[_qp]*std::max(_Om[_qp],0.0)*std::max(_HO2m[_qp],0.0);					       // O- + HO2- --> O2- + OH-    
-  // _rxn32[_qp]	= _k32[_qp]*std::max(_Om[_qp],0.0)*std::max(_O2m[_qp],0.0);					       // O- + O2- --> O3-           
+  // _rxn10[_qp]	= _k10[_qp]*std::max(_em[_qp],0.0)*std::max(_O2[_qp],0.0);					       // e + O2 --> O2-
+  // _rxn11[_qp]	= _k11[_qp]*std::max(_em[_qp],0.0)*std::max(_O[_qp],0.0);					       // e + O --> O-
+  // _rxn12[_qp]	= _k12[_qp]*std::max(_H[_qp],0.0)*std::max(_cw[_qp],0.0);					       // H + H2O --> H2 + OH
+  // _rxn13[_qp]	= _k13[_qp]*std::max(_H[_qp],0.0)*std::max(_H[_qp],0.0);					       // 2H --> H2
+  // _rxn14[_qp]	= _k14[_qp]*std::max(_H[_qp],0.0)*std::max(_OH[_qp],0.0);					       // H + OH --> H2O
+  // _rxn15[_qp]	= _k15[_qp]*std::max(_H[_qp],0.0)*std::max(_OHm[_qp],0.0);					       // H + OH- --> H2O + e
+  // _rxn16[_qp]	= _k16[_qp]*std::max(_H[_qp],0.0)*std::max(_H2O2[_qp],0.0);					       // H + H2O2 --> OH + H2O
+  // _rxn17[_qp]	= _k17[_qp]*std::max(_H2[_qp],0.0)*std::max(_H2O2[_qp],0.0);					       // H2 + H2O2 --> H + OH + H2O
+  // _rxn18[_qp]	= _k18[_qp]*std::max(_H[_qp],0.0)*std::max(_O2[_qp],0.0);					       // H + O2 --> HO2
+  // _rxn19[_qp]	= _k19[_qp]*std::max(_H[_qp],0.0)*std::max(_HO2[_qp],0.0);					       // H + HO2 --> H2O2
+  // _rxn20[_qp]	= _k20[_qp]*std::max(_O[_qp],0.0)*std::max(_cw[_qp],0.0);					       // O + H2O --> 2OH
+  // _rxn21[_qp]	= _k21[_qp]*std::max(_O[_qp],0.0)*std::max(_O2[_qp],0.0);					       // O + O2 --> O3
+  // _rxn22[_qp]	= _k22[_qp]*std::max(_OH[_qp],0.0)*std::max(_OH[_qp],0.0);					       // 2OH --> H2O2
+  // _rxn23[_qp]	= _k23[_qp]*std::max(_OH[_qp],0.0)*std::max(_Om[_qp],0.0);					       // OH + O- --> HO2-
+  // _rxn24[_qp]	= _k24[_qp]*std::max(_OH[_qp],0.0)*std::max(_H2[_qp],0.0);					       // OH + H2 --> H + H2O
+  // _rxn25[_qp]	= _k25[_qp]*std::max(_OH[_qp],0.0)*std::max(_OHm[_qp],0.0);					       // OH + OH- --> O- + H2O
+  // _rxn26[_qp]	= _k26[_qp]*std::max(_OH[_qp],0.0)*std::max(_HO2[_qp],0.0);					       // OH + HO2 --> H2O + O2
+  // _rxn27[_qp]	= _k27[_qp]*std::max(_OH[_qp],0.0)*std::max(_O2m[_qp],0.0);					       // OH + O2- --> OH- + O2
+  // _rxn28[_qp]	= _k28[_qp]*std::max(_Om[_qp],0.0)*std::max(_cw[_qp],0.0);					       // ] O- + H2O --> OH- + OH
+  // _rxn29[_qp]	= _k29[_qp]*std::max(_Om[_qp],0.0)*std::max(_H2[_qp],0.0);					       // O- + H2 --> OH- + H
+  // _rxn30[_qp]	= _k30[_qp]*std::max(_Om[_qp],0.0)*std::max(_H2O2[_qp],0.0);					       // O- + H2O2 --> O2- + H2O
+  // _rxn31[_qp]	= _k31[_qp]*std::max(_Om[_qp],0.0)*std::max(_HO2m[_qp],0.0);					       // O- + HO2- --> O2- + OH-
+  // _rxn32[_qp]	= _k32[_qp]*std::max(_Om[_qp],0.0)*std::max(_O2m[_qp],0.0);					       // O- + O2- --> O3-
   // _rxn33[_qp]	= _k33[_qp]*std::max(_Om[_qp],0.0)*std::max(_O2m[_qp],0.0)*std::max(_cw[_qp],0.0);		       // O- + O2- + H2O --> 2OH- + O
-  // _rxn34[_qp]	= _k34[_qp]*std::max(_OH[_qp],0.0)*std::max(_H2O2[_qp],0.0);					       // OH + H2O2 --> H2O + HO2    
-  // _rxn35[_qp]	= _k35[_qp]*std::max(_OH[_qp],0.0)*std::max(_HO2m[_qp],0.0);					       // OH + HO2- --> OH- + HO2    
-  // _rxn36[_qp]	= _k36[_qp]*std::max(_H2Op[_qp],0.0)*std::max(_cw[_qp],0.0);					       // H2O+ + H2O --> H3O+ + OH   
+  // _rxn34[_qp]	= _k34[_qp]*std::max(_OH[_qp],0.0)*std::max(_H2O2[_qp],0.0);					       // OH + H2O2 --> H2O + HO2
+  // _rxn35[_qp]	= _k35[_qp]*std::max(_OH[_qp],0.0)*std::max(_HO2m[_qp],0.0);					       // OH + HO2- --> OH- + HO2
+  // _rxn36[_qp]	= _k36[_qp]*std::max(_H2Op[_qp],0.0)*std::max(_cw[_qp],0.0);					       // H2O+ + H2O --> H3O+ + OH
   // _rxn37[_qp]	= _k37[_qp]*std::max(_H3Op[_qp],0.0)*std::max(_OHm[_qp],0.0);					       // H3O+ + OH- --> H + OH + H2O
-  // _rxn38[_qp]	= _k38[_qp]*std::max(_HO2[_qp],0.0)*std::max(_cw[_qp],0.0);					       // HO2 + H2O --> H3O+ + O2-   
-  // _rxn39[_qp]	= _k39[_qp]*std::max(_H3Op[_qp],0.0)*std::max(_O2m[_qp],0.0);					       // H3O+ O2- --> HO2 + H2O     
+  // _rxn38[_qp]	= _k38[_qp]*std::max(_HO2[_qp],0.0)*std::max(_cw[_qp],0.0);					       // HO2 + H2O --> H3O+ + O2-
+  // _rxn39[_qp]	= _k39[_qp]*std::max(_H3Op[_qp],0.0)*std::max(_O2m[_qp],0.0);					       // H3O+ O2- --> HO2 + H2O
 
   // // Terms for reaction source/sink residuals
 
