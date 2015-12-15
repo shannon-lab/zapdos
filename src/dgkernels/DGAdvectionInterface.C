@@ -56,11 +56,17 @@ DGAdvectionInterface::computeQpResidual(Moose::DGResidualType type)
   switch (type)
   {
   case Moose::Element:
-    r += 0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _normals[_qp] + _mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_neighbor_value[_qp]) * _normals[_qp]) * _test[_i][_qp];
+    if ( (_sgn[_qp] * -_grad_potential[_qp] * _normals[_qp]) >= 0.0)
+      r += _mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _normals[_qp] * _test[_i][_qp];
+    else
+      r += _mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_u_neighbor[_qp]) * _normals[_qp] * _test[_i][_qp];
     break;
 
   case Moose::Neighbor:
-    r += -0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _normals[_qp] + _mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_neighbor_value[_qp]) * _normals[_qp]) * _test_neighbor[_i][_qp];
+    if ( (_sgn[_qp] * -_grad_potential[_qp] * _normals[_qp]) >= 0.0)
+      r += -_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _normals[_qp] * _test_neighbor[_i][_qp];
+    else
+      r += -_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_u_neighbor[_qp]) * _normals[_qp] * _test_neighbor[_i][_qp];
     break;
   }
 
@@ -70,40 +76,48 @@ DGAdvectionInterface::computeQpResidual(Moose::DGResidualType type)
 Real
 DGAdvectionInterface::computeQpJacobian(Moose::DGJacobianType type)
 {
-  Real jac = 0;
+  Real r = 0;
 
   switch (type)
   {
-
   case Moose::ElementElement:
-    jac += 0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]) * _test[_i][_qp];
+    if ( (_sgn[_qp] * -_grad_potential[_qp] * _normals[_qp]) >= 0.0)
+      r += _mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp] * _test[_i][_qp];
+    else
+      r += 0.;
     break;
 
-  // case Moose::ElementNeighbor:
-  //   jac += 0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp]) * _test[_i][_qp];
-  //   break;
-
-  // case Moose::NeighborElement:
-  //   jac += -0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]) * _test_neighbor[_i][_qp];
-  //   break;
-
   case Moose::NeighborNeighbor:
-    jac += -0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp]) * _test_neighbor[_i][_qp];
+    if ( (_sgn[_qp] * -_grad_potential[_qp] * _normals[_qp]) >= 0.0)
+      r += 0.;
+    else
+      r += -_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_u_neighbor[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp] * _test_neighbor[_i][_qp];
     break;
   }
 
-  return jac;
+  return r;
 }
 
 Real
 DGAdvectionInterface::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar)
 {
+  Real r = 0;
 
   if (jvar == _var.number() && type == Moose::NeighborElement)
-    return -0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]) * _test_neighbor[_i][_qp];
+  {
+    if ( (_sgn[_qp] * -_grad_potential[_qp] * _normals[_qp]) >= 0.0)
+      r += -_mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp] * _test_neighbor[_i][_qp];
+    else
+      r += 0.;
+  }
 
   else if (jvar == _neighbor_var.number() && type == Moose::ElementNeighbor)
-    return 0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp]) * _test[_i][_qp];
+  {
+    if ( (_sgn[_qp] * -_grad_potential[_qp] * _normals[_qp]) >= 0.0)
+      r += 0.;
+    else
+      r += _mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * std::exp(_u_neighbor[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp] * _test[_i][_qp];
+  }
 
   else if (jvar == _potential_id)
   {
@@ -111,19 +125,25 @@ DGAdvectionInterface::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsig
     {
 
       case Moose::ElementElement:
-        return  0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_phi[_j][_qp] * std::exp(_u[_qp]) * _normals[_qp]) * _test[_i][_qp];
+        if ( (_sgn[_qp] * -_grad_potential[_qp] * _normals[_qp]) >= 0.0)
+          r +=  _mu[_qp] * _sgn[_qp] * -_grad_phi[_j][_qp] * std::exp(_u[_qp]) * _normals[_qp] * _test[_i][_qp];
+        else
+          r += 0.0;
+        break;
 
       case Moose::ElementNeighbor:
-        return 0.;
+        r += 0.;
 
       case Moose::NeighborElement:
-        return  -0.5 * (_mu[_qp] * _sgn[_qp] * -_grad_phi[_j][_qp] * std::exp(_u[_qp]) * _normals[_qp]) * _test_neighbor[_i][_qp];
+        if ( (_sgn[_qp] * -_grad_potential[_qp] * _normals[_qp]) >= 0.0)
+          r += -_mu[_qp] * _sgn[_qp] * -_grad_phi[_j][_qp] * std::exp(_u[_qp]) * _normals[_qp] * _test_neighbor[_i][_qp];
+        else
+          r += 0.;
 
       case Moose::NeighborNeighbor:
-        return 0.;
+        r += 0.;
 
     }
-    return 0.;
   }
 
   else if (jvar == _potential_neighbor_id)
@@ -132,22 +152,25 @@ DGAdvectionInterface::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsig
     {
 
       case Moose::ElementElement:
-        return 0.;
+        r += 0.;
 
       case Moose::ElementNeighbor:
-        return  0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _normals[_qp]) * _test[_i][_qp];
+        if ( (_sgn[_qp] * -_grad_potential[_qp] * _normals[_qp]) >= 0.0)
+          r += 0.;
+        else
+          r +=  (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _normals[_qp]) * _test[_i][_qp];
 
       case Moose::NeighborElement:
-        return 0.;
+        r += 0.;
 
       case Moose::NeighborNeighbor:
-        return  -0.5 * (_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _normals[_qp]) * _test_neighbor[_i][_qp];
+        if ( (_sgn[_qp] * -_grad_potential[_qp] * _normals[_qp]) >= 0.0)
+          r += 0.;
+        else
+          r +=  -(_mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _normals[_qp]) * _test_neighbor[_i][_qp];
 
     }
-    return 0.;
   }
 
-  else
-    return 0.;
-
+  return r;
 }

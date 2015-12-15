@@ -48,7 +48,9 @@ Water::Water(const InputParameters & parameters) :
   _k(declareProperty<Real>("k")),
   _T(declareProperty<Real>("T")),
   _kemliq(declareProperty<Real>("kemliq")),
+  _kem(declareProperty<Real>("kem")),
  _kemliqemliq(declareProperty<Real>("kemliqemliq")),
+  _kemem(declareProperty<Real>("kemem")),
  _k3(declareProperty<Real>("k3")),
  _k4(declareProperty<Real>("k4")),
  _k5(declareProperty<Real>("k5")),
@@ -87,7 +89,9 @@ Water::Water(const InputParameters & parameters) :
  _k38(declareProperty<Real>("k38")),
  _k39(declareProperty<Real>("k39")),
  _diffemliq(declareProperty<Real>("diffemliq")),
+  _diffem(declareProperty<Real>("diffem")),
  _diffpotentialliq(declareProperty<Real>("diffpotentialliq")),
+  _diffpotential(declareProperty<Real>("diffpotential")),
  _DH(declareProperty<Real>("DH")),
  _diffOHm(declareProperty<Real>("diffOHm")),
  _DH2Op(declareProperty<Real>("DH2Op")),
@@ -120,6 +124,7 @@ Water::Water(const InputParameters & parameters) :
  _zO3(declareProperty<Real>("zO3")),
  _zO3m(declareProperty<Real>("zO3m")),
  _muemliq(declareProperty<Real>("muemliq")),
+  _muem(declareProperty<Real>("muem")),
  _muH(declareProperty<Real>("muH")),
  _muOHm(declareProperty<Real>("muOHm")),
  _muH2Op(declareProperty<Real>("muH2Op")),
@@ -213,6 +218,7 @@ Water::Water(const InputParameters & parameters) :
   _Jac_potential(declareProperty<Real>("Jac_potential")),
   _eps(declareProperty<Real>("eps")),
   _sgnemliq(declareProperty<Real>("sgnemliq")),
+  _sgnem(declareProperty<Real>("sgnem")),
   _sgnOHm(declareProperty<Real>("sgnOHm")),
   _sgnH3Op(declareProperty<Real>("sgnH3Op")),
   _sgnNap(declareProperty<Real>("sgnNap")),
@@ -265,8 +271,10 @@ Water::computeQpProperties()
   _k[_qp]	= 1.38e-23; // Boltzmanns constant
   _T[_qp]	= 300;      // Simulation temperature
   _kemliq[_qp]	= 1.9e1 * _cw[_qp];   // e + H2O-->H + OH-
+  _kem[_qp] = _kemliq[_qp];
   // _kemliqemliq[_qp]	= 6e11 * _cw[_qp] * _cw[_qp] / (_N_A[_qp] * 1000.);     // e + H2Op-->H + OH
   _kemliqemliq[_qp]	= 1e8 * _cw[_qp] * _cw[_qp] / 1000.;      // 2e + 2H2O-->H2 + 2OH-. Now has units of m^3 / (mol * s)
+  _kemem[_qp] = _kemliqemliq[_qp];
   _k4[_qp]	= 2.5e10;   // e + H + H2O-->H2 + OH-
   _k5[_qp]	= 3e10;     // e + OH-->OH-
   _k6[_qp]	= 2.2e10;   // e + O- + H2O --> 2OH-
@@ -304,7 +312,9 @@ Water::computeQpProperties()
   _k38[_qp]	= 2.0e3;  // HO2 + H2O --> H3O+ + O2-
   _k39[_qp]	= 6.0e1;  // H3O+ O2- --> HO2 + H2O
   _diffemliq[_qp]	= 4.5e-9;	// diffusivity of hydrated electron
+  _diffem[_qp] = _diffemliq[_qp];
   _diffpotentialliq[_qp] = _eps[_qp];
+  _diffpotential[_qp] = _diffpotentialliq[_qp];
   // _diffemliq[_qp] = 0.297951680159/4;
   _DH[_qp]	= 5e-9;		// H radical
   _diffOHm[_qp]	= 5.27e-9;	// OH- ion
@@ -342,11 +352,13 @@ Water::computeQpProperties()
   _zO3[_qp]	= 0;		// O3 molecule
   _zO3m[_qp]	= -1;		// O3- ion
   _sgnemliq[_qp]   = -1;
+  _sgnem[_qp] = _sgnemliq[_qp];
   _sgnOHm[_qp] = -1;
   _sgnH3Op[_qp] = 1;
   _sgnClm[_qp] = -1;
   _sgnNap[_qp] = 1;
   _muemliq[_qp]	= _e[_qp]*_diffemliq[_qp]/_k[_qp]/_T[_qp] * 1000.;	// mobility of hydrated electron
+  _muem[_qp] = _muemliq[_qp];
   // _muemliq[_qp] = 0.0352103411399/4;
   _muH[_qp]	= _zH[_qp]*_e[_qp]*_DH[_qp]/_k[_qp]/_T[_qp];	// H radical
   _muOHm[_qp]	= _e[_qp]*_diffOHm[_qp]/_k[_qp]/_T[_qp] * 1000.;	// OH- ion

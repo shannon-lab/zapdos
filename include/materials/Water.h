@@ -21,7 +21,7 @@ class Water : public Material
   const Real & _user_relative_permittivity;
   const Real & _user_potential_mult;
   const Real & _user_electron_mult;
-  
+
   // Material Properties
 
   MaterialProperty<Real> & _cw;
@@ -29,12 +29,14 @@ class Water : public Material
   MaterialProperty<Real> & _potential_mult;
   MaterialProperty<Real> & _N_A;
   MaterialProperty<Real> & _eps_r;
-  MaterialProperty<Real> & _eps_0;  
+  MaterialProperty<Real> & _eps_0;
   MaterialProperty<Real> & _e;
   MaterialProperty<Real> & _k;
   MaterialProperty<Real> & _T;
   MaterialProperty<Real> & _kemliq;
+  MaterialProperty<Real> & _kem;
   MaterialProperty<Real> & _kemliqemliq;
+  MaterialProperty<Real> & _kemem;
   MaterialProperty<Real> & _k3;
   MaterialProperty<Real> & _k4;
   MaterialProperty<Real> & _k5;
@@ -73,7 +75,9 @@ class Water : public Material
   MaterialProperty<Real> & _k38;
   MaterialProperty<Real> & _k39;
   MaterialProperty<Real> & _diffemliq;
+  MaterialProperty<Real> & _diffem;
   MaterialProperty<Real> & _diffpotentialliq;
+  MaterialProperty<Real> & _diffpotential;
   MaterialProperty<Real> & _DH;
   MaterialProperty<Real> & _diffOHm;
   MaterialProperty<Real> & _DH2Op;
@@ -106,6 +110,7 @@ class Water : public Material
   MaterialProperty<Real> & _zO3;
   MaterialProperty<Real> & _zO3m;
   MaterialProperty<Real> & _muemliq;
+  MaterialProperty<Real> & _muem;
   MaterialProperty<Real> & _muH;
   MaterialProperty<Real> & _muOHm;
   MaterialProperty<Real> & _muH2Op;
@@ -124,46 +129,46 @@ class Water : public Material
   MaterialProperty<Real> & _Dunity;
   MaterialProperty<Real> & _muunity;
   MaterialProperty<Real> & _munegunity;
-  MaterialProperty<Real> & _rxn1;    
-  MaterialProperty<Real> & _rxn2;    
-  MaterialProperty<Real> & _rxn3;    
-  MaterialProperty<Real> & _rxn4;    
-  MaterialProperty<Real> & _rxn5;    
-  MaterialProperty<Real> & _rxn6;    
-  MaterialProperty<Real> & _rxn7;    
-  MaterialProperty<Real> & _rxn8;    
-  MaterialProperty<Real> & _rxn9;    
-  MaterialProperty<Real> & _rxn10;   
-  MaterialProperty<Real> & _rxn11;   
-  MaterialProperty<Real> & _rxn12;   
-  MaterialProperty<Real> & _rxn13;   
-  MaterialProperty<Real> & _rxn14;   
-  MaterialProperty<Real> & _rxn15;   
-  MaterialProperty<Real> & _rxn16;   
-  MaterialProperty<Real> & _rxn17;   
-  MaterialProperty<Real> & _rxn18;   
-  MaterialProperty<Real> & _rxn19;   
-  MaterialProperty<Real> & _rxn20;   
-  MaterialProperty<Real> & _rxn21;   
-  MaterialProperty<Real> & _rxn22;   
-  MaterialProperty<Real> & _rxn23;   
-  MaterialProperty<Real> & _rxn24;   
-  MaterialProperty<Real> & _rxn25;   
-  MaterialProperty<Real> & _rxn26;   
-  MaterialProperty<Real> & _rxn27;   
-  MaterialProperty<Real> & _rxn28;   
-  MaterialProperty<Real> & _rxn29;   
-  MaterialProperty<Real> & _rxn30;   
-  MaterialProperty<Real> & _rxn31;   
-  MaterialProperty<Real> & _rxn32;   
-  MaterialProperty<Real> & _rxn33;   
-  MaterialProperty<Real> & _rxn34;   
-  MaterialProperty<Real> & _rxn35;   
-  MaterialProperty<Real> & _rxn36;   
-  MaterialProperty<Real> & _rxn37;   
-  MaterialProperty<Real> & _rxn38;   
-  MaterialProperty<Real> & _rxn39;   
-  MaterialProperty<Real> & _sem;     
+  MaterialProperty<Real> & _rxn1;
+  MaterialProperty<Real> & _rxn2;
+  MaterialProperty<Real> & _rxn3;
+  MaterialProperty<Real> & _rxn4;
+  MaterialProperty<Real> & _rxn5;
+  MaterialProperty<Real> & _rxn6;
+  MaterialProperty<Real> & _rxn7;
+  MaterialProperty<Real> & _rxn8;
+  MaterialProperty<Real> & _rxn9;
+  MaterialProperty<Real> & _rxn10;
+  MaterialProperty<Real> & _rxn11;
+  MaterialProperty<Real> & _rxn12;
+  MaterialProperty<Real> & _rxn13;
+  MaterialProperty<Real> & _rxn14;
+  MaterialProperty<Real> & _rxn15;
+  MaterialProperty<Real> & _rxn16;
+  MaterialProperty<Real> & _rxn17;
+  MaterialProperty<Real> & _rxn18;
+  MaterialProperty<Real> & _rxn19;
+  MaterialProperty<Real> & _rxn20;
+  MaterialProperty<Real> & _rxn21;
+  MaterialProperty<Real> & _rxn22;
+  MaterialProperty<Real> & _rxn23;
+  MaterialProperty<Real> & _rxn24;
+  MaterialProperty<Real> & _rxn25;
+  MaterialProperty<Real> & _rxn26;
+  MaterialProperty<Real> & _rxn27;
+  MaterialProperty<Real> & _rxn28;
+  MaterialProperty<Real> & _rxn29;
+  MaterialProperty<Real> & _rxn30;
+  MaterialProperty<Real> & _rxn31;
+  MaterialProperty<Real> & _rxn32;
+  MaterialProperty<Real> & _rxn33;
+  MaterialProperty<Real> & _rxn34;
+  MaterialProperty<Real> & _rxn35;
+  MaterialProperty<Real> & _rxn36;
+  MaterialProperty<Real> & _rxn37;
+  MaterialProperty<Real> & _rxn38;
+  MaterialProperty<Real> & _rxn39;
+  MaterialProperty<Real> & _sem;
   MaterialProperty<Real> & _sH;
   MaterialProperty<Real> & _sOHm;
   MaterialProperty<Real> & _sH2Op;
@@ -199,6 +204,7 @@ class Water : public Material
   MaterialProperty<Real> & _Jac_potential;
   MaterialProperty<Real> & _eps;
   MaterialProperty<Real> & _sgnemliq;
+  MaterialProperty<Real> & _sgnem;
   MaterialProperty<Real> & _sgnOHm;
   MaterialProperty<Real> & _sgnH3Op;
   MaterialProperty<Real> &  _sgnNap;
@@ -231,6 +237,6 @@ class Water : public Material
   VariableValue & _O3;
   VariableValue & _O3m;
   VariableGradient & _grad_potential;
-};	      
-		      
+};
+
 #endif //WATER_H
