@@ -264,7 +264,7 @@ Water::computeQpProperties()
   _potential_mult[_qp] = _user_potential_mult;
   _N_A[_qp] = 6.02e23;
   _eps_r[_qp]   = 80.;
-  // _eps_r[_qp] = 5.;
+  // _eps_r[_qp] = 1.;
   _eps_0[_qp]   = 8.85e-12;
   _eps[_qp] = _eps_r[_qp] * _eps_0[_qp];
   _e[_qp]	= 1.6e-19;  // coulombic charge
@@ -313,6 +313,7 @@ Water::computeQpProperties()
   _k39[_qp]	= 6.0e1;  // H3O+ O2- --> HO2 + H2O
   _diffemliq[_qp]	= 4.5e-9;	// diffusivity of hydrated electron
   _diffem[_qp] = _diffemliq[_qp];
+  // _diffem[_qp] = 0.297951680159;
   _diffpotentialliq[_qp] = _eps[_qp];
   _diffpotential[_qp] = _diffpotentialliq[_qp];
   // _diffemliq[_qp] = 0.297951680159/4;
@@ -359,6 +360,7 @@ Water::computeQpProperties()
   _sgnNap[_qp] = 1;
   _muemliq[_qp]	= _e[_qp]*_diffemliq[_qp]/_k[_qp]/_T[_qp] * 1000.;	// mobility of hydrated electron
   _muem[_qp] = _muemliq[_qp];
+  // _muem[_qp] = 0.0352103411399 * 1000.; // units of m^2/(kV*s)
   // _muemliq[_qp] = 0.0352103411399/4;
   _muH[_qp]	= _zH[_qp]*_e[_qp]*_DH[_qp]/_k[_qp]/_T[_qp];	// H radical
   _muOHm[_qp]	= _e[_qp]*_diffOHm[_qp]/_k[_qp]/_T[_qp] * 1000.;	// OH- ion

@@ -2667,3 +2667,35 @@ Active time was 1 minute on 1 processor. That's pretty nice.
 In this simulation, the water width was only 100 nm. Screening specie concentrations were quite high.
 
 I should double check and make sure that OHm reaction rates are correct and accurate. Presumably they should be since the OHm_lin concentration appears steady state.
+
+Next thing to do: play around with some of the physics. Look again at extending out the liquid domain so that the em liquid concentration can effectively go to zero. See how that effects the total plasma densities.
+
+Also, think about what could be done to make this simulation locally conservative, such that the electron current could be continuous across the interface.
+
+Left potential = -.521882 kV = -521.882 Volts -> -522 V
+
+Ion current = -1317 Amps/m^2
+Electron current = -132.19 Amps/m^2
+Total current = -1449.66 Amps/m^2
+
+-> V_R = 727.73 Volts
+-> V_p = 522.27 V -> 522 V
+
+Perfect match in this case, so what's going on with the potential in the copuled plasma-liquid case?
+
+With pot = 1e3 scaling, time steps = 169, voltage = ~2 Volts, abs_tol = 4e-6
+1e6 scaling, tsteps = 198, voltage = 2.3 volts, abs_tol = 4e-6
+1e7 scaling, tsteps = 296, voltage = 2.3 Volts, abs_tol = 4e-6
+No scaling, tsteps = 170, voltage = 2.3 volts, abs_tol = 3e-6
+
+So with scaling, the solve efficiency gets worse but the steady-state solution is the same.
+
+Alright, after changing the electron mobility and diffusivity in the water to match their values in the gas, the left boundary potential condition is satisfied.
+
+After turning off the advection_stabilization, I no longer got a discharge.
+
+It's clear that 1e-8 is definitely too high of an absolute tolerance for early in the simulation.
+
+With nl_abs_tol = 2e-9, nl_rel_tol = 1e-5, diverged line search at 1.78e-5 seconds with too high of residual
+
+In LFA_lit_diff_mob_1e6_ballast_resist_no_H3Op_eps_80_gold_out.e, continuity of current and potential BC are both satisifed. Boom!!!

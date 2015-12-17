@@ -7,7 +7,7 @@ InputParameters validParams<Current>()
 
   params.addRequiredCoupledVar("density_log","The electron density");
   params.addRequiredCoupledVar("potential","The potential");
-
+  params.addParam<bool>("art_diff",false,"Whether there is a current contribution from artificial diffusion.");
   return params;
 }
 
@@ -20,12 +20,22 @@ Current::Current(const InputParameters & parameters) :
     _grad_potential(coupledGradient("potential")),
     _mu(getMaterialProperty<Real>("mu" + _density_var.name())),
     _sgn(getMaterialProperty<Real>("sgn" + _density_var.name())),
-    _diff(getMaterialProperty<Real>("diff" + _density_var.name()))
+    _diff(getMaterialProperty<Real>("diff" + _density_var.name())),
+    _art_diff(getParam<bool>("art_diff"))
 {
 }
 
 Real
 Current::computeValue()
 {
-  return _sgn[_qp] * 1.6e-19 * 6.02e23 * (_sgn[_qp] * _mu[_qp] * -_grad_potential[_qp](0) * std::exp(_density_log[_qp]) - _diff[_qp]* std::exp(_density_log[_qp]) * _grad_density_log[_qp](0));
+  Real r = _sgn[_qp] * 1.6e-19 * 6.02e23 * (_sgn[_qp] * _mu[_qp] * -_grad_potential[_qp](0) * std::exp(_density_log[_qp]) - _diff[_qp]* std::exp(_density_log[_qp]) * _grad_density_log[_qp](0));
+
+  if (_art_diff)
+  {
+    Real vd_mag = _mu[_qp] * _grad_potential[_qp].size();
+    Real delta = vd_mag * _current_elem->hmax()/2.;
+    r += _sgn[_qp] * 1.6e-19 * 6.02e23 * -delta * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0);
+  }
+
+  return r;
 }

@@ -24,6 +24,7 @@ protected:
   const MaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sgn;
   const MaterialProperty<Real> & _diff;
+  bool _art_diff;
 };
 
 #endif //CURRENT_H

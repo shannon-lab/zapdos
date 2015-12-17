@@ -39,7 +39,7 @@
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
  nl_rel_tol = 1e-5
- nl_abs_tol = 3.2e-6
+ nl_abs_tol = 6e-7
  # nl_max_its = 20
   dtmin = 1e-12
   [./TimeStepper]
@@ -68,8 +68,8 @@
     type = ProvideMobility
     # electrode_area = 3.14e-6 # Formerly 3.14e-6
     electrode_area = 5.02e-7 # Formerly 3.14e-6
-    # ballast_resist = 8.1e3
-    ballast_resist = 1e6
+    ballast_resist = 8.1e3
+    # ballast_resist = 1e6
     e = 1.6e-19
   [../]
 []
@@ -137,12 +137,12 @@
     charged = OHm
     block = 1
   [../]
-  # [./H3Op_charge_source]
-  #   type = ChargeSourceMoles_KV
-  #   variable = potential
-  #   charged = H3Op
-  #   block = 1
-  # [../]
+  [./H3Op_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = H3Op
+    block = 1
+  [../]
 
   [./Arp_time_deriv]
     type = ElectronTimeDerivative
@@ -221,35 +221,35 @@
     block = 1
   [../]
 
-  # [./H3Op_time_deriv]
-  #   type = ElectronTimeDerivative
-  #   variable = H3Op
-  #   block = 1
-  # [../]
-  # [./H3Op_advection]
-  #   type = EFieldAdvection
+  [./H3Op_time_deriv]
+    type = ElectronTimeDerivative
+    variable = H3Op
+    block = 1
+  [../]
+  [./H3Op_advection]
+    type = EFieldAdvection
+    variable = H3Op
+    potential = potential
+    block = 1
+  [../]
+  [./H3Op_diffusion]
+    type = CoeffDiffusion
+    variable = H3Op
+    block = 1
+  [../]
+  [./H3Op_log_stabilization]
+    type = LogStabilizationMoles
+    offset = 50
+    variable = H3Op
+    block = 1
+  [../]
+  # [./H3Op_advection_stabilization]
+  #   type = EFieldArtDiff
   #   variable = H3Op
   #   potential = potential
   #   block = 1
+  #   scale = 1
   # [../]
-  # [./H3Op_diffusion]
-  #   type = CoeffDiffusion
-  #   variable = H3Op
-  #   block = 1
-  # [../]
-  # [./H3Op_log_stabilization]
-  #   type = LogStabilizationMoles
-  #   offset = 50
-  #   variable = H3Op
-  #   block = 1
-  # [../]
-  # # [./H3Op_advection_stabilization]
-  # #   type = EFieldArtDiff
-  # #   variable = H3Op
-  # #   potential = potential
-  # #   block = 1
-  # #   scale = 1
-  # # [../]
 []
 
 [Variables]
@@ -265,9 +265,9 @@
   [./OHm]
     block = 1
   [../]
-  # [./H3Op]
-  #   block = 1
-  # [../]
+  [./H3Op]
+    block = 1
+  [../]
 []
 
 [AuxVariables]
@@ -299,11 +299,11 @@
     order = CONSTANT
     family = MONOMIAL
   [../]
-  # [./H3Op_lin]
-  #   block = 1
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
+  [./H3Op_lin]
+    block = 1
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
   [./Efield]
     order = CONSTANT
     family = MONOMIAL
@@ -322,11 +322,11 @@
     order = CONSTANT
     family = MONOMIAL
   [../]
-  # [./Current_H3Op]
-  #   block = 1
-  #   order = CONSTANT
-  #   family = MONOMIAL
-  # [../]
+  [./Current_H3Op]
+    block = 1
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
   [./tot_gas_current]
     block = 0
     order = CONSTANT
@@ -378,8 +378,8 @@
   [./rholiq]
     type = ParsedAux
     variable = rholiq
-    args = 'em_lin OHm_lin' # H3Op_lin OHm_lin'
-    function = '-em_lin - OHm_lin' # 'H3Op_lin - em_lin - OHm_lin'
+    args = 'em_lin H3Op_lin OHm_lin'
+    function = 'H3Op_lin - em_lin - OHm_lin'
     execute_on = 'timestep_end'
     block = 1
   [../]
@@ -394,8 +394,8 @@
   [./tot_liq_current]
     type = ParsedAux
     variable = tot_liq_current
-    args = 'Current_em Current_OHm' # Current_H3Op Current_OHm'
-    function = 'Current_em + Current_OHm' # + Current_H3Op + Current_OHm'
+    args = 'Current_em Current_H3Op Current_OHm'
+    function = 'Current_em + Current_H3Op + Current_OHm'
     execute_on = 'timestep_end'
     block = 1
   [../]
@@ -416,12 +416,12 @@
     density_log = OHm
     block = 1
   [../]
-  # [./H3Op_lin]
-  #   type = Density
-  #   variable = H3Op_lin
-  #   density_log = H3Op
-  #   block = 1
-  # [../]
+  [./H3Op_lin]
+    type = Density
+    variable = H3Op_lin
+    density_log = H3Op
+    block = 1
+  [../]
   [./Efield]
     type = Efield
     potential = potential
@@ -450,14 +450,14 @@
     variable = Current_OHm
     art_diff = false
   [../]
-  # [./Current_H3Op]
-  #   block = 1
-  #   type = Current
-  #   potential = potential
-  #   density_log = H3Op
-  #   variable = Current_H3Op
-  #   art_diff = false
-  # [../]
+  [./Current_H3Op]
+    block = 1
+    type = Current
+    potential = potential
+    density_log = H3Op
+    variable = Current_H3Op
+    art_diff = false
+  [../]
   [./tot_flux_OHm]
     block = 1
     type = TotalFlux
@@ -537,12 +537,12 @@
   [./em_ic]
     type = ConstantIC
     variable = em
-    value = -17
+    value = -15.6
   [../]
   [./Arp_ic]
     type = ConstantIC
     variable = Arp
-    value = -17
+    value = -15.6
     block = 0
   [../]
   # [./potential_ic]
@@ -560,15 +560,15 @@
   [./OHm_ic]
     type = ConstantIC
     variable = OHm
-    value = -15.6
+    value = .0455
     block = 1
   [../]
-  # [./H3Op_ic]
-  #   type = ConstantIC
-  #   variable = H3Op
-  #   value = .0455
-  #   block = 1
-  # [../]
+  [./H3Op_ic]
+    type = ConstantIC
+    variable = H3Op
+    value = .0455
+    block = 1
+  [../]
 []
 
 [Functions]
