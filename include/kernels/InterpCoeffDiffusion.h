@@ -12,50 +12,37 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef JOULEHEATING_H
-#define JOULEHEATING_H
+#ifndef INTERPCOEFFDIFFUSION_H
+#define INTERPCOEFFDIFFUSION_H
 
-#include "Kernel.h"
+#include "Diffusion.h"
+#include "SplineInterpolation.h"
 
-class JouleHeating;
+class InterpCoeffDiffusion;
 
 template<>
-InputParameters validParams<JouleHeating>();
+InputParameters validParams<InterpCoeffDiffusion>();
 
-class JouleHeating : public Kernel
+class InterpCoeffDiffusion : public Diffusion
 {
- public:
+public:
+  InterpCoeffDiffusion(const InputParameters & parameters);
+  virtual ~InterpCoeffDiffusion();
 
-  JouleHeating(const InputParameters & parameters);
-
- protected:
+protected:
 
   virtual Real computeQpResidual();
-
   virtual Real computeQpJacobian();
-
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
-  // Input file scalars
+  VariableValue & _v;
+  unsigned int _v_id;
 
-  // Material properties
+  const MaterialProperty<Real> & _diffusivity;
+  const MaterialProperty<Real> & _d_diffusivity_d_v;
 
-  const MaterialProperty<Real> & _muem;
-  const MaterialProperty<Real> & _diffem;
-
-  std::string _potential_units;
-
-  // Coupled variables
-
-  unsigned int _potential_id;
-  VariableGradient & _grad_potential;
-  VariableValue & _em;
-  VariableGradient & _grad_em;
-  unsigned int _em_id;
-
-  // Unique variables
-
-  Real _voltage_scaling;
+  // SplineInterpolation _interpolation;
 };
 
-#endif //JOULEHEATING_H
+
+#endif /* INTERPCOEFFDIFFUSION_H */

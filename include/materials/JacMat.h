@@ -15,6 +15,7 @@
 #define JACMAT_H_
 
 #include "Material.h"
+#include "SplineInterpolation.h"
 
 class JacMat;
 
@@ -50,6 +51,32 @@ protected:
   MaterialProperty<Real> & _se_coeff;
   MaterialProperty<Real> & _eps;
   MaterialProperty<Real> & _mem;
+  MaterialProperty<Real> & _d_interp;
+  MaterialProperty<Real> & _d_d_interp_d_v;
+  MaterialProperty<Real> &  _d_muem_d_actual_mean_en;
+  MaterialProperty<Real> &  _d_diffem_d_actual_mean_en;
+  MaterialProperty<Real> &  _alpha_iz;
+  MaterialProperty<Real> &  _d_iz_d_actual_mean_en;
+  MaterialProperty<Real> &  _alpha_ex;
+  MaterialProperty<Real> &  _d_ex_d_actual_mean_en;
+  MaterialProperty<Real> &  _alpha_el;
+  MaterialProperty<Real> &  _d_el_d_actual_mean_en;
+  MaterialProperty<Real> &  _Eiz;
+  MaterialProperty<Real> &  _Eex;
+  MaterialProperty<Real> &  _mGas;
+
+
+  VariableValue & _v;
+  VariableValue & _mean_en;
+  VariableValue & _em;
+
+  SplineInterpolation _interpolation;
+  SplineInterpolation  _alpha_interpolation;
+  SplineInterpolation  _alphaEx_interpolation;
+  SplineInterpolation  _alphaEl_interpolation;
+  SplineInterpolation  _mu_interpolation;
+  SplineInterpolation  _diff_interpolation;
+
 };
 
 #endif //JACMAT_H

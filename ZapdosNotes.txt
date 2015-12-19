@@ -2699,3 +2699,45 @@ It's clear that 1e-8 is definitely too high of an absolute tolerance for early i
 With nl_abs_tol = 2e-9, nl_rel_tol = 1e-5, diverged line search at 1.78e-5 seconds with too high of residual
 
 In LFA_lit_diff_mob_1e6_ballast_resist_no_H3Op_eps_80_gold_out.e, continuity of current and potential BC are both satisifed. Boom!!!
+
+Emi does not include metastables in her PIC simulation. However, she most certainly does have excitation.
+
+Unfortunately, with the current formulation for ElectronsFromIonization, the jacobian entries are so small that the kernel under investigations contribution to the matrix norms are too small to be registered. The finite difference jacobian doesn't even register any off-diagonal components even though they have to be present.
+
+Good news!!! The finite differencing Jacobian will correctly handle material properties that are functions of dependent variables. Sweet!!!
+
+Electron energy equation, unit checking check list:
+
+ElectronTimeDerivative
+EFieldAdvection
+CoeffDiffusion
+JouleHeating
+ElectronEnergyLossFromIonization
+
+Other kernel changes check list:
+
+ElectronsFromIonization
+
+Ok the trick variable appears to be em. That comes from studying IonsFromIonization. This is confirmed by studying ElectronsFromIonization.
+
+So the question to answer is: should the on-diagonal of ElectronsFromIonization be non-zero even when _grad_em = 0 ? That will have to answered when I come back from my run.
+
+When I get back, remove the interpolation of alpha_iz and its derivatives. Write down analytic expressions and see whether the weird behavior remains.
+
+The problem here is an inescapable mathematical one. Trying to evaluate a function that contains a division by zero: in this case the electron flux magnitude. As soon as that value is non-zero the problems go away.
+
+The problem in this case had nothing to do with interpolation.
+
+Off diagonal jacobian for em is wrong.
+
+Alright,
+ElectronEnergyLossFromElastic no good
+ElectronEnergyLossFromExcitation no good
+ElectronEnergyLossFromIonization no good
+
+With mean_en_log_stabilization at 27, fail time = 4.69e-6 seconds.
+
+Stable = 22, fail = 1.09e-6, lowest_point = -34
+Stable = 17, fail = 2.69e-7, lowest_point = -17.5, no oscillations
+
+Next going to try reducing nl_rel_tol

@@ -98,6 +98,7 @@ protected:
   MaterialProperty<Real> & _sgnmean_en;
   MaterialProperty<Real> & _sgnArp;
   MaterialProperty<Real> & _diffpotential;
+  MaterialProperty<Real> & _actual_mean_energy;
 
   /* MaterialProperty<Real> & _diffusivity; */
   /* MaterialProperty<Real> & _d_diffusivity_d_u; */

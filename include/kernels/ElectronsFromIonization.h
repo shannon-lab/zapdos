@@ -38,8 +38,6 @@ protected:
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _alpha_iz;
   const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
-  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
-  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
 
   VariableValue & _mean_en;
   VariableGradient & _grad_potential;

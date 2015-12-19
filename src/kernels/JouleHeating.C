@@ -21,21 +21,23 @@ InputParameters validParams<JouleHeating>()
 
   params.addRequiredCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredCoupledVar("em", "The electron density.");
+  params.addRequiredParam<std::string>("potential_units", "The potential units.");
   return params;
 }
 
 JouleHeating::JouleHeating(const InputParameters & parameters) :
     Kernel(parameters),
-    
+
     // Input Parameters
-    
+
     // Material properties
-    
+
     _muem(getMaterialProperty<Real>("muem")),
     _diffem(getMaterialProperty<Real>("diffem")),
+    _potential_units(getParam<std::string>("potential_units")),
 
     // Coupled variables
-    
+
     _potential_id(coupled("potential")),
     _grad_potential(coupledGradient("potential")),
     _em(coupledValue("em")),
@@ -43,11 +45,17 @@ JouleHeating::JouleHeating(const InputParameters & parameters) :
     _em_id(coupled("em"))
 
     // Unique variables
-{}
+{
+  if (_potential_units.compare("V") == 0)
+    _voltage_scaling = 1.;
+  else if (_potential_units.compare("kV") == 0)
+    _voltage_scaling = 1000;
+
+}
 
 Real JouleHeating::computeQpResidual()
 {
-  return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]);
+  return _test[_i][_qp]*-_grad_potential[_qp] * _voltage_scaling * (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]);
 }
 
 Real JouleHeating::computeQpJacobian()
@@ -59,14 +67,14 @@ Real JouleHeating::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
     {
-      return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_phi[_j][_qp]*std::exp(_em[_qp])) + _test[_i][_qp]*-_grad_phi[_j][_qp]*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]);
+      return _test[_i][_qp]*-_grad_potential[_qp] * _voltage_scaling * (-_muem[_qp]*-_grad_phi[_j][_qp]*std::exp(_em[_qp])) + _test[_i][_qp]*-_grad_phi[_j][_qp] * _voltage_scaling * (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]);
     }
   else if (jvar == _em_id)
     {
-      return _test[_i][_qp]*-_grad_potential[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]-_diffem[_qp]*(std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp]+std::exp(_em[_qp])*_grad_phi[_j][_qp]));
+      return _test[_i][_qp]*-_grad_potential[_qp] * _voltage_scaling * (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]-_diffem[_qp]*(std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp]+std::exp(_em[_qp])*_grad_phi[_j][_qp]));
     }
   else
     {
-      return 0.0; 
+      return 0.0;
     }
 }

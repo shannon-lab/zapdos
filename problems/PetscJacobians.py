@@ -52,4 +52,11 @@ z-MatchedValueLogBC
 z-DGPenaltyTiedValue
 z-DGEFieldAdvection # This will only work as long as the variable and coupled variable have the same number of shape functions in each element
 z-DGCoeffDiffusion
+z-InterpCoeffDiffusion
+z-ElectronsFromIonization
+z-JouleHeating
+z-IonsFromIonization
+z-ElectronEnergyLossFromIonization
+z-ElectronEnergyLossFromElastic
+z-ElectronEnergyLossFromExcitation
 '''

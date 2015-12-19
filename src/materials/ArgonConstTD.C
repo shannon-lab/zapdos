@@ -92,6 +92,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
   _sgnmean_en(declareProperty<Real>("sgnmean_en")),
   _sgnArp(declareProperty<Real>("sgnArp")),
   _diffpotential(declareProperty<Real>("diffpotential")),
+  _actual_mean_energy(declareProperty<Real>("actual_mean_energy")),
   // _diffusivity(declareProperty<Real>("diffusivity")),
   // _d_diffusivity_d_u(declareProperty<Real>("d_diffusivity_d_u")),
 
@@ -149,7 +150,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
     myfile.close();
   }
 
-  else std::cerr << "Unable to open file" << std::endl; 
+  else std::cerr << "Unable to open file" << std::endl;
 
   _alpha_interpolation.setData(actual_mean_energy, alpha);
   // _d_alpha_d_actual_mean_energy_interpolation.setData(actual_mean_energy, d_alpha_d_actual_mean_energy);
@@ -168,7 +169,7 @@ ArgonConstTD::computeQpProperties()
 
   // With the exception of perhaps temperature/energy (perhaps in eV), all properties are in standard SI units
 
-  if (_interp_trans_coeffs) {  
+  if (_interp_trans_coeffs) {
     _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
     _d_muem_d_actual_mean_en[_qp] = _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
     _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
@@ -206,7 +207,8 @@ ArgonConstTD::computeQpProperties()
   //   _iz_coeff_energy_c[_qp] = 7.64727794e+1;
   // }
 
-  _alpha_iz[_qp] = _alpha_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+  _actual_mean_energy[_qp] = std::exp(_mean_en[_qp] - _em[_qp]);
+  _alpha_iz[_qp] = _alpha_interpolation.sample(_actual_mean_energy[_qp]);
   _d_iz_d_actual_mean_en[_qp] = _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
   // _d_iz_d_actual_mean_en[_qp] = _d_alpha_d_actual_mean_energy_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
   _alpha_ex[_qp] = _alphaEx_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
@@ -239,7 +241,7 @@ ArgonConstTD::computeQpProperties()
   else {
     _d_mumean_en_d_actual_mean_en[_qp] = 0.0;
     _d_diffmean_en_d_actual_mean_en[_qp] = 0.0;
-  } 
+  }
 
   _rate_coeff_elastic[_qp] = 1e-13;
   _mem[_qp] = 9.11e-31;

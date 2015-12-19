@@ -19,10 +19,11 @@
 
 [Kernels]
   [./test_u]
-    type = IonsFromIonizationLFA_KV
+    type = JouleHeating
     variable = u
     potential = v
     em = w
+    potential_units = V
   [../]
   [./diff_v]
     type = Diffusion
@@ -62,12 +63,29 @@
     type = RandomIC
     variable = w
   [../]
+  # [./u_ic]
+  #   type = ConstantIC
+  #   variable = u
+  #   value = 0.5
+  # [../]
+  # [./v_ic]
+  #   type = ConstantIC
+  #   variable = v
+  #   value = 0.5
+  # [../]
+  # [./w_ic]
+  #   type = ConstantIC
+  #   variable = w
+  #   value = 0.5
+  # [../]
 []
 
 [Materials]
   [./jac]
     block = '0'
     type = JacMat
+    mean_en = u
+    em = w
   [../]
 []
 
@@ -92,6 +110,9 @@
 [Outputs]
   exodus = true
   print_linear_residuals = false
+  [./DOFMap]
+    type = DOFMap
+  [../]
 []
 
 [Debug]

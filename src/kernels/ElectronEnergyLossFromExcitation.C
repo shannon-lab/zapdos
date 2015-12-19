@@ -12,11 +12,11 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "ElectronEnergyLossFromElastic.h"
+#include "ElectronEnergyLossFromExcitation.h"
 
 
 template<>
-InputParameters validParams<ElectronEnergyLossFromElastic>()
+InputParameters validParams<ElectronEnergyLossFromExcitation>()
 {
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("potential","The potential.");
@@ -25,19 +25,16 @@ InputParameters validParams<ElectronEnergyLossFromElastic>()
 }
 
 
-ElectronEnergyLossFromElastic::ElectronEnergyLossFromElastic(const InputParameters & parameters) :
+ElectronEnergyLossFromExcitation::ElectronEnergyLossFromExcitation(const InputParameters & parameters) :
   Kernel(parameters),
 
   _diffem(getMaterialProperty<Real>("diffem")),
   _muem(getMaterialProperty<Real>("muem")),
-  _alpha_iz(getMaterialProperty<Real>("alpha_iz")),
-  _d_iz_d_actual_mean_en(getMaterialProperty<Real>("d_iz_d_actual_mean_en")),
+  _alpha_ex(getMaterialProperty<Real>("alpha_ex")),
+  _d_ex_d_actual_mean_en(getMaterialProperty<Real>("d_ex_d_actual_mean_en")),
   _d_muem_d_actual_mean_en(getMaterialProperty<Real>("d_muem_d_actual_mean_en")),
   _d_diffem_d_actual_mean_en(getMaterialProperty<Real>("d_diffem_d_actual_mean_en")),
-  _mem(getMaterialProperty<Real>("mem")),
-  _mGas(getMaterialProperty<Real>("mGas")),
-  _alpha_el(getMaterialProperty<Real>("alpha_el")),
-  _d_el_d_actual_mean_en(getMaterialProperty<Real>("d_el_d_actual_mean_en")),
+  _Eex(getMaterialProperty<Real>("Eex")),
 
   _grad_potential(coupledGradient("potential")),
   _em(coupledValue("em")),
@@ -47,26 +44,25 @@ ElectronEnergyLossFromElastic::ElectronEnergyLossFromElastic(const InputParamete
 {
 }
 
-ElectronEnergyLossFromElastic::~ElectronEnergyLossFromElastic()
+ElectronEnergyLossFromExcitation::~ElectronEnergyLossFromExcitation()
 {
 }
 
 Real
-ElectronEnergyLossFromElastic::computeQpResidual()
+ElectronEnergyLossFromExcitation::computeQpResidual()
 {
   Real electron_flux_mag = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
-  Real Eel = -3.0*_mem[_qp]/_mGas[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp]);
-  Real el_term = _alpha_el[_qp] * electron_flux_mag * Eel;
+  Real ex_term = _alpha_ex[_qp] * electron_flux_mag;
 
-  return -_test[_i][_qp]*el_term;
+  return -_test[_i][_qp] * ex_term * -_Eex[_qp];
 }
 
 Real
-ElectronEnergyLossFromElastic::computeQpJacobian()
+ElectronEnergyLossFromExcitation::computeQpJacobian()
 {
   Real actual_mean_en = std::exp(_u[_qp]-_em[_qp]);
   Real d_actual_mean_en_d_mean_en = std::exp(_u[_qp]-_em[_qp])*_phi[_j][_qp];
-  Real d_el_d_mean_en = _d_el_d_actual_mean_en[_qp] * d_actual_mean_en_d_mean_en;
+  Real d_ex_d_mean_en = _d_ex_d_actual_mean_en[_qp] * d_actual_mean_en_d_mean_en;
   Real d_muem_d_mean_en = _d_muem_d_actual_mean_en[_qp] * d_actual_mean_en_d_mean_en;
   Real d_diffem_d_mean_en = _d_diffem_d_actual_mean_en[_qp] * d_actual_mean_en_d_mean_en;
 
@@ -74,20 +70,17 @@ ElectronEnergyLossFromElastic::computeQpJacobian()
   RealVectorValue d_electron_flux_d_mean_en = -d_muem_d_mean_en*-_grad_potential[_qp]*std::exp(_em[_qp])-d_diffem_d_mean_en*std::exp(_em[_qp])*_grad_em[_qp];
   Real electron_flux_mag = electron_flux.size();
   Real d_electron_flux_mag_d_mean_en = electron_flux*d_electron_flux_d_mean_en/(electron_flux_mag+std::numeric_limits<double>::epsilon());
+  Real d_ex_term_d_mean_en = (electron_flux_mag * d_ex_d_mean_en + _alpha_ex[_qp] * d_electron_flux_mag_d_mean_en);
 
-  Real Eel = -3.0*_mem[_qp]/_mGas[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp]);
-  Real d_Eel_d_mean_en = -3.0*_mem[_qp]/_mGas[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp])*_phi[_j][_qp];
-  Real d_el_term_d_mean_en = (electron_flux_mag * d_el_d_mean_en + _alpha_el[_qp] * d_electron_flux_mag_d_mean_en)*Eel + electron_flux_mag*_alpha_el[_qp]*d_Eel_d_mean_en;
-
-  return -_test[_i][_qp] * d_el_term_d_mean_en;
+  return -_test[_i][_qp] * d_ex_term_d_mean_en * -_Eex[_qp];
 }
 
 Real
-ElectronEnergyLossFromElastic::computeQpOffDiagJacobian(unsigned int jvar)
+ElectronEnergyLossFromExcitation::computeQpOffDiagJacobian(unsigned int jvar)
 {
   Real actual_mean_en = std::exp(_u[_qp]-_em[_qp]);
   Real d_actual_mean_en_d_em = -std::exp(_u[_qp]-_em[_qp])*_phi[_j][_qp];
-  Real d_el_d_em = _d_el_d_actual_mean_en[_qp] * d_actual_mean_en_d_em;
+  Real d_ex_d_em = _d_ex_d_actual_mean_en[_qp] * d_actual_mean_en_d_em;
   Real d_muem_d_em = _d_muem_d_actual_mean_en[_qp] * d_actual_mean_en_d_em;
   Real d_diffem_d_em = _d_diffem_d_actual_mean_en[_qp] * d_actual_mean_en_d_em;
 
@@ -98,18 +91,16 @@ ElectronEnergyLossFromElastic::computeQpOffDiagJacobian(unsigned int jvar)
   Real d_electron_flux_mag_d_potential = electron_flux*d_electron_flux_d_potential/(electron_flux_mag+std::numeric_limits<double>::epsilon());
   Real d_electron_flux_mag_d_em = electron_flux*d_electron_flux_d_em/(electron_flux_mag+std::numeric_limits<double>::epsilon());
 
-  Real Eel = -3.0*_mem[_qp]/_mGas[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp]);
-  Real d_Eel_d_em = -3.0*_mem[_qp]/_mGas[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp])*-_phi[_j][_qp];
-  Real d_Eel_d_potential = 0.0;
-  Real d_el_term_d_em = (electron_flux_mag * d_el_d_em + _alpha_el[_qp] * d_electron_flux_mag_d_em)*Eel + electron_flux_mag*_alpha_el[_qp]*d_Eel_d_em;
-  Real d_el_term_d_potential = (_alpha_el[_qp] * d_electron_flux_mag_d_potential)*Eel + electron_flux_mag*_alpha_el[_qp]*d_Eel_d_potential;
-
+  Real d_ex_term_d_potential = (_alpha_ex[_qp] * d_electron_flux_mag_d_potential);
+  Real d_ex_term_d_em = (electron_flux_mag * d_ex_d_em + _alpha_ex[_qp] * d_electron_flux_mag_d_em);
 
   if (jvar == _potential_id)
-    return -_test[_i][_qp] * d_el_term_d_potential;
+    return -_test[_i][_qp]*d_ex_term_d_potential * -_Eex[_qp];
 
   else if (jvar == _em_id)
-    return -_test[_i][_qp] * d_el_term_d_em;
+  {
+    return -_test[_i][_qp] * d_ex_term_d_em * -_Eex[_qp];
+  }
 
   else
     return 0.0;

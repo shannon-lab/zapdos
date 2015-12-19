@@ -5,6 +5,7 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "InterpCoeffDiffusion.h"
 #include "ProductAABBRxn.h"
 #include "ProductFirstOrderRxn.h"
 #include "ElectronsFromIonizationLFA_KV.h"
@@ -18,6 +19,7 @@
 #include "IonsFromIonizationLFA.h"
 #include "ChargeSource.h"
 #include "ElectronEnergyLossFromIonization.h"
+#include "ElectronEnergyLossFromExcitation.h"
 #include "ElectronEnergyLossFromElastic.h"
 #include "IonsFromIonization.h"
 #include "EFieldArtDiff.h"
@@ -227,6 +229,7 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(InterpCoeffDiffusion);
   registerKernel(ChargeSourceMoles);
   registerKernel(ChargeSourceMoles_KV);
   registerKernel(IonsFromIonizationLFA_KV);
@@ -238,6 +241,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ElectronsFromIonizationLFA);
   registerKernel(EFieldArtDiff);
   registerKernel(ElectronEnergyLossFromIonization);
+  registerKernel(ElectronEnergyLossFromExcitation);
   registerKernel(ElectronEnergyLossFromElastic);
   registerKernel(ChargeSource);
   registerKernel(LogStabilization);

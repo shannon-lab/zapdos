@@ -17,6 +17,9 @@ template<>
 InputParameters validParams<JacMat>()
 {
   InputParameters params = validParams<Material>();
+  params.addCoupledVar("v", "A variable for interpolation tests.");
+  params.addCoupledVar("mean_en", "A variable for interpolation tests.");
+  params.addCoupledVar("em", "A variable for interpolation tests.");
   return params;
 }
 
@@ -43,9 +46,102 @@ JacMat::JacMat(const InputParameters & parameters) :
   _diffu2(declareProperty<Real>("diffu2")),
   _se_coeff(declareProperty<Real>("se_coeff")),
   _eps(declareProperty<Real>("eps")),
-  _mem(declareProperty<Real>("mem"))
+  _mem(declareProperty<Real>("mem")),
+  _d_interp(declareProperty<Real>("d_interp")),
+  _d_d_interp_d_v(declareProperty<Real>("d_d_interp_d_v")),
+  _d_muem_d_actual_mean_en(declareProperty<Real>("d_muem_d_actual_mean_en")),
+  _d_diffem_d_actual_mean_en(declareProperty<Real>("d_diffem_d_actual_mean_en")),
+  _alpha_iz(declareProperty<Real>("alpha_iz")),
+  _d_iz_d_actual_mean_en(declareProperty<Real>("d_iz_d_actual_mean_en")),
+  _alpha_ex(declareProperty<Real>("alpha_ex")),
+  _d_ex_d_actual_mean_en(declareProperty<Real>("d_ex_d_actual_mean_en")),
+  _alpha_el(declareProperty<Real>("alpha_el")),
+  _d_el_d_actual_mean_en(declareProperty<Real>("d_el_d_actual_mean_en")),
+  _Eiz(declareProperty<Real>("Eiz")),
+  _Eex(declareProperty<Real>("Eex")),
+  _mGas(declareProperty<Real>("mGas")),
+
+  _v(isCoupled("v") ? coupledValue("v") : _zero),
+  _mean_en(isCoupled("mean_en") ? coupledValue("mean_en") : _zero),
+  _em(isCoupled("em") ? coupledValue("em") : _zero)
 
 {
+  std::vector<Real> x;
+  std::vector<Real> y;
+  std::string path = "/home/lindsayad/zapdos/src/materials/test.txt";
+  const char *charPath = path.c_str();
+  std::ifstream myfile (charPath);
+  Real value;
+
+  if (myfile.is_open())
+  {
+    while (myfile >> value)
+    {
+      x.push_back(value);
+      myfile >> value;
+      y.push_back(value);
+    }
+    myfile.close();
+  }
+
+  else std::cerr << "Unable to pen file" << std::endl;
+  _interpolation.setData(x, y);
+
+  std::vector<Real> actual_mean_energy;
+  std::vector<Real> alpha;
+  std::vector<Real> alphaEx;
+  std::vector<Real> alphaEl;
+  std::vector<Real> mu;
+  std::vector<Real> diff;
+  // std::vector<Real> d_alpha_d_actual_mean_energy;
+  // std::cerr << "About to get the environment variable." << std::endl;
+  char* zapDirPoint;
+  zapDirPoint = getenv("ZAPDIR");
+  std::string zapDir;
+
+  if (zapDirPoint == NULL) {
+    std::cerr << "Environment variable ZAPDIR not defined." << std::endl;
+    std::exit(1);
+  }
+  else {
+    zapDir = std::string(zapDirPoint);
+  }
+
+  std::string tdPath = "/src/materials/test2.txt";
+  path = zapDir + tdPath;
+  const char * charPathNew = path.c_str();
+  std::ifstream newfile (charPathNew);
+  Real value_new;
+
+  if (newfile.is_open())
+  {
+    while ( newfile >> value_new )
+    {
+      actual_mean_energy.push_back(value_new);
+      newfile >> value_new;
+      alpha.push_back(value_new);
+      // newfile >> value_new;
+      // d_alpha_d_actual_mean_energy.push_back(value_new);
+      newfile >> value_new;
+      alphaEx.push_back(value_new);
+      newfile >> value_new;
+      alphaEl.push_back(value_new);
+      newfile >> value_new;
+      mu.push_back(value_new);
+      newfile >> value_new;
+      diff.push_back(value_new);
+    }
+    newfile.close();
+  }
+
+  else std::cerr << "Unable to open file" << std::endl;
+
+  _alpha_interpolation.setData(actual_mean_energy, alpha);
+  // _d_alpha_d_actual_mean_energy_interpolation.setData(actual_mean_energy, d_alpha_d_actual_mean_energy);
+  _alphaEx_interpolation.setData(actual_mean_energy, alphaEx);
+  _alphaEl_interpolation.setData(actual_mean_energy, alphaEl);
+  _mu_interpolation.setData(actual_mean_energy, mu);
+  _diff_interpolation.setData(actual_mean_energy, diff);
 }
 
 void
@@ -72,4 +168,18 @@ JacMat::computeQpProperties()
   _se_coeff[_qp] = 0.1;
   _eps[_qp] = 1.1;
   _mem[_qp] = 1.1;
+  _d_interp[_qp] = _interpolation.sample(_v[_qp]);
+  _d_d_interp_d_v[_qp] = _interpolation.sampleDerivative(_v[_qp]);
+  _d_muem_d_actual_mean_en[_qp] = 0.0;
+  _d_diffem_d_actual_mean_en[_qp] = 0.0;
+  _alpha_iz[_qp] = _alpha_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+  _d_iz_d_actual_mean_en[_qp] = _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
+  _alpha_ex[_qp] = _alphaEx_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+  _d_ex_d_actual_mean_en[_qp] = _alphaEx_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
+  _alpha_el[_qp] = _alphaEl_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+  _d_el_d_actual_mean_en[_qp] = _alphaEl_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
+  _Eiz[_qp] = 1.1;
+  _Eex[_qp] = 1.1;
+  _mem[_qp] = 1.1;
+  _mGas[_qp] = 1.1;
 }
