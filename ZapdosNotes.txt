@@ -2749,3 +2749,21 @@ Stable = 17, nl_rel_tol = 1e-4, nl_abs_tol = 8e-7, fail_time = 7.15e-7. Better
 
 Electric field condition satisified at the interface.
 Potential boundary condition satisfied.
+
+We have a new warehouse structure in Moose, damn it. Alright, there are methods in NonlinearSystem for adding boundary conditions, dg kernels, etc. When we execute those methods' code we add objects to the attributes:
+
+  MooseObjectWarehouse<DGKernel> _dg_kernels;
+  MooseObjectWarehouse<KernelBase> _time_kernels;
+  MooseObjectWarehouse<KernelBase> _non_time_kernels;
+
+  ///@}
+
+  ///@{
+  /// BoundaryCondition Warhouses
+  MooseObjectWarehouse<IntegratedBC> _integrated_bcs;
+  MooseObjectWarehouse<NodalBC> _nodal_bcs;
+  MooseObjectWarehouse<PresetNodalBC> _preset_nodal_bcs;
+
+Alright, we're adding objects to the warehouses. So my question: do I want to make a new warehouse? And what should I inherit primarily from? DG or boundary condition?
+
+What are the interface objects mathematically? They represent boundary conditions! I think they should be boundary condition objects. Now we need to investigate whether that is feasible. I think then it would have to inherit some properties of DGKernel, most importantly the access to variables on the other side of the interface.
