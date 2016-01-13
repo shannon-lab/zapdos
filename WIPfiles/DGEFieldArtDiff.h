@@ -15,7 +15,7 @@
 #ifndef DGEFIELDARTDIFF_H
 #define DGEFIELDARTDIFF_H
 
-#include "DGInterface.h"
+#include "InterfaceKernel.h"
 
 //Forward Declarations
 class DGEFieldArtDiff;
@@ -26,7 +26,7 @@ InputParameters validParams<DGEFieldArtDiff>();
 /**
  * DG kernel for interfacing advection on adjacent blocks
  */
-class DGEFieldArtDiff : public DGInterface
+class DGEFieldArtDiff : public InterfaceKernel
 {
 public:
   DGEFieldArtDiff(const InputParameters & parameters);

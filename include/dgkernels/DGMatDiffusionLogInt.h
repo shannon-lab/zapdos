@@ -15,7 +15,7 @@
 #ifndef DGMATDIFFUSIONLOGINT_H
 #define DGMATDIFFUSIONLOGINT_H
 
-#include "DGInterface.h"
+#include "InterfaceKernel.h"
 
 //Forward Declarations
 class DGMatDiffusionLogInt;
@@ -26,7 +26,7 @@ InputParameters validParams<DGMatDiffusionLogInt>();
 /**
  * DG kernel for interfacing diffusion between two variables on adjacent blocks
  */
-class DGMatDiffusionLogInt : public DGInterface
+class DGMatDiffusionLogInt : public InterfaceKernel
 {
 public:
   DGMatDiffusionLogInt(const InputParameters & parameters);

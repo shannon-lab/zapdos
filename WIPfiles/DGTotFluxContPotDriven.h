@@ -1,7 +1,7 @@
 #ifndef DGTOTFLUXCONTPOTDRIVEN_H
 #define DGTOTFLUXCONTPOTDRIVEN_H
 
-#include "DGInterface.h"
+#include "InterfaceKernel.h"
 
 //Forward Declarations
 class DGTotFluxContPotDriven;
@@ -19,7 +19,7 @@ InputParameters validParams<DGTotFluxContPotDriven>();
  * \f$ {a} = 0.5 * (a_1 + a_2) \f$
  *
  */
-class DGTotFluxContPotDriven : public DGInterface
+class DGTotFluxContPotDriven : public InterfaceKernel
 {
 public:
   DGTotFluxContPotDriven(const InputParameters & parameters);

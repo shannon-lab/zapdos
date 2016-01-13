@@ -15,7 +15,7 @@
 #ifndef DGPENALTYTIEDVALUE_H
 #define DGPENALTYTIEDVALUE_H
 
-#include "DGInterface.h"
+#include "InterfaceKernel.h"
 
 //Forward Declarations
 class DGPenaltyTiedValue;
@@ -26,7 +26,7 @@ InputParameters validParams<DGPenaltyTiedValue>();
 /**
  * DG kernel for interfacing diffusion between two variables on adjacent blocks
  */
-class DGPenaltyTiedValue : public DGInterface
+class DGPenaltyTiedValue : public InterfaceKernel
 {
 public:
   DGPenaltyTiedValue(const InputParameters & parameters);

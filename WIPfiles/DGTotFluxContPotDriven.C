@@ -5,14 +5,14 @@
 template<>
 InputParameters validParams<DGTotFluxContPotDriven>()
 {
-  InputParameters params = validParams<DGInterface>();
+  InputParameters params = validParams<InterfaceKernel>();
   params.addRequiredCoupledVar("potential","The electrical potential");
   params.addRequiredCoupledVar("potential_neighbor","The neighboring electrical potential");
   return params;
 }
 
 DGTotFluxContPotDriven::DGTotFluxContPotDriven(const InputParameters & parameters) :
-    DGInterface(parameters),
+    InterfaceKernel(parameters),
     _potential(coupledValue("potential")),
     _grad_potential(coupledGradient("potential")),
     _potential_id(coupled("potential")),

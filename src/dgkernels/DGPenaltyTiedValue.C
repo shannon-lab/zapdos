@@ -19,13 +19,13 @@
 template<>
 InputParameters validParams<DGPenaltyTiedValue>()
 {
-  InputParameters params = validParams<DGInterface>();
+  InputParameters params = validParams<InterfaceKernel>();
   params.addParam<Real>("scale_factor",1.,"The amount by which to scale this penalty condition.");
   return params;
 }
 
 DGPenaltyTiedValue::DGPenaltyTiedValue(const InputParameters & parameters) :
-    DGInterface(parameters),
+    InterfaceKernel(parameters),
     _scale_factor(getParam<Real>("scale_factor"))
 {
   if (!parameters.isParamValid("boundary"))

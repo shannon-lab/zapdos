@@ -15,7 +15,7 @@
 #ifndef DGADVECTIONINTERFACE_H
 #define DGADVECTIONINTERFACE_H
 
-#include "DGInterface.h"
+#include "InterfaceKernel.h"
 
 //Forward Declarations
 class DGAdvectionInterface;
@@ -26,7 +26,7 @@ InputParameters validParams<DGAdvectionInterface>();
 /**
  * DG kernel for interfacing advection on adjacent blocks
  */
-class DGAdvectionInterface : public DGInterface
+class DGAdvectionInterface : public InterfaceKernel
 {
 public:
   DGAdvectionInterface(const InputParameters & parameters);

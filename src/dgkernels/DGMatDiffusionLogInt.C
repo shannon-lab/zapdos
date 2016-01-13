@@ -19,12 +19,12 @@
 template<>
 InputParameters validParams<DGMatDiffusionLogInt>()
 {
-  InputParameters params = validParams<DGInterface>();
+  InputParameters params = validParams<InterfaceKernel>();
   return params;
 }
 
 DGMatDiffusionLogInt::DGMatDiffusionLogInt(const InputParameters & parameters) :
-    DGInterface(parameters),
+    InterfaceKernel(parameters),
     _D(getMaterialProperty<Real>("diff" + _var.name())),
     _D_neighbor(getNeighborMaterialProperty<Real>("diff" + _neighbor_var.name()))
 {

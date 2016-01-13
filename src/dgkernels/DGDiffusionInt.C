@@ -19,12 +19,12 @@
 template<>
 InputParameters validParams<DGDiffusionInt>()
 {
-  InputParameters params = validParams<DGInterface>();
+  InputParameters params = validParams<InterfaceKernel>();
   return params;
 }
 
 DGDiffusionInt::DGDiffusionInt(const InputParameters & parameters) :
-    DGInterface(parameters)
+    InterfaceKernel(parameters)
 {
   if (!parameters.isParamValid("boundary"))
   {

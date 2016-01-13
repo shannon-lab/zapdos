@@ -19,14 +19,14 @@
 template<>
 InputParameters validParams<DGEFieldArtDiff>()
 {
-  InputParameters params = validParams<DGInterface>();
+  InputParameters params = validParams<InterfaceKernel>();
   params.addRequiredCoupledVar("potential","The potential on the master side of the interface.");
   params.addRequiredCoupledVar("potential_neighbor", "The potential on the slave side of the interface.");
   return params;
 }
 
 DGEFieldArtDiff::DGEFieldArtDiff(const InputParameters & parameters) :
-    DGInterface(parameters),
+    InterfaceKernel(parameters),
     _potential_var(*getVar("potential",0)),
     _potential_neighbor_var(*getVar("potential_neighbor",0)),
     _grad_potential(_potential_var.gradSln()),
