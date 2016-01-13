@@ -3,22 +3,10 @@
 
 [Mesh]
   type = FileMesh
-  file = 'liquidNew.msh'
+  file = 'just_plasma.msh'
 []
 
 [MeshModifiers]
-  [./interface]
-    type = SideSetsBetweenSubdomains
-    master_block = '0'
-    paired_block = '1'
-    new_boundary = 'master0_interface'
-  [../]
-  [./interface_again]
-    type = SideSetsBetweenSubdomains
-    master_block = '1'
-    paired_block = '0'
-    new_boundary = 'master1_interface'
-  [../]
   [./left]
     type = SideSetsFromNormals
     normals = '-1 0 0'
@@ -102,7 +90,6 @@
     variable = em
     potential = potential
     mean_en = mean_en
-    block = 0
   [../]
   [./em_log_stabilization]
     type = LogStabilizationMoles
@@ -114,16 +101,6 @@
   #   variable = em
   #   potential = potential
   # [../]
-  [./em_reactant_first_order_rxn]
-    type = ReactantFirstOrderRxn
-    variable = em
-    block = 1
-  [../]
-  [./em_water_bi_sink]
-    type = ReactantAARxn
-    variable = em
-    block = 1
-  [../]
 
   [./potential_diffusion]
     type = CoeffDiffusionLin
@@ -133,35 +110,25 @@
     type = ChargeSourceMoles_KV
     variable = potential
     charged = Arp
-    block = 0
   [../]
   [./em_charge_source]
     type = ChargeSourceMoles_KV
     variable = potential
     charged = em
   [../]
-  [./OHm_charge_source]
-    type = ChargeSourceMoles_KV
-    variable = potential
-    charged = OHm
-    block = 1
-  [../]
 
   [./Arp_time_deriv]
     type = ElectronTimeDerivative
     variable = Arp
-    block = 0
   [../]
   [./Arp_advection]
     type = EFieldAdvection
     variable = Arp
     potential = potential
-    block = 0
   [../]
   [./Arp_diffusion]
     type = CoeffDiffusion
     variable = Arp
-    block = 0
   [../]
   [./Arp_ionization]
     type = IonsFromIonization
@@ -169,13 +136,11 @@
     potential = potential
     em = em
     mean_en = mean_en
-    block = 0
   [../]
   [./Arp_log_stabilization]
     type = LogStabilizationMoles
-    offset = 50
+    offset = 17
     variable = Arp
-    block = 0
   [../]
   # [./Arp_advection_stabilization]
   #   type = EFieldArtDiff
@@ -183,62 +148,19 @@
   #   potential = potential
   # [../]
 
-  [./OHm_time_deriv]
-    type = ElectronTimeDerivative
-    variable = OHm
-    block = 1
-  [../]
-  [./OHm_advection]
-    type = EFieldAdvection
-    variable = OHm
-    potential = potential
-    block = 1
-  [../]
-  [./OHm_diffusion]
-    type = CoeffDiffusion
-    variable = OHm
-    block = 1
-  [../]
-  [./OHm_log_stabilization]
-    type = LogStabilizationMoles
-    offset = 50
-    variable = OHm
-    block = 1
-  [../]
-  # [./OHm_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = OHm
-  #   potential = potential
-  #   block = 1
-  # [../]
-  [./OHm_product_first_order_rxn]
-    type = ProductFirstOrderRxn
-    variable = OHm
-    v = em
-    block = 1
-  [../]
-  [./OHm_product_aabb_rxn]
-    type = ProductAABBRxn
-    variable = OHm
-    v = em
-    block = 1
-  [../]
 
   [./mean_en_time_deriv]
     type = ElectronTimeDerivative
     variable = mean_en
-    block = 0
   [../]
   [./mean_en_advection]
     type = EFieldAdvection
     variable = mean_en
     potential = potential
-    block = 0
   [../]
   [./mean_en_diffusion]
     type = CoeffDiffusion
     variable = mean_en
-    block = 0
   [../]
   [./mean_en_joule_heating]
     type = JouleHeating
@@ -246,34 +168,29 @@
     potential = potential
     em = em
     potential_units = kV
-    block = 0
   [../]
   [./mean_en_ionization]
     type = ElectronEnergyLossFromIonization
     variable = mean_en
     potential = potential
     em = em
-    block = 0
   [../]
   [./mean_en_elastic]
     type = ElectronEnergyLossFromElastic
     variable = mean_en
     potential = potential
     em = em
-    block = 0
   [../]
   [./mean_en_excitation]
     type = ElectronEnergyLossFromExcitation
     variable = mean_en
     potential = potential
     em = em
-    block = 0
   [../]
   [./mean_en_log_stabilization]
     type = LogStabilizationMoles
     variable = mean_en
-    offset = 15
-    block = 0
+    offset = 14
   [../]
   # [./mean_en_advection_stabilization]
   #   type = EFieldArtDiff
@@ -289,21 +206,14 @@
   [../]
 
   [./Arp]
-    block = 0
   [../]
 
   [./mean_en]
-    block = 0
-  [../]
-
-  [./OHm]
-    block = 1
   [../]
 []
 
 [AuxVariables]
   [./e_temp]
-    block = 0
   [../]
   [./x]
     order = CONSTANT
@@ -312,24 +222,12 @@
   [./rho]
     order = CONSTANT
     family = MONOMIAL
-    block = 0
-  [../]
-  [./rholiq]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
   [../]
   [./em_lin]
     order = CONSTANT
     family = MONOMIAL
   [../]
   [./Arp_lin]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  [../]
-  [./OHm_lin]
-    block = 1
     order = CONSTANT
     family = MONOMIAL
   [../]
@@ -344,25 +242,8 @@
   [./Current_Arp]
     order = CONSTANT
     family = MONOMIAL
-    block = 0
-  [../]
-  [./Current_OHm]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
   [../]
   [./tot_gas_current]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  [../]
-  [./tot_liq_current]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./tot_flux_OHm]
-    block = 1
     order = CONSTANT
     family = MONOMIAL
   [../]
@@ -382,7 +263,6 @@
     variable = e_temp
     electron_density = em
     mean_en = mean_en
-    block = 0
   [../]
   [./x]
     type = Position
@@ -394,15 +274,6 @@
     args = 'em_lin Arp_lin'
     function = 'Arp_lin - em_lin'
     execute_on = 'timestep_end'
-    block = 0
-  [../]
-  [./rholiq]
-    type = ParsedAux
-    variable = rholiq
-    args = 'em_lin OHm_lin' # H3Op_lin OHm_lin'
-    function = '-em_lin - OHm_lin' # 'H3Op_lin - em_lin - OHm_lin'
-    execute_on = 'timestep_end'
-    block = 1
   [../]
   [./tot_gas_current]
     type = ParsedAux
@@ -410,15 +281,6 @@
     args = 'Current_em Current_Arp'
     function = 'Current_em + Current_Arp'
     execute_on = 'timestep_end'
-    block = 0
-  [../]
-  [./tot_liq_current]
-    type = ParsedAux
-    variable = tot_liq_current
-    args = 'Current_em Current_OHm' # Current_H3Op Current_OHm'
-    function = 'Current_em + Current_OHm' # + Current_H3Op + Current_OHm'
-    execute_on = 'timestep_end'
-    block = 1
   [../]
   [./em_lin]
     type = Density
@@ -429,13 +291,6 @@
     type = Density
     variable = Arp_lin
     density_log = Arp
-    block = 0
-  [../]
-  [./OHm_lin]
-    type = Density
-    variable = OHm_lin
-    density_log = OHm
-    block = 1
   [../]
   [./Efield]
     type = Efield
@@ -455,22 +310,6 @@
     density_log = Arp
     variable = Current_Arp
     art_diff = false
-    block = 0
-  [../]
-  [./Current_OHm]
-    block = 1
-    type = Current
-    potential = potential
-    density_log = OHm
-    variable = Current_OHm
-    art_diff = false
-  [../]
-  [./tot_flux_OHm]
-    block = 1
-    type = TotalFlux
-    potential = potential
-    density_log = OHm
-    variable = tot_flux_OHm
   [../]
   [./EFieldAdvAux_em]
     type = EFieldAdvAux
@@ -508,15 +347,23 @@
     ip = Arp
   [../]
   [./em_right]
-    type = DCIonBC
+    type = HagelaarAnodicBC
     variable = em
     boundary = right
     potential = potential
+    mean_en = mean_en
+    r = 0.9999
   [../]
+  # [./em_right]
+  #   type = DCIonBC
+  #   variable = em
+  #   boundary = right
+  #   potential = potential
+  # [../]
   [./Arp_physical]
     type = DCIonBC
     variable = Arp
-    boundary = 'left'
+    boundary = 'left right'
     potential = potential
   [../]
   [./mean_en_bc_left]
@@ -528,15 +375,9 @@
   [./mean_en_bc_right]
     type = GradMeanEnZeroBC
     variable = mean_en
-    boundary = 'master0_interface'
-    potential = potential
-    em = em
-  [../]
-  [./OHm_physical]
-    type = DCIonBC
-    variable = OHm
     boundary = 'right'
     potential = potential
+    em = em
   [../]
 []
 
@@ -574,13 +415,11 @@
     type = ConstantIC
     variable = Arp
     value = -22
-    block = 0
   [../]
   [./mean_en_ic]
     type = ConstantIC
     variable = mean_en
     value = -21
-    block = 0
   [../]
   # [./potential_ic]
   #   type = ConstantIC
@@ -592,12 +431,6 @@
     variable = potential
     function = potential_ic_func
   [../]
-  [./OHm_ic]
-    type = ConstantIC
-    variable = OHm
-    value = -15.6
-    block = 1
-  [../]
 []
 
 [Functions]
@@ -608,7 +441,7 @@
   [../]
   [./potential_ic_func]
     type = ParsedFunction
-    value = '-1.25 * (1.0001e-3 - x)'
+    value = '-1.25 * (.001-x)'
   [../]
 []
 
@@ -622,10 +455,5 @@
     ip = Arp
     mean_en = mean_en
     block = 0
- [../]
- [./water_block]
-   type = Water
-   block = 1
-   potential = potential
  [../]
 []

@@ -272,7 +272,7 @@
   [./mean_en_log_stabilization]
     type = LogStabilizationMoles
     variable = mean_en
-    offset = 15
+    offset = 14
     block = 0
   [../]
   # [./mean_en_advection_stabilization]

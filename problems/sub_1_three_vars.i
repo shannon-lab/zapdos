@@ -18,12 +18,16 @@
 []
 
 [Kernels]
-  [./test_u]
-    type = JouleHeating
+  # [./test_u]
+  #   type = JouleHeating
+  #   variable = u
+  #   potential = v
+  #   em = w
+  #   potential_units = V
+  # [../]
+  [./diff_u]
+    type = Diffusion
     variable = u
-    potential = v
-    em = w
-    potential_units = V
   [../]
   [./diff_v]
     type = Diffusion
@@ -35,20 +39,22 @@
   [../]
 []
 
-# [BCs]
-#   [./left]
-#     type = DirichletBC
-#     variable = u
-#     boundary = 'left'
-#     value = 1
-#   [../]
-#   [./right]
-#     type = DirichletBC
-#     variable = u
-#     boundary = 'right'
-#     value = 0
-#   [../]
-# []
+[BCs]
+  [./both]
+    type = HagelaarAnodicBC
+    variable = u
+    boundary = 'left right'
+    potential = v
+    mean_en = w
+    r = 0.5
+  [../]
+  # [./right]
+  #   type = DirichletBC
+  #   variable = u
+  #   boundary = 'right'
+  #   value = 0
+  # [../]
+[]
 
 [ICs]
   [./u_ic]
@@ -97,12 +103,9 @@
 []
 
 [Executioner]
-  # type = Transient
-  # dt = 0.1
-  # end_time = 1
   type = Steady
   solve_type = NEWTON
-  petsc_options = '-snes_converged_reason  -pc_svd_monitor -snes_linesearch_monitor -options_left -snes_test_display'
+  petsc_options = '-options_left -snes_test_display'
   petsc_options_iname = '-snes_type'
   petsc_options_value = 'test'
 []
@@ -110,9 +113,9 @@
 [Outputs]
   exodus = true
   print_linear_residuals = false
-  [./DOFMap]
-    type = DOFMap
-  [../]
+  # [./DOFMap]
+  #   type = DOFMap
+  # [../]
 []
 
 [Debug]

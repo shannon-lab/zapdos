@@ -24,19 +24,19 @@ InputParameters validParams<DiffusiveFlux>()
 
 DiffusiveFlux::DiffusiveFlux(const InputParameters & parameters) :
     AuxKernel(parameters),
-    
+
     // Coupled variables
 
     _grad_density_log(coupledGradient("density_log")),
     _density_var(*getVar("density_log",0)),
     _density_log(coupledValue("density_log")),
-    
+
     // Material properties
 
-    _diff(getMaterialProperty<Real>("diff" + _density_var.name()))    
+    _diff(getMaterialProperty<Real>("diff" + _density_var.name()))
 {}
 
 Real DiffusiveFlux::computeValue()
-{  
-  return -_diff[_qp] * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0);
+{
+  return -_diff[_qp] * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0) * 6.02e23;
 }

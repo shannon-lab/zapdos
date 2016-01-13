@@ -57,11 +57,6 @@
 #include "TimeDerivativeSUPG.h"
 #include "ConstConvectionSUPG.h"
 #include "ExampleDiffusion.h"
-#include "INSMass.h"
-#include "INSMomentum.h"
-#include "INSTemperature.h"
-#include "INSMomentumTimeDerivative.h"
-#include "INSTemperatureTimeDerivative.h"
 #include "EFieldAdvection.h"
 #include "Source.h"
 #include "UnitySource.h"
@@ -83,8 +78,6 @@
 #include "ElectronEnergyKernel.h"
 #include "PoissonKernel.h"
 #include "ElectronTimeDerivative.h"
-//#include "NSMassInviscidFlux.h"
-//#include "NSKernel.h"
 
 // AuxKernels
 
@@ -138,6 +131,8 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "HagelaarAnodicBC.h"
+#include "GradMeanEnZeroBC.h"
 #include "RobinBC.h"
 #include "OutflowBC.h"
 #include "InflowBC.h"
@@ -274,11 +269,6 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(TimeDerivativeSUPG);
   registerKernel(ConstConvectionSUPG);
   registerKernel(ExampleDiffusion);
-  registerKernel(INSMass);
-  registerKernel(INSMomentum);
-  registerKernel(INSTemperature);
-  registerKernel(INSMomentumTimeDerivative);
-  registerKernel(INSTemperatureTimeDerivative);
   registerKernel(EFieldAdvection);
   registerKernel(Source);
   registerKernel(UnitySource);
@@ -307,8 +297,6 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(LogStabilizationMoles);
   registerKernel(ProductFirstOrderRxn);
   registerKernel(ProductAABBRxn);
-//  registerKernel(NSMassInviscidFlux);
-//  registerKernel(NSKernel);
   registerAux(Current);
   registerAux(TotalFlux);
   registerAux(Position);
@@ -352,6 +340,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
   registerBoundaryCondition(DGFluxBC);
+  registerBoundaryCondition(HagelaarAnodicBC);
+  registerBoundaryCondition(GradMeanEnZeroBC);
   registerBoundaryCondition(InflowBC);
   registerBoundaryCondition(MultipliedValueBC);
   registerBoundaryCondition(NeumannCircuitVoltage);

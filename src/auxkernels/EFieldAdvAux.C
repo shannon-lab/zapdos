@@ -25,7 +25,7 @@ InputParameters validParams<EFieldAdvAux>()
 
 EFieldAdvAux::EFieldAdvAux(const InputParameters & parameters) :
     AuxKernel(parameters),
-    
+
     // Coupled variables
 
     _density_var(*getVar("density_log",0)),
@@ -39,6 +39,6 @@ EFieldAdvAux::EFieldAdvAux(const InputParameters & parameters) :
 {}
 
 Real EFieldAdvAux::computeValue()
-{  
-  return _sgn[_qp] * _mu[_qp] * std::exp(_density_log[_qp]) * -_grad_potential[_qp](0);
+{
+  return _sgn[_qp] * _mu[_qp] * std::exp(_density_log[_qp]) * -_grad_potential[_qp](0) * 6.02e23;
 }

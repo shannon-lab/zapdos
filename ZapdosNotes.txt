@@ -2767,3 +2767,54 @@ We have a new warehouse structure in Moose, damn it. Alright, there are methods 
 Alright, we're adding objects to the warehouses. So my question: do I want to make a new warehouse? And what should I inherit primarily from? DG or boundary condition?
 
 What are the interface objects mathematically? They represent boundary conditions! I think they should be boundary condition objects. Now we need to investigate whether that is feasible. I think then it would have to inherit some properties of DGKernel, most importantly the access to variables on the other side of the interface.
+
+In _factory.create(bc_name, name, ...), bc_name is the type of the object being constructed (e.g. from the input file, type = ____), and name is just the name of the object (e.g. in the input file [./right_side_bc]).
+
+Factory::create returns a MooseObjectPtr
+
+typedef MooseSharedPointer<MooseObject> MooseObjectPtr;
+
+#ifdef LIBMESH_HAVE_CXX11_SHARED_PTR
+#  include <memory>
+#  define MooseSharedPointer std::shared_ptr
+#  define MooseSharedNamespace std
+#else
+
+You see, here's where there might be a problem: DGInterface is a derived class of DGKernel so an _intc will be an _intc and a _dg_kernel :-(
+
+That might be ok. The _dg_kernels in NonlinearSystem are not a reference to another variable; they are the root.
+
+Alright, I need to go back and follow ComputeJacobianThread, ComputeFullJacobianThread, and DGInterface's jacobian calculation methods and clean things up and make them compile. That's the task at hand.
+
+Good: the jacobians for the DGInterface test out clean.
+
+So something is wrong with the coupling entries if I do block restriction with dg_kernels and apply SMP=true. If I don't apply SMP=true, then the problem solves perfectly fine. Additionally, if I do block restriction with just kernels and apply SMP=true, then the problem also solves perfectly fine.
+
+Need to figure out how ce in ComputeFullJacobianThread is contstructed.
+
+The assemblies get created in FEProblem here:
+
+  _assembly.resize(n_threads);
+  for (unsigned int i = 0; i < n_threads; ++i)
+    _assembly[i] = new Assembly(_nl, couplingMatrix(), i);
+
+So the coupling entries must come from couplingMatrix()
+
+Alright, so SMP sets the coupling matrix. And for full=true, every element of the coupling matrix is set equal to 1.
+
+Question, does offDiag get called for the kernel only case?
+
+Alright all Moose tests pass, and my two jacobian check tests passed as well. All is well!!!!!!!
+
+With mean_en offset at 17, solve fails at 2.06e-7 seconds, divet in mean_energy likely cause of solve failure.
+Offset = 14, solve fails at 2.39e-7 seconds, no divet in mean_energy so that is not the reason for non-convergence. Rather it looks like abs_tol too high (2e-6)
+abs_tol = 4e-6, fail = 3.61e-7
+
+Changing the offset from 14 to 15 didn't affect the final results; that's good.
+
+With r = 0.5, # time steps = 180.
+r = 0.9, time steps = 192.
+
+abs = 6e-8, fail = 4.20e-6
+abs = 1.2e-7, rel = 1e-5, fail = 1.3e-7
+abs = 1.2e-7, rel = 1e-4, fail = 1.3e-7
