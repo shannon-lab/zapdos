@@ -60,6 +60,12 @@ JacMat::JacMat(const InputParameters & parameters) :
   _Eiz(declareProperty<Real>("Eiz")),
   _Eex(declareProperty<Real>("Eex")),
   _mGas(declareProperty<Real>("mGas")),
+  _k_boltz(declareProperty<Real>("k_boltz")),
+  _T_heavy(declareProperty<Real>("T_heavy")),
+  _massu(declareProperty<Real>("massu")),
+  _sgnp(declareProperty<Real>("sgnp")),
+  _mup(declareProperty<Real>("mup")),
+  _diffp(declareProperty<Real>("diffp")),
 
   _v(isCoupled("v") ? coupledValue("v") : _zero),
   _mean_en(isCoupled("mean_en") ? coupledValue("mean_en") : _zero),
@@ -182,4 +188,10 @@ JacMat::computeQpProperties()
   _Eex[_qp] = 1.1;
   _mem[_qp] = 1.1;
   _mGas[_qp] = 1.1;
+  _k_boltz[_qp] = 1.1;
+  _T_heavy[_qp] = 1.1;
+  _massu[_qp] = 1.1;
+  _sgnp[_qp] = 1.;
+  _mup[_qp] = 1.1;
+  _diffp[_qp] = 1.1;
 }

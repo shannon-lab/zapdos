@@ -21,11 +21,8 @@
 
 [Kernels]
   [./test_u]
-    type = IonsFromIonization
+    type = Diffusion
     variable = u
-    potential = v
-    em = w
-    mean_en = p
   [../]
   [./diff_v]
     type = Diffusion
@@ -41,20 +38,17 @@
   [../]
 []
 
-# [BCs]
-#   [./left]
-#     type = DirichletBC
-#     variable = u
-#     boundary = 'left'
-#     value = 1
-#   [../]
-#   [./right]
-#     type = DirichletBC
-#     variable = u
-#     boundary = 'right'
-#     value = 0
-#   [../]
-# []
+[BCs]
+  [./both]
+    type = HagelaarElectronBC
+    variable = u
+    boundary = 'left right'
+    potential = v
+    mean_en = w
+    ip = p
+    r = 0.5
+  [../]
+[]
 
 [ICs]
   [./u_ic]
@@ -96,11 +90,13 @@
 []
 
 [Materials]
-  [./jac]
+  [./jac_block]
     block = '0'
     type = JacMat
-    mean_en = p
-    em = w
+  [../]
+  [./jac_boundary]
+    boundary = 'left right'
+    type = JacMat
   [../]
 []
 
@@ -112,12 +108,9 @@
 []
 
 [Executioner]
-  # type = Transient
-  # dt = 0.1
-  # end_time = 1
   type = Steady
   solve_type = NEWTON
-  petsc_options = '-snes_converged_reason  -pc_svd_monitor -snes_linesearch_monitor -options_left -snes_test_display'
+  petsc_options = '-options_left -snes_test_display'
   petsc_options_iname = '-snes_type'
   petsc_options_value = 'test'
 []
@@ -125,6 +118,9 @@
 [Outputs]
   exodus = true
   print_linear_residuals = false
+  [./DOFMap]
+    type = DOFMap
+  [../]
 []
 
 [Debug]

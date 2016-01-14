@@ -50,6 +50,7 @@ z-DCElectronBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 va
 z-DCIonBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
 z-GradMeanEnZeroBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
 z-HagelaarAnodicBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
+z-HagelaarIonBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
 z-MatchedValueLogBC
 z-DGPenaltyTiedValue
 z-DGEFieldAdvection # This will only work as long as the variable and coupled variable have the same number of shape functions in each element

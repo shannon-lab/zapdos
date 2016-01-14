@@ -11,22 +11,22 @@
 /*                                                              */
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
-#ifndef ARGONCONSTTD_H_
-#define ARGONCONSTTD_H_
+#ifndef GAS_H_
+#define GAS_H_
 
 #include "Material.h"
 /* #include "LinearInterpolation.h" */
 #include "SplineInterpolation.h"
 
-class ArgonConstTD;
+class Gas;
 
 template<>
-InputParameters validParams<ArgonConstTD>();
+InputParameters validParams<Gas>();
 
-class ArgonConstTD : public Material
+class Gas : public Material
 {
 public:
-  ArgonConstTD(const InputParameters & parameters);
+  Gas(const InputParameters & parameters);
 
 protected:
   virtual void computeQpProperties();
@@ -59,6 +59,7 @@ protected:
   MaterialProperty<Real> &  _rate_coeff_elastic;
   MaterialProperty<Real> &  _mem;
   MaterialProperty<Real> &  _mGas;
+  MaterialProperty<Real> &  _massArp;
   MaterialProperty<Real> &  _se_coeff;
   MaterialProperty<Real> & _ElectronTotalFluxMag;
   MaterialProperty<Real> & _ElectronTotalFluxMagSizeForm;
@@ -99,9 +100,7 @@ protected:
   MaterialProperty<Real> & _sgnArp;
   MaterialProperty<Real> & _diffpotential;
   MaterialProperty<Real> & _actual_mean_energy;
-
-  /* MaterialProperty<Real> & _diffusivity; */
-  /* MaterialProperty<Real> & _d_diffusivity_d_u; */
+  MaterialProperty<Real> & _T_heavy;
 
   VariableGradient & _grad_potential;
   VariableValue & _em;
@@ -111,4 +110,4 @@ protected:
   VariableValue & _mean_en;
 };
 
-#endif //ARGONCONSTTD_H
+#endif //GAS_H

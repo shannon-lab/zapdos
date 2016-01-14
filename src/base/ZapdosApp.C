@@ -114,7 +114,7 @@
 #include "Test2.h"
 #include "Air.h"
 #include "AirConstTD.h"
-#include "ArgonConstTD.h"
+#include "Gas.h"
 #include "NoCouplingAir.h"
 #include "BlockAverageDiffusionMaterial.h"
 #include "WD.h"
@@ -131,6 +131,8 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "HagelaarIonBC.h"
+#include "HagelaarElectronBC.h"
 #include "HagelaarAnodicBC.h"
 #include "GradMeanEnZeroBC.h"
 #include "RobinBC.h"
@@ -328,7 +330,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerMaterial(Test);
   registerMaterial(Test2);
   registerMaterial(AirConstTD);
-  registerMaterial(ArgonConstTD);
+  registerMaterial(Gas);
   registerMaterial(NoCouplingAir);
   registerMaterial(BlockAverageDiffusionMaterial);
   registerMaterial(WD);
@@ -341,6 +343,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerUserObject(ProvideMobility);
   registerBoundaryCondition(DGFluxBC);
   registerBoundaryCondition(HagelaarAnodicBC);
+  registerBoundaryCondition(HagelaarIonBC);
+  registerBoundaryCondition(HagelaarElectronBC);
   registerBoundaryCondition(GradMeanEnZeroBC);
   registerBoundaryCondition(InflowBC);
   registerBoundaryCondition(MultipliedValueBC);

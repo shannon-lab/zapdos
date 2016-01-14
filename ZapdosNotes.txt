@@ -2818,3 +2818,66 @@ r = 0.9, time steps = 192.
 abs = 6e-8, fail = 4.20e-6
 abs = 1.2e-7, rel = 1e-5, fail = 1.3e-7
 abs = 1.2e-7, rel = 1e-4, fail = 1.3e-7
+
+Assumptions that are better not to make:
+
+1) Better not to assume that D = mu * Te
+2) Better not to assume that mu_eps = 5/3 * mu, D_eps = 5/3 * D
+
+Quantities that are defined in bolos:
+
+mobility
+diffusion
+mean_energy
+rate (the rate of any given process that x_sections were provided for)
+
+solver.py contains the class BoltzmannSolver
+
+To get a truly accurate boundary condition, a transport equation with vx, vy, and vz (or E, omx, omy, and omz) would have to be used.
+
+From Duderstadt:
+
+Unfortunately diffusion theory is capable of only appromixating even the integral condition, since it cannot yield the exact form for J_{+/-}.
+
+Just accept and be happy.
+
+Alright, final decision: I'm going to use Hagelaar's formulation for the electrons for my electron boundary conditions (and for the ion boundary conditions (but I don't have to worry about secondaries)) and finally for the electron energy. To obtain the electron energy I'm simply going to multiply the alpha electron boundary condition by 5/3 mean_energy_alpha and the gamma electron boundary condition by 5/3 mean_energy_gamma (e.g. I'm multiplying all electron speeds by 5/3;). Alright I'm done with thinking about this. My justification for these decisions comes from juxtaposing Hagelaar's BC paper and Yuki's electron energy boundary condition in the LFA vs mean_en comparison paper. There done!!!!! Damn it!
+
+
+From FEProblem::checkProblemIntegrity, the checkBoundaryMatProps() function call is commented out. Let's imagine that it's uncommented. What happens: it calls SubProblem::checkBoundaryMatProps() and executes:
+
+  checkMatProps(_map_boundary_material_props, _map_boundary_material_props_check, "boundary");
+
+
+_map_boundary_material_props_check I believe is the map that stores what properties !should! exist on a given boundary ID.
+
+Modified by: SubProblem::storeDelayedCheckMatProp
+
+There are two different implementations of this method:
+
+void
+SubProblem::storeDelayedCheckMatProp(const std::string & requestor, SubdomainID block_id, const std::string & name)
+{
+  _map_block_material_props_check[block_id].insert(std::make_pair(requestor, name));
+}
+
+void
+SubProblem::storeDelayedCheckMatProp(const std::string & requestor, BoundaryID boundary_id, const std::string & name)
+{
+  _map_boundary_material_props_check[boundary_id].insert(std::make_pair(requestor, name));
+}
+
+What calls storeDelayedCheckMatProp?
+
+MaterialPropertyInterface::checkMaterialProperty calls storeDelayedCheckMatProp twice, once supposedly for blocks and once supposedly for boundaries. Yes it should call the correct storeDelayed method for both.
+
+Now this is called only if _mi_boundary_ids has some stuff in it. How does that attribute get modified?
+
+And what is _mi_name?
+
+IntegratedBC inherits from MaterialPropertyInterface
+
+u:0,4 em
+v:1,5 pot
+w:2,6 mean_en
+p:3,7 ip

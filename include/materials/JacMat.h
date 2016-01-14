@@ -64,7 +64,12 @@ protected:
   MaterialProperty<Real> &  _Eiz;
   MaterialProperty<Real> &  _Eex;
   MaterialProperty<Real> &  _mGas;
-
+  MaterialProperty<Real> &  _k_boltz;
+  MaterialProperty<Real> &  _T_heavy;
+  MaterialProperty<Real> &  _massu;
+  MaterialProperty<Real> &  _sgnp;
+  MaterialProperty<Real> &  _mup;
+  MaterialProperty<Real> &  _diffp;
 
   VariableValue & _v;
   VariableValue & _mean_en;

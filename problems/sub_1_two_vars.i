@@ -17,7 +17,7 @@
 
 [Kernels]
   [./test_u]
-    type = ProductAABBRxn
+    type = Diffusion
     variable = u
     v = v
   [../]
@@ -27,20 +27,22 @@
   [../]
 []
 
-# [BCs]
-#   [./left]
-#     type = DirichletBC
-#     variable = u
-#     boundary = 'left'
-#     value = 1
-#   [../]
-#   [./right]
-#     type = DirichletBC
-#     variable = u
-#     boundary = 'right'
-#     value = 0
-#   [../]
-# []
+[BCs]
+  [./left]
+    type = HagelaarIonBC
+    variable = u
+    boundary = 'left'
+    potential = v
+    r = 0
+  [../]
+  [./right]
+    type = HagelaarIonBC
+    variable = u
+    boundary = 'right'
+    potential = v
+    r = 0
+  [../]
+[]
 
 [ICs]
   [./u_ic]
@@ -68,12 +70,9 @@
 []
 
 [Executioner]
-  # type = Transient
-  # dt = 0.1
-  # end_time = 1
   type = Steady
   solve_type = NEWTON
-  petsc_options = '-snes_converged_reason  -pc_svd_monitor -snes_linesearch_monitor -options_left -snes_test_display'
+  petsc_options = '-options_left -snes_test_display'
   petsc_options_iname = '-snes_type'
   petsc_options_value = 'test'
 []

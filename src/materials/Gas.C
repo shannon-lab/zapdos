@@ -11,10 +11,10 @@
 /*                                                              */
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
-#include "ArgonConstTD.h"
+#include "Gas.h"
 
 template<>
-InputParameters validParams<ArgonConstTD>()
+InputParameters validParams<Gas>()
 {
   InputParameters params = validParams<Material>();
 
@@ -30,7 +30,7 @@ InputParameters validParams<ArgonConstTD>()
 }
 
 
-ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
+Gas::Gas(const InputParameters & parameters) :
     Material(parameters),
     // _townsend(getParam<bool>("townsend")),
     _interp_trans_coeffs(getParam<bool>("interp_trans_coeffs")),
@@ -53,6 +53,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
   _rate_coeff_elastic(declareProperty<Real>("rate_coeff_elastic")),
   _mem(declareProperty<Real>("mem")),
   _mGas(declareProperty<Real>("mGas")),
+  _massArp(declareProperty<Real>("massArp")),
   _se_coeff(declareProperty<Real>("se_coeff")),
   _ElectronTotalFluxMag(declareProperty<Real>("ElectronTotalFluxMag")),
   _ElectronTotalFluxMagSizeForm(declareProperty<Real>("ElectronTotalFluxMagSizeForm")),
@@ -93,8 +94,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
   _sgnArp(declareProperty<Real>("sgnArp")),
   _diffpotential(declareProperty<Real>("diffpotential")),
   _actual_mean_energy(declareProperty<Real>("actual_mean_energy")),
-  // _diffusivity(declareProperty<Real>("diffusivity")),
-  // _d_diffusivity_d_u(declareProperty<Real>("d_diffusivity_d_u")),
+  _T_heavy(declareProperty<Real>("T_heavy")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
   _em(isCoupled("em") ? coupledValue("em") : _zero),
@@ -161,7 +161,7 @@ ArgonConstTD::ArgonConstTD(const InputParameters & parameters) :
 }
 
 void
-ArgonConstTD::computeQpProperties()
+Gas::computeQpProperties()
 {
   // This is just a dummy material property for some simple functionality testing
   // _diffusivity[_qp] = _mean_en[_qp] + 1.;
@@ -246,6 +246,7 @@ ArgonConstTD::computeQpProperties()
   _rate_coeff_elastic[_qp] = 1e-13;
   _mem[_qp] = 9.11e-31;
   _mGas[_qp] = 40.0*1.66e-27;
+  _massArp[_qp] = 40.0*1.66e-27;
   _se_coeff[_qp] = 0.1;
   _e[_qp] = 1.6e-19;
   _eps[_qp] = 8.85e-12;
@@ -255,15 +256,5 @@ ArgonConstTD::computeQpProperties()
   _sgnArp[_qp] = 1.;
   _diffpotential[_qp] = _eps[_qp];
 
-  // _ElectronTotalFluxMag[_qp] = std::sqrt((-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp])*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]));
-  // _ElectronTotalFluxMagSizeForm[_qp] = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
-  // _ElectronTotalFlux[_qp] = -_muem[_qp]*-_grad_potential[_qp](0)*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp](0);
-  // _ElectronAdvectiveFlux[_qp] = -_muem[_qp]*-_grad_potential[_qp](0)*std::exp(_em[_qp]);
-  // _ElectronDiffusiveFlux[_qp] = -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp](0);
-  // _IonTotalFlux[_qp] = -_muArp[_qp]*-_grad_potential[_qp](0)*std::exp(_ip[_qp])-_diffArp[_qp]*std::exp(_ip[_qp])*_grad_ip[_qp](0);
-  // _IonAdvectiveFlux[_qp] = -_muArp[_qp]*-_grad_potential[_qp](0)*std::exp(_ip[_qp]);
-  // _IonDiffusiveFlux[_qp] = -_diffArp[_qp]*std::exp(_ip[_qp])*_grad_ip[_qp](0);
-  _EField[_qp] = -_grad_potential[_qp](0);
-  // _Source_term[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size())*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
-  // _Source_term_coeff[_qp] = _rate_coeff_ion[_qp]*std::exp(-_Eiz[_qp]/_grad_potential[_qp].size());
+  _T_heavy[_qp] = 300;
 }

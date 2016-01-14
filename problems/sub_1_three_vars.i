@@ -41,7 +41,7 @@
 
 [BCs]
   [./both]
-    type = HagelaarAnodicBC
+    type = HagelaarElectronBC
     variable = u
     boundary = 'left right'
     potential = v
