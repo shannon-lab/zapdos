@@ -41,7 +41,9 @@ class JouleHeating : public Kernel
   // Material properties
 
   const MaterialProperty<Real> & _muem;
+  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
   const MaterialProperty<Real> & _diffem;
+  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
 
   std::string _potential_units;
 

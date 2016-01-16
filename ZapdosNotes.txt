@@ -2881,3 +2881,24 @@ u:0,4 em
 v:1,5 pot
 w:2,6 mean_en
 p:3,7 ip
+
+Recall that analytical derivatives (when correct) are fundamentally  more accurate than finite difference derivatives
+
+Tests that failed when I tried implementing my boundary materials check:
+
+misc/line_source.test........................................................................ FAILED (ERRMSG)
+postprocessors/misc_pps.misc_pps_test........................................................ FAILED (ERRMSG)
+materials/boundary_material.elem_aux_bc_on_bnd............................................... FAILED (ERRMSG)
+materials/material.dg_test................................................................... FAILED (ERRMSG)
+materials/material.test...................................................................... FAILED (ERRMSG)
+materials/stateful_prop.spatial_test......................................................... FAILED (ERRMSG)
+materials/stateful_prop.stateful_copy........................................................ FAILED (ERRMSG)
+vectorpostprocessors/line_material_sampler.test.............................................. FAILED (ERRMSG)
+
+Based off what Cody said, I think that my incredibly crude, hacked implementation should work fine for cases on which I'm only using external boundaries.
+
+What I did today:
+
+Implemented 5 new residual/jacobian classes. Successfully ran a simulation with all of Hagelaar's boundary conditions implemented. Discovered that they don't really change my solution!
+
+WIP: implement energy dependence of muem, muel, diffem, and diffel

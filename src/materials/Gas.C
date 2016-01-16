@@ -55,6 +55,7 @@ Gas::Gas(const InputParameters & parameters) :
   _mGas(declareProperty<Real>("mGas")),
   _massArp(declareProperty<Real>("massArp")),
   _se_coeff(declareProperty<Real>("se_coeff")),
+  _se_energy(declareProperty<Real>("se_energy")),
   _ElectronTotalFluxMag(declareProperty<Real>("ElectronTotalFluxMag")),
   _ElectronTotalFluxMagSizeForm(declareProperty<Real>("ElectronTotalFluxMagSizeForm")),
   _ElectronTotalFlux(declareProperty<Real>("ElectronTotalFlux")),
@@ -247,7 +248,8 @@ Gas::computeQpProperties()
   _mem[_qp] = 9.11e-31;
   _mGas[_qp] = 40.0*1.66e-27;
   _massArp[_qp] = 40.0*1.66e-27;
-  _se_coeff[_qp] = 0.1;
+  _se_coeff[_qp] = 0.15;
+  _se_energy[_qp] = 2. * 3. / 2.; // Emi uses 2 Volts coming off the wall (presumably for Te). Multiply by 3/2 to get mean_en
   _e[_qp] = 1.6e-19;
   _eps[_qp] = 8.85e-12;
   _k_boltz[_qp] = 1.38e-23;

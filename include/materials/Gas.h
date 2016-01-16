@@ -61,6 +61,7 @@ protected:
   MaterialProperty<Real> &  _mGas;
   MaterialProperty<Real> &  _massArp;
   MaterialProperty<Real> &  _se_coeff;
+  MaterialProperty<Real> &  _se_energy;
   MaterialProperty<Real> & _ElectronTotalFluxMag;
   MaterialProperty<Real> & _ElectronTotalFluxMagSizeForm;
   MaterialProperty<Real> & _ElectronTotalFlux;

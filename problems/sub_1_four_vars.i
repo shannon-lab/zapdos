@@ -21,8 +21,11 @@
 
 [Kernels]
   [./test_u]
-    type = Diffusion
+    type = IonsFromIonization
     variable = u
+    em = v
+    mean_en = w
+    potential = p
   [../]
   [./diff_v]
     type = Diffusion
@@ -38,17 +41,17 @@
   [../]
 []
 
-[BCs]
-  [./both]
-    type = HagelaarElectronBC
-    variable = u
-    boundary = 'left right'
-    potential = v
-    mean_en = w
-    ip = p
-    r = 0.5
-  [../]
-[]
+# [BCs]
+#   [./both]
+#     type = HagelaarEnergyBC
+#     variable = u
+#     boundary = 'left right'
+#     potential = v
+#     em = w
+#     ip = p
+#     r = 0.5
+#   [../]
+# []
 
 [ICs]
   [./u_ic]
@@ -67,37 +70,21 @@
     type = RandomIC
     variable = p
   [../]
-  # [./u_ic]
-  #   type = ConstantIC
-  #   variable = u
-  #   value = 0.5
-  # [../]
-  # [./v_ic]
-  #   type = ConstantIC
-  #   variable = v
-  #   value = 0.5
-  # [../]
-  # # [./w_ic]
-  # #   type = ConstantIC
-  # #   variable = w
-  # #   value = 0.5
-  # # [../]
-  # [./p_ic]
-  #   type = ConstantIC
-  #   variable = p
-  #   value = 0.5
-  # [../]
 []
 
 [Materials]
   [./jac_block]
     block = '0'
     type = JacMat
+    em = v
+    mean_en = w
   [../]
-  [./jac_boundary]
-    boundary = 'left right'
-    type = JacMat
-  [../]
+  # [./jac_boundary]
+  #   boundary = 'left right'
+  #   type = JacMat
+  #   em = v
+  #   mean_en = w
+  # [../]
 []
 
 [Preconditioning]
@@ -118,9 +105,9 @@
 [Outputs]
   exodus = true
   print_linear_residuals = false
-  [./DOFMap]
-    type = DOFMap
-  [../]
+  # [./DOFMap]
+  #   type = DOFMap
+  # [../]
 []
 
 [Debug]

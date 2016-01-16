@@ -17,9 +17,9 @@
 
 [Kernels]
   [./test_u]
-    type = Diffusion
+    type = CoeffDiffusionEnergy
     variable = u
-    v = v
+    em = v
   [../]
   [./diff_v]
     type = Diffusion
@@ -27,22 +27,22 @@
   [../]
 []
 
-[BCs]
-  [./left]
-    type = HagelaarIonBC
-    variable = u
-    boundary = 'left'
-    potential = v
-    r = 0
-  [../]
-  [./right]
-    type = HagelaarIonBC
-    variable = u
-    boundary = 'right'
-    potential = v
-    r = 0
-  [../]
-[]
+# [BCs]
+#   [./left]
+#     type = HagelaarIonBC
+#     variable = u
+#     boundary = 'left'
+#     potential = v
+#     r = 0
+#   [../]
+#   [./right]
+#     type = HagelaarIonBC
+#     variable = u
+#     boundary = 'right'
+#     potential = v
+#     r = 0
+#   [../]
+# []
 
 [ICs]
   [./u_ic]
@@ -59,6 +59,8 @@
   [./jac]
     block = '0'
     type = JacMat
+    em = v
+    mean_en = u
   [../]
 []
 

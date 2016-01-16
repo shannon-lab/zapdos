@@ -5,6 +5,10 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "EFieldAdvectionEnergy.h"
+#include "CoeffDiffusionElectrons.h"
+#include "CoeffDiffusionEnergy.h"
+#include "EFieldAdvectionElectrons.h"
 #include "InterpCoeffDiffusion.h"
 #include "ProductAABBRxn.h"
 #include "ProductFirstOrderRxn.h"
@@ -131,6 +135,7 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "HagelaarEnergyBC.h"
 #include "HagelaarIonBC.h"
 #include "HagelaarElectronBC.h"
 #include "HagelaarAnodicBC.h"
@@ -226,7 +231,11 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(CoeffDiffusionElectrons);
+  registerKernel(CoeffDiffusionEnergy);
   registerKernel(InterpCoeffDiffusion);
+  registerKernel(EFieldAdvectionElectrons);
+  registerKernel(EFieldAdvectionEnergy);
   registerKernel(ChargeSourceMoles);
   registerKernel(ChargeSourceMoles_KV);
   registerKernel(IonsFromIonizationLFA_KV);
@@ -345,6 +354,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(HagelaarAnodicBC);
   registerBoundaryCondition(HagelaarIonBC);
   registerBoundaryCondition(HagelaarElectronBC);
+  registerBoundaryCondition(HagelaarEnergyBC);
   registerBoundaryCondition(GradMeanEnZeroBC);
   registerBoundaryCondition(InflowBC);
   registerBoundaryCondition(MultipliedValueBC);

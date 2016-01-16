@@ -46,20 +46,26 @@ z-ProductAABBRxn
 z-DGMatDiffusionLogInt
 z-DGMatDiffusionInt
 z-NeumannCircuitVoltageMoles_KV
+z-EFieldAdvectionElectrons
+z-EFieldAdvectionEnergy
+z-CoeffDiffusionElectrons
+z-CoeffDiffusionEnergy
 z-DCElectronBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
 z-DCIonBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
 z-GradMeanEnZeroBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
 z-HagelaarAnodicBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
 z-HagelaarIonBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
+z-HagelaarElectronBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
+z-HagelaarEnergyBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
 z-MatchedValueLogBC
 z-DGPenaltyTiedValue
 z-DGEFieldAdvection # This will only work as long as the variable and coupled variable have the same number of shape functions in each element
 z-DGCoeffDiffusion
 z-InterpCoeffDiffusion
-z-ElectronsFromIonization
-z-JouleHeating
-z-IonsFromIonization
-z-ElectronEnergyLossFromIonization
-z-ElectronEnergyLossFromElastic
-z-ElectronEnergyLossFromExcitation
+z-ElectronsFromIonization (Now confirmed with interpolated transport coefficients)
+z-JouleHeating (Now confirmed with interpolated transport coefficients)
+z-IonsFromIonization (Now confirmed with interpolated transport coefficients)
+#z-ElectronEnergyLossFromIonization
+#z-ElectronEnergyLossFromElastic
+#z-ElectronEnergyLossFromExcitation
 '''

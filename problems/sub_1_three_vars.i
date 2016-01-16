@@ -18,16 +18,12 @@
 []
 
 [Kernels]
-  # [./test_u]
-  #   type = JouleHeating
-  #   variable = u
-  #   potential = v
-  #   em = w
-  #   potential_units = V
-  # [../]
-  [./diff_u]
-    type = Diffusion
+  [./test_kernel]
+    type = JouleHeating
     variable = u
+    potential = v
+    em = w
+    potential_units = V
   [../]
   [./diff_v]
     type = Diffusion
@@ -39,22 +35,16 @@
   [../]
 []
 
-[BCs]
-  [./both]
-    type = HagelaarElectronBC
-    variable = u
-    boundary = 'left right'
-    potential = v
-    mean_en = w
-    r = 0.5
-  [../]
-  # [./right]
-  #   type = DirichletBC
-  #   variable = u
-  #   boundary = 'right'
-  #   value = 0
-  # [../]
-[]
+# [BCs]
+#   [./both]
+#     type = HagelaarAnodicBC
+#     variable = u
+#     boundary = 'left right'
+#     potential = v
+#     mean_en = w
+#     r = 0.5
+#   [../]
+# []
 
 [ICs]
   [./u_ic]
@@ -69,21 +59,6 @@
     type = RandomIC
     variable = w
   [../]
-  # [./u_ic]
-  #   type = ConstantIC
-  #   variable = u
-  #   value = 0.5
-  # [../]
-  # [./v_ic]
-  #   type = ConstantIC
-  #   variable = v
-  #   value = 0.5
-  # [../]
-  # [./w_ic]
-  #   type = ConstantIC
-  #   variable = w
-  #   value = 0.5
-  # [../]
 []
 
 [Materials]

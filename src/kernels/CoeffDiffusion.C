@@ -1,17 +1,3 @@
-/****************************************************************/
-/*               DO NOT MODIFY THIS HEADER                      */
-/* MOOSE - Multiphysics Object Oriented Simulation Environment  */
-/*                                                              */
-/*           (c) 2010 Battelle Energy Alliance, LLC             */
-/*                   ALL RIGHTS RESERVED                        */
-/*                                                              */
-/*          Prepared by Battelle Energy Alliance, LLC           */
-/*            Under Contract No. DE-AC07-05ID14517              */
-/*            With the U. S. Department of Energy               */
-/*                                                              */
-/*            See COPYRIGHT for full restrictions               */
-/****************************************************************/
-
 #include "CoeffDiffusion.h"
 
 
@@ -26,7 +12,7 @@ InputParameters validParams<CoeffDiffusion>()
 
 CoeffDiffusion::CoeffDiffusion(const InputParameters & parameters) :
     Diffusion(parameters),
-    
+
     _diffusivity(getMaterialProperty<Real>("diff" + _var.name()))
 {
 }

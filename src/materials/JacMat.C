@@ -29,10 +29,14 @@ JacMat::JacMat(const InputParameters & parameters) :
     _muu(declareProperty<Real>("muu")),
     _muv(declareProperty<Real>("muv")),
     _sgnu(declareProperty<Real>("sgnu")),
+    _sgnem(declareProperty<Real>("sgnem")),
     _sgnv(declareProperty<Real>("sgnv")),
     _diffu(declareProperty<Real>("diffu")),
     _diffem(declareProperty<Real>("diffem")),
+    _diffel(declareProperty<Real>("diffel")),
     _muem(declareProperty<Real>("muem")),
+    _muel(declareProperty<Real>("muel")),
+    _mumean_en(declareProperty<Real>("mumean_en")),
     _iz_coeff_efield_a(declareProperty<Real>("iz_coeff_efield_a")),
     _iz_coeff_efield_b(declareProperty<Real>("iz_coeff_efield_b")),
     _iz_coeff_efield_c(declareProperty<Real>("iz_coeff_efield_c")),
@@ -45,12 +49,15 @@ JacMat::JacMat(const InputParameters & parameters) :
   _diffu1(declareProperty<Real>("diffu1")),
   _diffu2(declareProperty<Real>("diffu2")),
   _se_coeff(declareProperty<Real>("se_coeff")),
+  _se_energy(declareProperty<Real>("se_energy")),
   _eps(declareProperty<Real>("eps")),
   _mem(declareProperty<Real>("mem")),
   _d_interp(declareProperty<Real>("d_interp")),
   _d_d_interp_d_v(declareProperty<Real>("d_d_interp_d_v")),
   _d_muem_d_actual_mean_en(declareProperty<Real>("d_muem_d_actual_mean_en")),
+  _d_muel_d_actual_mean_en(declareProperty<Real>("d_muel_d_actual_mean_en")),
   _d_diffem_d_actual_mean_en(declareProperty<Real>("d_diffem_d_actual_mean_en")),
+  _d_diffel_d_actual_mean_en(declareProperty<Real>("d_diffel_d_actual_mean_en")),
   _alpha_iz(declareProperty<Real>("alpha_iz")),
   _d_iz_d_actual_mean_en(declareProperty<Real>("d_iz_d_actual_mean_en")),
   _alpha_ex(declareProperty<Real>("alpha_ex")),
@@ -65,6 +72,7 @@ JacMat::JacMat(const InputParameters & parameters) :
   _massu(declareProperty<Real>("massu")),
   _sgnp(declareProperty<Real>("sgnp")),
   _mup(declareProperty<Real>("mup")),
+  _muw(declareProperty<Real>("muw")),
   _diffp(declareProperty<Real>("diffp")),
 
   _v(isCoupled("v") ? coupledValue("v") : _zero),
@@ -72,35 +80,12 @@ JacMat::JacMat(const InputParameters & parameters) :
   _em(isCoupled("em") ? coupledValue("em") : _zero)
 
 {
-  std::vector<Real> x;
-  std::vector<Real> y;
-  std::string path = "/home/lindsayad/zapdos/src/materials/test.txt";
-  const char *charPath = path.c_str();
-  std::ifstream myfile (charPath);
-  Real value;
-
-  if (myfile.is_open())
-  {
-    while (myfile >> value)
-    {
-      x.push_back(value);
-      myfile >> value;
-      y.push_back(value);
-    }
-    myfile.close();
-  }
-
-  else std::cerr << "Unable to pen file" << std::endl;
-  _interpolation.setData(x, y);
-
   std::vector<Real> actual_mean_energy;
   std::vector<Real> alpha;
   std::vector<Real> alphaEx;
   std::vector<Real> alphaEl;
   std::vector<Real> mu;
   std::vector<Real> diff;
-  // std::vector<Real> d_alpha_d_actual_mean_energy;
-  // std::cerr << "About to get the environment variable." << std::endl;
   char* zapDirPoint;
   zapDirPoint = getenv("ZAPDIR");
   std::string zapDir;
@@ -114,7 +99,7 @@ JacMat::JacMat(const InputParameters & parameters) :
   }
 
   std::string tdPath = "/src/materials/test2.txt";
-  path = zapDir + tdPath;
+  std::string path = zapDir + tdPath;
   const char * charPathNew = path.c_str();
   std::ifstream newfile (charPathNew);
   Real value_new;
@@ -126,8 +111,6 @@ JacMat::JacMat(const InputParameters & parameters) :
       actual_mean_energy.push_back(value_new);
       newfile >> value_new;
       alpha.push_back(value_new);
-      // newfile >> value_new;
-      // d_alpha_d_actual_mean_energy.push_back(value_new);
       newfile >> value_new;
       alphaEx.push_back(value_new);
       newfile >> value_new;
@@ -156,10 +139,18 @@ JacMat::computeQpProperties()
   _muu[_qp] = 1.1;
   _muv[_qp] = 1.1;
   _sgnu[_qp] = 1.;
+  _sgnem[_qp] = 1.;
   _sgnv[_qp] = 1.;
   _diffu[_qp] = 1.1;
-  _diffem[_qp] = 1.1;
-  _muem[_qp] = 1.1;
+  _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
+  _muel[_qp] = 5. / 3. * _muem[_qp];
+  _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
+  _diffel[_qp] = 5. / 3. * _diffem[_qp];
+  _d_muem_d_actual_mean_en[_qp] = _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+  _d_muel_d_actual_mean_en[_qp] = 5. / 3. * _d_muem_d_actual_mean_en[_qp];
+  _d_diffem_d_actual_mean_en[_qp] = _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+  _d_diffel_d_actual_mean_en[_qp] = 5. / 3. * _d_diffem_d_actual_mean_en[_qp];
+  _mumean_en[_qp] = 1.1;
   _iz_coeff_efield_a[_qp] = 1.1;
   _iz_coeff_efield_b[_qp] = 1.1;
   _iz_coeff_efield_c[_qp] = 1.1;
@@ -172,12 +163,9 @@ JacMat::computeQpProperties()
   _diffu1[_qp] = 1.1;
   _diffu2[_qp] = 1.1;
   _se_coeff[_qp] = 0.1;
+  _se_energy[_qp] = 1.1;
   _eps[_qp] = 1.1;
   _mem[_qp] = 1.1;
-  _d_interp[_qp] = _interpolation.sample(_v[_qp]);
-  _d_d_interp_d_v[_qp] = _interpolation.sampleDerivative(_v[_qp]);
-  _d_muem_d_actual_mean_en[_qp] = 0.0;
-  _d_diffem_d_actual_mean_en[_qp] = 0.0;
   _alpha_iz[_qp] = _alpha_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
   _d_iz_d_actual_mean_en[_qp] = _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
   _alpha_ex[_qp] = _alphaEx_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
@@ -193,5 +181,6 @@ JacMat::computeQpProperties()
   _massu[_qp] = 1.1;
   _sgnp[_qp] = 1.;
   _mup[_qp] = 1.1;
+  _muw[_qp] = 1.1;
   _diffp[_qp] = 1.1;
 }

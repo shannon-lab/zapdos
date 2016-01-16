@@ -33,10 +33,14 @@ protected:
   MaterialProperty<Real> & _muu;
   MaterialProperty<Real> & _muv;
   MaterialProperty<Real> & _sgnu;
+  MaterialProperty<Real> & _sgnem;
   MaterialProperty<Real> & _sgnv;
   MaterialProperty<Real> & _diffu;
   MaterialProperty<Real> & _diffem;
+  MaterialProperty<Real> & _diffel;
   MaterialProperty<Real> & _muem;
+  MaterialProperty<Real> & _muel;
+  MaterialProperty<Real> & _mumean_en;
   MaterialProperty<Real> & _iz_coeff_efield_a;
   MaterialProperty<Real> & _iz_coeff_efield_b;
   MaterialProperty<Real> & _iz_coeff_efield_c;
@@ -49,12 +53,15 @@ protected:
   MaterialProperty<Real> & _diffu1;
   MaterialProperty<Real> & _diffu2;
   MaterialProperty<Real> & _se_coeff;
+  MaterialProperty<Real> & _se_energy;
   MaterialProperty<Real> & _eps;
   MaterialProperty<Real> & _mem;
   MaterialProperty<Real> & _d_interp;
   MaterialProperty<Real> & _d_d_interp_d_v;
   MaterialProperty<Real> &  _d_muem_d_actual_mean_en;
+  MaterialProperty<Real> &  _d_muel_d_actual_mean_en;
   MaterialProperty<Real> &  _d_diffem_d_actual_mean_en;
+  MaterialProperty<Real> &  _d_diffel_d_actual_mean_en;
   MaterialProperty<Real> &  _alpha_iz;
   MaterialProperty<Real> &  _d_iz_d_actual_mean_en;
   MaterialProperty<Real> &  _alpha_ex;
@@ -69,6 +76,7 @@ protected:
   MaterialProperty<Real> &  _massu;
   MaterialProperty<Real> &  _sgnp;
   MaterialProperty<Real> &  _mup;
+  MaterialProperty<Real> &  _muw;
   MaterialProperty<Real> &  _diffp;
 
   VariableValue & _v;
