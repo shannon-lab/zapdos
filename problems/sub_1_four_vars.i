@@ -15,7 +15,7 @@
   [../]
   [./w]
   [../]
-  [./p]
+  [./Arp]
   [../]
 []
 
@@ -32,21 +32,24 @@
     type = Diffusion
     variable = w
   [../]
-  [./diff_p]
+  [./diff_Arp]
     type = Diffusion
-    variable = p
+    variable = Arp
   [../]
 []
 
 [BCs]
   [./both]
-    type = HagelaarElectronBC
+    type = NeumannCircuitVoltageMoles_KV
     variable = u
     boundary = 'left right'
-    potential = v
+    em = v
     mean_en = w
-    ip = p
+    ip = Arp
     r = 0.5
+    function = potential_bc_func
+    data_provider = data_provider
+    potential_units = V
   [../]
 []
 
@@ -63,9 +66,9 @@
     type = RandomIC
     variable = w
   [../]
-  [./p_ic]
+  [./Arp_ic]
     type = RandomIC
-    variable = p
+    variable = Arp
   [../]
 []
 
@@ -79,8 +82,8 @@
   [./jac_boundary]
     boundary = 'left right'
     type = JacMat
+    em = v
     mean_en = w
-    em = u
   [../]
 []
 
@@ -109,4 +112,20 @@
 
 [Debug]
   show_var_residual_norms = true
+[]
+
+[Functions]
+  [./potential_bc_func]
+    type = ParsedFunction
+    value = 1.25
+  [../]
+[]
+
+[UserObjects]
+  [./data_provider]
+    type = ProvideMobility
+    electrode_area = 1.1
+    ballast_resist = 1.1
+    e = 1.1
+  [../]
 []
