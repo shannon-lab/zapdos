@@ -14,8 +14,8 @@ InputParameters validParams<CoeffDiffusionEnergy>()
 CoeffDiffusionEnergy::CoeffDiffusionEnergy(const InputParameters & parameters) :
     Kernel(parameters),
 
-    _diffel(getMaterialProperty<Real>("diffel")),
-    _d_diffel_d_actual_mean_en(getMaterialProperty<Real>("d_diffel_d_actual_mean_en")),
+    _diffel(getMaterialProperty<Real>("diffmean_en")),
+    _d_diffel_d_actual_mean_en(getMaterialProperty<Real>("d_diffmean_en_d_actual_mean_en")),
 
     _em(coupledValue("em")),
     _em_id(coupled("em")),

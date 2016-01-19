@@ -65,7 +65,7 @@ z-InterpCoeffDiffusion
 z-ElectronsFromIonization (Now confirmed with interpolated transport coefficients)
 z-JouleHeating (Now confirmed with interpolated transport coefficients)
 z-IonsFromIonization (Now confirmed with interpolated transport coefficients)
-#z-ElectronEnergyLossFromIonization
-#z-ElectronEnergyLossFromElastic
-#z-ElectronEnergyLossFromExcitation
+z-ElectronEnergyLossFromIonization (Now confirmed with interpolated transport coefficients)
+z-ElectronEnergyLossFromElastic (Now confirmed with interpolated transport coefficients)
+z-ElectronEnergyLossFromExcitation (Now confirmed with interpolated transport coefficients)
 '''

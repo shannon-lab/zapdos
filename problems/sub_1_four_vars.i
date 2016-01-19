@@ -21,11 +21,8 @@
 
 [Kernels]
   [./test_u]
-    type = IonsFromIonization
+    type = Diffusion
     variable = u
-    em = v
-    mean_en = w
-    potential = p
   [../]
   [./diff_v]
     type = Diffusion
@@ -41,17 +38,17 @@
   [../]
 []
 
-# [BCs]
-#   [./both]
-#     type = HagelaarEnergyBC
-#     variable = u
-#     boundary = 'left right'
-#     potential = v
-#     em = w
-#     ip = p
-#     r = 0.5
-#   [../]
-# []
+[BCs]
+  [./both]
+    type = HagelaarElectronBC
+    variable = u
+    boundary = 'left right'
+    potential = v
+    mean_en = w
+    ip = p
+    r = 0.5
+  [../]
+[]
 
 [ICs]
   [./u_ic]
@@ -79,12 +76,12 @@
     em = v
     mean_en = w
   [../]
-  # [./jac_boundary]
-  #   boundary = 'left right'
-  #   type = JacMat
-  #   em = v
-  #   mean_en = w
-  # [../]
+  [./jac_boundary]
+    boundary = 'left right'
+    type = JacMat
+    mean_en = w
+    em = u
+  [../]
 []
 
 [Preconditioning]

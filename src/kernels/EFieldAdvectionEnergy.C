@@ -12,8 +12,8 @@ InputParameters validParams<EFieldAdvectionEnergy>()
 EFieldAdvectionEnergy::EFieldAdvectionEnergy(const InputParameters & parameters) :
     Kernel(parameters),
 
-    _muel(getMaterialProperty<Real>("muel")),
-    _d_muel_d_actual_mean_en(getMaterialProperty<Real>("d_muel_d_actual_mean_en")),
+    _muel(getMaterialProperty<Real>("mumean_en")),
+    _d_muel_d_actual_mean_en(getMaterialProperty<Real>("d_mumean_en_d_actual_mean_en")),
     _sign(getMaterialProperty<Real>("sgnem")),
 
     // Coupled variables

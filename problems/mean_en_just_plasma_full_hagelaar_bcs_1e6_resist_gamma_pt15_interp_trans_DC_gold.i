@@ -111,6 +111,7 @@
   [./em_log_stabilization]
     type = LogStabilizationMoles
     variable = em
+    # offset = 25
   [../]
 
   [./potential_diffusion]
@@ -313,7 +314,7 @@
     potential = potential
     density_log = Arp
     variable = Current_Arp
-    art_diff = true
+    art_diff = false
   [../]
   [./EFieldAdvAux_em]
     type = EFieldAdvAux
@@ -431,16 +432,16 @@
     mean_en = mean_en
     block = 0
  [../]
-  [./gas_boundary]
-    type = Gas
-    interp_trans_coeffs = true
-    interp_elastic_coeff = true
-    em = em
-    potential = potential
-    ip = Arp
-    mean_en = mean_en
-    boundary = 'left right'
- [../]
+ #  [./gas_boundary]
+ #    type = Gas
+ #    interp_trans_coeffs = true
+ #    interp_elastic_coeff = true
+ #    em = em
+ #    potential = potential
+ #    ip = Arp
+ #    mean_en = mean_en
+ #    boundary = 'left right'
+ # [../]
 []
 
 # [Materials]

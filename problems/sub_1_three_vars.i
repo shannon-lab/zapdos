@@ -19,11 +19,10 @@
 
 [Kernels]
   [./test_kernel]
-    type = JouleHeating
+    type = ElectronEnergyLossFromElastic
     variable = u
     potential = v
     em = w
-    potential_units = V
   [../]
   [./diff_v]
     type = Diffusion

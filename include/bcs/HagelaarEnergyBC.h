@@ -42,6 +42,7 @@ protected:
   const MaterialProperty<Real> & _se_coeff;
   const MaterialProperty<Real> & _se_energy;
   const MaterialProperty<Real> & _mumean_en;
+  const MaterialProperty<Real> & _d_mumean_en_d_actual_mean_en;
 
   Real  _a;
   Real  _v_thermal;
@@ -53,6 +54,9 @@ protected:
   RealVectorValue  _d_ion_flux_d_ip;
   Real  _d_n_gamma_d_potential;
   Real  _d_n_gamma_d_ip;
+  Real  _d_n_gamma_d_u;
+  Real  _d_n_gamma_d_em;
+  Real _actual_mean_en;
 
 };
 

@@ -22,6 +22,7 @@ InputParameters validParams<Gas>()
   // params.addRequiredParam<bool>("townsend","Whether to use the townsend formulation for the rate terms.");
   params.addRequiredParam<bool>("interp_trans_coeffs", "Whether to interpolate transport coefficients as a function of the mean energy. If false, coeffs are constant.");
   params.addRequiredParam<bool>("interp_elastic_coeff", "Whether to interpolate the elastic collision townsend coefficient as a function of the mean energy. If false, coeffs are constant.");
+  params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("mean_en", "The electron mean energy in log form.");
@@ -35,6 +36,7 @@ Gas::Gas(const InputParameters & parameters) :
     // _townsend(getParam<bool>("townsend")),
     _interp_trans_coeffs(getParam<bool>("interp_trans_coeffs")),
     _interp_elastic_coeff(getParam<bool>("interp_elastic_coeff")),
+    _potential_units(getParam<std::string>("potential_units")),
 
     _muem(declareProperty<Real>("muem")),
     _d_muem_d_actual_mean_en(declareProperty<Real>("d_muem_d_actual_mean_en")),
@@ -104,6 +106,11 @@ Gas::Gas(const InputParameters & parameters) :
   _grad_ip(isCoupled("ip") ? coupledGradient("ip") : _grad_zero),
   _mean_en(isCoupled("mean_en") ? coupledValue("mean_en") : _zero)
 {
+  if (_potential_units.compare("V") == 0)
+    _voltage_scaling = 1.;
+  else if (_potential_units.compare("kV") == 0)
+    _voltage_scaling = 1000;
+
   std::vector<Real> actual_mean_energy;
   std::vector<Real> alpha;
   std::vector<Real> alphaEx;
@@ -171,21 +178,21 @@ Gas::computeQpProperties()
   // With the exception of perhaps temperature/energy (perhaps in eV), all properties are in standard SI units
 
   if (_interp_trans_coeffs) {
-    _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
-    _d_muem_d_actual_mean_en[_qp] = _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
+    _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp])) * _voltage_scaling;
+    _d_muem_d_actual_mean_en[_qp] = _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp])) * _voltage_scaling;
     _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
     _d_diffem_d_actual_mean_en[_qp] = _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp]-_em[_qp]));
   }
   else {
     // From bolos at atmospheric pressure and an EField of 2e5 V/m
-    _muem[_qp] = 0.0352103411399 * 1000.; // units of m^2/(kV*s)
+    _muem[_qp] = 0.0352103411399 * _voltage_scaling; // units of m^2/(kV*s) if _voltage_scaling = 1000
     _d_muem_d_actual_mean_en[_qp] = 0.0;
     _diffem[_qp] = 0.297951680159;
     _d_diffem_d_actual_mean_en[_qp] = 0.0;
   }
 
   // From Richards and Sawin, muArp*pressure = 1444 cm^2*Torr/(V*s) and diffArp*pressure = 40 cm^2*Torr/s. Use pressure = 760 torr.
-  _muArp[_qp] = 1.9e-4 * 1000.; // units of m^2/(kV*s)
+  _muArp[_qp] = 1.9e-4 * _voltage_scaling; // units of m^2/(kV*s) if _voltage_scaling = 1000
   _diffArp[_qp] = 5.26e-6;
 
   // 100 times less than electrons

@@ -2902,3 +2902,46 @@ What I did today:
 Implemented 5 new residual/jacobian classes. Successfully ran a simulation with all of Hagelaar's boundary conditions implemented. Discovered that they don't really change my solution!
 
 WIP: implement energy dependence of muem, muel, diffem, and diffel
+
+0 mesh refinement (522 vertices): fail time = 1.25e-6 (oscillations in ions)
+1 mesh refinement (681 vertices): fail time = 1.26e-6
+2 mesh refinments (765 vertices): fail time = 1.33e-6 (no more oscillations), nl_rel_tol = 1e-5, nl_abs_tol = 2e-9
+
+I'm seeing no oscillations in the ion density now with a good mesh. No divets in the mean energy, so that says to me the problem is not an insufficient amount of stabilization. Also the last converged result had a residual of 1e-9
+
+rel = 1e-4, abs = 2e-9, fail = 1.33e-6, ion offset = 17, mean_en offset = 27, em offset = 50
+
+rel = 1e-4, abs = 2e-9, fail = 1.35e-10, ion offset = 27, mean_en offset = 27, em offset = 50
+
+rel = 1e-4, abs = 2e-9, fail = 5.60e-11, ion offset = 17, mean_en offset = 17, em offset = 17
+
+765 vertices, rel = 1e-4, abs = 2e-9, offsets = 40, ics = 28, fail = 4.26e-10 (oscillations in ions)
+
+1677 vertices, rel = 1e-4, abs = 2e-9, offsets = 40, ics = 28, fail = no time step
+1677 vertices, rel = 1e-4, abs = 2e-9, offsets = 50, ics = 28, fail = no time step
+1677 vertices, rel = 1e-4, abs = 2e-9, offsets = 50, ics = 31, fail = 2.56e-11
+
+Getting obscene oscillations in the ion density. In fact the more refined I make the mesh, the bigger the problem is.
+
+Mean_en offset = 29, fail at 1.59e-9 seconds
+Mean_en offset = 26, solve completed but not physical
+
+Restored correct units, fail at 5.08e-7 seconds
+Mean_en offset = 23, fail at 6.04e-7 seconds
+
+Offsets = 50, fail at 1.23e-5 seconds, old mean_energy transport data
+New mean_energy transport data, failt at 1.23e-5 seconds again
+
+Guess what? At the end of the day, the boundary material implementation broke my app too. As soon as I removed the boundary material, my app worked perfectly fine again.
+
+I lied, I didn't break it with the boundary material. So I guess what must have fixed everything was moving to offset = 50 for all objects?
+
+It turns out that both the source and flux stabilization techniques are critical for a successful simulation. Particularly for the argon ions.
+
+Simulation takes 209 time steps to solve with the interpolation of the transport coefficients.
+
+I guess it's evidence enough that the simulation is doing something different since it fails when I try to run the exact same input file, only with interpolation of transport coefficients turned off.
+
+Question is: how much ion current is diffusive and how much is from advection? Tomorrow's task is to correct the Neumann boundary condition (which also means doing a butt load of analytical derivatives.)
+
+Yes currently the boundary conditions aren't matching: based off the total current through the plasma, the potential at the wall should be 475 volts, but instead it's 540 volts. Gotta fix that tomorrow

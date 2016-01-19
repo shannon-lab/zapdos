@@ -48,6 +48,10 @@ protected:
   const MaterialProperty<Real> & _muip;
   const MaterialProperty<Real> & _eps;
   const MaterialProperty<Real> & _N_A;
+
+  std::string _potential_units;
+
+  Real _voltage_scaling;
 };
 
 #endif // NEUMANNCIRCUITVOLTAGEMOLES_KV_H

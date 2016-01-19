@@ -51,6 +51,9 @@ protected:
   RealVectorValue  _d_ion_flux_d_ip;
   Real  _d_n_gamma_d_potential;
   Real  _d_n_gamma_d_ip;
+  Real  _d_n_gamma_d_u;
+  Real  _d_n_gamma_d_mean_en;
+  Real _actual_mean_en;
 
 };
 

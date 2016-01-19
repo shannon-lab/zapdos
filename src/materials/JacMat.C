@@ -30,13 +30,14 @@ JacMat::JacMat(const InputParameters & parameters) :
     _muv(declareProperty<Real>("muv")),
     _sgnu(declareProperty<Real>("sgnu")),
     _sgnem(declareProperty<Real>("sgnem")),
+    _sgnmean_en(declareProperty<Real>("sgnmean_en")),
     _sgnv(declareProperty<Real>("sgnv")),
     _diffu(declareProperty<Real>("diffu")),
     _diffem(declareProperty<Real>("diffem")),
-    _diffel(declareProperty<Real>("diffel")),
+    _diffmean_en(declareProperty<Real>("diffmean_en")),
     _muem(declareProperty<Real>("muem")),
-    _muel(declareProperty<Real>("muel")),
     _mumean_en(declareProperty<Real>("mumean_en")),
+    _diffpotential(declareProperty<Real>("diffpotential")),
     _iz_coeff_efield_a(declareProperty<Real>("iz_coeff_efield_a")),
     _iz_coeff_efield_b(declareProperty<Real>("iz_coeff_efield_b")),
     _iz_coeff_efield_c(declareProperty<Real>("iz_coeff_efield_c")),
@@ -55,9 +56,9 @@ JacMat::JacMat(const InputParameters & parameters) :
   _d_interp(declareProperty<Real>("d_interp")),
   _d_d_interp_d_v(declareProperty<Real>("d_d_interp_d_v")),
   _d_muem_d_actual_mean_en(declareProperty<Real>("d_muem_d_actual_mean_en")),
-  _d_muel_d_actual_mean_en(declareProperty<Real>("d_muel_d_actual_mean_en")),
+  _d_mumean_en_d_actual_mean_en(declareProperty<Real>("d_mumean_en_d_actual_mean_en")),
   _d_diffem_d_actual_mean_en(declareProperty<Real>("d_diffem_d_actual_mean_en")),
-  _d_diffel_d_actual_mean_en(declareProperty<Real>("d_diffel_d_actual_mean_en")),
+  _d_diffmean_en_d_actual_mean_en(declareProperty<Real>("d_diffmean_en_d_actual_mean_en")),
   _alpha_iz(declareProperty<Real>("alpha_iz")),
   _d_iz_d_actual_mean_en(declareProperty<Real>("d_iz_d_actual_mean_en")),
   _alpha_ex(declareProperty<Real>("alpha_ex")),
@@ -70,10 +71,14 @@ JacMat::JacMat(const InputParameters & parameters) :
   _k_boltz(declareProperty<Real>("k_boltz")),
   _T_heavy(declareProperty<Real>("T_heavy")),
   _massu(declareProperty<Real>("massu")),
+  _massArp(declareProperty<Real>("massArp")),
   _sgnp(declareProperty<Real>("sgnp")),
   _mup(declareProperty<Real>("mup")),
   _muw(declareProperty<Real>("muw")),
   _diffp(declareProperty<Real>("diffp")),
+  _muArp(declareProperty<Real>("muArp")),
+  _diffArp(declareProperty<Real>("diffArp")),
+  _sgnArp(declareProperty<Real>("sgnArp")),
 
   _v(isCoupled("v") ? coupledValue("v") : _zero),
   _mean_en(isCoupled("mean_en") ? coupledValue("mean_en") : _zero),
@@ -140,17 +145,18 @@ JacMat::computeQpProperties()
   _muv[_qp] = 1.1;
   _sgnu[_qp] = 1.;
   _sgnem[_qp] = 1.;
+  _sgnmean_en[_qp] = 1;
   _sgnv[_qp] = 1.;
   _diffu[_qp] = 1.1;
   _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
-  _muel[_qp] = 5. / 3. * _muem[_qp];
+  _mumean_en[_qp] = 5. / 3. * _muem[_qp];
   _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
-  _diffel[_qp] = 5. / 3. * _diffem[_qp];
+  _diffmean_en[_qp] = 5. / 3. * _diffem[_qp];
   _d_muem_d_actual_mean_en[_qp] = _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
-  _d_muel_d_actual_mean_en[_qp] = 5. / 3. * _d_muem_d_actual_mean_en[_qp];
+  _d_mumean_en_d_actual_mean_en[_qp] = 5. / 3. * _d_muem_d_actual_mean_en[_qp];
   _d_diffem_d_actual_mean_en[_qp] = _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
-  _d_diffel_d_actual_mean_en[_qp] = 5. / 3. * _d_diffem_d_actual_mean_en[_qp];
-  _mumean_en[_qp] = 1.1;
+  _d_diffmean_en_d_actual_mean_en[_qp] = 5. / 3. * _d_diffem_d_actual_mean_en[_qp];
+  _diffpotential[_qp] = 1.1;
   _iz_coeff_efield_a[_qp] = 1.1;
   _iz_coeff_efield_b[_qp] = 1.1;
   _iz_coeff_efield_c[_qp] = 1.1;
@@ -179,8 +185,12 @@ JacMat::computeQpProperties()
   _k_boltz[_qp] = 1.1;
   _T_heavy[_qp] = 1.1;
   _massu[_qp] = 1.1;
+  _massArp[_qp] = 1.1;
   _sgnp[_qp] = 1.;
   _mup[_qp] = 1.1;
   _muw[_qp] = 1.1;
   _diffp[_qp] = 1.1;
+  _muArp[_qp] = 1.1;
+  _diffArp[_qp] = 1.1;
+  _sgnArp[_qp] = 1;
 }

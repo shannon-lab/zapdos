@@ -22,6 +22,7 @@ InputParameters validParams<NeumannCircuitVoltageMoles_KV>()
   params.addRequiredParam<FunctionName>("function", "The function.");
   params.addRequiredParam<UserObjectName>("data_provider","The name of the UserObject that can provide some data to materials, bcs, etc.");
   params.addRequiredCoupledVar("ip","The ion density.");
+  params.addRequiredParam<std::string>("potential_units", "The potential units.");
 
   return params;
 }
@@ -36,20 +37,26 @@ NeumannCircuitVoltageMoles_KV::NeumannCircuitVoltageMoles_KV(const InputParamete
     _se_coeff(getMaterialProperty<Real>("se_coeff")),
     _muip(getMaterialProperty<Real>("mu"+_ip_var.name())),
     _eps(getMaterialProperty<Real>("eps")),
-    _N_A(getMaterialProperty<Real>("N_A"))
+    _N_A(getMaterialProperty<Real>("N_A")),
+    _potential_units(getParam<std::string>("potential_units"))
+
 {
+  if (_potential_units.compare("V") == 0)
+    _voltage_scaling = 1.;
+  else if (_potential_units.compare("kV") == 0)
+    _voltage_scaling = 1000;
 }
 
 Real
 NeumannCircuitVoltageMoles_KV::computeQpResidual()
 {
-  return _test[_i][_qp] * _eps[_qp] * (_u[_qp] + _V_bat.value(_t, _q_point[_qp]))/((1+_se_coeff[_qp])*_data.coulomb_charge()*_muip[_qp] / 1000. * _N_A[_qp] * std::exp(_ip[_qp])*_data.ballast_resist()*_data.electrode_area());
+  return _test[_i][_qp] * _eps[_qp] * (_u[_qp] + _V_bat.value(_t, _q_point[_qp]))/((1+_se_coeff[_qp])*_data.coulomb_charge()*_muip[_qp] / _voltage_scaling * _N_A[_qp] * std::exp(_ip[_qp])*_data.ballast_resist()*_data.electrode_area());
 }
 
 Real
 NeumannCircuitVoltageMoles_KV::computeQpJacobian()
 {
-  return _test[_i][_qp] * _eps[_qp] * (_phi[_j][_qp])/((1+_se_coeff[_qp])*_data.coulomb_charge()*_muip[_qp] / 1000. * _N_A[_qp] * std::exp(_ip[_qp])*_data.ballast_resist()*_data.electrode_area());
+  return _test[_i][_qp] * _eps[_qp] * (_phi[_j][_qp])/((1+_se_coeff[_qp])*_data.coulomb_charge()*_muip[_qp] / _voltage_scaling * _N_A[_qp] * std::exp(_ip[_qp])*_data.ballast_resist()*_data.electrode_area());
 }
 
 Real
@@ -57,7 +64,7 @@ NeumannCircuitVoltageMoles_KV::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _ip_id) {
 
-    return _test[_i][_qp] * _eps[_qp] * (_u[_qp] + _V_bat.value(_t, _q_point[_qp]))/((1+_se_coeff[_qp])*_data.coulomb_charge()*_muip[_qp] / 1000. * _N_A[_qp] * _data.ballast_resist()*_data.electrode_area())*std::exp(-_ip[_qp])*-_phi[_j][_qp];
+    return _test[_i][_qp] * _eps[_qp] * (_u[_qp] + _V_bat.value(_t, _q_point[_qp]))/((1+_se_coeff[_qp])*_data.coulomb_charge()*_muip[_qp] / _voltage_scaling * _N_A[_qp] * _data.ballast_resist()*_data.electrode_area())*std::exp(-_ip[_qp])*-_phi[_j][_qp];
   }
   else
     return 0.0;

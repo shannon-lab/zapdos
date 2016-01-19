@@ -36,6 +36,7 @@ HagelaarEnergyBC::HagelaarEnergyBC(const InputParameters & parameters) :
   _se_coeff(getMaterialProperty<Real>("se_coeff")),
   _se_energy(getMaterialProperty<Real>("se_energy")),
   _mumean_en(getMaterialProperty<Real>("mumean_en")),
+  _d_mumean_en_d_actual_mean_en(getMaterialProperty<Real>("d_mumean_en_d_actual_mean_en")),
   _a(0.5),
   _v_thermal(0),
   _ion_flux(0, 0, 0),
@@ -45,7 +46,10 @@ HagelaarEnergyBC::HagelaarEnergyBC(const InputParameters & parameters) :
   _d_ion_flux_d_potential(0, 0, 0),
   _d_ion_flux_d_ip(0, 0, 0),
   _d_n_gamma_d_potential(0),
-  _d_n_gamma_d_ip(0)
+  _d_n_gamma_d_ip(0),
+  _d_n_gamma_d_u(0),
+  _d_n_gamma_d_em(0),
+  _actual_mean_en(0)
 {}
 
 Real
@@ -77,11 +81,13 @@ HagelaarEnergyBC::computeQpJacobian()
 
   _ion_flux = _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * std::exp(_ip[_qp]) - _Dip[_qp] * std::exp(_ip[_qp]) * _grad_ip[_qp];
   _n_gamma = (1. - _a) * _se_coeff[_qp] * _ion_flux * _normals[_qp] / (_muem[_qp] * -_grad_potential[_qp] * _normals[_qp] + std::numeric_limits<double>::epsilon());
+  _actual_mean_en = std::exp(_u[_qp] - _em[_qp]);
+  _d_n_gamma_d_u = -1. * (1. - _a) * _se_coeff[_qp] * _ion_flux * _normals[_qp] / (std::pow(_muem[_qp] * -_grad_potential[_qp] * _normals[_qp], 2.) + std::numeric_limits<double>::epsilon()) * -_grad_potential[_qp] * _normals[_qp] * _d_muem_d_actual_mean_en[_qp] * _actual_mean_en * _phi[_j][_qp];
   _v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _mem[_qp]));
   _d_v_thermal_d_u = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _mem[_qp]) * _phi[_j][_qp];
 
 
-  return 1. / (6. * (_r + 1.)) * (_r - 1.) * ((std::exp(_u[_qp]) * _phi[_j][_qp]) * (6. * -_grad_potential[_qp] * _normals[_qp] * _mumean_en[_qp] * (2. * _a - 1.) - 5. * _v_thermal) + (std::exp(_u[_qp]) - _se_energy[_qp] * _n_gamma) * (- 5. * _d_v_thermal_d_u));
+  return 1. / (6. * (_r + 1.)) * (_r - 1.) * ((std::exp(_u[_qp]) * _phi[_j][_qp] - _se_energy[_qp] * _d_n_gamma_d_u) * (6. * -_grad_potential[_qp] * _normals[_qp] * _mumean_en[_qp] * (2. * _a - 1.) - 5. * _v_thermal) + (std::exp(_u[_qp]) - _se_energy[_qp] * _n_gamma) * (6. * -_grad_potential[_qp] * _normals[_qp] * _d_mumean_en_d_actual_mean_en[_qp] * _actual_mean_en * _phi[_j][_qp] * (2. * _a - 1.) - 5. * _d_v_thermal_d_u));
 }
 
 Real
@@ -114,8 +120,10 @@ HagelaarEnergyBC::computeQpOffDiagJacobian(unsigned int jvar)
     _v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _mem[_qp]));
     _d_v_thermal_d_em = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _mem[_qp]) * -_phi[_j][_qp];
     _n_gamma = (1. - _a) * _se_coeff[_qp] * _ion_flux * _normals[_qp] / (_muem[_qp] * -_grad_potential[_qp] * _normals[_qp] + std::numeric_limits<double>::epsilon());
+    _actual_mean_en = std::exp(_u[_qp] - _em[_qp]);
+    _d_n_gamma_d_em = -1. * (1. - _a) * _se_coeff[_qp] * _ion_flux * _normals[_qp] / (std::pow(_muem[_qp] * -_grad_potential[_qp] * _normals[_qp], 2.) + std::numeric_limits<double>::epsilon()) * -_grad_potential[_qp] * _normals[_qp] * _d_muem_d_actual_mean_en[_qp] * _actual_mean_en * -_phi[_j][_qp];
 
-    return 1. / (6. * (_r + 1.)) * (_r - 1.) * (std::exp(_u[_qp]) - _se_energy[_qp] * _n_gamma) * -5. * _d_v_thermal_d_em;
+    return 1. / (6. * (_r + 1.)) * ((_r - 1.) * (std::exp(_u[_qp]) - _se_energy[_qp] * _n_gamma) * (6. * -_grad_potential[_qp] * _normals[_qp] * _d_mumean_en_d_actual_mean_en[_qp] * _actual_mean_en * -_phi[_j][_qp] * (2. * _a - 1.) - 5. * _d_v_thermal_d_em) + (_r - 1.) * (6. * -_grad_potential[_qp] * _normals[_qp] * _mumean_en[_qp] * (2. * _a - 1.) - 5. * _v_thermal) * -_se_energy[_qp] * _d_n_gamma_d_em);
 
   }
 
