@@ -29,43 +29,53 @@ m-DGDiffusionInterface
 m-Diffusion
 m-DirichletBC
 m-MatchedValueBC
+
+InterfaceKernels
 z-DGAdvectionInterface
-z-ElectronTimeDerivative
-z-EFieldAdvection
-z-CoeffDiffusion
-z-ElectronsFromIonizationLFA_KV Woooo!!!
-z-LogStabilizationMoles
+z-DGMatDiffusionLogInt
+z-DGMatDiffusionInt
+z-DGPenaltyTiedValue
+z-InterfaceAdvection (confirmed with interpolated electron transport coefficients)
+z-InterfaceLogDiffusionElectrons (confirmed with interpolated electron transport coefficients)
+
+Kernels
+z-ElectronTimeDerivative (confirmed with interpolated electron transport coefficients)
+z-EFieldAdvection (confirmed with interpolated electron transport coefficients)
+z-CoeffDiffusion (confirmed with interpolated electron transport coefficients)
+z-ElectronsFromIonizationLFA_KV
+z-LogStabilizationMoles (confirmed with interpolated electron transport coefficients)
 z-ReactantFirstOrderRxn
 z-ReactantAARxn
-z-CoeffDiffusionLin
-z-ChargeSourceMoles_KV
+z-CoeffDiffusionLin (confirmed with interpolated electron transport coefficients)
+z-ChargeSourceMoles_KV (confirmed with interpolated electron transport coefficients)
 z-IonsFromIonizationLFA_KV
 z-EFieldArtDiff
 z-ProductFirstOrderRxn
 z-ProductAABBRxn
-z-DGMatDiffusionLogInt
-z-DGMatDiffusionInt
 z-NeumannCircuitVoltageMoles_KV
-z-EFieldAdvectionElectrons
-z-EFieldAdvectionEnergy
-z-CoeffDiffusionElectrons
-z-CoeffDiffusionEnergy
-z-DCElectronBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
-z-DCIonBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
-z-GradMeanEnZeroBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
-z-HagelaarAnodicBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
-z-HagelaarIonBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
-z-HagelaarElectronBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
-z-HagelaarEnergyBC # Matched perfectly in user state. Discrepancy in 1.0 and -1.0 variable vectors. However, if if statements are removed from the src file, then discrepancies disappear.
+z-EFieldAdvectionElectrons (confirmed with interpolated electron transport coefficients)
+z-EFieldAdvectionEnergy (confirmed with interpolated electron transport coefficients)
+z-CoeffDiffusionElectrons (confirmed with interpolated electron transport coefficients)
+z-CoeffDiffusionEnergy (confirmed with interpolated electron transport coefficients)
+z-InterpCoeffDiffusion
+z-ElectronsFromIonization (Now confirmed with interpolated electron transport coefficients)
+z-JouleHeating (Now confirmed with interpolated electron transport coefficients)
+z-IonsFromIonization (Now confirmed with interpolated electron transport coefficients)
+z-ElectronEnergyLossFromIonization (Now confirmed with interpolated electron transport coefficients)
+z-ElectronEnergyLossFromElastic (Now confirmed with interpolated electron transport coefficients)
+z-ElectronEnergyLossFromExcitation (Now confirmed with interpolated electron transport coefficients)
+
+Boundary Conditions
+z-DCElectronBC
+z-DCIonBC
+z-GradMeanEnZeroBC
+z-HagelaarAnodicBC
+z-HagelaarIonBC (confirmed with interpolated electron transport coefficients)
+z-HagelaarElectronBC (confirmed with interpolated electron transport coefficients)
+z-HagelaarEnergyBC (confirmed with interpolated electron transport coefficients)
 z-MatchedValueLogBC
-z-DGPenaltyTiedValue
+
+DGKernels
 z-DGEFieldAdvection # This will only work as long as the variable and coupled variable have the same number of shape functions in each element
 z-DGCoeffDiffusion
-z-InterpCoeffDiffusion
-z-ElectronsFromIonization (Now confirmed with interpolated transport coefficients)
-z-JouleHeating (Now confirmed with interpolated transport coefficients)
-z-IonsFromIonization (Now confirmed with interpolated transport coefficients)
-z-ElectronEnergyLossFromIonization (Now confirmed with interpolated transport coefficients)
-z-ElectronEnergyLossFromElastic (Now confirmed with interpolated transport coefficients)
-z-ElectronEnergyLossFromExcitation (Now confirmed with interpolated transport coefficients)
 '''

@@ -2956,3 +2956,86 @@ New fail at 9.00e-6 seconds.
 After second level of refinement, solve completed successfully.
 
 It's been my observation that at least with respect to log stabilization, as little as possible actually enhances convergence (although some non-zero amount is certainly required in the case of ions at the anode because there is no source for them like there are for electrons at the cathode). With respect to advection stabilization, under normal circumstances any oscillations arising from the domination of advection can be fixed with mesh refinement and without enlisting the aid of stabilization.
+
+Alright, I'm using this as a scale length estimate for the change in the electric field: |E|/|dE/dx|. Using that I get about 40 to 55 microns in the cathode. This is actually indeed long on the scale of electron-neutral collisions.
+
+pt999 and pt9999 had appropriate boundary conditions.
+
+em dofs: 0, 1
+emliq dofs: 2, 3
+potential dofs: 4,6
+mean_en dofs: 5,7
+
+_mu_neighbor is a const reference to a Real MaterialProperty.
+
+My prediction is that each object is associated with a geomtric element. And thus there will be many different kernel objects with a one to one correspondence to the number of elements there are. Well that doesn't appear to be true there...
+
+Element1 JacMat: 0xa966b0
+Left boundary jacmat: 0xaa1c50
+Element2 JacMat: 0xa966b0
+
+There was a second alternative: a single material object and a single kernel object that represent all similar element types, where the process is:
+
+element 0:call Material (qp 0, qp1)
+element 0:call Kernel (i0: qp 0, qp1; i1: qp0, qp1)
+element 1:call material (qp0, qp1)
+element1:call kernel (qp0, qp1)
+
+so on and so forth. This is actually how the code works. The material properties are computed right before they are needed by the residual creating object
+
+Ok this looks promising, there are two material objects that live on the geomtric object associated with my InerfaceKernel and they correspond to the correct sides. Yet that material object doesn't appear to have access to the variables.
+
+#0  0x00007ffff78a77f0 in JacMat::JacMat(InputParameters const&)@plt ()
+   from /home/lindsayad/projects/zapdos/lib/libzapdos-dbg.so.0
+#1  0x00007ffff79646c5 in buildObject<JacMat> (parameters=...)
+    at /home/lindsayad/moose/framework/include/base/Factory.h:130
+#2  0x00007ffff67fdd56 in Factory::create (this=0x93c2a0, obj_name=..., name=..., parameters=...,
+    tid=0) at /home/lindsayad/moose/framework/src/base/Factory.C:77
+#3  0x00007ffff64b5821 in FEProblem::addMaterial (this=0xa51e30, mat_name=..., name=...,
+    parameters=...) at /home/lindsayad/moose/framework/src/base/FEProblem.C:1626
+#4  0x00007ffff6acbb37 in AddMaterialAction::act (this=0x9e3d50)
+    at /home/lindsayad/moose/framework/src/actions/AddMaterialAction.C:32
+#5  0x00007ffff6b00c3d in ActionWarehouse::executeActionsWithAction (this=0x93baa8, task=...)
+    at /home/lindsayad/moose/framework/src/actions/ActionWarehouse.C:332
+#6  0x00007ffff6b0081f in ActionWarehouse::executeAllActions (this=0x93baa8)
+    at /home/lindsayad/moose/framework/src/actions/ActionWarehouse.C:308
+#7  0x00007ffff66bb8d0 in MooseApp::runInputFile (this=0x93ae80)
+    at /home/lindsayad/moose/framework/src/base/MooseApp.C:307
+#8  0x00007ffff66bcea2 in MooseApp::run (this=0x93ae80)
+    at /home/lindsayad/moose/framework/src/base/MooseApp.C:510
+#9  0x0000000000420956 in main (argc=3, argv=0x7fffffffcf98)
+    at /home/lindsayad/projects/zapdos/src/main.C:23
+
+All objects appear to be built before any simulation starts. Thus it's possible that objects are built before initial values are read in.
+
+Block 0 element Mat: 0xa8a4f0
+
+Left boundary Mat: 0xa95a50
+
+Left interface Mat: 0xa9d9d0
+
+
+Block 1 element Mat: 0xaa3690
+
+Right interface Mat: 0xaaaa40
+Right boundary Mat: 0xaaaa40
+
+This is interesting. Maybe the left interface should be the same object as the left boundary since the right interface is the same as the right boundary.
+
+One can require coupled variables in a material class, and as long as those parameters are input in the input file, then moose won't complain. It doesn't even matter if the required variables don't even exist on the material block; moose won't complain.
+
+Yes it looks like I can get the neighboring block material properties but am currently stuck with variable values in the material class corresponding to the element block.
+
+Ok, one single block for JacMat:
+
+Element Mats: 0xa85c90 (both left and right blocks)
+boundary mats: 0xa922b0 (left boundary, right interface has acces to _emliq (master (right) side of InterfaceKernel))
+neighbor mat: 0xa97530 (left interface has access to _emliq (master (right) side of InterfaceKernel))
+
+So the problem appears to be that Coupleable is initialized before _neighbor gets set to be true.
+
+I believe the cause of divergence is when the electron temperature starts to get too low (or too high!!!). I'm guessing that this produces problems for the interpolation?
+
+Fail time with unaltered bolos data: 1.49e-5 seconds
+
+After altering the property input file so that I effectively ensured positive and realistic order of magnitude estimates of all the coefficients, then the simulation converged on the next run! Look at what we're bloody learning about convergence! We're becoming convergence frigging masters!!!

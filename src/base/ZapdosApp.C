@@ -174,6 +174,8 @@
 
 // DGKernels
 
+#include "InterfaceAdvection.h"
+#include "InterfaceLogDiffusionElectrons.h"
 #include "DGCoeffDiffusion.h"
 #include "DGEFieldAdvection.h"
 #include "DGPenaltyTiedValue.h"
@@ -376,6 +378,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(PhysicalElectronEnergyBC);
   registerBoundaryCondition(OutflowBC);
   registerBoundaryCondition(RobinBC);
+  registerDGKernel(InterfaceAdvection);
+  registerDGKernel(InterfaceLogDiffusionElectrons);
   registerDGKernel(DGAdvection);
   registerDGKernel(DGCoeffDiffusion);
   registerDGKernel(DGEFieldAdvection);

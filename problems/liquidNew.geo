@@ -13,7 +13,7 @@ locInt = 1e-3;
 locEnd = 1.0001e-3;
 z = 0;
 
-Point(1) = {z, z, z, l100nm/2};
+Point(1) = {z, z, z, 2e-9};
 Point(2) = {l10um, z, z, l1um/2};
 Line(1) = {1,2};
 Point(3) = {l100um, z, z, l10um/2};

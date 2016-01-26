@@ -83,10 +83,12 @@ protected:
   MaterialProperty<Real> &  _muArp;
   MaterialProperty<Real> &  _diffArp;
   MaterialProperty<Real> &  _sgnArp;
+  MaterialProperty<Real> &  _actual_mean_en;
 
   VariableValue & _v;
   VariableValue & _mean_en;
   VariableValue & _em;
+  VariableValue & _emliq;
 
   SplineInterpolation _interpolation;
   SplineInterpolation  _alpha_interpolation;

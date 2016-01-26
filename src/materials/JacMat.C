@@ -20,6 +20,7 @@ InputParameters validParams<JacMat>()
   params.addCoupledVar("v", "A variable for interpolation tests.");
   params.addCoupledVar("mean_en", "A variable for interpolation tests.");
   params.addCoupledVar("em", "A variable for interpolation tests.");
+  params.addCoupledVar("emliq", "A variable for interpolation tests.");
   return params;
 }
 
@@ -79,10 +80,12 @@ JacMat::JacMat(const InputParameters & parameters) :
   _muArp(declareProperty<Real>("muArp")),
   _diffArp(declareProperty<Real>("diffArp")),
   _sgnArp(declareProperty<Real>("sgnArp")),
+  _actual_mean_en(declareProperty<Real>("actual_mean_en")),
 
   _v(isCoupled("v") ? coupledValue("v") : _zero),
   _mean_en(isCoupled("mean_en") ? coupledValue("mean_en") : _zero),
-  _em(isCoupled("em") ? coupledValue("em") : _zero)
+  _em(isCoupled("em") ? coupledValue("em") : _zero),
+  _emliq(isCoupled("emliq") ? coupledValue("emliq") : _zero)
 
 {
   std::vector<Real> actual_mean_energy;
@@ -148,13 +151,18 @@ JacMat::computeQpProperties()
   _sgnmean_en[_qp] = 1;
   _sgnv[_qp] = 1.;
   _diffu[_qp] = 1.1;
+  _actual_mean_en[_qp] = std::exp(_mean_en[_qp] - _em[_qp]);
   _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
+  // _muem[_qp] = 1.1;
   _mumean_en[_qp] = 5. / 3. * _muem[_qp];
   _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
+  // _diffem[_qp] = 1.1;
   _diffmean_en[_qp] = 5. / 3. * _diffem[_qp];
   _d_muem_d_actual_mean_en[_qp] = _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+  // _d_muem_d_actual_mean_en[_qp] = 0.;
   _d_mumean_en_d_actual_mean_en[_qp] = 5. / 3. * _d_muem_d_actual_mean_en[_qp];
   _d_diffem_d_actual_mean_en[_qp] = _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+  // _d_diffem_d_actual_mean_en[_qp] = 0;
   _d_diffmean_en_d_actual_mean_en[_qp] = 5. / 3. * _d_diffem_d_actual_mean_en[_qp];
   _diffpotential[_qp] = 1.1;
   _iz_coeff_efield_a[_qp] = 1.1;
