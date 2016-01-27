@@ -18,6 +18,7 @@ template<>
 InputParameters validParams<MatchedValueLogBC>()
 {
   InputParameters params = validParams<NodalBC>();
+  params.addRequiredParam<Real>("H", "The ratio of liquid phase density to gas phase density");
   params.addRequiredCoupledVar("v", "The variable whose value we are to match.");
   return params;
 }
@@ -25,20 +26,21 @@ InputParameters validParams<MatchedValueLogBC>()
 MatchedValueLogBC::MatchedValueLogBC(const InputParameters & parameters) :
     NodalBC(parameters),
     _v(coupledValue("v")),
-    _v_num(coupled("v"))
+    _v_num(coupled("v")),
+    _H(getParam<Real>("H"))
 {
 }
 
 Real
 MatchedValueLogBC::computeQpResidual()
 {
-  return std::exp(_u[_qp]) - std::exp(_v[_qp]);
+  return _H * std::exp(_u[_qp]) - std::exp(_v[_qp]);
 }
 
 Real
 MatchedValueLogBC::computeQpJacobian()
 {
-  return std::exp(_u[_qp]);
+  return _H * std::exp(_u[_qp]);
 }
 
 Real
@@ -49,4 +51,3 @@ MatchedValueLogBC::computeQpOffDiagJacobian(unsigned int jvar)
   else
     return 0.;
 }
-

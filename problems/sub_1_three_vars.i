@@ -7,56 +7,53 @@
 
 
 [Variables]
-  [./u]
+  [./em]
     order = FIRST
     family = LAGRANGE
   [../]
-  [./v]
+  [./potential]
   [../]
-  [./w]
+  [./mean_en]
   [../]
 []
 
 [Kernels]
   [./test_kernel]
-    type = ElectronEnergyLossFromElastic
-    variable = u
-    potential = v
-    em = w
-  [../]
-  [./diff_v]
     type = Diffusion
-    variable = v
+    variable = em
   [../]
-  [./diff_w]
+  [./diff_potential]
     type = Diffusion
-    variable = w
+    variable = potential
+  [../]
+  [./diff_mean_en]
+    type = Diffusion
+    variable = mean_en
   [../]
 []
 
-# [BCs]
-#   [./both]
-#     type = HagelaarAnodicBC
-#     variable = u
-#     boundary = 'left right'
-#     potential = v
-#     mean_en = w
-#     r = 0.5
-#   [../]
-# []
+[BCs]
+  [./both]
+    type = GradMeanEnZeroBC
+    variable = mean_en
+    boundary = 'left right'
+    potential = potential
+    em = em
+  [../]
+[]
 
 [ICs]
-  [./u_ic]
+  [./em_ic]
     type = RandomIC
-    variable = u
+    variable = em
   [../]
-  [./v_ic]
+  [./potential_ic]
     type = RandomIC
-    variable = v
+    variable = potential
   [../]
-  [./w_ic]
+  [./mean_en_ic]
     type = RandomIC
-    variable = w
+    variable = mean_en
   [../]
 []
 
@@ -64,8 +61,8 @@
   [./jac]
     block = '0'
     type = JacMat
-    mean_en = u
-    em = w
+    mean_en = mean_en
+    em = em
   [../]
 []
 

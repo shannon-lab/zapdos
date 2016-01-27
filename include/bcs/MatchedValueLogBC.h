@@ -40,6 +40,7 @@ protected:
 
   /// The id of the coupled variable
   unsigned int _v_num;
+  Real _H;
 };
 
 #endif //MATCHEDVALUELOGBC_H

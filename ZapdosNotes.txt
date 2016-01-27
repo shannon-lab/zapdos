@@ -3039,3 +3039,15 @@ I believe the cause of divergence is when the electron temperature starts to get
 Fail time with unaltered bolos data: 1.49e-5 seconds
 
 After altering the property input file so that I effectively ensured positive and realistic order of magnitude estimates of all the coefficients, then the simulation converged on the next run! Look at what we're bloody learning about convergence! We're becoming convergence frigging masters!!!
+
+Getting the thermodynamic simulation to converge is much more difficult than getting the kinetic version to converge. I am pretty confident that this is because with my boundary conditions, the electron temperature goes to zero which can create numerical issues.
+
+To the collect method, I pass an expr. Let's say for example I am passing collect3. The type of collect3 is:
+
+sympy.core.mul.Mul
+
+This type appears to have the member function func. Let's try to learn about func.
+
+mul has some members. These include Mul and prod. Mul also has some members. These include as_coeff_Mul, as_content_primitive, and others. However, I don't see func listed.
+
+What do the multiple dots mean in python? In c++ there is only ever one dot, not a chain of dots. I'm in the process of researching this now.

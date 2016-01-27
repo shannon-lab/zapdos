@@ -68,12 +68,12 @@ z-ElectronEnergyLossFromExcitation (Now confirmed with interpolated electron tra
 Boundary Conditions
 z-DCElectronBC
 z-DCIonBC
-z-GradMeanEnZeroBC
+z-GradMeanEnZeroBC (confirmed with interpolated electron transport coefficients)
 z-HagelaarAnodicBC
 z-HagelaarIonBC (confirmed with interpolated electron transport coefficients)
 z-HagelaarElectronBC (confirmed with interpolated electron transport coefficients)
 z-HagelaarEnergyBC (confirmed with interpolated electron transport coefficients)
-z-MatchedValueLogBC
+z-MatchedValueLogBC (confirmed with interpolated electron transport coefficients)
 
 DGKernels
 z-DGEFieldAdvection # This will only work as long as the variable and coupled variable have the same number of shape functions in each element

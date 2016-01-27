@@ -1,5 +1,5 @@
 [GlobalParams]
-  offset = 30
+  offset = 40
   potential_units = kV
 []
 
@@ -52,7 +52,7 @@
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
  nl_rel_tol = 1e-4
- nl_abs_tol = 4e-7
+ nl_abs_tol = 8e-9
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -621,14 +621,14 @@
     potential = potential
     ip = Arp
     mean_en = mean_en
-    r = 0.9999
+    r = 0.99
   [../]
   [./Arp_physical_right]
     type = HagelaarIonBC
     variable = Arp
     boundary = 'master0_interface'
     potential = potential
-    r = 0.9999
+    r = 0.99
   [../]
   [./mean_en_physical_right]
     type = HagelaarEnergyBC
@@ -637,7 +637,7 @@
     potential = potential
     em = em
     ip = Arp
-    r = 0.9999
+    r = 0.99
   [../]
   [./em_physical_left]
     type = HagelaarElectronBC
