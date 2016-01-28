@@ -3051,3 +3051,48 @@ This type appears to have the member function func. Let's try to learn about fun
 mul has some members. These include Mul and prod. Mul also has some members. These include as_coeff_Mul, as_content_primitive, and others. However, I don't see func listed.
 
 What do the multiple dots mean in python? In c++ there is only ever one dot, not a chain of dots. I'm in the process of researching this now.
+
+['Add',
+ 'AssocOp',
+ 'Basic',
+ 'C',
+ 'Expr',
+class 'Mul',
+class 'NC_Marker',
+ 'Pow',
+ 'Rational',
+ 'S',
+ '__builtins__',
+ '__doc__',
+ '__file__',
+ '__name__',
+ '__package__',
+ '_addsort',
+ '_args_sortkey',
+def '_keep_coeff',
+def '_mulsort',
+ '_unevaluated_Add',
+def '_unevaluated_Mul',
+ 'cacheit',
+ 'cmp_to_key',
+ 'defaultdict',
+ 'division',
+def 'expand_2arg',
+ 'fuzzy_not',
+ 'operator',
+ 'print_function',
+def 'prod',
+ 'reduce',
+ 'sympify',
+ 'xrange']
+
+It seems that the mesh may play a major major role in whether something converges or not. Remember that with bad ProductAABBRxn Jacobian, the thermo simulation took 134 seconds to solve: that's not true. I wash still using the same executable, you big dumb dodo bird. With the correct Jacobian it takes the same amount of time. Thus the reason for my non-convergence with the kinetic simulation must be the mesh. It is not any other changes.
+
+Ok with smallest mesh feature = 2e-9, fail time = 2.69e-7 seconds.
+
+New kinetic mesh. Coarse liquid region. Fail time = 2.75e-7
+Finer liquid region: 2.57e-7
+
+Coarser mesh: fail time = 2.82e-7
+
+Alright we have proof of things. I made the mesh coarser once more at the interface and the simulation solved beautifully. Thus in my opinion the lack of convergence before was coming from poor conditioning. I have seen time and again that bad scaling leads to bad convergence. I have scaled my dependent variables nicely so that they are not so far from 1. However, I have not scaled my position or time variables. Time might be ok...it starts at nanosecond values but then increases through the simulation. But I'm using nanometer type distances in my mesh and this doesn't change throughout the simulation. Just think about a gradient term where the dependent variable is not changing very much: then we have a small number divided by a big number: this leads to bad conditioning! Ok we're still learning things about convergence as we go here.

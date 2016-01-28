@@ -1,14 +1,16 @@
 #!/bin/bash
 
 ZAPPROBDIR="/home/lindsayad/projects/zapdos/problems/"
-INSTRING="mean_en_thermo"
+INSTRING="mean_en_kinetic"
 ROOTSTRING=$INSTRING
-OUTSTRING=$ROOTSTRING"_no_salt_or_H3Op_H_100000_zero_grad_mean_en"
+OUTSTRING=$ROOTSTRING"_r_0pt9999_corrected_mesh_has_power_dep_and_proc_rates"
 
 cp $ZAPPROBDIR"log.txt" $ZAPPROBDIR"MooseLogs/log_"$OUTSTRING"_gold.txt"
 cp $ZAPPROBDIR$INSTRING".i" $ZAPPROBDIR$OUTSTRING"_gold.i"
 cp $ZAPPROBDIR$INSTRING"_out.e" $ZAPPROBDIR"MooseOutput/"$OUTSTRING"_gold_out.e"
+cp $ZAPPROBDIR"liquidKinetic.msh" $ZAPPROBDIR"MooseMeshes/"$OUTSTRING".msh"
 
 # cp $ZAPPROBDIR"log.txt" $ZAPPROBDIR"MooseLogs/log_"$OUTSTRING".txt"
 # cp $ZAPPROBDIR$INSTRING".i" $ZAPPROBDIR$OUTSTRING".i"
 # cp $ZAPPROBDIR$INSTRING"_out.e" $ZAPPROBDIR"MooseOutput/"$OUTSTRING"_out.e"
+# cp $ZAPPROBDIR"liquidKinetic.msh" $ZAPPROBDIR"MooseMeshes/"$OUTSTRING".msh"

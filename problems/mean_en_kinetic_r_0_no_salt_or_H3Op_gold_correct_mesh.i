@@ -705,14 +705,14 @@
     potential = potential
     ip = Arp
     mean_en = mean_en
-    r = 0.9999
+    r = 0
   [../]
   [./Arp_physical_right]
     type = HagelaarIonBC
     variable = Arp
     boundary = 'master0_interface'
     potential = potential
-    r = 0.9999
+    r = 0
   [../]
   [./mean_en_physical_right]
     type = HagelaarEnergyBC
@@ -721,7 +721,7 @@
     potential = potential
     em = em
     ip = Arp
-    r = 0.9999
+    r = 0
   [../]
   [./em_physical_left]
     type = HagelaarElectronBC
