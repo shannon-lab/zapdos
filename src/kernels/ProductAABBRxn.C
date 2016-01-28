@@ -24,7 +24,7 @@ InputParameters validParams<ProductAABBRxn>()
 
 ProductAABBRxn::ProductAABBRxn(const InputParameters & parameters) :
     Kernel(parameters),
-    
+
     _coupled_var(*getVar("v",0)),
     _v(coupledValue("v")),
     _v_id(coupled("v")),
@@ -46,7 +46,7 @@ ProductAABBRxn::computeQpJacobian()
 Real
 ProductAABBRxn::computeQpOffDiagJacobian(unsigned int jvar)
 {
-  if (jvar = _v_id)
+  if (jvar == _v_id)
     return -_test[_i][_qp] * (2.) * _reaction_coeff[_qp] * 2. * std::exp(_v[_qp]) * std::exp(_v[_qp]) * _phi[_j][_qp];
 
   else

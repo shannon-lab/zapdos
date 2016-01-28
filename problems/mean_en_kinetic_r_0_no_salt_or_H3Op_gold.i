@@ -1,9 +1,15 @@
 [GlobalParams]
   offset = 45
+  # offset = 0
   potential_units = kV
+  # potential_units = V
 []
 
 [Mesh]
+  # type = GeneratedMesh
+  # nx = 2
+  # xmax = 1
+  # dim = 1
   type = FileMesh
   file = 'liquidNew.msh'
 []
@@ -14,12 +20,14 @@
     master_block = '0'
     paired_block = '1'
     new_boundary = 'master0_interface'
+    # depends_on = 'box'
   [../]
   [./interface_again]
     type = SideSetsBetweenSubdomains
     master_block = '1'
     paired_block = '0'
     new_boundary = 'master1_interface'
+    # depends_on = 'box'
   [../]
   [./left]
     type = SideSetsFromNormals
@@ -31,10 +39,17 @@
     normals = '1 0 0'
     new_boundary = 'right'
   [../]
+  # [./box]
+  #   type = SubdomainBoundingBox
+  #   bottom_left = '0.5 0 0'
+  #   top_right = '1. 1. 0'
+  #   block_id = 1
+  # [../]
 []
 
 [Problem]
   type = FEProblem
+  # kernel_coverage_check = false
 []
 
 [Preconditioning]
@@ -47,17 +62,22 @@
 [Executioner]
   type = Transient
   end_time = 1e-1
+  # end_time = 10
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
+  # petsc_options = '-snes_test_display'
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
+  # petsc_options_iname = '-snes_type'
+  # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
- nl_abs_tol = 1e-10
+ nl_abs_tol = 6e-11
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
     dt = 1e-9
+    # dt = 1
     growth_factor = 1.2
    optimal_iterations = 15
   [../]
@@ -79,9 +99,11 @@
   [./data_provider]
     type = ProvideMobility
     electrode_area = 5.02e-7 # Formerly 3.14e-6
-    # ballast_resist = 8.1e3
     ballast_resist = 1e6
     e = 1.6e-19
+    # electrode_area = 1.
+    # ballast_resist = 1.
+    # e = 1.
   [../]
 []
 
@@ -308,7 +330,6 @@
     type = LogStabilizationMoles
     variable = mean_en
     block = 0
-    offset = 40
   [../]
   # [./mean_en_advection_stabilization]
   #   type = EFieldArtDiff
@@ -437,9 +458,71 @@
     family = MONOMIAL
     block = 1
   [../]
+  [./PowerDep_em]
+   order = CONSTANT
+   family = MONOMIAL
+   block = 0
+  [../]
+  [./PowerDep_Arp]
+   order = CONSTANT
+   family = MONOMIAL
+   block = 0
+  [../]
+  [./ProcRate_el]
+   order = CONSTANT
+   family = MONOMIAL
+   block = 0
+  [../]
+  [./ProcRate_ex]
+   order = CONSTANT
+   family = MONOMIAL
+   block = 0
+  [../]
+  [./ProcRate_iz]
+   order = CONSTANT
+   family = MONOMIAL
+   block = 0
+  [../]
 []
 
 [AuxKernels]
+  [./PowerDep_em]
+    type = PowerDep
+    density_log = em
+    potential = potential
+    art_diff = false
+    potential_units = kV
+    variable = PowerDep_em
+  [../]
+  [./PowerDep_Arp]
+    type = PowerDep
+    density_log = Arp
+    potential = potential
+    art_diff = false
+    potential_units = kV
+    variable = PowerDep_Arp
+  [../]
+  [./ProcRate_el]
+    type = ProcRate
+    em = em
+    potential = potential
+    proc = el
+    variable = ProcRate_el
+  [../]
+  [./ProcRate_ex]
+    type = ProcRate
+    em = em
+    potential = potential
+    proc = ex
+    variable = ProcRate_ex
+  [../]
+  [./ProcRate_iz]
+    type = ProcRate
+    em = em
+    potential = potential
+    proc = iz
+    variable = ProcRate_iz
+  [../]
   [./e_temp]
     type = ElectronTemperature
     variable = e_temp
@@ -704,11 +787,6 @@
     value = -25
     block = 0
   [../]
-  # [./potential_ic]
-  #   type = ConstantIC
-  #   variable = potential
-  #   value = 0
-  # [../]
   [./potential_ic]
     type = FunctionIC
     variable = potential
@@ -720,6 +798,35 @@
     value = -15.6
     block = 1
   [../]
+  # [./em_ic]
+  #   type = RandomIC
+  #   variable = em
+  #   block = 0
+  # [../]
+  # [./emliq_ic]
+  #   type = RandomIC
+  #   variable = emliq
+  #   block = 1
+  # [../]
+  # [./Arp_ic]
+  #   type = RandomIC
+  #   variable = Arp
+  #   block = 0
+  # [../]
+  # [./mean_en_ic]
+  #   type = RandomIC
+  #   variable = mean_en
+  #   block = 0
+  # [../]
+  # [./potential_ic]
+  #   type = RandomIC
+  #   variable = potential
+  # [../]
+  # [./OHm_ic]
+  #   type = RandomIC
+  #   variable = OHm
+  #   block = 1
+  # [../]
 []
 
 [Functions]
@@ -750,4 +857,11 @@
    block = 1
    potential = potential
  [../]
+ # [./jac]
+ #   type = JacMat
+ #   mean_en = mean_en
+ #   em = em
+ #   emliq = emliq
+ #   block = '0 1'
+ #  [../]
 []

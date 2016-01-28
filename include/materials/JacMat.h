@@ -84,6 +84,14 @@ protected:
   MaterialProperty<Real> &  _diffArp;
   MaterialProperty<Real> &  _sgnArp;
   MaterialProperty<Real> &  _actual_mean_en;
+  MaterialProperty<Real> &  _muOHm;
+  MaterialProperty<Real> &  _diffOHm;
+  MaterialProperty<Real> &  _sgnOHm;
+  MaterialProperty<Real> &  _muemliq;
+  MaterialProperty<Real> &  _diffemliq;
+  MaterialProperty<Real> &  _sgnemliq;
+  MaterialProperty<Real> &  _kemliqemliq;
+  MaterialProperty<Real> &  _kemliq;
 
   VariableValue & _v;
   VariableValue & _mean_en;

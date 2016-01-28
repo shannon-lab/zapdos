@@ -81,6 +81,14 @@ JacMat::JacMat(const InputParameters & parameters) :
   _diffArp(declareProperty<Real>("diffArp")),
   _sgnArp(declareProperty<Real>("sgnArp")),
   _actual_mean_en(declareProperty<Real>("actual_mean_en")),
+  _muOHm(declareProperty<Real>("muOHm")),
+  _diffOHm(declareProperty<Real>("diffOHm")),
+  _sgnOHm(declareProperty<Real>("sgnOHm")),
+  _muemliq(declareProperty<Real>("muemliq")),
+  _diffemliq(declareProperty<Real>("diffemliq")),
+  _sgnemliq(declareProperty<Real>("sgnemliq")),
+  _kemliqemliq(declareProperty<Real>("kemliqemliq")),
+  _kemliq(declareProperty<Real>("kemliq")),
 
   _v(isCoupled("v") ? coupledValue("v") : _zero),
   _mean_en(isCoupled("mean_en") ? coupledValue("mean_en") : _zero),
@@ -165,6 +173,15 @@ JacMat::computeQpProperties()
   // _d_diffem_d_actual_mean_en[_qp] = 0;
   _d_diffmean_en_d_actual_mean_en[_qp] = 5. / 3. * _d_diffem_d_actual_mean_en[_qp];
   _diffpotential[_qp] = 1.1;
+  _muOHm[_qp] = 1.1;
+  _diffOHm[_qp] = 1.1;
+  _sgnOHm[_qp] = 1.;
+  _muemliq[_qp] = 1.1;
+  _diffemliq[_qp] = 1.1;
+  _sgnemliq[_qp] = 1.;
+
+  _kemliqemliq[_qp] = 1.1;
+  _kemliq[_qp] = 1.1;
   _iz_coeff_efield_a[_qp] = 1.1;
   _iz_coeff_efield_b[_qp] = 1.1;
   _iz_coeff_efield_c[_qp] = 1.1;

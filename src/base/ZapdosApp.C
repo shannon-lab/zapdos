@@ -85,6 +85,8 @@
 
 // AuxKernels
 
+#include "ProcRate.h"
+#include "PowerDep.h"
 #include "Current.h"
 #include "EFieldAdvAux.h"
 #include "TotalFlux.h"
@@ -311,6 +313,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ProductFirstOrderRxn);
   registerKernel(ProductAABBRxn);
   registerAux(Current);
+  registerAux(PowerDep);
+  registerAux(ProcRate);
   registerAux(TotalFlux);
   registerAux(Position);
   registerAux(Efield);
