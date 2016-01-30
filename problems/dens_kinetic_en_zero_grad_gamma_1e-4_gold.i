@@ -11,7 +11,7 @@
   # xmax = 1
   # dim = 1
   type = FileMesh
-  file = 'liquidNew.msh'
+  file = 'liquidKinetic.msh'
 []
 
 [MeshModifiers]
@@ -705,14 +705,14 @@
     potential = potential
     ip = Arp
     mean_en = mean_en
-    r = 0
+    r = 0.9999
   [../]
   [./Arp_physical_right]
     type = HagelaarIonBC
     variable = Arp
     boundary = 'master0_interface'
     potential = potential
-    r = 0
+    r = 0.9999
   [../]
   [./mean_en_physical_right]
     type = GradMeanEnZeroBC

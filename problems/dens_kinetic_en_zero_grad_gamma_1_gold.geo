@@ -1,0 +1,26 @@
+l1pm = 1e-12;
+l10pm = 1e-11;
+l100pm = 1e-10;
+l1nm = 1e-9;
+l10nm = 1e-8;
+l100nm = 1e-7;
+l1um = 1e-6;
+l10um = 1e-5;
+l50um = 5e-5;
+l100um = 1e-4;
+l1mm = 1e-3;
+locInt = 1e-3;
+locEnd = 1.0001e-3;
+z = 0;
+
+Point(1) = {0, 0, 0, 100e-9};
+Point(2) = {.5e-3, 0, 0, 10e-6};
+Line(1) = {1,2};
+Point(3) = {1e-3, 0, 0, 50e-9};
+Line(2) = {2,3};
+Point(4) = {1e-3 + 50e-9, 0, 0, 50e-9};
+Line(3) = {3,4};
+Point(5) = {locEnd, 0, 0, 1e-9};
+Line(4) = {4,5};
+Physical Line(0) = {1,2};
+Physical Line(1) = {3,4};
