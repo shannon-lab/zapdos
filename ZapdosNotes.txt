@@ -3096,3 +3096,22 @@ Finer liquid region: 2.57e-7
 Coarser mesh: fail time = 2.82e-7
 
 Alright we have proof of things. I made the mesh coarser once more at the interface and the simulation solved beautifully. Thus in my opinion the lack of convergence before was coming from poor conditioning. I have seen time and again that bad scaling leads to bad convergence. I have scaled my dependent variables nicely so that they are not so far from 1. However, I have not scaled my position or time variables. Time might be ok...it starts at nanosecond values but then increases through the simulation. But I'm using nanometer type distances in my mesh and this doesn't change throughout the simulation. Just think about a gradient term where the dependent variable is not changing very much: then we have a small number divided by a big number: this leads to bad conditioning! Ok we're still learning things about convergence as we go here.
+
+Dr. Graves was right: meshing can play a big old role in convergence!!!!
+
+So apparently python will look over a whole method to determine whether variables are global or local and then execute the statements in the method. If at anyplace in a method, a global variable is reassigned without that variable being declared global in the method, then that variable will be treated as a local variable.
+
+0a) Observation: total current changes by only 17% between gamma extremes
+0b) Consequently the total potential drop across the plasma only varies by that amount
+1) From 0b): Total potential drop more or less constant
+2) Sound backing: Build up in electrons at anode because of gamma
+3) From 0a): Total current more or less constant. In order for this to be true, the cathode characteristics must be the same because we aren't changing the cathodic boundary conditions.
+4) From 2) electric field becomes large and negative, leading to a large potential drop in the anode.
+5) From 1) and 4) for smaller gammas, the potential drop in the bulk will be smaller because more potential is being lost in the anode.
+6) From 5) the bulk electric field is smaller for smaller gammas
+7) With a smaller bulk electric field, in order to maintain the same total current between cases, the *density* of electrons (and with quasineutrality consequently the ions) must be higher!
+
+boom! Only thing that would make the argument more rock solid is if I could come up with a theoretical descripton for 0).
+
+kinetic_r_0pt9_no*_gold.i ran without a hitch with the current commit version of liquidNew.geo
+kinetic_r_0pt9999_no*_gold.i ran without a hitch with the current commit version of liquidNew.geo (so there was actually no need to run this with the new mesh, should have just added the Auxkernels to this input file)
