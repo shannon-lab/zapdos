@@ -1,14 +1,14 @@
 #!/bin/bash
 
 ZAPPROBDIR="/home/lindsayad/projects/zapdos/problems/"
-INSTRING="dens_kinetic_en_zero_grad_gamma_1e-4"
+INSTRING="mean_en_thermo"
 ROOTSTRING=$INSTRING
-OUTSTRING=$ROOTSTRING
+OUTSTRING=$ROOTSTRING"_H_1_en_kinetic_r_0pt9999"
 
 cp $ZAPPROBDIR"log.txt" $ZAPPROBDIR"MooseLogs/log_"$OUTSTRING"_gold.txt"
 cp $ZAPPROBDIR$INSTRING".i" $ZAPPROBDIR$OUTSTRING"_gold.i"
 cp $ZAPPROBDIR$INSTRING"_out.e" $ZAPPROBDIR"MooseOutput/"$OUTSTRING"_gold_out.e"
-cp $ZAPPROBDIR"liquidKinetic.geo" $ZAPPROBDIR$OUTSTRING"_gold.geo"
+cp $ZAPPROBDIR"liquidNew.geo" $ZAPPROBDIR$OUTSTRING"_gold.geo"
 
 # cp $ZAPPROBDIR"log.txt" $ZAPPROBDIR"MooseLogs/log_"$OUTSTRING".txt"
 # cp $ZAPPROBDIR$INSTRING".i" $ZAPPROBDIR$OUTSTRING".i"

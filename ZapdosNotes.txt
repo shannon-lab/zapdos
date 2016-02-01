@@ -3118,13 +3118,37 @@ kinetic_r_0pt9999_no*_gold.i ran without a hitch with the current commit version
 
 Plots needed:
 
-dens kinetic, gamma = 1, energy kinetic check
-dens kinetic, gamma = 1e-4, energy kinetic check
+dens kinetic, gamma = 1, energy kinetic, gamma = 1, check
+dens kinetic, gamma = 1e-4, energy kinetic, gamma = 1e-4, check
 dens kinetic, gamma = 1, energy zero grad check (but poor liquid meshing)
 dens kinetic, gamma = 1e-4, energy zero grad check (but poor liquid meshing)
-dens thermo, H = 1, energy kinetic check
-dens thermo, H = 1e5, energy kinetic no (could do both gamma = 1 and gamma = 1e-4)
+dens thermo, H = 1, energy kinetic, gamma = 1, check (corresponds to high reflection density and low reflection energy -> inconsistent)
+dens thermo, H = 1e5, energy kinetic, gamma = 1, check (corresponds to low reflection density and low reflection energy -> consistent)
+dens thermo, H = 1e5, energy kinetic, gamma = 1e-4, check (corresponds to low reflection density and high reflection energy -> inconsistent)
+dens thermo, H = 1, energy kinetic, gamma = 1e-4, check (corresponds to high reflection density and high reflection energy -> consistent)
 dens thermo, H = 1, energy zero grad check
 dens thermo, H = 1e5, energy zero grad check
 
+Low gamma: high reflection
+High H: low reflection
+
 Next task: get the last case done, plot, and then add figures to paper. Figure out what figures should be kept for paper and start writing as Steve said.
+
+MatPlotLib appears to only have 7 original colors. After 7 plots are made, then it starts to recycle colors from the top (blue, green, red, etc...)
+
+Middle mesh: 100e-6, fail time = 1.09e-7
+Middle mesh: 50e-6, right mesh = 5e-8, fail time = 1.09e-7, nl_abs_tol = 1e-12
+Middle: 50e-6, right: 2e-8, fail: 1.10e-7
+Middle: 50e-6, right: 1e-8, fail: 1.10093e-7
+Middle: 50e-6, right: 5e-9, fail: 1.10151e-7, offset = 20
+Middle: 50e-6, right: 5e-9, fail: 3.5833e-7, offset = 25
+Middle: 50e-6, right: 5e-9, fail: 2.31938e-6, offset = 30
+Middle: 20e-6, right: 5e-9, fail: 1.078e-7, offset = 20
+Middle: 100e-6, right: 5e-9, fail: 1.08965e-7, offset = 20
+Middle: 100e-6, right: 1e-9, fail: 1.09003e-7, offset = 20
+Middle: 50e-6, right: 1e-9, fail: 1.10205e-7, offset = 20 (no oscillations or any problems in the solution...thus this has to be a conditioning problem in my opinion)
+Middle: 50e-6, right: 1e-9, fail: 1.09347e-7, offset = 20, mean_en_offset = 15
+
+I think lowering the offset just delays the onset of the discharge, it doesn't really improve convergence.
+
+Could it be mesh conditioning or low electron temperatures or what?

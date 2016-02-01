@@ -1,11 +1,11 @@
 [GlobalParams]
-  offset = 20
+  offset = 35
   potential_units = kV
 []
 
 [Mesh]
   type = FileMesh
-  file = 'liquidNew.msh'
+  file = 'mean_en_thermo_H_1_en_kinetic_r_0pt9999_gold.msh'
 []
 
 [MeshModifiers]
@@ -308,7 +308,6 @@
     type = LogStabilizationMoles
     variable = mean_en
     block = 0
-    offset = 15
   [../]
   # [./mean_en_advection_stabilization]
   #   type = EFieldArtDiff
@@ -437,71 +436,9 @@
     family = MONOMIAL
     block = 1
   [../]
-  [./PowerDep_em]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
-  [../]
-  [./PowerDep_Arp]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
-  [../]
-  [./ProcRate_el]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
-  [../]
-  [./ProcRate_ex]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
-  [../]
-  [./ProcRate_iz]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
-  [../]
 []
 
 [AuxKernels]
-  [./PowerDep_em]
-    type = PowerDep
-    density_log = em
-    potential = potential
-    art_diff = false
-    potential_units = kV
-    variable = PowerDep_em
-  [../]
-  [./PowerDep_Arp]
-    type = PowerDep
-    density_log = Arp
-    potential = potential
-    art_diff = false
-    potential_units = kV
-    variable = PowerDep_Arp
-  [../]
-  [./ProcRate_el]
-    type = ProcRate
-    em = em
-    potential = potential
-    proc = el
-    variable = ProcRate_el
-  [../]
-  [./ProcRate_ex]
-    type = ProcRate
-    em = em
-    potential = potential
-    proc = ex
-    variable = ProcRate_ex
-  [../]
-  [./ProcRate_iz]
-    type = ProcRate
-    em = em
-    potential = potential
-    proc = iz
-    variable = ProcRate_iz
-  [../]
   [./e_temp]
     type = ElectronTemperature
     variable = e_temp
@@ -743,25 +680,25 @@
   [./em_ic]
     type = ConstantIC
     variable = em
-    value = -26
+    value = -36
     block = 0
   [../]
   [./emliq_ic]
     type = ConstantIC
     variable = emliq
-    value = -26
+    value = -36
     block = 1
   [../]
   [./Arp_ic]
     type = ConstantIC
     variable = Arp
-    value = -26
+    value = -36
     block = 0
   [../]
   [./mean_en_ic]
     type = ConstantIC
     variable = mean_en
-    value = -25
+    value = -35
     block = 0
   [../]
   # [./potential_ic]
