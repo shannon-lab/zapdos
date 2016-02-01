@@ -629,11 +629,13 @@
     r = 0
   [../]
   [./mean_en_physical_right]
-    type = GradMeanEnZeroBC
+    type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'master0_interface'
     potential = potential
     em = em
+    ip = Arp
+    r = 0
   [../]
   [./em_physical_left]
     type = HagelaarElectronBC
