@@ -78,4 +78,32 @@ z-MatchedValueLogBC (confirmed with interpolated electron transport coefficients
 DGKernels
 z-DGEFieldAdvection # This will only work as long as the variable and coupled variable have the same number of shape functions in each element
 z-DGCoeffDiffusion
+
+Check list for units changed:
+ElectronTimeDerivative
+EFieldAdvectionElectrons
+CoeffDiffusionElectrons
+ElectronsFromIonization
+LogStabilizationMoles
+EFieldAdvection
+CoeffDiffusion
+ReactantFirstOrderRxn
+ReactantAARxn
+CoeffDiffusionLin
+ChargeSourceMoles_KV
+IonsFromIonization
+ProductFirstOrderRxn
+ProductAABBRxn
+EfieldAdvectionEnergy
+CoeffDiffusionEnergy
+JouleHeating
+ElectronEnergyLossFromIonization
+ElectronEnergyLossFromExcitation
+ElectronEnergyLossFromElastic
+HagelaarIonBC
+HagelaarElectronBC
+HagelaarEnergyBC
+DCIonBC
+InterfaceAdvection
+InterfaceLogDiffusionElectrons
 '''

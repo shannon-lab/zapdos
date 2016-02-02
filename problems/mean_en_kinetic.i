@@ -1,17 +1,14 @@
+$dom0Scale=1e-3
+$dom1Scale=1e-7
+
 [GlobalParams]
   offset = 20
-  # offset = 0
   potential_units = kV
-  # potential_units = V
 []
 
 [Mesh]
-  # type = GeneratedMesh
-  # nx = 2
-  # xmax = 1
-  # dim = 1
   type = FileMesh
-  file = 'liquidKinetic.msh'
+  file = 'liquidNew.msh'
 []
 
 [MeshModifiers]
@@ -20,14 +17,12 @@
     master_block = '0'
     paired_block = '1'
     new_boundary = 'master0_interface'
-    # depends_on = 'box'
   [../]
   [./interface_again]
     type = SideSetsBetweenSubdomains
     master_block = '1'
     paired_block = '0'
     new_boundary = 'master1_interface'
-    # depends_on = 'box'
   [../]
   [./left]
     type = SideSetsFromNormals
@@ -39,17 +34,10 @@
     normals = '1 0 0'
     new_boundary = 'right'
   [../]
-  # [./box]
-  #   type = SubdomainBoundingBox
-  #   bottom_left = '0.5 0 0'
-  #   top_right = '1. 1. 0'
-  #   block_id = 1
-  # [../]
 []
 
 [Problem]
   type = FEProblem
-  # kernel_coverage_check = false
 []
 
 [Preconditioning]
@@ -62,22 +50,17 @@
 [Executioner]
   type = Transient
   end_time = 1e-1
-  # end_time = 10
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
-  # petsc_options = '-snes_test_display'
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
-  # petsc_options_iname = '-snes_type'
-  # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
- nl_abs_tol = 1.4e-9
+ nl_abs_tol = 4e-8
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
     dt = 1e-9
-    # dt = 1
     growth_factor = 1.2
    optimal_iterations = 15
   [../]
@@ -99,11 +82,9 @@
   [./data_provider]
     type = ProvideMobility
     electrode_area = 5.02e-7 # Formerly 3.14e-6
+    # ballast_resist = 8.1e3
     ballast_resist = 1e6
     e = 1.6e-19
-    # electrode_area = 1.
-    # ballast_resist = 1.
-    # e = 1.
   [../]
 []
 
@@ -119,12 +100,14 @@
     potential = potential
     mean_en = mean_en
     block = 0
+    position_units = 1
   [../]
   [./em_diffusion]
     type = CoeffDiffusionElectrons
     variable = em
     mean_en = mean_en
     block = 0
+    position_units = 1
   [../]
   [./em_ionization]
     type = ElectronsFromIonization
@@ -132,6 +115,7 @@
     potential = potential
     mean_en = mean_en
     block = 0
+    position_units = 1
   [../]
   [./em_log_stabilization]
     type = LogStabilizationMoles
@@ -154,11 +138,13 @@
     variable = emliq
     potential = potential
     block = 1
+    position_units = 1
   [../]
   [./emliq_diffusion]
     type = CoeffDiffusion
     variable = emliq
     block = 1
+    position_units = 1
   [../]
   [./emliq_reactant_first_order_rxn]
     type = ReactantFirstOrderRxn
@@ -176,9 +162,17 @@
     block = 1
   [../]
 
-  [./potential_diffusion]
+  [./potential_diffusion_dom1]
     type = CoeffDiffusionLin
     variable = potential
+    block = 0
+    position_units = 1
+  [../]
+  [./potential_diffusion_dom2]
+    type = CoeffDiffusionLin
+    variable = potential
+    block = 1
+    position_units = 1
   [../]
   [./Arp_charge_source]
     type = ChargeSourceMoles_KV
@@ -214,12 +208,14 @@
     type = EFieldAdvection
     variable = Arp
     potential = potential
+    position_units = 1
     block = 0
   [../]
   [./Arp_diffusion]
     type = CoeffDiffusion
     variable = Arp
     block = 0
+    position_units = 1
   [../]
   [./Arp_ionization]
     type = IonsFromIonization
@@ -228,6 +224,7 @@
     em = em
     mean_en = mean_en
     block = 0
+    position_units = 1
   [../]
   [./Arp_log_stabilization]
     type = LogStabilizationMoles
@@ -250,11 +247,13 @@
     variable = OHm
     potential = potential
     block = 1
+    position_units = 1
   [../]
   [./OHm_diffusion]
     type = CoeffDiffusion
     variable = OHm
     block = 1
+    position_units = 1
   [../]
   [./OHm_log_stabilization]
     type = LogStabilizationMoles
@@ -291,12 +290,14 @@
     potential = potential
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_diffusion]
     type = CoeffDiffusionEnergy
     variable = mean_en
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_joule_heating]
     type = JouleHeating
@@ -304,6 +305,7 @@
     potential = potential
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_ionization]
     type = ElectronEnergyLossFromIonization
@@ -311,6 +313,7 @@
     potential = potential
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_elastic]
     type = ElectronEnergyLossFromElastic
@@ -318,6 +321,7 @@
     potential = potential
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_excitation]
     type = ElectronEnergyLossFromExcitation
@@ -325,11 +329,14 @@
     potential = potential
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_log_stabilization]
     type = LogStabilizationMoles
     variable = mean_en
     block = 0
+    offset = 15
+    position_units = 1
   [../]
   # [./mean_en_advection_stabilization]
   #   type = EFieldArtDiff
@@ -670,6 +677,8 @@
     neighbor_var = em
     variable = emliq
     boundary = master1_interface
+    position_units = 1
+    neighbor_position_units = 1
   [../]
   [./em_diffusion]
     type = InterfaceLogDiffusionElectrons
@@ -677,6 +686,8 @@
     neighbor_var = em
     variable = emliq
     boundary = master1_interface
+    position_units = 1
+    neighbor_position_units = 1
   [../]
 []
 
@@ -691,6 +702,7 @@
     em = em
     mean_en = mean_en
     r = 0
+    position_units = 1
   [../]
   [./potential_dirichlet_right]
     type = DirichletBC
@@ -703,9 +715,10 @@
     variable = em
     boundary = 'master0_interface'
     potential = potential
-    ip = Arp
     mean_en = mean_en
+    ip = Arp
     r = 0
+    position_units = 1
   [../]
   [./Arp_physical_right]
     type = HagelaarIonBC
@@ -713,6 +726,7 @@
     boundary = 'master0_interface'
     potential = potential
     r = 0
+    position_units = 1
   [../]
   [./mean_en_physical_right]
     type = HagelaarEnergyBC
@@ -721,7 +735,8 @@
     potential = potential
     em = em
     ip = Arp
-    r = 0
+    r = 0.9999
+    position_units = 1
   [../]
   [./em_physical_left]
     type = HagelaarElectronBC
@@ -731,6 +746,7 @@
     ip = Arp
     mean_en = mean_en
     r = 0
+    position_units = 1
   [../]
   [./Arp_physical_left]
     type = HagelaarIonBC
@@ -738,6 +754,7 @@
     boundary = 'left'
     potential = potential
     r = 0
+    position_units = 1
   [../]
   [./mean_en_physical_left]
     type = HagelaarEnergyBC
@@ -747,18 +764,21 @@
     em = em
     ip = Arp
     r = 0
+    position_units = 1
   [../]
   [./emliq_right]
     type = DCIonBC
     variable = emliq
     boundary = right
     potential = potential
+    position_units = 1
   [../]
   [./OHm_physical]
     type = DCIonBC
     variable = OHm
     boundary = 'right'
     potential = potential
+    position_units = 1
   [../]
 []
 
@@ -772,7 +792,7 @@
   [./emliq_ic]
     type = ConstantIC
     variable = emliq
-    value = -22
+    value = -14
     block = 1
   [../]
   [./Arp_ic]
@@ -787,6 +807,11 @@
     value = -25
     block = 0
   [../]
+  # [./potential_ic]
+  #   type = ConstantIC
+  #   variable = potential
+  #   value = 0
+  # [../]
   [./potential_ic]
     type = FunctionIC
     variable = potential
@@ -798,35 +823,6 @@
     value = -15.6
     block = 1
   [../]
-  # [./em_ic]
-  #   type = RandomIC
-  #   variable = em
-  #   block = 0
-  # [../]
-  # [./emliq_ic]
-  #   type = RandomIC
-  #   variable = emliq
-  #   block = 1
-  # [../]
-  # [./Arp_ic]
-  #   type = RandomIC
-  #   variable = Arp
-  #   block = 0
-  # [../]
-  # [./mean_en_ic]
-  #   type = RandomIC
-  #   variable = mean_en
-  #   block = 0
-  # [../]
-  # [./potential_ic]
-  #   type = RandomIC
-  #   variable = potential
-  # [../]
-  # [./OHm_ic]
-  #   type = RandomIC
-  #   variable = OHm
-  #   block = 1
-  # [../]
 []
 
 [Functions]
@@ -857,11 +853,4 @@
    block = 1
    potential = potential
  [../]
- # [./jac]
- #   type = JacMat
- #   mean_en = mean_en
- #   em = em
- #   emliq = emliq
- #   block = '0 1'
- #  [../]
 []

@@ -1,3 +1,6 @@
+$dom0Scale=1e-3
+$dom1Scale=1e-7
+
 [GlobalParams]
   offset = 20
   potential_units = kV
@@ -52,7 +55,7 @@
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
  nl_rel_tol = 1e-4
- nl_abs_tol = 1e-12
+ nl_abs_tol = 4e-8
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -97,12 +100,14 @@
     potential = potential
     mean_en = mean_en
     block = 0
+    position_units = 1
   [../]
   [./em_diffusion]
     type = CoeffDiffusionElectrons
     variable = em
     mean_en = mean_en
     block = 0
+    position_units = 1
   [../]
   [./em_ionization]
     type = ElectronsFromIonization
@@ -110,6 +115,7 @@
     potential = potential
     mean_en = mean_en
     block = 0
+    position_units = 1
   [../]
   [./em_log_stabilization]
     type = LogStabilizationMoles
@@ -132,11 +138,13 @@
     variable = emliq
     potential = potential
     block = 1
+    position_units = 1
   [../]
   [./emliq_diffusion]
     type = CoeffDiffusion
     variable = emliq
     block = 1
+    position_units = 1
   [../]
   [./emliq_reactant_first_order_rxn]
     type = ReactantFirstOrderRxn
@@ -154,9 +162,17 @@
     block = 1
   [../]
 
-  [./potential_diffusion]
+  [./potential_diffusion_dom1]
     type = CoeffDiffusionLin
     variable = potential
+    block = 0
+    position_units = 1
+  [../]
+  [./potential_diffusion_dom2]
+    type = CoeffDiffusionLin
+    variable = potential
+    block = 1
+    position_units = 1
   [../]
   [./Arp_charge_source]
     type = ChargeSourceMoles_KV
@@ -192,12 +208,14 @@
     type = EFieldAdvection
     variable = Arp
     potential = potential
+    position_units = 1
     block = 0
   [../]
   [./Arp_diffusion]
     type = CoeffDiffusion
     variable = Arp
     block = 0
+    position_units = 1
   [../]
   [./Arp_ionization]
     type = IonsFromIonization
@@ -206,6 +224,7 @@
     em = em
     mean_en = mean_en
     block = 0
+    position_units = 1
   [../]
   [./Arp_log_stabilization]
     type = LogStabilizationMoles
@@ -228,11 +247,13 @@
     variable = OHm
     potential = potential
     block = 1
+    position_units = 1
   [../]
   [./OHm_diffusion]
     type = CoeffDiffusion
     variable = OHm
     block = 1
+    position_units = 1
   [../]
   [./OHm_log_stabilization]
     type = LogStabilizationMoles
@@ -269,12 +290,14 @@
     potential = potential
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_diffusion]
     type = CoeffDiffusionEnergy
     variable = mean_en
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_joule_heating]
     type = JouleHeating
@@ -282,6 +305,7 @@
     potential = potential
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_ionization]
     type = ElectronEnergyLossFromIonization
@@ -289,6 +313,7 @@
     potential = potential
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_elastic]
     type = ElectronEnergyLossFromElastic
@@ -296,6 +321,7 @@
     potential = potential
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_excitation]
     type = ElectronEnergyLossFromExcitation
@@ -303,12 +329,14 @@
     potential = potential
     em = em
     block = 0
+    position_units = 1
   [../]
   [./mean_en_log_stabilization]
     type = LogStabilizationMoles
     variable = mean_en
     block = 0
     offset = 15
+    position_units = 1
   [../]
   # [./mean_en_advection_stabilization]
   #   type = EFieldArtDiff
@@ -649,6 +677,8 @@
     neighbor_var = em
     variable = emliq
     boundary = master1_interface
+    position_units = 1
+    neighbor_position_units = 1
   [../]
   [./em_diffusion]
     type = InterfaceLogDiffusionElectrons
@@ -656,6 +686,8 @@
     neighbor_var = em
     variable = emliq
     boundary = master1_interface
+    position_units = 1
+    neighbor_position_units = 1
   [../]
 []
 
@@ -670,6 +702,7 @@
     em = em
     mean_en = mean_en
     r = 0
+    position_units = 1
   [../]
   [./potential_dirichlet_right]
     type = DirichletBC
@@ -682,7 +715,7 @@
     variable = em
     boundary = 'master0_interface'
     v = emliq
-    H = 1
+    H = 1e5
   [../]
   [./Arp_physical_right]
     type = HagelaarIonBC
@@ -690,6 +723,7 @@
     boundary = 'master0_interface'
     potential = potential
     r = 0
+    position_units = 1
   [../]
   [./mean_en_physical_right]
     type = HagelaarEnergyBC
@@ -699,6 +733,7 @@
     em = em
     ip = Arp
     r = 0.9999
+    position_units = 1
   [../]
   [./em_physical_left]
     type = HagelaarElectronBC
@@ -708,6 +743,7 @@
     ip = Arp
     mean_en = mean_en
     r = 0
+    position_units = 1
   [../]
   [./Arp_physical_left]
     type = HagelaarIonBC
@@ -715,6 +751,7 @@
     boundary = 'left'
     potential = potential
     r = 0
+    position_units = 1
   [../]
   [./mean_en_physical_left]
     type = HagelaarEnergyBC
@@ -724,18 +761,21 @@
     em = em
     ip = Arp
     r = 0
+    position_units = 1
   [../]
   [./emliq_right]
     type = DCIonBC
     variable = emliq
     boundary = right
     potential = potential
+    position_units = 1
   [../]
   [./OHm_physical]
     type = DCIonBC
     variable = OHm
     boundary = 'right'
     potential = potential
+    position_units = 1
   [../]
 []
 
@@ -749,7 +789,7 @@
   [./emliq_ic]
     type = ConstantIC
     variable = emliq
-    value = -26
+    value = -14
     block = 1
   [../]
   [./Arp_ic]

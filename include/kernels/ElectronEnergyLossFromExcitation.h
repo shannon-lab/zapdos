@@ -34,6 +34,8 @@ protected:
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
+  Real _r_units;
+
   const MaterialProperty<Real> & _diffem;
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _alpha_ex;

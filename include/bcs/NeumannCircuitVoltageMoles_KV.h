@@ -39,6 +39,7 @@ protected:
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   /// The function being used for setting the value
+  Real _r_units;
   Function & _V_bat;
   const ProvideMobility & _data;
 

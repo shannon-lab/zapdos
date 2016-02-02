@@ -3154,3 +3154,5 @@ I think lowering the offset just delays the onset of the discharge, it doesn't r
 Could it be mesh conditioning or low electron temperatures or what?
 
 So I proved that the gold H = 1, gamma = 1e-4 anomalous ion and electron temperature results arises solely from a glitch in initial conditions. If I only modify the initial conditions, then I can get rid of the ridiculous jump in electron temperature and ion density at the interface. Weird stuff.
+
+Getting good convergence now after adding _test[_i][_qp] to the HagelaarEnergyBC. That could very well have been the reason that I've been struggling to get convergence with that boundary condition. Wowzers. Yea sure the Jacobian could have perfectly matched the residual, but if I'm supply a numerical method that's intrinsically unstable, then even with a perfect Jacobian, the problem won't converge. Wow, sometimes the weirdest things save you.

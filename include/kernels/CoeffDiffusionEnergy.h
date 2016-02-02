@@ -22,6 +22,8 @@ protected:
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
+  Real _r_units;
+
   const MaterialProperty<Real> & _diffel;
   const MaterialProperty<Real> & _d_diffel_d_actual_mean_en;
 

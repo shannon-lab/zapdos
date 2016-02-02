@@ -20,6 +20,8 @@ class EFieldAdvectionElectrons : public Kernel
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
+  Real _position_units;
+
   // Material properties
 
   const MaterialProperty<Real> & _muem;

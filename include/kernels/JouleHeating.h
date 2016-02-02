@@ -37,6 +37,7 @@ class JouleHeating : public Kernel
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   // Input file scalars
+  Real _r_units;
 
   // Material properties
 

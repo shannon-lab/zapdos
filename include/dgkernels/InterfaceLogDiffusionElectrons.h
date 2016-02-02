@@ -36,6 +36,9 @@ protected:
   virtual Real computeQpJacobian(Moose::DGJacobianType type);
   virtual Real computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar);
 
+  Real _r_units;
+  Real _r_neighbor_units;
+
   const MaterialProperty<Real> & _diffem;
   const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
 

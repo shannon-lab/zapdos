@@ -23,7 +23,8 @@ protected:
    const MaterialProperty<Real> & _sgn;
    /* const MaterialProperty<Real> & _vthermal_ip; */
    Real _a;
-  
+   Real _r_units;
+
   // coupled variables
 
   VariableGradient & _grad_potential;

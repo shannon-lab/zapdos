@@ -22,6 +22,8 @@ class EFieldAdvectionEnergy : public Kernel
 
   // Material properties
 
+  Real _r_units;
+
   const MaterialProperty<Real> & _muel;
   const MaterialProperty<Real> & _d_muel_d_actual_mean_en;
   const MaterialProperty<Real> & _sign;

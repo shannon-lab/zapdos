@@ -19,6 +19,7 @@ protected:
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
+  Real _r_units;
   Real _r;
 
   // Coupled variables

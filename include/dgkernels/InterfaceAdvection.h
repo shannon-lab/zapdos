@@ -36,6 +36,9 @@ protected:
   virtual Real computeQpJacobian(Moose::DGJacobianType type);
   virtual Real computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar);
 
+  Real _r_units;
+  Real _r_neighbor_units;
+
   MooseVariable & _potential_neighbor_var;
   VariableGradient & _grad_potential_neighbor;
   unsigned int _potential_neighbor_id;

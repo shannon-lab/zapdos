@@ -33,15 +33,17 @@ class EFieldAdvection : public Kernel
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  
+
   // Material properties
+
+  Real _r_units;
 
   const MaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sign;
 
  private:
 
-  // Coupled variables  
+  // Coupled variables
   unsigned int _potential_id;
   VariableGradient & _grad_potential;
 };
