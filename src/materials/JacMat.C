@@ -154,10 +154,10 @@ JacMat::computeQpProperties()
 {
   _muu[_qp] = 1.1;
   _muv[_qp] = 1.1;
-  _sgnu[_qp] = 1.;
-  _sgnem[_qp] = 1.;
-  _sgnmean_en[_qp] = 1;
-  _sgnv[_qp] = 1.;
+  _sgnu[_qp] = -1.;
+  _sgnem[_qp] = -1.;
+  _sgnmean_en[_qp] = -1;
+  _sgnv[_qp] = -1.;
   _diffu[_qp] = 1.1;
   _actual_mean_en[_qp] = std::exp(_mean_en[_qp] - _em[_qp]);
   _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
@@ -178,7 +178,7 @@ JacMat::computeQpProperties()
   _sgnOHm[_qp] = 1.;
   _muemliq[_qp] = 1.1;
   _diffemliq[_qp] = 1.1;
-  _sgnemliq[_qp] = 1.;
+  _sgnemliq[_qp] = -1.;
 
   _kemliqemliq[_qp] = 1.1;
   _kemliq[_qp] = 1.1;
@@ -211,11 +211,11 @@ JacMat::computeQpProperties()
   _T_heavy[_qp] = 1.1;
   _massu[_qp] = 1.1;
   _massArp[_qp] = 1.1;
-  _sgnp[_qp] = 1.;
+  _sgnp[_qp] = -1.;
   _mup[_qp] = 1.1;
   _muw[_qp] = 1.1;
   _diffp[_qp] = 1.1;
   _muArp[_qp] = 1.1;
   _diffArp[_qp] = 1.1;
-  _sgnArp[_qp] = 1;
+  _sgnArp[_qp] = -1.;
 }

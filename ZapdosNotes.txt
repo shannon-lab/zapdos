@@ -3156,3 +3156,99 @@ Could it be mesh conditioning or low electron temperatures or what?
 So I proved that the gold H = 1, gamma = 1e-4 anomalous ion and electron temperature results arises solely from a glitch in initial conditions. If I only modify the initial conditions, then I can get rid of the ridiculous jump in electron temperature and ion density at the interface. Weird stuff.
 
 Getting good convergence now after adding _test[_i][_qp] to the HagelaarEnergyBC. That could very well have been the reason that I've been struggling to get convergence with that boundary condition. Wowzers. Yea sure the Jacobian could have perfectly matched the residual, but if I'm supply a numerical method that's intrinsically unstable, then even with a perfect Jacobian, the problem won't converge. Wow, sometimes the weirdest things save you.
+
+The bad dgkernel offender is: InterfaceLogDiffusionElectrons
+
+Fix tomorrow. Fixed
+
+em: 26
+emliq: 26
+Arp: 26
+mean_en: 25
+OHm: 15.6
+
+
+0 Nonlinear |R| = 8.860315e+04
+      Line search: gnorm after quadratic fit 1.885694427347e+05
+      Line search: Cubically determined step, current gnorm 8.417309332120e+04 lambda=5.0000000000000003e-02
+    |residual|_2 of individual variables:
+                  potential: 84075
+                  em:        0.0604987
+                  emliq:     130.652
+                  Arp:       0.0603611
+                  mean_en:   3.29598
+                  OHm:       4060.41
+
+ 1 Nonlinear |R| = 8.417309e+04
+      Line search: Using full step: fnorm 8.417309332120e+04 gnorm 3.424562095658e+01
+    |residual|_2 of individual variables:
+                  potential: 0.14715
+                  em:        0.0231411
+                  emliq:     34.2238
+                  Arp:       0.0202218
+                  mean_en:   1.21432
+                  OHm:       3.44686e-06
+
+ 2 Nonlinear |R| = 3.424562e+01
+
+em: 26
+emliq: 31
+Arp: 26
+mean_en: 25
+OHm: 15.6
+
+ 0 Nonlinear |R| = 8.860315e+04
+
+em: 26
+emliq: 21
+Arp: 26
+mean_en: 25
+OHm: 15.6
+
+
+0 Nonlinear |R| = 8.860315e+04
+      Line search: Using full step: fnorm 8.860314992199e+04 gnorm 3.278313816951e+01
+    |residual|_2 of individual variables:
+                  potential: 0.154749
+                  em:        0.0240928
+                  emliq:     32.7579
+                  Arp:       0.021509
+                  mean_en:   1.27748
+                  OHm:       3.61508e-06
+
+ 1 Nonlinear |R| = 3.278314e+01
+
+em: 21
+emliq: 21
+Arp: 21
+mean_en: 20
+OHm: 15.6
+
+ 0 Nonlinear |R| = 8.860872e+04
+      Line search: gnorm after quadratic fit 7.974510602290e+04
+      Line search: Quadratically determined step, lambda=1.0000000000000001e-01
+    |residual|_2 of individual variables:
+                  potential: 79650
+                  em:        0.569602
+                  emliq:     601.907
+                  Arp:       0.000610509
+                  mean_en:   2.22051
+                  OHm:       3846.7
+
+ 1 Nonlinear |R| = 7.974511e+04
+Nonlinear solve did not converge due to DIVERGED_LINE_SEARCH iterations 1
+ Solve Did NOT Converge!
+
+
+Got initial steps to go just fine after actually doing the correct meshing (dummy!).
+
+Fail time with no scaling: 7.67636e-8
+1e-3 scaling of liq phase: 7.60823e-8
+1e-4 scaling of liq phase: 7.60823e-8
+1e-4 scaling of liq phase, 1e-1 scaling of mean_en: 7.65912e-8
+
+After increasing the maximum mean energy in my td_argon_mean_en.txt file: 7.86949e-8 (the electron temp had exceeded 20 volts at the anode)
+
+After removing scaling: .0001102 (crashed because of wrong abs_tol)
+
+So initially I identified the wrong problem: it wasn't a problem of scaling with the variables...in fact their relative scaling is probably just about in the perfectly optimable zone (there's a reason for the things we do and for the directions we go! Convergence leads us down the right path!). And the problem wasn't probably even with the scaling of the mesh. The problem was with the electron temperature exceeding my upper bound in my lookup table leading to bad numerics from that. And then the position scaling just made the solve go that much faster!

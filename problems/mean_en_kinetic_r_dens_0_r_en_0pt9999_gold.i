@@ -74,7 +74,7 @@ dom1Scale=1e-7
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
- nl_abs_tol = 3.2e-3
+ nl_abs_tol = 1e-4
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -742,7 +742,7 @@ dom1Scale=1e-7
     potential = potential
     mean_en = mean_en
     ip = Arp
-    r = 0.9999
+    r = 0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_right]
@@ -760,7 +760,7 @@ dom1Scale=1e-7
     potential = potential
     em = em
     ip = Arp
-    r = 0
+    r = 0.9999
     position_units = ${dom0Scale}
   [../]
   [./em_physical_left]
