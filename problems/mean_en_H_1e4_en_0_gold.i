@@ -74,7 +74,7 @@ dom1Scale=1e-7
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
- nl_abs_tol = 6e-5
+ nl_abs_tol = 6e-4
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -736,14 +736,11 @@ dom1Scale=1e-7
     value = 0
   [../]
   [./em_physical_right]
-    type = HagelaarElectronBC
+    type = MatchedValueLogBC
     variable = em
     boundary = 'master0_interface'
-    potential = potential
-    mean_en = mean_en
-    ip = Arp
-    r = 0
-    position_units = ${dom0Scale}
+    v = emliq
+    H = 1e4
   [../]
   [./Arp_physical_right]
     type = HagelaarIonBC
