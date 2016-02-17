@@ -102,7 +102,7 @@ dom1Scale=1e-7
   [./data_provider]
     type = ProvideMobility
     electrode_area = 5.02e-7 # Formerly 3.14e-6
-    ballast_resist = 1e6
+    ballast_resist = 50e3
     e = 1.6e-19
     # electrode_area = 1.1
     # ballast_resist = 1.1
@@ -358,7 +358,6 @@ dom1Scale=1e-7
     variable = mean_en
     block = 0
     offset = 15
-    position_units = ${dom0Scale}
   [../]
   # [./mean_en_advection_stabilization]
   #   type = EFieldArtDiff
@@ -634,6 +633,7 @@ dom1Scale=1e-7
     variable = Current_em
     art_diff = false
     block = 0
+    position_units = ${dom0Scale}
   [../]
   [./Current_emliq]
     type = Current
@@ -642,6 +642,7 @@ dom1Scale=1e-7
     variable = Current_emliq
     art_diff = false
     block = 1
+    position_units = ${dom1Scale}
   [../]
   [./Current_Arp]
     type = Current
@@ -650,6 +651,7 @@ dom1Scale=1e-7
     variable = Current_Arp
     art_diff = false
     block = 0
+    position_units = ${dom0Scale}
   [../]
   [./Current_OHm]
     block = 1
@@ -658,6 +660,7 @@ dom1Scale=1e-7
     density_log = OHm
     variable = Current_OHm
     art_diff = false
+    position_units = ${dom1Scale}
   [../]
   [./tot_flux_OHm]
     block = 1
@@ -736,12 +739,22 @@ dom1Scale=1e-7
     value = 0
   [../]
   [./em_physical_right]
-    type = MatchedValueLogBC
+    type = HagelaarElectronBC
     variable = em
     boundary = 'master0_interface'
-    v = emliq
-    H = 1e7
+    potential = potential
+    ip = Arp
+    mean_en = mean_en
+    r = 0
+    position_units = ${dom0Scale}
   [../]
+  # [./em_physical_right]
+  #   type = MatchedValueLogBC
+  #   variable = em
+  #   boundary = 'master0_interface'
+  #   v = emliq
+  #   H = 1e7
+  # [../]
   [./Arp_physical_right]
     type = HagelaarIonBC
     variable = Arp
