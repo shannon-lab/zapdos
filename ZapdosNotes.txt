@@ -1,3 +1,5 @@
+Air Force postdoc research fellowship deadline: May 1st
+
 Here are my three threads I'm working concurrently on in the hope that one/some/all of them lead me to my goal of interfacing two physics domains (or as Yaqi I think aptly calls them InteriorNodalBC and InteriorIntegratedBC):
 
 https://groups.google.com/forum/#!topic/moose-users/011fudvdHng (MeshModifiers)
@@ -3254,3 +3256,5 @@ After removing scaling: .0001102 (crashed because of wrong abs_tol)
 So initially I identified the wrong problem: it wasn't a problem of scaling with the variables...in fact their relative scaling is probably just about in the perfectly optimable zone (there's a reason for the things we do and for the directions we go! Convergence leads us down the right path!). And the problem wasn't probably even with the scaling of the mesh. The problem was with the electron temperature exceeding my upper bound in my lookup table leading to bad numerics from that. And then the position scaling just made the solve go that much faster!
 
 If Dr. Graves quibbles about factors, I will say that those nv/4 and 2kT flux quantities are derived for a Maxwellian distribution which assumes the absence of time variation, spatial gradients, and accelerations. In my DC discharge at the anode I have both spatial gradients and accelerations due to electric fields so those well known equations are not valid. For any further argument I would refer him to the Hagelaar paper which shows that many authors incorrectly leave off the -D/2 grad_n term of the boundary condition (this BC is familiar to me from neutran diffusion theory! The vacuum boundary condition!).
+
+Current number of lines of code in .C and .h files in Zapdos: 23410

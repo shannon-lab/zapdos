@@ -74,7 +74,7 @@ dom1Scale=1e-7
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
- nl_abs_tol = 5.4e-5
+ nl_abs_tol = 1.4e-3
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -102,7 +102,7 @@ dom1Scale=1e-7
   [./data_provider]
     type = ProvideMobility
     electrode_area = 5.02e-7 # Formerly 3.14e-6
-    ballast_resist = 1e6
+    ballast_resist = 50e3
     e = 1.6e-19
     # electrode_area = 1.1
     # ballast_resist = 1.1
