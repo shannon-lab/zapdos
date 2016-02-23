@@ -15,7 +15,7 @@ class ChargeSourceMoles_KV : public Kernel
   virtual ~ChargeSourceMoles_KV();
 
  protected:
-  
+
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -31,6 +31,9 @@ class ChargeSourceMoles_KV : public Kernel
   const MaterialProperty<Real> &  _e;
   const MaterialProperty<Real> &  _sgn;
   const MaterialProperty<Real> &  _N_A;
+  std::string _potential_units;
+
+  Real _voltage_scaling;
 };
 
 #endif /* CHARGESOURCEMOLES_KV_H */
