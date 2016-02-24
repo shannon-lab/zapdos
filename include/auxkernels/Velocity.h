@@ -45,8 +45,8 @@ protected:
 
   // Coupling variables
 
-  VariableGradient & _grad_some_var;
-  VariableValue & _some_var;
+  const VariableGradient & _grad_some_var;
+  const VariableValue & _some_var;
   
   // Material properties
 

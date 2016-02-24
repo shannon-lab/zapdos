@@ -25,7 +25,7 @@ protected:
   
   // coupled variables
 
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
   unsigned int _potential_id;
 };
 

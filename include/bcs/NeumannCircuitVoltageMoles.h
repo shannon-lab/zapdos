@@ -42,7 +42,7 @@ protected:
   Function & _V_bat;
   const ProvideMobility & _data;
   MooseVariable & _ip_var;
-  VariableValue & _ip;
+  const VariableValue & _ip;
   unsigned int _ip_id;
   const MaterialProperty<Real> & _se_coeff;
   const MaterialProperty<Real> & _muip;

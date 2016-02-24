@@ -220,23 +220,23 @@ class Water : public Material
 
  private:
 
-  VariableValue & _emliq;
-  VariableValue & _H;
-  VariableValue & _OHm;
-  VariableValue & _H2Op;
-  VariableValue & _OH;
-  VariableValue & _H2;
-  VariableValue & _Om;
-  VariableValue & _H3Op;
-  VariableValue & _H2O2;
-  VariableValue & _HO2m;
-  VariableValue & _O2;
-  VariableValue & _O2m;
-  VariableValue & _O;
-  VariableValue & _HO2;
-  VariableValue & _O3;
-  VariableValue & _O3m;
-  VariableGradient & _grad_potential;
+  const VariableValue & _emliq;
+  const VariableValue & _H;
+  const VariableValue & _OHm;
+  const VariableValue & _H2Op;
+  const VariableValue & _OH;
+  const VariableValue & _H2;
+  const VariableValue & _Om;
+  const VariableValue & _H3Op;
+  const VariableValue & _H2O2;
+  const VariableValue & _HO2m;
+  const VariableValue & _O2;
+  const VariableValue & _O2m;
+  const VariableValue & _O;
+  const VariableValue & _HO2;
+  const VariableValue & _O3;
+  const VariableValue & _O3m;
+  const VariableGradient & _grad_potential;
 };
 
 #endif //WATER_H

@@ -56,11 +56,11 @@ protected:
 
   // Coupled Variables
 
-  VariableGradient & _grad_potential;
-  VariableValue & _em;
-  VariableValue & _ip;
-  VariableGradient & _grad_em;
-  VariableGradient & _grad_ip;
+  const VariableGradient & _grad_potential;
+  const VariableValue & _em;
+  const VariableValue & _ip;
+  const VariableGradient & _grad_em;
+  const VariableGradient & _grad_ip;
 
   // Functions
   

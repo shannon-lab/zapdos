@@ -18,8 +18,8 @@ public:
 protected:
 
   const MaterialProperty<Real> & _muem;
-  VariableValue & _electron_density;
-  VariableGradient & _grad_potential;
+  const VariableValue & _electron_density;
+  const VariableGradient & _grad_potential;
   virtual Real computeValue();
 
 };

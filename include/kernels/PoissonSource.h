@@ -40,8 +40,8 @@ protected:
   
   // Coupled variables
   
-  VariableValue & _Arp;
-  VariableValue & _em;
+  const VariableValue & _Arp;
+  const VariableValue & _em;
   
   // Coupling identifiers for variables
   

@@ -29,10 +29,10 @@ protected:
 
   // coupled variables
 
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
   unsigned int _potential_id;
-  VariableGradient & _grad_em;
-  VariableValue & _em;
+  const VariableGradient & _grad_em;
+  const VariableValue & _em;
   unsigned int _em_id;
 
   Real _actual_mean_en;

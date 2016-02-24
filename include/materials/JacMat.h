@@ -93,10 +93,10 @@ protected:
   MaterialProperty<Real> &  _kemliqemliq;
   MaterialProperty<Real> &  _kemliq;
 
-  VariableValue & _v;
-  VariableValue & _mean_en;
-  VariableValue & _em;
-  VariableValue & _emliq;
+  const VariableValue & _v;
+  const VariableValue & _mean_en;
+  const VariableValue & _em;
+  const VariableValue & _emliq;
 
   SplineInterpolation _interpolation;
   SplineInterpolation  _alpha_interpolation;

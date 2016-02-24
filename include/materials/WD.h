@@ -51,11 +51,11 @@ protected:
 
   // Coupled Variables
 
-  VariableGradient & _grad_potential;
-  VariableValue & _atomic_ion_density;
-  VariableValue & _molecular_ion_density;
-  VariableValue & _r_velocity;
-  VariableValue & _z_velocity;
+  const VariableGradient & _grad_potential;
+  const VariableValue & _atomic_ion_density;
+  const VariableValue & _molecular_ion_density;
+  const VariableValue & _r_velocity;
+  const VariableValue & _z_velocity;
 
   // Functions
   

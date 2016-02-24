@@ -20,7 +20,7 @@ protected:
 
   // coupled variables
 
-  VariableGradient & _grad_coupled_var;
+  const VariableGradient & _grad_coupled_var;
   unsigned int _coupled_var_id;
 };
 

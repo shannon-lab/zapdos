@@ -35,8 +35,8 @@ class EFieldAdvAux : public AuxKernel
   // Coupled variables
 
   MooseVariable & _density_var;
-  VariableValue & _density_log;
-  VariableGradient & _grad_potential;
+  const VariableValue & _density_log;
+  const VariableGradient & _grad_potential;
 
   // Material properties
 

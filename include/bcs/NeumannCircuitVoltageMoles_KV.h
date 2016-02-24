@@ -44,12 +44,12 @@ protected:
   const ProvideMobility & _data;
 
   MooseVariable & _ip_var;
-  VariableValue & _ip;
-  VariableGradient & _grad_ip;
+  const VariableValue & _ip;
+  const VariableGradient & _grad_ip;
   unsigned int _ip_id;
-  VariableValue & _mean_en;
+  const VariableValue & _mean_en;
   unsigned int _mean_en_id;
-  VariableValue & _em;
+  const VariableValue & _em;
   unsigned int _em_id;
 
   const MaterialProperty<Real> & _se_coeff;

@@ -24,13 +24,13 @@ protected:
 
   // Coupled variables
 
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
   unsigned int _potential_id;
-  VariableValue & _mean_en;
+  const VariableValue & _mean_en;
   unsigned int _mean_en_id;
   MooseVariable & _ip_var;
-  VariableValue & _ip;
-  VariableGradient & _grad_ip;
+  const VariableValue & _ip;
+  const VariableGradient & _grad_ip;
   unsigned int _ip_id;
 
   const MaterialProperty<Real> & _muem;

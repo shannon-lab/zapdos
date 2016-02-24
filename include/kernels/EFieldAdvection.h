@@ -45,7 +45,7 @@ class EFieldAdvection : public Kernel
 
   // Coupled variables
   unsigned int _potential_id;
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
 };
 
 #endif //EFIELDADVECTION_H

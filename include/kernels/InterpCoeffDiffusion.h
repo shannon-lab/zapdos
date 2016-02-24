@@ -35,7 +35,7 @@ protected:
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
-  VariableValue & _v;
+  const VariableValue & _v;
   unsigned int _v_id;
 
   const MaterialProperty<Real> & _diffusivity;

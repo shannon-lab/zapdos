@@ -32,11 +32,11 @@ protected:
 
   // Coupled variables
   
-  /* VariableValue & _Arp; */
-  /* VariableGradient & _grad_Arp; */
-  VariableGradient & _grad_potential;  
+  /* const VariableValue & _Arp; */
+  /* const VariableGradient & _grad_Arp; */
+  const VariableGradient & _grad_potential;  
   unsigned int _potential_id;
-  VariableValue & _em;
+  const VariableValue & _em;
   unsigned int _em_id;
 };
 

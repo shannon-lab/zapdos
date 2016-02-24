@@ -26,11 +26,11 @@ class ArpSource : public Kernel
 
   // Coupled Variables
 
-  VariableValue & _em;
+  const VariableValue & _em;
   unsigned int _em_id;
-  VariableValue & _Ars;
+  const VariableValue & _Ars;
   unsigned int _Ars_id;
-  VariableValue & _Te;
+  const VariableValue & _Te;
   unsigned int _Te_id;
 
   // Unique to kernel

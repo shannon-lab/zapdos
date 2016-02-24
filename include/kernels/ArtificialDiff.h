@@ -49,7 +49,7 @@ protected:
   
   // Coupled variables
 
-  // VariableGradient & _grad_potential;
+  // const VariableGradient & _grad_potential;
 
   // Variables unique to the kernel
 

@@ -43,9 +43,9 @@ protected:
   
   // Coupled variables
 
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
   unsigned int _potential_id;
-  VariableValue & _Te;
+  const VariableValue & _Te;
   unsigned int _Te_id;
   
   // Material Properties

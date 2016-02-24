@@ -19,9 +19,9 @@ protected:
 
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _diffem;
-  VariableValue & _em;
-  VariableGradient & _grad_potential;
-  VariableGradient & _grad_em;
+  const VariableValue & _em;
+  const VariableGradient & _grad_potential;
+  const VariableGradient & _grad_em;
   virtual Real computeValue();
 
 };

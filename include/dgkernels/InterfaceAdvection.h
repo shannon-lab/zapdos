@@ -40,10 +40,10 @@ protected:
   Real _r_neighbor_units;
 
   MooseVariable & _potential_neighbor_var;
-  VariableGradient & _grad_potential_neighbor;
+  const VariableGradient & _grad_potential_neighbor;
   unsigned int _potential_neighbor_id;
   MooseVariable & _mean_en_neighbor_var;
-  VariableValue & _mean_en_neighbor;
+  const VariableValue & _mean_en_neighbor;
   unsigned int _mean_en_neighbor_id;
 
   const MaterialProperty<Real> & _mu_neighbor;

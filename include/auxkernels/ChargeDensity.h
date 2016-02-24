@@ -20,8 +20,8 @@ protected:
   virtual Real computeValue();
 
   Real _e;
-  VariableValue & _electron_density;
-  VariableValue & _ion_density;
+  const VariableValue & _electron_density;
+  const VariableValue & _ion_density;
 };
 
 #endif //CHARGEDENSITY_H

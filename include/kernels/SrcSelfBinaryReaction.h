@@ -40,7 +40,7 @@ protected:
   Real _stoich_coeff;
   
   // Singe coupling variable
-  VariableValue & _sole_reactant;
+  const VariableValue & _sole_reactant;
   
   // Coupling variable ID
   unsigned int _sole_reactant_id;

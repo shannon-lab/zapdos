@@ -34,7 +34,7 @@ protected:
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   MooseVariable & _coupled_var;
-  VariableValue & _v;
+  const VariableValue & _v;
   unsigned int _v_id;
 
   // The reaction coefficient

@@ -24,9 +24,9 @@ protected:
   Real _Pe;
   Real _vd_mag;
   Real _delta;
-  VariableGradient & _grad_potential;
-  VariableValue & _em;
-  VariableGradient & _grad_em;
+  const VariableGradient & _grad_potential;
+  const VariableValue & _em;
+  const VariableGradient & _grad_em;
 };
 
 #endif //ELECTRONARTDIFFUSIVEFLUX_H

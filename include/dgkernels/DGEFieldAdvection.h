@@ -27,8 +27,8 @@ protected:
 
   MooseVariable & _potential_var;
   unsigned int _potential_id;
-  VariableGradient & _grad_potential;
-  VariableGradient & _grad_potential_neighbor;
+  const VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential_neighbor;
   const VariablePhiGradient & _grad_phi_pot;
   const VariablePhiGradient & _grad_phi_neighbor_pot;
 

@@ -40,8 +40,8 @@ protected:
   Real _stoich_coeff;
   
   // coupling variables
-  VariableValue & _reactant1;
-  VariableValue & _reactant2;
+  const VariableValue & _reactant1;
+  const VariableValue & _reactant2;
   
   // Coupling variable IDs
   unsigned int _reactant1_id;

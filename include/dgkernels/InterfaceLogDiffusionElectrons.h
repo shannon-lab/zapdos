@@ -43,7 +43,7 @@ protected:
   const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
 
   MooseVariable & _mean_en_neighbor_var;
-  VariableValue & _mean_en_neighbor;
+  const VariableValue & _mean_en_neighbor;
   unsigned int _mean_en_neighbor_id;
 
   Real _actual_mean_en;

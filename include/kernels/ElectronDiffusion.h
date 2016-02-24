@@ -41,7 +41,7 @@ protected:
 
   // Coupled Variables
 
-  VariableValue & _Te;
+  const VariableValue & _Te;
   unsigned int _Te_id;
 
   // Unique variables

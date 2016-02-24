@@ -32,8 +32,8 @@ class EFieldAdvectionEnergy : public Kernel
 
   // Coupled variables
   unsigned int _potential_id;
-  VariableGradient & _grad_potential;
-  VariableValue & _em;
+  const VariableGradient & _grad_potential;
+  const VariableValue & _em;
   unsigned int _em_id;
 
   Real _d_actual_mean_en_d_em;

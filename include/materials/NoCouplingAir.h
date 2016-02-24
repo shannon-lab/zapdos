@@ -56,7 +56,7 @@ protected:
 
   // Coupled Variables
 
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
 
   // Functions
   

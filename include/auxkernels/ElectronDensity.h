@@ -19,7 +19,7 @@ protected:
 
   virtual Real computeValue();
   
-  VariableValue & _electron_density;
+  const VariableValue & _electron_density;
 };
 
 #endif //ELECTRONDENSITY_H

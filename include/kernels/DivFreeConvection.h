@@ -49,7 +49,7 @@ protected:
 
 private:
 
-VariableGradient & _grad_some_variable; */
+const VariableGradient & _grad_some_variable; */
 
 };
 

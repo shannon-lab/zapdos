@@ -19,7 +19,7 @@ protected:
 
   virtual Real computeValue();
 
-  VariableValue & _density_log;
+  const VariableValue & _density_log;
   const MaterialProperty<Real> & _N_A;
 };
 

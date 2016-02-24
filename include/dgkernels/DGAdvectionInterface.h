@@ -38,8 +38,8 @@ protected:
 
   MooseVariable & _potential_var;
   MooseVariable & _potential_neighbor_var;
-  VariableGradient & _grad_potential;
-  VariableGradient & _grad_potential_neighbor;
+  const VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential_neighbor;
   unsigned int _potential_id;
   unsigned int _potential_neighbor_id;
 

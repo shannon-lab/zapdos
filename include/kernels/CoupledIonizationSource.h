@@ -46,11 +46,11 @@ protected:
   
   unsigned int _potential_id;
   unsigned int _electrons_id;
-  VariableValue & _electron_density;
+  const VariableValue & _electron_density;
   
 private:
   
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
 
 };
 #endif //COUPLEDIONIZATIONSOURCE_H

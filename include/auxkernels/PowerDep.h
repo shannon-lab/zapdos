@@ -18,9 +18,9 @@ public:
 
 protected:
   MooseVariable & _density_var;
-  VariableValue & _density_log;
-  VariableGradient & _grad_density_log;
-  VariableGradient & _grad_potential;
+  const VariableValue & _density_log;
+  const VariableGradient & _grad_density_log;
+  const VariableGradient & _grad_potential;
   const MaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sgn;
   const MaterialProperty<Real> & _diff;

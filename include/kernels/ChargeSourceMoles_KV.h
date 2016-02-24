@@ -23,7 +23,7 @@ class ChargeSourceMoles_KV : public Kernel
   // coupled vars
 
   MooseVariable & _charged_var;
-  VariableValue & _charged;
+  const VariableValue & _charged;
   unsigned int _charged_id;
 
   // Kernel members

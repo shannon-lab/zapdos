@@ -48,7 +48,7 @@ protected:
   
 private:
   
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
 
 };
 #endif //IONIZATIONSOURCE_H

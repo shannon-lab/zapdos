@@ -44,7 +44,7 @@ protected:
   //int _component;
 
   /// The gradient of a coupled variable
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
 };
 
 #endif //EX_H

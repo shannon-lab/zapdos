@@ -40,9 +40,9 @@ protected:
   const MaterialProperty<Real> &  _iz_coeff_efield_b;
   const MaterialProperty<Real> &  _iz_coeff_efield_c;
 
-  VariableGradient & _grad_potential;
-  VariableValue & _em;
-  VariableGradient & _grad_em;
+  const VariableGradient & _grad_potential;
+  const VariableValue & _em;
+  const VariableGradient & _grad_em;
   unsigned int _potential_id;
   unsigned int _em_id;
 };

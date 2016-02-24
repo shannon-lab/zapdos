@@ -26,9 +26,9 @@ class ElectronSource : public Kernel
 
   // Coupled Variables
 
-  VariableValue & _Ars;
+  const VariableValue & _Ars;
   unsigned int _Ars_id;
-  VariableValue & _Te;
+  const VariableValue & _Te;
   unsigned int _Te_id;
 
   // Unique to kernel

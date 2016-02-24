@@ -19,8 +19,8 @@ protected:
 
   virtual Real computeValue();
   const MaterialProperty<Real> & _diffem;
-  VariableValue & _em;
-  VariableGradient & _grad_em;
+  const VariableValue & _em;
+  const VariableGradient & _grad_em;
 };
 
 #endif //ELECTRONDIFFUSIVEFLUX_H

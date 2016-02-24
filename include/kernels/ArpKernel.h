@@ -22,10 +22,10 @@ class ArpKernel : public Kernel
 
   // coupled vars
 
-  VariableValue & _em;
-  VariableGradient & _grad_em;
+  const VariableValue & _em;
+  const VariableGradient & _grad_em;
   unsigned int _em_id;
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
   unsigned int _potential_id;
 
   // Material Properties

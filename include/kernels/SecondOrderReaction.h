@@ -37,7 +37,7 @@ protected:
   Real _reaction_coeff;
   
   // Coupling variable
-  VariableValue & _reactant_two;
+  const VariableValue & _reactant_two;
   
   // Coupling identifier for the second reactant
   unsigned int _reactant_two_id;

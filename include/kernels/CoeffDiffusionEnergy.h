@@ -27,7 +27,7 @@ protected:
   const MaterialProperty<Real> & _diffel;
   const MaterialProperty<Real> & _d_diffel_d_actual_mean_en;
 
-  VariableValue & _em;
+  const VariableValue & _em;
   unsigned int _em_id;
 
   Real _d_diffel_d_u;

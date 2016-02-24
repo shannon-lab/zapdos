@@ -29,7 +29,7 @@ protected:
 
   // Coupled variables
   
-  VariableGradient & _grad_potential;
+  const VariableGradient & _grad_potential;
 };
 
 #endif //ALPHATIMESHSIZE_H

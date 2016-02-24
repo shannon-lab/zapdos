@@ -105,12 +105,12 @@ protected:
   MaterialProperty<Real> & _actual_mean_energy;
   MaterialProperty<Real> & _T_heavy;
 
-  VariableGradient & _grad_potential;
-  VariableValue & _em;
-  VariableValue & _ip;
-  VariableGradient & _grad_em;
-  VariableGradient & _grad_ip;
-  VariableValue & _mean_en;
+  const VariableGradient & _grad_potential;
+  const VariableValue & _em;
+  const VariableValue & _ip;
+  const VariableGradient & _grad_em;
+  const VariableGradient & _grad_ip;
+  const VariableValue & _mean_en;
 };
 
 #endif //GAS_H

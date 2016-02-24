@@ -20,9 +20,9 @@ class DiffusiveFlux : public AuxKernel
   
   // Coupled variables
 
-  VariableGradient & _grad_density_log;
+  const VariableGradient & _grad_density_log;
   MooseVariable & _density_var;
-  VariableValue & _density_log;
+  const VariableValue & _density_log;
 
   // Material properties
 

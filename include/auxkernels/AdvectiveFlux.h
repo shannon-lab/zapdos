@@ -43,8 +43,8 @@ class AdvectiveFlux : public AuxKernel
   // Coupled variables
 
  private:
-  VariableValue & _electron_density;
-  VariableGradient & _grad_potential;
+  const VariableValue & _electron_density;
+  const VariableGradient & _grad_potential;
 };
 
 #endif //ADVECTIVEFLUX_H

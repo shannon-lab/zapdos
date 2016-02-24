@@ -19,7 +19,7 @@ protected:
 
   virtual Real computeValue();
   
-  VariableValue & _ion_density;
+  const VariableValue & _ion_density;
 };
 
 #endif //IONDENSITY_H

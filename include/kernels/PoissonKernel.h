@@ -22,8 +22,8 @@ class PoissonKernel : public Kernel
 
   // coupled vars
 
-  VariableValue & _em;
-  VariableValue & _Arp;
+  const VariableValue & _em;
+  const VariableValue & _Arp;
   unsigned int _em_id;
   unsigned int _Arp_id;
 

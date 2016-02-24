@@ -36,9 +36,9 @@ protected:
   /* virtual Real computeQpOffDiagJacobian(unsigned int jvar); */
 
   bool _lumping;
-  /* VariableValue & _em; */
-  /* VariableValue & _em_dot; */
-  /* VariableValue & _dem_dot; */
+  /* const VariableValue & _em; */
+  /* const VariableValue & _em_dot; */
+  /* const VariableValue & _dem_dot; */
   /* unsigned int _em_id; */
 };
 

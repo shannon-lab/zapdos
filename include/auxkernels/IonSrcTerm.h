@@ -30,8 +30,8 @@ protected:
 
   // Coupled variables
   
-  VariableValue & _electron_density;
-  VariableGradient & _grad_potential;
+  const VariableValue & _electron_density;
+  const VariableGradient & _grad_potential;
 };
 
 #endif //IONSRCTERM_H

@@ -27,7 +27,7 @@ protected:
   const MaterialProperty<Real> & _diffem;
   const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
 
-  VariableValue & _mean_en;
+  const VariableValue & _mean_en;
   unsigned int _mean_en_id;
 
   Real _d_diffem_d_u;

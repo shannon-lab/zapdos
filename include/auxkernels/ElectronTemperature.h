@@ -19,8 +19,8 @@ protected:
 
   virtual Real computeValue();
   
-  VariableValue & _electron_density;
-  VariableValue & _mean_en;
+  const VariableValue & _electron_density;
+  const VariableValue & _mean_en;
 };
 
 #endif //ELECTRONTEMPERATURE_H

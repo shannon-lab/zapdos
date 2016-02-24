@@ -43,10 +43,10 @@ protected:
   const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
   const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
 
-  VariableValue & _mean_en;
-  VariableGradient & _grad_potential;
-  VariableValue & _em;
-  VariableGradient & _grad_em;
+  const VariableValue & _mean_en;
+  const VariableGradient & _grad_potential;
+  const VariableValue & _em;
+  const VariableGradient & _grad_em;
   unsigned int _mean_en_id;
   unsigned int _potential_id;
   unsigned int _em_id;

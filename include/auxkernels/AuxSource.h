@@ -20,9 +20,9 @@ protected:
   Real _muem;
   Real _diff;
 
-  VariableValue & _em;
-  VariableGradient & _grad_potential;
-  VariableGradient & _grad_em;
+  const VariableValue & _em;
+  const VariableGradient & _grad_potential;
+  const VariableGradient & _grad_em;
   virtual Real computeValue();
 
 };

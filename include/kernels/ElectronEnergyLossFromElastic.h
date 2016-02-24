@@ -47,9 +47,9 @@ protected:
   const MaterialProperty<Real> & _alpha_el;
   const MaterialProperty<Real> & _d_el_d_actual_mean_en;
 
-  VariableGradient & _grad_potential;
-  VariableValue & _em;
-  VariableGradient & _grad_em;
+  const VariableGradient & _grad_potential;
+  const VariableValue & _em;
+  const VariableGradient & _grad_em;
   unsigned int _potential_id;
   unsigned int _em_id;
 };
