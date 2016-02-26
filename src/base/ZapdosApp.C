@@ -175,14 +175,15 @@
 #include "AddLotsOfPotentialDrivenArtificialDiff.h"
 
 // DGKernels
-
-#include "InterfaceAdvection.h"
-#include "InterfaceLogDiffusionElectrons.h"
 #include "DGCoeffDiffusion.h"
 #include "DGEFieldAdvection.h"
+#include "DGAdvection.h"
+
+// InterfaceKernels
+#include "InterfaceAdvection.h"
+#include "InterfaceLogDiffusionElectrons.h"
 #include "DGPenaltyTiedValue.h"
 #include "DGDiffusionInt.h"
-#include "DGAdvection.h"
 #include "DGAdvectionInterface.h"
 #include "DGMatDiffusionInt.h"
 #include "DGMatDiffusionLogInt.h"
@@ -384,14 +385,14 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(RobinBC);
   registerInterfaceKernel(InterfaceAdvection);
   registerInterfaceKernel(InterfaceLogDiffusionElectrons);
+  registerInterfaceKernel(DGPenaltyTiedValue);
+  registerInterfaceKernel(DGDiffusionInt);
+  registerInterfaceKernel(DGAdvectionInterface);
+  registerInterfaceKernel(DGMatDiffusionInt);
+  registerInterfaceKernel(DGMatDiffusionLogInt);
   registerDGKernel(DGAdvection);
   registerDGKernel(DGCoeffDiffusion);
   registerDGKernel(DGEFieldAdvection);
-  registerDGKernel(DGPenaltyTiedValue);
-  registerDGKernel(DGDiffusionInt);
-  registerDGKernel(DGAdvectionInterface);
-  registerDGKernel(DGMatDiffusionInt);
-  registerDGKernel(DGMatDiffusionLogInt);
   registerConstraint(EqualGradientConstraint);
   registerConstraint(ArbitrarilyTiedValueConstraint);
 }

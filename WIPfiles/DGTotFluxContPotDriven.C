@@ -38,7 +38,7 @@ DGTotFluxContPotDriven::computeQpResidual(Moose::DGResidualType type)
   else
     is_elem = false;
 
-  const unsigned int elem_b_order = static_cast<unsigned int> (is_elem ? _var.getOrder() : _neighbor_var.getOrder());
+  const unsigned int elem_b_order = static_cast<unsigned int> (is_elem ? _var.order() : _neighbor_var.order());
   const double h_elem = _current_elem->volume()/_current_side_elem->volume() * 1./std::pow(elem_b_order, 2.);
 
   switch (type)
@@ -74,7 +74,7 @@ DGTotFluxContPotDriven::computeQpJacobian(Moose::DGJacobianType type)
   else
     is_elem = false;
 
-  const unsigned int elem_b_order = static_cast<unsigned int> (is_elem ? _var.getOrder() : _neighbor_var.getOrder());
+  const unsigned int elem_b_order = static_cast<unsigned int> (is_elem ? _var.order() : _neighbor_var.order());
   const double h_elem = _current_elem->volume()/_current_side_elem->volume() * 1./std::pow(elem_b_order, 2.);
 
   switch (type)

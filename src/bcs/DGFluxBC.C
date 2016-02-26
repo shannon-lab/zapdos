@@ -63,7 +63,7 @@ DGFluxBC::computeQpResidual()
 {
 	Real r = 0;
 	
-	const unsigned int elem_b_order = static_cast<unsigned int> (_var.getOrder());
+	const unsigned int elem_b_order = static_cast<unsigned int> (_var.order());
 	const double h_elem = _current_elem->volume()/_current_side_elem->volume() * 1./std::pow(elem_b_order, 2.);
 	
 	//Output
@@ -85,7 +85,7 @@ DGFluxBC::computeQpJacobian()
 {
 	Real r = 0;
 	
-	const unsigned int elem_b_order = static_cast<unsigned int> (_var.getOrder());
+	const unsigned int elem_b_order = static_cast<unsigned int> (_var.order());
 	const double h_elem = _current_elem->volume()/_current_side_elem->volume() * 1./std::pow(elem_b_order, 2.);
 	
 	//Output
