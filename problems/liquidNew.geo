@@ -4,7 +4,7 @@ dom1Mult = 1e7;
 // dom1Mult = 1;
 
 Point(1) = {0, 0, 0, 2e-9 * dom0Mult};
-Point(3) = {.5e-3 * dom0Mult, 0, 0, 13e-6 * dom0Mult};
+Point(3) = {.5e-3 * dom0Mult, 0, 0, 50e-6 * dom0Mult};
 Line(2) = {1,3};
 Point(8) = {1e-3 * dom0Mult, 0, 0, 1e-9 * dom0Mult};
 Line(7) = {3,8};

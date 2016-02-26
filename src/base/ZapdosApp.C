@@ -382,8 +382,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(PhysicalElectronEnergyBC);
   registerBoundaryCondition(OutflowBC);
   registerBoundaryCondition(RobinBC);
-  registerDGKernel(InterfaceAdvection);
-  registerDGKernel(InterfaceLogDiffusionElectrons);
+  registerInterfaceKernel(InterfaceAdvection);
+  registerInterfaceKernel(InterfaceLogDiffusionElectrons);
   registerDGKernel(DGAdvection);
   registerDGKernel(DGCoeffDiffusion);
   registerDGKernel(DGEFieldAdvection);
