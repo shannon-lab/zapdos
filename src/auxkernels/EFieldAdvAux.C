@@ -20,11 +20,13 @@ InputParameters validParams<EFieldAdvAux>()
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredCoupledVar("density_log","The variable representing the log of the density.");
+  params.addRequiredParam<Real>("position_units", "Units of position.");
   return params;
 }
 
 EFieldAdvAux::EFieldAdvAux(const InputParameters & parameters) :
     AuxKernel(parameters),
+    _r_units(1. / getParam<Real>("position_units")),
 
     // Coupled variables
 
@@ -40,5 +42,5 @@ EFieldAdvAux::EFieldAdvAux(const InputParameters & parameters) :
 
 Real EFieldAdvAux::computeValue()
 {
-  return _sgn[_qp] * _mu[_qp] * std::exp(_density_log[_qp]) * -_grad_potential[_qp](0) * 6.02e23;
+  return _sgn[_qp] * _mu[_qp] * std::exp(_density_log[_qp]) * -_grad_potential[_qp](0) * _r_units * 6.02e23;
 }

@@ -144,8 +144,6 @@ Gas::Gas(const InputParameters & parameters) :
       actual_mean_energy.push_back(value);
       myfile >> value;
       alpha.push_back(value);
-      // myfile >> value;
-      // d_alpha_d_actual_mean_energy.push_back(value);
       myfile >> value;
       alphaEx.push_back(value);
       myfile >> value;
@@ -161,7 +159,6 @@ Gas::Gas(const InputParameters & parameters) :
   else std::cerr << "Unable to open file" << std::endl;
 
   _alpha_interpolation.setData(actual_mean_energy, alpha);
-  // _d_alpha_d_actual_mean_energy_interpolation.setData(actual_mean_energy, d_alpha_d_actual_mean_energy);
   _alphaEx_interpolation.setData(actual_mean_energy, alphaEx);
   _alphaEl_interpolation.setData(actual_mean_energy, alphaEl);
   _mu_interpolation.setData(actual_mean_energy, mu);

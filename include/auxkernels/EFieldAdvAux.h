@@ -31,7 +31,9 @@ class EFieldAdvAux : public AuxKernel
  protected:
 
   virtual Real computeValue();
-  
+
+  Real _r_units;
+
   // Coupled variables
 
   MooseVariable & _density_var;

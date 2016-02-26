@@ -40,11 +40,14 @@ protected:
    * points coincide with the nodes.
    */
   virtual Real computeValue();
-  
+
   //int _component;
+  Real _r_units;
+  std::string _potential_units;
 
   /// The gradient of a coupled variable
   const VariableGradient & _grad_potential;
+  Real _voltage_scaling;
 };
 
 #endif //EFIELD_H

@@ -17,7 +17,9 @@ class DiffusiveFlux : public AuxKernel
  protected:
 
   virtual Real computeValue();
-  
+
+  Real _r_units;
+
   // Coupled variables
 
   const VariableGradient & _grad_density_log;
@@ -26,7 +28,7 @@ class DiffusiveFlux : public AuxKernel
 
   // Material properties
 
-  const MaterialProperty<Real> & _diff;  
+  const MaterialProperty<Real> & _diff;
 };
 
 #endif //DIFFUSIVEFLUX_H

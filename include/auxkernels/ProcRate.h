@@ -17,6 +17,8 @@ public:
   virtual Real computeValue();
 
 protected:
+  Real _r_units;
+
   const VariableValue & _em;
   const VariableGradient & _grad_em;
   const VariableGradient & _grad_potential;

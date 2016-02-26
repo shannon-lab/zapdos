@@ -17,6 +17,8 @@ public:
   virtual Real computeValue();
 
 protected:
+  Real _r_units;
+
   MooseVariable & _density_var;
   const VariableValue & _density_log;
   const VariableGradient & _grad_density_log;

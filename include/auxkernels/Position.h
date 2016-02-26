@@ -38,6 +38,8 @@ public:
   virtual ~Position() {}
 
 protected:
+  Real _r_units;
+
   virtual Real computeValue();
 
 };

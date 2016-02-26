@@ -20,14 +20,15 @@ ChargeSourceMoles_KV::ChargeSourceMoles_KV(const InputParameters & parameters) :
   _sgn(getMaterialProperty<Real>("sgn"+_charged_var.name())),
   _N_A(getMaterialProperty<Real>("N_A")),
   _potential_units(getParam<std::string>("potential_units"))
-{}
-
-ChargeSourceMoles_KV::~ChargeSourceMoles_KV()
 {
   if (_potential_units.compare("V") == 0)
     _voltage_scaling = 1.;
   else if (_potential_units.compare("kV") == 0)
     _voltage_scaling = 1000;
+}
+
+ChargeSourceMoles_KV::~ChargeSourceMoles_KV()
+{
 }
 
 Real
