@@ -99,19 +99,19 @@ WD::computeQpProperties()
     {
       _velocity[_qp] = _velocity_function.vectorValue(_t,_qp);
     }
-  _velocity_norm[_qp] = _velocity[_qp] / _velocity[_qp].size();
-  _peclet_num[_qp] = _current_elem->hmax() * _velocity[_qp].size() / (2.0 * _diffusivity[_qp]);
+  _velocity_norm[_qp] = _velocity[_qp] / _velocity[_qp].norm();
+  _peclet_num[_qp] = _current_elem->hmax() * _velocity[_qp].norm() / (2.0 * _diffusivity[_qp]);
   _alpha[_qp] = 1.0 / std::tanh(_peclet_num[_qp]) - 1.0 / _peclet_num[_qp];
 
   if (_consistent)
     {
       // Consistent diffusion formulation of tau
-      _tau[_qp] = _delta * _current_elem->hmax() * _alpha[_qp] / _velocity[_qp].size();
+      _tau[_qp] = _delta * _current_elem->hmax() * _alpha[_qp] / _velocity[_qp].norm();
     }
   else if (!_consistent)
     {
       // Isotropic diffusion formulation of tau
 
-      _tau[_qp] = _delta * _current_elem->hmax() / _velocity[_qp].size();
+      _tau[_qp] = _delta * _current_elem->hmax() / _velocity[_qp].norm();
     }
 }

@@ -48,7 +48,7 @@ ElectronEnergyKernel::~ElectronEnergyKernel()
 Real
 ElectronEnergyKernel::computeQpResidual()
 {
-  // _vd_mag = std::abs(_muel[_qp]*_grad_potential[_qp].size());
+  // _vd_mag = std::abs(_muel[_qp]*_grad_potential[_qp].norm());
   // _Pe = _vd_mag*_current_elem->hmax()/_diffel[_qp];
   // _alpha = std::min(1.0,_Pe/6.0);
   // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
@@ -66,7 +66,7 @@ ElectronEnergyKernel::computeQpResidual()
 Real
 ElectronEnergyKernel::computeQpJacobian()
 {
-  // _vd_mag = std::abs(_muel[_qp]*_grad_potential[_qp].size());
+  // _vd_mag = std::abs(_muel[_qp]*_grad_potential[_qp].norm());
   // _Pe = _vd_mag*_current_elem->hmax()/_diffel[_qp];
   // _alpha = std::min(1.0,_Pe/6.0);
   // _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;

@@ -45,7 +45,7 @@ ElectronsFromIonizationLFA_KV::~ElectronsFromIonizationLFA_KV()
 Real
 ElectronsFromIonizationLFA_KV::computeQpResidual()
 {
-    return -_test[_i][_qp] * _iz_coeff_efield_a[_qp] * std::pow(_grad_potential[_qp].size() * 1000. + std::numeric_limits<double>::epsilon(), _iz_coeff_efield_b[_qp]) * std::exp(-_iz_coeff_efield_c[_qp] / (_grad_potential[_qp].size() * 1000. + std::numeric_limits<double>::epsilon())) * (-_muem[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) - _diffem[_qp] * std::exp(_u[_qp]) * _grad_u[_qp]).size();
+    return -_test[_i][_qp] * _iz_coeff_efield_a[_qp] * std::pow(_grad_potential[_qp].norm() * 1000. + std::numeric_limits<double>::epsilon(), _iz_coeff_efield_b[_qp]) * std::exp(-_iz_coeff_efield_c[_qp] / (_grad_potential[_qp].norm() * 1000. + std::numeric_limits<double>::epsilon())) * (-_muem[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) - _diffem[_qp] * std::exp(_u[_qp]) * _grad_u[_qp]).norm();
 }
 
 Real
@@ -54,7 +54,7 @@ ElectronsFromIonizationLFA_KV::computeQpJacobian()
   RealVectorValue _em_flux = -_muem[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) - _diffem[_qp] * std::exp(_u[_qp]) * _grad_u[_qp];
   RealVectorValue _d_em_flux_d_em = -_muem[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] - _diffem[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] + std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]);
 
-  return -_test[_i][_qp]*_iz_coeff_efield_a[_qp]*std::pow(_grad_potential[_qp].size() * 1000. + std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].size() * 1000. + std::numeric_limits<double>::epsilon()))*_em_flux*_d_em_flux_d_em/(_em_flux.size()+std::numeric_limits<double>::epsilon());
+  return -_test[_i][_qp]*_iz_coeff_efield_a[_qp]*std::pow(_grad_potential[_qp].norm() * 1000. + std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].norm() * 1000. + std::numeric_limits<double>::epsilon()))*_em_flux*_d_em_flux_d_em/(_em_flux.norm()+std::numeric_limits<double>::epsilon());
 }
 
 Real
@@ -62,14 +62,14 @@ ElectronsFromIonizationLFA_KV::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id) {
    RealVectorValue _em_flux = -_muem[_qp] * -_grad_potential[_qp] * std::exp(_u[_qp])-_diffem[_qp] * std::exp(_u[_qp]) * _grad_u[_qp];
-   Real _em_flux_mag = _em_flux.size();
+   Real _em_flux_mag = _em_flux.norm();
    RealVectorValue _d_em_flux_d_potential = -_muem[_qp]*-_grad_phi[_j][_qp]*std::exp(_u[_qp]);
    Real _d_em_flux_mag_d_potential = _em_flux*_d_em_flux_d_potential/(_em_flux_mag+std::numeric_limits<double>::epsilon());
-   Real _iz = _iz_coeff_efield_a[_qp] * std::pow(_grad_potential[_qp].size() * 1000. + std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].size() * 1000. + std::numeric_limits<double>::epsilon()));
-   Real iz_first_product = std::pow(_grad_potential[_qp].size() * 1000. + std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp]);
-   Real d_iz_first_product_d_potential = _iz_coeff_efield_b[_qp] * std::pow(1000. * _grad_potential[_qp].size() + std::numeric_limits<double>::epsilon(), _iz_coeff_efield_b[_qp] - 1.) * 1000. * _grad_potential[_qp] * _grad_phi[_j][_qp] / (_grad_potential[_qp].size() + std::numeric_limits<double>::epsilon());
-   Real iz_second_product = std::exp(-_iz_coeff_efield_c[_qp] / (_grad_potential[_qp].size() * 1000. + std::numeric_limits<double>::epsilon()));
-   Real d_iz_second_product_d_potential = std::exp(-_iz_coeff_efield_c[_qp] / (_grad_potential[_qp].size() * 1000. + std::numeric_limits<double>::epsilon())) * _iz_coeff_efield_c[_qp] / 1000. * _grad_potential[_qp] * _grad_phi[_j][_qp] / (std::pow(_grad_potential[_qp].size(), 3.) + std::numeric_limits<double>::epsilon());
+   Real _iz = _iz_coeff_efield_a[_qp] * std::pow(_grad_potential[_qp].norm() * 1000. + std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].norm() * 1000. + std::numeric_limits<double>::epsilon()));
+   Real iz_first_product = std::pow(_grad_potential[_qp].norm() * 1000. + std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp]);
+   Real d_iz_first_product_d_potential = _iz_coeff_efield_b[_qp] * std::pow(1000. * _grad_potential[_qp].norm() + std::numeric_limits<double>::epsilon(), _iz_coeff_efield_b[_qp] - 1.) * 1000. * _grad_potential[_qp] * _grad_phi[_j][_qp] / (_grad_potential[_qp].norm() + std::numeric_limits<double>::epsilon());
+   Real iz_second_product = std::exp(-_iz_coeff_efield_c[_qp] / (_grad_potential[_qp].norm() * 1000. + std::numeric_limits<double>::epsilon()));
+   Real d_iz_second_product_d_potential = std::exp(-_iz_coeff_efield_c[_qp] / (_grad_potential[_qp].norm() * 1000. + std::numeric_limits<double>::epsilon())) * _iz_coeff_efield_c[_qp] / 1000. * _grad_potential[_qp] * _grad_phi[_j][_qp] / (std::pow(_grad_potential[_qp].norm(), 3.) + std::numeric_limits<double>::epsilon());
    Real d_iz_d_potential = _iz_coeff_efield_a[_qp] * (iz_first_product * d_iz_second_product_d_potential + d_iz_first_product_d_potential * iz_second_product);
 
     return -_test[_i][_qp] * (_iz * _d_em_flux_mag_d_potential + d_iz_d_potential * _em_flux_mag);

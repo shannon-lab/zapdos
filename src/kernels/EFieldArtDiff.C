@@ -31,7 +31,7 @@ EFieldArtDiff::~EFieldArtDiff()
 Real
 EFieldArtDiff::computeQpResidual()
 {
-  Real  vd_mag = _mu[_qp]*_grad_potential[_qp].size();
+  Real  vd_mag = _mu[_qp]*_grad_potential[_qp].norm();
   Real  delta = vd_mag*_current_elem->hmax()/2.0;
 
   return -_grad_test[_i][_qp]*(-delta*std::exp(_u[_qp])*_grad_u[_qp]) * _scale;
@@ -40,7 +40,7 @@ EFieldArtDiff::computeQpResidual()
 Real
 EFieldArtDiff::computeQpJacobian()
 {
-  Real  vd_mag = _mu[_qp]*_grad_potential[_qp].size();
+  Real  vd_mag = _mu[_qp]*_grad_potential[_qp].norm();
   Real  delta = vd_mag*_current_elem->hmax()/2.0;
 
   return -_grad_test[_i][_qp]*(-delta*(std::exp(_u[_qp])*_phi[_j][_qp]*_grad_u[_qp] + std::exp(_u[_qp])*_grad_phi[_j][_qp])) * _scale;
@@ -50,8 +50,8 @@ Real
 EFieldArtDiff::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id) {
-    Real  vd_mag = _mu[_qp]*_grad_potential[_qp].size();
-    Real  d_vd_mag_d_potential = _mu[_qp]*_grad_potential[_qp]*_grad_phi[_j][_qp]/(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon());
+    Real  vd_mag = _mu[_qp]*_grad_potential[_qp].norm();
+    Real  d_vd_mag_d_potential = _mu[_qp]*_grad_potential[_qp]*_grad_phi[_j][_qp]/(_grad_potential[_qp].norm()+std::numeric_limits<double>::epsilon());
     Real d_delta_d_potential = _current_elem->hmax()/2.0*d_vd_mag_d_potential;
 
     return -_grad_test[_i][_qp] * -d_delta_d_potential * std::exp(_u[_qp]) * _grad_u[_qp] * _scale;

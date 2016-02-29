@@ -25,8 +25,8 @@ AuxSource::AuxSource(const InputParameters & parameters) :
 Real
 AuxSource::computeValue()
 {
-  return 0.35*std::exp(-1.65e7/(_grad_potential[_qp].size()))*(-_muem*-_grad_potential[_qp]*_em[_qp]-_diff*_grad_em[_qp]).size();
-  // return 1.0/(_grad_potential.size());
+  return 0.35 * std::exp(-1.65e7/(_grad_potential[_qp].norm())) * (-_muem*-_grad_potential[_qp]*_em[_qp]-_diff*_grad_em[_qp]).norm();
+  // return 1.0/(_grad_potential.norm());
 }
 
  

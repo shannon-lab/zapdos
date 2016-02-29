@@ -32,5 +32,5 @@ ProcRate::computeValue()
 {
   _em_current = 6.02e23 * (_sgnem[_qp] * _muem[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) - _diffem[_qp]* std::exp(_em[_qp]) * _grad_em[_qp] * _r_units);
 
-  return _alpha[_qp] * _em_current.size();
+  return _alpha[_qp] * _em_current.norm();
 }

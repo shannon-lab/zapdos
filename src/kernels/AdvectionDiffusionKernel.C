@@ -26,7 +26,7 @@ AdvectionDiffusionKernel::~AdvectionDiffusionKernel()
 Real
 AdvectionDiffusionKernel::computeQpResidual()
 {
-  _vd_mag = _a.size();
+  _vd_mag = _a.norm();
   _Pe = _vd_mag*_current_elem->hmax()/_diff;
   _alpha = std::min(1.0,_Pe/6.0);
   _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;
@@ -37,7 +37,7 @@ AdvectionDiffusionKernel::computeQpResidual()
 Real
 AdvectionDiffusionKernel::computeQpJacobian()
 {
-  _vd_mag = _a.size();
+  _vd_mag = _a.norm();
   _Pe = _vd_mag*_current_elem->hmax()/_diff;
   _alpha = std::min(1.0,_Pe/6.0);
   _delta = _alpha*_vd_mag*_current_elem->hmax()/2.0;

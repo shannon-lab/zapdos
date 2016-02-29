@@ -49,7 +49,7 @@ IonsFromIonizationLFA::~IonsFromIonizationLFA()
 Real
 IonsFromIonizationLFA::computeQpResidual()
 {
-  return -_test[_i][_qp]*_iz_coeff_efield_a[_qp]*std::pow(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon()))*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
+  return -_test[_i][_qp]*_iz_coeff_efield_a[_qp]*std::pow(_grad_potential[_qp].norm()+std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].norm()+std::numeric_limits<double>::epsilon()))*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).norm();
 }
 
 Real
@@ -63,11 +63,11 @@ IonsFromIonizationLFA::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id) {
    RealVectorValue _em_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
-   Real _em_flux_mag = _em_flux.size();
+   Real _em_flux_mag = _em_flux.norm();
    RealVectorValue _d_em_flux_d_potential = -_muem[_qp]*-_grad_phi[_j][_qp]*std::exp(_em[_qp]);
    Real _d_em_flux_mag_d_potential = _em_flux*_d_em_flux_d_potential/(_em_flux_mag+std::numeric_limits<double>::epsilon());
-   Real _iz = _iz_coeff_efield_a[_qp]*std::pow(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon()));
-   Real _d_iz_d_potential = std::pow(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp]-2.0)*_iz_coeff_efield_a[_qp]*(_grad_potential[_qp].size()*_iz_coeff_efield_b[_qp]+_iz_coeff_efield_c[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon()))*_grad_potential[_qp]*_grad_phi[_j][_qp]/(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon());
+   Real _iz = _iz_coeff_efield_a[_qp]*std::pow(_grad_potential[_qp].norm()+std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].norm()+std::numeric_limits<double>::epsilon()));
+   Real _d_iz_d_potential = std::pow(_grad_potential[_qp].norm()+std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp]-2.0)*_iz_coeff_efield_a[_qp]*(_grad_potential[_qp].norm()*_iz_coeff_efield_b[_qp]+_iz_coeff_efield_c[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].norm()+std::numeric_limits<double>::epsilon()))*_grad_potential[_qp]*_grad_phi[_j][_qp]/(_grad_potential[_qp].norm()+std::numeric_limits<double>::epsilon());
 
     return -_test[_i][_qp]*(_iz*_d_em_flux_mag_d_potential + _d_iz_d_potential*_em_flux_mag);
   }
@@ -75,9 +75,9 @@ IonsFromIonizationLFA::computeQpOffDiagJacobian(unsigned int jvar)
   else if (jvar == _em_id) {
     RealVectorValue _em_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
     RealVectorValue _d_em_flux_d_em = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]-_diffem[_qp]*(std::exp(_em[_qp])*_grad_phi[_j][_qp]+std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp]);
-    Real _iz = _iz_coeff_efield_a[_qp]*std::pow(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].size()+std::numeric_limits<double>::epsilon()));
+    Real _iz = _iz_coeff_efield_a[_qp]*std::pow(_grad_potential[_qp].norm()+std::numeric_limits<double>::epsilon(),_iz_coeff_efield_b[_qp])*std::exp(-_iz_coeff_efield_c[_qp]/(_grad_potential[_qp].norm()+std::numeric_limits<double>::epsilon()));
 
-    return -_test[_i][_qp]*_iz*_em_flux*_d_em_flux_d_em/(_em_flux.size()+std::numeric_limits<double>::epsilon());
+    return -_test[_i][_qp]*_iz*_em_flux*_d_em_flux_d_em/(_em_flux.norm()+std::numeric_limits<double>::epsilon());
 
   }
 

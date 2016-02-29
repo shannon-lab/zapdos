@@ -57,7 +57,7 @@ ElectronEnergyBolosKernel::~ElectronEnergyBolosKernel()
 Real
 ElectronEnergyBolosKernel::computeQpResidual()
 {
-  Real _electron_flux_mag = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
+  Real _electron_flux_mag = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).norm();
   Real _iz_term = _alpha_iz[_qp] * _electron_flux_mag * -_Eiz[_qp];
   Real _ex_term = _alpha_ex[_qp] * _electron_flux_mag * -_Eex[_qp];
   Real _Eel = 3.0*_mem[_qp]/_mip[_qp]*2.0/3*std::exp(_u[_qp]-_em[_qp]);
@@ -89,7 +89,7 @@ ElectronEnergyBolosKernel::computeQpJacobian()
 
   RealVectorValue _electron_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
   RealVectorValue _d_electron_flux_d_mean_en = -_d_muem_d_mean_en*-_grad_potential[_qp]*std::exp(_em[_qp])-_d_diffem_d_mean_en*std::exp(_em[_qp])*_grad_em[_qp];
-  Real _electron_flux_mag = _electron_flux.size();
+  Real _electron_flux_mag = _electron_flux.norm();
   Real _d_electron_flux_mag_d_mean_en = _electron_flux*_d_electron_flux_d_mean_en/(_electron_flux_mag+std::numeric_limits<double>::epsilon());
 
   Real _d_Joule_d_mean_en = -_grad_potential[_qp] * _d_electron_flux_d_mean_en;
@@ -134,7 +134,7 @@ ElectronEnergyBolosKernel::computeQpOffDiagJacobian(unsigned int jvar)
   RealVectorValue _electron_flux = -_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp];
   RealVectorValue _d_electron_flux_d_em = -_d_muem_d_em*-_grad_potential[_qp]*std::exp(_em[_qp])-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]-_d_diffem_d_em*std::exp(_em[_qp])*_grad_em[_qp]-_diffem[_qp]*std::exp(_em[_qp])*_phi[_j][_qp]*_grad_em[_qp]-_diffem[_qp]*std::exp(_em[_qp])*_grad_phi[_j][_qp];
   RealVectorValue _d_electron_flux_d_potential = -_muem[_qp]*-_grad_phi[_j][_qp]*std::exp(_em[_qp]);
-  Real _electron_flux_mag = _electron_flux.size();
+  Real _electron_flux_mag = _electron_flux.norm();
   Real _d_electron_flux_mag_d_em = _electron_flux*_d_electron_flux_d_em/(_electron_flux_mag+std::numeric_limits<double>::epsilon());
   Real _d_electron_flux_mag_d_potential = _electron_flux*_d_electron_flux_d_potential/(_electron_flux_mag+std::numeric_limits<double>::epsilon());
 

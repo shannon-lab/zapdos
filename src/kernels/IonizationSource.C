@@ -47,15 +47,15 @@ This scaling is evident anywhere where you see the potential multiplied by _pote
 Real
 IonizationSource::computeQpResidual()
 {
-  /* return -_test[_i][_qp]*_ionization_coeff[_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0))*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].size()*_u[_qp]; */
-  return -_test[_i][_qp]*std::max(std::exp(-1.0/(_grad_potential[_qp].size()+1.0e-6))*_velocity[_qp].size()*_u[_qp],0.0);
+  /* return -_test[_i][_qp]*_ionization_coeff[_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].norm()+1.0))*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].norm()*_u[_qp]; */
+  return -_test[_i][_qp]*std::max(std::exp(-1.0/(_grad_potential[_qp].norm()+1.0e-6))*_velocity[_qp].norm()*_u[_qp],0.0);
 }
 
 Real
 IonizationSource::computeQpJacobian()
 {
-  /* return -_test[_i][_qp]*_ionization_coeff[_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0))*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].size()*_phi[_j][_qp]; */
-  return -_test[_i][_qp]*std::exp(-1.0/(_grad_potential[_qp].size()+1.0e-6))*_velocity[_qp].size()*_phi[_j][_qp];
+  /* return -_test[_i][_qp]*_ionization_coeff[_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].norm()+1.0))*_velocity_coeff[_qp]*_potential_mult[_qp]*_grad_potential[_qp].norm()*_phi[_j][_qp]; */
+  return -_test[_i][_qp]*std::exp(-1.0/(_grad_potential[_qp].norm()+1.0e-6))*_velocity[_qp].norm()*_phi[_j][_qp];
 }
 
 /* Real
@@ -63,7 +63,7 @@ IonizationSource::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
   {
-    return _test[_i][_qp]*_ionization_coeff[_qp]*_velocity_coeff[_qp]*_u[_qp]*_potential_mult[_qp]*_grad_potential[_qp]*_grad_phi[_j][_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0))*(_ion_activation_energy[_qp]/(_grad_potential[_qp]*_grad_potential[_qp]*std::pow(_potential_mult[_qp],2)+1.0)-1.0/(_potential_mult[_qp]*_grad_potential[_qp].size()+1.0));
+    return _test[_i][_qp]*_ionization_coeff[_qp]*_velocity_coeff[_qp]*_u[_qp]*_potential_mult[_qp]*_grad_potential[_qp]*_grad_phi[_j][_qp]*std::exp(-_ion_activation_energy[_qp]/(_potential_mult[_qp]*_grad_potential[_qp].norm()+1.0))*(_ion_activation_energy[_qp]/(_grad_potential[_qp]*_grad_potential[_qp]*std::pow(_potential_mult[_qp],2)+1.0)-1.0/(_potential_mult[_qp]*_grad_potential[_qp].norm()+1.0));
   }
   
   return 0.0;

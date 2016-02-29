@@ -35,7 +35,7 @@ Current::computeValue()
 
   if (_art_diff)
   {
-    Real vd_mag = _mu[_qp] * _grad_potential[_qp].size() * _r_units;
+    Real vd_mag = _mu[_qp] * _grad_potential[_qp].norm() * _r_units;
     Real delta = vd_mag * _current_elem->hmax()/2.;
     r += _sgn[_qp] * 1.6e-19 * 6.02e23 * -delta * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0) * _r_units;
   }

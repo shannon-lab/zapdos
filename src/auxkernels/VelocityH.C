@@ -59,22 +59,22 @@ VelocityH::VelocityH(const InputParameters & parameters) :
 Real
 VelocityH::computeValue()
 {
-  if (_grad_some_var[_qp].size() == 0)
+  if (_grad_some_var[_qp].norm() == 0)
     {
       _velocity_h = _velocity[_qp];
-      /*      _peclet_num_h = _current_elem->hmax() * _velocity_h.size() / (2.0 * _diffusivity[_qp]);
+      /*      _peclet_num_h = _current_elem->hmax() * _velocity_h.norm() / (2.0 * _diffusivity[_qp]);
       _alpha_h = 1.0 / std::tanh(_peclet_num_h) - 1.0 / _peclet_num_h;
-      _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.size());
+      _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.norm());
       _sigma = std::max(0.0,_tau_h-_tau[_qp]); */
-      return _velocity_h.size();
+      return _velocity_h.norm();
     }
   else
     {
-      _velocity_h = _velocity[_qp]*_grad_some_var[_qp] / std::pow(_grad_some_var[_qp].size(),2) * _grad_some_var[_qp];
-      /*      _peclet_num_h = _current_elem->hmax() * _velocity_h.size() / (2.0 * _diffusivity[_qp]);
+      _velocity_h = _velocity[_qp]*_grad_some_var[_qp] / std::pow(_grad_some_var[_qp].norm(),2) * _grad_some_var[_qp];
+      /*      _peclet_num_h = _current_elem->hmax() * _velocity_h.norm() / (2.0 * _diffusivity[_qp]);
       _alpha_h = 1.0 / std::tanh(_peclet_num_h) - 1.0 / _peclet_num_h;
-      _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.size());
+      _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.norm());
       _sigma = std::max(0.0,_tau_h-_tau[_qp]); */
-      return _velocity_h.size();
+      return _velocity_h.norm();
     }
 }

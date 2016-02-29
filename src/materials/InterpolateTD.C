@@ -101,11 +101,11 @@ InterpolateTD::InterpolateTD(const InputParameters & parameters) :
 void
 InterpolateTD::computeQpProperties()
 {  
-  _muem[_qp] = _mobility_interpolation.sample(_grad_potential[_qp].size());
-  _diffem[_qp] = _diffusivity_interpolation.sample(_grad_potential[_qp].size());
+  _muem[_qp] = _mobility_interpolation.sample(_grad_potential[_qp].norm());
+  _diffem[_qp] = _diffusivity_interpolation.sample(_grad_potential[_qp].norm());
   _muip[_qp] = _muem[_qp]/100.0;
   _diffip[_qp] = -_diffem[_qp]/100.0;
-  _rate_coeff_ion[_qp] = _alpha_interpolation.sample(_grad_potential[_qp].size()); // rate_coeff_ion is synonymous with alpha in this case. 
+  _rate_coeff_ion[_qp] = _alpha_interpolation.sample(_grad_potential[_qp].norm()); // rate_coeff_ion is synonymous with alpha in this case. 
   _Ar[_qp] = 1.01e5/(300*1.38e-23);
   _muel[_qp] = 5.0/3.0*_muem[_qp];
   _diffel[_qp] = 5.0/3.0*_diffem[_qp];
@@ -122,7 +122,7 @@ InterpolateTD::computeQpProperties()
   _vthermal_ip[_qp] = 1.6*sqrt(_k_boltz[_qp]*_Tip_lfa[_qp]/_mip[_qp]);
 
   _ElectronTotalFluxMag[_qp] = std::sqrt((-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp])*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]));
-  _ElectronTotalFluxMagSizeForm[_qp] = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
+  _ElectronTotalFluxMagSizeForm[_qp] = (-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).norm();
   _ElectronTotalFlux[_qp] = -_muem[_qp]*-_grad_potential[_qp](0)*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp](0);
   _ElectronAdvectiveFlux[_qp] = -_muem[_qp]*-_grad_potential[_qp](0)*std::exp(_em[_qp]);
   _ElectronDiffusiveFlux[_qp] = -_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp](0);
@@ -130,6 +130,6 @@ InterpolateTD::computeQpProperties()
   _IonAdvectiveFlux[_qp] = -_muip[_qp]*-_grad_potential[_qp](0)*std::exp(_ip[_qp]);
   _IonDiffusiveFlux[_qp] = -_diffip[_qp]*std::exp(_ip[_qp])*_grad_ip[_qp](0);
   _EField[_qp] = -_grad_potential[_qp](0);
-  _Source_term[_qp] = _rate_coeff_ion[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).size();
+  _Source_term[_qp] = _rate_coeff_ion[_qp]*(-_muem[_qp]*-_grad_potential[_qp]*std::exp(_em[_qp])-_diffem[_qp]*std::exp(_em[_qp])*_grad_em[_qp]).norm();
   _Source_term_coeff[_qp] = _rate_coeff_ion[_qp];
 }

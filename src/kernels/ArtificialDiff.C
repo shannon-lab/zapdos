@@ -70,25 +70,25 @@ Real
 ArtificialDiff::computeQpResidual()
 {
   // Use the MaterialProperty references we stored earlier
-  // return _delta*_current_elem->hmax()*_grad_potential[_qp].size()* Diffusion::computeQpResidual();
+  // return _delta*_current_elem->hmax()*_grad_potential[_qp].norm()* Diffusion::computeQpResidual();
   if (_crosswind)
     {
-      if (_grad_u[_qp].size() == 0.0)
+      if (_grad_u[_qp].norm() == 0.0)
 	{
 	  _velocity_h = _velocity[_qp];
-	  _peclet_num_h = _current_elem->hmax() * _velocity_h.size() / (2.0 * _diffusivity[_qp]);
+	  _peclet_num_h = _current_elem->hmax() * _velocity_h.norm() / (2.0 * _diffusivity[_qp]);
 	  _alpha_h = 1.0 / std::tanh(_peclet_num_h) - 1.0 / _peclet_num_h;
-	  _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.size());
+	  _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.norm());
 	  //	  _sigma = std::max(0.0,_tau_h-_tau[_qp]);
 	  _sigma = _tau_h;
 	  return (_tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp] + _sigma*_velocity_h* _grad_test[_i][_qp]) * _velocity[_qp] * _grad_u[_qp];
 	}
       else
 	{
-	  _velocity_h = _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].size() * _grad_u[_qp].size() + _epsilon ) * _grad_u[_qp];
-	  _peclet_num_h = _current_elem->hmax() * _velocity_h.size() / (2.0 * _diffusivity[_qp]);
+	  _velocity_h = _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].norm() * _grad_u[_qp].norm() + _epsilon ) * _grad_u[_qp];
+	  _peclet_num_h = _current_elem->hmax() * _velocity_h.norm() / (2.0 * _diffusivity[_qp]);
 	  _alpha_h = 1.0 / std::tanh(_peclet_num_h) - 1.0 / _peclet_num_h;
-	  _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.size());
+	  _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.norm());
 	  //	  _sigma = std::max(0.0,_tau_h-_tau[_qp]);
 	  _sigma = _tau_h;
 	  return (_tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp] + _sigma * _velocity_h * _grad_test[_i][_qp] ) * _velocity[_qp] * _grad_u[_qp];
@@ -104,26 +104,26 @@ Real
 ArtificialDiff::computeQpJacobian()
 {
   // Use the MaterialProperty references we stored earlier
-  // return _delta*_current_elem->hmax()*_grad_potential[_qp].size()*Diffusion::computeQpJacobian();
+  // return _delta*_current_elem->hmax()*_grad_potential[_qp].norm()*Diffusion::computeQpJacobian();
   if (_crosswind)
     {
-      if (_grad_u[_qp].size() == 0.0)
+      if (_grad_u[_qp].norm() == 0.0)
 	{
 	  _velocity_h = _velocity[_qp];
-	  _peclet_num_h = _current_elem->hmax() * _velocity_h.size() / (2.0 * _diffusivity[_qp]);
+	  _peclet_num_h = _current_elem->hmax() * _velocity_h.norm() / (2.0 * _diffusivity[_qp]);
 	  _alpha_h = 1.0 / std::tanh(_peclet_num_h) - 1.0 / _peclet_num_h;
-	  _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.size());
+	  _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.norm());
 	  //	  _sigma = std::max(0.0,_tau_h-_tau[_qp]);
 	  _sigma = _tau_h;
  	  return (_tau[_qp]*_velocity[_qp]*_grad_test[_i][_qp] + _sigma*_velocity_h* _grad_test[_i][_qp]) * _velocity[_qp] * _grad_phi[_j][_qp];
 	}
       else
 	{
-	  _velocity_h = _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].size() * _grad_u[_qp].size() + _epsilon ) * _grad_u[_qp];
-	  _d_velocity_h_d_uj =  (std::pow(_grad_u[_qp].size(),2)* ( _velocity[_qp] * _grad_phi[_j][_qp])-(_velocity[_qp] * _grad_u[_qp] )* ( 2.0 * _grad_u[_qp] * _grad_phi[_j][_qp] ) ) / std::pow(_grad_u[_qp].size(),4)*_grad_u[_qp] + _velocity[_qp]*_grad_u[_qp] / std::pow(_grad_u[_qp].size(),2) * _grad_phi[_j][_qp];
-	  _peclet_num_h = _current_elem->hmax() * _velocity_h.size() / (2.0 * _diffusivity[_qp]);
+	  _velocity_h = _velocity[_qp]*_grad_u[_qp] / ( _grad_u[_qp].norm() * _grad_u[_qp].norm() + _epsilon ) * _grad_u[_qp];
+	  _d_velocity_h_d_uj =  (std::pow(_grad_u[_qp].norm(),2)* ( _velocity[_qp] * _grad_phi[_j][_qp])-(_velocity[_qp] * _grad_u[_qp] )* ( 2.0 * _grad_u[_qp] * _grad_phi[_j][_qp] ) ) / std::pow(_grad_u[_qp].norm(),4)*_grad_u[_qp] + _velocity[_qp]*_grad_u[_qp] / std::pow(_grad_u[_qp].norm(),2) * _grad_phi[_j][_qp];
+	  _peclet_num_h = _current_elem->hmax() * _velocity_h.norm() / (2.0 * _diffusivity[_qp]);
 	  _alpha_h = 1.0 / std::tanh(_peclet_num_h) - 1.0 / _peclet_num_h;
-	  _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.size());
+	  _tau_h = _current_elem->hmax() * _alpha_h / (2.0*_velocity_h.norm());
 	  //	  _sigma = std::max(0.0,_tau_h-_tau[_qp]);
 	  _sigma = _tau_h;
 

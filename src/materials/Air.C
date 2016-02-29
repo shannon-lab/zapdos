@@ -126,11 +126,11 @@ Air::computeQpProperties()
   _alpha_0[_qp] = 4332.0*100.0; // Ebert article
   _E_0[_qp] = 2.0e7; // Ebert article
   
-  _s[_qp] = std::max(_em[_qp],0.0)*std::abs(_muem[_qp])*_grad_potential[_qp].size()*_potential_mult[_qp]*_alpha_0[_qp]*std::exp(-_E_0[_qp]/(_grad_potential[_qp].size()*_potential_mult[_qp]+1.0));
+  _s[_qp] = std::max(_em[_qp],0.0)*std::abs(_muem[_qp])*_grad_potential[_qp].norm()*_potential_mult[_qp]*_alpha_0[_qp]*std::exp(-_E_0[_qp]/(_grad_potential[_qp].norm()*_potential_mult[_qp]+1.0));
   _sem[_qp] = _s[_qp];
   _sip[_qp] = _s[_qp];
   _spotential[_qp] = _N_A[_qp]*_e[_qp]/(_eps_r[_qp]*_eps_0[_qp]*_potential_mult[_qp])*(std::max(_em[_qp],0.0)*_zem[_qp]+std::max(_ip[_qp],0.0)*_zip[_qp]);
-  _Jac_em[_qp] = std::abs(_muem[_qp])*_grad_potential[_qp].size()*_potential_mult[_qp]*_alpha_0[_qp]*std::exp(-_E_0[_qp]/(_grad_potential[_qp].size()*_potential_mult[_qp]+1.0));
+  _Jac_em[_qp] = std::abs(_muem[_qp])*_grad_potential[_qp].norm()*_potential_mult[_qp]*_alpha_0[_qp]*std::exp(-_E_0[_qp]/(_grad_potential[_qp].norm()*_potential_mult[_qp]+1.0));
   _Jac_ip[_qp] = 0.0;
   _Jac_potential[_qp] = 0.0;
 
@@ -159,19 +159,19 @@ Air::computeQpProperties()
       _velocity[_qp](2) = 0.0;
       }
 
-    _velocity_norm_vector[_qp] = _velocity[_qp] / _velocity[_qp].size();  
-    _peclet_num[_qp] = _current_elem->hmax() * _velocity[_qp].size() / (2.0 * _diffusivity[_qp]);
+    _velocity_norm_vector[_qp] = _velocity[_qp] / _velocity[_qp].norm();  
+    _peclet_num[_qp] = _current_elem->hmax() * _velocity[_qp].norm() / (2.0 * _diffusivity[_qp]);
   _alpha[_qp] = 1.0 / std::tanh(_peclet_num[_qp]) - 1.0 / _peclet_num[_qp];
   
   if (_consistent)
   {
     // Consistent diffusion formulation of tau
-    _tau[_qp] = _delta * _current_elem->hmax() * _alpha[_qp] / _velocity[_qp].size();
+    _tau[_qp] = _delta * _current_elem->hmax() * _alpha[_qp] / _velocity[_qp].norm();
   }
   else if (!_consistent)
   {
     // Isotropic diffusion formulation of tau
 
-    _tau[_qp] = _delta * _current_elem->hmax() / _velocity[_qp].size();
+    _tau[_qp] = _delta * _current_elem->hmax() / _velocity[_qp].norm();
     }*/
 }
