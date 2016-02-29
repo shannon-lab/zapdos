@@ -937,6 +937,7 @@ dom1Scale=1e-7
     type = Gas
     interp_trans_coeffs = true
     interp_elastic_coeff = true
+    ramp_trans_coeffs = false
     em = em
     potential = potential
     ip = Arp

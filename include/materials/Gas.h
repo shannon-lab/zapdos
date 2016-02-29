@@ -41,6 +41,7 @@ protected:
   /* bool _townsend; */
   bool _interp_trans_coeffs;
   bool _interp_elastic_coeff;
+  bool _ramp_trans_coeffs;
   std::string _potential_units;
   Real _voltage_scaling;
 

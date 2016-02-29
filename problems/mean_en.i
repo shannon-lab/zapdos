@@ -1,5 +1,7 @@
 dom0Scale=1e-3
 dom1Scale=1e-7
+# dom0Scale=1.1
+# dom1Scale=1.1
 
 [GlobalParams]
   offset = 20
@@ -74,7 +76,7 @@ dom1Scale=1e-7
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
- nl_abs_tol = 6e-4
+ nl_abs_tol = 2.4e-3
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -148,6 +150,7 @@ dom1Scale=1e-7
   #   type = EFieldArtDiff
   #   variable = em
   #   potential = potential
+  #   block = 0
   # [../]
 
   [./emliq_time_deriv]
@@ -183,6 +186,12 @@ dom1Scale=1e-7
     variable = emliq
     block = 1
   [../]
+  # [./emliq_advection_stabilization]
+  #   type = EFieldArtDiff
+  #   variable = emliq
+  #   potential = potential
+  #   block = 1
+  # [../]
 
   [./potential_diffusion_dom1]
     type = CoeffDiffusionLin
@@ -257,6 +266,7 @@ dom1Scale=1e-7
   #   type = EFieldArtDiff
   #   variable = Arp
   #   potential = potential
+  #   block = 0
   # [../]
 
   [./OHm_time_deriv]
@@ -363,6 +373,7 @@ dom1Scale=1e-7
   #   type = EFieldArtDiff
   #   variable = mean_en
   #   potential = potential
+  #   block = 0
   # [../]
 []
 
@@ -374,7 +385,7 @@ dom1Scale=1e-7
   [../]
   [./emliq]
     block = 1
-    # scaling = 1e-4
+    # scaling = 1e-5
   [../]
 
   [./Arp]
@@ -388,7 +399,7 @@ dom1Scale=1e-7
 
   [./OHm]
     block = 1
-    # scaling = 1e-4
+    # scaling = 1e-5
   [../]
 []
 
@@ -769,23 +780,23 @@ dom1Scale=1e-7
     boundary = right
     value = 0
   [../]
-  # [./em_physical_right]
-  #   type = HagelaarElectronBC
-  #   variable = em
-  #   boundary = 'master0_interface'
-  #   potential = potential
-  #   ip = Arp
-  #   mean_en = mean_en
-  #   r = 0.9999
-  #   position_units = ${dom0Scale}
-  # [../]
   [./em_physical_right]
-    type = MatchedValueLogBC
+    type = HagelaarElectronBC
     variable = em
     boundary = 'master0_interface'
-    v = emliq
-    H = 1e3
+    potential = potential
+    ip = Arp
+    mean_en = mean_en
+    r = 0.9999
+    position_units = ${dom0Scale}
   [../]
+  # [./em_physical_right]
+  #   type = MatchedValueLogBC
+  #   variable = em
+  #   boundary = 'master0_interface'
+  #   v = emliq
+  #   H = 1e3
+  # [../]
   [./Arp_physical_right]
     type = HagelaarIonBC
     variable = Arp
@@ -801,7 +812,7 @@ dom1Scale=1e-7
     potential = potential
     em = em
     ip = Arp
-    r = 0
+    r = 0.999
     position_units = ${dom0Scale}
   [../]
   [./em_physical_left]
@@ -852,7 +863,7 @@ dom1Scale=1e-7
   [./em_ic]
     type = ConstantIC
     variable = em
-    value = -26
+    value = -21
     block = 0
   [../]
   [./emliq_ic]
@@ -864,13 +875,13 @@ dom1Scale=1e-7
   [./Arp_ic]
     type = ConstantIC
     variable = Arp
-    value = -26
+    value = -21
     block = 0
   [../]
   [./mean_en_ic]
     type = ConstantIC
     variable = mean_en
-    value = -25
+    value = -20
     block = 0
   [../]
   # [./potential_ic]
@@ -937,6 +948,7 @@ dom1Scale=1e-7
     type = Gas
     interp_trans_coeffs = true
     interp_elastic_coeff = true
+    ramp_trans_coeffs = true
     em = em
     potential = potential
     ip = Arp

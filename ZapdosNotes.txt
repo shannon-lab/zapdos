@@ -3258,3 +3258,10 @@ So initially I identified the wrong problem: it wasn't a problem of scaling with
 If Dr. Graves quibbles about factors, I will say that those nv/4 and 2kT flux quantities are derived for a Maxwellian distribution which assumes the absence of time variation, spatial gradients, and accelerations. In my DC discharge at the anode I have both spatial gradients and accelerations due to electric fields so those well known equations are not valid. For any further argument I would refer him to the Hagelaar paper which shows that many authors incorrectly leave off the -D/2 grad_n term of the boundary condition (this BC is familiar to me from neutran diffusion theory! The vacuum boundary condition!).
 
 Current number of lines of code in .C and .h files in Zapdos: 23410
+
+Yep, if things don't converge, it could be because:
+
+1) Oscillations at large variable values
+2) Bad material fitting (e.g. linear or spline). Check spline fits (see plot_mat_data.py)
+3) Bad variable scaling
+4) Problem is just amazingly non-linear. In this case, you can try ramping the non-linearity. I did this with great success for gamma_dens = 1e-4 and gamma_en = 1e-3. Without the ramping, I was getting incredibly inefficient convergence, e.g. overnight simulation without reaching steady state. However, adding in the nonlinear ramping, got to steady state in 93 seconds of simulation time. Nice work!
