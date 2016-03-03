@@ -3265,3 +3265,11 @@ Yep, if things don't converge, it could be because:
 2) Bad material fitting (e.g. linear or spline). Check spline fits (see plot_mat_data.py)
 3) Bad variable scaling
 4) Problem is just amazingly non-linear. In this case, you can try ramping the non-linearity. I did this with great success for gamma_dens = 1e-4 and gamma_en = 1e-3. Without the ramping, I was getting incredibly inefficient convergence, e.g. overnight simulation without reaching steady state. However, adding in the nonlinear ramping, got to steady state in 93 seconds of simulation time. Nice work!
+
+Unscaled solution time: 29.069 seconds
+Scaled solution time: 13 seconds
+
+JxW for a Kernel compute residual: 1.04e-6
+JxW for IntegratedBC @ 0,0,0: 1
+
+After removing the boundary condition and interface scaling factors, the solve no longer converged.

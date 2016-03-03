@@ -76,7 +76,7 @@ dom1Scale=1e-7
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
- nl_abs_tol = 2.4e-3
+ nl_abs_tol = 7.6e-5
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -411,6 +411,8 @@ dom1Scale=1e-7
     order = CONSTANT
     family = MONOMIAL
   [../]
+  [./x_node]
+  [../]
   [./rho]
     order = CONSTANT
     family = MONOMIAL
@@ -591,6 +593,18 @@ dom1Scale=1e-7
   [./x_l]
     type = Position
     variable = x
+    position_units = ${dom1Scale}
+    block = 1
+  [../]
+  [./x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
+    block = 0
+  [../]
+  [./x_nl]
+    type = Position
+    variable = x_node
     position_units = ${dom1Scale}
     block = 1
   [../]
@@ -787,7 +801,7 @@ dom1Scale=1e-7
     potential = potential
     ip = Arp
     mean_en = mean_en
-    r = 0.9999
+    r = 0.99
     position_units = ${dom0Scale}
   [../]
   # [./em_physical_right]
@@ -812,7 +826,7 @@ dom1Scale=1e-7
     potential = potential
     em = em
     ip = Arp
-    r = 0.999
+    r = 0.99
     position_units = ${dom0Scale}
   [../]
   [./em_physical_left]
@@ -948,7 +962,7 @@ dom1Scale=1e-7
     type = Gas
     interp_trans_coeffs = true
     interp_elastic_coeff = true
-    ramp_trans_coeffs = true
+    ramp_trans_coeffs = false
     em = em
     potential = potential
     ip = Arp
