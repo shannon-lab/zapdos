@@ -105,6 +105,9 @@ protected:
   MaterialProperty<Real> & _diffpotential;
   MaterialProperty<Real> & _actual_mean_energy;
   MaterialProperty<Real> & _T_heavy;
+  MaterialProperty<Real> & _muu;
+  MaterialProperty<Real> & _diffu;
+  MaterialProperty<Real> & _sgnu;
 
   const VariableGradient & _grad_potential;
   const VariableValue & _em;

@@ -100,6 +100,9 @@ Gas::Gas(const InputParameters & parameters) :
   _diffpotential(declareProperty<Real>("diffpotential")),
   _actual_mean_energy(declareProperty<Real>("actual_mean_energy")),
   _T_heavy(declareProperty<Real>("T_heavy")),
+  _muu(declareProperty<Real>("muu")),
+  _diffu(declareProperty<Real>("diffu")),
+  _sgnu(declareProperty<Real>("sgnu")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
   _em(isCoupled("em") ? coupledValue("em") : _zero),
@@ -277,4 +280,9 @@ Gas::computeQpProperties()
   _diffpotential[_qp] = _eps[_qp];
 
   _T_heavy[_qp] = 300;
+
+  // Physics test properties
+  _muu[_qp] = 1.;
+  _diffu[_qp] = 1.;
+  _sgnu[_qp] = 1.;
 }

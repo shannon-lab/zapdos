@@ -18,7 +18,7 @@ UnitySource::~UnitySource()
 Real
 UnitySource::computeQpResidual()
 {
-  return -_test[_i][_qp]*1.0;
+  return -_test[_i][_qp] * 1.0;
 }
 
 Real
