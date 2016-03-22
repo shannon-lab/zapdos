@@ -12,10 +12,10 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "Efield.h"
+#include "Ex.h"
 
 template<>
-InputParameters validParams<Efield>()
+InputParameters validParams<Ex>()
 {
   InputParameters params = validParams<AuxKernel>();
 
@@ -26,10 +26,9 @@ InputParameters validParams<Efield>()
   return params;
 }
 
-Efield::Efield(const InputParameters & parameters) :
+Ex::Ex(const InputParameters & parameters) :
     AuxKernel(parameters),
 
-    _component(getParam<int>("component")),
     _r_units(1. / getParam<Real>("position_units")),
     _potential_units(getParam<std::string>("potential_units")),
     _grad_potential(coupledGradient("potential"))
@@ -40,8 +39,11 @@ Efield::Efield(const InputParameters & parameters) :
     _voltage_scaling = 1000;
 }
 
+Efield::~Efield()
+{}
+
 Real
-Efield::computeValue()
+Ex::computeValue()
 {
-  return  -_grad_potential[_qp](_component) * _r_units * _voltage_scaling;
+  return  -_grad_potential[_qp](0) * _r_units * _voltage_scaling;
 }

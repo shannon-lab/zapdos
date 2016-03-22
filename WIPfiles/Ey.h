@@ -12,26 +12,26 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef EX_H
-#define EX_H
+#ifndef EY_H
+#define EY_H
 
 #include "AuxKernel.h"
 
 //Forward Declarations
-class Ex;
+class Ey;
 
 template<>
-InputParameters validParams<Ex>();
+InputParameters validParams<Ey>();
 
 /**
  * Constant auxiliary value
  */
-class Ex : public AuxKernel
+class Ey : public AuxKernel
 {
 public:
-  Ex(const InputParameters & parameters);
+  Ey(const InputParameters & parameters);
 
-  virtual ~Ex() {}
+  virtual ~Ey() {}
 
 protected:
   /**
@@ -39,12 +39,17 @@ protected:
    * every quadrature point.  For Nodal Auxiliary variables those quadrature
    * points coincide with the nodes.
    */
+  virtual void compute();
   virtual Real computeValue();
-  
+  virtual void computeVarValues(std::vector<Real> & values);
+
   //int _component;
+  Real _r_units;
+  std::string _potential_units;
 
   /// The gradient of a coupled variable
   const VariableGradient & _grad_potential;
+  Real _voltage_scaling;
 };
 
-#endif //EX_H
+#endif //EY_H

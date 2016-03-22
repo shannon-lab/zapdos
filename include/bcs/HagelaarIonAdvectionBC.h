@@ -1,18 +1,18 @@
-#ifndef HAGELAARIONBC_H
-#define HAGELAARIONBC_H
+#ifndef HAGELAARIONADVECTIONBC_H
+#define HAGELAARIONADVECTIONBC_H
 
 #include "IntegratedBC.h"
 
-class HagelaarIonBC;
+class HagelaarIonAdvectionBC;
 
 template<>
-InputParameters validParams<HagelaarIonBC>();
+InputParameters validParams<HagelaarIonAdvectionBC>();
 
-class HagelaarIonBC : public IntegratedBC
+class HagelaarIonAdvectionBC : public IntegratedBC
 {
 public:
 
-  HagelaarIonBC(const InputParameters & parameters);
+  HagelaarIonAdvectionBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -30,12 +30,8 @@ protected:
   const MaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _e;
   const MaterialProperty<Real> & _sgn;
-  const MaterialProperty<Real> & _kb;
-  const MaterialProperty<Real> & _T_heavy;
-  const MaterialProperty<Real> & _mass;
 
   Real _a;
-  Real _v_thermal;
 };
 
-#endif //HAGELAARIONBC_H
+#endif //HAGELAARIONADVECTIONBC_H

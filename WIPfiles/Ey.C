@@ -12,24 +12,23 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "Efield.h"
+#include "Ey.h"
 
 template<>
-InputParameters validParams<Efield>()
+InputParameters validParams<Ey>()
 {
   InputParameters params = validParams<AuxKernel>();
 
   params.addRequiredCoupledVar("potential", "The potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
-  params.addRequiredParam<int>("component", "The component of the electric field to access. Accepts an integer");
+  params.addRequiredCoupledVar("vars", "unknown (nl-variable)");
   return params;
 }
 
-Efield::Efield(const InputParameters & parameters) :
+Ey::Ey(const InputParameters & parameters) :
     AuxKernel(parameters),
 
-    _component(getParam<int>("component")),
     _r_units(1. / getParam<Real>("position_units")),
     _potential_units(getParam<std::string>("potential_units")),
     _grad_potential(coupledGradient("potential"))
@@ -41,7 +40,7 @@ Efield::Efield(const InputParameters & parameters) :
 }
 
 Real
-Efield::computeValue()
+Ey::computeValue()
 {
-  return  -_grad_potential[_qp](_component) * _r_units * _voltage_scaling;
+  return  -_grad_potential[_qp](1) * _r_units * _voltage_scaling;
 }

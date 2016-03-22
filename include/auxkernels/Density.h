@@ -19,6 +19,7 @@ protected:
 
   virtual Real computeValue();
 
+  bool _convert_moles;
   const VariableValue & _density_log;
   const MaterialProperty<Real> & _N_A;
 };

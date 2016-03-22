@@ -12,26 +12,26 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef EFIELD_H
-#define EFIELD_H
+#ifndef EX_H
+#define EX_H
 
 #include "AuxKernel.h"
 
 //Forward Declarations
-class Efield;
+class Ex;
 
 template<>
-InputParameters validParams<Efield>();
+InputParameters validParams<Ex>();
 
 /**
  * Constant auxiliary value
  */
-class Efield : public AuxKernel
+class Ex : public AuxKernel
 {
 public:
-  Efield(const InputParameters & parameters);
+  Ex(const InputParameters & parameters);
 
-  virtual ~Efield() {}
+  virtual ~Ex() {}
 
 protected:
   /**
@@ -50,4 +50,4 @@ protected:
   Real _voltage_scaling;
 };
 
-#endif //EFIELD_H
+#endif //EX_H

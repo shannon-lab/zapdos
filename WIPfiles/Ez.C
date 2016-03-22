@@ -12,40 +12,35 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "Ex.h"
+#include "Ez.h"
 
 template<>
-InputParameters validParams<Ex>()
+InputParameters validParams<Ez>()
 {
   InputParameters params = validParams<AuxKernel>();
-  
-  //MooseEnum component("x y z");
-  
-  //params.addRequiredParam<MooseEnum>("component",component, "The desired component of potential gradient.");
 
-  // Add a "coupling paramater" to get a variable from the input file.
   params.addRequiredCoupledVar("potential", "The potential");
-
+  params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addRequiredParam<std::string>("potential_units", "The potential units.");
+  params.addRequiredCoupledVar("vars", "unknown (nl-variable)");
   return params;
 }
 
-Ex::Ex(const InputParameters & parameters) :
+Ez::Ez(const InputParameters & parameters) :
     AuxKernel(parameters),
-    
-    //_component(getParam<MooseEnum>("component")),
 
-    // Get the gradient of the variable
+    _r_units(1. / getParam<Real>("position_units")),
+    _potential_units(getParam<std::string>("potential_units")),
     _grad_potential(coupledGradient("potential"))
 {
+  if (_potential_units.compare("V") == 0)
+    _voltage_scaling = 1.;
+  else if (_potential_units.compare("kV") == 0)
+    _voltage_scaling = 1000;
 }
 
 Real
-Ex::computeValue()
+Ez::computeValue()
 {
-  // Access the gradient of the pressure at this quadrature point
-  // Then pull out the "component" of it we are looking for (x, y or z)
-  // Note that getting a particular component of a gradient is done using the
-  // parenthesis operator
-  return -_grad_potential[_qp](0);
-  // return _grad_potential[_qp](_component);
+  return  -_grad_potential[_qp](2) * _r_units * _voltage_scaling;
 }

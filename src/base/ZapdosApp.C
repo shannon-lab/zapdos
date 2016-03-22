@@ -108,7 +108,6 @@
 #include "Sigma.h"
 #include "VelocityH.h"
 #include "Velocity.h"
-#include "Ex.h"
 #include "AdvectiveFlux.h"
 #include "DiffusiveFlux.h"
 #include "Density.h"
@@ -137,9 +136,11 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "CircuitDirichletPotential.h"
 #include "VacuumElectricBC.h"
 #include "HagelaarEnergyBC.h"
-#include "HagelaarIonBC.h"
+#include "HagelaarIonAdvectionBC.h"
+#include "HagelaarIonDiffusionBC.h"
 #include "HagelaarElectronBC.h"
 #include "HagelaarAnodicBC.h"
 #include "GradMeanEnZeroBC.h"
@@ -197,6 +198,10 @@
 // Mesh modifiers
 
 #include "NodeAndSidesetBetweenSubdomains.h"
+
+// Postprocessors
+
+#include "SideTotFluxIntegral.h"
 
 template<>
 InputParameters validParams<ZapdosApp>()
@@ -338,7 +343,6 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(Sigma);
   registerAux(VelocityH);
   registerAux(Velocity);
-  registerAux(Ex);
   registerAux(AdvectiveFlux);
   registerAux(DiffusiveFlux);
   registerAux(EFieldAdvAux);
@@ -358,10 +362,12 @@ ZapdosApp::registerObjects(Factory & factory)
   registerIndicator(VariableJumpIndicator);
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
+  registerBoundaryCondition(CircuitDirichletPotential);
   registerBoundaryCondition(VacuumElectricBC);
   registerBoundaryCondition(DGFluxBC);
   registerBoundaryCondition(HagelaarAnodicBC);
-  registerBoundaryCondition(HagelaarIonBC);
+  registerBoundaryCondition(HagelaarIonAdvectionBC);
+  registerBoundaryCondition(HagelaarIonDiffusionBC);
   registerBoundaryCondition(HagelaarElectronBC);
   registerBoundaryCondition(HagelaarEnergyBC);
   registerBoundaryCondition(GradMeanEnZeroBC);
@@ -397,6 +403,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerDGKernel(DGEFieldAdvection);
   registerConstraint(EqualGradientConstraint);
   registerConstraint(ArbitrarilyTiedValueConstraint);
+  registerPostprocessor(SideTotFluxIntegral);
 }
 
 void

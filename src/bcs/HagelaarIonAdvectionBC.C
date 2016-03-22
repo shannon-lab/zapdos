@@ -1,7 +1,7 @@
-#include "HagelaarIonBC.h"
+#include "HagelaarIonAdvectionBC.h"
 
 template<>
-InputParameters validParams<HagelaarIonBC>()
+InputParameters validParams<HagelaarIonAdvectionBC>()
 {
   InputParameters params = validParams<IntegratedBC>();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
@@ -10,7 +10,7 @@ InputParameters validParams<HagelaarIonBC>()
   return params;
 }
 
-HagelaarIonBC::HagelaarIonBC(const InputParameters & parameters) :
+HagelaarIonAdvectionBC::HagelaarIonAdvectionBC(const InputParameters & parameters) :
   IntegratedBC(parameters),
 
   _r_units(1. / getParam<Real>("position_units")),
@@ -23,15 +23,11 @@ HagelaarIonBC::HagelaarIonBC(const InputParameters & parameters) :
   _mu(getMaterialProperty<Real>("mu" + _var.name())),
   _e(getMaterialProperty<Real>("e")),
   _sgn(getMaterialProperty<Real>("sgn" + _var.name())),
-  _kb(getMaterialProperty<Real>("k_boltz")),
-  _T_heavy(getMaterialProperty<Real>("T_heavy")),
-  _mass(getMaterialProperty<Real>("mass" + _var.name())),
-  _a(0.5),
-  _v_thermal(0)
+  _a(0.5)
 {}
 
 Real
-HagelaarIonBC::computeQpResidual()
+HagelaarIonAdvectionBC::computeQpResidual()
 {
   if ( _normals[_qp] * _sgn[_qp] * -_grad_potential[_qp] > 0.0) {
     _a = 1.0;
@@ -40,13 +36,11 @@ HagelaarIonBC::computeQpResidual()
     _a = 0.0;
   }
 
-  _v_thermal = std::sqrt(8 * _kb[_qp] * _T_heavy[_qp] / (M_PI * _mass[_qp]));
-
-  return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) * ((2 * _a - 1) * _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _normals[_qp] + 0.5 * _v_thermal * std::exp(_u[_qp]));
+  return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) * ((2 * _a - 1) * _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _normals[_qp]);
 }
 
 Real
-HagelaarIonBC::computeQpJacobian()
+HagelaarIonAdvectionBC::computeQpJacobian()
 {
   if ( _normals[_qp] * _sgn[_qp] * -_grad_potential[_qp] > 0.0) {
     _a = 1.0;
@@ -55,13 +49,11 @@ HagelaarIonBC::computeQpJacobian()
     _a = 0.0;
   }
 
-  _v_thermal = std::sqrt(8 * _kb[_qp] * _T_heavy[_qp] / (M_PI * _mass[_qp]));
-
-  return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) * ((2 * _a - 1) * _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp] + 0.5 * _v_thermal * std::exp(_u[_qp]) * _phi[_j][_qp]);
+  return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) * ((2 * _a - 1) * _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]);
 }
 
 Real
-HagelaarIonBC::computeQpOffDiagJacobian(unsigned int jvar)
+HagelaarIonAdvectionBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
   {

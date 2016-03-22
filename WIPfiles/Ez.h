@@ -12,26 +12,26 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef EFIELD_H
-#define EFIELD_H
+#ifndef EZ_H
+#define EZ_H
 
 #include "AuxKernel.h"
 
 //Forward Declarations
-class Efield;
+class Ez;
 
 template<>
-InputParameters validParams<Efield>();
+InputParameters validParams<Ez>();
 
 /**
  * Constant auxiliary value
  */
-class Efield : public AuxKernel
+class Ez : public AuxKernel
 {
 public:
-  Efield(const InputParameters & parameters);
+  Ez(const InputParameters & parameters);
 
-  virtual ~Efield() {}
+  virtual ~Ez() {}
 
 protected:
   /**
@@ -39,9 +39,11 @@ protected:
    * every quadrature point.  For Nodal Auxiliary variables those quadrature
    * points coincide with the nodes.
    */
+  virtual void compute();
   virtual Real computeValue();
+  virtual void computeVarValues(std::vector<Real> & values);
 
-  int _component;
+  //int _component;
   Real _r_units;
   std::string _potential_units;
 
@@ -50,4 +52,4 @@ protected:
   Real _voltage_scaling;
 };
 
-#endif //EFIELD_H
+#endif //EZ_H
