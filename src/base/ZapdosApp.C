@@ -136,6 +136,7 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "PenaltyCircuitPotential.h"
 #include "CircuitDirichletPotential.h"
 #include "VacuumElectricBC.h"
 #include "HagelaarEnergyBC.h"
@@ -362,6 +363,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerIndicator(VariableJumpIndicator);
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
+  registerBoundaryCondition(PenaltyCircuitPotential);
   registerBoundaryCondition(CircuitDirichletPotential);
   registerBoundaryCondition(VacuumElectricBC);
   registerBoundaryCondition(DGFluxBC);

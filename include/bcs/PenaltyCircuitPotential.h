@@ -1,22 +1,22 @@
-#ifndef CIRCUITDIRICHLETPOTENTIAL_H
-#define CIRCUITDIRICHLETPOTENTIAL_H
+#ifndef PENALTYCIRCUITPOTENTIAL_H
+#define PENALTYCIRCUITPOTENTIAL_H
 
-#include "NodalBC.h"
+#include "IntegratedBC.h"
 
-class CircuitDirichletPotential;
+class PenaltyCircuitPotential;
 
 template<>
-InputParameters validParams<CircuitDirichletPotential>();
+InputParameters validParams<PenaltyCircuitPotential>();
 
 /**
  * Boundary condition of a Dirichlet type
  *
  * Sets the value at the node to the value of a Postprocessor
  */
-class CircuitDirichletPotential : public NodalBC
+class PenaltyCircuitPotential : public IntegratedBC
 {
 public:
-  CircuitDirichletPotential(const InputParameters & parameters);
+  PenaltyCircuitPotential(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -27,6 +27,7 @@ protected:
   Real _surface_potential;
   std::string _surface;
   Real _current_sign;
+  Real _p;
 };
 
-#endif /* CIRCUITDIRICHLETPOTENTIAL_H */
+#endif /* PENALTYCIRCUITPOTENTIAL_H */

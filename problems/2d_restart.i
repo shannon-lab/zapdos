@@ -4,18 +4,7 @@
 []
 
 [Mesh]
-  type = FileMesh
-  file = '2d.msh'
-  boundary_id = '10 11 12 13'
-  boundary_name = 'cathode anode walls axis'
-  # type = GeneratedMesh
-  # nx = 1
-  # xmax = 1.1
-  # # ny = 2
-  # # ymax = 1.1
-  # dim = 1
-  # boundary_id = '0 1'
-  # boundary_name = 'anode cathode'
+  file = '2d_out.e'
 []
 
 [Problem]
@@ -26,7 +15,7 @@
 
 [Preconditioning]
   [./smp]
-    type = SMP
+    type = FDP
     full = true
   [../]
 []
@@ -36,11 +25,12 @@
   type = Transient
   dt = 0.1
   dtmin = 1e-4
-  end_time = .2
-  solve_type = NEWTON
+  end_time = 1
+  solve_type = FD
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
-  petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
+  # nl_rel_tol = 1e-4
+  # petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
+  # petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
   # petsc_options = '-snes_test_display'
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
@@ -86,10 +76,14 @@
 
 [Variables]
   [./u]
+    initial_from_file_var = u
+    initial_from_file_timestep = 1
     # order = SECOND
     # family = LAGRANGE
   [../]
   [./v]
+    initial_from_file_var = v
+    initial_from_file_timestep = 1
     # order = SECOND
     # family = LAGRANGE
   [../]
@@ -101,15 +95,6 @@
   #   boundary = cathode
   #   variable = v
   #   value = -1
-  # [../]
-  # [./cathode]
-  #   type = PenaltyCircuitPotential
-  #   surface_potential = -1
-  #   current = cathode_flux
-  #   boundary = cathode
-  #   variable = v
-  #   surface = cathode
-  #   penalty = 1
   # [../]
   [./cathode]
     type = CircuitDirichletPotential
@@ -140,7 +125,6 @@
     position_units = 1
     user_velocity = 1
     boundary = 'cathode anode walls'
-    # boundary = 'cathode anode'
   [../]
   [./species_adv]
     type = HagelaarIonAdvectionBC
@@ -149,7 +133,6 @@
     position_units = 1
     potential = v
     boundary = 'cathode anode walls'
-    # boundary = 'cathode anode'
   [../]
   # [./axis]
   #   type = NeumannBC
@@ -232,8 +215,7 @@
 [Postprocessors]
   [./anode_flux]
     type = SideTotFluxIntegral
-    execute_on = timestep_end
-    # execute_on = linear
+    execute_on = nonlinear
     boundary = anode
     mobility = muu
     variable = u
@@ -244,8 +226,7 @@
   [../]
   [./cathode_flux]
     type = SideTotFluxIntegral
-    execute_on = timestep_end
-    # execute_on = linear
+    execute_on = nonlinear
     boundary = cathode
     mobility = muu
     potential = v
@@ -255,14 +236,3 @@
     user_velocity = 1
   [../]
 []
-
-# [ICs]
-#   [./em_ic]
-#     type = RandomIC
-#     variable = u
-#   [../]
-#   [./emliq_ic]
-#     type = RandomIC
-#     variable = v
-#   [../]
-# []
