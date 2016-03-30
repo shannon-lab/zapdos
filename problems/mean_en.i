@@ -642,30 +642,35 @@ dom1Scale=1e-7
   [../]
   [./em_lin]
     type = Density
+    convert_moles = true
     variable = em_lin
     density_log = em
     block = 0
   [../]
   [./emliq_lin]
     type = Density
+    convert_moles = true
     variable = emliq_lin
     density_log = emliq
     block = 1
   [../]
   [./Arp_lin]
     type = Density
+    convert_moles = true
     variable = Arp_lin
     density_log = Arp
     block = 0
   [../]
   [./OHm_lin]
     type = Density
+    convert_moles = true
     variable = OHm_lin
     density_log = OHm
     block = 1
   [../]
   [./Efield_g]
     type = Efield
+    component = 0
     potential = potential
     variable = Efield
     position_units = ${dom0Scale}
@@ -673,6 +678,7 @@ dom1Scale=1e-7
   [../]
   [./Efield_l]
     type = Efield
+    component = 0
     potential = potential
     variable = Efield
     position_units = ${dom1Scale}
@@ -811,8 +817,15 @@ dom1Scale=1e-7
   #   v = emliq
   #   H = 1e3
   # [../]
-  [./Arp_physical_right]
-    type = HagelaarIonBC
+  [./Arp_physical_right_diffusion]
+    type = HagelaarIonDiffusionBC
+    variable = Arp
+    boundary = 'master0_interface'
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
+  [./Arp_physical_right_advection]
+    type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'master0_interface'
     potential = potential
@@ -839,8 +852,15 @@ dom1Scale=1e-7
     r = 0
     position_units = ${dom0Scale}
   [../]
-  [./Arp_physical_left]
-    type = HagelaarIonBC
+  [./Arp_physical_left_diffusion]
+    type = HagelaarIonDiffusionBC
+    variable = Arp
+    boundary = 'left'
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
+  [./Arp_physical_left_advection]
+    type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'left'
     potential = potential
