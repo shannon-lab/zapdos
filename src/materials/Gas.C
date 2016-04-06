@@ -101,7 +101,7 @@ Gas::Gas(const InputParameters & parameters) :
   _sgnArp(declareProperty<Real>("sgnArp")),
   _diffpotential(declareProperty<Real>("diffpotential")),
   _actual_mean_energy(declareProperty<Real>("actual_mean_energy")),
-  _T_heavy(declareProperty<Real>("T_heavy")),
+  _TArp(declareProperty<Real>("TArp")),
   _muu(declareProperty<Real>("muu")),
   _diffu(declareProperty<Real>("diffu")),
   _sgnu(declareProperty<Real>("sgnu")),
@@ -281,7 +281,7 @@ Gas::computeQpProperties()
   _sgnArp[_qp] = 1.;
   _diffpotential[_qp] = _eps[_qp];
 
-  _T_heavy[_qp] = 300;
+  _TArp[_qp] = 300;
 
   // Physics test properties
   _muu[_qp] = 1.;

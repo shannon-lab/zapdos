@@ -105,7 +105,7 @@ protected:
   MaterialProperty<Real> & _sgnArp;
   MaterialProperty<Real> & _diffpotential;
   MaterialProperty<Real> & _actual_mean_energy;
-  MaterialProperty<Real> & _T_heavy;
+  MaterialProperty<Real> & _TArp;
   MaterialProperty<Real> & _muu;
   MaterialProperty<Real> & _diffu;
   MaterialProperty<Real> & _sgnu;

@@ -18,7 +18,7 @@ HagelaarIonDiffusionBC::HagelaarIonDiffusionBC(const InputParameters & parameter
   _r(getParam<Real>("r")),
 
   _kb(getMaterialProperty<Real>("k_boltz")),
-  _T_heavy(getMaterialProperty<Real>("T_heavy")),
+  _T(getMaterialProperty<Real>("T" + _var.name())),
   _mass(getMaterialProperty<Real>("mass" + _var.name())),
   _v_thermal(0),
   _user_velocity(getParam<Real>("user_velocity"))
@@ -30,7 +30,7 @@ HagelaarIonDiffusionBC::computeQpResidual()
   if (_user_velocity > 0.)
     _v_thermal = _user_velocity;
   else
-    _v_thermal = std::sqrt(8 * _kb[_qp] * _T_heavy[_qp] / (M_PI * _mass[_qp]));
+    _v_thermal = std::sqrt(8 * _kb[_qp] * _T[_qp] / (M_PI * _mass[_qp]));
 
   return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) * 0.5 * _v_thermal * std::exp(_u[_qp]);
 }
@@ -41,7 +41,7 @@ HagelaarIonDiffusionBC::computeQpJacobian()
   if (_user_velocity > 0.)
     _v_thermal = _user_velocity;
   else
-    _v_thermal = std::sqrt(8 * _kb[_qp] * _T_heavy[_qp] / (M_PI * _mass[_qp]));
+    _v_thermal = std::sqrt(8 * _kb[_qp] * _T[_qp] / (M_PI * _mass[_qp]));
 
   return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) * 0.5 * _v_thermal * std::exp(_u[_qp]) * _phi[_j][_qp];
 }

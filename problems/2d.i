@@ -36,7 +36,7 @@ dom0Scale=1e-3
 
 [Preconditioning]
   [./smp]
-    type = FDP
+    type = SMP
     full = true
   [../]
 []
@@ -47,9 +47,9 @@ dom0Scale=1e-3
   # end_time = 10
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
   # petsc_options = '-snes_test_display'
-  solve_type = PJFNK
-  # petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
-  # petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
+  solve_type = NEWTON
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
+  petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
@@ -85,6 +85,7 @@ dom0Scale=1e-3
   [../]
   [./em_advection]
     type = EFieldAdvectionElectrons
+    # type = EFieldAdvection
     variable = em
     potential = potential
     mean_en = mean_en
@@ -93,6 +94,7 @@ dom0Scale=1e-3
   [../]
   [./em_diffusion]
     type = CoeffDiffusionElectrons
+    # type = CoeffDiffusion
     variable = em
     mean_en = mean_en
     block = 0
@@ -503,13 +505,21 @@ dom0Scale=1e-3
     boundary = anode
     value = 0
   [../]
-  [./electrons]
-    type = HagelaarElectronBC
+  # [./electrons]
+  #   # type = HagelaarElectronBC
+  #   type = HagelaarIonAdvectionBC
+  #   variable = em
+  #   boundary = 'anode cathode walls'
+  #   potential = potential
+  #   # ip = Arp
+  #   # mean_en = mean_en
+  #   r = 0
+  #   position_units = ${dom0Scale}
+  # [../]
+  [./electrons_diffusion]
+    type = HagelaarIonDiffusionBC
     variable = em
     boundary = 'anode cathode walls'
-    potential = potential
-    ip = Arp
-    mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
   [../]
@@ -530,17 +540,17 @@ dom0Scale=1e-3
     r = 0
     position_units = ${dom0Scale}
   [../]
-  [./mean_en]
-    type = HagelaarEnergyBC
-    variable = mean_en
-    boundary = 'anode cathode walls'
-    # boundary = 'anode cathode'
-    potential = potential
-    em = em
-    ip = Arp
-    r = 0
-    position_units = ${dom0Scale}
-  [../]
+  # [./mean_en]
+  #   type = HagelaarEnergyBC
+  #   variable = mean_en
+  #   boundary = 'anode cathode walls'
+  #   # boundary = 'anode cathode'
+  #   potential = potential
+  #   em = em
+  #   ip = Arp
+  #   r = 0
+  #   position_units = ${dom0Scale}
+  # [../]
 []
 
 [ICs]
@@ -608,16 +618,16 @@ dom0Scale=1e-3
  #  [../]
 []
 
-[Postprocessors]
-  [./cathode_flux]
-    type = SideTotFluxIntegral
-    execute_on = timestep_end
-    # execute_on = linear
-    boundary = cathode
-    mobility = muArp
-    potential = potential
-    variable = Arp
-    r = 0
-    position_units = ${dom0Scale}
-  [../]
-[]
+# [Postprocessors]
+#   [./cathode_flux]
+#     type = SideTotFluxIntegral
+#     execute_on = timestep_end
+#     # execute_on = linear
+#     boundary = cathode
+#     mobility = muArp
+#     potential = potential
+#     variable = Arp
+#     r = 0
+#     position_units = ${dom0Scale}
+#   [../]
+# []
