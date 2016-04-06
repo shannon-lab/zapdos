@@ -406,6 +406,8 @@ dom1Scale=1e-7
 [AuxVariables]
   [./e_temp]
     block = 0
+    order = CONSTANT
+    family = MONOMIAL
   [../]
   [./x]
     order = CONSTANT
@@ -987,6 +989,7 @@ dom1Scale=1e-7
     potential = potential
     ip = Arp
     mean_en = mean_en
+    user_se_coeff = .05
     block = 0
  [../]
  [./water_block]

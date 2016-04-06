@@ -23,6 +23,7 @@ InputParameters validParams<Gas>()
   params.addRequiredParam<bool>("interp_trans_coeffs", "Whether to interpolate transport coefficients as a function of the mean energy. If false, coeffs are constant.");
   params.addRequiredParam<bool>("interp_elastic_coeff", "Whether to interpolate the elastic collision townsend coefficient as a function of the mean energy. If false, coeffs are constant.");
   params.addRequiredParam<bool>("ramp_trans_coeffs", "Whether to ramp the non-linearity of coming from the electron energy dependence of the transport coefficients.");
+  params.addParam<Real>("user_se_coeff", 0.15, "The secondary electron emission coefficient.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
@@ -39,6 +40,7 @@ Gas::Gas(const InputParameters & parameters) :
     _interp_elastic_coeff(getParam<bool>("interp_elastic_coeff")),
     _ramp_trans_coeffs(getParam<bool>("ramp_trans_coeffs")),
     _potential_units(getParam<std::string>("potential_units")),
+    _user_se_coeff(getParam<Real>("user_se_coeff")),
 
     _muem(declareProperty<Real>("muem")),
     _d_muem_d_actual_mean_en(declareProperty<Real>("d_muem_d_actual_mean_en")),
@@ -269,7 +271,7 @@ Gas::computeQpProperties()
   _mem[_qp] = 9.11e-31;
   _mGas[_qp] = 40.0*1.66e-27;
   _massArp[_qp] = 40.0*1.66e-27;
-  _se_coeff[_qp] = 0.15;
+  _se_coeff[_qp] = _user_se_coeff;
   _se_energy[_qp] = 2. * 3. / 2.; // Emi uses 2 Volts coming off the wall (presumably for Te). Multiply by 3/2 to get mean_en
   _e[_qp] = 1.6e-19;
   _eps[_qp] = 8.85e-12;

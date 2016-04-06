@@ -44,6 +44,7 @@ protected:
   bool _ramp_trans_coeffs;
   std::string _potential_units;
   Real _voltage_scaling;
+  Real _user_se_coeff;
 
   MaterialProperty<Real>  & _muem;
   MaterialProperty<Real>  & _d_muem_d_actual_mean_en;
