@@ -22,7 +22,7 @@ protected:
   Real _r;
 
   const MaterialProperty<Real> & _kb;
-  const MaterialProperty<Real> & _T_heavy;
+  const MaterialProperty<Real> & _T;
   const MaterialProperty<Real> & _mass;
 
   Real _v_thermal;

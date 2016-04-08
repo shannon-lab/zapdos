@@ -23,8 +23,13 @@ InputParameters validParams<Gas>()
   params.addRequiredParam<bool>("interp_trans_coeffs", "Whether to interpolate transport coefficients as a function of the mean energy. If false, coeffs are constant.");
   params.addRequiredParam<bool>("interp_elastic_coeff", "Whether to interpolate the elastic collision townsend coefficient as a function of the mean energy. If false, coeffs are constant.");
   params.addRequiredParam<bool>("ramp_trans_coeffs", "Whether to ramp the non-linearity of coming from the electron energy dependence of the transport coefficients.");
-  params.addParam<Real>("user_se_coeff", 0.15, "The secondary electron emission coefficient.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
+  params.addRequiredParam<bool>("use_moles", "Whether to use units of moles as opposed to # of molecules.");
+
+  params.addParam<Real>("user_se_coeff", 0.15, "The secondary electron emission coefficient.");
+  params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
+  params.addParam<Real>("user_p_gas", 1.01e5, "The gas pressure in Pascals.");
+
   params.addCoupledVar("potential", "The potential for calculating the electron velocity");
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("mean_en", "The electron mean energy in log form.");
@@ -41,6 +46,9 @@ Gas::Gas(const InputParameters & parameters) :
     _ramp_trans_coeffs(getParam<bool>("ramp_trans_coeffs")),
     _potential_units(getParam<std::string>("potential_units")),
     _user_se_coeff(getParam<Real>("user_se_coeff")),
+    _user_T_gas(getParam<Real>("user_T_gas")),
+    _user_p_gas(getParam<Real>("user_p_gas")),
+    _use_moles(getParam<bool>("use_moles")),
 
     _muem(declareProperty<Real>("muem")),
     _d_muem_d_actual_mean_en(declareProperty<Real>("d_muem_d_actual_mean_en")),
@@ -57,8 +65,8 @@ Gas::Gas(const InputParameters & parameters) :
   _diffmean_en(declareProperty<Real>("diffmean_en")),
   _d_diffmean_en_d_actual_mean_en(declareProperty<Real>("d_diffmean_en_d_actual_mean_en")),
   _rate_coeff_elastic(declareProperty<Real>("rate_coeff_elastic")),
-  _mem(declareProperty<Real>("mem")),
-  _mGas(declareProperty<Real>("mGas")),
+  _massem(declareProperty<Real>("massem")),
+  _massGas(declareProperty<Real>("massGas")),
   _massArp(declareProperty<Real>("massArp")),
   _se_coeff(declareProperty<Real>("se_coeff")),
   _se_energy(declareProperty<Real>("se_energy")),
@@ -102,9 +110,14 @@ Gas::Gas(const InputParameters & parameters) :
   _diffpotential(declareProperty<Real>("diffpotential")),
   _actual_mean_energy(declareProperty<Real>("actual_mean_energy")),
   _TArp(declareProperty<Real>("TArp")),
+  _Tem(declareProperty<Real>("Tem")),
   _muu(declareProperty<Real>("muu")),
   _diffu(declareProperty<Real>("diffu")),
   _sgnu(declareProperty<Real>("sgnu")),
+    _T_gas(declareProperty<Real>("T_gas")),
+    _p_gas(declareProperty<Real>("p_gas")),
+    _n_gas(declareProprety<Real>("n_gas")),
+    _kiz(declareProperty<Real>("kiz")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
   _em(isCoupled("em") ? coupledValue("em") : _zero),
@@ -268,20 +281,38 @@ Gas::computeQpProperties()
   }
 
   _rate_coeff_elastic[_qp] = 1e-13;
-  _mem[_qp] = 9.11e-31;
-  _mGas[_qp] = 40.0*1.66e-27;
+  _massem[_qp] = 9.11e-31;
+  _massGas[_qp] = 40.0*1.66e-27;
   _massArp[_qp] = 40.0*1.66e-27;
+  _T_gas[_qp] = _user_T_gas;
+  _p_gas[_qp] = _user_p_gas;
+  _k_boltz[_qp] = 1.38e-23;
+  if (_use_moles)
+    _n_gas[_qp] = _p_gas[_qp] / (8.3145 * _T_gas[_qp]);
+  else
+    _n_gas[_qp] = _p_gas[_qp] / (_k_boltz[_qp] * _T_gas[_qp]);
+
   _se_coeff[_qp] = _user_se_coeff;
   _se_energy[_qp] = 2. * 3. / 2.; // Emi uses 2 Volts coming off the wall (presumably for Te). Multiply by 3/2 to get mean_en
   _e[_qp] = 1.6e-19;
   _eps[_qp] = 8.85e-12;
-  _k_boltz[_qp] = 1.38e-23;
   _sgnem[_qp] = -1.;
   _sgnmean_en[_qp] = -1.;
   _sgnArp[_qp] = 1.;
   _diffpotential[_qp] = _eps[_qp];
 
   _TArp[_qp] = 300;
+
+  _TemVolts[_qp] = 2. / 3. * std::exp(_mean_en[_qp] - _em[_qp])
+  _Tem[_qp] = _e[_qp] * _TemVolts[_qp] / _k_boltz[_qp];
+
+  _kiz[_qp] = 2.34e-14 * std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]);
+  _d_kiz_d_actual_mean_en[_qp] = 2.34e-14 * (.59 * std::pow(_TemVolts[_qp], .59 - 1.) * std::exp(-17.44 / _TemVolts[_qp]) + std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]) * 17.44 / std::pow(_TemVolts[_qp], 2.)) * 2. / 3.;
+  if (_use_moles)
+  {
+    _kiz[_qp] = _kiz[_qp] * _N_A[_qp];
+    _d_kiz_d_actual_mean_en[_qp] = _d_kiz_d_actual_mean_en[_qp] * _N_A[_qp];
+  }
 
   // Physics test properties
   _muu[_qp] = 1.;

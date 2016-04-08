@@ -20,11 +20,10 @@ dom0Scale=1e-3
   # dim = 2
   # boundary_id = '0 1 2'
   # boundary_name = 'anode cathode walls'
-  # type = FileMesh
-  # file = '2d.msh'
-  # boundary_id = '10 11 12 13'
-  # boundary_name = 'cathode anode walls axis'
-  file = '2d_temp_out.e'
+  type = FileMesh
+  file = '2d.msh'
+  boundary_id = '10 11 12 13'
+  boundary_name = 'cathode anode walls axis'
 []
 
 
@@ -53,7 +52,7 @@ dom0Scale=1e-3
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
- nl_abs_tol = 7.6e-5
+ # nl_abs_tol = 3e-3
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -67,7 +66,7 @@ dom0Scale=1e-3
 
 [Outputs]
   print_perf_log = true
-  print_linear_residuals = true
+  print_linear_residuals = false
   [./out]
     type = Exodus
   [../]
@@ -246,8 +245,8 @@ dom0Scale=1e-3
 
 [Variables]
   [./potential]
-    initial_from_file_var = potential
-    initial_from_file_timestep = 1
+    # initial_from_file_var = potential
+    # initial_from_file_timestep = 1
   [../]
   [./em]
     block = 0
@@ -429,14 +428,14 @@ dom0Scale=1e-3
   [../]
   [./em_lin]
     type = Density
-    convert_moles = true
+    use_moles = true
     variable = em_lin
     density_log = em
     block = 0
   [../]
   [./Arp_lin]
     type = Density
-    convert_moles = true
+    use_moles = true
     variable = Arp_lin
     density_log = Arp
     block = 0
@@ -485,41 +484,43 @@ dom0Scale=1e-3
 []
 
 [BCs]
-  [./potential_cathode]
-    type = DirichletBC
-    value = -1.25
-    boundary = cathode
-    variable = potential
-  [../]
   # [./potential_cathode]
-  #   type = CircuitDirichletPotential
-  #   surface_potential = -1.25
-  #   current = cathode_flux
+  #   type = DirichletBC
+  #   value = -1.25
   #   boundary = cathode
   #   variable = potential
-  #   surface = cathode
   # [../]
+  [./potential_cathode]
+    type = CircuitDirichletPotential
+    surface_potential = -1.25
+    current = cathode_flux
+    boundary = cathode
+    variable = potential
+    surface = cathode
+  [../]
   [./potential_anode]
     type = DirichletBC
     variable = potential
     boundary = anode
     value = 0
   [../]
-  # [./electrons]
-  #   # type = HagelaarElectronBC
-  #   type = HagelaarIonAdvectionBC
-  #   variable = em
-  #   boundary = 'anode cathode walls'
-  #   potential = potential
-  #   # ip = Arp
-  #   # mean_en = mean_en
-  #   r = 0
-  #   position_units = ${dom0Scale}
-  # [../]
-  [./electrons_diffusion]
-    type = HagelaarIonDiffusionBC
+  [./electrons]
+    type = HagelaarElectronBC
+    # type = HagelaarIonAdvectionBC
     variable = em
     boundary = 'anode cathode walls'
+    potential = potential
+    mean_en = mean_en
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
+  [./sec_electrons]
+    type = SecondaryElectronBC
+    variable = em
+    boundary = 'anode cathode walls'
+    potential = potential
+    ip = Arp
+    mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
   [../]
@@ -540,17 +541,17 @@ dom0Scale=1e-3
     r = 0
     position_units = ${dom0Scale}
   [../]
-  # [./mean_en]
-  #   type = HagelaarEnergyBC
-  #   variable = mean_en
-  #   boundary = 'anode cathode walls'
-  #   # boundary = 'anode cathode'
-  #   potential = potential
-  #   em = em
-  #   ip = Arp
-  #   r = 0
-  #   position_units = ${dom0Scale}
-  # [../]
+  [./mean_en]
+    type = HagelaarEnergyBC
+    variable = mean_en
+    boundary = 'anode cathode walls'
+    # boundary = 'anode cathode'
+    potential = potential
+    em = em
+    ip = Arp
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
 []
 
 [ICs]
@@ -601,7 +602,7 @@ dom0Scale=1e-3
 [Materials]
   [./gas_block]
     type = Gas
-    interp_trans_coeffs = true
+    interp_trans_coeffs = false
     interp_elastic_coeff = true
     ramp_trans_coeffs = false
     em = em
@@ -618,16 +619,16 @@ dom0Scale=1e-3
  #  [../]
 []
 
-# [Postprocessors]
-#   [./cathode_flux]
-#     type = SideTotFluxIntegral
-#     execute_on = timestep_end
-#     # execute_on = linear
-#     boundary = cathode
-#     mobility = muArp
-#     potential = potential
-#     variable = Arp
-#     r = 0
-#     position_units = ${dom0Scale}
-#   [../]
-# []
+[Postprocessors]
+  [./cathode_flux]
+    type = SideTotFluxIntegral
+    execute_on = nonlinear
+    # execute_on = linear
+    boundary = cathode
+    mobility = muArp
+    potential = potential
+    variable = Arp
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
+[]

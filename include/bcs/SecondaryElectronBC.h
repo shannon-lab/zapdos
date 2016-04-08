@@ -1,18 +1,18 @@
-#ifndef HAGELAARENERGYBC_H
-#define HAGELAARENERGYBC_H
+#ifndef SECONDARYELECTRONBC_H
+#define SECONDARYELECTRONBC_H
 
 #include "IntegratedBC.h"
 
-class HagelaarEnergyBC;
+class SecondaryElectronBC;
 
 template<>
-InputParameters validParams<HagelaarEnergyBC>();
+InputParameters validParams<SecondaryElectronBC>();
 
-class HagelaarEnergyBC : public IntegratedBC
+class SecondaryElectronBC : public IntegratedBC
 {
 public:
 
-  HagelaarEnergyBC(const InputParameters & parameters);
+  SecondaryElectronBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -26,8 +26,8 @@ protected:
 
   const VariableGradient & _grad_potential;
   unsigned int _potential_id;
-  const VariableValue & _em;
-  unsigned int _em_id;
+  const VariableValue & _mean_en;
+  unsigned int _mean_en_id;
   MooseVariable & _ip_var;
   const VariableValue & _ip;
   const VariableGradient & _grad_ip;
@@ -41,24 +41,21 @@ protected:
   const MaterialProperty<Real> & _muip;
   const MaterialProperty<Real> & _Dip;
   const MaterialProperty<Real> & _se_coeff;
-  const MaterialProperty<Real> & _se_energy;
-  const MaterialProperty<Real> & _mumean_en;
-  const MaterialProperty<Real> & _d_mumean_en_d_actual_mean_en;
 
   Real  _a;
   Real  _v_thermal;
   RealVectorValue  _ion_flux;
   Real  _n_gamma;
   Real  _d_v_thermal_d_u;
-  Real  _d_v_thermal_d_em;
+  Real  _d_v_thermal_d_mean_en;
   RealVectorValue  _d_ion_flux_d_potential;
   RealVectorValue  _d_ion_flux_d_ip;
   Real  _d_n_gamma_d_potential;
   Real  _d_n_gamma_d_ip;
   Real  _d_n_gamma_d_u;
-  Real  _d_n_gamma_d_em;
+  Real  _d_n_gamma_d_mean_en;
   Real _actual_mean_en;
 
 };
 
-#endif //HAGELAARENERGYBC_H
+#endif //SECONDARYELECTRONBC_H

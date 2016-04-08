@@ -6,14 +6,14 @@ InputParameters validParams<Density>()
   InputParameters params = validParams<AuxKernel>();
 
   params.addRequiredCoupledVar("density_log","The variable representing the log of the density.");
-  params.addRequiredParam<bool>("convert_moles", "Whether to convert from units of moles to #.");
+  params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to #.");
   return params;
 }
 
 Density::Density(const InputParameters & parameters) :
     AuxKernel(parameters),
 
-    _convert_moles(getParam<bool>("convert_moles")),
+    _convert_moles(getParam<bool>("use_moles")),
     _density_log(coupledValue("density_log")),
     _N_A(getMaterialProperty<Real>("N_A"))
 {

@@ -4,16 +4,16 @@ lc = .1 * 1e-3 * dom0Mult;
 dc = 1; // Stands for don't care
 
 // Needle tip
-Point(5) = {0, 1e-3 * dom0Mult, 0, .5 * lc};
+Point(5) = {0, 1e-3 * dom0Mult, 0, .005 * lc};
 
 // Center of radius of curvature
 Point(6) = {0, dom0Mult * (1e-3 + 30e-6), 0, dc};
 
 // Point of needle at small radius
-Point(7) = {30e-6 * dom0Mult, dom0Mult * (1e-3 + 30e-6), 0, .5 * lc};
+Point(7) = {30e-6 * dom0Mult, dom0Mult * (1e-3 + 30e-6), 0, .05 * lc};
 
 // Point of needle at large radius (pesudo-bottom left of domain)
-Point(8) = {dom0Mult * 180e-6, dom0Mult * 1.5e-3, 0, lc};
+Point(8) = {dom0Mult * 180e-6, dom0Mult * 1.5e-3, 0, .5 * lc};
 
 // Needle tip edge
 Circle(1) = {5, 6, 7};

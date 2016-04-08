@@ -45,6 +45,9 @@ protected:
   std::string _potential_units;
   Real _voltage_scaling;
   Real _user_se_coeff;
+  Real _user_T_gas;
+  Real _user_p_gas;
+  bool _use_moles;
 
   MaterialProperty<Real>  & _muem;
   MaterialProperty<Real>  & _d_muem_d_actual_mean_en;
@@ -61,8 +64,8 @@ protected:
   MaterialProperty<Real> &  _diffmean_en;
   MaterialProperty<Real> &  _d_diffmean_en_d_actual_mean_en;
   MaterialProperty<Real> &  _rate_coeff_elastic;
-  MaterialProperty<Real> &  _mem;
-  MaterialProperty<Real> &  _mGas;
+  MaterialProperty<Real> &  _massem;
+  MaterialProperty<Real> &  _massGas;
   MaterialProperty<Real> &  _massArp;
   MaterialProperty<Real> &  _se_coeff;
   MaterialProperty<Real> &  _se_energy;
@@ -106,9 +109,14 @@ protected:
   MaterialProperty<Real> & _diffpotential;
   MaterialProperty<Real> & _actual_mean_energy;
   MaterialProperty<Real> & _TArp;
+  MaterialProperty<Real> & _Tem;
   MaterialProperty<Real> & _muu;
   MaterialProperty<Real> & _diffu;
   MaterialProperty<Real> & _sgnu;
+  MaterialProperty<Real> & _T_gas;
+  MaterialProperty<Real> & _p_gas;
+  MaterialProperty<Real> & _n_gas;
+  MaterialProperty<Real> & _kiz;
 
   const VariableGradient & _grad_potential;
   const VariableValue & _em;
