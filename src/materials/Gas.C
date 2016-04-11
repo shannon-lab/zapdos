@@ -1,16 +1,3 @@
-/****************************************************************/
-/*               DO NOT MODIFY THIS HEADER                      */
-/* MOOSE - Multiphysics Object Oriented Simulation Environment  */
-/*                                                              */
-/*           (c) 2010 Battelle Energy Alliance, LLC             */
-/*                   ALL RIGHTS RESERVED                        */
-/*                                                              */
-/*          Prepared by Battelle Energy Alliance, LLC           */
-/*            Under Contract No. DE-AC07-05ID14517              */
-/*            With the U. S. Department of Energy               */
-/*                                                              */
-/*            See COPYRIGHT for full restrictions               */
-/****************************************************************/
 #include "Gas.h"
 
 template<>
@@ -116,8 +103,12 @@ Gas::Gas(const InputParameters & parameters) :
   _sgnu(declareProperty<Real>("sgnu")),
     _T_gas(declareProperty<Real>("T_gas")),
     _p_gas(declareProperty<Real>("p_gas")),
-    _n_gas(declareProprety<Real>("n_gas")),
+    _n_gas(declareProperty<Real>("n_gas")),
     _kiz(declareProperty<Real>("kiz")),
+  _kex(declareProperty<Real>("kex")),
+  _kel(declareProperty<Real>("kel")),
+  _d_kiz_d_actual_mean_en(declareProperty<Real>("d_kiz_d_actual_mean_en")),
+  _TemVolts(declareProperty<Real>("TemVolts")),
 
   _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
   _em(isCoupled("em") ? coupledValue("em") : _zero),
@@ -303,7 +294,7 @@ Gas::computeQpProperties()
 
   _TArp[_qp] = 300;
 
-  _TemVolts[_qp] = 2. / 3. * std::exp(_mean_en[_qp] - _em[_qp])
+  _TemVolts[_qp] = 2. / 3. * std::exp(_mean_en[_qp] - _em[_qp]);
   _Tem[_qp] = _e[_qp] * _TemVolts[_qp] / _k_boltz[_qp];
 
   _kiz[_qp] = 2.34e-14 * std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]);

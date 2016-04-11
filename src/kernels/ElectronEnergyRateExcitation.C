@@ -16,6 +16,11 @@ ElectronEnergyRateExcitation::ElectronEnergyRateExcitation(const InputParameters
     _kex(getMaterialProperty<Real>("kex")),
     _d_kex_d_actual_mean_en(getMaterialProperty<Real>("d_kex_d_actual_mean_en")),
     _Eex(getMaterialProperty<Real>("Eex")),
+    _n_gas(getMaterialProperty<Real>("n_gas")),
+
+    _actual_mean_en(0),
+    _d_kex_d_mean_en(0),
+    _d_kex_d_em(0),
 
     _em(coupledValue("em")),
     _em_id(coupled("em"))

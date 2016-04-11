@@ -5,7 +5,6 @@ template<>
 InputParameters validParams<ElectronEnergyRateIonization>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addRequiredCoupledVar("mean_en","The electron mean energy.");
   params.addRequiredCoupledVar("em", "The electron density");
   return params;
 }
@@ -17,9 +16,11 @@ ElectronEnergyRateIonization::ElectronEnergyRateIonization(const InputParameters
     _kiz(getMaterialProperty<Real>("kiz")),
     _d_kiz_d_actual_mean_en(getMaterialProperty<Real>("d_kiz_d_actual_mean_en")),
     _Eiz(getMaterialProperty<Real>("Eiz")),
+    _n_gas(getMaterialProperty<Real>("n_gas")),
+    _actual_mean_en(0),
+    _d_kiz_d_mean_en(0),
+    _d_kiz_d_em(0),
 
-    _mean_en(coupledValue("mean_en")),
-    _mean_en_id(coupled("mean_en")),
     _em(coupledValue("em")),
     _em_id(coupled("em"))
 {

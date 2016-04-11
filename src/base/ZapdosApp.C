@@ -5,6 +5,11 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "IonRateIonization.h"
+#include "ElectronRateIonization.h"
+#include "ElectronEnergyRateIonization.h"
+#include "ElectronEnergyRateExcitation.h"
+#include "ElectronEnergyRateElastic.h"
 #include "EFieldAdvectionEnergy.h"
 #include "CoeffDiffusionElectrons.h"
 #include "CoeffDiffusionEnergy.h"
@@ -244,6 +249,11 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(IonRateIonization);
+  registerKernel(ElectronRateIonization);
+  registerKernel(ElectronEnergyRateIonization);
+  registerKernel(ElectronEnergyRateExcitation);
+  registerKernel(ElectronEnergyRateElastic);
   registerKernel(CoeffDiffusionElectrons);
   registerKernel(CoeffDiffusionEnergy);
   registerKernel(InterpCoeffDiffusion);

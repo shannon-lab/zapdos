@@ -15,6 +15,11 @@ ElectronRateIonization::ElectronRateIonization(const InputParameters & parameter
 
     _kiz(getMaterialProperty<Real>("kiz")),
     _d_kiz_d_actual_mean_en(getMaterialProperty<Real>("d_kiz_d_actual_mean_en")),
+    _n_gas(getMaterialProperty<Real>("n_gas")),
+
+    _actual_mean_en(0),
+    _d_kiz_d_mean_en(0),
+    _d_kiz_d_em(0),
 
     _mean_en(coupledValue("mean_en")),
     _mean_en_id(coupled("mean_en"))
@@ -35,9 +40,9 @@ Real
 ElectronRateIonization::computeQpJacobian()
 {
   _actual_mean_en = std::exp(_mean_en[_qp] - _u[_qp]);
-  _d_kiz_d_u = _d_kiz_d_actual_mean_en[_qp] * _actual_mean_en * -_phi[_j][_qp];
+  _d_kiz_d_em = _d_kiz_d_actual_mean_en[_qp] * _actual_mean_en * -_phi[_j][_qp];
 
-  return -_test[_i][_qp] * _n_gas[_qp] * (_d_kiz_d_u * std::exp(_u[_qp]) + _kiz[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp]);
+  return -_test[_i][_qp] * _n_gas[_qp] * (_d_kiz_d_em * std::exp(_u[_qp]) + _kiz[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp]);
 }
 
 Real

@@ -24,8 +24,13 @@ protected:
   const MaterialProperty<Real> & _d_kel_d_actual_mean_en;
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _massGas;
+  const MaterialProperty<Real> & _n_gas;
 
-  const VariableValue & em;
+  Real _actual_mean_en;
+  Real _d_kel_d_mean_en;
+  Real _d_kel_d_em;
+
+  const VariableValue & _em;
   unsigned int _em_id;
 };
 

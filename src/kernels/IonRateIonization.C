@@ -16,6 +16,11 @@ IonRateIonization::IonRateIonization(const InputParameters & parameters) :
 
     _kiz(getMaterialProperty<Real>("kiz")),
     _d_kiz_d_actual_mean_en(getMaterialProperty<Real>("d_kiz_d_actual_mean_en")),
+    _n_gas(getMaterialProperty<Real>("n_gas")),
+
+    _actual_mean_en(0),
+    _d_kiz_d_mean_en(0),
+    _d_kiz_d_em(0),
 
     _mean_en(coupledValue("mean_en")),
     _mean_en_id(coupled("mean_en")),

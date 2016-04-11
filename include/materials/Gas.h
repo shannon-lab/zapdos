@@ -117,6 +117,10 @@ protected:
   MaterialProperty<Real> & _p_gas;
   MaterialProperty<Real> & _n_gas;
   MaterialProperty<Real> & _kiz;
+  MaterialProperty<Real> & _kex;
+  MaterialProperty<Real> & _kel;
+  MaterialProperty<Real> & _d_kiz_d_actual_mean_en;
+  MaterialProperty<Real> & _TemVolts;
 
   const VariableGradient & _grad_potential;
   const VariableValue & _em;

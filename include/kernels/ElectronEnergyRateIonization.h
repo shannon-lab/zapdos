@@ -23,8 +23,13 @@ protected:
   const MaterialProperty<Real> & _kiz;
   const MaterialProperty<Real> & _d_kiz_d_actual_mean_en;
   const MaterialProperty<Real> & _Eiz;
+  const MaterialProperty<Real> & _n_gas;
 
-  const VariableValue & em;
+  Real _actual_mean_en;
+  Real _d_kiz_d_mean_en;
+  Real _d_kiz_d_em;
+
+  const VariableValue & _em;
   unsigned int _em_id;
 };
 

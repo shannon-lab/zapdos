@@ -17,6 +17,11 @@ ElectronEnergyRateElastic::ElectronEnergyRateElastic(const InputParameters & par
     _d_kel_d_actual_mean_en(getMaterialProperty<Real>("d_kel_d_actual_mean_en")),
     _massem(getMaterialProperty<Real>("massem")),
     _massGas(getMaterialProperty<Real>("massGas")),
+    _n_gas(getMaterialProperty<Real>("n_gas")),
+
+    _actual_mean_en(0),
+    _d_kel_d_mean_en(0),
+    _d_kel_d_em(0),
 
     _em(coupledValue("em")),
     _em_id(coupled("em"))
