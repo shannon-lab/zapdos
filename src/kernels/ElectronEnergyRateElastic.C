@@ -44,7 +44,7 @@ ElectronEnergyRateElastic::computeQpJacobian()
     _actual_mean_en = std::exp(_u[_qp] - _em[_qp]);
     _d_kel_d_mean_en = _d_kel_d_actual_mean_en[_qp] * _actual_mean_en * _phi[_j][_qp];
 
-    return -_test[_i][_qp] * _n_gas[_qp] * -2. * _massem[_qp] / _massGas[_qp] * std::exp(_em[_qp]) * (_d_kel_d_mean_en * std::exp(_u[_qp] - _em[_qp]) * _kel[_qp] * std::exp(_u[_qp] - _em[_qp]) * _phi[_j][_qp]);
+    return -_test[_i][_qp] * _n_gas[_qp] * -2. * _massem[_qp] / _massGas[_qp] * std::exp(_em[_qp]) * (_d_kel_d_mean_en * std::exp(_u[_qp] - _em[_qp]) + _kel[_qp] * std::exp(_u[_qp] - _em[_qp]) * _phi[_j][_qp]);
 }
 
 Real

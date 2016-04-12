@@ -106,4 +106,9 @@ HagelaarEnergyBC
 DCIonBC
 InterfaceAdvection
 InterfaceLogDiffusionElectrons
+ElectronRateIonization
+IonRateIonization
+ElectronEnergyRateIonization
+ElectronEnergyRateExcitation
+ElectronEnergyRateElastic (as long as kel is a constant)
 '''

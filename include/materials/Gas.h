@@ -120,6 +120,8 @@ protected:
   MaterialProperty<Real> & _kex;
   MaterialProperty<Real> & _kel;
   MaterialProperty<Real> & _d_kiz_d_actual_mean_en;
+  MaterialProperty<Real> & _d_kex_d_actual_mean_en;
+  MaterialProperty<Real> & _d_kel_d_actual_mean_en;
   MaterialProperty<Real> & _TemVolts;
 
   const VariableGradient & _grad_potential;
