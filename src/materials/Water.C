@@ -311,7 +311,7 @@ Water::computeQpProperties()
   _k37[_qp]	= 6.0e10; // H3O+ + OH- --> H + OH + H2O
   _k38[_qp]	= 2.0e3;  // HO2 + H2O --> H3O+ + O2-
   _k39[_qp]	= 6.0e1;  // H3O+ O2- --> HO2 + H2O
-  _diffemliq[_qp]	= 4.5e-9;	// diffusivity of hydrated electron
+  _diffemliq[_qp]	= 4.5e-9;	// diffusivity of hydrated electron. Anbar (1965) from Ranga paper
   _diffem[_qp] = _diffemliq[_qp];
   // _diffem[_qp] = 0.297951680159;
   _diffpotentialliq[_qp] = _eps[_qp];
