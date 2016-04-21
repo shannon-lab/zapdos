@@ -42,6 +42,7 @@ protected:
   unsigned int _potential_id;
 
   Real _scale;
+  Real _r_units;
 
   // Material Properties
 

@@ -1,11 +1,8 @@
 dom0Scale=1e-3
-# dom0Scale=1.1
 
 [GlobalParams]
   offset = 20
-  # offset = 0
   potential_units = kV
-  # potential_units = V
 []
 
 [Mesh]
@@ -15,11 +12,6 @@ dom0Scale=1e-3
   # dim = 1
   # boundary_id = '0 1'
   # boundary_name = 'anode cathode'
-  # ny = 1
-  # ymax = 1.1
-  # dim = 2
-  # boundary_id = '0 1 2'
-  # boundary_name = 'anode cathode walls'
   type = FileMesh
   file = '2d.msh'
   boundary_id = '10 11 12 13'
@@ -43,22 +35,19 @@ dom0Scale=1e-3
 [Executioner]
   type = Transient
   end_time = 1e-1
-  # end_time = 10
-  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
-  # petsc_options = '-snes_test_display'
   solve_type = NEWTON
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
+  # petsc_options = '-snes_test_display'
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
- nl_rel_tol = 1e-4
- # nl_abs_tol = 3e-3
+ # nl_rel_tol = 1e-4
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
     dt = 1e-9
-    # dt = 0.1
     growth_factor = 1.2
    optimal_iterations = 15
   [../]
@@ -84,7 +73,6 @@ dom0Scale=1e-3
   [../]
   [./em_advection]
     type = EFieldAdvectionElectrons
-    # type = EFieldAdvection
     variable = em
     potential = potential
     mean_en = mean_en
@@ -93,7 +81,6 @@ dom0Scale=1e-3
   [../]
   [./em_diffusion]
     type = CoeffDiffusionElectrons
-    # type = CoeffDiffusion
     variable = em
     mean_en = mean_en
     block = 0
@@ -118,12 +105,13 @@ dom0Scale=1e-3
     variable = em
     block = 0
   [../]
-  # [./em_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = em
-  #   potential = potential
-  #   block = 0
-  # [../]
+  [./em_advection_stabilization]
+    type = EFieldArtDiff
+    variable = em
+    potential = potential
+    block = 0
+    position_units = ${dom0Scale}
+  [../]
 
   [./potential_diffusion_dom1]
     type = CoeffDiffusionLin
@@ -183,12 +171,13 @@ dom0Scale=1e-3
     variable = Arp
     block = 0
   [../]
-  # [./Arp_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = Arp
-  #   potential = potential
-  #   block = 0
-  # [../]
+  [./Arp_advection_stabilization]
+    type = EFieldArtDiff
+    variable = Arp
+    potential = potential
+    block = 0
+    position_units = ${dom0Scale}
+  [../]
 
   [./mean_en_time_deriv]
     type = ElectronTimeDerivative
@@ -266,18 +255,17 @@ dom0Scale=1e-3
     block = 0
     offset = 15
   [../]
-  # [./mean_en_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = mean_en
-  #   potential = potential
-  #   block = 0
-  # [../]
+  [./mean_en_advection_stabilization]
+    type = EFieldArtDiff
+    variable = mean_en
+    potential = potential
+    block = 0
+    position_units = ${dom0Scale}
+  [../]
 []
 
 [Variables]
   [./potential]
-    # initial_from_file_var = potential
-    # initial_from_file_timestep = 1
   [../]
   [./em]
     block = 0
@@ -289,7 +277,6 @@ dom0Scale=1e-3
 
   [./mean_en]
     block = 0
-    # scaling = 1e-1
   [../]
 []
 
@@ -515,12 +502,6 @@ dom0Scale=1e-3
 []
 
 [BCs]
-  # [./potential_cathode]
-  #   type = DirichletBC
-  #   value = -1.25
-  #   boundary = cathode
-  #   variable = potential
-  # [../]
   [./potential_cathode]
     type = CircuitDirichletPotential
     surface_potential = -1.25
@@ -537,7 +518,6 @@ dom0Scale=1e-3
   [../]
   [./electrons]
     type = HagelaarElectronBC
-    # type = HagelaarIonAdvectionBC
     variable = em
     boundary = 'anode cathode walls'
     # boundary = 'anode cathode'
