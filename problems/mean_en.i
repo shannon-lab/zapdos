@@ -855,6 +855,16 @@ dom1Scale=1e-7
     r = 0
     position_units = ${dom0Scale}
   [../]
+  [./sec_electrons_left]
+    type = SecondaryElectronBC
+    variable = em
+    boundary = 'left'
+    potential = potential
+    ip = Arp
+    mean_en = mean_en
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
   [./Arp_physical_left_diffusion]
     type = HagelaarIonDiffusionBC
     variable = Arp
