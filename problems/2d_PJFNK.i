@@ -36,7 +36,7 @@ dom0Scale=1e-3
   type = Transient
   end_time = 1e-1
   solve_type = PJFNK
-  # petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
   # petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   # petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
   # petsc_options = '-snes_test_display'
@@ -55,8 +55,8 @@ dom0Scale=1e-3
 
 [Outputs]
   print_perf_log = true
-  print_linear_residuals = false
-  [./out]
+  print_linear_residuals = true
+  [./out_linear]
     type = Exodus
   [../]
 []
@@ -644,8 +644,8 @@ dom0Scale=1e-3
 [Postprocessors]
   [./cathode_flux]
     type = SideTotFluxIntegral
-    execute_on = nonlinear
-    # execute_on = linear
+    # execute_on = nonlinear
+    execute_on = linear
     boundary = cathode
     mobility = muArp
     potential = potential

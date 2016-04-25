@@ -7,6 +7,7 @@ dom1Scale=1e-7
   offset = 20
   # offset = 0
   potential_units = kV
+  use_moles = true
   # potential_units = V
 []
 

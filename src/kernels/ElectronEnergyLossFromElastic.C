@@ -24,7 +24,7 @@ ElectronEnergyLossFromElastic::ElectronEnergyLossFromElastic(const InputParamete
   _d_muem_d_actual_mean_en(getMaterialProperty<Real>("d_muem_d_actual_mean_en")),
   _d_diffem_d_actual_mean_en(getMaterialProperty<Real>("d_diffem_d_actual_mean_en")),
   _massem(getMaterialProperty<Real>("massem")),
-  _mGas(getMaterialProperty<Real>("mGas")),
+  _massGas(getMaterialProperty<Real>("massGas")),
   _alpha_el(getMaterialProperty<Real>("alpha_el")),
   _d_el_d_actual_mean_en(getMaterialProperty<Real>("d_el_d_actual_mean_en")),
 
@@ -44,7 +44,7 @@ Real
 ElectronEnergyLossFromElastic::computeQpResidual()
 {
   Real electron_flux_mag = (-_muem[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp])-_diffem[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units).norm();
-  Real Eel = -3.0 * _massem[_qp]/_mGas[_qp] * 2.0/3 * std::exp(_u[_qp]-_em[_qp]);
+  Real Eel = -3.0 * _massem[_qp]/_massGas[_qp] * 2.0/3 * std::exp(_u[_qp]-_em[_qp]);
   Real el_term = _alpha_el[_qp] * electron_flux_mag * Eel;
 
   return -_test[_i][_qp] * el_term;
@@ -64,8 +64,8 @@ ElectronEnergyLossFromElastic::computeQpJacobian()
   Real electron_flux_mag = electron_flux.norm();
   Real d_electron_flux_mag_d_mean_en = electron_flux * d_electron_flux_d_mean_en/(electron_flux_mag+std::numeric_limits<double>::epsilon());
 
-  Real Eel = -3.0 * _massem[_qp]/_mGas[_qp] * 2.0/3 * std::exp(_u[_qp]-_em[_qp]);
-  Real d_Eel_d_mean_en = -3.0 * _massem[_qp]/_mGas[_qp] * 2.0/3 * std::exp(_u[_qp]-_em[_qp]) * _phi[_j][_qp];
+  Real Eel = -3.0 * _massem[_qp]/_massGas[_qp] * 2.0/3 * std::exp(_u[_qp]-_em[_qp]);
+  Real d_Eel_d_mean_en = -3.0 * _massem[_qp]/_massGas[_qp] * 2.0/3 * std::exp(_u[_qp]-_em[_qp]) * _phi[_j][_qp];
   Real d_el_term_d_mean_en = (electron_flux_mag * d_el_d_mean_en + _alpha_el[_qp] * d_electron_flux_mag_d_mean_en) * Eel + electron_flux_mag * _alpha_el[_qp] * d_Eel_d_mean_en;
 
   return -_test[_i][_qp] * d_el_term_d_mean_en;
@@ -87,8 +87,8 @@ ElectronEnergyLossFromElastic::computeQpOffDiagJacobian(unsigned int jvar)
   Real d_electron_flux_mag_d_potential = electron_flux * d_electron_flux_d_potential/(electron_flux_mag+std::numeric_limits<double>::epsilon());
   Real d_electron_flux_mag_d_em = electron_flux * d_electron_flux_d_em/(electron_flux_mag+std::numeric_limits<double>::epsilon());
 
-  Real Eel = -3.0 * _massem[_qp]/_mGas[_qp] * 2.0/3 * std::exp(_u[_qp]-_em[_qp]);
-  Real d_Eel_d_em = -3.0 * _massem[_qp]/_mGas[_qp] * 2.0/3 * std::exp(_u[_qp]-_em[_qp]) * -_phi[_j][_qp];
+  Real Eel = -3.0 * _massem[_qp]/_massGas[_qp] * 2.0/3 * std::exp(_u[_qp]-_em[_qp]);
+  Real d_Eel_d_em = -3.0 * _massem[_qp]/_massGas[_qp] * 2.0/3 * std::exp(_u[_qp]-_em[_qp]) * -_phi[_j][_qp];
   Real d_Eel_d_potential = 0.0;
   Real d_el_term_d_em = (electron_flux_mag * d_el_d_em + _alpha_el[_qp] * d_electron_flux_mag_d_em) * Eel + electron_flux_mag * _alpha_el[_qp] * d_Eel_d_em;
   Real d_el_term_d_potential = (_alpha_el[_qp] * d_electron_flux_mag_d_potential) * Eel + electron_flux_mag * _alpha_el[_qp] * d_Eel_d_potential;

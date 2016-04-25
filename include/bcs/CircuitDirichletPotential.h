@@ -4,6 +4,7 @@
 #include "NodalBC.h"
 
 class CircuitDirichletPotential;
+class Function;
 
 template<>
 InputParameters validParams<CircuitDirichletPotential>();
@@ -24,7 +25,7 @@ protected:
 
   /// The value for this BC
   const PostprocessorValue & _current;
-  Real _surface_potential;
+  Function & _surface_potential;
   std::string _surface;
   Real _current_sign;
 };

@@ -61,7 +61,7 @@ protected:
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
   const MaterialProperty<Real> & _e;
-  const MaterialProperty<Real> & _mem;
+  const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _T_heavy;
   const MaterialProperty<Real> & _kb;
   const MaterialProperty<Real> & _mass;

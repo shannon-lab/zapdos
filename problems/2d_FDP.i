@@ -27,18 +27,18 @@ dom0Scale=1e-3
 
 [Preconditioning]
   [./smp]
-    type = SMP
+    type = FDP
     full = true
   [../]
 []
 
 [Executioner]
   type = Transient
-  end_time = 1e-1
-  solve_type = PJFNK
-  # petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
-  # petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
-  # petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
+  end_time = 1e-8
+  solve_type = NEWTON
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
+  petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
   # petsc_options = '-snes_test_display'
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
@@ -55,7 +55,7 @@ dom0Scale=1e-3
 
 [Outputs]
   print_perf_log = true
-  print_linear_residuals = false
+  print_linear_residuals = true
   [./out]
     type = Exodus
   [../]
