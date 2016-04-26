@@ -37,6 +37,7 @@ SideTotFluxIntegral::SideTotFluxIntegral(const InputParameters & parameters) :
 Real
 SideTotFluxIntegral::computeQpIntegral()
 {
+  // Output units for base case are: mol / (m^2 * s)
 
   if (_user_velocity > 0.)
     _v_thermal = _user_velocity;
@@ -51,5 +52,5 @@ SideTotFluxIntegral::computeQpIntegral()
 
   // return -_mobility_coef[_qp] * _grad_potential[_qp] * _normals[_qp] * std::exp(_u[_qp]) -_diffusion_coef[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _normals[_qp];
 
-  return _r_units * (1. - _r) / (1. + _r) * 0.5 * _v_thermal * std::exp(_u[_qp]) + _r_units * (1. - _r) / (1. + _r) * ((2 * _a - 1) * _sgn[_qp] * _mobility_coef[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _normals[_qp]);
+  return (1. - _r) / (1. + _r) * 0.5 * _v_thermal * std::exp(_u[_qp]) + (1. - _r) / (1. + _r) * ((2 * _a - 1) * _sgn[_qp] * _mobility_coef[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _normals[_qp]);
 }

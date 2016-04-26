@@ -27,7 +27,16 @@ protected:
   const PostprocessorValue & _current;
   Function & _surface_potential;
   std::string _surface;
+  Real _resist;
+  Real _coulomb_charge;
+  Real _N_A;
+  std::string _potential_units;
+  Real _r_units;
+  bool _convert_moles;
+  Real _A;
+
   Real _current_sign;
+  Real _voltage_scaling;
 };
 
 #endif /* CIRCUITDIRICHLETPOTENTIAL_H */
