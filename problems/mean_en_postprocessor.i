@@ -69,16 +69,17 @@ dom1Scale=1e-7
   type = Transient
   end_time = 1e-1
   # end_time = 10
-  petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
   # petsc_options = '-snes_test_display'
   solve_type = NEWTON
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
-  petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
+  # petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
+  # petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
  nl_abs_tol = 7.6e-5
   dtmin = 1e-12
+  l_max_its = 25
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
@@ -91,7 +92,7 @@ dom1Scale=1e-7
 
 [Outputs]
   print_perf_log = true
-  print_linear_residuals = false
+  print_linear_residuals = true
   [./out]
     type = Exodus
   [../]
@@ -645,28 +646,24 @@ dom1Scale=1e-7
   [../]
   [./em_lin]
     type = Density
-    convert_moles = true
     variable = em_lin
     density_log = em
     block = 0
   [../]
   [./emliq_lin]
     type = Density
-    convert_moles = true
     variable = emliq_lin
     density_log = emliq
     block = 1
   [../]
   [./Arp_lin]
     type = Density
-    convert_moles = true
     variable = Arp_lin
     density_log = Arp
     block = 0
   [../]
   [./OHm_lin]
     type = Density
-    convert_moles = true
     variable = OHm_lin
     density_log = OHm
     block = 1
@@ -785,17 +782,28 @@ dom1Scale=1e-7
 []
 
 [BCs]
-  [./potential_left]
-    type = NeumannCircuitVoltageMoles_KV
-    variable = potential
+  # [./potential_left]
+  #   type = NeumannCircuitVoltageMoles_KV
+  #   variable = potential
+  #   boundary = left
+  #   function = potential_bc_func
+  #   ip = Arp
+  #   data_provider = data_provider
+  #   em = em
+  #   mean_en = mean_en
+  #   r = 0
+  #   position_units = ${dom0Scale}
+  # [../]
+  [./potential_cathode]
+    type = CircuitDirichletPotential
+    surface_potential = potential_bc_func
+    current = cathode_flux
     boundary = left
-    function = potential_bc_func
-    ip = Arp
-    data_provider = data_provider
-    em = em
-    mean_en = mean_en
-    r = 0
+    variable = potential
+    surface = cathode
+    resist = 1e6
     position_units = ${dom0Scale}
+    A = 5.02e-1
   [../]
   [./potential_dirichlet_right]
     type = DirichletBC
@@ -808,7 +816,6 @@ dom1Scale=1e-7
     variable = em
     boundary = 'master0_interface'
     potential = potential
-    ip = Arp
     mean_en = mean_en
     r = 0.99
     position_units = ${dom0Scale}
@@ -850,7 +857,6 @@ dom1Scale=1e-7
     variable = em
     boundary = 'left'
     potential = potential
-    ip = Arp
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
@@ -951,38 +957,48 @@ dom1Scale=1e-7
   #   type = RandomIC
   #   variable = em
   #   block = 0
+  #   min = -21.5
+  #   max = -20.5
   # [../]
   # [./emliq_ic]
   #   type = RandomIC
   #   variable = emliq
   #   block = 1
+  #   min = -21.5
+  #   max = -20.5
   # [../]
   # [./Arp_ic]
   #   type = RandomIC
   #   variable = Arp
   #   block = 0
+  #   min = -21.5
+  #   max = -20.5
   # [../]
   # [./mean_en_ic]
   #   type = RandomIC
   #   variable = mean_en
   #   block = 0
-  # [../]
-  # [./potential_ic]
-  #   type = RandomIC
-  #   variable = potential
+  #   min = -20.5
+  #   max = -19.5
   # [../]
   # [./OHm_ic]
   #   type = RandomIC
   #   variable = OHm
   #   block = 1
+  #   min = -16.1
+  #   max = -15.1
   # [../]
+  # # [./potential_ic]
+  # #   type = RandomIC
+  # #   variable = potential
+  # # [../]
 []
 
 [Functions]
   [./potential_bc_func]
     type = ParsedFunction
     # value = '1.25*tanh(1e6*t)'
-    value = 1.25
+    value = -1.25
   [../]
   [./potential_ic_func]
     type = ParsedFunction
@@ -1015,4 +1031,18 @@ dom1Scale=1e-7
  #   emliq = emliq
  #   block = '0 1'
  #  [../]
+[]
+
+[Postprocessors]
+  [./cathode_flux]
+    type = SideTotFluxIntegral
+    execute_on = nonlinear
+    # execute_on = linear
+    boundary = left
+    mobility = muArp
+    potential = potential
+    variable = Arp
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
 []
