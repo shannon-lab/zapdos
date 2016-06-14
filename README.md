@@ -27,6 +27,7 @@ The best documentation so far for this project is in [this thesis chapter.](http
     <li><code>cd ~/projects/zapdos/problems; ../zapdos-opt -i mean_en.i --no-color 2>&1 | tee log.txt</code></li>
     <li>The above command will parse information of the iterative solution process to both the console and to the log file <code>log.txt</code></li>
     <li>The above command will also create an output file named <code>mean_en_out.e</code> containing all the solution variable values. These results are best viewed using a visualization tool like <b>Paraview</b>, downloadable <a href="http://www.paraview.org/download/">here</a></li>
+    <li><b>Important note:</b> Many of the existing input files in the <code>problems</code> directory require <code>fileName.msh</code>. In order to create the requisite <code>.msh</code> file, you must run the command <code>gmsh -d fileName.geo</code> where <code>d</code> is the dimension of the mesh and <code>fileName.geo</code> is the source file for the mesh. <code>gmsh</code> can be installed on Ubuntu using <code>sudo apt-get install gmsh</code> or it can be downloaded <a href="http://gmsh.info/#Download">here</a>.</li>
   </ul>
 </ol>
 
