@@ -1,10 +1,13 @@
 dom0Scale=1e-3
 dom1Scale=1e-7
+# dom0Scale=1.1
+# dom1Scale=1.1
 
 [GlobalParams]
   offset = 20
   # offset = 0
   potential_units = kV
+  use_moles = true
   # potential_units = V
 []
 
@@ -74,7 +77,7 @@ dom1Scale=1e-7
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
- nl_abs_tol = 6e-4
+ nl_abs_tol = 7.6e-5
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -148,6 +151,7 @@ dom1Scale=1e-7
   #   type = EFieldArtDiff
   #   variable = em
   #   potential = potential
+  #   block = 0
   # [../]
 
   [./emliq_time_deriv]
@@ -183,6 +187,12 @@ dom1Scale=1e-7
     variable = emliq
     block = 1
   [../]
+  # [./emliq_advection_stabilization]
+  #   type = EFieldArtDiff
+  #   variable = emliq
+  #   potential = potential
+  #   block = 1
+  # [../]
 
   [./potential_diffusion_dom1]
     type = CoeffDiffusionLin
@@ -257,6 +267,7 @@ dom1Scale=1e-7
   #   type = EFieldArtDiff
   #   variable = Arp
   #   potential = potential
+  #   block = 0
   # [../]
 
   [./OHm_time_deriv]
@@ -363,6 +374,7 @@ dom1Scale=1e-7
   #   type = EFieldArtDiff
   #   variable = mean_en
   #   potential = potential
+  #   block = 0
   # [../]
 []
 
@@ -374,7 +386,7 @@ dom1Scale=1e-7
   [../]
   [./emliq]
     block = 1
-    # scaling = 1e-4
+    # scaling = 1e-5
   [../]
 
   [./Arp]
@@ -388,17 +400,21 @@ dom1Scale=1e-7
 
   [./OHm]
     block = 1
-    # scaling = 1e-4
+    # scaling = 1e-5
   [../]
 []
 
 [AuxVariables]
   [./e_temp]
     block = 0
+    order = CONSTANT
+    family = MONOMIAL
   [../]
   [./x]
     order = CONSTANT
     family = MONOMIAL
+  [../]
+  [./x_node]
   [../]
   [./rho]
     order = CONSTANT
@@ -583,6 +599,18 @@ dom1Scale=1e-7
     position_units = ${dom1Scale}
     block = 1
   [../]
+  [./x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
+    block = 0
+  [../]
+  [./x_nl]
+    type = Position
+    variable = x_node
+    position_units = ${dom1Scale}
+    block = 1
+  [../]
   [./rho]
     type = ParsedAux
     variable = rho
@@ -617,30 +645,35 @@ dom1Scale=1e-7
   [../]
   [./em_lin]
     type = Density
+    convert_moles = true
     variable = em_lin
     density_log = em
     block = 0
   [../]
   [./emliq_lin]
     type = Density
+    convert_moles = true
     variable = emliq_lin
     density_log = emliq
     block = 1
   [../]
   [./Arp_lin]
     type = Density
+    convert_moles = true
     variable = Arp_lin
     density_log = Arp
     block = 0
   [../]
   [./OHm_lin]
     type = Density
+    convert_moles = true
     variable = OHm_lin
     density_log = OHm
     block = 1
   [../]
   [./Efield_g]
     type = Efield
+    component = 0
     potential = potential
     variable = Efield
     position_units = ${dom0Scale}
@@ -648,6 +681,7 @@ dom1Scale=1e-7
   [../]
   [./Efield_l]
     type = Efield
+    component = 0
     potential = potential
     variable = Efield
     position_units = ${dom1Scale}
@@ -769,25 +803,32 @@ dom1Scale=1e-7
     boundary = right
     value = 0
   [../]
-  # [./em_physical_right]
-  #   type = HagelaarElectronBC
-  #   variable = em
-  #   boundary = 'master0_interface'
-  #   potential = potential
-  #   ip = Arp
-  #   mean_en = mean_en
-  #   r = 0.9999
-  #   position_units = ${dom0Scale}
-  # [../]
   [./em_physical_right]
-    type = MatchedValueLogBC
+    type = HagelaarElectronBC
     variable = em
     boundary = 'master0_interface'
-    v = emliq
-    H = 1e3
+    potential = potential
+    ip = Arp
+    mean_en = mean_en
+    r = 0.99
+    position_units = ${dom0Scale}
   [../]
-  [./Arp_physical_right]
-    type = HagelaarIonBC
+  # [./em_physical_right]
+  #   type = MatchedValueLogBC
+  #   variable = em
+  #   boundary = 'master0_interface'
+  #   v = emliq
+  #   H = 1e3
+  # [../]
+  [./Arp_physical_right_diffusion]
+    type = HagelaarIonDiffusionBC
+    variable = Arp
+    boundary = 'master0_interface'
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
+  [./Arp_physical_right_advection]
+    type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'master0_interface'
     potential = potential
@@ -801,7 +842,7 @@ dom1Scale=1e-7
     potential = potential
     em = em
     ip = Arp
-    r = 0
+    r = 0.99
     position_units = ${dom0Scale}
   [../]
   [./em_physical_left]
@@ -814,8 +855,25 @@ dom1Scale=1e-7
     r = 0
     position_units = ${dom0Scale}
   [../]
-  [./Arp_physical_left]
-    type = HagelaarIonBC
+  [./sec_electrons_left]
+    type = SecondaryElectronBC
+    variable = em
+    boundary = 'left'
+    potential = potential
+    ip = Arp
+    mean_en = mean_en
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
+  [./Arp_physical_left_diffusion]
+    type = HagelaarIonDiffusionBC
+    variable = Arp
+    boundary = 'left'
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
+  [./Arp_physical_left_advection]
+    type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'left'
     potential = potential
@@ -852,7 +910,7 @@ dom1Scale=1e-7
   [./em_ic]
     type = ConstantIC
     variable = em
-    value = -26
+    value = -21
     block = 0
   [../]
   [./emliq_ic]
@@ -864,13 +922,13 @@ dom1Scale=1e-7
   [./Arp_ic]
     type = ConstantIC
     variable = Arp
-    value = -26
+    value = -21
     block = 0
   [../]
   [./mean_en_ic]
     type = ConstantIC
     variable = mean_en
-    value = -25
+    value = -20
     block = 0
   [../]
   # [./potential_ic]
@@ -942,6 +1000,7 @@ dom1Scale=1e-7
     potential = potential
     ip = Arp
     mean_en = mean_en
+    user_se_coeff = .05
     block = 0
  [../]
  [./water_block]

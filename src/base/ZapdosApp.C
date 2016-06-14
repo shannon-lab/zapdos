@@ -199,7 +199,6 @@
 
 // Constraints
 
-#include "EqualGradientConstraint.h"
 #include "ArbitrarilyTiedValueConstraint.h"
 
 // Mesh modifiers
@@ -415,7 +414,6 @@ ZapdosApp::registerObjects(Factory & factory)
   registerDGKernel(DGAdvection);
   registerDGKernel(DGCoeffDiffusion);
   registerDGKernel(DGEFieldAdvection);
-  registerConstraint(EqualGradientConstraint);
   registerConstraint(ArbitrarilyTiedValueConstraint);
   registerPostprocessor(SideTotFluxIntegral);
 }
