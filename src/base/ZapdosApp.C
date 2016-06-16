@@ -5,6 +5,7 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "TM0Cylindrical.h"
 #include "IonRateIonization.h"
 #include "ElectronRateIonization.h"
 #include "ElectronEnergyRateIonization.h"
@@ -90,6 +91,9 @@
 
 // AuxKernels
 
+#include "TM0CylindricalEr.h"
+#include "TM0CylindricalEz.h"
+#include "AbsValueAux.h"
 #include "ProcRate.h"
 #include "PowerDep.h"
 #include "Current.h"
@@ -141,6 +145,8 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "TM0AntennaVertBC.h"
+#include "TM0PECVertBC.h"
 #include "PenaltyCircuitPotential.h"
 #include "CircuitDirichletPotential.h"
 #include "VacuumElectricBC.h"
@@ -248,6 +254,7 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(TM0Cylindrical);
   registerKernel(IonRateIonization);
   registerKernel(ElectronRateIonization);
   registerKernel(ElectronEnergyRateIonization);
@@ -330,6 +337,9 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(LogStabilizationMoles);
   registerKernel(ProductFirstOrderRxn);
   registerKernel(ProductAABBRxn);
+  registerAux(AbsValueAux);
+  registerAux(TM0CylindricalEz);
+  registerAux(TM0CylindricalEr);
   registerAux(Current);
   registerAux(PowerDep);
   registerAux(ProcRate);
@@ -373,6 +383,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerIndicator(VariableJumpIndicator);
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
+  registerBoundaryCondition(TM0AntennaVertBC);
+  registerBoundaryCondition(TM0PECVertBC);
   registerBoundaryCondition(PenaltyCircuitPotential);
   registerBoundaryCondition(CircuitDirichletPotential);
   registerBoundaryCondition(VacuumElectricBC);
