@@ -99,14 +99,32 @@
     u = Hphi
     variable = Hphi_mag
   [../]
-  [./Er]
+  [./Er_dielectric]
     type = TM0CylindricalEr
     Hphi = Hphi
     variable = Er
+    block = 1
+    eps_r = 16
   [../]
-  [./Electric_z]
+  [./Er_vacuum]
+    type = TM0CylindricalEr
+    Hphi = Hphi
+    block = 0
+    eps_r = 1
+    variable = Er
+  [../]
+  [./Electric_z_dielectric]
     type = TM0CylindricalEz
     Hphi = Hphi
     variable = Electric_z
+    block = 1
+    eps_r = 16
+  [../]
+  [./Electric_z_vacuum]
+    type = TM0CylindricalEz
+    Hphi = Hphi
+    variable = Electric_z
+    block = 0
+    eps_r = 1
   [../]
 []
