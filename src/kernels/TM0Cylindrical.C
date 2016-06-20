@@ -28,11 +28,11 @@ TM0Cylindrical::~TM0Cylindrical()
 Real
 TM0Cylindrical::computeQpResidual()
 {
-  return -_grad_test[_i][_qp] * _grad_u[_qp] - _test[_i][_qp] * _u[_qp] / std::pow(_q_point[_qp](0), 2) + _test[_i][_qp] * std::pow(_omega, 2) * _mu0 * _eps_r * _eps0 * _u[_qp];
+  return -_grad_test[_i][_qp] * _grad_u[_qp] / _eps_r - _test[_i][_qp] * _u[_qp] / std::pow(_q_point[_qp](0), 2) / _eps_r + _test[_i][_qp] * std::pow(_omega, 2) * _mu0 * _eps_r * _eps0 * _u[_qp];
 }
 
 Real
 TM0Cylindrical::computeQpJacobian()
 {
-  return -_grad_test[_i][_qp] * _grad_phi[_j][_qp] - _test[_i][_qp] * _phi[_j][_qp] / std::pow(_q_point[_qp](0), 2) + _test[_i][_qp] * std::pow(_omega, 2) * _mu0 * _eps_r * _eps0 * _phi[_j][_qp];
+  return -_grad_test[_i][_qp] * _grad_phi[_j][_qp] / _eps_r - _test[_i][_qp] * _phi[_j][_qp] / std::pow(_q_point[_qp](0), 2) / _eps_r + _test[_i][_qp] * std::pow(_omega, 2) * _mu0 * _eps_r * _eps0 * _phi[_j][_qp];
 }
