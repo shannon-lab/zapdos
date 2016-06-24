@@ -1,7 +1,7 @@
-#include "TM0CylindricalEz.h"
+#include "TM0CylindricalEzAux.h"
 
 template<>
-InputParameters validParams<TM0CylindricalEz>()
+InputParameters validParams<TM0CylindricalEzAux>()
 {
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredCoupledVar("Hphi", "Magnetic field component Hphi.");
@@ -10,7 +10,7 @@ InputParameters validParams<TM0CylindricalEz>()
   return params;
 }
 
-TM0CylindricalEz::TM0CylindricalEz(const InputParameters & parameters) :
+TM0CylindricalEzAux::TM0CylindricalEzAux(const InputParameters & parameters) :
     AuxKernel(parameters),
     _grad_Hphi(coupledGradient("Hphi")),
     _Hphi(coupledValue("Hphi")),
@@ -20,7 +20,7 @@ TM0CylindricalEz::TM0CylindricalEz(const InputParameters & parameters) :
 {}
 
 Real
-TM0CylindricalEz::computeValue()
+TM0CylindricalEzAux::computeValue()
 {
   return (_Hphi[_qp] / _q_point[_qp](0) + _grad_Hphi[_qp](0)) / (_omega * _eps0 * _eps_r);
 }

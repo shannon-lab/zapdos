@@ -5,6 +5,8 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "TM0CylindricalEz.h"
+#include "TM0CylindricalEr.h"
 #include "TM0Cylindrical.h"
 #include "IonRateIonization.h"
 #include "ElectronRateIonization.h"
@@ -91,8 +93,8 @@
 
 // AuxKernels
 
-#include "TM0CylindricalEr.h"
-#include "TM0CylindricalEz.h"
+#include "TM0CylindricalErAux.h"
+#include "TM0CylindricalEzAux.h"
 #include "AbsValueAux.h"
 #include "ProcRate.h"
 #include "PowerDep.h"
@@ -195,6 +197,7 @@
 #include "DGAdvection.h"
 
 // InterfaceKernels
+#include "HphiRadialInterface.h"
 #include "InterfaceAdvection.h"
 #include "InterfaceLogDiffusionElectrons.h"
 #include "DGPenaltyTiedValue.h"
@@ -254,6 +257,8 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(TM0CylindricalEz);
+  registerKernel(TM0CylindricalEr);
   registerKernel(TM0Cylindrical);
   registerKernel(IonRateIonization);
   registerKernel(ElectronRateIonization);
@@ -338,8 +343,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ProductFirstOrderRxn);
   registerKernel(ProductAABBRxn);
   registerAux(AbsValueAux);
-  registerAux(TM0CylindricalEz);
-  registerAux(TM0CylindricalEr);
+  registerAux(TM0CylindricalEzAux);
+  registerAux(TM0CylindricalErAux);
   registerAux(Current);
   registerAux(PowerDep);
   registerAux(ProcRate);
@@ -417,6 +422,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(OutflowBC);
   registerBoundaryCondition(RobinBC);
   registerInterfaceKernel(InterfaceAdvection);
+  registerInterfaceKernel(HphiRadialInterface);
   registerInterfaceKernel(InterfaceLogDiffusionElectrons);
   registerInterfaceKernel(DGPenaltyTiedValue);
   registerInterfaceKernel(DGDiffusionInt);

@@ -1,7 +1,7 @@
-#include "TM0CylindricalEr.h"
+#include "TM0CylindricalErAux.h"
 
 template<>
-InputParameters validParams<TM0CylindricalEr>()
+InputParameters validParams<TM0CylindricalErAux>()
 {
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredCoupledVar("Hphi", "Magnetic field component Hphi.");
@@ -10,7 +10,7 @@ InputParameters validParams<TM0CylindricalEr>()
   return params;
 }
 
-TM0CylindricalEr::TM0CylindricalEr(const InputParameters & parameters) :
+TM0CylindricalErAux::TM0CylindricalErAux(const InputParameters & parameters) :
     AuxKernel(parameters),
     _grad_Hphi(coupledGradient("Hphi")),
     _omega(2. * libMesh::pi * getParam<Real>("f")),
@@ -19,7 +19,7 @@ TM0CylindricalEr::TM0CylindricalEr(const InputParameters & parameters) :
 {}
 
 Real
-TM0CylindricalEr::computeValue()
+TM0CylindricalErAux::computeValue()
 {
   return _grad_Hphi[_qp](1) / (-_omega * _eps0 * _eps_r);
 }

@@ -4,7 +4,7 @@
 // Recall that we're using a mirror plane
 
 lc = .0075/20;
-tl = .09;
+tl = .05;
 // Origin
 Point(1) = {0, 0, 0, lc};
 
@@ -44,10 +44,10 @@ Line(4) = {3, 4};
 // Vert PEC
 Line(5) = {4, 5};
 
-// Top launcher, vacuum
+// Top domain, vacuum
 Line(6) = {5, 8};
 
-// Top launcher, dielectric
+// Top domain, dielectric
 Line(9) = {8, 6};
 
 // Axis of symmetry
@@ -69,16 +69,13 @@ Physical Surface(0) = {9}; // Vacuum
 Physical Surface(1) = {11}; // Dielectric
 
 // Axis
-Physical Line("Axis") = {6};
-
-// Mirror plane
-Physical Line("Mirror") = {1};
+Physical Line("Axis") = {7};
 
 // Antenna
-Physical Line("Antenna") = {2};
-
-// Horiz PECs
-Physical Line("horiz_pecs") = {3, 5};
+Physical Line("Antenna") = {3};
 
 // Vert PEC
-Physical Line("vert_pec") = {4};
+Physical Line("vert_pec") = {5};
+
+// Interface
+Physical Line("interface") = {10};

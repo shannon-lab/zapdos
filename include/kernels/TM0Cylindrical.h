@@ -8,8 +8,6 @@ class TM0Cylindrical;
 template<>
 InputParameters validParams<TM0Cylindrical>();
 
-// This diffusion kernel should only be used with species whose values are in the logarithmic form.
-
 class TM0Cylindrical : public Kernel
 {
 public:
@@ -23,7 +21,7 @@ protected:
 
   /* Real _r_units; */
   Real _omega;
-  Real _eps_r;
+  const MaterialProperty<Real> & _eps_r;
   Real _mu0;
   Real _eps0;
 };
