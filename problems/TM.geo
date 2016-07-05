@@ -45,7 +45,7 @@ Line Loop(8) = {2, 3, 4, 5, 6, 7};
 Plane Surface(9) = {8};
 
 // Sim domain
-Physical Surface(1) = {9};
+Physical Surface("vacuum") = {9};
 
 // Axis
 Physical Line("Axis") = {6};
