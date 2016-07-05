@@ -92,3 +92,12 @@
     variable = Hphi_mag
   [../]
 []
+
+[Materials]
+   [./vacuum]
+     type = GenericConstantMaterial
+     prop_names = 'eps_r'
+     prop_values = '1'
+     block = vacuum
+   [../]
+[]
