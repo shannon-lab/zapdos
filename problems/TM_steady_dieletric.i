@@ -48,9 +48,11 @@
   print_linear_residuals = true
   [./out]
     type = Exodus
+    overwrite = 1
   [../]
   [./csv]
     type = CSV
+    # execute_on = final
   [../]
 []
 
@@ -174,82 +176,68 @@
    [../]
 []
 
-
-# [AuxVariables]
-#   [./Hphi_mag]
-#   [../]
-#   [./Er]
-#     order = FIRST
-#     family = MONOMIAL
-#   [../]
-#   # [./Electric_z]
-#   #   order = FIRST
-#   #   family = MONOMIAL
-#   # [../]
-# []
-
-# [AuxKernels]
-#   [./Hphi_mag]
-#     type = AbsValueAux
-#     u = Hphi
-#     variable = Hphi_mag
-#   [../]
-#   [./Er_dielectric]
-#     type = TM0CylindricalEr
-#     Hphi = Hphi
-#     variable = Er
-#     block = 1
-#     eps_r = 16
-#   [../]
-#   [./Er_vacuum]
-#     type = TM0CylindricalEr
-#     Hphi = Hphi
-#     block = 0
-#     eps_r = 1
-#     variable = Er
-#   [../]
-#   # [./Electric_z_dielectric]
-#   #   type = TM0CylindricalEz
-#   #   Hphi = Hphi
-#   #   variable = Electric_z
-#   #   block = 1
-#   #   eps_r = 16
-#   # [../]
-#   # [./Electric_z_vacuum]
-#   #   type = TM0CylindricalEz
-#   #   Hphi = Hphi
-#   #   variable = Electric_z
-#   #   block = 0
-#   #   eps_r = 1
-#   # [../]
-# []
-
-# [VectorPostprocessors]
-#   [./line0]
-#     type = LineValueSampler
-#     start_point = '0 .045 0'
-#     end_point = '.015 .045 0'
-#     num_points = 1000
-#     sort_by = x
-#     variable = Hphi
-#     outputs = csv
-#   [../]
-#   [./line1]
-#     type = LineValueSampler
-#     start_point = '0 .045 0'
-#     end_point = '.015 .045 0'
-#     num_points = 1000
-#     sort_by = x
-#     variable = Elec_z
-#     outputs = csv
-#   [../]
-#   [./line2]
-#     type = LineValueSampler
-#     start_point = '0 .045 0'
-#     end_point = '.015 .045 0'
-#     num_points = 1000
-#     sort_by = x
-#     variable = Er
-#     outputs = csv
-#   [../]
-# []
+[VectorPostprocessors]
+  [./line0]
+    type = LineValueSampler
+    start_point = '0 .045 0'
+    end_point = '.015 .045 0'
+    num_points = 100
+    sort_by = x
+    variable = 'Hphi_dielectric Hphi_vacuum Ez_dielectric Ez_vacuum Er_dielectric Er_vacuum'
+    outputs = csv
+  [../]
+  [./line1]
+    type = LineValueSampler
+    start_point = '0 .015 0'
+    end_point = '.015 .015 0'
+    num_points = 100
+    sort_by = x
+    variable = 'Hphi_dielectric Hphi_vacuum Ez_dielectric Ez_vacuum Er_dielectric Er_vacuum'
+    outputs = csv
+  [../]
+  # [./Ez_dielectric]
+  #   type = LineValueSampler
+  #   start_point = '0 .045 0'
+  #   end_point = '.015 .045 0'
+  #   num_points = 100
+  #   sort_by = x
+  #   variable = Ez_dielectric
+  #   outputs = csv
+  # [../]
+  # [./Er_dielectric]
+  #   type = LineValueSampler
+  #   start_point = '0 .045 0'
+  #   end_point = '.015 .045 0'
+  #   num_points = 100
+  #   sort_by = x
+  #   variable = Er_dielectric
+  #   outputs = csv
+  # [../]
+  # [./Hphi_vacuum]
+  #   type = LineValueSampler
+  #   start_point = '0 .045 0'
+  #   end_point = '.015 .045 0'
+  #   num_points = 100
+  #   sort_by = x
+  #   variable = Hphi_vacuum
+  #   outputs = csv
+  # [../]
+  # [./Ez_vacuum]
+  #   type = LineValueSampler
+  #   start_point = '0 .045 0'
+  #   end_point = '.015 .045 0'
+  #   num_points = 100
+  #   sort_by = x
+  #   variable = Ez_vacuum
+  #   outputs = csv
+  # [../]
+  # [./Er_vacuum]
+  #   type = LineValueSampler
+  #   start_point = '0 .045 0'
+  #   end_point = '.015 .045 0'
+  #   num_points = 100
+  #   sort_by = x
+  #   variable = Er_vacuum
+  #   outputs = csv
+  # [../]  
+[]
