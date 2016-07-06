@@ -94,6 +94,8 @@ dom1Scale=1e-7
   print_linear_residuals = false
   [./out]
     type = Exodus
+    output_timestep_end = false
+    output_final = true
   [../]
 []
 

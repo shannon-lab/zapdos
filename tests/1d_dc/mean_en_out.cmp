@@ -1,0 +1,69 @@
+
+#  *****************************************************************
+#             EXODIFF	(Version: 2.69) Modified: 2013-07-11
+#             Authors:  Richard Drake, rrdrake@sandia.gov
+#                       Greg Sjaardema, gdsjaar@sandia.gov
+#             Run on    2016/07/06   16:42:14 EDT
+#  *****************************************************************
+
+#  FILE 1: /home/lindsayad/projects_stable/zapdos/tests/1d_dc/mean_en_out.e
+#   Title: mean_en_out.e
+#          Dim = 3, Blocks = 2, Nodes = 275, Elements = 274, Nodesets = 4, Sidesets = 4
+#          Vars: Global = 0, Nodal = 7, Element = 25, Nodeset = 0, Sideset = 0, Times = 127
+
+
+# ==============================================================
+#  NOTE: All node and element ids are reported as global ids.
+
+# NOTES:  - The min/max values are reporting the min/max in absolute value.
+#         - Time values (t) are 1-offset time step numbers.
+#         - Element block numbers are the block ids.
+#         - Node(n) and element(e) numbers are 1-offset.
+
+COORDINATES absolute 1.e-6    # min separation not calculated
+
+TIME STEPS relative 1.e-6 floor 0.0     # min:               0 @ t1 max:             0.1 @ t127
+
+
+# No GLOBAL VARIABLES
+
+NODAL VARIABLES relative 3e-5 floor 0.0
+	Arp        # min:               0 @ t1,n213	max:       22.442108 @ t14,n212
+	OHm        # min:               0 @ t1,n1	max:            15.6 @ t1,n212
+	em         # min:               0 @ t1,n213	max:       23.878074 @ t43,n1
+	emliq      # min:               0 @ t1,n1	max:              21 @ t1,n212
+	mean_en    # min:               0 @ t1,n213	max:       21.907313 @ t43,n1
+	potential  # min:               0 @ t2,n275	max:       2.4987499 @ t1,n275
+	x_node     # min:               0 @ t1,n1	max:   0.00099999896 @ t2,n211
+
+ELEMENT VARIABLES relative 6e-5 floor 0.0
+	e_temp               # min:               0 @ t1,b0,e1	max:       6.0723452 @ t46,b0,e57
+	x                    # min:               0 @ t1,b0,e1	max:   0.00099999948 @ t2,b0,e211
+	rho                  floor 1e15 # min:               0 @ t1,b0,e1	max:   1.3963518e+19 @ t46,b0,e74
+	rholiq               # min:               0 @ t1,b0,e1	max:   9.6256278e+22 @ t65,b1,e212
+	em_lin               floor 1e15 # min:               0 @ t1,b0,e1	max:   6.5768071e+18 @ t44,b0,e211
+	emliq_lin            # min:               0 @ t1,b0,e1	max:    5.001142e+22 @ t45,b1,e212
+	Arp_lin              floor 1e15 # min:               0 @ t1,b0,e1	max:   1.4073826e+19 @ t46,b0,e75
+	OHm_lin              # min:               0 @ t1,b0,e1	max:   6.6308361e+22 @ t66,b1,e212
+	Efield               floor 1e2 @ b1
+	Efield		     floor 1e3 @ b0
+	Current_em           # min:               0 @ t1,b0,e1	max:       6338.7906 @ t44,b0,e86
+	Current_emliq        # min:               0 @ t1,b0,e1	max:       3904.1022 @ t44,b1,e212
+	Current_Arp          floor 5e-1 # min:               0 @ t1,b0,e1	max:       2601.7646 @ t46,b0,e71
+	Current_OHm          # min:               0 @ t1,b0,e1	max:       1436.5174 @ t67,b1,e274
+	tot_gas_current      # min:               0 @ t1,b0,e1	max:       6492.9593 @ t44,b0,e85
+	tot_liq_current      # min:               0 @ t1,b0,e1	max:       3904.1128 @ t44,b1,e212
+	tot_flux_OHm         # min:               0 @ t1,b0,e1	max:   1.4914009e-09 @ t67,b1,e274
+	EFieldAdvAux_em      # min:               0 @ t1,b0,e1	max:   3.6296138e+23 @ t44,b0,e211
+	DiffusiveFlux_em     # min:               0 @ t1,b0,e1	max:   3.3856272e+23 @ t44,b0,e211
+	EFieldAdvAux_emliq   floor 1e17 # min:               0 @ t1,b0,e1	max:   6.6540135e+20 @ t65,b1,e266
+	DiffusiveFlux_emliq  # min:               0 @ t1,b0,e1	max:    2.440062e+22 @ t44,b1,e212
+	PowerDep_em          floor 1e6 # min:               0 @ t1,b0,e1	max:   1.6564958e+10 @ t45,b0,e78
+	PowerDep_Arp         floor 1e6 # min:               0 @ t1,b0,e1	max:   1.9929826e+10 @ t46,b0,e68
+	ProcRate_el          floor 1e23 # min:               0 @ t1,b0,e1	max:    8.891043e+30 @ t45,b0,e87
+	ProcRate_ex          floor 1e23 # min:               0 @ t1,b0,e1	max:   5.7472212e+27 @ t45,b0,e78
+	ProcRate_iz          floor 1e23 # min:               0 @ t1,b0,e1	max:   1.5869011e+27 @ t45,b0,e77
+
+# No NODESET VARIABLES
+
+# No SIDESET VARIABLES
