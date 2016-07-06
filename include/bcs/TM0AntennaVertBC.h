@@ -21,6 +21,7 @@ protected:
   Real _omega;
   Real _eps_r;
   Real _eps0;
+  bool _time_dependent;
 };
 
 #endif //TM0ANTENNAVERTBC_H
