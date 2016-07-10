@@ -82,7 +82,7 @@ dom1Scale=1e-7
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
-    dt = 1e-9
+    dt = 1e-11
     # dt = 1.1
     growth_factor = 1.2
    optimal_iterations = 15
