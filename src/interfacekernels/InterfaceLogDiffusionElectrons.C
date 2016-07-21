@@ -1,17 +1,3 @@
-/****************************************************************/
-/*               DO NOT MODIFY THIS HEADER                      */
-/* MOOSE - Multiphysics Object Oriented Simulation Environment  */
-/*                                                              */
-/*           (c) 2010 Battelle Energy Alliance, LLC             */
-/*                   ALL RIGHTS RESERVED                        */
-/*                                                              */
-/*          Prepared by Battelle Energy Alliance, LLC           */
-/*            Under Contract No. DE-AC07-05ID14517              */
-/*            With the U. S. Department of Energy               */
-/*                                                              */
-/*            See COPYRIGHT for full restrictions               */
-/****************************************************************/
-
 #include "InterfaceLogDiffusionElectrons.h"
 
 #include <cmath>
@@ -87,9 +73,21 @@ InterfaceLogDiffusionElectrons::computeQpOffDiagJacobian(Moose::DGJacobianType t
   {
     switch (type)
     {
+      case Moose::ElementElement:
+        jac = 0;
+        break;
+
       case Moose::ElementNeighbor:
         _actual_mean_en = std::exp(_mean_en_neighbor[_qp] - _neighbor_value[_qp]);
         jac =  -_d_diffem_d_actual_mean_en[_qp] * _actual_mean_en * _phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] * _r_neighbor_units * _normals[_qp] * _test[_i][_qp] * _r_units;
+        break;
+
+      case Moose::NeighborElement:
+        jac = 0;
+        break;
+
+      case Moose::NeighborNeighbor:
+        jac = 0;
         break;
     }
   }
