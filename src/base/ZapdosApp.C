@@ -5,6 +5,8 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "UserSource.h"
+#include "AxisymmetricCurlZ.h"
 #include "TM0CylindricalEz.h"
 #include "TM0CylindricalEr.h"
 #include "TM0Cylindrical.h"
@@ -144,6 +146,8 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(AxisymmetricCurlZ);
+  registerKernel(UserSource);
   registerKernel(TM0CylindricalEz);
   registerKernel(TM0CylindricalEr);
   registerKernel(TM0Cylindrical);
