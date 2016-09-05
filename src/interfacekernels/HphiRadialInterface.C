@@ -45,17 +45,15 @@ HphiRadialInterface::computeQpResidual(Moose::DGResidualType type)
 Real
 HphiRadialInterface::computeQpJacobian(Moose::DGJacobianType type)
 {
-  return 0.;
-}
-
-Real
-HphiRadialInterface::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar)
-{
   Real jac = 0;
-
-  if (jvar == _neighbor_var.number())
+  switch (type)
   {
-    jac = _test[_i][_qp] * _eps_r[_qp] / _eps_r_neighbor[_qp] * (_grad_phi_neighbor[_j][_qp] * _normals[_qp] + _phi_neighbor[_j][_qp] / _q_point[_qp](0)) - _test[_i][_qp] * _phi_neighbor[_j][_qp] / _q_point[_qp](0);
+    case Moose::ElementNeighbor:
+      jac += _test[_i][_qp] * _eps_r[_qp] / _eps_r_neighbor[_qp] * (_grad_phi_neighbor[_j][_qp] * _normals[_qp] + _phi_neighbor[_j][_qp] / _q_point[_qp](0)) - _test[_i][_qp] * _phi_neighbor[_j][_qp] / _q_point[_qp](0);
+      break;
+
+    default:
+      break;
   }
 
   return jac;
