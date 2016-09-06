@@ -1,4 +1,5 @@
 #include "Gas.h"
+#include "MooseUtils.h"
 
 template<>
 InputParameters validParams<Gas>()
@@ -12,6 +13,7 @@ InputParameters validParams<Gas>()
   params.addRequiredParam<bool>("ramp_trans_coeffs", "Whether to ramp the non-linearity of coming from the electron energy dependence of the transport coefficients.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<bool>("use_moles", "Whether to use units of moles as opposed to # of molecules.");
+  params.addRequiredParam<FileName>("property_tables_file", "The file containing interpolation tables for material properties.");
 
   params.addParam<Real>("user_se_coeff", 0.15, "The secondary electron emission coefficient.");
   params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
@@ -131,22 +133,10 @@ Gas::Gas(const InputParameters & parameters) :
   std::vector<Real> mu;
   std::vector<Real> diff;
   // std::vector<Real> d_alpha_d_actual_mean_energy;
-  // std::cerr << "About to get the environment variable." << std::endl;
-  char* zapDirPoint;
-  zapDirPoint = getenv("ZAPDIR");
-  std::string zapDir;
 
-  if (zapDirPoint == NULL) {
-    std::cerr << "Environment variable ZAPDIR not defined." << std::endl;
-    std::exit(1);
-  }
-  else {
-    zapDir = std::string(zapDirPoint);
-  }
-
-  std::string tdPath = "/src/materials/td_argon_mean_en.txt";
-  std::string path = zapDir + tdPath;
-  const char *charPath = path.c_str();
+  std::string file_name = getParam<FileName>("property_tables_file");
+  MooseUtils::checkFileReadable(file_name);
+  const char *charPath = file_name.c_str();
   std::ifstream myfile (charPath);
   Real value;
 
