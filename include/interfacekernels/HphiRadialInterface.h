@@ -20,7 +20,6 @@ public:
 protected:
   virtual Real computeQpResidual(Moose::DGResidualType type);
   virtual Real computeQpJacobian(Moose::DGJacobianType type);
-  virtual Real computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar);
 
   const MaterialProperty<Real> & _eps_r_neighbor;
   const MaterialProperty<Real> & _eps_r;

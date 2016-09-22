@@ -74,11 +74,14 @@ dom1Scale=1e-7
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
+  # petsc_options_iname = '-pc_type -sub_pc_type'
+  # petsc_options_value = 'asm lu'
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
  nl_rel_tol = 1e-4
  nl_abs_tol = 7.6e-5
   dtmin = 1e-12
+  l_max_its = 20
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
@@ -91,10 +94,13 @@ dom1Scale=1e-7
 
 [Outputs]
   print_perf_log = true
-  print_linear_residuals = false
+  # print_linear_residuals = false
   [./out]
     type = Exodus
     execute_on = 'final'
+  [../]
+  [./dof_map]
+    type = DOFMap
   [../]
 []
 
@@ -932,51 +938,51 @@ dom1Scale=1e-7
     value = -20
     block = 0
   [../]
-  # [./potential_ic]
-  #   type = ConstantIC
-  #   variable = potential
-  #   value = 0
-  # [../]
-  [./potential_ic]
-    type = FunctionIC
-    variable = potential
-    function = potential_ic_func
-  [../]
   [./OHm_ic]
     type = ConstantIC
     variable = OHm
     value = -15.6
     block = 1
   [../]
+  [./potential_ic]
+    type = FunctionIC
+    variable = potential
+    function = potential_ic_func
+  [../]
   # [./em_ic]
   #   type = RandomIC
   #   variable = em
   #   block = 0
+  #   min = -21.5
+  #   max = -20.5
   # [../]
   # [./emliq_ic]
   #   type = RandomIC
   #   variable = emliq
   #   block = 1
+  #   min = -21.5
+  #   max = -20.5
   # [../]
   # [./Arp_ic]
   #   type = RandomIC
   #   variable = Arp
   #   block = 0
+  #   min = -21.5
+  #   max = -20.5
   # [../]
   # [./mean_en_ic]
   #   type = RandomIC
   #   variable = mean_en
   #   block = 0
+  #   min = -20.5
+  #   max = -19.5
   # [../]
-  # [./potential_ic]
-  #   type = RandomIC
-  #   variable = potential
-  # [../]
-  # [./OHm_ic]
   #   type = RandomIC
   #   variable = OHm
   #   block = 1
-  # [../]
+  #   min = -16.1
+  #   max = -15.1
+  [../]
 []
 
 [Functions]
@@ -1003,6 +1009,7 @@ dom1Scale=1e-7
     mean_en = mean_en
     user_se_coeff = .05
     block = 0
+    property_tables_file = td_argon_mean_en.txt
  [../]
  [./water_block]
    type = Water

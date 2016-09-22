@@ -72,7 +72,20 @@ InterfaceAdvection::computeQpResidual(Moose::DGResidualType type)
 Real
 InterfaceAdvection::computeQpJacobian(Moose::DGJacobianType type)
 {
-  return 0.;
+  Real jac = 0;
+
+  switch (type)
+  {
+    case Moose::ElementNeighbor:
+      _actual_mean_en = std::exp(_mean_en_neighbor[_qp] - _neighbor_value[_qp]);
+      jac += _mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * _r_neighbor_units * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp] * _test[_i][_qp] * _r_units + _d_mu_neighbor_d_actual_mean_en[_qp] * _actual_mean_en * -_phi_neighbor[_j][_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * _r_neighbor_units * std::exp(_neighbor_value[_qp]) * _normals[_qp] * _test[_i][_qp] * _r_units;
+      break;
+
+    default:
+      break;
+  }
+
+  return jac;
 }
 
 Real
@@ -80,13 +93,7 @@ InterfaceAdvection::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigne
 {
   Real r = 0;
 
-  if (jvar == _neighbor_var.number() && type == Moose::ElementNeighbor)
-  {
-    _actual_mean_en = std::exp(_mean_en_neighbor[_qp] - _neighbor_value[_qp]);
-    r += _mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * _r_neighbor_units * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _normals[_qp] * _test[_i][_qp] * _r_units + _d_mu_neighbor_d_actual_mean_en[_qp] * _actual_mean_en * -_phi_neighbor[_j][_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp] * _r_neighbor_units * std::exp(_neighbor_value[_qp]) * _normals[_qp] * _test[_i][_qp] * _r_units;
-  }
-
-  else if (jvar == _potential_neighbor_id)
+  if (jvar == _potential_neighbor_id)
   {
     switch (type)
     {
