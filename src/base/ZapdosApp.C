@@ -55,7 +55,6 @@
 
 // Indicators
 #include "AnalyticalDiffIndicator.h"
-#include "VariableJumpIndicator.h"
 
 // User Objects
 #include "BlockAverageValue.h"
@@ -190,7 +189,6 @@ ZapdosApp::registerObjects(Factory & factory)
   registerMaterial(Gas);
   registerMaterial(Water);
   registerIndicator(AnalyticalDiffIndicator);
-  registerIndicator(VariableJumpIndicator);
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
   registerBoundaryCondition(TM0AntennaVertBC);
