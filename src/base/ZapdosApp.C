@@ -67,6 +67,7 @@
 #include "PenaltyCircuitPotential.h"
 #include "CircuitDirichletPotential.h"
 #include "SecondaryElectronBC.h"
+#include "FieldEmissionBC.h"
 #include "HagelaarEnergyBC.h"
 #include "HagelaarIonAdvectionBC.h"
 #include "HagelaarIonDiffusionBC.h"
@@ -197,6 +198,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(PenaltyCircuitPotential);
   registerBoundaryCondition(CircuitDirichletPotential);
   registerBoundaryCondition(SecondaryElectronBC);
+  registerBoundaryCondition(FieldEmissionBC);
   registerBoundaryCondition(HagelaarIonAdvectionBC);
   registerBoundaryCondition(HagelaarIonDiffusionBC);
   registerBoundaryCondition(HagelaarElectronBC);
