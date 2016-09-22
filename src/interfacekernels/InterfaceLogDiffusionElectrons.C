@@ -55,19 +55,7 @@ InterfaceLogDiffusionElectrons::computeQpResidual(Moose::DGResidualType type)
 Real
 InterfaceLogDiffusionElectrons::computeQpJacobian(Moose::DGJacobianType type)
 {
-  Real jac = 0;
-  switch (type)
-  {
-    case Moose::ElementNeighbor:
-      _actual_mean_en = std::exp(_mean_en_neighbor[_qp] - _neighbor_value[_qp]);
-      jac += (-_d_diffem_d_actual_mean_en[_qp] * _actual_mean_en * -_phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] * _r_neighbor_units - _diffem[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _grad_neighbor_value[_qp] * _r_neighbor_units - _diffem[_qp] * std::exp(_neighbor_value[_qp]) * _grad_phi_neighbor[_j][_qp] * _r_neighbor_units) * _normals[_qp] * _test[_i][_qp] * _r_units;
-      break;
-
-    default:
-      break;
-  }
-
-  return jac;
+  return 0.;
 }
 
 Real
@@ -75,7 +63,13 @@ InterfaceLogDiffusionElectrons::computeQpOffDiagJacobian(Moose::DGJacobianType t
 {
   Real jac = 0;
 
-  if (jvar == _mean_en_neighbor_id)
+  if (jvar == _neighbor_var.number())
+  {
+    _actual_mean_en = std::exp(_mean_en_neighbor[_qp] - _neighbor_value[_qp]);
+    jac = (-_d_diffem_d_actual_mean_en[_qp] * _actual_mean_en * -_phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] * _r_neighbor_units - _diffem[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _grad_neighbor_value[_qp] * _r_neighbor_units - _diffem[_qp] * std::exp(_neighbor_value[_qp]) * _grad_phi_neighbor[_j][_qp] * _r_neighbor_units) * _normals[_qp] * _test[_i][_qp] * _r_units;
+  }
+
+  else if (jvar == _mean_en_neighbor_id)
   {
     switch (type)
     {
