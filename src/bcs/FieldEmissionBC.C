@@ -57,6 +57,7 @@ FieldEmissionBC::computeQpResidual()
 {	
 	Real a;
 	Real b;
+	Real c;
 	Real v;
 	Real f;
 	Real je;
@@ -81,12 +82,17 @@ FieldEmissionBC::computeQpResidual()
 	F = _a * _field_enhancement[_qp] * _normals[_qp] * -_grad_potential[_qp] * _r_units;
 	
 	a = 1.541434; // A eV/kV^2
-	b = 6.830890E6; // kV/m-eV^1.5
+	b = 6.830890E6; // kV/m*eV^1.5
+	c = 1.439964E12; // eV^2*m/kV
 	
-	f = (1.439964E12)*(F / pow(_work_function[_qp], 2) );
-	v = 1 - f + (f/6)*std::log(f);
-	
-	je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(v * b * pow(_work_function[_qp], 1.5) / F);
+	if (F > 1E-20) {
+		f = c*(F / pow(_work_function[_qp], 2) );
+		v = 1 - f + (f/6)*std::log(f);
+		je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(v * b * pow(_work_function[_qp], 1.5) / F);
+	} 
+	else {
+		je = 0;
+	}
 	
 	return _test[_i][_qp] * (je / _e[_qp]);
 }
@@ -114,6 +120,7 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
 	Real a;
 	Real b;
+	Real c;
 	Real v;
 	Real f;
 	Real je;
@@ -129,29 +136,36 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 	// v(f) = 1 - f + (f/6)*ln(f)
 	// f = (1.439964E9 eV^2 m/V)*(F/wf^2)
 
+	if ( _normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0) {
+		_a = 1.0;
+	}
+	else {
+		_a = 0.0;
+	}
+
 	F = _a * _field_enhancement[_qp] * _normals[_qp] * -_grad_potential[_qp] * _r_units;
 	
 	a = 1.541434; // A eV/kV^2
 	b = 6.830890E6; // kV/m-eV^1.5
-	
-	f = (1.439964E12)*(F / pow(_work_function[_qp], 2) );
-	v = 1 - f + (f/6)*std::log(f);
-	
-	je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(v * b * pow(_work_function[_qp], 1.5) / F);
+	c = 1.439964E12; // eV^2*m / kV
+
+	if (F > 1E-20) {
+		f = c*(F / pow(_work_function[_qp], 2) );
+		v = 1 - f + (f/6)*std::log(f);
+		je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(v * b * pow(_work_function[_qp], 1.5) / F);
+	}
+	else {
+		je = 0;
+	}
+
 	_E_Flux = je / _e[_qp];
 	
 	if (jvar == _potential_id)
 	{
-		if ( _normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
-			_a = 1.0;
-		else
-			_a = 0.0;
-
+		if ( _a == 0.0 )
 			_v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
-
 			_dv_dF = (-(5.0/6.0) + (1.0/6.0) * std::log(f)) * (1.439964E9 / pow(_work_function[_qp], 2) ) ;
-			
-		return - _test[_i][_qp] * ( (2.0 / F) - ( b * pow(_work_function[_qp], 1.5) * v / pow(F,2) ) + ( b * pow(_work_function[_qp], 1.5) * _dv_dF / F ) ) * ( _E_Flux ) * (-_grad_phi[_j][_qp] * _normals[_qp]) * _r_units ;
+			return - _test[_i][_qp] * ( (2.0 / F) - ( b * pow(_work_function[_qp], 1.5) * v / pow(F,2) ) + ( b * pow(_work_function[_qp], 1.5) * _dv_dF / F ) ) * ( _E_Flux ) * (-_grad_phi[_j][_qp] * _normals[_qp]) * _r_units ;
 	}
 
 	else if (jvar == _mean_en_id)

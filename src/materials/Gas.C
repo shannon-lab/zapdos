@@ -16,6 +16,8 @@ InputParameters validParams<Gas>()
   params.addRequiredParam<FileName>("property_tables_file", "The file containing interpolation tables for material properties.");
 
   params.addParam<Real>("user_se_coeff", 0.15, "The secondary electron emission coefficient.");
+  params.addParam<Real>("user_work_function", 5.00, "The secondary electron emission coefficient.");
+  params.addParam<Real>("user_field_enhancement", 1, "The secondary electron emission coefficient.");
   params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
   params.addParam<Real>("user_p_gas", 1.01e5, "The gas pressure in Pascals.");
 
@@ -35,6 +37,8 @@ Gas::Gas(const InputParameters & parameters) :
     _ramp_trans_coeffs(getParam<bool>("ramp_trans_coeffs")),
     _potential_units(getParam<std::string>("potential_units")),
     _user_se_coeff(getParam<Real>("user_se_coeff")),
+    _user_work_function(getParam<Real>("user_work_function")),
+    _user_field_enhancement(getParam<Real>("user_field_enhancement")),
     _user_T_gas(getParam<Real>("user_T_gas")),
     _user_p_gas(getParam<Real>("user_p_gas")),
     _use_moles(getParam<bool>("use_moles")),
@@ -58,6 +62,8 @@ Gas::Gas(const InputParameters & parameters) :
   _massGas(declareProperty<Real>("massGas")),
   _massArp(declareProperty<Real>("massArp")),
   _se_coeff(declareProperty<Real>("se_coeff")),
+  _work_function(declareProperty<Real>("work_function")),
+  _field_enhancement(declareProperty<Real>("field_enhancement")),
   _se_energy(declareProperty<Real>("se_energy")),
   _ElectronTotalFluxMag(declareProperty<Real>("ElectronTotalFluxMag")),
   _ElectronTotalFluxMagSizeForm(declareProperty<Real>("ElectronTotalFluxMagSizeForm")),
@@ -183,6 +189,8 @@ Gas::computeQpProperties()
     _n_gas[_qp] = _p_gas[_qp] / (_k_boltz[_qp] * _T_gas[_qp]);
 
   _se_coeff[_qp] = _user_se_coeff;
+  _work_function[_qp] = _user_work_function;
+  _field_enhancement[_qp] = _user_field_enhancement;
   _se_energy[_qp] = 2. * 3. / 2.; // Emi uses 2 Volts coming off the wall (presumably for Te). Multiply by 3/2 to get mean_en
   _e[_qp] = 1.6e-19;
   _eps[_qp] = 8.85e-12;
