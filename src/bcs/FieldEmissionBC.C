@@ -63,37 +63,33 @@ FieldEmissionBC::computeQpResidual()
 	Real je;
 	Real F;
 	
-	if ( _normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0) {
-		_a = 1.0;
-	}
-	else {
-		_a = 0.0;
-	}
-	
 	_v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
 
-	// Fowler-Nordheim
+	if ( _normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0) {
+		_a = 1.0;
+
+		// Fowler-Nordheim
 		// je = (a / wf) * F^2 * exp(-v(f) * b * wf^1.5 / F)
 		// a = 1.541434E-6 A eV/V^2
 		// b = 6.830890E9 V/m-eV^1.5
 		// v(f) = 1 - f + (f/6)*ln(f)
 		// f = (1.439964E9 eV^2 m/V)*(F/wf^2)
+
+		F = _a * _field_enhancement[_qp] * _normals[_qp] * -_grad_potential[_qp] * _r_units;
 	
-	F = _a * _field_enhancement[_qp] * _normals[_qp] * -_grad_potential[_qp] * _r_units;
-	
-	a = 1.541434; // A eV/kV^2
-	b = 6.830890E6; // kV/m*eV^1.5
-	c = 1.439964E12; // eV^2*m/kV
-	
-	if (F > 1E-20) {
+		a = 1.541434; // A eV/kV^2
+		b = 6.830890E6; // kV/m*eV^1.5
+		c = 1.439964E12; // eV^2*m/kV
+
 		f = c*(F / pow(_work_function[_qp], 2) );
 		v = 1 - f + (f/6)*std::log(f);
 		je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(v * b * pow(_work_function[_qp], 1.5) / F);
-	} 
-	else {
-		je = 0;
 	}
-	
+	else {
+		_a = 0.0;
+		je = 0.0;
+	}
+		
 	return _test[_i][_qp] * (je / _e[_qp]);
 }
 
@@ -129,32 +125,29 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 	Real _dv_dF;
 	
 
-	// Fowler-Nordheim
-	// je = (a / wf) * F^2 * exp(-v(f) * b * wf^1.5 / F)
-	// a = 1.541434E-6 A eV/V^2
-	// b = 6.830890E9 V/m-eV^1.5
-	// v(f) = 1 - f + (f/6)*ln(f)
-	// f = (1.439964E9 eV^2 m/V)*(F/wf^2)
 
 	if ( _normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0) {
 		_a = 1.0;
-	}
-	else {
-		_a = 0.0;
-	}
 
-	F = _a * _field_enhancement[_qp] * _normals[_qp] * -_grad_potential[_qp] * _r_units;
+		// Fowler-Nordheim
+		// je = (a / wf) * F^2 * exp(-v(f) * b * wf^1.5 / F)
+		// a = 1.541434E-6 A eV/V^2
+		// b = 6.830890E9 V/m-eV^1.5
+		// v(f) = 1 - f + (f/6)*ln(f)
+		// f = (1.439964E9 eV^2 m/V)*(F/wf^2)
+
+		F = _a * _field_enhancement[_qp] * _normals[_qp] * -_grad_potential[_qp] * _r_units;
 	
-	a = 1.541434; // A eV/kV^2
-	b = 6.830890E6; // kV/m-eV^1.5
-	c = 1.439964E12; // eV^2*m / kV
+		a = 1.541434; // A eV/kV^2
+		b = 6.830890E6; // kV/m-eV^1.5
+		c = 1.439964E12; // eV^2*m / kV
 
-	if (F > 1E-20) {
 		f = c*(F / pow(_work_function[_qp], 2) );
 		v = 1 - f + (f/6)*std::log(f);
 		je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(v * b * pow(_work_function[_qp], 1.5) / F);
 	}
 	else {
+		_a = 0.0;
 		je = 0;
 	}
 
