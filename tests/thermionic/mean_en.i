@@ -687,9 +687,9 @@ dom0Scale=1
 		user_se_coeff = 0.05
 		user_work_function = 4.55
 		user_field_enhancement = 55
-	    property_tables_file = td_argon_mean_en.txt
+		property_tables_file = td_argon_mean_en.txt
 		block = 0
- [../]
+	[../]
  # [./jac]
  #		type = JacMat
  #		mean_en = mean_en

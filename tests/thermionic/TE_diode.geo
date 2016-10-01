@@ -1,4 +1,4 @@
-dom0Size = 50E-6;
+dom0Size = 5E-6;
 
 Point(1) = {0             , 0, 0,  2E-4 * dom0Size};
 Point(2) = {0.5 * dom0Size, 0, 0, 50E-4 * dom0Size};
