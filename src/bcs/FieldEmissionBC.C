@@ -54,7 +54,7 @@ FieldEmissionBC::FieldEmissionBC(const InputParameters & parameters) :
 
 Real
 FieldEmissionBC::computeQpResidual()
-{	
+{
 	Real a;
 	Real b;
 	Real c;
@@ -64,7 +64,7 @@ FieldEmissionBC::computeQpResidual()
 	Real F;
 
 	_v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
-	
+
 	if ( _normals[_qp] * -_grad_potential[_qp] > 0.0) {
 		_a = 1.0;
 
@@ -75,25 +75,25 @@ FieldEmissionBC::computeQpResidual()
 			// c = 1.439964E-9 eV^2-m/V
 			// v(f) = 1 - f + (f/6)*ln(f)
 			// f = c*(F/wf^2)
-	
+
 		F = -_a * _field_enhancement[_qp] * _normals[_qp] * _grad_potential[_qp] * _r_units;
-	
-		a = 1.541434; // A eV/kV^2
-		b = 6.830890E6; // kV/m-eV^1.5
-		c = 1.439964E-6; // eV^2*m/kV
-	
+
+		a = 1.541434e-3; // A keV/kV^2
+		b = 2.16e11; // kV/(m*keV^1.5)
+		c = 1.439964E-12; // keV^2*m/kV
+
 		f = c * F / pow(_work_function[_qp], 2) ;
 		v = 1 - f + (f/6)*std::log(f);
-	
+
 		je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(-v * b * pow(_work_function[_qp], 1.5) / F);
-	
-		return -_test[_i][_qp] * (je / _e[_qp]);
+
+		return -_test[_i][_qp] * _r_units * (je / (_e[_qp] * 6.02e23));
 	}
 	else {
 		_a = 0.0;
 		return 0;
 	}
-	
+
 }
 
 Real
@@ -105,9 +105,9 @@ FieldEmissionBC::computeQpJacobian()
 	else {
 		_a = 0.0;
 	}
- 
+
 	_actual_mean_en = std::exp(_mean_en[_qp] - _u[_qp]);
- 
+
 	_v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
 	_d_v_thermal_d_u = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]) * -_phi[_j][_qp];
 
@@ -124,7 +124,7 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 	Real f;
 	Real F;
 	Real je;
-	
+
 	_v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
 
 	// Fowler-Nordheim
@@ -133,28 +133,28 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 	// b = 6.830890E9 V/m-eV^1.5
 	// v(f) = 1 - f + (f/6)*ln(f)
 	// f = (1.439964E-9 eV^2 m/V)*(F/wf^2)
-		
+
 	if (jvar == _potential_id)
 	{
 		if ( _normals[_qp] * -_grad_potential[_qp] > 0.0)
 		{
 			_a = 1.0;
-	
+
 			F = -_a * _field_enhancement[_qp] * _normals[_qp] * _grad_potential[_qp] * _r_units;
-	
-			a = 1.541434; // A eV/kV^2
-			b = 6.830890E6; // kV/m-eV^1.5
-			c = 1.439964E-6; // eV^2*m/kV
-	
+
+			a = 1.541434e-3; // A keV/kV^2
+			b = 2.16e11; // kV/(m*keV^1.5)
+			c = 1.439964E-12; // keV^2*m/kV
+
 			f = c * F / pow(_work_function[_qp], 2) ;
 			v = 1 - f + (f/6)*std::log(f);
-	
+
 			je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(-v * b * pow(_work_function[_qp], 1.5) / F);
 
-			return - _test[_i][_qp] * (je / _e[_qp]) * 
+			return - _test[_i][_qp] * _r_units * (je / (_e[_qp] * 6.02e23)) *
 					(
-						2.0 - 
-						b*c/(6*sqrt(_work_function[_qp])) - 
+						2.0 -
+						b*c/(6*sqrt(_work_function[_qp])) -
 						b*pow(_work_function[_qp], 1.5)/(_field_enhancement[_qp] * _grad_potential[_qp] * _normals[_qp] * _r_units )
 					) /
 					(_grad_potential[_qp] * _normals[_qp] * _r_units) * (-_grad_phi[_j][_qp] * _normals[_qp] * _r_units) ;
@@ -162,7 +162,7 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 		else
 		{
 			_a = 0.0;
-			
+
 			return 0.0 ;
 		}
 	}
