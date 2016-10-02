@@ -1,4 +1,5 @@
 dom0Scale=1
+dom0Size=5E-6
 
 [GlobalParams]
 	offset = 20
@@ -657,7 +658,7 @@ dom0Scale=1
 	[./potential_bc_func]
 		type = ParsedFunction
 		vars = 'period dutyCycle riseTime VHigh VLow'
-		vals = '3E-6 0.1 5E-7 1.25 0.1')
+		vals = '3E-6 0.1 5E-7 0.15 0.1')
 		value = 'if((t % period) < dutyCycle*period           , VHigh                                                                  ,
 				 if((t % period) < dutyCycle*period + riseTime, ((VLow - VHigh)/riseTime) * ((t % period) - period * dutyCycle) + VHigh,
 				 if((t % period) < period - riseTime          , VLow																   ,
@@ -666,7 +667,7 @@ dom0Scale=1
 	[../]
 	[./potential_ic_func]
 		type = ParsedFunction
-		value = '-1.25 * (1.0001e-3 - x) / 1.0001e-3'
+		value = '-0.35 * (${dom0Size} - x) / ${dom0Size}'
 	[../]
 	[./cathode_temperature]
 		type = ParsedFunction
