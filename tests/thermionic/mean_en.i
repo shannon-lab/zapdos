@@ -672,7 +672,7 @@ dom0Size=5E-6
 	[./cathode_temperature]
 		type = ParsedFunction
 		value = 1500
-	[../]	
+	[../]
 []
 
 [Materials]
