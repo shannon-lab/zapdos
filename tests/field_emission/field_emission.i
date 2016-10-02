@@ -11,7 +11,7 @@ vhigh=0.15 #kV
 
 [Mesh]
 	type = FileMesh
-	file = 'TE_diode.msh'
+	file = 'micro_fe.msh'
 []
 
 [MeshModifiers]
@@ -54,7 +54,7 @@ vhigh=0.15 #kV
 
 [Executioner]
 	type = Transient
-	end_time = 36E-6
+	end_time = 6E-6
 	petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
 	solve_type = NEWTON
 	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
