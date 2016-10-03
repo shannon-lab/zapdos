@@ -40,6 +40,7 @@ protected:
 	const MaterialProperty<Real> & _sgnip;
 	const MaterialProperty<Real> & _muip;
 	const MaterialProperty<Real> & _Dip;
+	const MaterialProperty<Real> & _se_coeff;
 	const MaterialProperty<Real> & _work_function;
 	const MaterialProperty<Real> & _field_enhancement;
 
