@@ -35,6 +35,7 @@ FieldEmissionBC::FieldEmissionBC(const InputParameters & parameters) :
 	_sgnip(getMaterialProperty<Real>("sgn" + _ip_var.name())),
 	_muip(getMaterialProperty<Real>("mu" + _ip_var.name())),
 	_Dip(getMaterialProperty<Real>("diff" + _ip_var.name())),
+	_se_coeff(getMaterialProperty<Real>("se_coeff")),
 	_work_function(getMaterialProperty<Real>("work_function")),
 	_field_enhancement(getMaterialProperty<Real>("field_enhancement")),
 	_a(0.5),
@@ -68,6 +69,8 @@ FieldEmissionBC::computeQpResidual()
 	if ( _normals[_qp] * -_grad_potential[_qp] > 0.0) {
 		_a = 1.0;
 
+		_ion_flux = _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_ip[_qp]) - _Dip[_qp] * std::exp(_ip[_qp]) * _grad_ip[_qp] * _r_units;
+
 		// Fowler-Nordheim
 			// je = (a / wf) * F^2 * exp(-v(f) * b * wf^1.5 / F)
 			// a = 1.541434E-6 A eV/V^2
@@ -87,7 +90,8 @@ FieldEmissionBC::computeQpResidual()
 
 		je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(-v * b * pow(_work_function[_qp], 1.5) / F);
 
-		return -_test[_i][_qp] * _r_units * (je / (_e[_qp] * 6.02e23));
+		return -_test[_i][_qp] * _r_units * (je / (_e[_qp] * 6.02e23)
+							+ 2. / (1. + _r) * _a * _se_coeff[_qp] * _ion_flux * _normals[_qp]);
 	}
 	else {
 		_a = 0.0;
@@ -140,6 +144,9 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 		{
 			_a = 1.0;
 
+			_ion_flux = _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_ip[_qp]) - _Dip[_qp] * std::exp(_ip[_qp]) * _grad_ip[_qp] * _r_units;
+			_d_ion_flux_d_potential = _sgnip[_qp] * _muip[_qp] * -_grad_phi[_j][_qp] * _r_units * std::exp(_ip[_qp]);
+
 			F = -_a * _field_enhancement[_qp] * _normals[_qp] * _grad_potential[_qp] * _r_units;
 
 			a = 1.541434; // A eV/kV^2
@@ -157,7 +164,10 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 						b*c/(6*sqrt(_work_function[_qp])) -
 						b*pow(_work_function[_qp], 1.5)/(_field_enhancement[_qp] * _grad_potential[_qp] * _normals[_qp] * _r_units )
 					) /
-					(_grad_potential[_qp] * _normals[_qp] * _r_units) * (-_grad_phi[_j][_qp] * _normals[_qp] * _r_units) ;
+					(_grad_potential[_qp] * _normals[_qp] * _r_units) * (-_grad_phi[_j][_qp] * _normals[_qp] * _r_units) 
+
+				- _test[_i][_qp] * _r_units * 2. / (1. + _r) * (1. - _a) * _se_coeff[_qp] * _d_ion_flux_d_potential * _normals[_qp];
+;
 		}
 		else
 		{
