@@ -47,6 +47,8 @@ protected:
 	Real _user_se_coeff;
 	Real _user_work_function;
 	Real _user_field_enhancement;
+	Real _user_Richardson_coefficient;
+	Real _user_cathode_temperature;
 	Real _user_T_gas;
 	Real _user_p_gas;
 	bool _use_moles;
@@ -72,6 +74,8 @@ protected:
 	MaterialProperty<Real> & _se_coeff;
 	MaterialProperty<Real> &  _work_function;
 	MaterialProperty<Real> &  _field_enhancement;
+	MaterialProperty<Real> &  _Richardson_coefficient;
+	MaterialProperty<Real> &  _cathode_temperature;
 	MaterialProperty<Real> & _se_energy;
 	MaterialProperty<Real> & _ElectronTotalFluxMag;
 	MaterialProperty<Real> & _ElectronTotalFluxMagSizeForm;
