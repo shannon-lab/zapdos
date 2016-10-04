@@ -16,8 +16,11 @@ InputParameters validParams<Gas>()
 	params.addRequiredParam<FileName>("property_tables_file", "The file containing interpolation tables for material properties.");
 
 	params.addParam<Real>("user_se_coeff", 0.15, "The secondary electron emission coefficient.");
-	params.addParam<Real>("user_work_function", 5.00, "The secondary electron emission coefficient.");
-	params.addParam<Real>("user_field_enhancement", 1, "The secondary electron emission coefficient.");
+	params.addParam<Real>("user_work_function", 5.00, "The work function.");
+	params.addParam<Real>("user_field_enhancement", 1, "The field enhancement factor.");
+
+	params.addParam<Real>("user_Richardson_coefficient", 1.20173E6, "The Richardson coefficient.");
+	params.addParam<Real>("user_cathode_temperature", 300, "The cathode temperature in Kelvin.");
 
 	params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
 	params.addParam<Real>("user_p_gas", 1.01e5, "The gas pressure in Pascals.");
@@ -40,6 +43,9 @@ Gas::Gas(const InputParameters & parameters) :
 	_user_se_coeff(getParam<Real>("user_se_coeff")),
 	_user_work_function(getParam<Real>("user_work_function")),
 	_user_field_enhancement(getParam<Real>("user_field_enhancement")),
+
+	_user_Richardson_coefficient(getParam<Real>("user_Richardson_coefficient")),
+	_user_cathode_temperature(getParam<Real>("user_cathode_temperature")),
 
 	_user_T_gas(getParam<Real>("user_T_gas")),
 	_user_p_gas(getParam<Real>("user_p_gas")),
@@ -66,6 +72,10 @@ Gas::Gas(const InputParameters & parameters) :
 	_se_coeff(declareProperty<Real>("se_coeff")),
 	_work_function(declareProperty<Real>("work_function")),
 	_field_enhancement(declareProperty<Real>("field_enhancement")),
+
+	_Richardson_coefficient(declareProperty<Real>("Richardson_coefficient")),
+	_cathode_temperature(declareProperty<Real>("cathode_temperature")),
+
 	_se_energy(declareProperty<Real>("se_energy")),
 
 	_ElectronTotalFluxMag(declareProperty<Real>("ElectronTotalFluxMag")),
@@ -194,6 +204,9 @@ Gas::computeQpProperties()
 	_se_coeff[_qp] = _user_se_coeff;
 	_work_function[_qp] = _user_work_function;
 	_field_enhancement[_qp] = _user_field_enhancement;
+
+	_Richardson_coefficient[_qp] = _user_Richardson_coefficient;
+	_cathode_temperature[_qp] = _user_cathode_temperature;
 
 	_se_energy[_qp] = 2. * 3. / 2.; // Emi uses 2 Volts coming off the wall (presumably for Te). Multiply by 3/2 to get mean_en
 	_e[_qp] = 1.6e-19;
