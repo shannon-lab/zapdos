@@ -1,6 +1,6 @@
 dom0Scale=1
 dom0Size=5E-6 #m
-vhigh=0.15 #kV
+vhigh=0.1 #kV
 
 [GlobalParams]
 	offset = 20
@@ -61,14 +61,14 @@ vhigh=0.15 #kV
 	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
 	nl_rel_tol = 1e-4
 	nl_abs_tol = 7.6e-5
-	dtmin = 1e-15
+	dtmin = 1e-20
 	dtmax = 0.01E-7
 	[./TimeStepper]
 		type = IterationAdaptiveDT
 		cutback_factor = 0.4
 		dt = 1e-12
 		growth_factor = 1.2
-		optimal_iterations = 15
+		optimal_iterations = 100
 	[../]
 []
 
@@ -684,7 +684,7 @@ vhigh=0.15 #kV
 		mean_en = mean_en
 		user_se_coeff = 0.05
 		user_work_function = 4.55 # eV
-		user_field_enhancement = 55
+		user_field_enhancement = 20
 		user_Richardson_coefficient = 0.6E6
 		user_cathode_temperature = 1473
 		property_tables_file = td_argon_mean_en.txt

@@ -75,7 +75,6 @@ SchottkyEmissionBC::computeQpResidual()
 			// je = AR * T^2 * exp(-(wf - dPhi) / (kB * T))
 			// c = 0.001199985 eV*sqrt(m/kV)
 			// dPhi = c * sqrt(F) // eV
-			// f = c*(F/wf^2)
 
 		F = -_a * _field_enhancement[_qp] * _normals[_qp] * _grad_potential[_qp] * _r_units;
 
@@ -85,8 +84,8 @@ SchottkyEmissionBC::computeQpResidual()
 
 		je = _Richardson_coefficient[_qp] * pow(_cathode_temperature[_qp], 2) * exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
 
-		return -_test[_i][_qp] * _r_units * (je / (_e[_qp] * 6.02e23)
-							+ 2. / (1. + _r) * _a * _se_coeff[_qp] * _ion_flux * _normals[_qp]);
+		return -_test[_i][_qp] * _r_units * 2. / (1. + _r) * (je / (_e[_qp] * 6.02e23)
+							+  _a * _se_coeff[_qp] * _ion_flux * _normals[_qp]);
 	}
 	else {
 		_a = 0.0;
