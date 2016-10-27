@@ -90,8 +90,8 @@ FieldEmissionBC::computeQpResidual()
 
 		je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(-v * b * pow(_work_function[_qp], 1.5) / F);
 
-		return -_test[_i][_qp] * _r_units * (je / (_e[_qp] * 6.02e23)
-							+ 2. / (1. + _r) * _a * _se_coeff[_qp] * _ion_flux * _normals[_qp]);
+		return -_test[_i][_qp] * _r_units * 2. / (1. + _r) * 
+					(je / (_e[_qp] * 6.02e23) + _a * _se_coeff[_qp] * _ion_flux * _normals[_qp]);
 	}
 	else {
 		_a = 0.0;
@@ -158,7 +158,7 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 
 			je = (a / (_work_function[_qp])) * pow( F , 2) * std::exp(-v * b * pow(_work_function[_qp], 1.5) / F);
 
-			return - _test[_i][_qp] * _r_units * (je / (_e[_qp] * 6.02e23)) *
+			return - _test[_i][_qp] * _r_units * 2. / (1. + _r) * (je / (_e[_qp] * 6.02e23)) *
 					(
 						2.0 -
 						b*c/(6*sqrt(_work_function[_qp])) -

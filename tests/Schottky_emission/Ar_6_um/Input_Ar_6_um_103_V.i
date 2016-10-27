@@ -1,6 +1,6 @@
 dom0Scale = 1
-dom0Size = 5E-6 #m
-vhigh = 0.10 #kV
+dom0Size = 6E-6 #m
+vhigh = 103E-3 #kV
 
 [GlobalParams]
 	offset = 20
@@ -54,13 +54,15 @@ vhigh = 0.10 #kV
 
 [Executioner]
 	type = Transient
-	end_time = 6E-6
+	end_time = 0.1E-6
+#	trans_ss_check = 1
+#	ss_check_tol = 1E-12
 	petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
 	solve_type = NEWTON
 	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
 	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
-	nl_rel_tol = 1e-4
-	nl_abs_tol = 7.6e-5
+	nl_rel_tol = 1e-11
+	nl_abs_tol = 1e-11
 	dtmin = 1e-20
 	dtmax = 0.01E-7
 	[./TimeStepper]
@@ -68,7 +70,7 @@ vhigh = 0.10 #kV
 		cutback_factor = 0.4
 		dt = 1e-12
 		growth_factor = 1.2
-		optimal_iterations = 100
+		optimal_iterations = 25
 	[../]
 []
 
@@ -77,7 +79,7 @@ vhigh = 0.10 #kV
 	print_linear_residuals = false
 	[./out]
 		type = Exodus
-		#	execute_on = 'final'
+#		execute_on = 'final'
 	[../]
 []
 
@@ -89,7 +91,7 @@ vhigh = 0.10 #kV
 	[./data_provider]
 		type = ProvideMobility
 		electrode_area = 5.02e-7 # Formerly 3.14e-6
-		ballast_resist = 1e6
+		ballast_resist = 1e0
 		e = 1.6e-19
 	[../]
 []
@@ -128,12 +130,6 @@ vhigh = 0.10 #kV
 		variable = em
 		block = 0
 	[../]
-	# [./em_advection_stabilization]
-	#		type = EFieldArtDiff
-	#		variable = em
-	#		potential = potential
-	#		block = 0
-	# [../]
 
 	[./potential_diffusion_dom1]
 		type = CoeffDiffusionLin
@@ -187,13 +183,6 @@ vhigh = 0.10 #kV
 		variable = Arp
 		block = 0
 	[../]
-	# [./Arp_advection_stabilization]
-	#		type = EFieldArtDiff
-	#		variable = Arp
-	#		potential = potential
-	#		block = 0
-	# [../]
-
 
 	[./mean_en_time_deriv]
 		type = ElectronTimeDerivative
@@ -562,16 +551,6 @@ vhigh = 0.10 #kV
 		r = 0
 		position_units = ${dom0Scale}
 	[../]
-#	[./sec_electrons_left]
-#		type = SecondaryElectronBC
-#		variable = em
-#		boundary = 'left'
-#		potential = potential
-#		ip = Arp
-#		mean_en = mean_en
-#		r = 0
-#		position_units = ${dom0Scale}
-#	[../]
 	[./Schottky_emission_left]
 		type = SchottkyEmissionBC
 		variable = em
@@ -634,37 +613,14 @@ vhigh = 0.10 #kV
 		variable = potential
 		function = potential_ic_func
 	[../]
-	# [./em_ic]
-	#		type = RandomIC
-	#		variable = em
-	#		block = 0
-	# [../]
-	# [./Arp_ic]
-	#		type = RandomIC
-	#		variable = Arp
-	#		block = 0
-	# [../]
-	# [./mean_en_ic]
-	#		type = RandomIC
-	#		variable = mean_en
-	#		block = 0
-	# [../]
-	# [./potential_ic]
-	#		type = RandomIC
-	#		variable = potential
-	# [../]
 []
 
 [Functions]
 	[./potential_bc_func]
 		type = ParsedFunction
-		vars = 'period dutyCycle riseTime VHigh VLow'
-		vals = '3E-6 0.1 5E-7 ${vhigh} 0.001')
-		value = 'if((t % period) < dutyCycle*period           , VHigh                                                                  ,
-				 if((t % period) < dutyCycle*period + riseTime, ((VLow - VHigh)/riseTime) * ((t % period) - period * dutyCycle) + VHigh,
-				 if((t % period) < period - riseTime          , VLow																   ,
-				 if((t % period) < period					  , ((VHigh - VLow)/riseTime) * ((t % period) - period) + VHigh            ,
-				 	0))))'
+		vars = 'VHigh'
+		vals = '${vhigh}')
+		value = 'VHigh'
 	[../]
 	[./potential_ic_func]
 		type = ParsedFunction
@@ -682,19 +638,12 @@ vhigh = 0.10 #kV
 		potential = potential
 		ip = Arp
 		mean_en = mean_en
-		user_se_coeff = 0.05
+		user_se_coeff = 0.01
 		user_work_function = 4.55 # eV
-		user_field_enhancement = 20
-		user_Richardson_coefficient = 0.6E6
-		user_cathode_temperature = 1473
+		user_field_enhancement = 55
+		user_Richardson_coefficient = 80E4
+		user_cathode_temperature = 1273
 		property_tables_file = td_argon_mean_en.txt
 		block = 0
 	[../]
- # [./jac]
- #		type = JacMat
- #		mean_en = mean_en
- #		em = em
- #		emliq = emliq
- #		block = '0 1'
- #	[../]
 []
