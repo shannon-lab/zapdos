@@ -14,6 +14,9 @@
 #include "CoeffDiffusionElectrons.h"
 #include "CoeffDiffusionEnergy.h"
 #include "EFieldAdvectionElectrons.h"
+#include "DriftDiffusion.h"
+#include "DriftDiffusionElectrons.h"
+#include "DriftDiffusionEnergy.h"
 #include "ProductAABBRxn.h"
 #include "ProductFirstOrderRxn.h"
 #include "LogStabilizationMoles.h"
@@ -156,6 +159,9 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(CoeffDiffusionEnergy);
   registerKernel(EFieldAdvectionElectrons);
   registerKernel(EFieldAdvectionEnergy);
+  registerKernel(DriftDiffusion);
+  registerKernel(DriftDiffusionElectrons);
+  registerKernel(DriftDiffusionEnergy);
   registerKernel(ChargeSourceMoles_KV);
   registerKernel(ReactantFirstOrderRxn);
   registerKernel(ReactantAARxn);

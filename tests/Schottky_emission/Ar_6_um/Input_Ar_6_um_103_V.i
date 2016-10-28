@@ -102,17 +102,10 @@ vhigh = 103E-3 #kV
 		variable = em
 		block = 0
 	[../]
-	[./em_advection]
-		type = EFieldAdvectionElectrons
+	[./em_DriftDiffusion]
+		type = DriftDiffusionElectrons
 		variable = em
 		potential = potential
-		mean_en = mean_en
-		block = 0
-		position_units = ${dom0Scale}
-	[../]
-	[./em_diffusion]
-		type = CoeffDiffusionElectrons
-		variable = em
 		mean_en = mean_en
 		block = 0
 		position_units = ${dom0Scale}
@@ -156,19 +149,14 @@ vhigh = 103E-3 #kV
 		variable = Arp
 		block = 0
 	[../]
-	[./Arp_advection]
-		type = EFieldAdvection
+	[./Arp_DriftDiffusion]
+		type = DriftDiffusion
 		variable = Arp
 		potential = potential
 		position_units = ${dom0Scale}
 		block = 0
 	[../]
-	[./Arp_diffusion]
-		type = CoeffDiffusion
-		variable = Arp
-		block = 0
-		position_units = ${dom0Scale}
-	[../]
+
 	[./Arp_ionization]
 		type = IonsFromIonization
 		variable = Arp
@@ -189,21 +177,15 @@ vhigh = 103E-3 #kV
 		variable = mean_en
 		block = 0
 	[../]
-	[./mean_en_advection]
-		type = EFieldAdvectionEnergy
+	[./mean_en_DriftDiffusion]
+		type = DriftDiffusionEnergy
 		variable = mean_en
 		potential = potential
 		em = em
 		block = 0
 		position_units = ${dom0Scale}
 	[../]
-	[./mean_en_diffusion]
-		type = CoeffDiffusionEnergy
-		variable = mean_en
-		em = em
-		block = 0
-		position_units = ${dom0Scale}
-	[../]
+
 	[./mean_en_joule_heating]
 		type = JouleHeating
 		variable = mean_en
@@ -634,6 +616,7 @@ vhigh = 103E-3 #kV
 		interp_trans_coeffs = true
 		interp_elastic_coeff = true
 		ramp_trans_coeffs = false
+		user_p_gas = 101.3E3
 		em = em
 		potential = potential
 		ip = Arp
