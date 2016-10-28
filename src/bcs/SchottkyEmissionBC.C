@@ -61,13 +61,14 @@ SchottkyEmissionBC::computeQpResidual()
 	Real c;
 	Real dPhi;
 	Real kB;
-	Real je;
+	Real jRD;
+	Real jSE;
 	Real F;
 
 	_v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
 
 	if ( _normals[_qp] * -_grad_potential[_qp] > 0.0) {
-		_a = 1.0;
+		_a = 0.0;
 
 		_ion_flux = _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_ip[_qp]) - _Dip[_qp] * std::exp(_ip[_qp]) * _grad_ip[_qp] * _r_units;
 
@@ -76,19 +77,20 @@ SchottkyEmissionBC::computeQpResidual()
 			// c = 0.001199985 eV*sqrt(m/kV)
 			// dPhi = c * sqrt(F) // eV
 
-		F = -_a * _field_enhancement[_qp] * _normals[_qp] * _grad_potential[_qp] * _r_units;
+		F = -(1 - _a) * _field_enhancement[_qp] * _normals[_qp] * _grad_potential[_qp] * _r_units;
 
 		c = 0.001199985; // eV*sqrt(m/kV)
 		kB = 8.617385E-5; // eV/K
 		dPhi = c * sqrt(F);
 
-		je = _Richardson_coefficient[_qp] * pow(_cathode_temperature[_qp], 2) * exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
+		jRD = _Richardson_coefficient[_qp] * pow(_cathode_temperature[_qp], 2) * exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
+		jSE = _e[_qp] * 6.02e23 * _se_coeff[_qp] * _ion_flux * _normals[_qp];
 
-		return -_test[_i][_qp] * _r_units * 2. / (1. + _r) * 
-					(je / (_e[_qp] * 6.02e23) + _a * _se_coeff[_qp] * _ion_flux * _normals[_qp]);
+		return -_test[_i][_qp] * _r_units * 2. / (1. + _r) * (1 - _a) * 
+				( jRD + jSE )/ (_e[_qp] * 6.02e23);
 	}
 	else {
-		_a = 0.0;
+		_a = 1.0;
 		return 0;
 	}
 
@@ -127,7 +129,7 @@ SchottkyEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 	{
 		if ( _normals[_qp] * -_grad_potential[_qp] > 0.0)
 		{
-			_a = 1.0;
+			_a = 0.0;
 
 			_ion_flux = _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_ip[_qp]) - _Dip[_qp] * std::exp(_ip[_qp]) * _grad_ip[_qp] * _r_units;
 			_d_ion_flux_d_potential = _sgnip[_qp] * _muip[_qp] * -_grad_phi[_j][_qp] * _r_units * std::exp(_ip[_qp]);
@@ -138,7 +140,7 @@ SchottkyEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 				// dPhi = c * sqrt(F) // eV
 				// f = c*(F/wf^2)
 
-			F = -_a * _field_enhancement[_qp] * _normals[_qp] * _grad_potential[_qp] * _r_units;
+			F = -(1 - _a) * _field_enhancement[_qp] * _normals[_qp] * _grad_potential[_qp] * _r_units;
 
 			c = 0.001199985; // eV*sqrt(m/kV)
 			kB = 8.617385E-5; // eV/K
@@ -146,15 +148,15 @@ SchottkyEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 
 			je = _Richardson_coefficient[_qp] * pow(_cathode_temperature[_qp], 2) * exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
 
-			return - _test[_i][_qp] * _r_units * 2. / (1. + _r) *
-						(je * dPhi / (_e[_qp] * 6.02e23)) / (2*kB) /
-						(_grad_potential[_qp] * _normals[_qp] * _r_units) * (-_grad_phi[_j][_qp] * _normals[_qp] * _r_units) 
+			return - _test[_i][_qp] * _r_units * (1 - _a) * (je * dPhi / (_e[_qp] * 6.02e23)) / (2*kB) /
+					(_grad_potential[_qp] * _normals[_qp] * _r_units) * (-_grad_phi[_j][_qp] * _normals[_qp] * _r_units) 
+
 				- _test[_i][_qp] * _r_units * 2. / (1. + _r) * (1. - _a) * _se_coeff[_qp] * _d_ion_flux_d_potential * _normals[_qp];
 ;
 		}
 		else
 		{
-			_a = 0.0;
+			_a = 1.0;
 
 			return 0.0 ;
 		}
