@@ -55,14 +55,14 @@ vhigh = 103E-3 #kV
 [Executioner]
 	type = Transient
 	end_time = 0.1E-6
-#	trans_ss_check = 1
-#	ss_check_tol = 1E-12
+	trans_ss_check = 1
+	ss_check_tol = 1E-12
 	petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
 	solve_type = NEWTON
 	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
 	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
-	nl_rel_tol = 1e-11
-	nl_abs_tol = 1e-11
+	nl_rel_tol = 1e-10
+	nl_abs_tol = 1e-10
 	dtmin = 1e-20
 	dtmax = 0.01E-7
 	[./TimeStepper]
@@ -91,7 +91,7 @@ vhigh = 103E-3 #kV
 	[./data_provider]
 		type = ProvideMobility
 		electrode_area = 5.02e-7 # Formerly 3.14e-6
-		ballast_resist = 1e0
+		ballast_resist = 1e6
 		e = 1.6e-19
 	[../]
 []
@@ -102,10 +102,17 @@ vhigh = 103E-3 #kV
 		variable = em
 		block = 0
 	[../]
-	[./em_DriftDiffusion]
-		type = DriftDiffusionElectrons
+	[./em_advection]
+		type = EFieldAdvectionElectrons
 		variable = em
 		potential = potential
+		mean_en = mean_en
+		block = 0
+		position_units = ${dom0Scale}
+	[../]
+	[./em_diffusion]
+		type = CoeffDiffusionElectrons
+		variable = em
 		mean_en = mean_en
 		block = 0
 		position_units = ${dom0Scale}
@@ -149,14 +156,19 @@ vhigh = 103E-3 #kV
 		variable = Arp
 		block = 0
 	[../]
-	[./Arp_DriftDiffusion]
-		type = DriftDiffusion
+	[./Arp_advection]
+		type = EFieldAdvection
 		variable = Arp
 		potential = potential
 		position_units = ${dom0Scale}
 		block = 0
 	[../]
-
+	[./Arp_diffusion]
+		type = CoeffDiffusion
+		variable = Arp
+		block = 0
+		position_units = ${dom0Scale}
+	[../]
 	[./Arp_ionization]
 		type = IonsFromIonization
 		variable = Arp
@@ -177,15 +189,21 @@ vhigh = 103E-3 #kV
 		variable = mean_en
 		block = 0
 	[../]
-	[./mean_en_DriftDiffusion]
-		type = DriftDiffusionEnergy
+	[./mean_en_advection]
+		type = EFieldAdvectionEnergy
 		variable = mean_en
 		potential = potential
 		em = em
 		block = 0
 		position_units = ${dom0Scale}
 	[../]
-
+	[./mean_en_diffusion]
+		type = CoeffDiffusionEnergy
+		variable = mean_en
+		em = em
+		block = 0
+		position_units = ${dom0Scale}
+	[../]
 	[./mean_en_joule_heating]
 		type = JouleHeating
 		variable = mean_en
@@ -616,7 +634,6 @@ vhigh = 103E-3 #kV
 		interp_trans_coeffs = true
 		interp_elastic_coeff = true
 		ramp_trans_coeffs = false
-		user_p_gas = 101.3E3
 		em = em
 		potential = potential
 		ip = Arp
@@ -630,3 +647,4 @@ vhigh = 103E-3 #kV
 		block = 0
 	[../]
 []
+

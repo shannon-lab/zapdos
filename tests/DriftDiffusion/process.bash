@@ -4,7 +4,7 @@ OutputFile="Input_Ar_6_um_103_V_out"
 
 module load paraview
 
-pvpython ../ToCSV.py "${OutputFile}"
+pvpython ToCSV.py "${OutputFile}"
 
 for file in $( ls ${OutputFile}*0.csv ) ; do
 	TempOutputFile=${file//"0.csv"/".txt"}
