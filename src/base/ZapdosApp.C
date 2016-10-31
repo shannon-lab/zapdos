@@ -64,6 +64,8 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "ElectronAdvectionDoNothingBC.h"
+#include "ElectronDiffusionDoNothingBC.h"
 #include "TM0AntennaVertBC.h"
 #include "TM0PECVertBC.h"
 #include "PenaltyCircuitPotential.h"
@@ -199,6 +201,8 @@ ZapdosApp::registerObjects(Factory & factory)
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
   registerBoundaryCondition(TM0AntennaVertBC);
+  registerBoundaryCondition(ElectronAdvectionDoNothingBC);
+  registerBoundaryCondition(ElectronDiffusionDoNothingBC);
   registerBoundaryCondition(TM0PECVertBC);
   registerBoundaryCondition(PenaltyCircuitPotential);
   registerBoundaryCondition(CircuitDirichletPotential);
