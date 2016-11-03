@@ -43,13 +43,15 @@ ElectronsFromIonization::ElectronsFromIonization(const InputParameters & paramet
 
   if (!(isCoupled("potential")))
     _minus_e_field.resize(_fe_problem.getMaxQps(), RealGradient(-getParam<Real>("EField")));
-  _user_diffem.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("diffem")));
-  _user_d_diffem_d_actual_mean_en.set().resize(_fe_problem.getMaxQps(), Real(0));
-  _user_muem.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("muem")));
-  _user_d_muem_d_actual_mean_en.set().resize(_fe_problem.getMaxQps(), Real(0));
-  _user_alpha_iz.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("alpha_iz")));
-  _user_d_iz_d_actual_mean_en.set().resize(_fe_problem.getMaxQps(), Real(0));
-
+  if (!(getParam<bool>("use_material_props")))
+    {
+      _user_diffem.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("diffem")));
+      _user_d_diffem_d_actual_mean_en.set().resize(_fe_problem.getMaxQps(), Real(0));
+      _user_muem.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("muem")));
+      _user_d_muem_d_actual_mean_en.set().resize(_fe_problem.getMaxQps(), Real(0));
+      _user_alpha_iz.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("alpha_iz")));
+      _user_d_iz_d_actual_mean_en.set().resize(_fe_problem.getMaxQps(), Real(0));
+    }
 }
 
 ElectronsFromIonization::~ElectronsFromIonization()

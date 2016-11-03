@@ -146,6 +146,7 @@ dom1Scale=1e-7
     variable = em
     potential = potential
     mean_en = mean_en
+    em = em
     block = 0
     position_units = ${dom0Scale}
   [../]
