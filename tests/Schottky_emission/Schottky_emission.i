@@ -117,6 +117,7 @@ vhigh = 0.10 #kV
 	[../]
 	[./em_ionization]
 		type = ElectronsFromIonization
+    em = em
 		variable = em
 		potential = potential
 		mean_en = mean_en
