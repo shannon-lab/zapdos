@@ -1,20 +1,20 @@
-#ifndef DRIFTDIFFUSION_H
-#define DRIFTDIFFUSION_H
+#ifndef DRIFTDIFFUSIONDONOTHINGBC_H
+#define DRIFTDIFFUSIONDONOTHINGBC_H
 
-#include "Kernel.h"
+#include "IntegratedBC.h"
 
-class DriftDiffusion;
+class DriftDiffusionDoNothingBC;
 
 template<>
-InputParameters validParams<DriftDiffusion>();
+InputParameters validParams<DriftDiffusionDoNothingBC>();
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
 
-class DriftDiffusion : public Kernel
+class DriftDiffusionDoNothingBC : public IntegratedBC
 {
 public:
-  DriftDiffusion(const InputParameters & parameters);
-  virtual ~DriftDiffusion();
+  DriftDiffusionDoNothingBC(const InputParameters & parameters);
+  virtual ~DriftDiffusionDoNothingBC();
 
 protected:
 
@@ -40,4 +40,4 @@ protected:
 };
 
 
-#endif /* DRIFTDIFFUSION_H */
+#endif /* DRIFTDIFFUSIONDONOTHINGBC_H */

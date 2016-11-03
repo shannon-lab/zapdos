@@ -1,9 +1,9 @@
-#include "DriftDiffusion.h"
+#include "DriftDiffusionDoNothingBC.h"
 
 template<>
-InputParameters validParams<DriftDiffusion>()
+InputParameters validParams<DriftDiffusionDoNothingBC>()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = validParams<IntegratedBC>();
   params.addCoupledVar("potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<Real>("EField", "Optionally can use a specified electric field for 1D simulations in place of a potential variable");
@@ -14,10 +14,8 @@ InputParameters validParams<DriftDiffusion>()
   return params;
 }
 
-// This diffusion kernel should only be used with species whose values are in the logarithmic form.
-
-DriftDiffusion::DriftDiffusion(const InputParameters & parameters) :
-    Kernel(parameters),
+DriftDiffusionDoNothingBC::DriftDiffusionDoNothingBC(const InputParameters & parameters) :
+    IntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
 
@@ -38,28 +36,29 @@ DriftDiffusion::DriftDiffusion(const InputParameters & parameters) :
   _user_sign.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("sign")));
 }
 
-DriftDiffusion::~DriftDiffusion()
+DriftDiffusionDoNothingBC::~DriftDiffusionDoNothingBC()
 {}
 
 Real
-DriftDiffusion::computeQpResidual()
+DriftDiffusionDoNothingBC::computeQpResidual()
 {
-  return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * -_grad_potential[_qp] * _r_units * -_grad_test[_i][_qp] * _r_units
-    - _diffusivity[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _r_units * -_grad_test[_i][_qp] * _r_units;
+  return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * -_grad_potential[_qp] * _r_units * _normals[_qp] * _test[_i][_qp] * _r_units
+    - _diffusivity[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _r_units * _normals[_qp] * _test[_i][_qp] * _r_units;
 }
 
 Real
-DriftDiffusion::computeQpJacobian()
+DriftDiffusionDoNothingBC::computeQpJacobian()
 {
-  return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * -_grad_potential[_qp] * _r_units * -_grad_test[_i][_qp] * _r_units
-    - _diffusivity[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units + std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) * -_grad_test[_i][_qp] * _r_units;
+  return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] * _test[_i][_qp] * _r_units
+    - _diffusivity[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units + std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) * _normals[_qp] * _test[_i][_qp] * _r_units;
 }
 
-Real DriftDiffusion::computeQpOffDiagJacobian(unsigned int jvar)
+Real DriftDiffusionDoNothingBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id) {
-    return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * -_grad_phi[_j][_qp] * _r_units * -_grad_test[_i][_qp] * _r_units;
-  } else {
+    return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * -_grad_phi[_j][_qp] * _r_units * _normals[_qp] * _test[_i][_qp] * _r_units;
+  }
+  else {
     return 0.;
   }
 }
