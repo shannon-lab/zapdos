@@ -41,7 +41,8 @@ ElectronsFromIonization::ElectronsFromIonization(const InputParameters & paramet
   if (!(isCoupled("potential") || parameters.isParamSetByUser("EField")))
     mooseError("You must either couple in a potential variable or set an EField.");
 
-  _minus_e_field.resize(_fe_problem.getMaxQps(), RealGradient(-getParam<Real>("EField")));
+  if (!(isCoupled("potential")))
+    _minus_e_field.resize(_fe_problem.getMaxQps(), RealGradient(-getParam<Real>("EField")));
   _user_diffem.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("diffem")));
   _user_d_diffem_d_actual_mean_en.set().resize(_fe_problem.getMaxQps(), Real(0));
   _user_muem.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("muem")));
