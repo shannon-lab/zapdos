@@ -15,6 +15,7 @@
 #include "CoeffDiffusionEnergy.h"
 #include "EFieldAdvectionElectrons.h"
 #include "DriftDiffusion.h"
+#include "DriftDiffusionUser.h"
 #include "DriftDiffusionElectrons.h"
 #include "DriftDiffusionEnergy.h"
 #include "ProductAABBRxn.h"
@@ -29,6 +30,7 @@
 #include "IonsFromIonization.h"
 #include "EFieldArtDiff.h"
 #include "ElectronsFromIonization.h"
+#include "ElectronsFromIonizationUser.h"
 #include "CoeffDiffusion.h"
 #include "ReactantFirstOrderRxn.h"
 #include "EFieldAdvection.h"
@@ -37,6 +39,7 @@
 
 // AuxKernels
 
+#include "UserFlux.h"
 #include "TM0CylindricalErAux.h"
 #include "TM0CylindricalEzAux.h"
 #include "AbsValueAux.h"
@@ -64,6 +67,8 @@
 #include "ProvideMobility.h"
 
 // Boundary Conditions
+#include "DriftDiffusionDoNothingBC.h"
+#include "DriftDiffusionUserDoNothingBC.h"
 #include "ElectronAdvectionDoNothingBC.h"
 #include "ElectronDiffusionDoNothingBC.h"
 #include "TM0AntennaVertBC.h"
@@ -162,6 +167,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(EFieldAdvectionElectrons);
   registerKernel(EFieldAdvectionEnergy);
   registerKernel(DriftDiffusion);
+  registerKernel(DriftDiffusionUser);
   registerKernel(DriftDiffusionElectrons);
   registerKernel(DriftDiffusionEnergy);
   registerKernel(ChargeSourceMoles_KV);
@@ -177,6 +183,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(JouleHeating);
   registerKernel(ElectronTimeDerivative);
   registerKernel(ElectronsFromIonization);
+  registerKernel(ElectronsFromIonizationUser);
   registerKernel(CoeffDiffusionLin);
   registerKernel(LogStabilizationMoles);
   registerKernel(ProductFirstOrderRxn);
@@ -194,12 +201,15 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(Density);
   registerAux(DiffusiveFlux);
   registerAux(EFieldAdvAux);
+  registerAux(UserFlux);
   registerMaterial(JacMat);
   registerMaterial(Gas);
   registerMaterial(Water);
   registerIndicator(AnalyticalDiffIndicator);
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
+  registerBoundaryCondition(DriftDiffusionDoNothingBC);
+  registerBoundaryCondition(DriftDiffusionUserDoNothingBC);
   registerBoundaryCondition(TM0AntennaVertBC);
   registerBoundaryCondition(ElectronAdvectionDoNothingBC);
   registerBoundaryCondition(ElectronDiffusionDoNothingBC);
