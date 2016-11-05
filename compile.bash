@@ -22,6 +22,6 @@ export F90=mpif90
 export F77=mpif77
 export FC=mpif90
 
-make -j4
+make -j8
 
-make METHOD=dbg -j4
+make METHOD=dbg -j8

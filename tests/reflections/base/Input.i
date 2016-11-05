@@ -1,11 +1,11 @@
 dom0Scale = 1
 dom0Size = 6E-6 #m
-vhigh = 103E-3 #kV
+vhigh = 175E-3 #kV
 
 [GlobalParams]
-	offset = 20
+#	offset = 20
 	potential_units = kV
-	# potential_units = V
+#	 potential_units = V
 	use_moles = true
 []
 
@@ -26,7 +26,7 @@ vhigh = 103E-3 #kV
 #		master_block = '1'
 #		paired_block = '0'
 #		new_boundary = 'master1_interface'
-#		# depends_on = 'box'
+#		 depends_on = 'box'
 #	[../]
 	[./left]
 		type = SideSetsFromNormals
@@ -42,7 +42,7 @@ vhigh = 103E-3 #kV
 
 [Problem]
 	type = FEProblem
-	# kernel_coverage_check = false
+#	 kernel_coverage_check = false
 []
 
 [Preconditioning]
@@ -56,21 +56,22 @@ vhigh = 103E-3 #kV
 	type = Transient
 	end_time = 10E-6
 	trans_ss_check = 1
-	ss_check_tol = 1E-10
+	ss_check_tol = 1E-15
 	petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
 	solve_type = NEWTON
 	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
 	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
-	nl_rel_tol = 1e-10
-	nl_abs_tol = 1e-10
-	dtmin = 1e-20
+	nl_rel_tol = 1e-15
+	nl_abs_tol = 0.5e-12
+	ss_tmin = 1E-6
+	dtmin = 1e-18
 	dtmax = 0.1E-7
 	[./TimeStepper]
 		type = IterationAdaptiveDT
-		cutback_factor = 0.4
-		dt = 1e-12
+		cutback_factor = 0.9
+		dt = 1e-13
 		growth_factor = 1.2
-		optimal_iterations = 25
+		optimal_iterations = 100
 	[../]
 []
 
@@ -529,7 +530,7 @@ vhigh = 103E-3 #kV
 		boundary = 'left'
 		potential = potential
 		mean_en = mean_en
-		r = 1
+		r = 0
 		position_units = ${dom0Scale}
 	[../]
 
@@ -539,7 +540,7 @@ vhigh = 103E-3 #kV
 		boundary = right
 		potential = potential
 		mean_en = mean_en
-		r = 1
+		r = 0
 		position_units = ${dom0Scale}
 	[../]
 
@@ -548,7 +549,7 @@ vhigh = 103E-3 #kV
 		type = HagelaarIonDiffusionBC
 		variable = Arp
 		boundary = 'left'
-		r = 1
+		r = 0
 		position_units = ${dom0Scale}
 	[../]
 	[./Arp_physical_left_advection]
@@ -595,7 +596,7 @@ vhigh = 103E-3 #kV
 		potential = potential
 		em = em
 		ip = Arp
-		r = 1
+		r = 0
 		position_units = ${dom0Scale}
 	[../]
 []
@@ -610,21 +611,21 @@ vhigh = 103E-3 #kV
 	[./em_ic]
 		type = ConstantIC
 		variable = em
-		value = -21
+		value = -35
 		block = 0
 	[../]
 
 	[./Arp_ic]
 		type = ConstantIC
 		variable = Arp
-		value = -21
+		value = -35
 		block = 0
 	[../]
 
 	[./mean_en_ic]
 		type = ConstantIC
 		variable = mean_en
-		value = -20
+		value = -35
 		block = 0
 	[../]
 []
