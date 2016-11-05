@@ -93,6 +93,7 @@ protected:
 	MaterialProperty<Real> & _Tem_lfa;
 	MaterialProperty<Real> & _Tip_lfa;
 	MaterialProperty<Real> & _k_boltz;
+	MaterialProperty<Real> & _Avogadro;
 	MaterialProperty<Real> & _vthermal_em;
 	MaterialProperty<Real> & _vthermal_ip;
 	MaterialProperty<Real> & _iz_coeff_efield_a;
