@@ -54,7 +54,7 @@ vhigh = 150E-3 #kV
 
 [Executioner]
 	type = Transient
-	line_search = none
+	# line_search = none
 	end_time = 10E-6
 	trans_ss_check = 1
 	ss_check_tol = 1E-15
@@ -530,15 +530,15 @@ vhigh = 150E-3 #kV
 		position_units = ${dom0Scale}
 	[../]
 
-	[./em_physical_left]
-		type = HagelaarElectronBC
-		variable = em
-		boundary = 'left'
-		potential = potential
-		mean_en = mean_en
-		r = 0
-		position_units = ${dom0Scale}
-	[../]
+	# [./em_physical_left]
+	# 	type = HagelaarElectronBC
+	# 	variable = em
+	# 	boundary = 'left'
+	# 	potential = potential
+	# 	mean_en = mean_en
+	# 	r = 0
+	# 	position_units = ${dom0Scale}
+	# [../]
 
 	[./em_physical_right]
 		type = HagelaarElectronBC
