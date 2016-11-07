@@ -91,8 +91,8 @@ SchottkyEmissionBC::computeQpResidual()
 		jRD = _Richardson_coefficient[_qp] * pow(_cathode_temperature[_qp], 2) * exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
 		jSE = _e[_qp] * 6.02E23 * _se_coeff[_qp] * _ion_flux * _normals[_qp];
 
-		return _test[_i][_qp] * _r_units * 2. / (1. + _r) * (1 - _a) * 
-				( jRD - jSE )/ (_e[_qp] * 6.02E23);
+		return _test[_i][_qp] * _r_units * 2. / (1. + _r) * (1 - _a) *
+				( - jRD - jSE )/ (_e[_qp] * 6.02E23);
 	}
 
 }
@@ -153,11 +153,11 @@ SchottkyEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 
 			jRD = _Richardson_coefficient[_qp] * pow(_cathode_temperature[_qp], 2) * exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
 
-			_d_jRD_d_potential = jRD * (dPhi / (2 * kB * _cathode_temperature[_qp])) * 
+			_d_jRD_d_potential = jRD * (dPhi / (2 * kB * _cathode_temperature[_qp])) *
 								(_grad_phi[_j][_qp] * _normals[_qp] * _r_units) / (_grad_potential[_qp] * _normals[_qp] * _r_units);
 
 			return _test[_i][_qp] * _r_units * 2. / (1. + _r) * (1 - _a) *
-						( _d_jRD_d_potential - _d_jSE_d_potential ) / ( _e[_qp] * 6.02E23 );
+						( -_d_jRD_d_potential - _d_jSE_d_potential ) / ( _e[_qp] * 6.02E23 );
 
 		}
 	} else if (jvar == _mean_en_id) {
