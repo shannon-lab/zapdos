@@ -133,7 +133,7 @@ vhigh = 150E-3 #kV
 	[./em_log_stabilization]
 		type = LogStabilizationMoles
 		variable = em
-		offset = 37
+		offset = 40
 		block = 0
 	[../]
 
