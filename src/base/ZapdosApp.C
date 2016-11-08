@@ -82,6 +82,7 @@
 #include "HagelaarIonAdvectionBC.h"
 #include "HagelaarIonDiffusionBC.h"
 #include "HagelaarElectronBC.h"
+#include "HagelaarElectronAdvectionBC.h"
 #include "MatchedValueLogBC.h"
 #include "NeumannCircuitVoltageMoles_KV.h"
 #include "DCIonBC.h"
@@ -222,6 +223,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(HagelaarIonAdvectionBC);
   registerBoundaryCondition(HagelaarIonDiffusionBC);
   registerBoundaryCondition(HagelaarElectronBC);
+  registerBoundaryCondition(HagelaarElectronAdvectionBC);
   registerBoundaryCondition(HagelaarEnergyBC);
   registerBoundaryCondition(NeumannCircuitVoltageMoles_KV);
   registerBoundaryCondition(DCIonBC);
