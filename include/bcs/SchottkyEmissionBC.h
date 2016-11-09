@@ -27,6 +27,7 @@ protected:
   const VariableGradient & _grad_potential;
   unsigned int _potential_id;
   const VariableValue & _mean_en;
+
   unsigned int _mean_en_id;
   MooseVariable & _ip_var;
   const VariableValue & _ip;
@@ -60,6 +61,13 @@ protected:
   Real  _d_n_gamma_d_mean_en;
   Real _actual_mean_en;
   Real _tau;
+  bool _relax;
+	std::string _potential_units;
+
+	// Unique variables
+
+	Real _voltage_scaling;
+	Real _dPhi_over_F;
 
 };
 

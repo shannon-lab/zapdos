@@ -79,6 +79,7 @@
 #include "FieldEmissionBC.h"
 #include "SchottkyEmissionBC.h"
 #include "HagelaarEnergyBC.h"
+#include "HagelaarEnergyAdvectionBC.h"
 #include "HagelaarIonAdvectionBC.h"
 #include "HagelaarIonDiffusionBC.h"
 #include "HagelaarElectronBC.h"
@@ -225,6 +226,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerBoundaryCondition(HagelaarElectronBC);
   registerBoundaryCondition(HagelaarElectronAdvectionBC);
   registerBoundaryCondition(HagelaarEnergyBC);
+  registerBoundaryCondition(HagelaarEnergyAdvectionBC);
   registerBoundaryCondition(NeumannCircuitVoltageMoles_KV);
   registerBoundaryCondition(DCIonBC);
   registerInterfaceKernel(InterfaceAdvection);

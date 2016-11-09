@@ -1,6 +1,6 @@
 dom0Scale = 1
 dom0Size = 5E-6 #m
-vhigh = 300E-3 #kV
+vhigh = 400E-3 #kV
 
 [GlobalParams]
 	offset = 25
@@ -55,7 +55,7 @@ vhigh = 300E-3 #kV
 [Executioner]
 	type = Transient
 #	line_search = none
-	end_time = 10E-6
+	end_time = 10E6
 
 	trans_ss_check = 1
 	ss_check_tol = 1E-15
@@ -98,7 +98,7 @@ vhigh = 300E-3 #kV
 	[./data_provider]
 		type = ProvideMobility
 		electrode_area = 5.02e-7 # Formerly 3.14e-6
-		ballast_resist = 1e3
+		ballast_resist = 1e0
 		e = 1.6e-19
 	[../]
 []
@@ -534,6 +534,8 @@ vhigh = 300E-3 #kV
 		mean_en = mean_en
 		r = 1
 		position_units = ${dom0Scale}
+		tau = 100E-9
+		relax = true
 	[../]
 
 	# [./em_physical_left]
@@ -557,13 +559,13 @@ vhigh = 300E-3 #kV
 	[../]
 
 ## Argon boundary conditions ##
-	[./Arp_physical_left_diffusion]
-		type = HagelaarIonDiffusionBC
-		variable = Arp
-		boundary = 'left'
-		r = 0
-		position_units = ${dom0Scale}
-	[../]
+#	[./Arp_physical_left_diffusion]
+#		type = HagelaarIonDiffusionBC
+#		variable = Arp
+#		boundary = 'left'
+#		r = 0
+#		position_units = ${dom0Scale}
+#	[../]
 	[./Arp_physical_left_advection]
 		type = HagelaarIonAdvectionBC
 		variable = Arp
@@ -573,13 +575,13 @@ vhigh = 300E-3 #kV
 		position_units = ${dom0Scale}
 	[../]
 
-	[./Arp_physical_right_diffusion]
-		type = HagelaarIonDiffusionBC
-		variable = Arp
-		boundary = right
-		r = 0
-		position_units = ${dom0Scale}
-	[../]
+#	[./Arp_physical_right_diffusion]
+#		type = HagelaarIonDiffusionBC
+#		variable = Arp
+#		boundary = right
+#		r = 0
+#		position_units = ${dom0Scale}
+#	[../]
 	[./Arp_physical_right_advection]
 		type = HagelaarIonAdvectionBC
 		variable = Arp
@@ -591,7 +593,7 @@ vhigh = 300E-3 #kV
 
 ## Mean energy boundary conditions ##
 	[./mean_en_physical_left]
-		type = HagelaarEnergyBC
+		type = HagelaarEnergyAdvectionBC
 		variable = mean_en
 		boundary = 'left'
 		potential = potential
