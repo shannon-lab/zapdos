@@ -66,7 +66,7 @@ vhigh = 60E-3 #kV
 	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
 	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
 	nl_rel_tol = 1e-4
-	nl_abs_tol = 1e-10
+	nl_abs_tol = 4e-13
 
 	dtmin = 1e-16
 	# dtmax = 1E-6
@@ -74,7 +74,7 @@ vhigh = 60E-3 #kV
 	[./TimeStepper]
 		type = IterationAdaptiveDT
 		cutback_factor = 0.4
-		dt = 1e-9
+		dt = 1e-11
 		growth_factor = 1.2
 		optimal_iterations = 100
 		nl_max_its = 200
@@ -625,21 +625,21 @@ vhigh = 60E-3 #kV
 	[./em_ic]
 		type = ConstantIC
 		variable = em
-		value = -40
+		value = -30
 		block = 0
 	[../]
 
 	[./Arp_ic]
 		type = ConstantIC
 		variable = Arp
-		value = -40
+		value = -30
 		block = 0
 	[../]
 
 	[./mean_en_ic]
 		type = ConstantIC
 		variable = mean_en
-		value = -39
+		value = -29
 		block = 0
 	[../]
 []

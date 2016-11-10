@@ -73,12 +73,12 @@ vhigh = 200E-3 #kV
 	nl_abs_tol = 7e-10
 
 	dtmin = 1e-16
-	dtmax = 1E-6
+	# dtmax = 1E-6
 	nl_max_its = 100
 	[./TimeStepper]
 		type = IterationAdaptiveDT
 		cutback_factor = 0.4
-		dt = 1e-9
+		dt = 1e-11
 		growth_factor = 1.2
 		optimal_iterations = 100
 		nl_max_its = 200
