@@ -65,16 +65,16 @@ vhigh = 60E-3 #kV
 	solve_type = NEWTON
 	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
 	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
-	nl_rel_tol = 1e-9
-	nl_abs_tol = 1e-9
+	nl_rel_tol = 1e-4
+	nl_abs_tol = 4e-13
 
-	dtmin = 1e-35
-	dtmax = 1E-6
+	dtmin = 1e-16
+	# dtmax = 1E-6
 	nl_max_its = 100
 	[./TimeStepper]
 		type = IterationAdaptiveDT
 		cutback_factor = 0.4
-		dt = 1e-20
+		dt = 1e-11
 		growth_factor = 1.2
 		optimal_iterations = 100
 		nl_max_its = 200
@@ -534,7 +534,7 @@ vhigh = 60E-3 #kV
 		mean_en = mean_en
 		r = 1
 		position_units = ${dom0Scale}
-		tau = 10E-6
+		# tau = 10E-6
 		relax = true
 	[../]
 
@@ -625,21 +625,21 @@ vhigh = 60E-3 #kV
 	[./em_ic]
 		type = ConstantIC
 		variable = em
-		value = -50
+		value = -30
 		block = 0
 	[../]
 
 	[./Arp_ic]
 		type = ConstantIC
 		variable = Arp
-		value = -50
+		value = -30
 		block = 0
 	[../]
 
 	[./mean_en_ic]
 		type = ConstantIC
 		variable = mean_en
-		value = -50
+		value = -29
 		block = 0
 	[../]
 []
