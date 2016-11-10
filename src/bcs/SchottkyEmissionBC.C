@@ -169,7 +169,7 @@ SchottkyEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 			jRD = _Richardson_coefficient[_qp] * pow(_cathode_temperature[_qp], 2) * exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
 
 			_d_jRD_d_potential = jRD * (dPhi / (2 * kB * _cathode_temperature[_qp])) *
-								(_grad_phi[_j][_qp] * _normals[_qp] * _r_units) / (_grad_potential[_qp] * _normals[_qp] * _r_units);
+								(_grad_phi[_j][_qp] * _normals[_qp] ) / (_grad_potential[_qp] * _normals[_qp] );
 
 			if ( _relax == true ) {
 				_relaxation_Expr = std::tanh(_t / _tau) ;
