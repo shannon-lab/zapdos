@@ -651,28 +651,28 @@ dom1Scale=1e-7
     block = 1
   [../]
   [./em_lin]
-    type = Density
+    type = DensityMoles
     convert_moles = true
     variable = em_lin
     density_log = em
     block = 0
   [../]
   [./emliq_lin]
-    type = Density
+    type = DensityMoles
     convert_moles = true
     variable = emliq_lin
     density_log = emliq
     block = 1
   [../]
   [./Arp_lin]
-    type = Density
+    type = DensityMoles
     convert_moles = true
     variable = Arp_lin
     density_log = Arp
     block = 0
   [../]
   [./OHm_lin]
-    type = Density
+    type = DensityMoles
     convert_moles = true
     variable = OHm_lin
     density_log = OHm
