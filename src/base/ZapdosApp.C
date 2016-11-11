@@ -34,6 +34,7 @@
 
 // AuxKernels
 
+#include "DensityMoles.h"
 #include "TM0CylindricalErAux.h"
 #include "TM0CylindricalEzAux.h"
 #include "AbsValueAux.h"
@@ -78,7 +79,6 @@
 
 // Actions
 
-#include "AddLotsOfDiffusion.h"
 #include "AddLotsOfCoeffDiffusion.h"
 #include "AddLotsOfVariables.h"
 #include "AddLotsOfSources.h"
@@ -89,7 +89,6 @@
 // DGKernels
 #include "DGCoeffDiffusion.h"
 #include "DGEFieldAdvection.h"
-#include "DGAdvection.h"
 
 // InterfaceKernels
 #include "HphiRadialInterface.h"
@@ -174,6 +173,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(ProductFirstOrderRxn);
   registerKernel(ProductAABBRxn);
   registerAux(AbsValueAux);
+  registerAux(DensityMoles);
   registerAux(TM0CylindricalEzAux);
   registerAux(TM0CylindricalErAux);
   registerAux(Current);
@@ -208,7 +208,6 @@ ZapdosApp::registerObjects(Factory & factory)
   registerInterfaceKernel(InterfaceAdvection);
   registerInterfaceKernel(HphiRadialInterface);
   registerInterfaceKernel(InterfaceLogDiffusionElectrons);
-  registerDGKernel(DGAdvection);
   registerDGKernel(DGCoeffDiffusion);
   registerDGKernel(DGEFieldAdvection);
   registerConstraint(ArbitrarilyTiedValueConstraint);
@@ -219,10 +218,6 @@ void
 ZapdosApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
 {
   // add actions
-  registerAction(AddLotsOfDiffusion, "add_variable");
-  registerAction(AddLotsOfDiffusion, "add_kernel");
-  registerAction(AddLotsOfDiffusion, "add_bc");
-  syntax.registerActionSyntax("AddLotsOfDiffusion", "LotsOfDiffusion");
   registerAction(AddLotsOfCoeffDiffusion, "add_variable");
   registerAction(AddLotsOfCoeffDiffusion, "add_kernel");
   registerAction(AddLotsOfCoeffDiffusion, "add_bc");
