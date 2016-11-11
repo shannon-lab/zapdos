@@ -1,10 +1,10 @@
 #!/bin/bash
 #$ -pe smp 4
-#$ -N JobName
+#$ -N Ar_2_um
 #$ -M jhaase1@nd.edu
 #$ -m a
 #$ -r y
-#$ -t 10-100:5 #Applied voltage in V
+#$ -t 50-350:5 #Applied voltage in V
 #$ -q *@@dgo
 ###########$ -V
 
@@ -21,7 +21,7 @@ olddom0Size=5 #um
 
 gas="Ar"
 
-newdom0Size=5 #um
+newdom0Size=2 #um
 	newDomainLine="dom0Size = ${newdom0Size}E-6"
 
 newvhigh=${SGE_TASK_ID}
@@ -30,7 +30,7 @@ newvhigh=${SGE_TASK_ID}
 NewInputFile="Input_${gas}_${newdom0Size}_um_${newvhigh}_V.i"
 OutputFile="Input_${gas}_${newdom0Size}_um_${newvhigh}_V_out"
 
-####LogFile=$( ls JobName.o*.$newvhigh )
+####LogFile=$( ls Ar_2_um.o*.$newvhigh )
 LogFile="Log_${gas}_${newdom0Size}_um_${newvhigh}_V.txt"
 
 cp ../${OldInputFile} ${NewInputFile}

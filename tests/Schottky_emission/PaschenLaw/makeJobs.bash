@@ -3,12 +3,12 @@
 oldGas="Ar"
 newGas="Ar"
 
-minVoltage=10
-maxVoltage=1000
+minVoltage=50
+maxVoltage=350
 VoltageStep=5
 sigDigits=3
 
-minGap=1
+minGap=6
 maxGap=12
 GapStep=1
 

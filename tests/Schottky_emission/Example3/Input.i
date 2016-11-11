@@ -1,9 +1,10 @@
 dom0Scale = 1
-dom0Size = 4E-6 #m
-vhigh = 200E-3 #kV
+dom0Size = 2E-6 #m
+vhigh = 230E-3 #kV
+relaxTime = 50E-6 #s
 
 [GlobalParams]
-	offset = 25
+#	offset = 25
 	potential_units = kV
 #	 potential_units = V
 	use_moles = true
@@ -54,34 +55,30 @@ vhigh = 200E-3 #kV
 
 [Executioner]
 	type = Transient
-	# line_search = none
+#	line_search = none
 	end_time = 10E6
 
 	trans_ss_check = 1
 	ss_check_tol = 1E-15
-	ss_tmin = 10E-6
+	ss_tmin = 3*${relaxTime}
 
-	petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
+	petsc_options = '-snes_converged_reason -snes_linesearch_monitor -snes_ksp_ew'
 	solve_type = NEWTON
-	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
-	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
-	# solve_type = PJFNK
-        # petsc_options_iname = '-pc_type -sub_pc_type -sub_ksp_type' # -pc_asm_overlap -ksp_gmres_restart'
-        # petsc_options_value = 'asm lu preonly' # 2 31'
+	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda -ksp_gmres_restart'
+	petsc_options_value = 'gamg NONZERO 1.e-10 preonly 1e-3 100'
 
-	nl_rel_tol = 1e-4
-	nl_abs_tol = 7e-10
+	nl_rel_tol = 1e-8
+	nl_abs_tol = 1e-10
 
-	dtmin = 1e-16
+	dtmin = 1e-25
 	# dtmax = 1E-6
-	nl_max_its = 100
+	nl_max_its = 200
 	[./TimeStepper]
 		type = IterationAdaptiveDT
 		cutback_factor = 0.4
-		dt = 1e-11
+		dt = 1e-13
 		growth_factor = 1.2
 		optimal_iterations = 100
-		nl_max_its = 200
 	[../]
 []
 
@@ -112,20 +109,20 @@ vhigh = 200E-3 #kV
 	[./Arp_log_stabilization]
 		type = LogStabilizationMoles
 		variable = Arp
-		offset = 50
+		offset = 20
 		block = 0
 	[../]
 	[./em_log_stabilization]
 		type = LogStabilizationMoles
 		variable = em
-		offset = 50
+		offset = 20
 		block = 0
 	[../]
 	[./mean_en_log_stabilization]
 		type = LogStabilizationMoles
 		variable = mean_en
 		block = 0
-		offset = 50
+		offset = 35
 	[../]
 #	[./mean_en_advection_stabilization]
 #		type = EFieldArtDiff
@@ -156,7 +153,7 @@ vhigh = 200E-3 #kV
 	[../]
 	[./em_ionization]
 		type = ElectronsFromIonization
-    em = em
+		em = em
 		variable = em
 		potential = potential
 		mean_en = mean_en
@@ -538,7 +535,7 @@ vhigh = 200E-3 #kV
 		mean_en = mean_en
 		r = 1
 		position_units = ${dom0Scale}
-		# tau = 10E-6
+		# tau = ${relaxTime}
 		relax = true
 	[../]
 
@@ -629,21 +626,21 @@ vhigh = 200E-3 #kV
 	[./em_ic]
 		type = ConstantIC
 		variable = em
-		value = -40
+		value = -30
 		block = 0
 	[../]
 
 	[./Arp_ic]
 		type = ConstantIC
 		variable = Arp
-		value = -40
+		value = -30
 		block = 0
 	[../]
 
 	[./mean_en_ic]
 		type = ConstantIC
 		variable = mean_en
-		value = -39
+		value = -25
 		block = 0
 	[../]
 []

@@ -1,9 +1,9 @@
 dom0Scale = 1
-dom0Size = 5E-6 #m
-vhigh = 0.10 #kV
+dom0Size = 4E-6 #m
+vhigh = 200E-3 #kV
 
 [GlobalParams]
-#	offset = 25
+	offset = 25
 	potential_units = kV
 #	 potential_units = V
 	use_moles = true
@@ -61,23 +61,24 @@ vhigh = 0.10 #kV
 	ss_check_tol = 1E-15
 	ss_tmin = 10E-6
 
-	petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
+	petsc_options = '-snes_converged_reason -snes_linesearch_monitor -snes_ksp_ew'
 	solve_type = NEWTON
 	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
 	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
 
-	nl_rel_tol = 1e-15
-	nl_abs_tol = 1e-11
+	nl_rel_tol = 1e-4
+	nl_abs_tol = 5e-10
 
-	dtmin = 1e-20
+	dtmin = 1e-16
 	# dtmax = 1E-6
-	nl_max_its = 200
+	nl_max_its = 100
 	[./TimeStepper]
 		type = IterationAdaptiveDT
 		cutback_factor = 0.4
 		dt = 1e-11
 		growth_factor = 1.2
 		optimal_iterations = 100
+		nl_max_its = 200
 	[../]
 []
 
@@ -534,7 +535,7 @@ vhigh = 0.10 #kV
 		mean_en = mean_en
 		r = 1
 		position_units = ${dom0Scale}
-		# tau = 5E-6
+		# tau = 10E-6
 		relax = true
 	[../]
 
@@ -625,21 +626,21 @@ vhigh = 0.10 #kV
 	[./em_ic]
 		type = ConstantIC
 		variable = em
-		value = -33
+		value = -40
 		block = 0
 	[../]
 
 	[./Arp_ic]
 		type = ConstantIC
 		variable = Arp
-		value = -33
+		value = -40
 		block = 0
 	[../]
 
 	[./mean_en_ic]
 		type = ConstantIC
 		variable = mean_en
-		value = -29
+		value = -39
 		block = 0
 	[../]
 []

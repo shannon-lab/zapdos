@@ -1,6 +1,6 @@
 dom0Scale = 1
 dom0Size = 12E-6 #m
-vhigh = 60E-3 #kV
+vhigh = 80E-3 #kV
 
 [GlobalParams]
 	offset = 25
@@ -65,8 +65,9 @@ vhigh = 60E-3 #kV
 	solve_type = NEWTON
 	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
 	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
-	nl_rel_tol = 1e-4
-	nl_abs_tol = 4e-13
+
+	nl_rel_tol = 1e-15
+	nl_abs_tol = 1e-11
 
 	dtmin = 1e-16
 	# dtmax = 1E-6
@@ -152,7 +153,7 @@ vhigh = 60E-3 #kV
 	[../]
 	[./em_ionization]
 		type = ElectronsFromIonization
-    em = em
+		em = em
 		variable = em
 		potential = potential
 		mean_en = mean_en
