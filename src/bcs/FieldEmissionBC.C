@@ -89,6 +89,8 @@ FieldEmissionBC::computeQpResidual()
 
 		_ion_flux = _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_ip[_qp]) - _Dip[_qp] * std::exp(_ip[_qp]) * _grad_ip[_qp] * _r_units;
 
+		_ion_flux = _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_ip[_qp]) - _Dip[_qp] * std::exp(_ip[_qp]) * _grad_ip[_qp] * _r_units;
+
 		// Fowler-Nordheim
 			// jFE = (a / wf) * F^2 * exp(-v(f) * b * wf^1.5 / F)
 			// a = 1.541434E-6 A eV/V^2
@@ -170,7 +172,7 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 			v = 1 - f + (f/6)*std::log(f);
 
 			jFE = (FE_a / (_work_function[_qp])) * pow( F , 2) * std::exp(-v * FE_b * pow(_work_function[_qp], 1.5) / F);
-			_d_jFE_d_potential = jFE * ( 2 - ( FE_b * FE_c ) / ( 6 * sqrt( _work_function[_qp] ) ) 
+			_d_jFE_d_potential = jFE * ( 2 - ( FE_b * FE_c ) / ( 6 * sqrt( _work_function[_qp] ) )
 							+ ( FE_b * pow(_work_function[_qp], 1.5) / F ) ) *
 							(_grad_phi[_j][_qp] * _normals[_qp] ) / (_grad_potential[_qp] * _normals[_qp] ) ;
 
