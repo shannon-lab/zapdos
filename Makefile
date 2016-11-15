@@ -3,7 +3,7 @@
 ###############################################################################
 #
 # Optional Environment variables
-# MOOSE_DIR        - Root directory of the MOOSE project 
+# MOOSE_DIR        - Root directory of the MOOSE project
 #
 ###############################################################################
 # Use the MOOSE submodule if it exists and MOOSE_DIR is not set
@@ -23,6 +23,10 @@ include $(FRAMEWORK_DIR)/moose.mk
 ALL_MODULES := no
 include $(MOOSE_DIR)/modules/modules.mk
 ###############################################################################
+
+APPLICATION_DIR    := $(shell dirname `pwd`)/moltres
+APPLICATION_NAME   := moltres
+include            $(FRAMEWORK_DIR)/app.mk
 
 # dep apps
 APPLICATION_DIR    := $(CURDIR)
