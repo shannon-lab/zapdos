@@ -48,7 +48,7 @@ relaxTime = 1e-8 #s
 
 [Preconditioning]
 	[./smp]
-		type = FDP
+		type = SMP
 		full = true
 	[../]
 []
