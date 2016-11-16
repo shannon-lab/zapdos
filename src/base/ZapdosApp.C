@@ -2,7 +2,6 @@
 #include "Moose.h"
 #include "AppFactory.h"
 #include "MooseSyntax.h"
-#include "MoltresApp.h"
 // #include "ModulesApp.h"
 
 // Kernels
@@ -137,11 +136,9 @@ ZapdosApp::ZapdosApp(InputParameters parameters) :
 
   Moose::registerObjects(_factory);
 //  ModulesApp::registerObjects(_factory);
-  MoltresApp::registerObjects(_factory);
   ZapdosApp::registerObjects(_factory);
 
   Moose::associateSyntax(_syntax, _action_factory);
-  MoltresApp::associateSyntax(_syntax, _action_factory);
 //  ModulesApp::associateSyntax(_syntax, _action_factory);
   ZapdosApp::associateSyntax(_syntax, _action_factory);
 }
