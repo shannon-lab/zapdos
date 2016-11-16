@@ -14,7 +14,7 @@ fi
 module unload intel gcc git matlab ompi allinea
 module load cmake git gcc/4.9.2 ompi/1.10.2-gcc-4.9.2 boost/1.61
 
-source /afs/crc.nd.edu/user/j/jhaase1/Zapdos-dir/moose.bash
+source /afs/crc.nd.edu/user/j/jhaase1/Moose-dir/moose.bash
 
 export CC=mpicc
 export CXX=mpicxx
