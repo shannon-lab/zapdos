@@ -57,6 +57,16 @@ protected:
 	Real  _d_n_gamma_d_u;
 	Real  _d_n_gamma_d_mean_en;
 	Real _actual_mean_en;
+  Real _tau;
+  bool _relax;
+	std::string _potential_units;
+
+	// Unique variables
+
+	Real _voltage_scaling;
+	Real FE_a;
+	Real FE_b;
+	Real FE_c;
 
 };
 

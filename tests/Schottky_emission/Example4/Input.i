@@ -1,10 +1,10 @@
 dom0Scale = 1
 dom0Size = 2E-6 #m
 vhigh = 230E-3 #kV
-relaxTime = 1e-8 #s
+relaxTime = 50E-6 #s
 
 [GlobalParams]
-	offset = 40
+#	offset = 25
 	potential_units = kV
 #	 potential_units = V
 	use_moles = true
@@ -60,25 +60,25 @@ relaxTime = 1e-8 #s
 
 	trans_ss_check = 1
 	ss_check_tol = 1E-15
-	ss_tmin = 1e-6
+	ss_tmin = 3*${relaxTime}
 
 	petsc_options = '-snes_converged_reason -snes_linesearch_monitor -snes_ksp_ew'
 	solve_type = NEWTON
 	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda -ksp_gmres_restart'
-	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3 100'
+	petsc_options_value = 'gamg NONZERO 1.e-10 preonly 1e-3 100'
 
-	nl_rel_tol = 1e-4
-	# nl_abs_tol = 8e-8
+	nl_rel_tol = 1e-8
+	nl_abs_tol = 1e-10
 
-	dtmin = 1e-14
+	dtmin = 1e-25
 	# dtmax = 1E-6
-	nl_max_its = 50
+	nl_max_its = 200
 	[./TimeStepper]
 		type = IterationAdaptiveDT
 		cutback_factor = 0.4
-		dt = 1e-11
+		dt = 1e-13
 		growth_factor = 1.2
-		optimal_iterations = 20
+		optimal_iterations = 100
 	[../]
 []
 
@@ -96,6 +96,12 @@ relaxTime = 1e-8 #s
 []
 
 [UserObjects]
+	[./current_density_user_object]
+		type = CurrentDensityShapeSideUserObject
+		u = tot_gas_current
+    boundary = left
+    execute_on = 'linear nonlinear'
+	[../]	
 	[./data_provider]
 		type = ProvideMobility
 		electrode_area = 5.02e-7 # Formerly 3.14e-6
@@ -109,20 +115,20 @@ relaxTime = 1e-8 #s
 	[./Arp_log_stabilization]
 		type = LogStabilizationMoles
 		variable = Arp
-		# offset = 20
+		offset = 20
 		block = 0
 	[../]
 	[./em_log_stabilization]
 		type = LogStabilizationMoles
 		variable = em
-		# offset = 20
+		offset = 20
 		block = 0
 	[../]
 	[./mean_en_log_stabilization]
 		type = LogStabilizationMoles
 		variable = mean_en
 		block = 0
-		# offset = 20
+		offset = 35
 	[../]
 #	[./mean_en_advection_stabilization]
 #		type = EFieldArtDiff
@@ -447,12 +453,14 @@ relaxTime = 1e-8 #s
 	[../]
 	[./em_lin]
 		type = Density
+#		convert_moles = true
 		variable = em_lin
 		density_log = em
 		block = 0
 	[../]
 	[./Arp_lin]
 		type = Density
+#		convert_moles = true
 		variable = Arp_lin
 		density_log = Arp
 		block = 0
@@ -502,18 +510,36 @@ relaxTime = 1e-8 #s
 
 [BCs]
 ## Potential boundary conditions ##
+#	[./potential_left]
+#		type = NeumannCircuitVoltageMoles_KV
+#		variable = potential
+#		boundary = left
+#		function = potential_bc_func
+#		ip = Arp
+#		data_provider = data_provider
+#		em = em
+#		mean_en = mean_en
+#		r = 0
+#		position_units = ${dom0Scale}
+#	[../]
+
 	[./potential_left]
-		type = NeumannCircuitVoltageMoles_KV
+    boundary = left
+    type = CurrentDensityShapeSideUserObject
 		variable = potential
-		boundary = left
+		
 		function = potential_bc_func
+		current_density = tot_gas_current
+
 		ip = Arp
-		data_provider = data_provider
 		em = em
 		mean_en = mean_en
-		r = 0
+
+		data_provider = data_provider
+
 		position_units = ${dom0Scale}
 	[../]
+
 
 	[./potential_dirichlet_right]
 		type = DirichletBC
@@ -533,12 +559,21 @@ relaxTime = 1e-8 #s
 		mean_en = mean_en
 		r = 1
 		position_units = ${dom0Scale}
-		tau = ${relaxTime}
+		# tau = ${relaxTime}
 		relax = true
 	[../]
 
+	# [./em_physical_left]
+	# 	type = HagelaarElectronBC
+	# 	variable = em
+	# 	boundary = 'left'
+	# 	potential = potential
+	# 	mean_en = mean_en
+	# 	r = 0
+	# 	position_units = ${dom0Scale}
+	# [../]
 
-[./em_physical_right]
+	[./em_physical_right]
 		type = HagelaarElectronAdvectionBC
 		variable = em
 		boundary = right
@@ -629,7 +664,7 @@ relaxTime = 1e-8 #s
 	[./mean_en_ic]
 		type = ConstantIC
 		variable = mean_en
-		value = -29
+		value = -25
 		block = 0
 	[../]
 []
@@ -638,7 +673,7 @@ relaxTime = 1e-8 #s
 	[./potential_bc_func]
 		type = ParsedFunction
 		vars = 'VHigh'
-		vals = '${vhigh}'
+		vals = '${vhigh}')
 		value = 'VHigh'
 	[../]
 	[./potential_ic_func]
@@ -657,7 +692,7 @@ relaxTime = 1e-8 #s
 		potential = potential
 		ip = Arp
 		mean_en = mean_en
-		user_se_coeff = 0
+		user_se_coeff = 0.02
 		user_work_function = 4.55 # eV
 		user_field_enhancement = 55
 		user_Richardson_coefficient = 80E4

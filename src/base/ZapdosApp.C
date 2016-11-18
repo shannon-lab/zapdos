@@ -60,7 +60,7 @@
 // User Objects
 #include "BlockAverageValue.h"
 #include "ProvideMobility.h"
-//#include "CurrentDensityShapeSideUserObject.h"
+#include "CurrentDensityShapeSideUserObject.h"
 
 // Boundary Conditions
 #include "TM0AntennaVertBC.h"
@@ -78,7 +78,7 @@
 #include "HagelaarEnergyAdvectionBC.h"
 #include "MatchedValueLogBC.h"
 #include "NeumannCircuitVoltageMoles_KV.h"
-//#include "NeumannCircuitVoltageNew.h"
+#include "NeumannCircuitVoltageNew.h"
 #include "DCIonBC.h"
 
 // Actions
@@ -196,7 +196,7 @@ ZapdosApp::registerObjects(Factory & factory)
 	registerIndicator(AnalyticalDiffIndicator);
 	registerUserObject(BlockAverageValue);
 	registerUserObject(ProvideMobility);
-//	registerUserObject(CurrentDensityShapeSideUserObject);
+	registerUserObject(CurrentDensityShapeSideUserObject);
 
 	registerBoundaryCondition(TM0AntennaVertBC);
 	registerBoundaryCondition(TM0PECVertBC);
@@ -212,7 +212,7 @@ ZapdosApp::registerObjects(Factory & factory)
 	registerBoundaryCondition(HagelaarEnergyBC);
 	registerBoundaryCondition(HagelaarEnergyAdvectionBC);
 	registerBoundaryCondition(NeumannCircuitVoltageMoles_KV);
-//	registerBoundaryCondition(NeumannCircuitVoltageNew);
+	registerBoundaryCondition(NeumannCircuitVoltageNew);
 	registerBoundaryCondition(DCIonBC);
 	registerInterfaceKernel(InterfaceAdvection);
 	registerInterfaceKernel(HphiRadialInterface);
