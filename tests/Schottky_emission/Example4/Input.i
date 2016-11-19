@@ -96,12 +96,12 @@ relaxTime = 50E-6 #s
 []
 
 [UserObjects]
-	[./current_density_user_object]
-		type = CurrentDensityShapeSideUserObject
-		u = tot_gas_current
-    boundary = left
-    execute_on = 'linear nonlinear'
-	[../]	
+    # 	[./current_density_user_object]
+    # 		type = CurrentDensityShapeSideUserObject
+    # 		u = tot_gas_current
+    # boundary = left
+    # execute_on = 'linear nonlinear'
+    # 	[../]
 	[./data_provider]
 		type = ProvideMobility
 		electrode_area = 5.02e-7 # Formerly 3.14e-6
@@ -523,22 +523,22 @@ relaxTime = 50E-6 #s
 #		position_units = ${dom0Scale}
 #	[../]
 
-	[./potential_left]
-    boundary = left
-    type = CurrentDensityShapeSideUserObject
-		variable = potential
-		
-		function = potential_bc_func
-		current_density = tot_gas_current
+    # 	[./potential_left]
+    # boundary = left
+    # type = CurrentDensityShapeSideUserObject
+    # 		variable = potential
 
-		ip = Arp
-		em = em
-		mean_en = mean_en
+    # 		function = potential_bc_func
+    # 		current_density = tot_gas_current
 
-		data_provider = data_provider
+    # 		ip = Arp
+    # 		em = em
+    # 		mean_en = mean_en
 
-		position_units = ${dom0Scale}
-	[../]
+    # 		data_provider = data_provider
+
+    # 		position_units = ${dom0Scale}
+    # 	[../]
 
 
 	[./potential_dirichlet_right]
