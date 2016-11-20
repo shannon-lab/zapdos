@@ -1,17 +1,3 @@
-/****************************************************************/
-/*               DO NOT MODIFY THIS HEADER                      */
-/* MOOSE - Multiphysics Object Oriented Simulation Environment  */
-/*                                                              */
-/*           (c) 2010 Battelle Energy Alliance, LLC             */
-/*                   ALL RIGHTS RESERVED                        */
-/*                                                              */
-/*          Prepared by Battelle Energy Alliance, LLC           */
-/*            Under Contract No. DE-AC07-05ID14517              */
-/*            With the U. S. Department of Energy               */
-/*                                                              */
-/*            See COPYRIGHT for full restrictions               */
-/****************************************************************/
-
 #include "CurrentDensityShapeSideUserObject.h"
 #include "libmesh/quadrature.h"
 
@@ -19,15 +5,33 @@ template<>
 InputParameters validParams<CurrentDensityShapeSideUserObject>()
 {
   InputParameters params = validParams<ShapeSideUserObject>();
-  params.addRequiredCoupledVar("u", "Charged species density.");
+  params.addRequiredCoupledVar("em", "The electron  density.");
+  params.addRequiredCoupledVar("ip", "The ion density density.");
+  params.addRequiredCoupledVar("potential", "The electrical potential.");
+  params.addRequiredCoupledVar("mean_en", "The mean energy variable.");
   return params;
 }
 
 CurrentDensityShapeSideUserObject::CurrentDensityShapeSideUserObject(const InputParameters & parameters) :
     ShapeSideUserObject(parameters),
-    _u_value(coupledValue("u")),
-    _u_var(coupled("u")),
-    _grad_u(coupledGradient("u"))
+    _em(coupledValue("em")),
+    _em_id(coupled("em")),
+    _grad_em(coupledGradient("em")),
+    _ip_var(*getVar("ip", 0)),
+    _ip(coupledValue("ip")),
+    _ip_id(coupled("ip")),
+    _grad_ip(coupledGradient("ip")),
+    _grad_potential(coupledGradient("potential")),
+    _potential_id(coupled("potential")),
+    _mean_en(coupledValue("mean_en")),
+    _mean_en_id(coupled("mean_en")),
+    _muip(getMaterialProperty<Real>("mu" + _ip_var.name())),
+    _diffip(getMaterialProperty<Real>("diff" + _ip_var.name())),
+    _muem(getMaterialProperty<Real>("muem")),
+    _d_muem_d_actual_mean_en(getMaterialProperty<Real>("d_muem_d_actual_mean_en")),
+    _diffem(getMaterialProperty<Real>("diffem")),
+    _d_diffem_d_actual_mean_en(getMaterialProperty<Real>("d_diffem_d_actual_mean_en")),
+    _e(1.6e-19)
 {
 }
 
@@ -47,21 +51,87 @@ void
 CurrentDensityShapeSideUserObject::execute()
 {
   for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
-    _integral += _JxW[qp] * _coord[qp] * _grad_u[qp] * _normals[qp];
+  {
+    RealVectorValue ion_current = _e * (_muip[qp] * -_grad_potential[qp] * std::exp(_ip[qp])
+                                        - _diffip[qp] * std::exp(_ip[qp]) * _grad_ip[qp]);
+    RealVectorValue electron_current = -_e * (-_muem[qp] * -_grad_potential[qp] * std::exp(_em[qp])
+                                              - _diffem[qp] * std::exp(_em[qp]) * _grad_em[qp]);
+    Real outgoing_current = _normals[qp] * (ion_current + electron_current);
+
+    _integral += _JxW[qp] * _coord[qp] * outgoing_current;
+  }
 }
 
 void
 CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
 {
-  // derivative of _integral w.r.t. u_j
-  if (jvar == _u_var)
+  // derivative of _integral w.r.t. ip_j
+  if (jvar == _ip_id)
   {
-    // sum jacobian contributions over quadrature points
     Real sum = 0.0;
     for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
-      sum += _JxW[qp] * _coord[qp] * _grad_phi[_j][qp] * _normals[qp];
+    {
+      RealVectorValue d_ion_current_d_ip = _e * (_muip[qp] * -_grad_potential[qp] * std::exp(_ip[qp]) * _phi[_j][qp]
+                                                 - _diffip[qp] * (std::exp(_ip[qp]) * _phi[_j][qp] * _grad_ip[qp]
+                                                                   + std::exp(_ip[qp]) * _grad_phi[_j][qp]));
+      sum += _JxW[qp] * _coord[qp] * _normals[qp] * d_ion_current_d_ip;
+    }
 
-    // the user has to store the value of sum in a storage object indexed by global DOF _j_global
+    _jacobian_storage[_j_global] += sum;
+  }
+
+  // derivative of _integral w.r.t. em_j
+  else if (jvar == _em_id)
+  {
+    Real sum = 0.0;
+    for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
+    {
+      Real d_actual_mean_en_d_em = std::exp(_mean_en[qp] - _em[qp]) * -_phi[_j][qp];
+      Real d_muem_d_em = _d_muem_d_actual_mean_en[qp] * d_actual_mean_en_d_em;
+      Real d_diffem_d_em = _d_diffem_d_actual_mean_en[qp] * d_actual_mean_en_d_em;
+
+      RealVectorValue d_electron_current_d_em = -_e * (-_muem[qp] * -_grad_potential[qp] * std::exp(_em[qp]) * _phi[_j][qp]
+                                                       - d_muem_d_em * -_grad_potential[qp] * std::exp(_em[qp])
+                                                       - _diffem[qp] * (std::exp(_em[qp]) * _phi[_j][qp] * _grad_em[qp]
+                                                                         + std::exp(_em[qp]) * _grad_phi[_j][qp])
+                                                       - d_diffem_d_em * std::exp(_em[qp]) * _grad_em[qp]);
+      sum += _JxW[qp] * _coord[qp] * _normals[qp] * d_electron_current_d_em;
+    }
+
+    _jacobian_storage[_j_global] += sum;
+  }
+
+  // derivative of _integral w.r.t. potential_j
+  else if (jvar == _potential_id)
+  {
+    Real sum = 0.0;
+    for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
+    {
+      RealVectorValue d_ion_current_d_potential = _e * (_muip[qp] * -_grad_phi[_j][qp] * std::exp(_ip[qp]));
+      RealVectorValue d_electron_current_d_potential = -_e * (-_muem[qp] * -_grad_phi[_j][qp] * std::exp(_em[qp]));
+      Real d_outgoing_current_d_potential = _normals[qp] * (d_ion_current_d_potential + d_electron_current_d_potential);
+
+      sum += _JxW[qp] * _coord[qp] * d_outgoing_current_d_potential;
+    }
+
+    _jacobian_storage[_j_global] += sum;
+  }
+
+  // derivative of _integral w.r.t. mean_en_j
+  else if (jvar == _mean_en_id)
+  {
+    Real sum = 0.0;
+    for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
+    {
+      Real d_actual_mean_en_d_mean_en = std::exp(_mean_en[qp] - _em[qp]) * _phi[_j][qp];
+      Real d_muem_d_mean_en = _d_muem_d_actual_mean_en[qp] * d_actual_mean_en_d_mean_en;
+      Real d_diffem_d_mean_en = _d_diffem_d_actual_mean_en[qp] * d_actual_mean_en_d_mean_en;
+
+      RealVectorValue d_electron_current_d_mean_en = -_e * (-d_muem_d_mean_en * -_grad_potential[qp] * std::exp(_em[qp])
+                                                            -d_diffem_d_mean_en * std::exp(_em[qp]) * _grad_em[qp]);
+      sum += _JxW[qp] * _coord[qp] * _normals[qp] * d_electron_current_d_mean_en;
+    }
+
     _jacobian_storage[_j_global] += sum;
   }
 }
