@@ -41,6 +41,13 @@ protected:
   const std::vector<dof_id_type> & _em_dofs;
   unsigned int _ip_id;
   const std::vector<dof_id_type> & _ip_dofs;
+  unsigned int _mean_en_id;
+  const std::vector<dof_id_type> & _mean_en_dofs;
+  Real _r_units;
+  Real _resistance;
+  Real _area;
+  bool _use_area;
+  Real _voltage_scaling;
 };
 
 #endif /* PENALTYCIRCUITPOTENTIAL_H */
