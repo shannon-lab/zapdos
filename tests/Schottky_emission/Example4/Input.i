@@ -98,6 +98,7 @@ relaxTime = 50E-6 #s
 [UserObjects]
  	[./current_density_user_object]
 		type = CurrentDensityShapeSideUserObject
+		boundary = left
 		potential = potential		
 		em = em
 		ip = ip
@@ -526,7 +527,7 @@ relaxTime = 50E-6 #s
 
 	[./potential_left]
 		boundary = left
-		type = CurrentDensityShapeSideUserObject
+		type = NeumannCircuitVoltageNew
  		variable = potential
 
  		function = potential_bc_func
