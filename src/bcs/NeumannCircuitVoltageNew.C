@@ -20,7 +20,9 @@ InputParameters validParams<NeumannCircuitVoltageNew>()
 {
 	InputParameters params = validParams<NonlocalIntegratedBC>();
 	params.addRequiredParam<FunctionName>("function", "The function describing the time dependent source voltage.");
+
 	params.addRequiredParam<UserObjectName>("current_density", "The total gas current density.");
+  params.addRequiredParam<UserObjectName>("data_provider","The name of the UserObject that can provide some data to materials, bcs, etc.");
 
 	params.addRequiredCoupledVar("ip","The ion density.");
 	params.addRequiredCoupledVar("em","The log of the electron density.");

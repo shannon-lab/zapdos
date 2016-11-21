@@ -99,9 +99,10 @@ relaxTime = 50E-6 #s
  	[./current_density_user_object]
 		type = CurrentDensityShapeSideUserObject
 		boundary = left
-		potential = potential		
+		data_provider = data_provider
+		potential = potential
 		em = em
-		ip = ip
+ 		ip = Arp
 		mean_en = mean_en
  	[../]
 	[./data_provider]
