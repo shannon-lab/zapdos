@@ -70,7 +70,7 @@ PenaltyCircuitPotential::computeQpResidual()
   if (_use_area)
     curr_times_resist *= _area;
 
-  return _test[_i][_qp] * _p * (_surface_potential - _u[_qp] + curr_times_resist);
+  return _test[_i][_qp] * _r_units * _p * (_surface_potential - _u[_qp] + curr_times_resist);
 }
 
 Real
@@ -80,7 +80,7 @@ PenaltyCircuitPotential::computeQpJacobian()
   if (_use_area)
     d_curr_times_resist_d_potential *= _area;
 
-  return _test[_i][_qp] * _p * (-_phi[_j][_qp] + d_curr_times_resist_d_potential);
+  return _test[_i][_qp] * _r_units * _p * (-_phi[_j][_qp] + d_curr_times_resist_d_potential);
 }
 
 Real
@@ -92,7 +92,7 @@ PenaltyCircuitPotential::computeQpOffDiagJacobian(unsigned int jvar)
     if (_use_area)
       d_curr_times_resist_d_em *= _area;
 
-    return _test[_i][_qp] * _p * d_curr_times_resist_d_em;
+    return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_em;
   }
 
   else if (jvar == _ip_id)
@@ -101,7 +101,7 @@ PenaltyCircuitPotential::computeQpOffDiagJacobian(unsigned int jvar)
     if (_use_area)
       d_curr_times_resist_d_ip *= _area;
 
-    return _test[_i][_qp] * _p * d_curr_times_resist_d_ip;
+    return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_ip;
   }
 
   else if (jvar == _mean_en_id)
@@ -110,7 +110,7 @@ PenaltyCircuitPotential::computeQpOffDiagJacobian(unsigned int jvar)
     if (_use_area)
       d_curr_times_resist_d_mean_en *= _area;
 
-    return _test[_i][_qp] * _p * d_curr_times_resist_d_mean_en;
+    return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_mean_en;
   }
 
   else
@@ -124,7 +124,7 @@ PenaltyCircuitPotential::computeQpNonlocalJacobian(dof_id_type dof_index)
   if (_use_area)
     d_curr_times_resist_d_potential *= _area;
 
-  return _test[_i][_qp] * _p * d_curr_times_resist_d_potential;
+  return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_potential;
 }
 
 Real
@@ -136,7 +136,7 @@ PenaltyCircuitPotential::computeQpNonlocalOffDiagJacobian(unsigned int jvar, dof
     if (_use_area)
       d_curr_times_resist_d_coupled_var *= _area;
 
-    return _test[_i][_qp] * _p * d_curr_times_resist_d_coupled_var;
+    return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_coupled_var;
   }
 
   return 0;
