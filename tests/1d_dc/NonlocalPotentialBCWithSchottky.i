@@ -51,8 +51,8 @@ area = 5.02e-7 # Formerly 3.14e-6
 
 	petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
 	solve_type = NEWTON
-	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
-	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
+	petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda -pc_factor_mat_solver_package'
+	petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3 superlu_dist'
 
 	nl_rel_tol = 1e-8
 	nl_abs_tol = 2e-6
@@ -74,7 +74,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 	print_linear_residuals = false
 	[./out]
 		type = Exodus
-#		execute_on = 'final'
+		execute_on = 'final'
 	[../]
 []
 
@@ -86,7 +86,6 @@ area = 5.02e-7 # Formerly 3.14e-6
  	[./current_density_user_object]
 		type = CurrentDensityShapeSideUserObject
 		boundary = left
-		data_provider = data_provider
 		potential = potential
 		em = em
  		ip = Arp
@@ -518,12 +517,16 @@ area = 5.02e-7 # Formerly 3.14e-6
 	# 	boundary = left
 	# 	type = NeumannCircuitVoltageNew
  	# 	variable = potential
+
  	# 	function = potential_bc_func
 	# 	current_density = current_density_user_object
+
  	# 	ip = Arp
  	# 	em = em
  	# 	mean_en = mean_en
+
  	# 	data_provider = data_provider
+
  	# 	position_units = ${dom0Scale}
  	# [../]
 
@@ -534,7 +537,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 	  current = current_density_user_object
 	  surface_potential = -${vhigh}
 	  surface = 'cathode'
-	  penalty = 1
+	  penalty = 1000
 	  data_provider = data_provider
 	  em = em
 	  ip = Arp
