@@ -50,6 +50,8 @@ protected:
   const MaterialProperty<Real> & _diffem;
   const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
   Real _e;
+  bool _use_moles;
+  Real _avogadro;
 };
 
 #endif
