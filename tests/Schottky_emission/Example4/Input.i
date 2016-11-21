@@ -104,6 +104,7 @@ relaxTime = 50E-6 #s
 		em = em
  		ip = Arp
 		mean_en = mean_en
+		execute_on = 'linear nonlinear'
  	[../]
 	[./data_provider]
 		type = ProvideMobility
@@ -530,13 +531,18 @@ relaxTime = 50E-6 #s
 		boundary = left
 		type = NeumannCircuitVoltageNew
  		variable = potential
-
- 		function = potential_bc_func
-		current_density = current_density_user_object
+		
+		boundary = 'left'
+		surface = 'cathode'
+ 		source_voltage = potential_bc_func
+		current = current_density_user_object
 
  		ip = Arp
  		em = em
  		mean_en = mean_en
+
+		resistance = 10E6
+		area = 5.02e-7 # Formerly 3.14e-6
 
  		data_provider = data_provider
 
