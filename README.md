@@ -9,8 +9,11 @@ The best documentation so far for this project is in [this thesis chapter.](http
 **Instructions for installing Zapdos:**
 
 <ol>
-  <li>Follow the <a href="http://mooseframework.org/getting-started/">getting started instructions</a> for setting up the MOOSE environment. <b>Important: do not clone MOOSE.</b></li>
-  <li>After installing the MOOSE environment execute the following commands</li>
+  <li>Follow the <a href="http://mooseframework.org/getting-started/">getting started instructions</a> for setting up the MOOSE environment.</li>
+  <li>After installing the MOOSE environment execute the following commands in
+  the directory above your MOOSE directory. E.g. if MOOSE is in
+  <code>~/projects/moose</code>, then these commands should be executed from the
+  <code>~/projects</code> directory</li>
   <ul>
     <li><code>git clone https://github.com/shannon-lab/zapdos</code></li>
     <li><code>cd zapdos</code></li>
