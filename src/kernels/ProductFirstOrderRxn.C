@@ -1,17 +1,3 @@
-/****************************************************************/
-/*               DO NOT MODIFY THIS HEADER                      */
-/* MOOSE - Multiphysics Object Oriented Simulation Environment  */
-/*                                                              */
-/*           (c) 2010 Battelle Energy Alliance, LLC             */
-/*                   ALL RIGHTS RESERVED                        */
-/*                                                              */
-/*          Prepared by Battelle Energy Alliance, LLC           */
-/*            Under Contract No. DE-AC07-05ID14517              */
-/*            With the U. S. Department of Energy               */
-/*                                                              */
-/*            See COPYRIGHT for full restrictions               */
-/****************************************************************/
-
 #include "ProductFirstOrderRxn.h"
 
 template<>
@@ -24,7 +10,7 @@ InputParameters validParams<ProductFirstOrderRxn>()
 
 ProductFirstOrderRxn::ProductFirstOrderRxn(const InputParameters & parameters) :
     Kernel(parameters),
-    
+
     _coupled_var(*getVar("v",0)),
     _v(coupledValue("v")),
     _v_id(coupled("v")),
