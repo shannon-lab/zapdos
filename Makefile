@@ -24,6 +24,10 @@ ALL_MODULES := no
 include $(MOOSE_DIR)/modules/modules.mk
 ###############################################################################
 
+APPLICATION_DIR    := $(shell dirname `pwd`)/squirrel
+APPLICATION_NAME   := squirrel
+include            $(FRAMEWORK_DIR)/app.mk
+
 # dep apps
 APPLICATION_DIR    := $(CURDIR)
 APPLICATION_NAME   := zapdos

@@ -52,7 +52,6 @@
 #include "Position.h"
 #include "ElectronTemperature.h"
 #include "DiffusiveFlux.h"
-#include "Density.h"
 #include "Efield.h"
 
 // Materials
@@ -202,7 +201,6 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(Position);
   registerAux(Efield);
   registerAux(ElectronTemperature);
-  registerAux(Density);
   registerAux(DiffusiveFlux);
   registerAux(EFieldAdvAux);
   registerAux(UserFlux);
