@@ -2,6 +2,7 @@
 #include "Moose.h"
 #include "AppFactory.h"
 #include "MooseSyntax.h"
+#include "SquirrelApp.h"
 // #include "ModulesApp.h"
 
 // Kernels
@@ -39,6 +40,7 @@
 
 // AuxKernels
 
+#include "DriftDiffusionFluxAux.h"
 #include "UserFlux.h"
 #include "DensityMoles.h"
 #include "TM0CylindricalErAux.h"
@@ -136,11 +138,11 @@ ZapdosApp::ZapdosApp(InputParameters parameters) :
 {
 
 	Moose::registerObjects(_factory);
-//	ModulesApp::registerObjects(_factory);
+	SquirrelApp::registerObjects(_factory);
 	ZapdosApp::registerObjects(_factory);
 
 	Moose::associateSyntax(_syntax, _action_factory);
-//	ModulesApp::associateSyntax(_syntax, _action_factory);
+	SquirrelApp::associateSyntax(_syntax, _action_factory);
 	ZapdosApp::associateSyntax(_syntax, _action_factory);
 }
 
@@ -190,6 +192,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(LogStabilizationMoles);
   registerKernel(ProductFirstOrderRxn);
   registerKernel(ProductAABBRxn);
+  registerAux(DriftDiffusionFluxAux);
   registerAux(AbsValueAux);
   registerAux(DensityMoles);
   registerAux(TM0CylindricalEzAux);
