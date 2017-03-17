@@ -71,6 +71,7 @@
 #include "CurrentDensityShapeSideUserObject.h"
 
 // Boundary Conditions
+#include "PotentialDriftOutflowBC.h"
 #include "DriftDiffusionDoNothingBC.h"
 #include "DriftDiffusionUserDoNothingBC.h"
 #include "ElectronAdvectionDoNothingBC.h"
@@ -216,6 +217,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerUserObject(BlockAverageValue);
   registerUserObject(ProvideMobility);
   registerUserObject(CurrentDensityShapeSideUserObject);
+  registerBoundaryCondition(PotentialDriftOutflowBC);
   registerBoundaryCondition(DriftDiffusionDoNothingBC);
   registerBoundaryCondition(DriftDiffusionUserDoNothingBC);
   registerBoundaryCondition(TM0AntennaVertBC);
