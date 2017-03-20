@@ -6,6 +6,7 @@
 // #include "ModulesApp.h"
 
 // Kernels
+#include "PotentialGradientSource.h"
 #include "EFieldMagnitudeSource.h"
 #include "UserSource.h"
 #include "AxisymmetricCurlZ.h"
@@ -163,6 +164,7 @@ void
 ZapdosApp::registerObjects(Factory & factory)
 {
   registerMeshModifier(NodeAndSidesetBetweenSubdomains);
+  registerKernel(PotentialGradientSource);
   registerKernel(EFieldMagnitudeSource);
   registerKernel(AxisymmetricCurlZ);
   registerKernel(UserSource);
