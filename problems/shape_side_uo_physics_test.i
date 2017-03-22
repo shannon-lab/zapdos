@@ -30,20 +30,27 @@ u_left = 0.5
     type = Diffusion
     variable = pot
   [../]
+  [./source]
+    type = PotentialGradientSource
+    variable = u
+    potential = pot
+  [../]
+  [./time_u]
+    type = TimeDerivative
+    variable = u
+  [../]
 []
 
 [BCs]
   [./left]
     boundary = left
-    type = DirichletBC
-    value = ${u_left}
+    type = VacuumBC
     variable = u
   [../]
   [./right]
     boundary = right
-    type = DirichletBC
+    type = VacuumBC
     variable = u
-    value = 0
   [../]
 
   [./left_pot]
@@ -83,6 +90,10 @@ u_left = 0.5
     family = MONOMIAL
     order = CONSTANT
   [../]
+  [./sigma_aux]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
 []
 
 [AuxKernels]
@@ -92,6 +103,13 @@ u_left = 0.5
     u = u
     potential = pot
     component = 0
+  [../]
+  [./sigma_aux]
+    type = Sigma
+    variable = sigma_aux
+    n = u
+    potential = pot
+    boundary = 'left right'
   [../]
 []
 
@@ -107,7 +125,9 @@ u_left = 0.5
 []
 
 [Executioner]
-  type = Steady
+  type = Transient
+  num_steps = 10
+  dt = .1
 
   solve_type = NEWTON
   petsc_options = '-snes_converged_reason -ksp_converged_reason -snes_linesearch_monitor'
@@ -116,8 +136,13 @@ u_left = 0.5
 []
 
 [Outputs]
-  exodus = true
   print_perf_log = true
+  [./out]
+    type = Exodus
+    execute_on = 'timestep_end'
+    output_material_properties = true
+    show_material_properties = 'sigma'
+  [../]
 []
 
 [ICs]
@@ -141,5 +166,14 @@ u_left = 0.5
   [./ic_pot]
     type = ParsedFunction
     value = '1 - x'
+  [../]
+[]
+
+[Materials]
+  [./sigma_mat]
+    type = SigmaMat
+    n = u
+    potential = pot
+    boundary = 'left right'
   [../]
 []

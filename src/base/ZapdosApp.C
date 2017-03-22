@@ -42,6 +42,7 @@
 
 // AuxKernels
 
+#include "Sigma.h"
 #include "DriftDiffusionFluxAux.h"
 #include "UserFlux.h"
 #include "DensityMoles.h"
@@ -59,6 +60,7 @@
 #include "Efield.h"
 
 // Materials
+#include "SigmaMat.h"
 #include "JacMat.h"
 #include "Gas.h"
 #include "Water.h"
@@ -197,6 +199,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerKernel(LogStabilizationMoles);
   registerKernel(ProductFirstOrderRxn);
   registerKernel(ProductAABBRxn);
+  registerAux(Sigma);
   registerAux(DriftDiffusionFluxAux);
   registerAux(AbsValueAux);
   registerAux(DensityMoles);
@@ -212,6 +215,7 @@ ZapdosApp::registerObjects(Factory & factory)
   registerAux(DiffusiveFlux);
   registerAux(EFieldAdvAux);
   registerAux(UserFlux);
+  registerMaterial(SigmaMat);
   registerMaterial(JacMat);
   registerMaterial(Gas);
   registerMaterial(Water);
