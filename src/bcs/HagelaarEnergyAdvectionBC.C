@@ -1,5 +1,8 @@
 #include "HagelaarEnergyAdvectionBC.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<HagelaarEnergyAdvectionBC>()
 {

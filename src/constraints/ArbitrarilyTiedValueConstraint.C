@@ -13,7 +13,11 @@
 /****************************************************************/
 #include "ArbitrarilyTiedValueConstraint.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
 #include "SystemBase.h"
+
+// libmesh includes
 #include "libmesh/sparse_matrix.h"
 
 template<>

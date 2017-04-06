@@ -1,5 +1,8 @@
 #include "SideTotFluxIntegral.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<SideTotFluxIntegral>()
 {

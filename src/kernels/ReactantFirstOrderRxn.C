@@ -1,5 +1,8 @@
 #include "ReactantFirstOrderRxn.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<ReactantFirstOrderRxn>()
 {

@@ -1,5 +1,8 @@
 #include "FieldEmissionBC.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<FieldEmissionBC>()
 {

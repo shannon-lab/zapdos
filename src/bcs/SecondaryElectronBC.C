@@ -1,5 +1,8 @@
 #include "SecondaryElectronBC.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<SecondaryElectronBC>()
 {

@@ -1,5 +1,8 @@
 #include "InterfaceLogDiffusionElectrons.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 #include <cmath>
 
 template<>
