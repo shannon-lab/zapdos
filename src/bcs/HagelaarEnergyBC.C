@@ -1,5 +1,8 @@
 #include "HagelaarEnergyBC.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<HagelaarEnergyBC>()
 {

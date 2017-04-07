@@ -1,5 +1,8 @@
 #include "ProductFirstOrderRxn.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<ProductFirstOrderRxn>()
 {

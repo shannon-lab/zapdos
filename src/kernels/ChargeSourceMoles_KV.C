@@ -1,5 +1,8 @@
 #include "ChargeSourceMoles_KV.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<ChargeSourceMoles_KV>()
 {
