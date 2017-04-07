@@ -1,5 +1,8 @@
 #include "EFieldArtDiff.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<EFieldArtDiff>()
 {

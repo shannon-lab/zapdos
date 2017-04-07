@@ -1,5 +1,7 @@
 #include "ElectronsFromIonization.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
 
 template<>
 InputParameters validParams<ElectronsFromIonization>()

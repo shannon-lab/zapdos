@@ -1,5 +1,8 @@
 #include "HagelaarIonDiffusionBC.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<HagelaarIonDiffusionBC>()
 {

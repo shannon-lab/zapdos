@@ -1,5 +1,8 @@
 #include "SchottkyEmissionBC.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<SchottkyEmissionBC>()
 {

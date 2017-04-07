@@ -1,5 +1,8 @@
 #include "EFieldAdvection.h"
 
+// MOOSE includes
+#include "MooseVariable.h"
+
 template<>
 InputParameters validParams<EFieldAdvection>()
 {
