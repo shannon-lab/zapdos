@@ -45,19 +45,19 @@ Line Loop(7) = {5, 6, -2, -1, 3, 4};
 Plane Surface(8) = {7};
 
 // Plasma domain
-Physical Surface(0) = {8};
+Physical Surface("plasma") = {8};
 
 // Physical Cathode
-Physical Line(10) = {2, 1};
+Physical Line("needle") = {2, 1};
 
 // Physical Anode
-Physical Line(11) = {4};
+Physical Line("dish") = {4};
 
 // Physical Walls
-Physical Line(12) = {5, 6};
+Physical Line("walls") = {5, 6};
 
 // Physical axis of symmetry
-Physical Line(13) = {3};
+Physical Line("axis") = {3};
 
 // Field[1] = BoundaryLayer;
 // Field[1].EdgesList = {3};
