@@ -18,6 +18,7 @@
   [./smp]
     type = SMP
     full = true
+    ksp_norm = none
   [../]
 []
 

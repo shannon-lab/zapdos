@@ -62,6 +62,7 @@ dom1Scale=1e-7
   [./smp]
     type = SMP
     full = true
+    ksp_norm = none
   [../]
 []
 
