@@ -10,5 +10,5 @@ else
     while read -rd '' fname; do
 	expand $fname > /tmp/expandtmp
 	mv /tmp/expandtmp $fname
-  done < <( find "$REPO_DIR" -name "*.i" -type f -print0)
+  done < <( find "$REPO_DIR" \( -name "*.i" -o -name "*.C" -o -name "*.h" \) -type f -print0)
 fi

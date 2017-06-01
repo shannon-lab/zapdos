@@ -69,11 +69,11 @@ AddLotsOfTimeDerivatives::act()
   if (_current_task == "add_kernel")
     {
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-	{
-	  std::string var_name = variables[cur_num];
-	  InputParameters params = _factory.getValidParams("TimeDerivative");
-	  params.set<NonlinearVariableName>("variable") = var_name;
-	  _problem->addKernel("TimeDerivative", var_name, params);
-	}
+        {
+          std::string var_name = variables[cur_num];
+          InputParameters params = _factory.getValidParams("TimeDerivative");
+          params.set<NonlinearVariableName>("variable") = var_name;
+          _problem->addKernel("TimeDerivative", var_name, params);
+        }
     }
 }
