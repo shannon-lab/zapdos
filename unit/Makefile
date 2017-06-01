@@ -18,9 +18,7 @@ include $(FRAMEWORK_DIR)/build.mk
 include $(FRAMEWORK_DIR)/moose.mk
 
 ################################## MODULES ####################################
-HEAT_CONDUCTION   := yes
-NAVIER_STOKES     := yes
-MISC              := yes
+ALL_MODULES := no
 include           $(MOOSE_DIR)/modules/modules.mk
 ###############################################################################
 
@@ -44,19 +42,19 @@ include            $(FRAMEWORK_DIR)/app.mk
 
 # dep apps
 APPLICATION_DIR    := $(CURRENT_DIR)/..
-APPLICATION_NAME   := bovine
+APPLICATION_NAME   := zapdos
 include            $(FRAMEWORK_DIR)/app.mk
 
 APPLICATION_DIR    := $(CURRENT_DIR)
-APPLICATION_NAME   := bovine-unit
+APPLICATION_NAME   := zapdos-unit
 BUILD_EXEC         := yes
 DEP_APPS    ?= $(shell $(FRAMEWORK_DIR)/scripts/find_dep_apps.py $(APPLICATION_NAME))
 include $(FRAMEWORK_DIR)/app.mk
 
-# Find all the BOVINE unit test source files and include their dependencies.
-bovine-unit_srcfiles := $(shell find $(CURRENT_DIR) -name "*.C")
-bovine-unit_deps := $(patsubst %.C, %.$(obj-suffix).d, $(bovine-unit_srcfiles))
--include $(bovine-unit_deps)
+# Find all the ZAPDOS unit test source files and include their dependencies.
+zapdos-unit_srcfiles := $(shell find $(CURRENT_DIR) -name "*.C")
+zapdos-unit_deps := $(patsubst %.C, %.$(obj-suffix).d, $(zapdos-unit_srcfiles))
+-include $(zapdos-unit_deps)
 
 ###############################################################################
 # Additional special case targets should be added here
