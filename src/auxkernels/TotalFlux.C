@@ -4,10 +4,10 @@ template<>
 InputParameters validParams<TotalFlux>()
 {
   InputParameters params = validParams<AuxKernel>();
-  
+
   params.addRequiredCoupledVar("density_log","The electron density");
   params.addRequiredCoupledVar("potential","The potential");
-  
+
   return params;
 }
 
@@ -30,4 +30,4 @@ TotalFlux::computeValue()
   return _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp](0) * std::exp(_density_log[_qp]) - _diff[_qp]* std::exp(_density_log[_qp]) * _grad_density_log[_qp](0);
 }
 
- 
+

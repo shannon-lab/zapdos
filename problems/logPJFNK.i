@@ -9,14 +9,14 @@ Parallelism:
   Num Processors:          1
   Num Threads:             1
 
-Mesh: 
+Mesh:
   Distribution:            serial
   Mesh Dimension:          1
   Spatial Dimension:       3
-  Nodes:                   
+  Nodes:
     Total:                 275
     Local:                 275
-  Elems:                   
+  Elems:
     Total:                 274
     Local:                 274
   Num Subdomains:          2
@@ -25,24 +25,24 @@ Mesh:
 Nonlinear System:
   Num DOFs:                1039
   Num Local DOFs:          1039
-  Variables:               "potential" "em" "emliq" { "Arp" "mean_en" } "OHm" 
-  Finite Element Types:    "LAGRANGE" "LAGRANGE" "LAGRANGE" "LAGRANGE" "LAGRANGE" 
-  Approximation Orders:    "FIRST" "FIRST" "FIRST" "FIRST" "FIRST" 
+  Variables:               "potential" "em" "emliq" { "Arp" "mean_en" } "OHm"
+  Finite Element Types:    "LAGRANGE" "LAGRANGE" "LAGRANGE" "LAGRANGE" "LAGRANGE"
+  Approximation Orders:    "FIRST" "FIRST" "FIRST" "FIRST" "FIRST"
 
 Auxiliary System:
   Num DOFs:                4344
   Num Local DOFs:          4344
-  Variables:               "e_temp" "x" "x_node" "rho" "rholiq" "em_lin" "emliq_lin" "Arp_lin" "OHm_lin" 
-                             "Efield" "Current_em" "Current_emliq" "Current_Arp" "Current_OHm" "tot_gas_current" 
-                             { "tot_liq_current" "tot_flux_OHm" } { "EFieldAdvAux_em" "DiffusiveFlux_em" 
-                             } { "EFieldAdvAux_emliq" "DiffusiveFlux_emliq" } { "PowerDep_em" "PowerDep_Arp" 
-                             "ProcRate_el" "ProcRate_ex" "ProcRate_iz" } 
-  Finite Element Types:    "MONOMIAL" "MONOMIAL" "LAGRANGE" "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" 
-                             "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" 
-                             "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" 
-  Approximation Orders:    "CONSTANT" "CONSTANT" "FIRST" "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" 
-                             "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" 
-                             "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" 
+  Variables:               "e_temp" "x" "x_node" "rho" "rholiq" "em_lin" "emliq_lin" "Arp_lin" "OHm_lin"
+                             "Efield" "Current_em" "Current_emliq" "Current_Arp" "Current_OHm" "tot_gas_current"
+                             { "tot_liq_current" "tot_flux_OHm" } { "EFieldAdvAux_em" "DiffusiveFlux_em"
+                             } { "EFieldAdvAux_emliq" "DiffusiveFlux_emliq" } { "PowerDep_em" "PowerDep_Arp"
+                             "ProcRate_el" "ProcRate_ex" "ProcRate_iz" }
+  Finite Element Types:    "MONOMIAL" "MONOMIAL" "LAGRANGE" "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL"
+                             "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL"
+                             "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL" "MONOMIAL"
+  Approximation Orders:    "CONSTANT" "CONSTANT" "FIRST" "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT"
+                             "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT"
+                             "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT" "CONSTANT"
 
 Execution Information:
   Executioner:             Transient
@@ -777,7 +777,7 @@ Time Step  1, time = 1e-12
       Line search: Cubic step no good, shrinking lambda, current gnorm 8.860872962448e+04 lambda=1.0016649545453952e-11
       Line search: Cubic step no good, shrinking lambda, current gnorm 8.860872962447e+04 lambda=1.0016649545453953e-12
       Line search: Cubic step no good, shrinking lambda, current gnorm 8.860872962447e+04 lambda=1.0016649545453953e-13
-      Line search: unable to find good step length! After 14 tries 
+      Line search: unable to find good step length! After 14 tries
       Line search: fnorm=8.8608729607969261e+04, gnorm=8.8608729624473926e+04, ynorm=7.3593662937614295e+02, minlambda=9.9999999999999998e-13, lambda=1.0016649545453953e-13, initial slope=-6.0117319030321047e+07
 Nonlinear solve did not converge due to DIVERGED_LINE_SEARCH iterations 1
  Solve Did NOT Converge!
@@ -800,7 +800,7 @@ Stack frames: 9
 8: ../zapdos-opt() [0x40c8d9]
 [0] /home/lindsayad/moose/framework/src/timesteppers/IterationAdaptiveDT.C, line 225, compiled nodate at notime
 --------------------------------------------------------------------------
-MPI_ABORT was invoked on rank 0 in communicator MPI_COMM_WORLD 
+MPI_ABORT was invoked on rank 0 in communicator MPI_COMM_WORLD
 with errorcode 1.
 
 NOTE: invoking MPI_ABORT causes Open MPI to kill all MPI processes.

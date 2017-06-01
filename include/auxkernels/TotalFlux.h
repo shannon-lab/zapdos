@@ -12,10 +12,10 @@ class TotalFlux : public AuxKernel
 {
 public:
   TotalFlux(const InputParameters & parameters);
-  
+
   virtual ~TotalFlux() {}
   virtual Real computeValue();
-  
+
 protected:
   MooseVariable & _density_var;
   const VariableValue & _density_log;

@@ -108,6 +108,6 @@ AddLotsOfSources::act()
 	  params.set<Real>("value") = 1;
 
 	  _problem->addBoundaryCondition("DirichletBC", var_name + "_right", params);
-	} 
+	}
 	} */
 }

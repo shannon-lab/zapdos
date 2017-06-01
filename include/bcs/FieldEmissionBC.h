@@ -23,7 +23,7 @@ protected:
 	Real _r;
 
 	// Coupled variables
-	
+
 	const VariableGradient & _grad_potential;
 	unsigned int _potential_id;
 	const VariableValue & _mean_en;

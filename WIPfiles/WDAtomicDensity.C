@@ -18,8 +18,8 @@ template<>
 InputParameters validParams<WDAtomicDensity>()
 {
   InputParameters params = validParams<AuxKernel>();
-  
-  
+
+
   params.addRequiredCoupledVar("potential", "The potential");
 
   return params;

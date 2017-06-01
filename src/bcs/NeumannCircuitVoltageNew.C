@@ -51,14 +51,14 @@ NeumannCircuitVoltageNew::NeumannCircuitVoltageNew(const InputParameters & param
 	_ip_dofs(getVar("ip", 0)->dofIndices()),
 	_mean_en_id(coupled("mean_en")),
 	_mean_en_dofs(getVar("mean_en", 0)->dofIndices()),
-	
+
 	// System properties
 	_V_source(getFunction("source_voltage")),
 	_resistance(getParam<Real>("resistance")),
 
 	// units
 	_r_units(1. / getParam<Real>("position_units"))
-	
+
 {
 	if (_surface.compare("anode") == 0) {
 		_current_sign = -1.;
@@ -75,7 +75,7 @@ NeumannCircuitVoltageNew::NeumannCircuitVoltageNew(const InputParameters & param
 	} else {
 		_use_area = false;
 	}
-	
+
 	if (getParam<std::string>("potential_units").compare("V") == 0) {
 		_voltage_scaling = 1.;
 	} else if (getParam<std::string>("potential_units").compare("kV") == 0) {
@@ -89,7 +89,7 @@ Real
 NeumannCircuitVoltageNew::computeQpResidual()
 {
 	Real d_curr_times_resist_d_potential = _current_sign * _current * _resistance / _voltage_scaling;
-	
+
 	if (_use_area) {
 		d_curr_times_resist_d_potential *= _area;
 	}
@@ -101,7 +101,7 @@ Real
 NeumannCircuitVoltageNew::computeQpJacobian()
 {
 	Real d_curr_times_resist_dv = _current_sign * _current_jac[_var_dofs[_j]] * _resistance / _voltage_scaling;
-	
+
 	if (_use_area) {
 		d_curr_times_resist_dv *= _area;
 	}
@@ -123,13 +123,13 @@ NeumannCircuitVoltageNew::computeQpOffDiagJacobian(unsigned int jvar)
 	} else {
 		return 0;
 	}
-	
+
 	if (_use_area) {
 		d_curr_times_resist_dv *= _area;
 	}
-	
+
 	return _test[_i][_qp] * _r_units * d_curr_times_resist_dv;
-	
+
 }
 
 Real
@@ -150,7 +150,7 @@ NeumannCircuitVoltageNew::computeQpNonlocalOffDiagJacobian(unsigned int jvar, do
 	if (jvar == _em_id || jvar == _ip_id || jvar == _mean_en_id)
 	{
 		Real d_curr_times_resist_dv = _current_sign * _current_jac[dof_index] * _resistance / _voltage_scaling;
-	
+
 		if (_use_area) {
 			d_curr_times_resist_dv *= _area;
 		}

@@ -3,7 +3,7 @@ import netCDF4
 
 nc = netCDF4.Dataset('LFA_different_scaling_in.e')
 all_ns = nc.variables['ns_names']
-# print "The nodeset names are " 
+# print "The nodeset names are "
 # print all_ns[:,:]
 all_ss = nc.variables['ss_names']
 # print "The sideset names are "
