@@ -12,13 +12,13 @@ class ElectronTemperature : public AuxKernel
 {
 public:
   ElectronTemperature(const InputParameters & parameters);
-  
+
   virtual ~ElectronTemperature() {}
-  
+
 protected:
 
   virtual Real computeValue();
-  
+
   const VariableValue & _electron_density;
   const VariableValue & _mean_en;
 };

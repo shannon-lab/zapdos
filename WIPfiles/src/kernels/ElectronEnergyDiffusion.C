@@ -28,7 +28,7 @@ InputParameters validParams<ElectronEnergyDiffusion>()
 
 ElectronEnergyDiffusion::ElectronEnergyDiffusion(const InputParameters & parameters) :
     Diffusion(parameters),
-    
+
     // Input Parameters
 
     // Material Properties

@@ -25,7 +25,7 @@ InputParameters validParams<IonizationSource>()
 
 IonizationSource::IonizationSource(const InputParameters & parameters) :
     Kernel(parameters),
-    
+
     _ionization_coeff(getParam<Real>("ionization_coeff")),
     _potential_id(coupled("potential")),
     _grad_potential(coupledGradient("potential"))
@@ -53,6 +53,6 @@ IonizationSource::computeQpOffDiagJacobian(unsigned int jvar)
   {
     return -_test[_i][_qp]*_ionization_coeff*(.0382+2.9e5/760.0)/(1.0e4)*1.0e4*_grad_potential[_qp]/_grad_potential[_qp].size()*_grad_phi[_j][_qp]*_u[_qp];
   }
-  
+
   return 0.0;
 }

@@ -62,12 +62,12 @@ protected:
   Real _actual_mean_en;
   Real _tau;
   bool _relax;
-	std::string _potential_units;
+        std::string _potential_units;
 
-	// Unique variables
+        // Unique variables
 
-	Real _voltage_scaling;
-	Real _dPhi_over_F;
+        Real _voltage_scaling;
+        Real _dPhi_over_F;
 
 };
 

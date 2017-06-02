@@ -13,7 +13,7 @@ InputParameters validParams<DGEFieldAdvection>();
 class DGEFieldAdvection : public DGKernel
 {
 public:
-	DGEFieldAdvection(const InputParameters & parameters);
+        DGEFieldAdvection(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual(Moose::DGResidualType type);

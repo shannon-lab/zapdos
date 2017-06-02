@@ -16,7 +16,7 @@ SigmaMat::SigmaMat(const InputParameters & parameters) :
   // Declare material properties
   _sigma(declareProperty<Real>("sigma")),
   _sigma_old(declarePropertyOld<Real>("sigma")),
-  
+
   // Coupled Variables
   _n(coupledValue("n")),
   _grad_potential(coupledGradient("potential"))
