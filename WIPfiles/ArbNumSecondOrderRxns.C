@@ -25,7 +25,7 @@ InputParameters validParams<ArbNumSecondOrderRxns>()
 
 ArbNumSecondOrderRxns::ArbNumSecondOrderRxns(const InputParameters & parameters) :
     Kernel(parameters),
-    
+
     _reaction_coeff(getParam<Real>("reaction_coeff")),
     // Couple to the second reactant
     _reactant_two(coupledValue("reactant_two")),
@@ -52,6 +52,6 @@ ArbNumSecondOrderRxns::computeQpOffDiagJacobian(unsigned int jvar)
   {
     return _test[_i][_qp]*_reaction_coeff*_phi[_j][_qp]*_u[_qp];
   }
-  
+
   return 0.0;
 }

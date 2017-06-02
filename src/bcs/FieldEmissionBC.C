@@ -67,9 +67,9 @@ FieldEmissionBC::FieldEmissionBC(const InputParameters & parameters) :
     _voltage_scaling = 1000;
   }
 
-  FE_a = 1.541434E-6 * pow(_voltage_scaling, 2); 	// A eV/kV^2 (if _voltage_scaling == 1000)
-  FE_b = 6.830890E9 / _voltage_scaling ; 					// kV/m-eV^1.5 (if _voltage_scaling == 1000)
-  FE_c = 1.439964E-9 * _voltage_scaling ;					// eV^2*m/kV (if _voltage_scaling == 1000)
+  FE_a = 1.541434E-6 * pow(_voltage_scaling, 2);        // A eV/kV^2 (if _voltage_scaling == 1000)
+  FE_b = 6.830890E9 / _voltage_scaling ;                                        // kV/m-eV^1.5 (if _voltage_scaling == 1000)
+  FE_c = 1.439964E-9 * _voltage_scaling ;                                       // eV^2*m/kV (if _voltage_scaling == 1000)
 
 }
 
@@ -194,7 +194,7 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
       _a = 0.0;
     }
     _v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
-    _d_v_thermal_d_mean_en	= 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]) * _phi[_j][_qp];
+    _d_v_thermal_d_mean_en      = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]) * _phi[_j][_qp];
     _actual_mean_en = std::exp(_mean_en[_qp] - _u[_qp]);
 
     return 0.;

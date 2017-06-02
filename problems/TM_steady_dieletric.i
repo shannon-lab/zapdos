@@ -159,7 +159,7 @@
     boundary = interface_dielectric
   [../]
 []
-    
+
 
 [Materials]
    [./dielectric]
@@ -239,5 +239,5 @@
   #   sort_by = x
   #   variable = Er_vacuum
   #   outputs = csv
-  # [../]  
+  # [../]
 []

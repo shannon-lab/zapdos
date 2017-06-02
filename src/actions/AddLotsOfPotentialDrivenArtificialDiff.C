@@ -72,14 +72,14 @@ AddLotsOfPotentialDrivenArtificialDiff::act()
   if (_current_task == "add_kernel")
     {
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-	{
-	  std::string var_name = variables[cur_num];
-	  InputParameters params = _factory.getValidParams("PotentialDrivenArtificialDiff");
-	  params.set<NonlinearVariableName>("variable") = var_name;
-	  params.set<std::string>("var_name_string") = var_name;
-	  params.set<std::vector<VariableName> >("potential") = potential;
-	  params.set<Real>("delta") = delta;
-	  _problem->addKernel("PotentialDrivenArtificialDiff", var_name, params);
-	}
+        {
+          std::string var_name = variables[cur_num];
+          InputParameters params = _factory.getValidParams("PotentialDrivenArtificialDiff");
+          params.set<NonlinearVariableName>("variable") = var_name;
+          params.set<std::string>("var_name_string") = var_name;
+          params.set<std::vector<VariableName> >("potential") = potential;
+          params.set<Real>("delta") = delta;
+          _problem->addKernel("PotentialDrivenArtificialDiff", var_name, params);
+        }
     }
 }

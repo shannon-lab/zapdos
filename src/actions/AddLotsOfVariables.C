@@ -71,40 +71,40 @@ AddLotsOfVariables::act()
   if (_current_task == "add_variable")
     {
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-	{
-	  //      std::string var_name = getShortName() + Moose::stringify(cur_num);
-	  std::string var_name = variables[cur_num];
-	  addVariable(var_name);
-	}
+        {
+          //      std::string var_name = getShortName() + Moose::stringify(cur_num);
+          std::string var_name = variables[cur_num];
+          addVariable(var_name);
+        }
     }
   /*  else if (_current_task == "add_kernel")
     {
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-	{
-	  std::string var_name = variables[cur_num];
+        {
+          std::string var_name = variables[cur_num];
 
-	  InputParameters params = _factory.getValidParams("Diffusion");
-	  params.set<NonlinearVariableName>("variable") = var_name;
-	  _problem->addKernel("Diffusion", var_name, params);
-	}
+          InputParameters params = _factory.getValidParams("Diffusion");
+          params.set<NonlinearVariableName>("variable") = var_name;
+          _problem->addKernel("Diffusion", var_name, params);
+        }
     }
   else if (_current_task == "add_bc")
     {
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-	{
-	  std::string var_name = variables[cur_num];
+        {
+          std::string var_name = variables[cur_num];
 
-	  InputParameters params = _factory.getValidParams("DirichletBC");
-	  params.set<NonlinearVariableName>("variable") = var_name;
-	  params.set<std::vector<BoundaryName> >("boundary").push_back("left");
-	  params.set<Real>("value") = 0;
+          InputParameters params = _factory.getValidParams("DirichletBC");
+          params.set<NonlinearVariableName>("variable") = var_name;
+          params.set<std::vector<BoundaryName> >("boundary").push_back("left");
+          params.set<Real>("value") = 0;
 
-	  _problem->addBoundaryCondition("DirichletBC", var_name + "_left", params);
+          _problem->addBoundaryCondition("DirichletBC", var_name + "_left", params);
 
-	  params.set<std::vector<BoundaryName> >("boundary")[0] = "right";
-	  params.set<Real>("value") = 1;
+          params.set<std::vector<BoundaryName> >("boundary")[0] = "right";
+          params.set<Real>("value") = 1;
 
-	  _problem->addBoundaryCondition("DirichletBC", var_name + "_right", params);
-	} 
-	} */
+          _problem->addBoundaryCondition("DirichletBC", var_name + "_right", params);
+        }
+        } */
 }

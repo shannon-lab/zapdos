@@ -39,6 +39,6 @@ protected:
 
   // The reaction coefficient
   const MaterialProperty<Real> &  _reaction_coeff;
-  
+
 };
 #endif //PRODUCTAABBRXN_H

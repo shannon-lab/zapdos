@@ -73,17 +73,17 @@ AddLotsOfEFieldAdvection::act()
   if (_current_task == "add_kernel")
     {
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-	{
-	  std::string var_name = variables[cur_num];
-	  //std::vector<std::string> fictional_vec_variables;
-	  //std::vector<VariableName> vel_vec_variable;
-	  //fictional_vec_varables.push_back(potential[0]);
-	  //vel_vec_variable.push_back(potential[0]);
-	  InputParameters params = _factory.getValidParams("EFieldAdvection");
-	  params.set<NonlinearVariableName>("variable") = var_name;
-	  params.set<std::string>("var_name_string") = var_name;
-	  params.set<std::vector<VariableName> >("potential") = potential;
-	  _problem->addKernel("EFieldAdvection", var_name, params);
-	}
+        {
+          std::string var_name = variables[cur_num];
+          //std::vector<std::string> fictional_vec_variables;
+          //std::vector<VariableName> vel_vec_variable;
+          //fictional_vec_varables.push_back(potential[0]);
+          //vel_vec_variable.push_back(potential[0]);
+          InputParameters params = _factory.getValidParams("EFieldAdvection");
+          params.set<NonlinearVariableName>("variable") = var_name;
+          params.set<std::string>("var_name_string") = var_name;
+          params.set<std::vector<VariableName> >("potential") = potential;
+          _problem->addKernel("EFieldAdvection", var_name, params);
+        }
     }
 }
