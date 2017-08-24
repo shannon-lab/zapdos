@@ -984,7 +984,7 @@ dom1Scale=1e-7
   #   block = 1
   #   min = -16.1
   #   max = -15.1
-  [../]
+  # [../]
 []
 
 [Functions]
