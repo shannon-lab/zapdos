@@ -19,11 +19,10 @@
 
 class NodeAndSidesetBetweenSubdomains;
 
-template<>
+template <>
 InputParameters validParams<NodeAndSidesetBetweenSubdomains>();
 
-class NodeAndSidesetBetweenSubdomains :
-  public MeshModifier
+class NodeAndSidesetBetweenSubdomains : public MeshModifier
 {
 public:
   NodeAndSidesetBetweenSubdomains(const InputParameters & parameters);
@@ -33,7 +32,6 @@ public:
   virtual void modify();
 
 protected:
-
 };
 
 #endif /* NODEANDSIDESETBETWEENSUBDOMAINS_H */

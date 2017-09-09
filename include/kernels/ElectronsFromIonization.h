@@ -19,7 +19,7 @@
 
 class ElectronsFromIonization;
 
-template<>
+template <>
 InputParameters validParams<ElectronsFromIonization>();
 
 class ElectronsFromIonization : public Kernel
@@ -29,7 +29,6 @@ public:
   virtual ~ElectronsFromIonization();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -58,6 +57,5 @@ protected:
   const VariableGradient & _grad_em;
   unsigned int _em_id;
 };
-
 
 #endif /* ELECTRONSFROMIONIZATION_H */

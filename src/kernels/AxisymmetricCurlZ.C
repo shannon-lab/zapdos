@@ -1,20 +1,16 @@
 #include "AxisymmetricCurlZ.h"
 
-template<>
-InputParameters validParams<AxisymmetricCurlZ>()
+template <>
+InputParameters
+validParams<AxisymmetricCurlZ>()
 {
   InputParameters params = validParams<Kernel>();
   return params;
 }
 
-AxisymmetricCurlZ::AxisymmetricCurlZ(const InputParameters & parameters) :
-    Kernel(parameters)
-{
-}
+AxisymmetricCurlZ::AxisymmetricCurlZ(const InputParameters & parameters) : Kernel(parameters) {}
 
-AxisymmetricCurlZ::~AxisymmetricCurlZ()
-{
-}
+AxisymmetricCurlZ::~AxisymmetricCurlZ() {}
 
 Real
 AxisymmetricCurlZ::computeQpResidual()

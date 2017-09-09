@@ -4,16 +4,16 @@
 #include "DGKernel.h"
 #include <cmath>
 
-//Forward Declarations
+// Forward Declarations
 class DGEFieldAdvection;
 
-template<>
+template <>
 InputParameters validParams<DGEFieldAdvection>();
 
 class DGEFieldAdvection : public DGKernel
 {
 public:
-        DGEFieldAdvection(const InputParameters & parameters);
+  DGEFieldAdvection(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual(Moose::DGResidualType type);
@@ -33,7 +33,6 @@ protected:
   const VariablePhiGradient & _grad_phi_neighbor_pot;
 
 private:
-
 };
 
-#endif //DGEFIELDADVECTION_H
+#endif // DGEFIELDADVECTION_H

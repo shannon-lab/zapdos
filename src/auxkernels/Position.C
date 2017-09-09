@@ -14,17 +14,17 @@
 
 #include "Position.h"
 
-template<>
-InputParameters validParams<Position>()
+template <>
+InputParameters
+validParams<Position>()
 {
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredParam<Real>("position_units", "Units of position.");
   return params;
 }
 
-Position::Position(const InputParameters & parameters) :
-    AuxKernel(parameters),
-    _r_units(1. / getParam<Real>("position_units"))
+Position::Position(const InputParameters & parameters)
+  : AuxKernel(parameters), _r_units(1. / getParam<Real>("position_units"))
 {
 }
 

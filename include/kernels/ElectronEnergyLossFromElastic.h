@@ -19,7 +19,7 @@
 
 class ElectronEnergyLossFromElastic;
 
-template<>
+template <>
 InputParameters validParams<ElectronEnergyLossFromElastic>();
 
 class ElectronEnergyLossFromElastic : public Kernel
@@ -29,7 +29,6 @@ public:
   virtual ~ElectronEnergyLossFromElastic();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -53,6 +52,5 @@ protected:
   unsigned int _potential_id;
   unsigned int _em_id;
 };
-
 
 #endif /* ELECTRONENERGYLOSSFROMELASTIC_H */

@@ -5,13 +5,12 @@
 
 class TM0PECVertBC;
 
-template<>
+template <>
 InputParameters validParams<TM0PECVertBC>();
 
 class TM0PECVertBC : public IntegratedBC
 {
 public:
-
   TM0PECVertBC(const InputParameters & parameters);
 
 protected:
@@ -19,4 +18,4 @@ protected:
   virtual Real computeQpJacobian();
 };
 
-#endif //TM0PECVERTBC_H
+#endif // TM0PECVERTBC_H

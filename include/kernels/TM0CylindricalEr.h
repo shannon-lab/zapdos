@@ -5,7 +5,7 @@
 
 class TM0CylindricalEr;
 
-template<>
+template <>
 InputParameters validParams<TM0CylindricalEr>();
 
 class TM0CylindricalEr : public Kernel
@@ -15,7 +15,6 @@ public:
   virtual ~TM0CylindricalEr();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -29,6 +28,5 @@ protected:
   const VariableGradient & _grad_Hphi;
   unsigned int _Hphi_id;
 };
-
 
 #endif /* TM0CYLINDRICALER_H */

@@ -14,20 +14,22 @@
 
 #include "Efield.h"
 
-template<>
-InputParameters validParams<Efield>()
+template <>
+InputParameters
+validParams<Efield>()
 {
   InputParameters params = validParams<AuxKernel>();
 
   params.addRequiredCoupledVar("potential", "The potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
-  params.addRequiredParam<int>("component", "The component of the electric field to access. Accepts an integer");
+  params.addRequiredParam<int>("component",
+                               "The component of the electric field to access. Accepts an integer");
   return params;
 }
 
-Efield::Efield(const InputParameters & parameters) :
-    AuxKernel(parameters),
+Efield::Efield(const InputParameters & parameters)
+  : AuxKernel(parameters),
 
     _component(getParam<int>("component")),
     _r_units(1. / getParam<Real>("position_units")),
@@ -43,5 +45,5 @@ Efield::Efield(const InputParameters & parameters) :
 Real
 Efield::computeValue()
 {
-  return  -_grad_potential[_qp](_component) * _r_units * _voltage_scaling;
+  return -_grad_potential[_qp](_component) * _r_units * _voltage_scaling;
 }

@@ -5,7 +5,7 @@
 
 class ElectronTemperature;
 
-template<>
+template <>
 InputParameters validParams<ElectronTemperature>();
 
 class ElectronTemperature : public AuxKernel
@@ -16,11 +16,10 @@ public:
   virtual ~ElectronTemperature() {}
 
 protected:
-
   virtual Real computeValue();
 
   const VariableValue & _electron_density;
   const VariableValue & _mean_en;
 };
 
-#endif //ELECTRONTEMPERATURE_H
+#endif // ELECTRONTEMPERATURE_H

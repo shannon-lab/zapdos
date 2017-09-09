@@ -19,7 +19,7 @@
 
 class ElectronEnergyLossFromExcitation;
 
-template<>
+template <>
 InputParameters validParams<ElectronEnergyLossFromExcitation>();
 
 class ElectronEnergyLossFromExcitation : public Kernel
@@ -29,7 +29,6 @@ public:
   virtual ~ElectronEnergyLossFromExcitation();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -50,6 +49,5 @@ protected:
   unsigned int _potential_id;
   unsigned int _em_id;
 };
-
 
 #endif /* ELECTRONENERGYLOSSFROMEXCITATION_H */

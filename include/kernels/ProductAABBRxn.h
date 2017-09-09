@@ -20,7 +20,7 @@
 // Forward Declaration
 class ProductAABBRxn;
 
-template<>
+template <>
 InputParameters validParams<ProductAABBRxn>();
 
 class ProductAABBRxn : public Kernel
@@ -38,7 +38,6 @@ protected:
   unsigned int _v_id;
 
   // The reaction coefficient
-  const MaterialProperty<Real> &  _reaction_coeff;
-
+  const MaterialProperty<Real> & _reaction_coeff;
 };
-#endif //PRODUCTAABBRXN_H
+#endif // PRODUCTAABBRXN_H

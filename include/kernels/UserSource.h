@@ -5,7 +5,7 @@
 
 class UserSource;
 
-template<>
+template <>
 InputParameters validParams<UserSource>();
 
 class UserSource : public Kernel
@@ -15,13 +15,10 @@ public:
   virtual ~UserSource();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
 
   Real _source;
-
 };
-
 
 #endif /* USERSOURCE_H */

@@ -38,22 +38,27 @@
 #include "libmesh/string_to_enum.h"
 #include "libmesh/fe.h"
 
-template<>
-InputParameters validParams<AddLotsOfPotentialDrivenArtificialDiff>()
+template <>
+InputParameters
+validParams<AddLotsOfPotentialDrivenArtificialDiff>()
 {
   MooseEnum families(AddVariableAction::getNonlinearVariableFamilies());
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
   InputParameters params = validParams<AddVariableAction>();
-  params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which PotentialDrivenArtificialDiff kernels should be added");
-  params.addRequiredParam<std::vector<VariableName> >("potential", "A dummy vector that holds the potential to couple in for advection");
-  params.addParam<Real>("delta",0.5,"Used for determining the amount of artificial diffusion to add.");
+  params.addRequiredParam<std::vector<NonlinearVariableName>>(
+      "variables",
+      "The names of the variables for which PotentialDrivenArtificialDiff kernels should be added");
+  params.addRequiredParam<std::vector<VariableName>>(
+      "potential", "A dummy vector that holds the potential to couple in for advection");
+  params.addParam<Real>(
+      "delta", 0.5, "Used for determining the amount of artificial diffusion to add.");
   return params;
 }
 
-
-AddLotsOfPotentialDrivenArtificialDiff::AddLotsOfPotentialDrivenArtificialDiff(InputParameters params) :
-  AddVariableAction(params)
+AddLotsOfPotentialDrivenArtificialDiff::AddLotsOfPotentialDrivenArtificialDiff(
+    InputParameters params)
+  : AddVariableAction(params)
 {
 }
 
@@ -63,23 +68,24 @@ AddLotsOfPotentialDrivenArtificialDiff::act()
   MooseSharedPointer<Action> action;
   MooseSharedPointer<MooseObjectAction> moose_object_action;
 
-  std::vector<NonlinearVariableName> variables = getParam<std::vector<NonlinearVariableName> > ("variables");
-  std::vector<VariableName> potential = getParam<std::vector<VariableName> > ("potential");
+  std::vector<NonlinearVariableName> variables =
+      getParam<std::vector<NonlinearVariableName>>("variables");
+  std::vector<VariableName> potential = getParam<std::vector<VariableName>>("potential");
   Real delta = getParam<Real>("delta");
 
   unsigned int number = variables.size();
 
   if (_current_task == "add_kernel")
+  {
+    for (unsigned int cur_num = 0; cur_num < number; cur_num++)
     {
-      for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-        {
-          std::string var_name = variables[cur_num];
-          InputParameters params = _factory.getValidParams("PotentialDrivenArtificialDiff");
-          params.set<NonlinearVariableName>("variable") = var_name;
-          params.set<std::string>("var_name_string") = var_name;
-          params.set<std::vector<VariableName> >("potential") = potential;
-          params.set<Real>("delta") = delta;
-          _problem->addKernel("PotentialDrivenArtificialDiff", var_name, params);
-        }
+      std::string var_name = variables[cur_num];
+      InputParameters params = _factory.getValidParams("PotentialDrivenArtificialDiff");
+      params.set<NonlinearVariableName>("variable") = var_name;
+      params.set<std::string>("var_name_string") = var_name;
+      params.set<std::vector<VariableName>>("potential") = potential;
+      params.set<Real>("delta") = delta;
+      _problem->addKernel("PotentialDrivenArtificialDiff", var_name, params);
     }
+  }
 }

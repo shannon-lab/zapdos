@@ -5,7 +5,7 @@
 
 class ElectronsFromIonizationUser;
 
-template<>
+template <>
 InputParameters validParams<ElectronsFromIonizationUser>();
 
 class ElectronsFromIonizationUser : public ElectronsFromIonization
@@ -21,6 +21,5 @@ protected:
   MooseArray<Real> _alpha_iz;
   MooseArray<Real> _d_iz_d_actual_mean_en;
 };
-
 
 #endif /* ELECTRONSFROMIONIZATIONUSER_H */

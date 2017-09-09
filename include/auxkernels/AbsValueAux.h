@@ -19,21 +19,19 @@
 
 class AbsValueAux;
 
-template<>
+template <>
 InputParameters validParams<AbsValueAux>();
 
 class AbsValueAux : public AuxKernel
 {
- public:
-
+public:
   AbsValueAux(const InputParameters & parameters);
 
- protected:
-
+protected:
   virtual Real computeValue();
 
- private:
+private:
   const VariableValue & _u;
 };
 
-#endif //ABSVALUEAUX_H
+#endif // ABSVALUEAUX_H

@@ -5,7 +5,7 @@
 
 class UserFlux;
 
-template<>
+template <>
 InputParameters validParams<UserFlux>();
 
 class UserFlux : public AuxKernel
@@ -17,7 +17,6 @@ public:
   virtual Real computeValue();
 
 protected:
-
   const VariableValue & _u;
   const VariableGradient & _grad_u;
   Real _mu;
@@ -26,4 +25,4 @@ protected:
   Real _EField;
 };
 
-#endif //USERFLUX_H
+#endif // USERFLUX_H

@@ -1,7 +1,8 @@
 #include "TM0CylindricalEz.h"
 
-template<>
-InputParameters validParams<TM0CylindricalEz>()
+template <>
+InputParameters
+validParams<TM0CylindricalEz>()
 {
   InputParameters params = validParams<Kernel>();
   // params.addRequiredParam<Real>("position_units", "Units of position.");
@@ -10,8 +11,8 @@ InputParameters validParams<TM0CylindricalEz>()
   return params;
 }
 
-TM0CylindricalEz::TM0CylindricalEz(const InputParameters & parameters) :
-    Kernel(parameters),
+TM0CylindricalEz::TM0CylindricalEz(const InputParameters & parameters)
+  : Kernel(parameters),
 
     // _r_units(1. / getParam<Real>("position_units")),
     _omega(2. * libMesh::pi * getParam<Real>("f")),
@@ -24,14 +25,13 @@ TM0CylindricalEz::TM0CylindricalEz(const InputParameters & parameters) :
 {
 }
 
-TM0CylindricalEz::~TM0CylindricalEz()
-{
-}
+TM0CylindricalEz::~TM0CylindricalEz() {}
 
 Real
 TM0CylindricalEz::computeQpResidual()
 {
-  return _test[_i][_qp] * (_grad_Hphi[_qp](0) + _Hphi[_qp] / _q_point[_qp](0) - _omega * _eps0 * _eps_r[_qp] * _u[_qp]);
+  return _test[_i][_qp] * (_grad_Hphi[_qp](0) + _Hphi[_qp] / _q_point[_qp](0) -
+                           _omega * _eps0 * _eps_r[_qp] * _u[_qp]);
 }
 
 Real

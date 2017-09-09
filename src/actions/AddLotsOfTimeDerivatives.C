@@ -38,21 +38,22 @@
 #include "libmesh/string_to_enum.h"
 #include "libmesh/fe.h"
 
-template<>
-InputParameters validParams<AddLotsOfTimeDerivatives>()
+template <>
+InputParameters
+validParams<AddLotsOfTimeDerivatives>()
 {
   MooseEnum families(AddVariableAction::getNonlinearVariableFamilies());
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
   InputParameters params = validParams<AddVariableAction>();
-  params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which TimeDerivative kernels should be added");
+  params.addRequiredParam<std::vector<NonlinearVariableName>>(
+      "variables", "The names of the variables for which TimeDerivative kernels should be added");
 
   return params;
 }
 
-
-AddLotsOfTimeDerivatives::AddLotsOfTimeDerivatives(InputParameters params) :
-  AddVariableAction(params)
+AddLotsOfTimeDerivatives::AddLotsOfTimeDerivatives(InputParameters params)
+  : AddVariableAction(params)
 {
 }
 
@@ -62,18 +63,19 @@ AddLotsOfTimeDerivatives::act()
   MooseSharedPointer<Action> action;
   MooseSharedPointer<MooseObjectAction> moose_object_action;
 
-  std::vector<NonlinearVariableName> variables = getParam<std::vector<NonlinearVariableName> > ("variables");
+  std::vector<NonlinearVariableName> variables =
+      getParam<std::vector<NonlinearVariableName>>("variables");
 
   unsigned int number = variables.size();
 
   if (_current_task == "add_kernel")
+  {
+    for (unsigned int cur_num = 0; cur_num < number; cur_num++)
     {
-      for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-        {
-          std::string var_name = variables[cur_num];
-          InputParameters params = _factory.getValidParams("TimeDerivative");
-          params.set<NonlinearVariableName>("variable") = var_name;
-          _problem->addKernel("TimeDerivative", var_name, params);
-        }
+      std::string var_name = variables[cur_num];
+      InputParameters params = _factory.getValidParams("TimeDerivative");
+      params.set<NonlinearVariableName>("variable") = var_name;
+      _problem->addKernel("TimeDerivative", var_name, params);
     }
+  }
 }

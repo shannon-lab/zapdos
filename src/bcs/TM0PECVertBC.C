@@ -1,15 +1,14 @@
 #include "TM0PECVertBC.h"
 
-template<>
-InputParameters validParams<TM0PECVertBC>()
+template <>
+InputParameters
+validParams<TM0PECVertBC>()
 {
   InputParameters params = validParams<IntegratedBC>();
   return params;
 }
 
-TM0PECVertBC::TM0PECVertBC(const InputParameters & parameters) :
-  IntegratedBC(parameters)
-{}
+TM0PECVertBC::TM0PECVertBC(const InputParameters & parameters) : IntegratedBC(parameters) {}
 
 Real
 TM0PECVertBC::computeQpResidual()

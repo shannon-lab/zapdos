@@ -1,8 +1,8 @@
 #include "ElectronsFromIonizationUser.h"
 
-
-template<>
-InputParameters validParams<ElectronsFromIonizationUser>()
+template <>
+InputParameters
+validParams<ElectronsFromIonizationUser>()
 {
   InputParameters params = validParams<ElectronsFromIonization>();
   params.addRequiredParam<Real>("muem", "The mobility.");
@@ -11,9 +11,8 @@ InputParameters validParams<ElectronsFromIonizationUser>()
   return params;
 }
 
-
-ElectronsFromIonizationUser::ElectronsFromIonizationUser(const InputParameters & parameters) :
-    ElectronsFromIonization(parameters)
+ElectronsFromIonizationUser::ElectronsFromIonizationUser(const InputParameters & parameters)
+  : ElectronsFromIonization(parameters)
 {
   _diffem.resize(_fe_problem.getMaxQps(), Real(getParam<Real>("diffem")));
   _muem.resize(_fe_problem.getMaxQps(), Real(getParam<Real>("muem")));

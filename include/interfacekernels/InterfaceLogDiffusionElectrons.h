@@ -17,10 +17,10 @@
 
 #include "InterfaceKernel.h"
 
-//Forward Declarations
+// Forward Declarations
 class InterfaceLogDiffusionElectrons;
 
-template<>
+template <>
 InputParameters validParams<InterfaceLogDiffusionElectrons>();
 
 /**
@@ -47,7 +47,6 @@ protected:
   unsigned int _mean_en_neighbor_id;
 
   Real _actual_mean_en;
-
 };
 
 #endif

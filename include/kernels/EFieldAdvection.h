@@ -19,17 +19,15 @@
 
 class EFieldAdvection;
 
-template<>
+template <>
 InputParameters validParams<EFieldAdvection>();
 
 class EFieldAdvection : public Kernel
 {
- public:
-
+public:
   EFieldAdvection(const InputParameters & parameters);
 
- protected:
-
+protected:
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -41,11 +39,10 @@ class EFieldAdvection : public Kernel
   const MaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sign;
 
- private:
-
+private:
   // Coupled variables
   unsigned int _potential_id;
   const VariableGradient & _grad_potential;
 };
 
-#endif //EFIELDADVECTION_H
+#endif // EFIELDADVECTION_H

@@ -1,7 +1,8 @@
 #include "DensityMoles.h"
 
-template<>
-InputParameters validParams<DensityMoles>()
+template <>
+InputParameters
+validParams<DensityMoles>()
 {
   InputParameters params = validParams<Density>();
 
@@ -9,8 +10,8 @@ InputParameters validParams<DensityMoles>()
   return params;
 }
 
-DensityMoles::DensityMoles(const InputParameters & parameters) :
-    Density(parameters),
+DensityMoles::DensityMoles(const InputParameters & parameters)
+  : Density(parameters),
 
     _convert_moles(getParam<bool>("use_moles")),
     _N_A(getMaterialProperty<Real>("N_A"))

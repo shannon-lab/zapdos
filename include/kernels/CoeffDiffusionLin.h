@@ -19,7 +19,7 @@
 
 class CoeffDiffusionLin;
 
-template<>
+template <>
 InputParameters validParams<CoeffDiffusionLin>();
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
@@ -31,7 +31,6 @@ public:
   virtual ~CoeffDiffusionLin();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
 
@@ -39,6 +38,5 @@ protected:
 
   const MaterialProperty<Real> & _diffusivity;
 };
-
 
 #endif /* COEFFDIFFUSIONLIN_H */

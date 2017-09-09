@@ -3,8 +3,9 @@
 // MOOSE includes
 #include "MooseVariable.h"
 
-template<>
-InputParameters validParams<CoeffDiffusionLin>()
+template <>
+InputParameters
+validParams<CoeffDiffusionLin>()
 {
   InputParameters params = validParams<Diffusion>();
   params.addRequiredParam<Real>("position_units", "Units of position.");
@@ -13,8 +14,8 @@ InputParameters validParams<CoeffDiffusionLin>()
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
 
-CoeffDiffusionLin::CoeffDiffusionLin(const InputParameters & parameters) :
-    Diffusion(parameters),
+CoeffDiffusionLin::CoeffDiffusionLin(const InputParameters & parameters)
+  : Diffusion(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
 
@@ -22,9 +23,7 @@ CoeffDiffusionLin::CoeffDiffusionLin(const InputParameters & parameters) :
 {
 }
 
-CoeffDiffusionLin::~CoeffDiffusionLin()
-{
-}
+CoeffDiffusionLin::~CoeffDiffusionLin() {}
 
 Real
 CoeffDiffusionLin::computeQpResidual()

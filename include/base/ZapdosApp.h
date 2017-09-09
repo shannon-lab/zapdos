@@ -5,7 +5,7 @@
 
 class ZapdosApp;
 
-template<>
+template <>
 InputParameters validParams<ZapdosApp>();
 
 class ZapdosApp : public MooseApp

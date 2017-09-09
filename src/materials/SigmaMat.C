@@ -1,7 +1,8 @@
 #include "SigmaMat.h"
 
-template<>
-InputParameters validParams<SigmaMat>()
+template <>
+InputParameters
+validParams<SigmaMat>()
 {
   InputParameters params = validParams<Material>();
 
@@ -10,17 +11,18 @@ InputParameters validParams<SigmaMat>()
   return params;
 }
 
-SigmaMat::SigmaMat(const InputParameters & parameters) :
-  Material(parameters),
+SigmaMat::SigmaMat(const InputParameters & parameters)
+  : Material(parameters),
 
-  // Declare material properties
-  _sigma(declareProperty<Real>("sigma")),
-  _sigma_old(declarePropertyOld<Real>("sigma")),
+    // Declare material properties
+    _sigma(declareProperty<Real>("sigma")),
+    _sigma_old(declarePropertyOld<Real>("sigma")),
 
-  // Coupled Variables
-  _n(coupledValue("n")),
-  _grad_potential(coupledGradient("potential"))
-{}
+    // Coupled Variables
+    _n(coupledValue("n")),
+    _grad_potential(coupledGradient("potential"))
+{
+}
 
 void
 SigmaMat::initQpStatefulProperties()

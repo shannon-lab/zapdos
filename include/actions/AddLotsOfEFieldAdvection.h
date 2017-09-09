@@ -20,9 +20,8 @@
 
 class AddLotsOfEFieldAdvection;
 
-template<>
+template <>
 InputParameters validParams<AddLotsOfEFieldAdvection>();
-
 
 class AddLotsOfEFieldAdvection : public AddVariableAction
 {

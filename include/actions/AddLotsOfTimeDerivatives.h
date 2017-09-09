@@ -20,9 +20,8 @@
 
 class AddLotsOfTimeDerivatives;
 
-template<>
+template <>
 InputParameters validParams<AddLotsOfTimeDerivatives>();
-
 
 class AddLotsOfTimeDerivatives : public AddVariableAction
 {

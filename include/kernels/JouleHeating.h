@@ -1,15 +1,15 @@
 /****************************************************************/
-/*                                                       DO NOT MODIFY THIS HEADER                                                                                      */
+/*                                                       DO NOT MODIFY THIS HEADER */
 /* MOOSE - Multiphysics Object Oriented Simulation Environment  */
 /*                                                                                                                                                                                                                                                      */
-/*                                       (c) 2010 Battelle Energy Alliance, LLC                                          */
-/*                                                                       ALL RIGHTS RESERVED                                                                                            */
+/*                                       (c) 2010 Battelle Energy Alliance, LLC */
+/*                                                                       ALL RIGHTS RESERVED */
 /*                                                                                                                                                                                                                                                      */
-/*                                      Prepared by Battelle Energy Alliance, LLC                                        */
-/*                                              Under Contract No. DE-AC07-05ID14517                                                    */
-/*                                              With the U. S. Department of Energy                                                      */
+/*                                      Prepared by Battelle Energy Alliance, LLC */
+/*                                              Under Contract No. DE-AC07-05ID14517 */
+/*                                              With the U. S. Department of Energy */
 /*                                                                                                                                                                                                                                                      */
-/*                                              See COPYRIGHT for full restrictions                                                      */
+/*                                              See COPYRIGHT for full restrictions */
 /****************************************************************/
 
 #ifndef JOULEHEATING_H
@@ -19,46 +19,44 @@
 
 class JouleHeating;
 
-template<>
+template <>
 InputParameters validParams<JouleHeating>();
 
 class JouleHeating : public Kernel
 {
- public:
+public:
+  JouleHeating(const InputParameters & parameters);
 
-        JouleHeating(const InputParameters & parameters);
+protected:
+  virtual Real computeQpResidual();
 
- protected:
+  virtual Real computeQpJacobian();
 
-        virtual Real computeQpResidual();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
-        virtual Real computeQpJacobian();
+  // Input file scalars
+  Real _r_units;
 
-        virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  // Material properties
 
-        // Input file scalars
-        Real _r_units;
+  const MaterialProperty<Real> & _muem;
+  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
+  const MaterialProperty<Real> & _diffem;
+  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
 
-        // Material properties
+  std::string _potential_units;
 
-        const MaterialProperty<Real> & _muem;
-        const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
-        const MaterialProperty<Real> & _diffem;
-        const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
+  // Coupled variables
 
-        std::string _potential_units;
+  unsigned int _potential_id;
+  const VariableGradient & _grad_potential;
+  const VariableValue & _em;
+  const VariableGradient & _grad_em;
+  unsigned int _em_id;
 
-        // Coupled variables
+  // Unique variables
 
-        unsigned int _potential_id;
-        const VariableGradient & _grad_potential;
-        const VariableValue & _em;
-        const VariableGradient & _grad_em;
-        unsigned int _em_id;
-
-        // Unique variables
-
-        Real _voltage_scaling;
+  Real _voltage_scaling;
 };
 
-#endif //JOULEHEATING_H
+#endif // JOULEHEATING_H
