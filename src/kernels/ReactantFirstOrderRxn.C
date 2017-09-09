@@ -3,18 +3,20 @@
 // MOOSE includes
 #include "MooseVariable.h"
 
-template<>
-InputParameters validParams<ReactantFirstOrderRxn>()
+template <>
+InputParameters
+validParams<ReactantFirstOrderRxn>()
 {
   InputParameters params = validParams<Kernel>();
   return params;
 }
 
-ReactantFirstOrderRxn::ReactantFirstOrderRxn(const InputParameters & parameters) :
-    Kernel(parameters),
+ReactantFirstOrderRxn::ReactantFirstOrderRxn(const InputParameters & parameters)
+  : Kernel(parameters),
 
-    _reaction_coeff(getMaterialProperty<Real>("k"+_var.name()))
-{}
+    _reaction_coeff(getMaterialProperty<Real>("k" + _var.name()))
+{
+}
 
 Real
 ReactantFirstOrderRxn::computeQpResidual()
