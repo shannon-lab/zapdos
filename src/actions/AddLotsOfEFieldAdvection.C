@@ -38,23 +38,26 @@
 #include "libmesh/string_to_enum.h"
 #include "libmesh/fe.h"
 
-template<>
-InputParameters validParams<AddLotsOfEFieldAdvection>()
+template <>
+InputParameters
+validParams<AddLotsOfEFieldAdvection>()
 {
   MooseEnum families(AddVariableAction::getNonlinearVariableFamilies());
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
   InputParameters params = validParams<AddVariableAction>();
-  params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which EFieldAdvection kernels should be added");
-  //params.addRequiredParam<std::string>("potential", "The potential that will be responsible for advecting the species.");
-  params.addRequiredParam<std::vector<VariableName> >("potential", "A dummy vector that holds the potential to couple in for advection");
+  params.addRequiredParam<std::vector<NonlinearVariableName>>(
+      "variables", "The names of the variables for which EFieldAdvection kernels should be added");
+  // params.addRequiredParam<std::string>("potential", "The potential that will be responsible for
+  // advecting the species.");
+  params.addRequiredParam<std::vector<VariableName>>(
+      "potential", "A dummy vector that holds the potential to couple in for advection");
 
   return params;
 }
 
-
-AddLotsOfEFieldAdvection::AddLotsOfEFieldAdvection(InputParameters params) :
-  AddVariableAction(params)
+AddLotsOfEFieldAdvection::AddLotsOfEFieldAdvection(InputParameters params)
+  : AddVariableAction(params)
 {
 }
 
@@ -64,26 +67,27 @@ AddLotsOfEFieldAdvection::act()
   MooseSharedPointer<Action> action;
   MooseSharedPointer<MooseObjectAction> moose_object_action;
 
-  std::vector<NonlinearVariableName> variables = getParam<std::vector<NonlinearVariableName> > ("variables");
-  //std::string potential = getParam<std::string>("potential");
-  std::vector<VariableName> potential = getParam<std::vector<VariableName> > ("potential");
+  std::vector<NonlinearVariableName> variables =
+      getParam<std::vector<NonlinearVariableName>>("variables");
+  // std::string potential = getParam<std::string>("potential");
+  std::vector<VariableName> potential = getParam<std::vector<VariableName>>("potential");
 
   unsigned int number = variables.size();
 
   if (_current_task == "add_kernel")
+  {
+    for (unsigned int cur_num = 0; cur_num < number; cur_num++)
     {
-      for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-        {
-          std::string var_name = variables[cur_num];
-          //std::vector<std::string> fictional_vec_variables;
-          //std::vector<VariableName> vel_vec_variable;
-          //fictional_vec_varables.push_back(potential[0]);
-          //vel_vec_variable.push_back(potential[0]);
-          InputParameters params = _factory.getValidParams("EFieldAdvection");
-          params.set<NonlinearVariableName>("variable") = var_name;
-          params.set<std::string>("var_name_string") = var_name;
-          params.set<std::vector<VariableName> >("potential") = potential;
-          _problem->addKernel("EFieldAdvection", var_name, params);
-        }
+      std::string var_name = variables[cur_num];
+      // std::vector<std::string> fictional_vec_variables;
+      // std::vector<VariableName> vel_vec_variable;
+      // fictional_vec_varables.push_back(potential[0]);
+      // vel_vec_variable.push_back(potential[0]);
+      InputParameters params = _factory.getValidParams("EFieldAdvection");
+      params.set<NonlinearVariableName>("variable") = var_name;
+      params.set<std::string>("var_name_string") = var_name;
+      params.set<std::vector<VariableName>>("potential") = potential;
+      _problem->addKernel("EFieldAdvection", var_name, params);
     }
+  }
 }

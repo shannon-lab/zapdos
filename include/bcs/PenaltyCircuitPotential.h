@@ -7,7 +7,7 @@
 
 class PenaltyCircuitPotential;
 
-template<>
+template <>
 InputParameters validParams<PenaltyCircuitPotential>();
 
 /**
@@ -26,7 +26,6 @@ protected:
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
   virtual Real computeQpNonlocalJacobian(dof_id_type dof_index);
   virtual Real computeQpNonlocalOffDiagJacobian(unsigned int jvar, dof_id_type dof_index);
-
 
   const CurrentDensityShapeSideUserObject & _current_uo;
   const Real & _current;

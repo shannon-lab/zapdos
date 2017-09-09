@@ -1,7 +1,8 @@
 #include "TM0CylindricalEzAux.h"
 
-template<>
-InputParameters validParams<TM0CylindricalEzAux>()
+template <>
+InputParameters
+validParams<TM0CylindricalEzAux>()
 {
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredCoupledVar("Hphi", "Magnetic field component Hphi.");
@@ -10,14 +11,15 @@ InputParameters validParams<TM0CylindricalEzAux>()
   return params;
 }
 
-TM0CylindricalEzAux::TM0CylindricalEzAux(const InputParameters & parameters) :
-    AuxKernel(parameters),
+TM0CylindricalEzAux::TM0CylindricalEzAux(const InputParameters & parameters)
+  : AuxKernel(parameters),
     _grad_Hphi(coupledGradient("Hphi")),
     _Hphi(coupledValue("Hphi")),
     _omega(2. * libMesh::pi * getParam<Real>("f")),
     _eps_r(getParam<Real>("eps_r")),
     _eps0(8.85e-12)
-{}
+{
+}
 
 Real
 TM0CylindricalEzAux::computeValue()

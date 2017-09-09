@@ -5,7 +5,7 @@
 
 class TM0Cylindrical;
 
-template<>
+template <>
 InputParameters validParams<TM0Cylindrical>();
 
 class TM0Cylindrical : public Kernel
@@ -15,7 +15,6 @@ public:
   virtual ~TM0Cylindrical();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
 
@@ -25,6 +24,5 @@ protected:
   Real _mu0;
   Real _eps0;
 };
-
 
 #endif /* TM0CYLINDRICAL_H */

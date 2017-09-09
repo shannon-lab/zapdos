@@ -19,11 +19,10 @@
 
 class AnalyticalDiffIndicator;
 
-template<>
+template <>
 InputParameters validParams<AnalyticalDiffIndicator>();
 
-class AnalyticalDiffIndicator :
-  public ElementIntegralIndicator
+class AnalyticalDiffIndicator : public ElementIntegralIndicator
 {
 public:
   AnalyticalDiffIndicator(const InputParameters & parameters);

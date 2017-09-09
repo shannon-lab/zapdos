@@ -127,39 +127,41 @@
 
 #include "SideTotFluxIntegral.h"
 
-template<>
-InputParameters validParams<ZapdosApp>()
+template <>
+InputParameters
+validParams<ZapdosApp>()
 {
-        InputParameters params = validParams<MooseApp>();
+  InputParameters params = validParams<MooseApp>();
 
-        params.set<bool>("use_legacy_output_syntax") = false;
-        params.set<bool>("use_legacy_uo_initialization") = false;
-        params.set<bool>("use_legacy_uo_aux_computation") = false;
-        return params;
+  params.set<bool>("use_legacy_output_syntax") = false;
+  params.set<bool>("use_legacy_uo_initialization") = false;
+  params.set<bool>("use_legacy_uo_aux_computation") = false;
+  return params;
 }
 
-ZapdosApp::ZapdosApp(InputParameters parameters) :
-                MooseApp(parameters)
+ZapdosApp::ZapdosApp(InputParameters parameters) : MooseApp(parameters)
 {
 
-        Moose::registerObjects(_factory);
-        SquirrelApp::registerObjects(_factory);
-        ZapdosApp::registerObjects(_factory);
+  Moose::registerObjects(_factory);
+  SquirrelApp::registerObjects(_factory);
+  ZapdosApp::registerObjects(_factory);
 
-        Moose::associateSyntax(_syntax, _action_factory);
-        SquirrelApp::associateSyntax(_syntax, _action_factory);
-        ZapdosApp::associateSyntax(_syntax, _action_factory);
+  Moose::associateSyntax(_syntax, _action_factory);
+  SquirrelApp::associateSyntax(_syntax, _action_factory);
+  ZapdosApp::associateSyntax(_syntax, _action_factory);
 }
 
-ZapdosApp::~ZapdosApp()
+ZapdosApp::~ZapdosApp() {}
+
+extern "C" void
+ZapdosApp__registerApps()
 {
+  ZapdosApp::registerApps();
 }
-
-extern "C" void ZapdosApp__registerApps() { ZapdosApp::registerApps(); }
 void
 ZapdosApp::registerApps()
 {
-        registerApp(ZapdosApp);
+  registerApp(ZapdosApp);
 }
 
 void
@@ -255,29 +257,30 @@ ZapdosApp::registerObjects(Factory & factory)
 void
 ZapdosApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
 {
-        // add actions
-        registerAction(AddLotsOfCoeffDiffusion, "add_variable");
-        registerAction(AddLotsOfCoeffDiffusion, "add_kernel");
-        registerAction(AddLotsOfCoeffDiffusion, "add_bc");
-        syntax.registerActionSyntax("AddLotsOfCoeffDiffusion", "LotsOfCoeffDiffusion");
-        registerAction(AddLotsOfVariables, "add_variable");
-        registerAction(AddLotsOfVariables, "add_kernel");
-        registerAction(AddLotsOfVariables, "add_bc");
-        syntax.registerActionSyntax("AddLotsOfVariables", "LotsOfVariables");
-        registerAction(AddLotsOfSources, "add_variable");
-        registerAction(AddLotsOfSources, "add_kernel");
-        registerAction(AddLotsOfSources, "add_bc");
-        syntax.registerActionSyntax("AddLotsOfSources", "LotsOfSources");
-        registerAction(AddLotsOfTimeDerivatives, "add_variable");
-        registerAction(AddLotsOfTimeDerivatives, "add_kernel");
-        registerAction(AddLotsOfTimeDerivatives, "add_bc");
-        syntax.registerActionSyntax("AddLotsOfTimeDerivatives", "LotsOfTimeDerivatives");
-        registerAction(AddLotsOfEFieldAdvection, "add_variable");
-        registerAction(AddLotsOfEFieldAdvection, "add_kernel");
-        registerAction(AddLotsOfEFieldAdvection, "add_bc");
-        syntax.registerActionSyntax("AddLotsOfEFieldAdvection", "LotsOfEFieldAdvection");
-        registerAction(AddLotsOfPotentialDrivenArtificialDiff, "add_variable");
-        registerAction(AddLotsOfPotentialDrivenArtificialDiff, "add_kernel");
-        registerAction(AddLotsOfPotentialDrivenArtificialDiff, "add_bc");
-        syntax.registerActionSyntax("AddLotsOfPotentialDrivenArtificialDiff", "LotsOfPotentialDrivenArtificialDiff");
+  // add actions
+  registerAction(AddLotsOfCoeffDiffusion, "add_variable");
+  registerAction(AddLotsOfCoeffDiffusion, "add_kernel");
+  registerAction(AddLotsOfCoeffDiffusion, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfCoeffDiffusion", "LotsOfCoeffDiffusion");
+  registerAction(AddLotsOfVariables, "add_variable");
+  registerAction(AddLotsOfVariables, "add_kernel");
+  registerAction(AddLotsOfVariables, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfVariables", "LotsOfVariables");
+  registerAction(AddLotsOfSources, "add_variable");
+  registerAction(AddLotsOfSources, "add_kernel");
+  registerAction(AddLotsOfSources, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfSources", "LotsOfSources");
+  registerAction(AddLotsOfTimeDerivatives, "add_variable");
+  registerAction(AddLotsOfTimeDerivatives, "add_kernel");
+  registerAction(AddLotsOfTimeDerivatives, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfTimeDerivatives", "LotsOfTimeDerivatives");
+  registerAction(AddLotsOfEFieldAdvection, "add_variable");
+  registerAction(AddLotsOfEFieldAdvection, "add_kernel");
+  registerAction(AddLotsOfEFieldAdvection, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfEFieldAdvection", "LotsOfEFieldAdvection");
+  registerAction(AddLotsOfPotentialDrivenArtificialDiff, "add_variable");
+  registerAction(AddLotsOfPotentialDrivenArtificialDiff, "add_kernel");
+  registerAction(AddLotsOfPotentialDrivenArtificialDiff, "add_bc");
+  syntax.registerActionSyntax("AddLotsOfPotentialDrivenArtificialDiff",
+                              "LotsOfPotentialDrivenArtificialDiff");
 }

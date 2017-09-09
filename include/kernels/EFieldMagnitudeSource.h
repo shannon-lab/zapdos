@@ -5,7 +5,7 @@
 
 class EFieldMagnitudeSource;
 
-template<>
+template <>
 InputParameters validParams<EFieldMagnitudeSource>();
 
 class EFieldMagnitudeSource : public Kernel
@@ -15,7 +15,6 @@ public:
   virtual ~EFieldMagnitudeSource();
 
 protected:
-
   virtual Real computeQpResidual() override;
   virtual Real computeQpJacobian() override;
   virtual Real computeQpOffDiagJacobian(unsigned int jvar) override;
@@ -23,6 +22,5 @@ protected:
   const VariableGradient & _grad_potential;
   unsigned int _potential_id;
 };
-
 
 #endif /* EFIELDMAGNITUDESOURCE_H */

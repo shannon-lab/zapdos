@@ -1,8 +1,8 @@
 #include "PotentialGradientSource.h"
 
-
-template<>
-InputParameters validParams<PotentialGradientSource>()
+template <>
+InputParameters
+validParams<PotentialGradientSource>()
 {
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("potential", "The potential.");
@@ -11,16 +11,14 @@ InputParameters validParams<PotentialGradientSource>()
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
 
-PotentialGradientSource::PotentialGradientSource(const InputParameters & parameters) :
-    Kernel(parameters),
+PotentialGradientSource::PotentialGradientSource(const InputParameters & parameters)
+  : Kernel(parameters),
     _grad_potential(coupledGradient("potential")),
     _potential_id(coupled("potential"))
 {
 }
 
-PotentialGradientSource::~PotentialGradientSource()
-{
-}
+PotentialGradientSource::~PotentialGradientSource() {}
 
 Real
 PotentialGradientSource::computeQpResidual()

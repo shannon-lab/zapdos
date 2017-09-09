@@ -17,10 +17,10 @@
 
 #include "GeneralUserObject.h"
 
-//Forward Declarations
+// Forward Declarations
 class ProvideMobility;
 
-template<>
+template <>
 InputParameters validParams<ProvideMobility>();
 
 class ProvideMobility : public GeneralUserObject
@@ -39,11 +39,9 @@ public:
   virtual void finalize();
 
 protected:
-
   Real _electrode_area;
   Real _ballast_resist;
   Real _e;
-
 };
 
 #endif

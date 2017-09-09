@@ -20,7 +20,7 @@
 // Forward Declaration
 class ElectronTimeDerivative;
 
-template<>
+template <>
 InputParameters validParams<ElectronTimeDerivative>();
 
 class ElectronTimeDerivative : public TimeKernel
@@ -38,4 +38,4 @@ protected:
   bool _lumping;
 };
 
-#endif //ELECTRONTIMEDERIVATIVE_H
+#endif // ELECTRONTIMEDERIVATIVE_H

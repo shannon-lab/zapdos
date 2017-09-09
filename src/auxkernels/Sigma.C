@@ -1,17 +1,18 @@
 #include "Sigma.h"
 
-template<>
-InputParameters validParams<Sigma>()
+template <>
+InputParameters
+validParams<Sigma>()
 {
   InputParameters params = validParams<AuxKernel>();
 
   params.addRequiredCoupledVar("n", "The density of the ions.");
-  params.addRequiredCoupledVar("potential","The potential");
+  params.addRequiredCoupledVar("potential", "The potential");
   return params;
 }
 
-Sigma::Sigma(const InputParameters & parameters) :
-    AuxKernel(parameters),
+Sigma::Sigma(const InputParameters & parameters)
+  : AuxKernel(parameters),
 
     _n(coupledValue("n")),
     _grad_potential(coupledGradient("potential"))

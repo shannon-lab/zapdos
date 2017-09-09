@@ -17,10 +17,10 @@
 
 #include "AuxKernel.h"
 
-//Forward Declarations
+// Forward Declarations
 class Efield;
 
-template<>
+template <>
 InputParameters validParams<Efield>();
 
 /**
@@ -50,4 +50,4 @@ protected:
   Real _voltage_scaling;
 };
 
-#endif //EFIELD_H
+#endif // EFIELD_H

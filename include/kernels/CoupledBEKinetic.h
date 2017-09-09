@@ -9,11 +9,10 @@
 #ifndef COUPLEDBEKINETIC_H
 #define COUPLEDBEKINETIC_H
 
-
-//Forward Declarations
+// Forward Declarations
 class CoupledBEKinetic;
 
-template<>
+template <>
 InputParameters validParams<CoupledBEKinetic>();
 
 /**
@@ -24,11 +23,9 @@ InputParameters validParams<CoupledBEKinetic>();
 class CoupledBEKinetic : public Kernel
 {
 public:
-
   CoupledBEKinetic(const InputParameters & parameters);
 
 protected:
-
   /**
    * Responsible for computing the residual at one quadrature point
    * This should always be defined in the .C
@@ -44,10 +41,11 @@ protected:
    * not because the Jacobian of this operator is easy to calculate.
    *
    * This should always be defined in the .C
-   * @return The diagonal jacobian of mass accumulation of the coupled kinetic mineral species concentration.
+   * @return The diagonal jacobian of mass accumulation of the coupled kinetic mineral species
+   * concentration.
    */
   virtual Real computeQpJacobian();
-//  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  //  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
 private:
   /// Material property of porosity.
@@ -55,10 +53,10 @@ private:
 
   /// Weight of the kinetic mineral concentration in the total primary species concentration.
   std::vector<Real> _weight;
-//  std::vector<unsigned int> _vars;
+  //  std::vector<unsigned int> _vars;
   /// Coupled kinetic mineral concentrations.
   std::vector<VariableValue *> _vals;
   /// Coupled old values of kinetic mineral concentrations.
   std::vector<VariableValue *> _vals_old;
 };
-#endif //COUPLEDBEKINETIC_H
+#endif // COUPLEDBEKINETIC_H

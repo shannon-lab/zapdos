@@ -19,7 +19,7 @@
 
 class LogStabilizationMoles;
 
-template<>
+template <>
 InputParameters validParams<LogStabilizationMoles>();
 
 class LogStabilizationMoles : public Kernel
@@ -29,12 +29,10 @@ public:
   virtual ~LogStabilizationMoles();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
 
   Real _offset;
 };
-
 
 #endif /* LOGSTABILIZATIONMOLES_H */

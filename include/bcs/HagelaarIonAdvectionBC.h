@@ -5,13 +5,12 @@
 
 class HagelaarIonAdvectionBC;
 
-template<>
+template <>
 InputParameters validParams<HagelaarIonAdvectionBC>();
 
 class HagelaarIonAdvectionBC : public IntegratedBC
 {
 public:
-
   HagelaarIonAdvectionBC(const InputParameters & parameters);
 
 protected:
@@ -34,4 +33,4 @@ protected:
   Real _a;
 };
 
-#endif //HAGELAARIONADVECTIONBC_H
+#endif // HAGELAARIONADVECTIONBC_H

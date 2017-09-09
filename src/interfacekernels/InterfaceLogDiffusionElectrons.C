@@ -5,18 +5,23 @@
 
 #include <cmath>
 
-template<>
-InputParameters validParams<InterfaceLogDiffusionElectrons>()
+template <>
+InputParameters
+validParams<InterfaceLogDiffusionElectrons>()
 {
   InputParameters params = validParams<InterfaceKernel>();
-  params.addRequiredCoupledVar("mean_en_neighbor", "The log of the product of the mean energy and electron density on the slave side of the interface.");
+  params.addRequiredCoupledVar("mean_en_neighbor",
+                               "The log of the product of the mean energy and "
+                               "electron density on the slave side of the "
+                               "interface.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addRequiredParam<Real>("neighbor_position_units", "The units of position in the neighboring domain.");
+  params.addRequiredParam<Real>("neighbor_position_units",
+                                "The units of position in the neighboring domain.");
   return params;
 }
 
-InterfaceLogDiffusionElectrons::InterfaceLogDiffusionElectrons(const InputParameters & parameters) :
-    InterfaceKernel(parameters),
+InterfaceLogDiffusionElectrons::InterfaceLogDiffusionElectrons(const InputParameters & parameters)
+  : InterfaceKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _r_neighbor_units(1. / getParam<Real>("neighbor_position_units")),
 
@@ -29,7 +34,8 @@ InterfaceLogDiffusionElectrons::InterfaceLogDiffusionElectrons(const InputParame
 {
   if (!parameters.isParamValid("boundary"))
   {
-    mooseError("In order to use the InterfaceLogDiffusionElectrons dgkernel, you must specify a boundary where it will live.");
+    mooseError("In order to use the InterfaceLogDiffusionElectrons dgkernel, you must specify a "
+               "boundary where it will live.");
   }
 }
 
@@ -43,13 +49,14 @@ InterfaceLogDiffusionElectrons::computeQpResidual(Moose::DGResidualType type)
 
   switch (type)
   {
-  case Moose::Element:
-    r = -_diffem[_qp] * std::exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] * _r_neighbor_units * _normals[_qp] * _test[_i][_qp] * _r_units;
-    break;
+    case Moose::Element:
+      r = -_diffem[_qp] * std::exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] *
+          _r_neighbor_units * _normals[_qp] * _test[_i][_qp] * _r_units;
+      break;
 
-  case Moose::Neighbor:
-    r = 0.;
-    break;
+    case Moose::Neighbor:
+      r = 0.;
+      break;
   }
 
   return r;
@@ -63,7 +70,13 @@ InterfaceLogDiffusionElectrons::computeQpJacobian(Moose::DGJacobianType type)
   {
     case Moose::ElementNeighbor:
       _actual_mean_en = std::exp(_mean_en_neighbor[_qp] - _neighbor_value[_qp]);
-      jac += (-_d_diffem_d_actual_mean_en[_qp] * _actual_mean_en * -_phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] * _r_neighbor_units - _diffem[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] * _grad_neighbor_value[_qp] * _r_neighbor_units - _diffem[_qp] * std::exp(_neighbor_value[_qp]) * _grad_phi_neighbor[_j][_qp] * _r_neighbor_units) * _normals[_qp] * _test[_i][_qp] * _r_units;
+      jac += (-_d_diffem_d_actual_mean_en[_qp] * _actual_mean_en * -_phi_neighbor[_j][_qp] *
+                  std::exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] * _r_neighbor_units -
+              _diffem[_qp] * std::exp(_neighbor_value[_qp]) * _phi_neighbor[_j][_qp] *
+                  _grad_neighbor_value[_qp] * _r_neighbor_units -
+              _diffem[_qp] * std::exp(_neighbor_value[_qp]) * _grad_phi_neighbor[_j][_qp] *
+                  _r_neighbor_units) *
+             _normals[_qp] * _test[_i][_qp] * _r_units;
       break;
 
     default:
@@ -74,7 +87,8 @@ InterfaceLogDiffusionElectrons::computeQpJacobian(Moose::DGJacobianType type)
 }
 
 Real
-InterfaceLogDiffusionElectrons::computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar)
+InterfaceLogDiffusionElectrons::computeQpOffDiagJacobian(Moose::DGJacobianType type,
+                                                         unsigned int jvar)
 {
   Real jac = 0;
 
@@ -88,7 +102,9 @@ InterfaceLogDiffusionElectrons::computeQpOffDiagJacobian(Moose::DGJacobianType t
 
       case Moose::ElementNeighbor:
         _actual_mean_en = std::exp(_mean_en_neighbor[_qp] - _neighbor_value[_qp]);
-        jac =  -_d_diffem_d_actual_mean_en[_qp] * _actual_mean_en * _phi_neighbor[_j][_qp] * std::exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] * _r_neighbor_units * _normals[_qp] * _test[_i][_qp] * _r_units;
+        jac = -_d_diffem_d_actual_mean_en[_qp] * _actual_mean_en * _phi_neighbor[_j][_qp] *
+              std::exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] * _r_neighbor_units *
+              _normals[_qp] * _test[_i][_qp] * _r_units;
         break;
 
       case Moose::NeighborElement:

@@ -20,9 +20,8 @@
 
 class EFieldArtDiff;
 
-template<>
+template <>
 InputParameters validParams<EFieldArtDiff>();
-
 
 class EFieldArtDiff : public Kernel
 {
@@ -31,7 +30,6 @@ public:
   virtual ~EFieldArtDiff();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -48,6 +46,5 @@ protected:
 
   const MaterialProperty<Real> & _mu;
 };
-
 
 #endif /* EFIELDARTDIFF_H */

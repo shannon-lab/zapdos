@@ -1,22 +1,20 @@
 #include "UserSource.h"
 
-template<>
-InputParameters validParams<UserSource>()
+template <>
+InputParameters
+validParams<UserSource>()
 {
   InputParameters params = validParams<Kernel>();
   params.addRequiredParam<Real>("source_magnitude", "The numerical value of the source magnitude.");
   return params;
 }
 
-UserSource::UserSource(const InputParameters & parameters) :
-    Kernel(parameters),
-    _source(getParam<Real>("source_magnitude"))
+UserSource::UserSource(const InputParameters & parameters)
+  : Kernel(parameters), _source(getParam<Real>("source_magnitude"))
 {
 }
 
-UserSource::~UserSource()
-{
-}
+UserSource::~UserSource() {}
 
 Real
 UserSource::computeQpResidual()

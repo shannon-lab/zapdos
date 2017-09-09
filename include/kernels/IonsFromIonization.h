@@ -19,7 +19,7 @@
 
 class IonsFromIonization;
 
-template<>
+template <>
 InputParameters validParams<IonsFromIonization>();
 
 class IonsFromIonization : public Kernel
@@ -29,7 +29,6 @@ public:
   virtual ~IonsFromIonization();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -51,6 +50,5 @@ protected:
   unsigned int _potential_id;
   unsigned int _em_id;
 };
-
 
 #endif /* IONSFROMIONIZATION_H */

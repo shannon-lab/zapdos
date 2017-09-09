@@ -20,7 +20,7 @@
 // Forward Declaration
 class ReactantAARxn;
 
-template<>
+template <>
 InputParameters validParams<ReactantAARxn>();
 
 class ReactantAARxn : public Kernel
@@ -33,7 +33,6 @@ protected:
   virtual Real computeQpJacobian();
 
   // The reaction coefficient
-  const MaterialProperty<Real> &  _reaction_coeff;
-
+  const MaterialProperty<Real> & _reaction_coeff;
 };
-#endif //REACTANTAARXN_H
+#endif // REACTANTAARXN_H

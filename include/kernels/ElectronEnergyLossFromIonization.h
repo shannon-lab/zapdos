@@ -19,7 +19,7 @@
 
 class ElectronEnergyLossFromIonization;
 
-template<>
+template <>
 InputParameters validParams<ElectronEnergyLossFromIonization>();
 
 class ElectronEnergyLossFromIonization : public Kernel
@@ -29,7 +29,6 @@ public:
   virtual ~ElectronEnergyLossFromIonization();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -50,6 +49,5 @@ protected:
   unsigned int _potential_id;
   unsigned int _em_id;
 };
-
 
 #endif /* ELECTRONENERGYLOSSFROMIONIZATION_H */

@@ -5,7 +5,7 @@
 
 class AxisymmetricCurlZ;
 
-template<>
+template <>
 InputParameters validParams<AxisymmetricCurlZ>();
 
 class AxisymmetricCurlZ : public Kernel
@@ -15,11 +15,8 @@ public:
   virtual ~AxisymmetricCurlZ();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
-
 };
-
 
 #endif /* AXISYMMETRICCURLZ_H */

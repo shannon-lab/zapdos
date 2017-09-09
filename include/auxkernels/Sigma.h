@@ -5,7 +5,7 @@
 
 class Sigma;
 
-template<>
+template <>
 InputParameters validParams<Sigma>();
 
 class Sigma : public AuxKernel
@@ -17,9 +17,8 @@ public:
   virtual Real computeValue() override;
 
 protected:
-
   const VariableValue & _n;
   const VariableGradient & _grad_potential;
 };
 
-#endif //SIGMA_H
+#endif // SIGMA_H

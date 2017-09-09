@@ -5,7 +5,7 @@
 
 class TM0CylindricalEz;
 
-template<>
+template <>
 InputParameters validParams<TM0CylindricalEz>();
 
 class TM0CylindricalEz : public Kernel
@@ -15,7 +15,6 @@ public:
   virtual ~TM0CylindricalEz();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -29,6 +28,5 @@ protected:
   const VariableGradient & _grad_Hphi;
   unsigned int _Hphi_id;
 };
-
 
 #endif /* TM0CYLINDRICALEZ_H */

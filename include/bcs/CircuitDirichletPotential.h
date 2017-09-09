@@ -6,7 +6,7 @@
 class CircuitDirichletPotential;
 class Function;
 
-template<>
+template <>
 InputParameters validParams<CircuitDirichletPotential>();
 
 /**

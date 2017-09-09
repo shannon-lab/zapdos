@@ -5,13 +5,12 @@
 
 class TM0AntennaVertBC;
 
-template<>
+template <>
 InputParameters validParams<TM0AntennaVertBC>();
 
 class TM0AntennaVertBC : public IntegratedBC
 {
 public:
-
   TM0AntennaVertBC(const InputParameters & parameters);
 
 protected:
@@ -24,4 +23,4 @@ protected:
   bool _time_dependent;
 };
 
-#endif //TM0ANTENNAVERTBC_H
+#endif // TM0ANTENNAVERTBC_H

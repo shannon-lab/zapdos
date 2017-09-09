@@ -5,7 +5,7 @@
 
 class DriftDiffusionDoNothingBC;
 
-template<>
+template <>
 InputParameters validParams<DriftDiffusionDoNothingBC>();
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
@@ -17,7 +17,6 @@ public:
   virtual ~DriftDiffusionDoNothingBC();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -38,6 +37,5 @@ protected:
 
   Real _d_diffusivity_d_u;
 };
-
 
 #endif /* DRIFTDIFFUSIONDONOTHINGBC_H */

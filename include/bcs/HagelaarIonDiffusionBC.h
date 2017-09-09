@@ -5,13 +5,12 @@
 
 class HagelaarIonDiffusionBC;
 
-template<>
+template <>
 InputParameters validParams<HagelaarIonDiffusionBC>();
 
 class HagelaarIonDiffusionBC : public IntegratedBC
 {
 public:
-
   HagelaarIonDiffusionBC(const InputParameters & parameters);
 
 protected:
@@ -29,4 +28,4 @@ protected:
   Real _user_velocity;
 };
 
-#endif //HAGELAARIONDIFFUSIONBC_H
+#endif // HAGELAARIONDIFFUSIONBC_H

@@ -17,10 +17,10 @@
 
 #include "DGKernel.h"
 
-//Forward Declarations
+// Forward Declarations
 class DGCoeffDiffusion;
 
-template<>
+template <>
 InputParameters validParams<DGCoeffDiffusion>();
 
 /**

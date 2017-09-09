@@ -5,13 +5,12 @@
 
 class SchottkyEmissionBC;
 
-template<>
+template <>
 InputParameters validParams<SchottkyEmissionBC>();
 
 class SchottkyEmissionBC : public IntegratedBC
 {
 public:
-
   SchottkyEmissionBC(const InputParameters & parameters);
 
 protected:
@@ -47,28 +46,27 @@ protected:
   const MaterialProperty<Real> & _Richardson_coefficient;
   const MaterialProperty<Real> & _cathode_temperature;
 
-  Real  _a;
-  Real  _v_thermal;
-  RealVectorValue  _ion_flux;
-  Real  _n_gamma;
-  Real  _d_v_thermal_d_u;
-  Real  _d_v_thermal_d_mean_en;
-  RealVectorValue  _d_ion_flux_d_potential;
-  RealVectorValue  _d_ion_flux_d_ip;
-  Real  _d_n_gamma_d_potential;
-  Real  _d_n_gamma_d_ip;
-  Real  _d_n_gamma_d_u;
-  Real  _d_n_gamma_d_mean_en;
+  Real _a;
+  Real _v_thermal;
+  RealVectorValue _ion_flux;
+  Real _n_gamma;
+  Real _d_v_thermal_d_u;
+  Real _d_v_thermal_d_mean_en;
+  RealVectorValue _d_ion_flux_d_potential;
+  RealVectorValue _d_ion_flux_d_ip;
+  Real _d_n_gamma_d_potential;
+  Real _d_n_gamma_d_ip;
+  Real _d_n_gamma_d_u;
+  Real _d_n_gamma_d_mean_en;
   Real _actual_mean_en;
   Real _tau;
   bool _relax;
-        std::string _potential_units;
+  std::string _potential_units;
 
-        // Unique variables
+  // Unique variables
 
-        Real _voltage_scaling;
-        Real _dPhi_over_F;
-
+  Real _voltage_scaling;
+  Real _dPhi_over_F;
 };
 
-#endif //SCHOTTKYEMISSIONBC_H
+#endif // SCHOTTKYEMISSIONBC_H

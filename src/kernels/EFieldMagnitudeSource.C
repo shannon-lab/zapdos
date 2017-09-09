@@ -1,23 +1,22 @@
 #include "EFieldMagnitudeSource.h"
 
-template<>
-InputParameters validParams<EFieldMagnitudeSource>()
+template <>
+InputParameters
+validParams<EFieldMagnitudeSource>()
 {
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("potential", "The electric potential.");
   return params;
 }
 
-EFieldMagnitudeSource::EFieldMagnitudeSource(const InputParameters & parameters) :
-    Kernel(parameters),
+EFieldMagnitudeSource::EFieldMagnitudeSource(const InputParameters & parameters)
+  : Kernel(parameters),
     _grad_potential(coupledGradient("potential")),
     _potential_id(coupled("potential"))
 {
 }
 
-EFieldMagnitudeSource::~EFieldMagnitudeSource()
-{
-}
+EFieldMagnitudeSource::~EFieldMagnitudeSource() {}
 
 Real
 EFieldMagnitudeSource::computeQpResidual()

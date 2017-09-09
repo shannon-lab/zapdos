@@ -17,10 +17,10 @@
 
 #include "AuxKernel.h"
 
-//Forward Declarations
+// Forward Declarations
 class Position;
 
-template<>
+template <>
 InputParameters validParams<Position>();
 
 /**
@@ -41,7 +41,6 @@ protected:
   Real _r_units;
 
   virtual Real computeValue();
-
 };
 
 #endif // POSITION_H

@@ -5,15 +5,15 @@
 
 class Water;
 
-template<>
+template <>
 InputParameters validParams<Water>();
 
 class Water : public Material
 {
- public:
+public:
   Water(const InputParameters & parameters);
 
- protected:
+protected:
   virtual void computeQpProperties();
 
   // Input Parameters
@@ -207,19 +207,18 @@ class Water : public Material
   MaterialProperty<Real> & _sgnem;
   MaterialProperty<Real> & _sgnOHm;
   MaterialProperty<Real> & _sgnH3Op;
-  MaterialProperty<Real> &  _sgnNap;
-  MaterialProperty<Real> &  _sgnClm;
-  MaterialProperty<Real> &  _muNap;
-  MaterialProperty<Real> &  _muClm;
-  MaterialProperty<Real> &  _diffNap;
-  MaterialProperty<Real> &  _diffClm;
+  MaterialProperty<Real> & _sgnNap;
+  MaterialProperty<Real> & _sgnClm;
+  MaterialProperty<Real> & _muNap;
+  MaterialProperty<Real> & _muClm;
+  MaterialProperty<Real> & _diffNap;
+  MaterialProperty<Real> & _diffClm;
 
   MaterialProperty<Real> & _EField;
   MaterialProperty<Real> & _OHm_lin;
   MaterialProperty<Real> & _H3Op_lin;
 
- private:
-
+private:
   const VariableValue & _emliq;
   const VariableValue & _H;
   const VariableValue & _OHm;
@@ -239,4 +238,4 @@ class Water : public Material
   const VariableGradient & _grad_potential;
 };
 
-#endif //WATER_H
+#endif // WATER_H
