@@ -5,13 +5,12 @@
 
 class HagelaarElectronBC;
 
-template<>
+template <>
 InputParameters validParams<HagelaarElectronBC>();
 
 class HagelaarElectronBC : public IntegratedBC
 {
 public:
-
   HagelaarElectronBC(const InputParameters & parameters);
 
 protected:
@@ -34,12 +33,11 @@ protected:
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _e;
 
-  Real  _a;
-  Real  _v_thermal;
-  Real  _d_v_thermal_d_u;
-  Real  _d_v_thermal_d_mean_en;
+  Real _a;
+  Real _v_thermal;
+  Real _d_v_thermal_d_u;
+  Real _d_v_thermal_d_mean_en;
   Real _actual_mean_en;
-
 };
 
-#endif //HAGELAARELECTRONBC_H
+#endif // HAGELAARELECTRONBC_H

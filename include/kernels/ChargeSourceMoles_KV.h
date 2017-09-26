@@ -5,17 +5,16 @@
 
 class ChargeSourceMoles_KV;
 
-template<>
+template <>
 InputParameters validParams<ChargeSourceMoles_KV>();
 
 class ChargeSourceMoles_KV : public Kernel
 {
- public:
+public:
   ChargeSourceMoles_KV(const InputParameters & parameters);
   virtual ~ChargeSourceMoles_KV();
 
- protected:
-
+protected:
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -28,9 +27,9 @@ class ChargeSourceMoles_KV : public Kernel
 
   // Kernel members
 
-  const MaterialProperty<Real> &  _e;
-  const MaterialProperty<Real> &  _sgn;
-  const MaterialProperty<Real> &  _N_A;
+  const MaterialProperty<Real> & _e;
+  const MaterialProperty<Real> & _sgn;
+  const MaterialProperty<Real> & _N_A;
   std::string _potential_units;
 
   Real _voltage_scaling;

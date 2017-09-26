@@ -5,15 +5,15 @@
 
 class SigmaMat;
 
-template<>
+template <>
 InputParameters validParams<SigmaMat>();
 
 class SigmaMat : public Material
 {
- public:
+public:
   SigmaMat(const InputParameters & parameters);
 
- protected:
+protected:
   virtual void computeQpProperties() override;
   virtual void initQpStatefulProperties() override;
 
@@ -24,4 +24,4 @@ class SigmaMat : public Material
   const VariableGradient & _grad_potential;
 };
 
-#endif //SIGMAMAT_H
+#endif // SIGMAMAT_H

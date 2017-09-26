@@ -18,11 +18,11 @@
 #include "IntegratedBC.h"
 #include "ProvideMobility.h"
 
-//Forward Declarations
+// Forward Declarations
 class NeumannCircuitVoltageMoles_KV;
 class Function;
 
-template<>
+template <>
 InputParameters validParams<NeumannCircuitVoltageMoles_KV>();
 
 /**
@@ -78,22 +78,22 @@ protected:
   Real _v_i_th;
   Real _a;
   Real _b;
-  RealVectorValue  _d_ion_flux_d_u;
-  RealVectorValue  _d_ion_flux_d_ip;
-  Real  _d_n_gamma_d_u;
-  Real  _d_n_gamma_d_ip;
-  Real  _d_n_gamma_d_em;
-  Real  _d_n_gamma_d_mean_en;
-  Real  _numerator;
-  Real  _denominator;
-  Real  _d_numerator_d_u;
-  Real  _d_denominator_d_u;
-  Real  _d_numerator_d_ip;
-  Real  _d_denominator_d_ip;
-  Real  _d_numerator_d_em;
-  Real  _d_denominator_d_em;
-  Real  _d_numerator_d_mean_en;
-  Real  _d_denominator_d_mean_en;
+  RealVectorValue _d_ion_flux_d_u;
+  RealVectorValue _d_ion_flux_d_ip;
+  Real _d_n_gamma_d_u;
+  Real _d_n_gamma_d_ip;
+  Real _d_n_gamma_d_em;
+  Real _d_n_gamma_d_mean_en;
+  Real _numerator;
+  Real _denominator;
+  Real _d_numerator_d_u;
+  Real _d_denominator_d_u;
+  Real _d_numerator_d_ip;
+  Real _d_denominator_d_ip;
+  Real _d_numerator_d_em;
+  Real _d_denominator_d_em;
+  Real _d_numerator_d_mean_en;
+  Real _d_denominator_d_mean_en;
 
   Real _voltage_scaling;
 };

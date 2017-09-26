@@ -5,25 +5,24 @@
 
 class DCIonBC;
 
-template<>
+template <>
 InputParameters validParams<DCIonBC>();
 
 class DCIonBC : public IntegratedBC
 {
 public:
-
   DCIonBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
-   virtual Real computeQpJacobian();
-   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual Real computeQpJacobian();
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
-   const MaterialProperty<Real> & _mu;
-   const MaterialProperty<Real> & _sgn;
-   /* const MaterialProperty<Real> & _vthermal_ip; */
-   Real _a;
-   Real _r_units;
+  const MaterialProperty<Real> & _mu;
+  const MaterialProperty<Real> & _sgn;
+  /* const MaterialProperty<Real> & _vthermal_ip; */
+  Real _a;
+  Real _r_units;
 
   // coupled variables
 
@@ -31,4 +30,4 @@ protected:
   unsigned int _potential_id;
 };
 
-#endif //DCIONBC_H
+#endif // DCIONBC_H

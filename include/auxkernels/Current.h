@@ -5,7 +5,7 @@
 
 class Current;
 
-template<>
+template <>
 InputParameters validParams<Current>();
 
 class Current : public AuxKernel
@@ -29,4 +29,4 @@ protected:
   bool _art_diff;
 };
 
-#endif //CURRENT_H
+#endif // CURRENT_H

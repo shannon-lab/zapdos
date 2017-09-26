@@ -1,11 +1,12 @@
 #include "UserFlux.h"
 
-template<>
-InputParameters validParams<UserFlux>()
+template <>
+InputParameters
+validParams<UserFlux>()
 {
   InputParameters params = validParams<AuxKernel>();
 
-  params.addRequiredCoupledVar("density_log","The electron density");
+  params.addRequiredCoupledVar("density_log", "The electron density");
   params.addRequiredParam<Real>("mu", "The mobility.");
   params.addRequiredParam<Real>("diff", "The diffusivity.");
   params.addRequiredParam<Real>("sign", "The charge sign of the drift-diffusing particle.");
@@ -13,8 +14,8 @@ InputParameters validParams<UserFlux>()
   return params;
 }
 
-UserFlux::UserFlux(const InputParameters & parameters) :
-    AuxKernel(parameters),
+UserFlux::UserFlux(const InputParameters & parameters)
+  : AuxKernel(parameters),
     _u(coupledValue("density_log")),
     _grad_u(coupledGradient("density_log")),
     _mu(getParam<Real>("mu")),

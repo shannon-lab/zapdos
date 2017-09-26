@@ -20,9 +20,8 @@
 
 class AddLotsOfSources;
 
-template<>
+template <>
 InputParameters validParams<AddLotsOfSources>();
-
 
 class AddLotsOfSources : public AddVariableAction
 {

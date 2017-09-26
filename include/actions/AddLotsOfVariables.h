@@ -20,9 +20,8 @@
 
 class AddLotsOfVariables;
 
-template<>
+template <>
 InputParameters validParams<AddLotsOfVariables>();
-
 
 class AddLotsOfVariables : public AddVariableAction
 {

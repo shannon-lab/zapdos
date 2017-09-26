@@ -20,7 +20,7 @@
 // Forward Declaration
 class ProductFirstOrderRxn;
 
-template<>
+template <>
 InputParameters validParams<ProductFirstOrderRxn>();
 
 class ProductFirstOrderRxn : public Kernel
@@ -38,7 +38,6 @@ protected:
   unsigned int _v_id;
 
   // The reaction coefficient
-  const MaterialProperty<Real> &  _reaction_coeff;
-
+  const MaterialProperty<Real> & _reaction_coeff;
 };
-#endif //PRODUCTFIRSTORDERRXN_H
+#endif // PRODUCTFIRSTORDERRXN_H

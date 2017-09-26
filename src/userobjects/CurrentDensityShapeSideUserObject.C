@@ -1,8 +1,9 @@
 #include "CurrentDensityShapeSideUserObject.h"
 #include "libmesh/quadrature.h"
 
-template<>
-InputParameters validParams<CurrentDensityShapeSideUserObject>()
+template <>
+InputParameters
+validParams<CurrentDensityShapeSideUserObject>()
 {
   InputParameters params = validParams<ShapeSideUserObject>();
   params.addRequiredCoupledVar("em", "The electron  density.");
@@ -13,8 +14,9 @@ InputParameters validParams<CurrentDensityShapeSideUserObject>()
   return params;
 }
 
-CurrentDensityShapeSideUserObject::CurrentDensityShapeSideUserObject(const InputParameters & parameters) :
-    ShapeSideUserObject(parameters),
+CurrentDensityShapeSideUserObject::CurrentDensityShapeSideUserObject(
+    const InputParameters & parameters)
+  : ShapeSideUserObject(parameters),
     _em(coupledValue("em")),
     _em_id(coupled("em")),
     _grad_em(coupledGradient("em")),
@@ -55,10 +57,11 @@ CurrentDensityShapeSideUserObject::execute()
 {
   for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
   {
-    RealVectorValue ion_current = _e * (_muip[qp] * -_grad_potential[qp] * std::exp(_ip[qp])
-                                        - _diffip[qp] * std::exp(_ip[qp]) * _grad_ip[qp]);
-    RealVectorValue electron_current = -_e * (-_muem[qp] * -_grad_potential[qp] * std::exp(_em[qp])
-                                              - _diffem[qp] * std::exp(_em[qp]) * _grad_em[qp]);
+    RealVectorValue ion_current = _e * (_muip[qp] * -_grad_potential[qp] * std::exp(_ip[qp]) -
+                                        _diffip[qp] * std::exp(_ip[qp]) * _grad_ip[qp]);
+    RealVectorValue electron_current =
+        -_e * (-_muem[qp] * -_grad_potential[qp] * std::exp(_em[qp]) -
+               _diffem[qp] * std::exp(_em[qp]) * _grad_em[qp]);
     Real outgoing_current = _normals[qp] * (ion_current + electron_current);
     if (_use_moles)
       outgoing_current *= _avogadro;
@@ -76,9 +79,10 @@ CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
     Real sum = 0.0;
     for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
     {
-      RealVectorValue d_ion_current_d_ip = _e * (_muip[qp] * -_grad_potential[qp] * std::exp(_ip[qp]) * _phi[_j][qp]
-                                                 - _diffip[qp] * (std::exp(_ip[qp]) * _phi[_j][qp] * _grad_ip[qp]
-                                                                   + std::exp(_ip[qp]) * _grad_phi[_j][qp]));
+      RealVectorValue d_ion_current_d_ip =
+          _e * (_muip[qp] * -_grad_potential[qp] * std::exp(_ip[qp]) * _phi[_j][qp] -
+                _diffip[qp] * (std::exp(_ip[qp]) * _phi[_j][qp] * _grad_ip[qp] +
+                               std::exp(_ip[qp]) * _grad_phi[_j][qp]));
       if (_use_moles)
         d_ion_current_d_ip *= _avogadro;
       sum += _JxW[qp] * _coord[qp] * _normals[qp] * d_ion_current_d_ip;
@@ -97,11 +101,12 @@ CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
       Real d_muem_d_em = _d_muem_d_actual_mean_en[qp] * d_actual_mean_en_d_em;
       Real d_diffem_d_em = _d_diffem_d_actual_mean_en[qp] * d_actual_mean_en_d_em;
 
-      RealVectorValue d_electron_current_d_em = -_e * (-_muem[qp] * -_grad_potential[qp] * std::exp(_em[qp]) * _phi[_j][qp]
-                                                       - d_muem_d_em * -_grad_potential[qp] * std::exp(_em[qp])
-                                                       - _diffem[qp] * (std::exp(_em[qp]) * _phi[_j][qp] * _grad_em[qp]
-                                                                         + std::exp(_em[qp]) * _grad_phi[_j][qp])
-                                                       - d_diffem_d_em * std::exp(_em[qp]) * _grad_em[qp]);
+      RealVectorValue d_electron_current_d_em =
+          -_e * (-_muem[qp] * -_grad_potential[qp] * std::exp(_em[qp]) * _phi[_j][qp] -
+                 d_muem_d_em * -_grad_potential[qp] * std::exp(_em[qp]) -
+                 _diffem[qp] * (std::exp(_em[qp]) * _phi[_j][qp] * _grad_em[qp] +
+                                std::exp(_em[qp]) * _grad_phi[_j][qp]) -
+                 d_diffem_d_em * std::exp(_em[qp]) * _grad_em[qp]);
       if (_use_moles)
         d_electron_current_d_em *= _avogadro;
       sum += _JxW[qp] * _coord[qp] * _normals[qp] * d_electron_current_d_em;
@@ -116,9 +121,12 @@ CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
     Real sum = 0.0;
     for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
     {
-      RealVectorValue d_ion_current_d_potential = _e * (_muip[qp] * -_grad_phi[_j][qp] * std::exp(_ip[qp]));
-      RealVectorValue d_electron_current_d_potential = -_e * (-_muem[qp] * -_grad_phi[_j][qp] * std::exp(_em[qp]));
-      Real d_outgoing_current_d_potential = _normals[qp] * (d_ion_current_d_potential + d_electron_current_d_potential);
+      RealVectorValue d_ion_current_d_potential =
+          _e * (_muip[qp] * -_grad_phi[_j][qp] * std::exp(_ip[qp]));
+      RealVectorValue d_electron_current_d_potential =
+          -_e * (-_muem[qp] * -_grad_phi[_j][qp] * std::exp(_em[qp]));
+      Real d_outgoing_current_d_potential =
+          _normals[qp] * (d_ion_current_d_potential + d_electron_current_d_potential);
       if (_use_moles)
         d_outgoing_current_d_potential *= _avogadro;
       sum += _JxW[qp] * _coord[qp] * d_outgoing_current_d_potential;
@@ -137,8 +145,9 @@ CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
       Real d_muem_d_mean_en = _d_muem_d_actual_mean_en[qp] * d_actual_mean_en_d_mean_en;
       Real d_diffem_d_mean_en = _d_diffem_d_actual_mean_en[qp] * d_actual_mean_en_d_mean_en;
 
-      RealVectorValue d_electron_current_d_mean_en = -_e * (-d_muem_d_mean_en * -_grad_potential[qp] * std::exp(_em[qp])
-                                                            -d_diffem_d_mean_en * std::exp(_em[qp]) * _grad_em[qp]);
+      RealVectorValue d_electron_current_d_mean_en =
+          -_e * (-d_muem_d_mean_en * -_grad_potential[qp] * std::exp(_em[qp]) -
+                 d_diffem_d_mean_en * std::exp(_em[qp]) * _grad_em[qp]);
       if (_use_moles)
         d_electron_current_d_mean_en *= _avogadro;
       sum += _JxW[qp] * _coord[qp] * _normals[qp] * d_electron_current_d_mean_en;
@@ -160,12 +169,14 @@ CurrentDensityShapeSideUserObject::finalize()
 void
 CurrentDensityShapeSideUserObject::threadJoin(const UserObject & y)
 {
-  const CurrentDensityShapeSideUserObject & shp_uo = dynamic_cast<const CurrentDensityShapeSideUserObject &>(y);
+  const CurrentDensityShapeSideUserObject & shp_uo =
+      dynamic_cast<const CurrentDensityShapeSideUserObject &>(y);
   _integral += shp_uo._integral;
 
   if (_fe_problem.currentlyComputingJacobian())
   {
-    mooseAssert(_jacobian_storage.size() == shp_uo._jacobian_storage.size(), "Jacobian storage size is inconsistent across threads");
+    mooseAssert(_jacobian_storage.size() == shp_uo._jacobian_storage.size(),
+                "Jacobian storage size is inconsistent across threads");
     for (unsigned int i = 0; i < _jacobian_storage.size(); ++i)
       _jacobian_storage[i] += shp_uo._jacobian_storage[i];
   }

@@ -5,7 +5,7 @@
 
 class CoeffDiffusionElectrons;
 
-template<>
+template <>
 InputParameters validParams<CoeffDiffusionElectrons>();
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
@@ -17,7 +17,6 @@ public:
   virtual ~CoeffDiffusionElectrons();
 
 protected:
-
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -33,6 +32,5 @@ protected:
   Real _d_diffem_d_u;
   Real _d_diffem_d_mean_en;
 };
-
 
 #endif /* COEFFDIFFUSIONELECTRONS_H */

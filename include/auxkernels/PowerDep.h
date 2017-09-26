@@ -5,7 +5,7 @@
 
 class PowerDep;
 
-template<>
+template <>
 InputParameters validParams<PowerDep>();
 
 class PowerDep : public AuxKernel
@@ -32,4 +32,4 @@ protected:
   Real _voltage_scaling;
 };
 
-#endif //POWERDEP_H
+#endif // POWERDEP_H

@@ -20,9 +20,8 @@
 
 class AddLotsOfCoeffDiffusion;
 
-template<>
+template <>
 InputParameters validParams<AddLotsOfCoeffDiffusion>();
-
 
 class AddLotsOfCoeffDiffusion : public AddVariableAction
 {

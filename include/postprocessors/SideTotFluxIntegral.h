@@ -7,7 +7,7 @@
 // Forward Declarations
 class SideTotFluxIntegral;
 
-template<>
+template <>
 InputParameters validParams<SideTotFluxIntegral>();
 
 /**

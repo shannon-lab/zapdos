@@ -5,17 +5,15 @@
 
 class EFieldAdvectionEnergy;
 
-template<>
+template <>
 InputParameters validParams<EFieldAdvectionEnergy>();
 
 class EFieldAdvectionEnergy : public Kernel
 {
- public:
-
+public:
   EFieldAdvectionEnergy(const InputParameters & parameters);
 
- protected:
-
+protected:
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
@@ -28,8 +26,7 @@ class EFieldAdvectionEnergy : public Kernel
   const MaterialProperty<Real> & _d_muel_d_actual_mean_en;
   const MaterialProperty<Real> & _sign;
 
- private:
-
+private:
   // Coupled variables
   unsigned int _potential_id;
   const VariableGradient & _grad_potential;
@@ -42,4 +39,4 @@ class EFieldAdvectionEnergy : public Kernel
   Real _d_muel_d_u;
 };
 
-#endif //EFIELDADVECTIONENERGY_H
+#endif // EFIELDADVECTIONENERGY_H

@@ -5,7 +5,7 @@
 
 class TotalFlux;
 
-template<>
+template <>
 InputParameters validParams<TotalFlux>();
 
 class TotalFlux : public AuxKernel
@@ -26,4 +26,4 @@ protected:
   const MaterialProperty<Real> & _diff;
 };
 
-#endif //TOTALFLUX_H
+#endif // TOTALFLUX_H

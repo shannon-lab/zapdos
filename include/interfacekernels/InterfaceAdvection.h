@@ -17,10 +17,10 @@
 
 #include "InterfaceKernel.h"
 
-//Forward Declarations
+// Forward Declarations
 class InterfaceAdvection;
 
-template<>
+template <>
 InputParameters validParams<InterfaceAdvection>();
 
 /**

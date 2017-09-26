@@ -38,25 +38,24 @@
 #include "libmesh/string_to_enum.h"
 #include "libmesh/fe.h"
 
-template<>
-InputParameters validParams<AddLotsOfSources>()
+template <>
+InputParameters
+validParams<AddLotsOfSources>()
 {
   MooseEnum families(AddVariableAction::getNonlinearVariableFamilies());
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
   InputParameters params = validParams<AddVariableAction>();
   //  params.addRequiredParam<unsigned int>("number", "The number of variables to add");
-  params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which Source kernels should be added");
-  //params.addRequiredParam<std::vector<std::string> >("diffusion_coeffs", "The names of the diffusion coefficients used in the kernels.");
+  params.addRequiredParam<std::vector<NonlinearVariableName>>(
+      "variables", "The names of the variables for which Source kernels should be added");
+  // params.addRequiredParam<std::vector<std::string> >("diffusion_coeffs", "The names of the
+  // diffusion coefficients used in the kernels.");
 
   return params;
 }
 
-
-AddLotsOfSources::AddLotsOfSources(InputParameters params) :
-  AddVariableAction(params)
-{
-}
+AddLotsOfSources::AddLotsOfSources(InputParameters params) : AddVariableAction(params) {}
 
 void
 AddLotsOfSources::act()
@@ -65,8 +64,10 @@ AddLotsOfSources::act()
   MooseSharedPointer<MooseObjectAction> moose_object_action;
   //  unsigned int number = getParam<unsigned int>("number");
 
-  std::vector<NonlinearVariableName> variables = getParam<std::vector<NonlinearVariableName> > ("variables");
-  //std::vector<std::string> var_name_strings = getParam<std::vector<std::string> > ("var_name_strings");
+  std::vector<NonlinearVariableName> variables =
+      getParam<std::vector<NonlinearVariableName>>("variables");
+  // std::vector<std::string> var_name_strings = getParam<std::vector<std::string> >
+  // ("var_name_strings");
 
   unsigned int number = variables.size();
 
@@ -81,16 +82,16 @@ AddLotsOfSources::act()
         } */
   //  else if (_current_task == "add_kernel")
   if (_current_task == "add_kernel")
+  {
+    for (unsigned int cur_num = 0; cur_num < number; cur_num++)
     {
-      for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-        {
-          std::string var_name = variables[cur_num];
-          InputParameters params = _factory.getValidParams("Source");
-          params.set<NonlinearVariableName>("variable") = var_name;
-          params.set<std::string>("var_name_string") = var_name;
-          _problem->addKernel("Source", var_name, params);
-        }
+      std::string var_name = variables[cur_num];
+      InputParameters params = _factory.getValidParams("Source");
+      params.set<NonlinearVariableName>("variable") = var_name;
+      params.set<std::string>("var_name_string") = var_name;
+      _problem->addKernel("Source", var_name, params);
     }
+  }
   /*else if (_current_task == "add_bc")
     {
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)

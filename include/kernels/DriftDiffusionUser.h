@@ -5,7 +5,7 @@
 
 class DriftDiffusionUser;
 
-template<>
+template <>
 InputParameters validParams<DriftDiffusionUser>();
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
@@ -20,6 +20,5 @@ protected:
   MooseArray<Real> _sign;
   MooseArray<Real> _diffusivity;
 };
-
 
 #endif /* DRIFTDIFFUSIONUSER_H */

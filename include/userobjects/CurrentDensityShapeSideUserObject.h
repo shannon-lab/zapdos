@@ -3,14 +3,13 @@
 
 #include "ShapeSideUserObject.h"
 
-//Forward Declarations
+// Forward Declarations
 class CurrentDensityShapeSideUserObject;
 
-template<>
+template <>
 InputParameters validParams<CurrentDensityShapeSideUserObject>();
 
-class CurrentDensityShapeSideUserObject :
-  public ShapeSideUserObject
+class CurrentDensityShapeSideUserObject : public ShapeSideUserObject
 {
 public:
   CurrentDensityShapeSideUserObject(const InputParameters & parameters);

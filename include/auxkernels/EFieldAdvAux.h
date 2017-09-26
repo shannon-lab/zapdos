@@ -19,17 +19,15 @@
 
 class EFieldAdvAux;
 
-template<>
+template <>
 InputParameters validParams<EFieldAdvAux>();
 
 class EFieldAdvAux : public AuxKernel
 {
- public:
-
+public:
   EFieldAdvAux(const InputParameters & parameters);
 
- protected:
-
+protected:
   virtual Real computeValue();
 
   Real _r_units;
@@ -46,4 +44,4 @@ class EFieldAdvAux : public AuxKernel
   const MaterialProperty<Real> & _sgn;
 };
 
-#endif //EFIELDADVAUX_H
+#endif // EFIELDADVAUX_H

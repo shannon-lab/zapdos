@@ -3,10 +3,10 @@
 
 #include "InterfaceKernel.h"
 
-//Forward Declarations
+// Forward Declarations
 class HphiRadialInterface;
 
-template<>
+template <>
 InputParameters validParams<HphiRadialInterface>();
 
 /**

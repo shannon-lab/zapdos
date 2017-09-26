@@ -20,9 +20,8 @@
 
 class AddLotsOfPotentialDrivenArtificialDiff;
 
-template<>
+template <>
 InputParameters validParams<AddLotsOfPotentialDrivenArtificialDiff>();
-
 
 class AddLotsOfPotentialDrivenArtificialDiff : public AddVariableAction
 {

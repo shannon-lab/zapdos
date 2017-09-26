@@ -5,20 +5,18 @@
 
 class TM0CylindricalEzAux;
 
-template<>
+template <>
 InputParameters validParams<TM0CylindricalEzAux>();
 
 class TM0CylindricalEzAux : public AuxKernel
 {
- public:
-
+public:
   TM0CylindricalEzAux(const InputParameters & parameters);
 
- protected:
-
+protected:
   virtual Real computeValue();
 
- private:
+private:
   const VariableGradient & _grad_Hphi;
   const VariableValue & _Hphi;
 
@@ -27,4 +25,4 @@ class TM0CylindricalEzAux : public AuxKernel
   Real _eps0;
 };
 
-#endif //TM0CYLINDRICALEZAUX_H
+#endif // TM0CYLINDRICALEZAUX_H

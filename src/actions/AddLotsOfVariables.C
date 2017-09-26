@@ -38,24 +38,22 @@
 #include "libmesh/string_to_enum.h"
 #include "libmesh/fe.h"
 
-template<>
-InputParameters validParams<AddLotsOfVariables>()
+template <>
+InputParameters
+validParams<AddLotsOfVariables>()
 {
   MooseEnum families(AddVariableAction::getNonlinearVariableFamilies());
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
   InputParameters params = validParams<AddVariableAction>();
   //  params.addRequiredParam<unsigned int>("number", "The number of variables to add");
-  params.addRequiredParam<std::vector<NonlinearVariableName> >("variables", "The names of the variables for which CoeffDiffusion kernels should be added");
+  params.addRequiredParam<std::vector<NonlinearVariableName>>(
+      "variables", "The names of the variables for which CoeffDiffusion kernels should be added");
 
   return params;
 }
 
-
-AddLotsOfVariables::AddLotsOfVariables(InputParameters params) :
-  AddVariableAction(params)
-{
-}
+AddLotsOfVariables::AddLotsOfVariables(InputParameters params) : AddVariableAction(params) {}
 
 void
 AddLotsOfVariables::act()
@@ -64,19 +62,20 @@ AddLotsOfVariables::act()
   MooseSharedPointer<MooseObjectAction> moose_object_action;
   //  unsigned int number = getParam<unsigned int>("number");
 
-  std::vector<NonlinearVariableName> variables = getParam<std::vector<NonlinearVariableName> > ("variables");
+  std::vector<NonlinearVariableName> variables =
+      getParam<std::vector<NonlinearVariableName>>("variables");
 
   unsigned int number = variables.size();
 
   if (_current_task == "add_variable")
+  {
+    for (unsigned int cur_num = 0; cur_num < number; cur_num++)
     {
-      for (unsigned int cur_num = 0; cur_num < number; cur_num++)
-        {
-          //      std::string var_name = getShortName() + Moose::stringify(cur_num);
-          std::string var_name = variables[cur_num];
-          addVariable(var_name);
-        }
+      //      std::string var_name = getShortName() + Moose::stringify(cur_num);
+      std::string var_name = variables[cur_num];
+      addVariable(var_name);
     }
+  }
   /*  else if (_current_task == "add_kernel")
     {
       for (unsigned int cur_num = 0; cur_num < number; cur_num++)

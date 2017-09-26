@@ -5,7 +5,7 @@
 
 class ProcRate;
 
-template<>
+template <>
 InputParameters validParams<ProcRate>();
 
 class ProcRate : public AuxKernel
@@ -30,4 +30,4 @@ protected:
   RealVectorValue _em_current;
 };
 
-#endif //PROCRATE_H
+#endif // PROCRATE_H

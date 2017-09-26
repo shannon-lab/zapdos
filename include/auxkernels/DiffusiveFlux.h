@@ -5,17 +5,15 @@
 
 class DiffusiveFlux;
 
-template<>
+template <>
 InputParameters validParams<DiffusiveFlux>();
 
 class DiffusiveFlux : public AuxKernel
 {
- public:
-
+public:
   DiffusiveFlux(const InputParameters & parameters);
 
- protected:
-
+protected:
   virtual Real computeValue();
 
   Real _r_units;
@@ -31,4 +29,4 @@ class DiffusiveFlux : public AuxKernel
   const MaterialProperty<Real> & _diff;
 };
 
-#endif //DIFFUSIVEFLUX_H
+#endif // DIFFUSIVEFLUX_H
