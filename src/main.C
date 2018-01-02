@@ -17,13 +17,10 @@ int main(int argc, char *argv[])
   ZapdosApp::registerApps();
 
   // This creates dynamic memory that we're responsible for deleting
-  MooseApp * app = AppFactory::createApp("ZapdosApp", argc, argv);
+  std::shared_ptr<MooseApp> app = AppFactory::createAppShared("ZapdosApp", argc, argv);
 
   // Execute the application
   app->run();
-
-  // Free up the memory we created earlier
-  delete app;
 
   return 0;
 }
