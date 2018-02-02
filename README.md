@@ -22,6 +22,8 @@ Zapdos/MOOSE are given in Chemical_Reactions.ipynb.
   <ul>
     <li><code>git clone https://github.com/shannon-lab/zapdos</code></li>
     <li><code>cd zapdos</code></li>
+	<li><code>git submodule init</code></li>
+	<li><code>git submodule update</code></li>
     <li><code>make -jn</code> where "n" is the number of logical processors on
   your computer</li>
   </ul>
