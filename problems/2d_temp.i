@@ -2,14 +2,13 @@ dom0Scale=1e-3
 
 [GlobalParams]
   potential_units = kV
+  use_moles = true
   # potential_units = V
 []
 
 [Mesh]
   type = FileMesh
   file = '2d.msh'
-  boundary_id = '10 11 12 13'
-  boundary_name = 'cathode anode walls axis'
   # type = GeneratedMesh
   # nx = 1
   # xmax = 1.1
@@ -41,8 +40,8 @@ dom0Scale=1e-3
   # end_time = .2
   solve_type = NEWTON
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
-  petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -snes_linesearch_minlambda'
+  petsc_options_value = 'lu NONZERO 1.e-10 1e-3'
   # petsc_options = '-snes_test_display'
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
@@ -101,7 +100,7 @@ dom0Scale=1e-3
 [BCs]
   [./cathode]
     type = DirichletBC
-    boundary = cathode
+    boundary = needle
     variable = potential
     value = -1.25
   [../]
@@ -133,7 +132,7 @@ dom0Scale=1e-3
   [./anode]
     type = DirichletBC
     value = 0
-    boundary = anode
+    boundary = dish
     variable = potential
   [../]
   # [./species_diff]
@@ -220,7 +219,8 @@ dom0Scale=1e-3
     interp_trans_coeffs = true
     interp_elastic_coeff = true
     ramp_trans_coeffs = false
-    block = 0
+    block = 'plasma'
+    property_tables_file = 'td_argon_mean_en.txt'
   [../]
   # [./test]
   #   type = JacMat

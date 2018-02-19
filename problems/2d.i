@@ -3,6 +3,11 @@ dom0Scale=1e-3
 [GlobalParams]
   offset = 20
   potential_units = kV
+  use_moles = true
+  position_units = ${dom0Scale}
+  em = em
+  potential = potential
+  resist = 1
 []
 
 [Mesh]
@@ -11,11 +16,9 @@ dom0Scale=1e-3
   # xmax = 1.1
   # dim = 1
   # boundary_id = '0 1'
-  # boundary_name = 'anode cathode'
+  # boundary_name = 'dish needle'
   type = FileMesh
   file = '2d.msh'
-  boundary_id = '10 11 12 13'
-  boundary_name = 'cathode anode walls axis'
 []
 
 
@@ -69,21 +72,21 @@ dom0Scale=1e-3
   [./em_time_deriv]
     type = ElectronTimeDerivative
     variable = em
-    block = 0
+    block = 'plasma'
   [../]
   [./em_advection]
     type = EFieldAdvectionElectrons
     variable = em
     potential = potential
     mean_en = mean_en
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
   [./em_diffusion]
     type = CoeffDiffusionElectrons
     variable = em
     mean_en = mean_en
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
   # [./em_ionization]
@@ -91,71 +94,71 @@ dom0Scale=1e-3
   #   variable = em
   #   potential = potential
   #   mean_en = mean_en
-  #   block = 0
+  #   block = 'plasma'
   #   position_units = ${dom0Scale}
   # [../]
   [./em_ionization]
-    type = ElectronRateIonization
+    type = ElectronsFromIonization
     variable = em
     mean_en = mean_en
-    block = 0
+    block = 'plasma'
   [../]
   [./em_log_stabilization]
     type = LogStabilizationMoles
     variable = em
-    block = 0
+    block = 'plasma'
   [../]
   [./em_advection_stabilization]
     type = EFieldArtDiff
     variable = em
     potential = potential
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
 
   [./potential_diffusion_dom1]
     type = CoeffDiffusionLin
     variable = potential
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
   [./Arp_charge_source]
     type = ChargeSourceMoles_KV
     variable = potential
     charged = Arp
-    block = 0
+    block = 'plasma'
   [../]
   [./em_charge_source]
     type = ChargeSourceMoles_KV
     variable = potential
     charged = em
-    block = 0
+    block = 'plasma'
   [../]
 
   [./Arp_time_deriv]
     type = ElectronTimeDerivative
     variable = Arp
-    block = 0
+    block = 'plasma'
   [../]
   [./Arp_advection]
     type = EFieldAdvection
     variable = Arp
     potential = potential
     position_units = ${dom0Scale}
-    block = 0
+    block = 'plasma'
   [../]
   [./Arp_diffusion]
     type = CoeffDiffusion
     variable = Arp
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
   [./Arp_ionization]
-    type = IonRateIonization
+    type = IonsFromIonization
     variable = Arp
     em = em
     mean_en = mean_en
-    block = 0
+    block = 'plasma'
   [../]
   # [./Arp_ionization]
   #   type = IonsFromIonization
@@ -163,40 +166,40 @@ dom0Scale=1e-3
   #   potential = potential
   #   em = em
   #   mean_en = mean_en
-  #   block = 0
+  #   block = 'plasma'
   #   position_units = ${dom0Scale}
   # [../]
   [./Arp_log_stabilization]
     type = LogStabilizationMoles
     variable = Arp
-    block = 0
+    block = 'plasma'
   [../]
   [./Arp_advection_stabilization]
     type = EFieldArtDiff
     variable = Arp
     potential = potential
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
 
   [./mean_en_time_deriv]
     type = ElectronTimeDerivative
     variable = mean_en
-    block = 0
+    block = 'plasma'
   [../]
   [./mean_en_advection]
     type = EFieldAdvectionEnergy
     variable = mean_en
     potential = potential
     em = em
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
   [./mean_en_diffusion]
     type = CoeffDiffusionEnergy
     variable = mean_en
     em = em
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
   [./mean_en_joule_heating]
@@ -204,33 +207,33 @@ dom0Scale=1e-3
     variable = mean_en
     potential = potential
     em = em
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
   [./mean_en_ionization]
-    type = ElectronEnergyRateIonization
+    type = ElectronEnergyLossFromIonization
     variable = mean_en
     em = em
-    block = 0
+    block = 'plasma'
   [../]
   [./mean_en_elastic]
-    type = ElectronEnergyRateElastic
+    type = ElectronEnergyLossFromElastic
     variable = mean_en
     em = em
-    block = 0
+    block = 'plasma'
   [../]
   [./mean_en_excitation]
-    type = ElectronEnergyRateExcitation
+    type = ElectronEnergyLossFromExcitation
     variable = mean_en
     em = em
-    block = 0
+    block = 'plasma'
   [../]
   # [./mean_en_ionization]
   #   type = ElectronEnergyLossFromIonization
   #   variable = mean_en
   #   potential = potential
   #   em = em
-  #   block = 0
+  #   block = 'plasma'
   #   position_units = ${dom0Scale}
   # [../]
   # [./mean_en_elastic]
@@ -238,7 +241,7 @@ dom0Scale=1e-3
   #   variable = mean_en
   #   potential = potential
   #   em = em
-  #   block = 0
+  #   block = 'plasma'
   #   position_units = ${dom0Scale}
   # [../]
   # [./mean_en_excitation]
@@ -246,20 +249,20 @@ dom0Scale=1e-3
   #   variable = mean_en
   #   potential = potential
   #   em = em
-  #   block = 0
+  #   block = 'plasma'
   #   position_units = ${dom0Scale}
   # [../]
   [./mean_en_log_stabilization]
     type = LogStabilizationMoles
     variable = mean_en
-    block = 0
+    block = 'plasma'
     offset = 15
   [../]
   [./mean_en_advection_stabilization]
     type = EFieldArtDiff
     variable = mean_en
     potential = potential
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
 []
@@ -268,21 +271,21 @@ dom0Scale=1e-3
   [./potential]
   [../]
   [./em]
-    block = 0
+    block = 'plasma'
   [../]
 
   [./Arp]
-    block = 0
+    block = 'plasma'
   [../]
 
   [./mean_en]
-    block = 0
+    block = 'plasma'
   [../]
 []
 
 [AuxVariables]
   [./e_temp]
-    block = 0
+    block = 'plasma'
   [../]
   [./x]
     order = CONSTANT
@@ -293,17 +296,17 @@ dom0Scale=1e-3
   [./rho]
     order = CONSTANT
     family = MONOMIAL
-    block = 0
+    block = 'plasma'
   [../]
   [./em_lin]
     order = CONSTANT
     family = MONOMIAL
-    block = 0
+    block = 'plasma'
   [../]
   [./Arp_lin]
     order = CONSTANT
     family = MONOMIAL
-    block = 0
+    block = 'plasma'
   [../]
   [./Efield]
     order = CONSTANT
@@ -312,52 +315,52 @@ dom0Scale=1e-3
   [./Current_em]
     order = CONSTANT
     family = MONOMIAL
-    block = 0
+    block = 'plasma'
   [../]
   [./Current_Arp]
     order = CONSTANT
     family = MONOMIAL
-    block = 0
+    block = 'plasma'
   [../]
   [./tot_gas_current]
     order = CONSTANT
     family = MONOMIAL
-    block = 0
+    block = 'plasma'
   [../]
   [./EFieldAdvAux_em]
     order = CONSTANT
     family = MONOMIAL
-    block = 0
+    block = 'plasma'
   [../]
   [./DiffusiveFlux_em]
     order = CONSTANT
     family = MONOMIAL
-    block = 0
+    block = 'plasma'
   [../]
   [./PowerDep_em]
    order = CONSTANT
    family = MONOMIAL
-   block = 0
+   block = 'plasma'
   [../]
   [./PowerDep_Arp]
    order = CONSTANT
    family = MONOMIAL
-   block = 0
+   block = 'plasma'
   [../]
   [./ProcRate_el]
    order = CONSTANT
    family = MONOMIAL
-   block = 0
+   block = 'plasma'
   [../]
   [./ProcRate_ex]
    order = CONSTANT
    family = MONOMIAL
-   block = 0
+   block = 'plasma'
   [../]
   [./ProcRate_iz]
    order = CONSTANT
    family = MONOMIAL
-   block = 0
+   block = 'plasma'
   [../]
 []
 
@@ -370,7 +373,7 @@ dom0Scale=1e-3
     potential_units = kV
     variable = PowerDep_em
     position_units = ${dom0Scale}
-    block = 0
+    block = 'plasma'
   [../]
   [./PowerDep_Arp]
     type = PowerDep
@@ -380,7 +383,7 @@ dom0Scale=1e-3
     potential_units = kV
     variable = PowerDep_Arp
     position_units = ${dom0Scale}
-    block = 0
+    block = 'plasma'
   [../]
   [./ProcRate_el]
     type = ProcRate
@@ -389,7 +392,7 @@ dom0Scale=1e-3
     proc = el
     variable = ProcRate_el
     position_units = ${dom0Scale}
-    block = 0
+    block = 'plasma'
   [../]
   [./ProcRate_ex]
     type = ProcRate
@@ -398,7 +401,7 @@ dom0Scale=1e-3
     proc = ex
     variable = ProcRate_ex
     position_units = ${dom0Scale}
-    block = 0
+    block = 'plasma'
   [../]
   [./ProcRate_iz]
     type = ProcRate
@@ -407,26 +410,26 @@ dom0Scale=1e-3
     proc = iz
     variable = ProcRate_iz
     position_units = ${dom0Scale}
-    block = 0
+    block = 'plasma'
   [../]
   [./e_temp]
     type = ElectronTemperature
     variable = e_temp
     electron_density = em
     mean_en = mean_en
-    block = 0
+    block = 'plasma'
   [../]
   [./x_g]
     type = Position
     variable = x
     position_units = ${dom0Scale}
-    block = 0
+    block = 'plasma'
   [../]
   [./x_ng]
     type = Position
     variable = x_node
     position_units = ${dom0Scale}
-    block = 0
+    block = 'plasma'
   [../]
   [./rho]
     type = ParsedAux
@@ -434,7 +437,7 @@ dom0Scale=1e-3
     args = 'em_lin Arp_lin'
     function = 'Arp_lin - em_lin'
     execute_on = 'timestep_end'
-    block = 0
+    block = 'plasma'
   [../]
   [./tot_gas_current]
     type = ParsedAux
@@ -442,21 +445,19 @@ dom0Scale=1e-3
     args = 'Current_em Current_Arp'
     function = 'Current_em + Current_Arp'
     execute_on = 'timestep_end'
-    block = 0
+    block = 'plasma'
   [../]
   [./em_lin]
     type = Density
-    use_moles = true
     variable = em_lin
     density_log = em
-    block = 0
+    block = 'plasma'
   [../]
   [./Arp_lin]
     type = Density
-    use_moles = true
     variable = Arp_lin
     density_log = Arp
-    block = 0
+    block = 'plasma'
   [../]
   [./Efield_g]
     type = Efield
@@ -464,7 +465,7 @@ dom0Scale=1e-3
     potential = potential
     variable = Efield
     position_units = ${dom0Scale}
-    block = 0
+    block = 'plasma'
   [../]
   [./Current_em]
     type = Current
@@ -472,7 +473,7 @@ dom0Scale=1e-3
     density_log = em
     variable = Current_em
     art_diff = false
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
   [./Current_Arp]
@@ -481,7 +482,7 @@ dom0Scale=1e-3
     density_log = Arp
     variable = Current_Arp
     art_diff = false
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
   [./EFieldAdvAux_em]
@@ -489,14 +490,14 @@ dom0Scale=1e-3
     potential = potential
     density_log = em
     variable = EFieldAdvAux_em
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
   [./DiffusiveFlux_em]
     type = DiffusiveFlux
     density_log = em
     variable = DiffusiveFlux_em
-    block = 0
+    block = 'plasma'
     position_units = ${dom0Scale}
   [../]
 []
@@ -506,21 +507,21 @@ dom0Scale=1e-3
     type = CircuitDirichletPotential
     surface_potential = cathode_func
     current = cathode_flux
-    boundary = cathode
+    boundary = needle
     variable = potential
-    surface = cathode
+    surface = needle
   [../]
   [./potential_anode]
     type = DirichletBC
     variable = potential
-    boundary = anode
+    boundary = dish
     value = 0
   [../]
   [./electrons]
     type = HagelaarElectronBC
     variable = em
-    boundary = 'anode cathode walls'
-    # boundary = 'anode cathode'
+    boundary = 'dish needle walls'
+    # boundary = 'dish needle'
     potential = potential
     mean_en = mean_en
     r = 0
@@ -529,8 +530,8 @@ dom0Scale=1e-3
   [./sec_electrons]
     type = SecondaryElectronBC
     variable = em
-    boundary = 'anode cathode walls'
-    # boundary = 'anode cathode'
+    boundary = 'dish needle walls'
+    # boundary = 'dish needle'
     potential = potential
     ip = Arp
     mean_en = mean_en
@@ -540,16 +541,16 @@ dom0Scale=1e-3
   [./ions_diffusion]
     type = HagelaarIonDiffusionBC
     variable = Arp
-    boundary = 'anode cathode walls'
-    # boundary = 'anode cathode'
+    boundary = 'dish needle walls'
+    # boundary = 'dish needle'
     r = 0
     position_units = ${dom0Scale}
   [../]
   [./ions_advection]
     type = HagelaarIonAdvectionBC
     variable = Arp
-    boundary = 'anode cathode walls'
-    # boundary = 'anode cathode'
+    boundary = 'dish needle walls'
+    # boundary = 'dish needle'
     potential = potential
     r = 0
     position_units = ${dom0Scale}
@@ -557,8 +558,8 @@ dom0Scale=1e-3
   [./mean_en]
     type = HagelaarEnergyBC
     variable = mean_en
-    boundary = 'anode cathode walls'
-    # boundary = 'anode cathode'
+    boundary = 'dish needle walls'
+    # boundary = 'dish needle'
     potential = potential
     em = em
     ip = Arp
@@ -572,19 +573,19 @@ dom0Scale=1e-3
     type = ConstantIC
     variable = em
     value = -21
-    block = 0
+    block = 'plasma'
   [../]
   [./Arp_ic]
     type = ConstantIC
     variable = Arp
     value = -21
-    block = 0
+    block = 'plasma'
   [../]
   [./mean_en_ic]
     type = ConstantIC
     variable = mean_en
     value = -20
-    block = 0
+    block = 'plasma'
   [../]
   [./potential_ic]
     type = ConstantIC
@@ -594,21 +595,21 @@ dom0Scale=1e-3
   # [./em_ic]
   #   type = RandomIC
   #   variable = em
-  #   block = 0
+  #   block = 'plasma'
   #   min = -21.5
   #   max = -20.5
   # [../]
   # [./Arp_ic]
   #   type = RandomIC
   #   variable = Arp
-  #   block = 0
+  #   block = 'plasma'
   #   min = -21.5
   #   max = -20.5
   # [../]
   # [./mean_en_ic]
   #   type = RandomIC
   #   variable = mean_en
-  #   block = 0
+  #   block = 'plasma'
   #   min = -20.5
   #   max = -19.5
   # [../]
@@ -631,7 +632,13 @@ dom0Scale=1e-3
     potential = potential
     ip = Arp
     mean_en = mean_en
-    block = 0
+    block = 'plasma'
+    property_tables_file = 'td_argon_mean_en.txt'
+ [../]
+ [./cathode_boundary]
+   type = GenericConstantMaterial
+   prop_names = 'T_heavy'
+   prop_values = '293'
  [../]
  # [./jac]
  #   type = JacMat
@@ -646,7 +653,7 @@ dom0Scale=1e-3
     type = SideTotFluxIntegral
     execute_on = nonlinear
     # execute_on = linear
-    boundary = cathode
+    boundary = needle
     mobility = muArp
     potential = potential
     variable = Arp
