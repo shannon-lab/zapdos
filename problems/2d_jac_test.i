@@ -1,6 +1,13 @@
 [GlobalParams]
+  area = 1.1
+  use_moles = true
   # potential_units = kV
   potential_units = V
+  potential = u
+  em = v
+  ip = w
+  mean_en = a
+  position_units = 1e-3
 []
 
 [Mesh]
@@ -19,6 +26,7 @@
 []
 
 [Problem]
+  kernel_coverage_check = false
   type = FEProblem
   coord_type = RZ
   # rz_coord_axis = X
@@ -88,6 +96,24 @@
   # [../]
 []
 
+[UserObjects]
+  [./cathode_flux]
+    type = CurrentDensityShapeSideUserObject
+    boundary = cathode
+    data_provider = data_provider
+    execute_on = 'linear nonlinear'
+  [../]
+  [./data_provider]
+    type = ProvideMobility
+    electrode_area = 5.02e-7 # Formerly 3.14e-6
+    ballast_resist = 1e6
+    e = 1.6e-19
+    # electrode_area = 1.1
+    # ballast_resist = 1.1
+    # e = 1.1
+  [../]
+[]
+
 [Variables]
   [./u]
     # order = SECOND
@@ -96,6 +122,10 @@
   [./v]
     # order = SECOND
     # family = LAGRANGE
+  [../]
+  [./w]
+  [../]
+  [./a]
   [../]
 []
 
@@ -111,9 +141,11 @@
     surface_potential = -1
     current = cathode_flux
     boundary = cathode
-    variable = v
+    variable = u
     surface = cathode
     penalty = 1
+    data_provider = data_provider
+    resistance = 1e6
   [../]
   # [./cathode]
   #   type = CircuitDirichletPotential
@@ -223,7 +255,13 @@
   #   ramp_trans_coeffs = false
   #   block = 0
   # [../]
+  [./constant_mats]
+    type = GenericConstantMaterial
+    prop_names = 'diffw'
+    prop_values = '1.1'
+  [../]
   [./test]
+    property_tables_file = 'td_argon_mean_en.txt'
     type = JacMat
     interp_trans_coeffs = true
     interp_elastic_coeff = true
@@ -246,27 +284,31 @@
     position_units = 1
     user_velocity = 1
   [../]
-  [./cathode_flux]
-    type = SideTotFluxIntegral
-    # execute_on = timestep_end
-    execute_on = linear
-    boundary = cathode
-    mobility = muu
-    potential = v
-    variable = u
-    r = 0
-    position_units = 1
-    user_velocity = 1
-  [../]
 []
 
-# [ICs]
-#   [./em_ic]
-#     type = RandomIC
-#     variable = u
-#   [../]
-#   [./emliq_ic]
-#     type = RandomIC
-#     variable = v
-#   [../]
-# []
+[ICs]
+  [./u_ic]
+    type = RandomIC
+    variable = u
+    min = 0.1
+    max = 0.9
+  [../]
+  [./v_ic]
+    type = RandomIC
+    variable = v
+    min = 0.1
+    max = 0.9
+  [../]
+  [./w_ic]
+    type = RandomIC
+    variable = w
+    min = 0.1
+    max = 0.9
+  [../]
+  [./a_ic]
+    type = RandomIC
+    variable = a
+    min = 0.1
+    max = 0.9
+  [../]
+[]
