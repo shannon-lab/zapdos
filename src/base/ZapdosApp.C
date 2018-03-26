@@ -16,6 +16,10 @@ validParams<ZapdosApp>()
   return params;
 }
 
+// When using the new Registry system, this line is required so that
+// dependent apps know about the ZapdosApp label.
+registerKnownLabel("ZapdosApp");
+
 ZapdosApp::ZapdosApp(InputParameters parameters) : MooseApp(parameters)
 {
 
