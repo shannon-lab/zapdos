@@ -19,6 +19,8 @@
 
 #include <cmath>
 
+registerMooseObject("ZapdosApp", InterfaceAdvection);
+
 template <>
 InputParameters
 validParams<InterfaceAdvection>()

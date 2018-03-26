@@ -1,5 +1,7 @@
 #include "ProcRate.h"
 
+registerMooseObject("ZapdosApp", ProcRate);
+
 template <>
 InputParameters
 validParams<ProcRate>()

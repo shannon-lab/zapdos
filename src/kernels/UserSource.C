@@ -1,5 +1,7 @@
 #include "UserSource.h"
 
+registerMooseObject("ZapdosApp", UserSource);
+
 template <>
 InputParameters
 validParams<UserSource>()

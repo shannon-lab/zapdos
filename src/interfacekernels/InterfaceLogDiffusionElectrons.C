@@ -5,6 +5,8 @@
 
 #include <cmath>
 
+registerMooseObject("ZapdosApp", InterfaceLogDiffusionElectrons);
+
 template <>
 InputParameters
 validParams<InterfaceLogDiffusionElectrons>()

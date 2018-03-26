@@ -1,5 +1,7 @@
 #include "UserFlux.h"
 
+registerMooseObject("ZapdosApp", UserFlux);
+
 template <>
 InputParameters
 validParams<UserFlux>()

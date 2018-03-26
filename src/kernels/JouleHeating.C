@@ -1,5 +1,7 @@
 #include "JouleHeating.h"
 
+registerMooseObject("ZapdosApp", JouleHeating);
+
 template <>
 InputParameters
 validParams<JouleHeating>()

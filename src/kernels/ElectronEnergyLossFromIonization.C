@@ -1,5 +1,7 @@
 #include "ElectronEnergyLossFromIonization.h"
 
+registerMooseObject("ZapdosApp", ElectronEnergyLossFromIonization);
+
 template <>
 InputParameters
 validParams<ElectronEnergyLossFromIonization>()

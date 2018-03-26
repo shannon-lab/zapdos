@@ -38,6 +38,10 @@
 #include "libmesh/string_to_enum.h"
 #include "libmesh/fe.h"
 
+registerMooseAction("ZapdosApp", AddLotsOfCoeffDiffusion, "add_variable");
+registerMooseAction("ZapdosApp", AddLotsOfCoeffDiffusion, "add_kernel");
+registerMooseAction("ZapdosApp", AddLotsOfCoeffDiffusion, "add_bc");
+
 template <>
 InputParameters
 validParams<AddLotsOfCoeffDiffusion>()

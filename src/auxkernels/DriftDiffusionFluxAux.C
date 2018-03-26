@@ -13,6 +13,8 @@
 /****************************************************************/
 #include "DriftDiffusionFluxAux.h"
 
+registerMooseObject("ZapdosApp", DriftDiffusionFluxAux);
+
 template <>
 InputParameters
 validParams<DriftDiffusionFluxAux>()

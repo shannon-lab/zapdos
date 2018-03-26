@@ -1,5 +1,7 @@
 #include "ElectronDiffusionDoNothingBC.h"
 
+registerMooseObject("ZapdosApp", ElectronDiffusionDoNothingBC);
+
 template <>
 InputParameters
 validParams<ElectronDiffusionDoNothingBC>()

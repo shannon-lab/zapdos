@@ -1,5 +1,7 @@
 #include "CoeffDiffusionEnergy.h"
 
+registerMooseObject("ZapdosApp", CoeffDiffusionEnergy);
+
 template <>
 InputParameters
 validParams<CoeffDiffusionEnergy>()

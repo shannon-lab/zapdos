@@ -4,6 +4,8 @@
 #include "MooseVariable.h"
 #include "Function.h"
 
+registerMooseObject("ZapdosApp", NeumannCircuitVoltageMoles_KV);
+
 template <>
 InputParameters
 validParams<NeumannCircuitVoltageMoles_KV>()

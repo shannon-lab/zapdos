@@ -13,6 +13,8 @@
 /****************************************************************/
 #include "JacMat.h"
 
+registerMooseObject("ZapdosApp", JacMat);
+
 template <>
 InputParameters
 validParams<JacMat>()

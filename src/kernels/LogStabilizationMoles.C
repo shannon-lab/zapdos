@@ -1,5 +1,7 @@
 #include "LogStabilizationMoles.h"
 
+registerMooseObject("ZapdosApp", LogStabilizationMoles);
+
 template <>
 InputParameters
 validParams<LogStabilizationMoles>()
