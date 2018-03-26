@@ -14,6 +14,8 @@
 
 #include "AbsValueAux.h"
 
+registerMooseObject("ZapdosApp", AbsValueAux);
+
 template <>
 InputParameters
 validParams<AbsValueAux>()

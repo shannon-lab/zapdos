@@ -1,6 +1,8 @@
 #include "CurrentDensityShapeSideUserObject.h"
 #include "libmesh/quadrature.h"
 
+registerMooseObject("ZapdosApp", CurrentDensityShapeSideUserObject);
+
 template <>
 InputParameters
 validParams<CurrentDensityShapeSideUserObject>()

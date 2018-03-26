@@ -1,5 +1,7 @@
 #include "ElectronTimeDerivative.h"
 
+registerMooseObject("ZapdosApp", ElectronTimeDerivative);
+
 template <>
 InputParameters
 validParams<ElectronTimeDerivative>()

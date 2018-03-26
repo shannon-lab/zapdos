@@ -18,6 +18,8 @@
 // libmesh includes
 #include "libmesh/mesh_tools.h"
 
+registerMooseObject("ZapdosApp", BlockAverageValue);
+
 template <>
 InputParameters
 validParams<BlockAverageValue>()

@@ -1,5 +1,7 @@
 #include "AxisymmetricCurlZ.h"
 
+registerMooseObject("ZapdosApp", AxisymmetricCurlZ);
+
 template <>
 InputParameters
 validParams<AxisymmetricCurlZ>()

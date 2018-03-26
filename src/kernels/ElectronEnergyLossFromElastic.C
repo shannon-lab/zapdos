@@ -1,5 +1,7 @@
 #include "ElectronEnergyLossFromElastic.h"
 
+registerMooseObject("ZapdosApp", ElectronEnergyLossFromElastic);
+
 template <>
 InputParameters
 validParams<ElectronEnergyLossFromElastic>()
