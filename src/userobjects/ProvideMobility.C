@@ -14,6 +14,8 @@
 
 #include "ProvideMobility.h"
 
+registerMooseObject("ZapdosApp", ProvideMobility);
+
 template <>
 InputParameters
 validParams<ProvideMobility>()

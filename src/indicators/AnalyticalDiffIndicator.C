@@ -15,6 +15,8 @@
 #include "AnalyticalDiffIndicator.h"
 #include "Function.h"
 
+registerMooseObject("ZapdosApp", AnalyticalDiffIndicator);
+
 template <>
 InputParameters
 validParams<AnalyticalDiffIndicator>()

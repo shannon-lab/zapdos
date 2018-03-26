@@ -1,5 +1,7 @@
 #include "ElectronEnergyLossFromExcitation.h"
 
+registerMooseObject("ZapdosApp", ElectronEnergyLossFromExcitation);
+
 template <>
 InputParameters
 validParams<ElectronEnergyLossFromExcitation>()

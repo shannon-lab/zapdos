@@ -1,5 +1,7 @@
 #include "PowerDep.h"
 
+registerMooseObject("ZapdosApp", PowerDep);
+
 template <>
 InputParameters
 validParams<PowerDep>()

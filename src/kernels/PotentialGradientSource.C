@@ -1,5 +1,7 @@
 #include "PotentialGradientSource.h"
 
+registerMooseObject("ZapdosApp", PotentialGradientSource);
+
 template <>
 InputParameters
 validParams<PotentialGradientSource>()

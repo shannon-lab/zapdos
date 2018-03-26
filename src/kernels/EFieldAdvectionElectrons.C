@@ -1,5 +1,7 @@
 #include "EFieldAdvectionElectrons.h"
 
+registerMooseObject("ZapdosApp", EFieldAdvectionElectrons);
+
 template <>
 InputParameters
 validParams<EFieldAdvectionElectrons>()

@@ -1,5 +1,7 @@
 #include "HagelaarElectronBC.h"
 
+registerMooseObject("ZapdosApp", HagelaarElectronBC);
+
 template <>
 InputParameters
 validParams<HagelaarElectronBC>()

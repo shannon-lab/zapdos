@@ -1,5 +1,7 @@
 #include "SigmaMat.h"
 
+registerMooseObject("ZapdosApp", SigmaMat);
+
 template <>
 InputParameters
 validParams<SigmaMat>()

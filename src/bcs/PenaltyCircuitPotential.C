@@ -1,6 +1,8 @@
 #include "PenaltyCircuitPotential.h"
 #include "MooseMesh.h"
 
+registerMooseObject("ZapdosApp", PenaltyCircuitPotential);
+
 template <>
 InputParameters
 validParams<PenaltyCircuitPotential>()

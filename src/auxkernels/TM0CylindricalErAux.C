@@ -1,5 +1,7 @@
 #include "TM0CylindricalErAux.h"
 
+registerMooseObject("ZapdosApp", TM0CylindricalErAux);
+
 template <>
 InputParameters
 validParams<TM0CylindricalErAux>()

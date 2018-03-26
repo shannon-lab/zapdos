@@ -14,6 +14,8 @@
 
 #include "Efield.h"
 
+registerMooseObject("ZapdosApp", Efield);
+
 template <>
 InputParameters
 validParams<Efield>()

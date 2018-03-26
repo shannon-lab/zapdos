@@ -1,5 +1,7 @@
 #include "TotalFlux.h"
 
+registerMooseObject("ZapdosApp", TotalFlux);
+
 template <>
 InputParameters
 validParams<TotalFlux>()

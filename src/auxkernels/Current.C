@@ -1,5 +1,7 @@
 #include "Current.h"
 
+registerMooseObject("ZapdosApp", Current);
+
 template <>
 InputParameters
 validParams<Current>()

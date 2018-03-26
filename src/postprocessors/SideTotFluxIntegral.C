@@ -3,6 +3,8 @@
 // MOOSE includes
 #include "MooseVariable.h"
 
+registerMooseObject("ZapdosApp", SideTotFluxIntegral);
+
 template <>
 InputParameters
 validParams<SideTotFluxIntegral>()
