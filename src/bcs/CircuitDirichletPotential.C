@@ -1,6 +1,8 @@
 #include "CircuitDirichletPotential.h"
 #include "Function.h"
 
+registerMooseObject("ZapdosApp", CircuitDirichletPotential);
+
 template <>
 InputParameters
 validParams<CircuitDirichletPotential>()

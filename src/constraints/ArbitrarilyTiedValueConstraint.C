@@ -20,6 +20,8 @@
 // libmesh includes
 #include "libmesh/sparse_matrix.h"
 
+registerMooseObject("ZapdosApp", ArbitrarilyTiedValueConstraint);
+
 template <>
 InputParameters
 validParams<ArbitrarilyTiedValueConstraint>()

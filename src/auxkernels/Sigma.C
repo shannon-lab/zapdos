@@ -1,5 +1,7 @@
 #include "Sigma.h"
 
+registerMooseObject("ZapdosApp", Sigma);
+
 template <>
 InputParameters
 validParams<Sigma>()

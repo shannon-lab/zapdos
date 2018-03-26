@@ -14,6 +14,8 @@
 
 #include "EFieldAdvAux.h"
 
+registerMooseObject("ZapdosApp", EFieldAdvAux);
+
 template <>
 InputParameters
 validParams<EFieldAdvAux>()

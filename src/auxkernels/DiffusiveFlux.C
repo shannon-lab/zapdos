@@ -14,6 +14,8 @@
 
 #include "DiffusiveFlux.h"
 
+registerMooseObject("ZapdosApp", DiffusiveFlux);
+
 template <>
 InputParameters
 validParams<DiffusiveFlux>()

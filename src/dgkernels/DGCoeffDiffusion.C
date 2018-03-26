@@ -5,6 +5,8 @@
 
 #include <cmath>
 
+registerMooseObject("ZapdosApp", DGCoeffDiffusion);
+
 template <>
 InputParameters
 validParams<DGCoeffDiffusion>()

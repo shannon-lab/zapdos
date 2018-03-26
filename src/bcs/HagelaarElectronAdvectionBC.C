@@ -1,5 +1,7 @@
 #include "HagelaarElectronAdvectionBC.h"
 
+registerMooseObject("ZapdosApp", HagelaarElectronAdvectionBC);
+
 template <>
 InputParameters
 validParams<HagelaarElectronAdvectionBC>()

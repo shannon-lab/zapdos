@@ -1,5 +1,7 @@
 #include "ElectronsFromIonizationUser.h"
 
+registerMooseObject("ZapdosApp", ElectronsFromIonizationUser);
+
 template <>
 InputParameters
 validParams<ElectronsFromIonizationUser>()

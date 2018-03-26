@@ -1,5 +1,7 @@
 #include "TM0AntennaVertBC.h"
 
+registerMooseObject("ZapdosApp", TM0AntennaVertBC);
+
 template <>
 InputParameters
 validParams<TM0AntennaVertBC>()

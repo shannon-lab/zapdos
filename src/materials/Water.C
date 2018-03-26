@@ -1,5 +1,7 @@
 #include "Water.h"
 
+registerMooseObject("ZapdosApp", Water);
+
 template <>
 InputParameters
 validParams<Water>()

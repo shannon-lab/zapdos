@@ -1,5 +1,7 @@
 #include "PotentialDriftOutflowBC.h"
 
+registerMooseObject("ZapdosApp", PotentialDriftOutflowBC);
+
 template <>
 InputParameters
 validParams<PotentialDriftOutflowBC>()

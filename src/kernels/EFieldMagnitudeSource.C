@@ -1,5 +1,7 @@
 #include "EFieldMagnitudeSource.h"
 
+registerMooseObject("ZapdosApp", EFieldMagnitudeSource);
+
 template <>
 InputParameters
 validParams<EFieldMagnitudeSource>()

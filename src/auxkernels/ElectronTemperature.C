@@ -1,5 +1,7 @@
 #include "ElectronTemperature.h"
 
+registerMooseObject("ZapdosApp", ElectronTemperature);
+
 template <>
 InputParameters
 validParams<ElectronTemperature>()

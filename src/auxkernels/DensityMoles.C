@@ -1,5 +1,7 @@
 #include "DensityMoles.h"
 
+registerMooseObject("ZapdosApp", DensityMoles);
+
 template <>
 InputParameters
 validParams<DensityMoles>()

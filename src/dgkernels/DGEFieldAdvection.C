@@ -3,6 +3,8 @@
 // MOOSE includes
 #include "MooseVariable.h"
 
+registerMooseObject("ZapdosApp", DGEFieldAdvection);
+
 template <>
 InputParameters
 validParams<DGEFieldAdvection>()

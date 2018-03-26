@@ -38,6 +38,10 @@
 #include "libmesh/string_to_enum.h"
 #include "libmesh/fe.h"
 
+registerMooseAction("ZapdosApp", AddLotsOfTimeDerivatives, "add_variable");
+registerMooseAction("ZapdosApp", AddLotsOfTimeDerivatives, "add_kernel");
+registerMooseAction("ZapdosApp", AddLotsOfTimeDerivatives, "add_bc");
+
 template <>
 InputParameters
 validParams<AddLotsOfTimeDerivatives>()

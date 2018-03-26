@@ -14,6 +14,8 @@
 
 #include "Position.h"
 
+registerMooseObject("ZapdosApp", Position);
+
 template <>
 InputParameters
 validParams<Position>()

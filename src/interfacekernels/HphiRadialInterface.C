@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+registerMooseObject("ZapdosApp", HphiRadialInterface);
+
 template <>
 InputParameters
 validParams<HphiRadialInterface>()

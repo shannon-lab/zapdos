@@ -1,5 +1,7 @@
 #include "TM0PECVertBC.h"
 
+registerMooseObject("ZapdosApp", TM0PECVertBC);
+
 template <>
 InputParameters
 validParams<TM0PECVertBC>()

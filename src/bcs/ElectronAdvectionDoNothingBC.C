@@ -1,5 +1,7 @@
 #include "ElectronAdvectionDoNothingBC.h"
 
+registerMooseObject("ZapdosApp", ElectronAdvectionDoNothingBC);
+
 template <>
 InputParameters
 validParams<ElectronAdvectionDoNothingBC>()

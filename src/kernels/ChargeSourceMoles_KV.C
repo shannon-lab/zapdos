@@ -3,6 +3,8 @@
 // MOOSE includes
 #include "MooseVariable.h"
 
+registerMooseObject("ZapdosApp", ChargeSourceMoles_KV);
+
 template <>
 InputParameters
 validParams<ChargeSourceMoles_KV>()

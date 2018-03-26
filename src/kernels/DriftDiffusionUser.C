@@ -1,5 +1,7 @@
 #include "DriftDiffusionUser.h"
 
+registerMooseObject("ZapdosApp", DriftDiffusionUser);
+
 template <>
 InputParameters
 validParams<DriftDiffusionUser>()

@@ -17,6 +17,8 @@
 #include "MooseTypes.h"
 #include "MooseMesh.h"
 
+registerMooseObject("ZapdosApp", NodeAndSidesetBetweenSubdomains);
+
 template <>
 InputParameters
 validParams<NodeAndSidesetBetweenSubdomains>()

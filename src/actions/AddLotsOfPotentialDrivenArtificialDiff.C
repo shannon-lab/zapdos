@@ -38,6 +38,10 @@
 #include "libmesh/string_to_enum.h"
 #include "libmesh/fe.h"
 
+registerMooseAction("ZapdosApp", AddLotsOfPotentialDrivenArtificialDiff, "add_variable");
+registerMooseAction("ZapdosApp", AddLotsOfPotentialDrivenArtificialDiff, "add_kernel");
+registerMooseAction("ZapdosApp", AddLotsOfPotentialDrivenArtificialDiff, "add_bc");
+
 template <>
 InputParameters
 validParams<AddLotsOfPotentialDrivenArtificialDiff>()

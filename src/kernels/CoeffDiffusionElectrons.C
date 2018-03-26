@@ -1,5 +1,7 @@
 #include "CoeffDiffusionElectrons.h"
 
+registerMooseObject("ZapdosApp", CoeffDiffusionElectrons);
+
 template <>
 InputParameters
 validParams<CoeffDiffusionElectrons>()
