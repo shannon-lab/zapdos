@@ -18,7 +18,7 @@ SigmaMat::SigmaMat(const InputParameters & parameters)
 
     // Declare material properties
     _sigma(declareProperty<Real>("sigma")),
-    _sigma_old(declarePropertyOld<Real>("sigma")),
+    _sigma_old(getMaterialPropertyOld<Real>("sigma")),
 
     // Coupled Variables
     _n(coupledValue("n")),
@@ -35,5 +35,8 @@ SigmaMat::initQpStatefulProperties()
 void
 SigmaMat::computeQpProperties()
 {
-  _sigma[_qp] = _sigma_old[_qp] + _dt * -_grad_potential[_qp] * _n[_qp] * _normals[_qp];
+  if (_material_data_type == Moose::FACE_MATERIAL_DATA || boundaryRestricted())
+    _sigma[_qp] = _sigma_old[_qp] + _dt * -_grad_potential[_qp] * _n[_qp] * _normals[_qp];
+  else
+    _sigma[_qp] = 0.;
 }

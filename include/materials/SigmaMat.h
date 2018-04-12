@@ -18,7 +18,7 @@ protected:
   virtual void initQpStatefulProperties() override;
 
   MaterialProperty<Real> & _sigma;
-  MaterialProperty<Real> & _sigma_old;
+  const MaterialProperty<Real> & _sigma_old;
 
   const VariableValue & _n;
   const VariableGradient & _grad_potential;
