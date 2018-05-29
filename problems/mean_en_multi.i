@@ -210,18 +210,7 @@ dom1Scale=1e-7
     block = 0
   [../]
 
-  #[./ArEx_excitation]
-  #  type = ElectronImpactReaction
-  #  variable = ArEx
-  #  potential = potential
-  #  em = em
-  #  mean_en = mean_en
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #  reactant = false
-  #[../]
-
-  [./ArEx_deexcitation]
+  [./ArEx_excitation]
     type = ElectronImpactReaction
     variable = ArEx
     potential = potential
@@ -229,39 +218,8 @@ dom1Scale=1e-7
     mean_en = mean_en
     block = 0
     position_units = ${dom0Scale}
-    reactant = true
+    reactant = false
   [../]
-
-#  [./ArTest_excitation]
-#    type = ElectronImpactReaction
-#    variable = ArTest
-#    potential = potential
-#    em = em
-#    mean_en = mean_en
-#    block = 0
-#    position_units = ${dom0Scale}
-#    reactant = false
-#  [../]
-
-  #[./ArEx_ionization1]
-  #  type = ProductFirstOrderRxn
-  #  variable = em
-  #  v = ArEx
-  #  block = 0
-  #[../]
-
-  #[./ArEx_ionization2]
-  #  type = ProductFirstOrderRxn
-  #  variable = Arp
-  #  v = ArEx
-  #  block = 0
-  #[../]
-
-  #[./ArEx_Ionization3]
-  #  type = ReactantFirstOrderRxn
-  #  variable = ArEx
-  #  block = 0
-  #[../]
 
   [./Arp_diffusion]
     type = CoeffDiffusion
