@@ -211,7 +211,7 @@ dom1Scale=1e-7
   [../]
 
   [./ArEx_excitation]
-    type = ElectronImpactReaction
+    type = ExcitationReaction
     variable = ArEx
     potential = potential
     em = em
@@ -219,6 +219,17 @@ dom1Scale=1e-7
     block = 0
     position_units = ${dom0Scale}
     reactant = false
+  [../]
+
+  [./ArEx_deexcitation]
+    type = ExcitationReaction
+    variable = ArEx
+    potential = potential
+    em = em
+    mean_en = mean_en
+    block = 0
+    position_units = ${dom0Scale}
+    reactant = true
   [../]
 
   [./Arp_diffusion]
