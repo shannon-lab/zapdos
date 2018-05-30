@@ -127,14 +127,14 @@ GasBase::GasBase(const InputParameters & parameters)
     _el_coeff_energy_b(declareProperty<Real>("el_coeff_energy_b")),
     _el_coeff_energy_c(declareProperty<Real>("el_coeff_energy_c")),
     _alpha_iz(declareProperty<Real>("alpha_iz")),
-    _kArIz(declareProperty<Real>("kArIz")),
-    _alpha_ArIz(declareProperty<Real>("alpha_ArIz")),
+    // _kArIz(declareProperty<Real>("kArIz")),
+    // _alpha_ArIz(declareProperty<Real>("alpha_ArIz")),
     _d_iz_d_actual_mean_en(declareProperty<Real>("d_iz_d_actual_mean_en")),
     _alpha_ex(declareProperty<Real>("alpha_ex")),
     _d_ex_d_actual_mean_en(declareProperty<Real>("d_ex_d_actual_mean_en")),
     _alpha_el(declareProperty<Real>("alpha_el")),
     _d_el_d_actual_mean_en(declareProperty<Real>("d_el_d_actual_mean_en")),
-    _kArEx(declareProperty<Real>("kArEx")),
+    // _kArEx(declareProperty<Real>("kArEx")),
     _sgnem(declareProperty<Real>("sgnem")),
     _sgnmean_en(declareProperty<Real>("sgnmean_en")),
     // _sgnArp(declareProperty<Real>("sgnArp")),
@@ -172,10 +172,10 @@ GasBase::GasBase(const InputParameters & parameters)
 
   std::vector<Real> actual_mean_energy;
   std::vector<Real> alpha;
-  std::vector<Real> kArIz;
+  // std::vector<Real> kArIz;
   std::vector<Real> alphaEx;
   std::vector<Real> alphaEl;
-  std::vector<Real> kArExIz;
+  // std::vector<Real> kArExIz;
   std::vector<Real> mu;
   std::vector<Real> diff;
   // std::vector<Real> d_alpha_d_actual_mean_energy;
@@ -194,13 +194,9 @@ GasBase::GasBase(const InputParameters & parameters)
       myfile >> value;
       alpha.push_back(value);
       myfile >> value;
-      kArIz.push_back(value);
-      myfile >> value;
       alphaEx.push_back(value);
       myfile >> value;
       alphaEl.push_back(value);
-      myfile >> value;
-      kArExIz.push_back(value);
       myfile >> value;
       mu.push_back(value);
       myfile >> value;
@@ -213,10 +209,8 @@ GasBase::GasBase(const InputParameters & parameters)
     mooseError("Unable to open file");
 
   _alpha_interpolation.setData(actual_mean_energy, alpha);
-  _kArIz_interpolation.setData(actual_mean_energy, kArIz);
   _alphaEx_interpolation.setData(actual_mean_energy, alphaEx);
   _alphaEl_interpolation.setData(actual_mean_energy, alphaEl);
-  _kArExIz_interpolation.setData(actual_mean_energy, kArExIz);
   _mu_interpolation.setData(actual_mean_energy, mu);
   _diff_interpolation.setData(actual_mean_energy, diff);
 }
@@ -303,10 +297,10 @@ GasBase::computeQpProperties()
 
   _actual_mean_energy[_qp] = std::exp(_mean_en[_qp] - _em[_qp]);
   _alpha_iz[_qp] = _alpha_interpolation.sample(_actual_mean_energy[_qp]);
-  _kArIz[_qp] = _kArIz_interpolation.sample(_actual_mean_energy[_qp]);
+  // _kArIz[_qp] = _kArIz_interpolation.sample(_actual_mean_energy[_qp]);
   _d_iz_d_actual_mean_en[_qp] =
       _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
-  _kArEx[_qp] = _kArExIz_interpolation.sample(_actual_mean_energy[_qp]);
+  // _kArEx[_qp] = _kArExIz_interpolation.sample(_actual_mean_energy[_qp]);
   _alpha_ex[_qp] = _alphaEx_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
   _d_ex_d_actual_mean_en[_qp] =
       _alphaEx_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
@@ -368,7 +362,7 @@ GasBase::computeQpProperties()
   _EField[_qp] = _grad_potential[_qp](0)*_r_units;
 
   // Townsend calculation test
-  _alpha_ArIz[_qp] = _n_gas[_qp]*_kArIz[_qp]/(_muem[_qp]*_EField[_qp]);
+  // _alpha_ArIz[_qp] = _n_gas[_qp]*_kArIz[_qp]/(_muem[_qp]*_EField[_qp]);
 
   _kel[_qp] = 1e-13; // Approximate elastic rate coefficient
   _d_kel_d_actual_mean_en[_qp] = 0.;

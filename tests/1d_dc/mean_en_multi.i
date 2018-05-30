@@ -77,6 +77,9 @@ dom1Scale=1e-7
     type = Exodus
     execute_on = 'final'
   [../]
+  [./dof_map]
+    type = DOFMap
+  [../]
 []
 
 [Debug]

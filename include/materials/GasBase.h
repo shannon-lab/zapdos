@@ -32,10 +32,8 @@ protected:
   virtual void computeQpProperties();
 
   SplineInterpolation _alpha_interpolation;
-  SplineInterpolation _kArIz_interpolation;
   SplineInterpolation _alphaEx_interpolation;
   SplineInterpolation _alphaEl_interpolation;
-  SplineInterpolation _kArExIz_interpolation;
   SplineInterpolation _mu_interpolation;
   SplineInterpolation _diff_interpolation;
 
@@ -104,14 +102,14 @@ protected:
   MaterialProperty<Real> & _el_coeff_energy_b;
   MaterialProperty<Real> & _el_coeff_energy_c;
   MaterialProperty<Real> & _alpha_iz;
-  MaterialProperty<Real> & _kArIz;
-  MaterialProperty<Real> & _alpha_ArIz;
+  // MaterialProperty<Real> & _kArIz;
+  // MaterialProperty<Real> & _alpha_ArIz;
   MaterialProperty<Real> & _d_iz_d_actual_mean_en;
   MaterialProperty<Real> & _alpha_ex;
   MaterialProperty<Real> & _d_ex_d_actual_mean_en;
   MaterialProperty<Real> & _alpha_el;
   MaterialProperty<Real> & _d_el_d_actual_mean_en;
-  MaterialProperty<Real> & _kArEx;
+  // MaterialProperty<Real> & _kArEx;
   MaterialProperty<Real> & _sgnem;
   MaterialProperty<Real> & _sgnmean_en;
   MaterialProperty<Real> & _diffpotential;
