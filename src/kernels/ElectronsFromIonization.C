@@ -59,12 +59,22 @@ ElectronsFromIonization::ElectronsFromIonization(const InputParameters & paramet
     _minus_e_field.resize(_fe_problem.getMaxQps(), RealGradient(-getParam<Real>("EField")));
   if (!(getParam<bool>("use_material_props")))
   {
-    _user_diffem.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("diffem")));
-    _user_d_diffem_d_actual_mean_en.set().resize(_fe_problem.getMaxQps(), Real(0));
-    _user_muem.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("muem")));
-    _user_d_muem_d_actual_mean_en.set().resize(_fe_problem.getMaxQps(), Real(0));
-    _user_alpha_iz.set().resize(_fe_problem.getMaxQps(), Real(getParam<Real>("alpha_iz")));
-    _user_d_iz_d_actual_mean_en.set().resize(_fe_problem.getMaxQps(), Real(0));
+    auto max_qps = _fe_problem.getMaxQps();
+    _user_diffem.resize(max_qps);
+    _user_d_diffem_d_actual_mean_en.resize(max_qps);
+    _user_muem.resize(max_qps);
+    _user_d_muem_d_actual_mean_en.resize(max_qps);
+    _user_alpha_iz.resize(max_qps);
+    _user_d_iz_d_actual_mean_en.resize(max_qps);
+    for (decltype(max_qps) qp = 0; qp < max_qps; ++qp)
+    {
+      _user_diffem[qp] = getParam<Real>("diffem");
+      _user_d_diffem_d_actual_mean_en[qp] = 0;
+      _user_muem[qp] = getParam<Real>("muem");
+      _user_d_muem_d_actual_mean_en[qp] = 0;
+      _user_alpha_iz[qp] = getParam<Real>("alpha_iz");
+      _user_d_iz_d_actual_mean_en[qp] = 0;
+    }
   }
 }
 
