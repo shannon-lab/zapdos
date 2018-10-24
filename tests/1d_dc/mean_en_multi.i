@@ -58,8 +58,9 @@ dom1Scale=1e-7
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3'
- nl_rel_tol = 1e-4
- nl_abs_tol = 7.6e-5
+  line_search = 'bt'
+  nl_rel_tol = 1e-4
+  nl_abs_tol = 7.6e-5
   dtmin = 1e-12
   [./TimeStepper]
     type = IterationAdaptiveDT
