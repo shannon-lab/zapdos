@@ -680,7 +680,7 @@ area = 5.02e-7 # Formerly 3.14e-6
         [./potential_bc_func]
                 type = ParsedFunction
                 vars = 'VHigh'
-                vals = '${vhigh}')
+                vals = '${vhigh}'
                 value = 'VHigh'
         [../]
         [./potential_ic_func]
