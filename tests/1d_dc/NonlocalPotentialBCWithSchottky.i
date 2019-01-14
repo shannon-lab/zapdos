@@ -47,7 +47,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 
         trans_ss_check = 1
         ss_check_tol = 1E-15
-        ss_tmin = 3*${relaxTime}
+        ss_tmin = ${fparse 3 * relaxTime}
 
         petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
         solve_type = NEWTON
@@ -680,7 +680,7 @@ area = 5.02e-7 # Formerly 3.14e-6
         [./potential_bc_func]
                 type = ParsedFunction
                 vars = 'VHigh'
-                vals = '${vhigh}')
+                vals = '${vhigh}'
                 value = 'VHigh'
         [../]
         [./potential_ic_func]
