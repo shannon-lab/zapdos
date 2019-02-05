@@ -17,6 +17,8 @@
 #include "MooseTypes.h"
 #include "MooseMesh.h"
 
+#include "libmesh/elem.h"
+
 registerMooseObject("ZapdosApp", NodeAndSidesetBetweenSubdomains);
 
 template <>
