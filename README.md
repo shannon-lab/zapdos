@@ -27,7 +27,7 @@ Zapdos/MOOSE are given in Chemical_Reactions.ipynb.
     <li><code>make -jn</code> where "n" is the number of logical processors on
   your computer</li>
   </ul>
-  then continue on to Step 4.</li>
+  then continue to Step 4.</li>
   <li><b>Using MOOSE as a submodule:</b> After installing the MOOSE environment execute the following commands in
   the directory in which you are installing Zapdos (we recommend <code>~/projects/</code> to stay consistent with MOOSE conventions)
   <ul>
