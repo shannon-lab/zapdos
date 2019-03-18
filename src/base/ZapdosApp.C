@@ -1,6 +1,7 @@
 #include "ZapdosApp.h"
 #include "Moose.h"
 #include "AppFactory.h"
+#include "ModulesApp.h"
 #include "MooseSyntax.h"
 #include "SquirrelApp.h"
 
@@ -22,45 +23,48 @@ registerKnownLabel("ZapdosApp");
 
 ZapdosApp::ZapdosApp(InputParameters parameters) : MooseApp(parameters)
 {
-
-  Moose::registerObjects(_factory);
+  ZapdosApp::registerAll(_factory, _action_factory, _syntax);
+  // TODO: Update Squirrel app to new registration system
   SquirrelApp::registerObjects(_factory);
-  ZapdosApp::registerObjects(_factory);
-
-  Moose::associateSyntax(_syntax, _action_factory);
   SquirrelApp::associateSyntax(_syntax, _action_factory);
-  ZapdosApp::associateSyntax(_syntax, _action_factory);
 }
 
 ZapdosApp::~ZapdosApp() {}
 
-extern "C" void
-ZapdosApp__registerApps()
+void
+ZapdosApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)
 {
-  ZapdosApp::registerApps();
+  ModulesApp::registerAll(f, af, s);
+  Registry::registerObjectsTo(f, {"ZapdosApp"});
+  Registry::registerActionsTo(af, {"ZapdosApp"});
+
+  /* register custom execute flags, action syntax, etc. here */
+  s.registerActionSyntax("AddLotsOfCoeffDiffusion", "LotsOfCoeffDiffusion");
+  s.registerActionSyntax("AddLotsOfVariables", "LotsOfVariables");
+  s.registerActionSyntax("AddLotsOfSources", "LotsOfSources");
+  s.registerActionSyntax("AddLotsOfTimeDerivatives", "LotsOfTimeDerivatives");
+  s.registerActionSyntax("AddLotsOfEFieldAdvection", "LotsOfEFieldAdvection");
+  s.registerActionSyntax("AddLotsOfPotentialDrivenArtificialDiff",
+                         "LotsOfPotentialDrivenArtificialDiff");
 }
+
 void
 ZapdosApp::registerApps()
 {
   registerApp(ZapdosApp);
 }
 
-void
-ZapdosApp::registerObjects(Factory & factory)
+/***************************************************************************************************
+ *********************** Dynamic Library Entry Points - DO NOT MODIFY ******************************
+ **************************************************************************************************/
+extern "C" void
+ZapdosApp__registerAll(Factory & f, ActionFactory & af, Syntax & s)
 {
-  Registry::registerObjectsTo(factory, {"ZapdosApp"});
+  ZapdosApp::registerAll(f, af, s);
 }
 
-void
-ZapdosApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
+extern "C" void
+ZapdosApp__registerApps()
 {
-  // add actions
-  Registry::registerActionsTo(action_factory, {"ZapdosApp"});
-  syntax.registerActionSyntax("AddLotsOfCoeffDiffusion", "LotsOfCoeffDiffusion");
-  syntax.registerActionSyntax("AddLotsOfVariables", "LotsOfVariables");
-  syntax.registerActionSyntax("AddLotsOfSources", "LotsOfSources");
-  syntax.registerActionSyntax("AddLotsOfTimeDerivatives", "LotsOfTimeDerivatives");
-  syntax.registerActionSyntax("AddLotsOfEFieldAdvection", "LotsOfEFieldAdvection");
-  syntax.registerActionSyntax("AddLotsOfPotentialDrivenArtificialDiff",
-                              "LotsOfPotentialDrivenArtificialDiff");
+  ZapdosApp::registerApps();
 }
