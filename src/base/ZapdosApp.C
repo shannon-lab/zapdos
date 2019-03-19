@@ -24,9 +24,7 @@ registerKnownLabel("ZapdosApp");
 ZapdosApp::ZapdosApp(InputParameters parameters) : MooseApp(parameters)
 {
   ZapdosApp::registerAll(_factory, _action_factory, _syntax);
-  // TODO: Update Squirrel app to new registration system
-  SquirrelApp::registerObjects(_factory);
-  SquirrelApp::associateSyntax(_syntax, _action_factory);
+  SquirrelApp::registerAll(_factory, _action_factory, _syntax);
 }
 
 ZapdosApp::~ZapdosApp() {}
