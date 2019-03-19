@@ -1,5 +1,5 @@
-#ifndef BOVINEAPP_H
-#define BOVINEAPP_H
+#ifndef ZAPDOSAPP_H
+#define ZAPDOSAPP_H
 
 #include "MooseApp.h"
 
@@ -15,8 +15,7 @@ public:
   virtual ~ZapdosApp();
 
   static void registerApps();
-  static void registerObjects(Factory & factory);
-  static void associateSyntax(Syntax & syntax, ActionFactory & action_factory);
+  static void registerAll(Factory & f, ActionFactory & af, Syntax & s);
 };
 
-#endif /* BOVINEAPP_H */
+#endif /* ZAPDOSAPP_H */
