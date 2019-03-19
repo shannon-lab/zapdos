@@ -79,7 +79,7 @@ vhigh = 150E-3 #kV
 []
 
 [Outputs]
-        print_perf_log = true
+        perf_graph = true
         print_linear_residuals = false
         [./out]
                 type = Exodus

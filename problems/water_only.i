@@ -46,7 +46,7 @@ dom1Scale=1e-7
 []
 
 [Outputs]
-  print_perf_log = true
+  perf_graph = true
   [./out]
     type = Exodus
   [../]
