@@ -68,7 +68,7 @@ NodeAndSidesetBetweenSubdomains::modify()
 
     for (unsigned int side = 0; side < elem->n_sides(); side++)
     {
-      const Elem * neighbor = elem->neighbor(side);
+      const Elem * neighbor = elem->neighbor_ptr(side);
       if (neighbor != NULL &&
           neighbor->subdomain_id() == paired_id) // is this side between the two blocks?
 
