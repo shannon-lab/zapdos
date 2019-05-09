@@ -845,13 +845,14 @@ dom0Scale=25.4e-3
 
 [Executioner]
   type = Transient
+  #end_time = 0.00737463126
   end_time = 3e-7
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   petsc_options_value = 'lu NONZERO 1.e-10 fgmres 1e-3'
-  nl_rel_tol = 1e-4
-  nl_abs_tol = 7.6e-5
+  nl_rel_tol = 1e-08
+  #nl_abs_tol = 7.6e-5 #Commit out do to test falure on Mac
   dtmin = 1e-14
   l_max_its = 20
 
