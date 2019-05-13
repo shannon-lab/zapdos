@@ -1,4 +1,5 @@
 #include "Sigma.h"
+#include "Assembly.h"
 
 registerMooseObject("ZapdosApp", Sigma);
 
@@ -24,5 +25,5 @@ Sigma::Sigma(const InputParameters & parameters)
 Real
 Sigma::computeValue()
 {
-  return _u_old[_qp] + _dt * -_grad_potential[_qp] * _n[_qp] * _var.normals()[_qp];
+  return _u_old[_qp] + _dt * -_grad_potential[_qp] * _n[_qp] * _assembly.normals()[_qp];
 }
