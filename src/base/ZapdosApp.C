@@ -4,6 +4,7 @@
 #include "ModulesApp.h"
 #include "MooseSyntax.h"
 #include "SquirrelApp.h"
+#include "CraneApp.h"
 
 template <>
 InputParameters
@@ -25,6 +26,7 @@ ZapdosApp::ZapdosApp(InputParameters parameters) : MooseApp(parameters)
 {
   ZapdosApp::registerAll(_factory, _action_factory, _syntax);
   SquirrelApp::registerAll(_factory, _action_factory, _syntax);
+  CraneApp::registerAll(_factory, _action_factory, _syntax);
 }
 
 ZapdosApp::~ZapdosApp() {}
