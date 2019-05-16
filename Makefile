@@ -37,6 +37,19 @@ APPLICATION_DIR    := $(SQUIRREL_DIR)
 APPLICATION_NAME   := squirrel
 include            $(FRAMEWORK_DIR)/app.mk
 
+# Use the CRANE submodule if it exists and CRANE_DIR is not set
+CRANE_SUBMODULE := $(CURDIR)/crane
+ifneq ($(wildcard $(CRANE_SUBMODULE)/Makefile),)
+  CRANE_DIR        ?= $(CRANE_SUBMODULE)
+else
+  CRANE_DIR        ?= $(shell dirname `pwd`)/crane
+endif
+
+# crane
+APPLICATION_DIR    := $(CRANE_DIR)
+APPLICATION_NAME   := crane
+include            $(FRAMEWORK_DIR)/app.mk
+
 # dep apps
 APPLICATION_DIR    := $(CURDIR)
 APPLICATION_NAME   := zapdos
