@@ -119,11 +119,11 @@ SchottkyEmissionBC::computeQpResidual()
           exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
     jSE = _e[_qp] * 6.02E23 * _se_coeff[_qp] * _ion_flux * _normals[_qp];
 
-    if (_relax == true)
+    if (_relax)
     {
       _relaxation_Expr = std::tanh(_t / _tau);
     }
-    else if (_relax == false)
+    else
     {
       _relaxation_Expr = 1.0;
     }
@@ -202,14 +202,10 @@ SchottkyEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
                            (_grad_phi[_j][_qp] * _normals[_qp]) /
                            (_grad_potential[_qp] * _normals[_qp]);
 
-      if (_relax == true)
-      {
+      if (_relax)
         _relaxation_Expr = std::tanh(_t / _tau);
-      }
-      else if (_relax == false)
-      {
+      else
         _relaxation_Expr = 1.0;
-      }
 
       return _relaxation_Expr * _test[_i][_qp] * _r_units * 2. / (1. + _r) * (1 - _a) *
              (-_d_jRD_d_potential - _d_jSE_d_potential) / (_e[_qp] * 6.02E23);

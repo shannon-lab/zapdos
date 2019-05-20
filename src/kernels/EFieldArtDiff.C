@@ -62,7 +62,6 @@ EFieldArtDiff::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
   {
-    Real vd_mag = _mu[_qp] * _grad_potential[_qp].norm() * _r_units;
     Real d_vd_mag_d_potential =
         _mu[_qp] * _grad_potential[_qp] * _grad_phi[_j][_qp] * _r_units /
         (_grad_potential[_qp].norm() + std::numeric_limits<double>::epsilon());
