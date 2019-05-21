@@ -4,7 +4,8 @@
 # You should always run this script without the "-u" option
 # first to make sure there is a clean dry run of the files that should
 # be updated
-# This is based on a script of the same name in the MOOSE Framework
+# This is based on a script of the same name in the MOOSE Framework:
+# https://github.com/idaholab/moose/blob/master/framework/scripts/fixup_headers.py
 
 import os, string, re, shutil
 from optparse import OptionParser
@@ -80,11 +81,6 @@ def checkAndUpdateCPlusPlus(filename):
 
             # Now cleanup extra blank lines
             text = re.sub(r'\A(^\s*\n)', '', text)
-
-            suffix = os.path.splitext(filename)
-            if suffix[-1] == '.h':
-                text = re.sub(r'^#ifndef\s*\S+_H_?\s*\n#define.*\n', '', text, flags=re.M)
-                text = re.sub(r'^#endif.*\n[\s]*\Z', '', text, flags=re.M)
 
             # Update
             f = open(filename + '~tmp', 'w')
