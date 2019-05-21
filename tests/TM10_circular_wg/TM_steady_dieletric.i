@@ -27,21 +27,15 @@
   [./smp]
     type = SMP
     full = true
-    ksp_norm = none
   [../]
 []
 
 [Executioner]
   type = Steady
   solve_type = NEWTON
-  # petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_converged_reason'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda -pc_factor_mat_solver_package'
-  petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3 superlu_dist'
-  # petsc_options = '-snes_test_display'
-  # petsc_options_iname = '-snes_type'
-  # petsc_options_value = 'test'
- # nl_rel_tol = 1e-4
- # l_tol = 1e-3
+
+  petsc_options_iname = '-pc_type'
+  petsc_options_value = 'lu'
 []
 
 [Outputs]

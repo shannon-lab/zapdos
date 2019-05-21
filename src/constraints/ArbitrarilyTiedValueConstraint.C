@@ -90,6 +90,9 @@ ArbitrarilyTiedValueConstraint::computeQpJacobian(Moose::ConstraintJacobianType 
     case Moose::MasterMaster:
       retVal = 0;
       break;
+
+    default:
+      return 0;
   }
   return retVal;
 }
