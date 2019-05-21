@@ -51,10 +51,10 @@ area = 5.02e-7 # Formerly 3.14e-6
 
         petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
         solve_type = NEWTON
-        petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda -pc_factor_mat_solver_package'
-        petsc_options_value = 'lu NONZERO 1.e-10 preonly 1e-3 superlu_dist'
+        petsc_options_iname = '-pc_type'
+        petsc_options_value = 'lu'
+        line_search = 'none'
 
-        nl_rel_tol = 1e-8
         nl_abs_tol = 2e-6
 
         dtmin = 1e-15

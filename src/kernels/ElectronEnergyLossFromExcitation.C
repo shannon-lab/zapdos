@@ -51,7 +51,6 @@ ElectronEnergyLossFromExcitation::computeQpResidual()
 Real
 ElectronEnergyLossFromExcitation::computeQpJacobian()
 {
-  Real actual_mean_en = std::exp(_u[_qp] - _em[_qp]);
   Real d_actual_mean_en_d_mean_en = std::exp(_u[_qp] - _em[_qp]) * _phi[_j][_qp];
   Real d_ex_d_mean_en = _d_ex_d_actual_mean_en[_qp] * d_actual_mean_en_d_mean_en;
   Real d_muem_d_mean_en = _d_muem_d_actual_mean_en[_qp] * d_actual_mean_en_d_mean_en;
@@ -75,7 +74,6 @@ ElectronEnergyLossFromExcitation::computeQpJacobian()
 Real
 ElectronEnergyLossFromExcitation::computeQpOffDiagJacobian(unsigned int jvar)
 {
-  Real actual_mean_en = std::exp(_u[_qp] - _em[_qp]);
   Real d_actual_mean_en_d_em = -std::exp(_u[_qp] - _em[_qp]) * _phi[_j][_qp];
   Real d_ex_d_em = _d_ex_d_actual_mean_en[_qp] * d_actual_mean_en_d_em;
   Real d_muem_d_em = _d_muem_d_actual_mean_en[_qp] * d_actual_mean_en_d_em;
