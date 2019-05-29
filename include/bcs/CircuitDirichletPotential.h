@@ -35,7 +35,7 @@ protected:
 
   /// The value for this BC
   const PostprocessorValue & _current;
-  Function & _surface_potential;
+  const Function & _surface_potential;
   std::string _surface;
   Real _resist;
   Real _coulomb_charge;

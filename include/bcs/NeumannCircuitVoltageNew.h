@@ -60,7 +60,7 @@ protected:
   const std::vector<dof_id_type> & _mean_en_dofs;
 
   // System properties
-  Function & _V_source;
+  const Function & _V_source;
   Real _resistance;
   Real _area;
   bool _use_area;
