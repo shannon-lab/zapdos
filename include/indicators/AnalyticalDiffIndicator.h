@@ -27,7 +27,7 @@ public:
 protected:
   virtual Real computeQpIntegral();
 
-  Function & _func;
+  const Function & _func;
 };
 
 #endif /* ANALYTICALDIFFINDICATOR_H */
