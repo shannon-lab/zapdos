@@ -22,8 +22,8 @@ Zapdos/MOOSE are given in `doc/Chemical_Reactions.ipynb`.
   <ul>
     <li><code>git clone https://github.com/shannon-lab/zapdos</code></li>
     <li><code>cd zapdos</code></li>
-	  <li><code>git submodule init squirrel</code></li>
-	  <li><code>git submodule update squirrel</code></li>
+	  <li><code>git submodule init squirrel crane</code></li>
+	  <li><code>git submodule update squirrel crane</code></li>
     <li><code>make -jn</code> where "n" is the number of logical processors on
   your computer</li>
   </ul>
@@ -44,7 +44,7 @@ Zapdos/MOOSE are given in `doc/Chemical_Reactions.ipynb`.
     <li><code>make -jn</code></li>
   </ul>
   then continue to Step 4.</li>
-  <li>To make sure the installation is working correctly, execute <code>run_tests -jn</code>, substituting 'n' with your number of processors. All tests should pass with 'OK'
+  <li>To make sure the installation is working correctly, execute <code>./run_tests -jn</code>, substituting 'n' with your number of processors. All tests should pass with 'OK'
   <li>If everything checks out, you should now be able to run input files using the <code>zapdos-opt</code> executable in the <code>~/projects/zapdos</code> directory. Input files demonstrating the capabilities of zapdos can be found in the sub-directories of <code>~/projects/zapdos/tests</code>. If you want to start modifying an input file, a good one to choose is <code>mean_en.i</code> in <code>~/projects/zapdos/problems</code>. I typically run an input file like <code>mean_en.i</code> using the following command:</li>
   <ul>
     <li><code>cd ~/projects/zapdos/problems; ../zapdos-opt -i mean_en.i --color off 2>&1 | tee log.txt</code></li>
