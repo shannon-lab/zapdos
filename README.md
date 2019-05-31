@@ -6,10 +6,10 @@ Zapdos
 Free (in all senses of the word) and open source software for modelling atmospheric plasmas using finite elements.
 This application is built on top of the MOOSE framework, which can be found at [http://mooseframework.org](http://mooseframework.org)
 
-The best documentation so far for this project is in
-[this thesis chapter.](http://169.229.198.106/ZapdosChapter.pdf) Some notes on
+The best documentation so far for this project is in Chapter 3 of the thesis located at
+`doc/Lindsay_thesis_coupling_of_plasmas_and_liquids.pdf`. Some notes on
 understanding existing chemistry kernels and/or implementing new ones in
-Zapdos/MOOSE are given in Chemical_Reactions.ipynb.
+Zapdos/MOOSE are given in `doc/Chemical_Reactions.ipynb`.
 
 **Instructions for installing Zapdos:**
 
