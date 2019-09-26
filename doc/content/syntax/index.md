@@ -1,3 +1,3 @@
 # Complete Syntax
 
-!syntax complete heading=None
+!syntax complete groups=ZapdosApp
