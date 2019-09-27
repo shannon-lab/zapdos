@@ -29,3 +29,5 @@ Zapdos works on Mac OS, Linux, and Windows and is easy to get started with. Begi
 [our getting started page](getting_started/index.md).
 !col-end!
 !row-end!
+
+!media media/ncsu-logo.png style=width:30%;display:block;margin-top:3em;margin-left:auto;margin-right:auto;
