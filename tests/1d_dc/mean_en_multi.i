@@ -9,32 +9,35 @@ dom1Scale=1e-7
 []
 
 [Mesh]
-  type = FileMesh
-  file = 'liquidNew.msh'
-[]
-
-[MeshModifiers]
+  [./file]
+    type = FileMeshGenerator
+    file = 'liquidNew.msh'
+  [../]
   [./interface]
-    type = SideSetsBetweenSubdomains
+    type = SideSetsBetweenSubdomainsGenerator
     master_block = '0'
     paired_block = '1'
     new_boundary = 'master0_interface'
+    input = file
   [../]
   [./interface_again]
-    type = SideSetsBetweenSubdomains
+    type = SideSetsBetweenSubdomainsGenerator
     master_block = '1'
     paired_block = '0'
     new_boundary = 'master1_interface'
+    input = interface
   [../]
   [./left]
-    type = SideSetsFromNormals
+    type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
+    input = interface_again
   [../]
   [./right]
-    type = SideSetsFromNormals
+    type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
+    input = left
   [../]
 []
 

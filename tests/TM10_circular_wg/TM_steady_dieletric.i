@@ -3,20 +3,19 @@
 []
 
 [Mesh]
-  type = FileMesh
-  file = 'TM_dieletric.msh'
-  # construct_side_list_from_node_list = 1
-[]
-
-[MeshModifiers]
+  [./file]
+    type = FileMeshGenerator
+    file = 'TM_dieletric.msh'
+    # construct_side_list_from_node_list = 1
+  [../]
   [./interface_dielectric]
-    type = SideSetsBetweenSubdomains
+    type = SideSetsBetweenSubdomainsGenerator
     master_block = '1'
     paired_block = '0'
     new_boundary = 'interface_dielectric'
+    input = file
   [../]
 []
-
 
 [Problem]
   type = FEProblem

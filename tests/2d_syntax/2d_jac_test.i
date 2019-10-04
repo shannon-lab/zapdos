@@ -11,18 +11,26 @@
 []
 
 [Mesh]
-  # type = FileMesh
-  # file = '2d.msh'
-  # boundary_id = '10 11 12 13'
-  # boundary_name = 'cathode anode walls axis'
-  type = GeneratedMesh
-  nx = 1
-  xmax = 1.1
-  # ny = 2
-  # ymax = 1.1
-  dim = 1
-  boundary_id = '0 1'
-  boundary_name = 'anode cathode'
+  # [./file]
+  #   type = FileMesh
+  #   file = '2d.msh'
+  #   boundary_id = '10 11 12 13'
+  #   boundary_name = 'cathode anode walls axis'
+  # [../]
+  [./generated]
+    type = GeneratedMeshGenerator
+    nx = 1
+    xmax = 1.1
+    # ny = 2
+    # ymax = 1.1
+    dim = 1
+  [../]
+  [./rename]
+    type = RenameBoundaryGenerator
+    old_boundary_id = '0 1'
+    new_boundary_name = 'anode cathode'
+    input = generated
+  [../]
 []
 
 [Problem]

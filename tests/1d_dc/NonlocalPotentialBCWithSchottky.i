@@ -11,21 +11,22 @@ area = 5.02e-7 # Formerly 3.14e-6
 []
 
 [Mesh]
-        type = FileMesh
-        file = 'Geometry.msh'
-[]
-
-[MeshModifiers]
-        [./left]
-                type = SideSetsFromNormals
-                normals = '-1 0 0'
-                new_boundary = 'left'
-        [../]
-        [./right]
-                type = SideSetsFromNormals
-                normals = '1 0 0'
-                new_boundary = 'right'
-        [../]
+  [./file]
+    type = FileMeshGenerator
+    file = 'Geometry.msh'
+  [../]
+  [./left]
+    type = SideSetsFromNormalsGenerator
+    normals = '-1 0 0'
+    new_boundary = 'left'
+    input = file
+  [../]
+  [./right]
+    type = SideSetsFromNormalsGenerator
+    normals = '1 0 0'
+    new_boundary = 'right'
+    input = left
+  [../]
 []
 
 [Problem]
@@ -45,9 +46,9 @@ area = 5.02e-7 # Formerly 3.14e-6
 #       line_search = none
         end_time = 10E-6
 
-        trans_ss_check = 1
-        ss_check_tol = 1E-15
-        ss_tmin = ${fparse 3 * relaxTime}
+        steady_state_detection = 1
+        steady_state_tolerance = 1E-15
+        steady_state_start_time = ${fparse 3 * relaxTime}
 
         petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
         solve_type = NEWTON

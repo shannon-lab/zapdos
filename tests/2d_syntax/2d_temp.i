@@ -7,16 +7,20 @@ dom0Scale=1e-3
 []
 
 [Mesh]
-  type = FileMesh
-  file = '2d.msh'
-  # type = GeneratedMesh
-  # nx = 1
-  # xmax = 1.1
-  # # ny = 2
-  # # ymax = 1.1
-  # dim = 1
-  # boundary_id = '0 1'
-  # boundary_name = 'anode cathode'
+  [./file]
+    type = FileMeshGenerator
+    file = '2d.msh'
+  [../]
+  # [./generated]
+  #   type = GeneratedMesh
+  #   nx = 1
+  #   xmax = 1.1
+  #   # ny = 2
+  #   # ymax = 1.1
+  #   dim = 1
+  #   boundary_id = '0 1'
+  #   boundary_name = 'anode cathode'
+  # [../]
 []
 
 [Problem]
