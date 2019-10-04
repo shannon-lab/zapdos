@@ -12,45 +12,36 @@ dom1Scale=1e-7
 []
 
 [Mesh]
-  # type = GeneratedMesh
-  # nx = 2
-  # xmax = 1.1
-  # dim = 1
-  type = FileMesh
-  file = 'liquidNew.msh'
-[]
-
-[MeshModifiers]
+  [./file]
+    type = FileMeshGenerator
+    file = 'liquidNew.msh'
+  [../]
   [./interface]
-    type = SideSetsBetweenSubdomains
+    type = SideSetsBetweenSubdomainsGenerator
     master_block = '0'
     paired_block = '1'
     new_boundary = 'master0_interface'
-    # depends_on = 'box'
+    input = file
   [../]
   [./interface_again]
-    type = SideSetsBetweenSubdomains
+    type = SideSetsBetweenSubdomainsGenerator
     master_block = '1'
     paired_block = '0'
     new_boundary = 'master1_interface'
-    # depends_on = 'box'
+    input = interface
   [../]
   [./left]
-    type = SideSetsFromNormals
+    type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
+    input = interface_again
   [../]
   [./right]
-    type = SideSetsFromNormals
+    type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
+    input = left
   [../]
-  # [./box]
-  #   type = SubdomainBoundingBox
-  #   bottom_left = '0.55 0 0'
-  #   top_right = '1.1 1. 0'
-  #   block_id = 1
-  # [../]
 []
 
 [Problem]

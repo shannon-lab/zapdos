@@ -10,34 +10,22 @@ vhigh=0.15 #kV
 []
 
 [Mesh]
-        type = FileMesh
-        file = 'micro_fe.msh'
-[]
-
-[MeshModifiers]
-#       [./interface]
-#               type = SideSetsBetweenSubdomains
-#               master_block = '0'
-#               paired_block = '1'
-#               new_boundary = right
-#       [../]
-#       [./interface_again]
-#               type = SideSetsBetweenSubdomains
-#               master_block = '1'
-#               paired_block = '0'
-#               new_boundary = 'master1_interface'
-#               # depends_on = 'box'
-#       [../]
-        [./left]
-                type = SideSetsFromNormals
-                normals = '-1 0 0'
-                new_boundary = 'left'
-        [../]
-        [./right]
-                type = SideSetsFromNormals
-                normals = '1 0 0'
-                new_boundary = 'right'
-        [../]
+  [./file]
+    type = FileMeshGenerator
+    file = 'micro_fe.msh'
+  [../]
+  [./left]
+    type = SideSetsFromNormalsGenerator
+    normals = '-1 0 0'
+    new_boundary = 'left'
+    input = file
+  [../]
+  [./right]
+    type = SideSetsFromNormalsGenerator
+    normals = '1 0 0'
+    new_boundary = 'right'
+    input = left
+  [../]
 []
 
 [Problem]
