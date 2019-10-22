@@ -69,7 +69,7 @@ Zapdos works on Mac OS, Linux, and Windows and is easy to get started with. Begi
 !col! small=12 medium=6 large=6 class=center
 !media media/nsf.png style=width:30%;margin-left:auto;margin-right:auto;
 
-SI2-SSE Award #1740300
+[SI2-SSE Award #1740300](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1740300)
 !col-end!
 !row-end!
 
