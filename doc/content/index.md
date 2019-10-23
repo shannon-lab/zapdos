@@ -60,6 +60,14 @@ Zapdos works on Mac OS, Linux, and Windows and is easy to get started with. Begi
 !col-end!
 !row-end!
 
+!row!
+!col! small=12 medium=12 large=12 class=center
+!media media/ornl.png style=width:30%;display:block;margin-top:auto;margin-left:auto;margin-right:auto;
+
+[Fusion Energy Division](https://www.ornl.gov/division/fed)
+!col-end!
+!row-end!
+
 # Funding Acknowledgements class=center style=font-weight:200;font-size:200%
 
 !row!
