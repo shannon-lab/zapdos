@@ -18,6 +18,8 @@ validParams<PotentialGradientSource>()
 {
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("potential", "The potential.");
+  params.addClassDescription(
+    "Duplicate kernel of 'EFieldMagnitudeSource'");
   return params;
 }
 

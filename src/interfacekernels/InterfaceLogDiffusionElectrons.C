@@ -29,6 +29,9 @@ validParams<InterfaceLogDiffusionElectrons>()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<Real>("neighbor_position_units",
                                 "The units of position in the neighboring domain.");
+  params.addClassDescription(
+    "Used to include the diffusive flux of species into or out of a neighboring"
+    "subdomain. Currently specific to electrons.");
   return params;
 }
 

@@ -60,6 +60,9 @@ validParams<GasElectronMoments>()
   params.addParam<Real>("user_electron_diffusion_coeff", 0, "The electron diffusion coefficient.");
   params.addParam<bool>("pressure_dependent_electron_coeff",false,
                       "Are the values for the electron mobility and diffusion coefficient dependent on gas pressure");
+  params.addClassDescription(
+    "Material properties of electrons"
+    "Defines reaction properties with rate coefficients");
 
   return params;
 }

@@ -18,6 +18,9 @@ validParams<LogDensityDirichletBC>()
 {
   InputParameters params = validParams<NodalBC>();
   params.addRequiredParam<Real>("value", "Value of the BC");
+  params.addClassDescription(
+    "Density Dirichlet boundary condition"
+    "(Densities must be in log form and in moles/m^3)");
   return params;
 }
 

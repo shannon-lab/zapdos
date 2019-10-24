@@ -18,6 +18,8 @@ validParams<UserSource>()
 {
   InputParameters params = validParams<Kernel>();
   params.addRequiredParam<Real>("source_magnitude", "The numerical value of the source magnitude.");
+  params.addClassDescription(
+    "User defined source term");
   return params;
 }
 

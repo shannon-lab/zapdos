@@ -23,6 +23,8 @@ validParams<Current>()
   params.addParam<bool>(
       "art_diff", false, "Whether there is a current contribution from artificial diffusion.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addClassDescription(
+    "Returns the electric current associated with the flux of defined species");
   return params;
 }
 

@@ -34,6 +34,9 @@ validParams<NeumannCircuitVoltageNew>()
   p.addRequiredParam<std::string>("potential_units", "The potential units.");
   p.addRequiredParam<Real>("position_units", "Units of position.");
   p.addRequiredParam<Real>("resistance", "The ballast resistance in Ohms.");
+  p.addClassDescription(
+    "Circuit boundary condition for potential"
+    "(Similar to 'NeumannCircuitVoltageNew' BC but current is given through an UserObject)");
   return p;
 }
 

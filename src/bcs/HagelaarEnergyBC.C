@@ -25,6 +25,9 @@ validParams<HagelaarEnergyBC>()
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredCoupledVar("ip", "The ion density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addClassDescription(
+    "Kinetic electron energy boundary condition"
+    "(Based on DOI:https://doi.org/10.1063/1.2715745)");
   return params;
 }
 

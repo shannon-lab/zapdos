@@ -21,6 +21,9 @@ validParams<DGEFieldAdvection>()
 {
   InputParameters params = validParams<DGKernel>();
   params.addRequiredCoupledVar("potential", "The potential that drives advection.");
+  params.addClassDescription(
+    "The discontinuous Galerkin form of the generic electric field driven advection term"
+    "(Densities must be in log form)");
   return params;
 }
 

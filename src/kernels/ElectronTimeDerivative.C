@@ -18,6 +18,8 @@ validParams<ElectronTimeDerivative>()
 {
   InputParameters params = validParams<TimeKernel>();
   params.addParam<bool>("lumping", false, "True for mass matrix lumping, false otherwise");
+  params.addClassDescription(
+    "Generic accumulation term for variables in log form.");
   return params;
 }
 

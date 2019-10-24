@@ -22,6 +22,8 @@ validParams<DCIonBC>()
   InputParameters params = validParams<IntegratedBC>();
   params.addRequiredCoupledVar("potential", "The electrical potential");
   params.addRequiredParam<Real>("position_units", "Units of position");
+  params.addClassDescription(
+    "Electric field driven outflow boundary condition");
   return params;
 }
 

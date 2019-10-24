@@ -39,6 +39,8 @@ validParams<PenaltyCircuitPotential>()
   p.addRequiredParam<std::string>("potential_units", "The potential units.");
   p.addRequiredParam<Real>("position_units", "Units of position.");
   p.addRequiredParam<Real>("resistance", "The ballast resistance in Ohms.");
+  p.addClassDescription(
+    "Circuit boundary condition for potential multiplied by a penalty term");
   return p;
 }
 
