@@ -18,10 +18,6 @@ class EconomouDielectricBC;
 template <>
 InputParameters validParams<EconomouDielectricBC>();
 
-/**
- * Implements a simple constant Neumann BC where grad(u)=value on the boundary.
- * Uses the term produced from integrating the diffusion operator by parts.
- */
 class EconomouDielectricBC : public IntegratedBC
 {
 public:
@@ -33,12 +29,10 @@ public:
 
 protected:
   virtual Real computeQpResidual() override;
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual Real computeQpJacobian() override;
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar) override;
 
-  /// Value of grad(u) on the boundary.
-
-  const Real & _r_units;
+  Real _r_units;
 
   const VariableValue & _mean_en;
   unsigned int _mean_en_id;
@@ -79,8 +73,6 @@ protected:
   std::string _potential_units;
 
   Real _voltage_scaling;
-
-  //const VariableValue & _surface_charge;
 };
 
 #endif // LymberopoulosElectronBC_H

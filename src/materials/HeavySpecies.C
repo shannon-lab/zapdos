@@ -28,7 +28,7 @@ validParams<HeavySpecies>()
   params.addRequiredParam<Real>("heavy_species_charge", "Charge of heavy species.");
   params.addClassDescription(
     "Material properties of ions"
-    "(Old Mateials Object, use HeavySepciesMaterial.C instead)");
+    "(Old Materials Object, use HeavySepciesMaterial.C instead)");
   return params;
 }
 

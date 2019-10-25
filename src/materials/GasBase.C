@@ -60,7 +60,7 @@ validParams<GasBase>()
   params.addCoupledVar("ip", "The ion density.");
   params.addClassDescription(
     "Material properties of electrons"
-    "Defines reaction properties with Townsend coefficients");
+    "(Defines reaction properties with Townsend coefficients)");
   return params;
 }
 

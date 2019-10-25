@@ -56,7 +56,7 @@ validParams<Gas>()
   params.addCoupledVar("ip", "The ion density.");
   params.addClassDescription(
     "Material properties of electron and ions for argon gas"
-     "Defines reaction properties with Townsend coefficients");
+     "(Defines reaction properties with Townsend coefficients)");
   return params;
 }
 

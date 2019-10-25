@@ -30,7 +30,6 @@ SakiyamaElectronDiffusionBC::SakiyamaElectronDiffusionBC(const InputParameters &
   : IntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
-    //_r(getParam<Real>("r")),
 
     // Coupled Variables
     _mean_en(coupledValue("mean_en")),

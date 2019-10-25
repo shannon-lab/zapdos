@@ -101,8 +101,6 @@ EconomouDielectricBC::computeQpResidual()
 
   _em_flux = (0.25 * _v_thermal * std::exp(_em[_qp]) * _normals[_qp]) - (_user_se_coeff * _ion_flux);
 
-  //return _test[_i][_qp]  * _r_units * ((_thickness/_epsilon_d) * (_e[_qp] * _ion_flux - _e[_qp] * _em_flux) * _normals[_qp] / _voltage_scaling
-  //        + (_thickness/_epsilon_d) * 8.8542e-12 * _E_dot[_qp] - _u_dot[_qp]);
   return _test[_i][_qp]  * _r_units * ((_thickness/_epsilon_d) * (_e[_qp] * _ion_flux - _e[_qp] * _em_flux) * _normals[_qp] / _voltage_scaling
           + (_thickness/_epsilon_d) * 8.8542e-12 * -_grad_u_dot[_qp] * _r_units * _normals[_qp] - _u_dot[_qp]);
 }
@@ -119,9 +117,7 @@ EconomouDielectricBC::computeQpJacobian()
     _a = 0.0;
   }
 
-  //return _test[_i][_qp]  * _r_units * ((_thickness/_epsilon_d) * (_e[_qp] * _d_ion_flux_du - _e[_qp] * _d_em_flux_du) * _normals[_qp] / _voltage_scaling
-  //        + (_thickness/_epsilon_d) * 8.8542e-12 * _dE_dot[_qp] * _grad_phi[_j][_qp] * _r_units * _normals[_qp] - _du_dot_du[_qp] * _phi[_j][_qp]); //Need to fix
-  return _test[_i][_qp]  * _r_units * ((_thickness/_epsilon_d) * 8.8542e-12 * _du_dot_du[_qp] * -_grad_phi[_j][_qp] * _r_units * _normals[_qp] - _du_dot_du[_qp] * _phi[_j][_qp]); //Need to fix
+  return _test[_i][_qp]  * _r_units * ((_thickness/_epsilon_d) * 8.8542e-12 * _du_dot_du[_qp] * -_grad_phi[_j][_qp] * _r_units * _normals[_qp] - _du_dot_du[_qp] * _phi[_j][_qp]);
 }
 
 Real

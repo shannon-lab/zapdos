@@ -62,7 +62,7 @@ validParams<GasElectronMoments>()
                       "Are the values for the electron mobility and diffusion coefficient dependent on gas pressure");
   params.addClassDescription(
     "Material properties of electrons"
-    "Defines reaction properties with rate coefficients");
+    "(Defines reaction properties with rate coefficients)");
 
   return params;
 }
