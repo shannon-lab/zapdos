@@ -25,6 +25,9 @@ validParams<DGCoeffDiffusion>()
   // See header file for sigma and epsilon
   params.addRequiredParam<Real>("sigma", "sigma");
   params.addRequiredParam<Real>("epsilon", "epsilon");
+  params.addClassDescription(
+    "The discontinuous Galerkin form of the generic diffusion term"
+    "(Densities must be in log form)");
   return params;
 }
 

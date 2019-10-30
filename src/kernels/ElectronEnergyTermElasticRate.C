@@ -22,6 +22,9 @@ validParams<ElectronEnergyTermElasticRate>()
   params.addRequiredParam<std::string>("reaction", "The reaction that is adding/removing energy.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredCoupledVar("potential", "The potential.");
+  params.addClassDescription(
+    "Electron energy loss term for elastic collisions using reaction rate coefficient"
+    "(Densities must be in log form)");
   return params;
 }
 

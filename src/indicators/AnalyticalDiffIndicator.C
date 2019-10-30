@@ -19,6 +19,8 @@ validParams<AnalyticalDiffIndicator>()
 {
   InputParameters params = validParams<ElementIntegralIndicator>();
   params.addRequiredParam<FunctionName>("function", "The analytic solution to compare against");
+  params.addClassDescription(
+    "Returns the difference between the function of the analytic solution vs the computed solution");
   return params;
 }
 

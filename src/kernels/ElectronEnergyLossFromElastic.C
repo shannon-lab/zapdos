@@ -20,6 +20,9 @@ validParams<ElectronEnergyLossFromElastic>()
   params.addRequiredCoupledVar("potential", "The potential.");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addClassDescription(
+    "Electron energy loss term for elastic collisions using Townsend coefficient"
+    "(Densities must be in log form)");
   return params;
 }
 

@@ -20,6 +20,9 @@ validParams<CoeffDiffusionElectrons>()
   params.addRequiredCoupledVar("mean_en",
                                "The log of the product of mean energy times electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position");
+  params.addClassDescription(
+    "Electron specific diffusion term"
+    "(Electron density must be in log form)");
   return params;
 }
 

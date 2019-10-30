@@ -24,6 +24,8 @@ validParams<PowerDep>()
       "art_diff", false, "Whether there is a current contribution from artificial diffusion.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addClassDescription(
+    "Amount of power deposited into a user specified specie by Joule Heating");
   return params;
 }
 

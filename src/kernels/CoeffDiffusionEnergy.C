@@ -19,6 +19,9 @@ validParams<CoeffDiffusionEnergy>()
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("em", "The log of the electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addClassDescription(
+    "Electron energy specific diffusion term"
+    "(Densities must be in log form)");
   return params;
 }
 

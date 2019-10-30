@@ -58,6 +58,9 @@ validParams<GasBase>()
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("mean_en", "The electron mean energy in log form.");
   params.addCoupledVar("ip", "The ion density.");
+  params.addClassDescription(
+    "Material properties of electrons"
+    "(Defines reaction properties with Townsend coefficients)");
   return params;
 }
 

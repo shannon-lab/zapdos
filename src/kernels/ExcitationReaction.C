@@ -26,6 +26,9 @@ validParams<ExcitationReaction>()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<bool>("reactant",
                                 "Checks if the variable is the reactant.");
+  params.addClassDescription(
+    "Rate of production of metastables from excitation using Townsend coefficient"
+    "(Densities must be in log form)");
   return params;
 }
 

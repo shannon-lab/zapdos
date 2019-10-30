@@ -33,6 +33,9 @@ validParams<NeumannCircuitVoltageMoles_KV>()
   params.addRequiredParam<Real>("r",
                                 "The reflection coefficient applied to both electrons and ions");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addClassDescription(
+    "Circuit boundary condition for potential"
+    "(Current is calculated in BC)");
 
   return params;
 }

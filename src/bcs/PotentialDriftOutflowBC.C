@@ -20,6 +20,8 @@ validParams<PotentialDriftOutflowBC>()
   MooseEnum charge_sign("positive=1 negative=-1", "positive");
   params.addRequiredCoupledVar(
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
+  params.addRequiredCoupledVar(
+    "potential", "The gradient of the potential will be used to compute the advection velocity.");
 
   params.addParam<MooseEnum>("charge_sign", charge_sign, "The sign of the charged particle.");
   return params;

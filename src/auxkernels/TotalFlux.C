@@ -20,6 +20,8 @@ validParams<TotalFlux>()
 
   params.addRequiredCoupledVar("density_log", "The electron density");
   params.addRequiredCoupledVar("potential", "The potential");
+  params.addClassDescription(
+    "Returns the total flux of defined species");
 
   return params;
 }

@@ -24,6 +24,9 @@ validParams<EFieldArtDiff>()
                                "The potential for calculating the advection velocity.");
   params.addParam<Real>("scale", 1., "Amount to scale artificial diffusion.");
   params.addRequiredParam<Real>("position_units", "Units of position");
+  params.addClassDescription(
+    "Generic artificial electric field driven advection term"
+    "(Densities must be in log form)");
   return params;
 }
 

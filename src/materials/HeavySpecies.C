@@ -26,6 +26,9 @@ validParams<HeavySpecies>()
   params.addRequiredParam<Real>("heavy_species_mass", "Mass of the heavy species");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("heavy_species_charge", "Charge of heavy species.");
+  params.addClassDescription(
+    "Material properties of ions"
+    "(Old Materials Object, use HeavySepciesMaterial.C instead)");
   return params;
 }
 

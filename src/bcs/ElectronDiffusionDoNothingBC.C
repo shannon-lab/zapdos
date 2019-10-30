@@ -20,6 +20,8 @@ validParams<ElectronDiffusionDoNothingBC>()
   params.addRequiredCoupledVar("mean_en",
                                "The log of the product of mean energy times electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position");
+  params.addClassDescription(
+    "Boundary condition where the election diffusion flux at the boundary is equal to the bulk election diffusion equation");
   return params;
 }
 
