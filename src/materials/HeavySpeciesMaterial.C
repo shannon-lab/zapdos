@@ -29,6 +29,8 @@ validParams<HeavySpeciesMaterial>()
   params.addParam<Real>("time_units", 1, "Units of time");
   params.addParam<Real>("mobility", "The species mobility (if applicable).");
   params.addParam<Real>("diffusivity", "The species diffusivity (if applicable).");
+  params.addClassDescription(
+    "Material properties of defined ions or metastables");
   // params.addRequiredParam<FileName>(
       // "reactions_file", "The file containing interpolation tables for material properties.");
   // params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");

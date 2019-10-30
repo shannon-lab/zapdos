@@ -21,6 +21,9 @@ validParams<EFieldAdvectionEnergy>()
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredCoupledVar("em", "The log of the electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position");
+  params.addClassDescription(
+    "Electron energy specific electric field driven advection term"
+    "(Densities must be in log form)");
   return params;
 }
 

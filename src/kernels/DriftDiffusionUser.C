@@ -20,6 +20,10 @@ validParams<DriftDiffusionUser>()
   params.addRequiredParam<Real>("mu", "The mobility.");
   params.addRequiredParam<Real>("diff", "The diffusivity.");
   params.addRequiredParam<Real>("sign", "The charge sign of the drift-diffusing particle.");
+  params.addClassDescription("Generic drift-diffusion equation that contains both"
+    "electric field driven advection and diffusion term and that requires constant user defined"
+    "mobility and diffusivity"
+    "(Densities must be in log form)");
   return params;
 }
 

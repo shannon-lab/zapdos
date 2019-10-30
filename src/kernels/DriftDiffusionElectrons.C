@@ -22,6 +22,9 @@ validParams<DriftDiffusionElectrons>()
   params.addRequiredCoupledVar("mean_en",
                                "The log of the product of mean energy times electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position");
+  params.addClassDescription("Electron specific drift-diffusion equation that contains both"
+    "electric field driven advection and diffusion term"
+    "(Densities must be in log form)");
   return params;
 }
 

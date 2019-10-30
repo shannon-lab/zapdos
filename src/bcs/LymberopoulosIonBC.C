@@ -22,6 +22,9 @@ validParams<LymberopoulosIonBC>()
   InputParameters params = validParams<IntegratedBC>();
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addClassDescription(
+    "Simpified kinetic ion boundary condition"
+    "(Based on DOI: https://doi.org/10.1063/1.352926)");
   return params;
 }
 

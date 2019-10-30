@@ -19,6 +19,9 @@ validParams<LogStabilizationMoles>()
   InputParameters params = validParams<Kernel>();
   params.addRequiredParam<Real>("offset",
                                 "The offset parameter that goes into the exponential function");
+  params.addClassDescription(
+    "Kernel stabilizes solution variable u in places where u → 0; b is the offset value"
+    "specified by the user. A typical value for b is 20.");
   return params;
 }
 

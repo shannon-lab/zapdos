@@ -23,6 +23,8 @@ validParams<CurrentDensityShapeSideUserObject>()
   params.addRequiredCoupledVar("potential", "The electrical potential.");
   params.addRequiredCoupledVar("mean_en", "The mean energy variable.");
   params.addRequiredParam<bool>("use_moles", "Whether the densities are in molar units.");
+  params.addClassDescription(
+    "Calculates the total current at a boundary");
   return params;
 }
 

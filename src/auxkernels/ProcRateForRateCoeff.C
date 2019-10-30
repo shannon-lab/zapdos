@@ -21,6 +21,9 @@ validParams<ProcRateForRateCoeff>()
   params.addCoupledVar("v", "The first variable that is reacting to create u.");
   params.addCoupledVar("w", "The second variable that is reacting to create u.");
   params.addRequiredParam<std::string>("reaction", "The full reaction equation.");
+  params.addClassDescription(
+    "Reaction rate for two body collisions in units of #/m^3s. User can pass"
+    "choice of elastic, excitation, or ionization reaction rate coefficients");
 
   return params;
 }

@@ -21,6 +21,9 @@ validParams<CoeffDiffusion>()
 {
   InputParameters params = validParams<Diffusion>();
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addClassDescription(
+    "Generic diffusion term"
+    "(Densities must be in log form)");
   return params;
 }
 

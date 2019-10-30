@@ -20,6 +20,9 @@ validParams<ProvideMobility>()
   params.addRequiredParam<Real>("electrode_area", "The area of the electrode or plasma.");
   params.addRequiredParam<Real>("ballast_resist", "The magnitude of the ballasting resistance.");
   params.addRequiredParam<Real>("e", "The Coulomb charge");
+  params.addClassDescription(
+    "Defines ballast resistance and the area of an electrode"
+    "(Used with Circuit BCs)");
   return params;
 }
 

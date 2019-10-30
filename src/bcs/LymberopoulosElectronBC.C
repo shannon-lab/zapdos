@@ -22,6 +22,9 @@ validParams<LymberopoulosElectronBC>()
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("ion", "The ion density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addClassDescription(
+    "Simpified kinetic electron boundary condition"
+    "(Based on DOI: https://doi.org/10.1063/1.352926)");
   return params;
 }
 

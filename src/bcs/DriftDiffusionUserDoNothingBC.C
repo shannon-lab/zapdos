@@ -20,6 +20,9 @@ validParams<DriftDiffusionUserDoNothingBC>()
   params.addRequiredParam<Real>("mu", "The mobility.");
   params.addRequiredParam<Real>("diff", "The diffusivity.");
   params.addRequiredParam<Real>("sign", "The charge sign of the drift-diffusing particle.");
+  params.addClassDescription(
+    "Boundary condition where the flux at the boundary is equal to the bulk dift-diffusion equation"
+    "with constant user defined coefficients");
   return params;
 }
 
