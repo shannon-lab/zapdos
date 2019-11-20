@@ -864,7 +864,7 @@ dom0Scale=25.4e-3
 []
 
 [Outputs]
-  print_perf_log = true
+  perf_graph = true
   [./out]
     type = Exodus
   [../]
