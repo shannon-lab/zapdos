@@ -85,7 +85,7 @@ SakiyamaEnergySecondaryElectronBC::computeQpResidual()
     _se_energy = _user_se_energy;
   }
 
-  _ion_flux = (_a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _normals[_qp]);
+  _ion_flux = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]);
 
   return  -_test[_i][_qp] * _r_units * _a * _se_coeff * (5.0/3.0) * _se_energy
           * _ion_flux * _normals[_qp];
@@ -112,7 +112,7 @@ SakiyamaEnergySecondaryElectronBC::computeQpJacobian()
     _d_se_energy_d_u = 0;
   }
 
-  _ion_flux = (_a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _normals[_qp]);
+  _ion_flux = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]);
 
   return  -_test[_i][_qp] * _r_units * _a * _se_coeff * (5.0/3.0) * _d_se_energy_d_u
           * _ion_flux * _normals[_qp];
@@ -141,7 +141,7 @@ SakiyamaEnergySecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
       _se_energy = _user_se_energy;
     }
 
-    _d_ion_flux_d_potential = (_a * _sgnip[_qp] * _muip[_qp] * -_grad_phi[_j][_qp] * _r_units * std::exp(_u[_qp]) * _normals[_qp]);
+    _d_ion_flux_d_potential = _a * _sgnip[_qp] * _muip[_qp] * -_grad_phi[_j][_qp] * _r_units * std::exp(_u[_qp]);
 
     return  -_test[_i][_qp] * _r_units * _a * _se_coeff * (5.0/3.0) * _se_energy
             * _d_ion_flux_d_potential * _normals[_qp];
@@ -167,7 +167,7 @@ SakiyamaEnergySecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
       _d_se_energy_d_em = 0;
     }
 
-    _ion_flux = (_a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _normals[_qp]);
+    _ion_flux = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]);
 
     return  -_test[_i][_qp] * _r_units * _a * _se_coeff * (5.0/3.0) * _d_se_energy_d_em
             * _ion_flux * _normals[_qp];
@@ -193,7 +193,7 @@ SakiyamaEnergySecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
       _se_energy = _user_se_energy;
     }
 
-    _d_ion_flux_d_ip = (_a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]);
+    _d_ion_flux_d_ip = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _phi[_j][_qp];
 
     return  -_test[_i][_qp] * _r_units * _a * _se_coeff * (5.0/3.0) * _se_energy
             * _d_ion_flux_d_ip * _normals[_qp];
