@@ -107,7 +107,7 @@ SakiyamaSecondaryElectronBC::computeQpResidual()
 
   _v_thermal = std::sqrt(8 * _kb[_qp] * _temp / (M_PI * _massip[_qp]));
 
-  _ion_flux = (_a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _normals[_qp]);
+  _ion_flux = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]);
 
 
   return  -_test[_i][_qp] * _r_units * _a * _user_se_coeff * _ion_flux *
@@ -200,7 +200,7 @@ SakiyamaSecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
 
     _v_thermal = std::sqrt(8 * _kb[_qp] * _temp / (M_PI * _massip[_qp]));
 
-    _d_ion_flux_d_ip = (_a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]);
+    _d_ion_flux_d_ip = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) * _phi[_j][_qp];
 
     return -_test[_i][_qp] * _r_units * _a * _user_se_coeff *
         _d_ion_flux_d_ip * _normals[_qp];
