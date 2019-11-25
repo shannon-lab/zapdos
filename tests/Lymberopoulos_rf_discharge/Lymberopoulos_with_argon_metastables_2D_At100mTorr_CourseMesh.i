@@ -920,7 +920,7 @@ dom0Scale=25.4e-3
 [Executioner]
   type = Transient
   #end_time = 7.4e-3
-  end_time = 3e-7
+  end_time = 1e-7
   dtmax = 1e-9
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
   solve_type = NEWTON
