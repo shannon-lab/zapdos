@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef NEUMANNCIRCUITVOLTAGEMOLES_KV_H
-#define NEUMANNCIRCUITVOLTAGEMOLES_KV_H
+#pragma once
 
 #include "IntegratedBC.h"
 #include "ProvideMobility.h"
@@ -39,28 +38,27 @@ protected:
   const Function & _V_bat;
   const ProvideMobility & _data;
 
-  MooseVariable & _ip_var;
-  const VariableValue & _ip;
-  const VariableGradient & _grad_ip;
-  unsigned int _ip_id;
+  std::vector<const VariableValue *> _ip;
+  std::vector<const VariableGradient *> _grad_ip;
+  std::vector<unsigned int> _ip_id;
   const VariableValue & _mean_en;
   unsigned int _mean_en_id;
   const VariableValue & _em;
   unsigned int _em_id;
 
   const MaterialProperty<Real> & _se_coeff;
-  const MaterialProperty<Real> & _muip;
+  std::vector<const MaterialProperty<Real> *> _muip;
   const MaterialProperty<Real> & _eps;
   const MaterialProperty<Real> & _N_A;
-  const MaterialProperty<Real> & _sgnip;
-  const MaterialProperty<Real> & _Dip;
+  std::vector<const MaterialProperty<Real> *> _sgnip;
+  std::vector<const MaterialProperty<Real> *> _Dip;
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
   const MaterialProperty<Real> & _e;
   const MaterialProperty<Real> & _massem;
-  const MaterialProperty<Real> & _T_heavy;
+  std::vector<const MaterialProperty<Real> *> _T_heavy;
   const MaterialProperty<Real> & _kb;
-  const MaterialProperty<Real> & _mass;
+  std::vector<const MaterialProperty<Real> *> _mass;
 
   std::string _potential_units;
   Real _r;
@@ -92,6 +90,12 @@ protected:
   Real _d_denominator_d_mean_en;
 
   Real _voltage_scaling;
-};
 
-#endif // NEUMANNCIRCUITVOLTAGEMOLES_KV_H
+  Real _ion_drift;
+  Real _secondary_ion;
+  unsigned int _num_ions;
+  std::vector<unsigned int> _ion_id;
+  std::vector<MooseVariable *> _ip_var;
+  unsigned int _ip_index;
+  std::vector<unsigned int>::iterator _iter;
+};

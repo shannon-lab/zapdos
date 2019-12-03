@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef HEAVYSPECIESMATERIAL_H_
-#define HEAVYSPECIESMATERIAL_H_
+#pragma once
 
 #include "Material.h"
 /* #include "LinearInterpolation.h" */
@@ -45,6 +44,8 @@ protected:
   const MaterialProperty<Real> & _p_gas;
 
   Real _time_units;
+  bool _calc_mobility;
+  bool _calc_diffusivity;
 
   // MaterialProperty<Real> & _T_gas;
   // MaterialProperty<Real> & _p_gas;  // Replace with gas fraction?
@@ -55,5 +56,3 @@ protected:
 
 
 };
-
-#endif // HEAVYSPECIES_H_
