@@ -1,7 +1,5 @@
 dom0Scale=1e-3
 dom1Scale=1e-7
-# dom0Scale=1.1
-# dom1Scale=1.1
 
 [GlobalParams]
   offset = 20
@@ -60,7 +58,6 @@ dom1Scale=1e-7
 [Executioner]
   type = Transient
   end_time = 1e-1
-  # end_time = 10
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
   # petsc_options = '-snes_test_display'
   solve_type = NEWTON
@@ -645,28 +642,24 @@ dom1Scale=1e-7
   [../]
   [./em_lin]
     type = DensityMoles
-    convert_moles = true
     variable = em_lin
     density_log = em
     block = 0
   [../]
   [./emliq_lin]
     type = DensityMoles
-    convert_moles = true
     variable = emliq_lin
     density_log = emliq
     block = 1
   [../]
   [./Arp_lin]
     type = DensityMoles
-    convert_moles = true
     variable = Arp_lin
     density_log = Arp
     block = 0
   [../]
   [./OHm_lin]
     type = DensityMoles
-    convert_moles = true
     variable = OHm_lin
     density_log = OHm
     block = 1
@@ -785,6 +778,37 @@ dom1Scale=1e-7
 []
 
 [BCs]
+  [./mean_en_physical_right]
+    type = HagelaarEnergyBC
+    variable = mean_en
+    boundary = 'master0_interface'
+    potential = potential
+    em = em
+    ip = Arp
+    r = 0.99
+    position_units = ${dom0Scale}
+  [../]
+  [./mean_en_physical_left]
+    type = HagelaarEnergyBC
+    variable = mean_en
+    boundary = 'left'
+    potential = potential
+    em = em
+    ip = Arp
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
+  [./secondary_energy_left]
+    type = SecondaryElectronEnergyBC
+    variable = mean_en
+    boundary = 'left'
+    potential = potential
+    em = em
+    ip = 'Arp'
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
+
   [./potential_left]
     type = NeumannCircuitVoltageMoles_KV
     variable = potential
@@ -808,18 +832,10 @@ dom1Scale=1e-7
     variable = em
     boundary = 'master0_interface'
     potential = potential
-    ip = Arp
     mean_en = mean_en
     r = 0.99
     position_units = ${dom0Scale}
   [../]
-  # [./em_physical_right]
-  #   type = MatchedValueLogBC
-  #   variable = em
-  #   boundary = 'master0_interface'
-  #   v = emliq
-  #   H = 1e3
-  # [../]
   [./Arp_physical_right_diffusion]
     type = HagelaarIonDiffusionBC
     variable = Arp
@@ -835,22 +851,12 @@ dom1Scale=1e-7
     r = 0
     position_units = ${dom0Scale}
   [../]
-  [./mean_en_physical_right]
-    type = HagelaarEnergyBC
-    variable = mean_en
-    boundary = 'master0_interface'
-    potential = potential
-    em = em
-    ip = Arp
-    r = 0.99
-    position_units = ${dom0Scale}
-  [../]
+
   [./em_physical_left]
     type = HagelaarElectronBC
     variable = em
     boundary = 'left'
     potential = potential
-    ip = Arp
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
@@ -880,16 +886,7 @@ dom1Scale=1e-7
     r = 0
     position_units = ${dom0Scale}
   [../]
-  [./mean_en_physical_left]
-    type = HagelaarEnergyBC
-    variable = mean_en
-    boundary = 'left'
-    potential = potential
-    em = em
-    ip = Arp
-    r = 0
-    position_units = ${dom0Scale}
-  [../]
+
   [./emliq_right]
     type = DCIonBC
     variable = emliq
@@ -942,40 +939,6 @@ dom1Scale=1e-7
     variable = potential
     function = potential_ic_func
   [../]
-  # [./em_ic]
-  #   type = RandomIC
-  #   variable = em
-  #   block = 0
-  #   min = -21.5
-  #   max = -20.5
-  # [../]
-  # [./emliq_ic]
-  #   type = RandomIC
-  #   variable = emliq
-  #   block = 1
-  #   min = -21.5
-  #   max = -20.5
-  # [../]
-  # [./Arp_ic]
-  #   type = RandomIC
-  #   variable = Arp
-  #   block = 0
-  #   min = -21.5
-  #   max = -20.5
-  # [../]
-  # [./mean_en_ic]
-  #   type = RandomIC
-  #   variable = mean_en
-  #   block = 0
-  #   min = -20.5
-  #   max = -19.5
-  # [../]
-  #   type = RandomIC
-  #   variable = OHm
-  #   block = 1
-  #   min = -16.1
-  #   max = -15.1
-  # [../]
 []
 
 [Functions]
@@ -1000,7 +963,7 @@ dom1Scale=1e-7
     potential = potential
     ip = Arp
     mean_en = mean_en
-    user_se_coeff = .05
+    user_se_coeff = 0.05
     block = 0
     property_tables_file = td_argon_mean_en.txt
  [../]
@@ -1009,11 +972,4 @@ dom1Scale=1e-7
    block = 1
    potential = potential
  [../]
- # [./jac]
- #   type = JacMat
- #   mean_en = mean_en
- #   em = em
- #   emliq = emliq
- #   block = '0 1'
- #  [../]
 []

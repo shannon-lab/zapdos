@@ -1,12 +1,12 @@
 
 #  *****************************************************************
-#             EXODIFF	(Version: 2.69) Modified: 2013-07-11
-#             Authors:  Richard Drake, rrdrake@sandia.gov
-#                       Greg Sjaardema, gdsjaar@sandia.gov
-#             Run on    2016/11/21   10:32:08 CST
+#             EXODIFF	(Version: 2.92) Modified: 2018-06-27
+#             Authors:  Richard Drake, rrdrake@sandia.gov           
+#                       Greg Sjaardema, gdsjaar@sandia.gov          
+#             Run on    2019/12/04   09:54:02 CST
 #  *****************************************************************
 
-#  FILE 1: /home/lindsayad/projects/zapdos/tests/1d_dc/gold/NonlocalPotentialBCWithSchottky_out.e
+#  FILE 1: /home/dev/projects/zapdos/tests/1d_dc/NonlocalPotentialBCWithSchottky_out.e
 #   Title: NonlocalPotentialBCWithSchottky_out.e
 #          Dim = 3, Blocks = 1, Nodes = 737, Elements = 736, Nodesets = 2, Sidesets = 2
 #          Vars: Global = 0, Nodal = 5, Element = 16, Nodeset = 0, Sideset = 0, Times = 1
@@ -22,36 +22,37 @@
 
 COORDINATES absolute 1.e-11    # min separation not calculated
 
-TIME STEPS relative 1.e-6 floor 0.0     # min:           1e-05 @ t1 max:           1e-05 @ t1
+TIME STEPS relative 1.e-6 floor 0.0     # min:   1.3400973e-08 @ t1 max:   1.3400973e-08 @ t1
 
 
 # No GLOBAL VARIABLES
 
 NODAL VARIABLES relative 3e-5 floor 0.0
-	Arp        # min:       3.0580829 @ t1,n332	max:       4.5534161 @ t1,n737
-	em         # min:       3.1140429 @ t1,n341	max:       8.3139007 @ t1,n1
-	mean_en    # min:       1.0733924 @ t1,n326	max:       8.3643159 @ t1,n1
-	potential  # min:               0 @ t1,n737	max:     0.059845259 @ t1,n1
+	Arp        # min:       3.0588037 @ t1,n332	max:        4.554538 @ t1,n737
+	em         # min:       3.1148201 @ t1,n341	max:       8.3186058 @ t1,n1
+	mean_en    # min:       1.0741541 @ t1,n326	max:       8.3742343 @ t1,n1
+	potential  # min:               0 @ t1,n737	max:      0.05985844 @ t1,n1
 	x_node     # min:               0 @ t1,n1	max:           2e-06 @ t1,n737
 
 ELEMENT VARIABLES relative 6e-5 floor 0.0
-	rho		 floor	 1e15	#	 min:	 7.5178241e+17	 @	 t1,b0,e603	max:	 1.4794294e+22	 @	 t1,b0,e174
-	em_lin		 floor	 1e15	#	 min:    1.497914e+20	 @	 t1,b0,e1	max:	 2.674132e+22	 @	 t1,b0,e341
-	Arp_lin		 floor	 1e15	#	 min:	 6.4347094e+21	 @	 t1,b0,e736	max:	 2.8279967e+22	 @	 t1,b0,e332
-	Current_em	 floor	 5e-1	#	 min:	 2.4662192e+08	 @	 t1,b0,e9	max:	 3.1184424e+08	 @	 t1,b0,e693
-	Current_Arp	 floor	 5e-1	#	 min:    69.521247	 @	 t1,b0,e360	max:     64722884	 @	 t1,b0,e81
-	PowerDep_em	 floor	 1e6	#	 min:	 1.5235264e+11	 @	 t1,b0,e697	max:	 4.0572875e+16	 @	 t1,b0,e1
-	PowerDep_Arp	 floor	 1e6	#	 min:    815623.12	 @	 t1,b0,e360	max:	 1.0647851e+16	 @	 t1,b0,e1
-	ProcRate_el	 floor	 1e23	#	 min:	 2.1282397e+34	 @	 t1,b0,e196	max:	 1.1611636e+36	 @	 t1,b0,e457
-	ProcRate_ex	 floor	 1e23	#	 min:	 1.9498595e+18	 @	 t1,b0,e1	max:	 6.3803711e+32	 @	 t1,b0,e224
-	ProcRate_iz	 floor	 1e23	#	 min:	 2.8006828e+13	 @	 t1,b0,e1	max:	 6.3670483e+32	 @	 t1,b0,e208
-	e_temp				#	 min:    0.64648829	 @	 t1,b0,e1	max:     7.5244726	 @	 t1,b0,e202
-	x				#	 min:	 2.0054222e-10	 @	 t1,b0,e1	max:	 1.9998997e-06	 @	 t1,b0,e736
-	Efield				#	 min:    488.55365	 @	 t1,b0,e697	max:	 1.6451447e+08	 @	 t1,b0,e1
-	tot_gas_current			#	 min:	 3.1134481e+08	 @	 t1,b0,e698	max:	 3.1134481e+08	 @	 t1,b0,e693
-	EFieldAdvAux_em			#	 min:    6.052497e+23	 @	 t1,b0,e697	max:	 1.3492973e+28	 @	 t1,b0,e274
-	DiffusiveFlux_em		#	 min:	 4.2744761e+23	 @	 t1,b0,e736	max:	 1.1711787e+28	 @	 t1,b0,e273
+	e_temp            # min:      0.64319471 @ t1,b0,e1	max:         7.52514 @ t1,b0,e202
+	x                 # min:   2.0054222e-10 @ t1,b0,e1	max:   1.9998997e-06 @ t1,b0,e736
+	rho               # min:   8.0010807e+17 @ t1,b0,e603	max:   1.4789201e+22 @ t1,b0,e174
+	em_lin            # min:   1.4909843e+20 @ t1,b0,e1	max:   2.6720593e+22 @ t1,b0,e341
+	Arp_lin           # min:   6.4274998e+21 @ t1,b0,e736	max:   2.8259616e+22 @ t1,b0,e332
+	Efield            # min:       1106.5198 @ t1,b0,e697	max:   1.6450677e+08 @ t1,b0,e1
+	Current_em        # min:   2.4643248e+08 @ t1,b0,e4	max:    3.116238e+08 @ t1,b0,e727
+	Current_Arp       # min:       1060.6467 @ t1,b0,e360	max:        64692422 @ t1,b0,e82
+	tot_gas_current   # min:    3.111249e+08 @ t1,b0,e728	max:    3.111249e+08 @ t1,b0,e727
+	EFieldAdvAux_em   # min:   1.3697395e+24 @ t1,b0,e697	max:   1.3481789e+28 @ t1,b0,e274
+	DiffusiveFlux_em  # min:   4.2716672e+23 @ t1,b0,e736	max:   1.1701731e+28 @ t1,b0,e273
+	PowerDep_em       # min:   3.4481792e+11 @ t1,b0,e697	max:   4.0539812e+16 @ t1,b0,e1
+	PowerDep_Arp      # min:        13752415 @ t1,b0,e360	max:   1.0642341e+16 @ t1,b0,e1
+	ProcRate_el       # min:    2.126332e+34 @ t1,b0,e196	max:   1.1603429e+36 @ t1,b0,e457
+	ProcRate_ex       # min:   3.1187085e+18 @ t1,b0,e1	max:   6.3760461e+32 @ t1,b0,e224
+	ProcRate_iz       # min:   4.4795603e+13 @ t1,b0,e1	max:   6.3634322e+32 @ t1,b0,e208
 
 # No NODESET VARIABLES
 
 # No SIDESET VARIABLES
+

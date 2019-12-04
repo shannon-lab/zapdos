@@ -962,6 +962,16 @@ dom1Scale=1e-7
     r = 0
     position_units = ${dom0Scale}
   [../]
+  [./secondary_energy_left]
+    type = SecondaryElectronEnergyBC
+    variable = mean_en
+    boundary = 'left'
+    potential = potential
+    em = em
+    ip = 'Arp'
+    r = 0
+    position_units = ${dom0Scale}
+  [../]
   [./emliq_right]
     type = DCIonBC
     variable = emliq
