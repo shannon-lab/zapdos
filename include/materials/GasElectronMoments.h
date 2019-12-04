@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef GASELECTRONMOMENTS_H_
-#define GASELECTRONMOMENTS_H_
+#pragma once
 
 #include "Material.h"
 /* #include "LinearInterpolation.h" */
@@ -42,7 +41,7 @@ protected:
   std::string _potential_units;
   Real _voltage_scaling;
 
-  //adding
+  // adding
   Real _time_units;
   Real _charge_units;
 
@@ -52,8 +51,8 @@ protected:
   Real _user_Richardson_coefficient;
   Real _user_cathode_temperature;
   Real _user_T_gas;
-  //Real _user_p_gas;
-  //const VariableValue & _user_T_gas;
+  // Real _user_p_gas;
+  // const VariableValue & _user_T_gas;
   const VariableValue & _user_p_gas;
   bool _use_moles;
 
@@ -65,8 +64,8 @@ protected:
   MaterialProperty<Real> & _d_muem_d_actual_mean_en;
   MaterialProperty<Real> & _diffem;
   MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
-  MaterialProperty<Real> & _muArp;
-  MaterialProperty<Real> & _diffArp;
+  // MaterialProperty<Real> & _muArp;
+  // MaterialProperty<Real> & _diffArp;
   MaterialProperty<Real> & _rate_coeff_ion;
   MaterialProperty<Real> & _Eiz;
   MaterialProperty<Real> & _Eex;
@@ -78,7 +77,7 @@ protected:
   MaterialProperty<Real> & _rate_coeff_elastic;
   MaterialProperty<Real> & _massem;
   MaterialProperty<Real> & _massGas;
-  MaterialProperty<Real> & _massArp;
+  // MaterialProperty<Real> & _massArp;
   MaterialProperty<Real> & _se_coeff;
   MaterialProperty<Real> & _work_function;
   MaterialProperty<Real> & _field_enhancement;
@@ -122,10 +121,10 @@ protected:
   MaterialProperty<Real> & _d_el_d_actual_mean_en;
   MaterialProperty<Real> & _sgnem;
   MaterialProperty<Real> & _sgnmean_en;
-  MaterialProperty<Real> & _sgnArp;
+  // MaterialProperty<Real> & _sgnArp;
   MaterialProperty<Real> & _diffpotential;
   MaterialProperty<Real> & _actual_mean_energy;
-  MaterialProperty<Real> & _TArp;
+  // MaterialProperty<Real> & _TArp;
   MaterialProperty<Real> & _Tem;
   MaterialProperty<Real> & _muu;
   MaterialProperty<Real> & _diffu;
@@ -148,5 +147,3 @@ protected:
   const VariableGradient & _grad_ip;
   const VariableValue & _mean_en;
 };
-
-#endif // GASELECTRONMOMENTS_H_
