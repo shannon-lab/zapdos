@@ -24,7 +24,7 @@ validParams<Efield>()
   params.addRequiredParam<int>("component",
                                "The component of the electric field to access. Accepts an integer");
   params.addClassDescription(
-    "Returns the defined component of the electric field (0 = x, 1 = y, 2 = z)");
+      "Returns the defined component of the electric field (0 = x, 1 = y, 2 = z)");
   return params;
 }
 

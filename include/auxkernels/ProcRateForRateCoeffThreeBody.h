@@ -27,8 +27,6 @@ public:
   virtual Real computeValue();
 
 protected:
-
-
   const VariableValue & _v;
   const VariableValue & _w;
   const VariableValue & _vv;
