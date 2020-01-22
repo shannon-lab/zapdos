@@ -20,10 +20,9 @@ InputParameters
 validParams<ReactantAARxn>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addClassDescription(
-    "Generic second order reaction sink term for u in which two"
-    "molecules of u are consumed"
-    "(Densities must be in log form)");
+  params.addClassDescription("Generic second order reaction sink term for u in which two"
+                             "molecules of u are consumed"
+                             "(Densities must be in log form)");
   return params;
 }
 

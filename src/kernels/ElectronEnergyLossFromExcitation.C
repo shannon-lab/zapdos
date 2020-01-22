@@ -21,9 +21,9 @@ validParams<ElectronEnergyLossFromExcitation>()
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
-    "Electron energy loss term for inelastic excitation collisions"
-    "using Townsend coefficient; Eex is the energy lost in Volts in a single"
-    "excitation collision (Densities must be in log form)");
+      "Electron energy loss term for inelastic excitation collisions"
+      "using Townsend coefficient; Eex is the energy lost in Volts in a single"
+      "excitation collision (Densities must be in log form)");
   return params;
 }
 

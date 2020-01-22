@@ -20,9 +20,8 @@ InputParameters
 validParams<ReactantFirstOrderRxn>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addClassDescription(
-    "Generic first order reaction sink term for u (u is the reactant)"
-    "(Densities must be in log form)");
+  params.addClassDescription("Generic first order reaction sink term for u (u is the reactant)"
+                             "(Densities must be in log form)");
   return params;
 }
 

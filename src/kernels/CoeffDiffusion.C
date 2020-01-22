@@ -21,9 +21,8 @@ validParams<CoeffDiffusion>()
 {
   InputParameters params = validParams<Diffusion>();
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Generic diffusion term"
-    "(Densities must be in log form)");
+  params.addClassDescription("Generic diffusion term"
+                             "(Densities must be in log form)");
   return params;
 }
 
@@ -50,7 +49,8 @@ CoeffDiffusion::computeQpResidual()
 Real
 CoeffDiffusion::computeQpJacobian()
 {
-  return -_diffusivity[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units +
-                               std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) *
+  return -_diffusivity[_qp] *
+         (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units +
+          std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) *
          -_grad_test[_i][_qp] * _r_units;
 }
