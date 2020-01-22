@@ -28,9 +28,8 @@ validParams<NodeAndSidesetBetweenSubdomains>()
                                          "The second block for which to draw a sideset between");
   params.addRequiredParam<std::vector<BoundaryName>>("new_boundary",
                                                      "The name of the boundary to create");
-  params.addClassDescription(
-    "Creates a boundary between two block"
-    "(This boundary is one way when used with InterfaceKernels)");
+  params.addClassDescription("Creates a boundary between two block"
+                             "(This boundary is one way when used with InterfaceKernels)");
   return params;
 }
 
