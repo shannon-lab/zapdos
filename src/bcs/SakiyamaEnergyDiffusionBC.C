@@ -22,9 +22,8 @@ validParams<SakiyamaEnergyDiffusionBC>()
   InputParameters params = validParams<IntegratedBC>();
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Kinetic advective electron energy boundary condition"
-    "(Based on DOI: https://doi.org/10.1116/1.579300)");
+  params.addClassDescription("Kinetic advective electron energy boundary condition"
+                             "(Based on DOI: https://doi.org/10.1116/1.579300)");
   return params;
 }
 
@@ -54,8 +53,7 @@ SakiyamaEnergyDiffusionBC::computeQpResidual()
   _v_thermal =
       std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
 
-      return _test[_i][_qp] * _r_units *
-          ((5.0/3.0) * 0.25 * _v_thermal * std::exp(_u[_qp]));
+  return _test[_i][_qp] * _r_units * ((5.0 / 3.0) * 0.25 * _v_thermal * std::exp(_u[_qp]));
 }
 
 Real
@@ -69,8 +67,8 @@ SakiyamaEnergyDiffusionBC::computeQpJacobian()
                      (M_PI * _massem[_qp]) * _phi[_j][_qp];
 
   return _test[_i][_qp] * _r_units *
-      ((5.0/3.0) * 0.25 * _d_v_thermal_d_u * std::exp(_u[_qp]) +
-       (5.0/3.0) * 0.25 * _v_thermal * std::exp(_u[_qp]) * _phi[_j][_qp]);
+         ((5.0 / 3.0) * 0.25 * _d_v_thermal_d_u * std::exp(_u[_qp]) +
+          (5.0 / 3.0) * 0.25 * _v_thermal * std::exp(_u[_qp]) * _phi[_j][_qp]);
 }
 
 Real
@@ -83,10 +81,9 @@ SakiyamaEnergyDiffusionBC::computeQpOffDiagJacobian(unsigned int jvar)
     _v_thermal =
         std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
     _d_v_thermal_d_em = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) /
-                       (M_PI * _massem[_qp]) * -_phi[_j][_qp];
+                        (M_PI * _massem[_qp]) * -_phi[_j][_qp];
 
-    return _test[_i][_qp] * _r_units *
-           ((5.0/3.0) * 0.25 * _d_v_thermal_d_em * std::exp(_u[_qp]));
+    return _test[_i][_qp] * _r_units * ((5.0 / 3.0) * 0.25 * _d_v_thermal_d_em * std::exp(_u[_qp]));
   }
 
   else

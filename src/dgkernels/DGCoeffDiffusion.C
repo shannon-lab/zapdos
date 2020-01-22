@@ -25,9 +25,8 @@ validParams<DGCoeffDiffusion>()
   // See header file for sigma and epsilon
   params.addRequiredParam<Real>("sigma", "sigma");
   params.addRequiredParam<Real>("epsilon", "epsilon");
-  params.addClassDescription(
-    "The discontinuous Galerkin form of the generic diffusion term"
-    "(Densities must be in log form)");
+  params.addClassDescription("The discontinuous Galerkin form of the generic diffusion term"
+                             "(Densities must be in log form)");
   return params;
 }
 
@@ -63,9 +62,10 @@ DGCoeffDiffusion::computeQpResidual(Moose::DGResidualType type)
       break;
 
     case Moose::Neighbor:
-      r += 0.5 * (_diff[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _normals[_qp] +
-                  _diff_neighbor[_qp] * std::exp(_u_neighbor[_qp]) * _grad_u_neighbor[_qp] *
-                      _normals[_qp]) *
+      r += 0.5 *
+           (_diff[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _normals[_qp] +
+            _diff_neighbor[_qp] * std::exp(_u_neighbor[_qp]) * _grad_u_neighbor[_qp] *
+                _normals[_qp]) *
            _test_neighbor[_i][_qp];
       r += _epsilon * 0.5 * _grad_test_neighbor[_i][_qp] * _normals[_qp] *
            (std::exp(_u[_qp]) - std::exp(_u_neighbor[_qp]));
@@ -90,8 +90,9 @@ DGCoeffDiffusion::computeQpJacobian(Moose::DGJacobianType type)
   {
 
     case Moose::ElementElement:
-      r -= 0.5 * _diff[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] +
-                               std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) *
+      r -= 0.5 * _diff[_qp] *
+           (std::exp(_u[_qp]) * _grad_phi[_j][_qp] +
+            std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) *
            _normals[_qp] * _test[_i][_qp];
       r += _epsilon * 0.5 * _grad_test[_i][_qp] * _normals[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp];
       r += _sigma / h_elem * std::exp(_u[_qp]) * _phi[_j][_qp] * _test[_i][_qp];
@@ -108,8 +109,9 @@ DGCoeffDiffusion::computeQpJacobian(Moose::DGJacobianType type)
       break;
 
     case Moose::NeighborElement:
-      r += 0.5 * _diff[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] +
-                               std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) *
+      r += 0.5 * _diff[_qp] *
+           (std::exp(_u[_qp]) * _grad_phi[_j][_qp] +
+            std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp]) *
            _normals[_qp] * _test_neighbor[_i][_qp];
       r += _epsilon * 0.5 * _grad_test_neighbor[_i][_qp] * _normals[_qp] * std::exp(_u[_qp]) *
            _phi[_j][_qp];

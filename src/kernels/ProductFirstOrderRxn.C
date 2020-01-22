@@ -21,9 +21,8 @@ validParams<ProductFirstOrderRxn>()
 {
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("v", "The variable that is reacting to create u.");
-  params.addClassDescription(
-    "Generic first order reaction source term for u (v is the reactant"
-    "and densities must be in log form)");
+  params.addClassDescription("Generic first order reaction source term for u (v is the reactant"
+                             "and densities must be in log form)");
   return params;
 }
 

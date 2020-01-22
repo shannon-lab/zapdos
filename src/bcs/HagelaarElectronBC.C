@@ -21,9 +21,8 @@ validParams<HagelaarElectronBC>()
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("mean_en", "The mean energy.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Kinetic electron boundary condition"
-    "(Based on DOI:https://doi.org/10.1103/PhysRevE.62.1452)");
+  params.addClassDescription("Kinetic electron boundary condition"
+                             "(Based on DOI:https://doi.org/10.1103/PhysRevE.62.1452)");
   return params;
 }
 

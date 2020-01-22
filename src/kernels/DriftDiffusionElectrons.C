@@ -23,8 +23,8 @@ validParams<DriftDiffusionElectrons>()
                                "The log of the product of mean energy times electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position");
   params.addClassDescription("Electron specific drift-diffusion equation that contains both"
-    "electric field driven advection and diffusion term"
-    "(Densities must be in log form)");
+                             "electric field driven advection and diffusion term"
+                             "(Densities must be in log form)");
   return params;
 }
 
@@ -78,8 +78,9 @@ DriftDiffusionElectrons::computeQpJacobian()
           _muem[_qp] * _sign[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * -_grad_potential[_qp] *
               _r_units) *
              -_grad_test[_i][_qp] * _r_units -
-         _diffem[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units +
-                         std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) *
+         _diffem[_qp] *
+             (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units +
+              std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) *
              -_grad_test[_i][_qp] * _r_units -
          _d_diffem_d_u * std::exp(_u[_qp]) * _grad_u[_qp] * _r_units * -_grad_test[_i][_qp] *
              _r_units;

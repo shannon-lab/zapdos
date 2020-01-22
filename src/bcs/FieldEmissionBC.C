@@ -203,8 +203,9 @@ FieldEmissionBC::computeQpOffDiagJacobian(unsigned int jvar)
 
       jFE = (FE_a / (_work_function[_qp])) * pow(F, 2) *
             std::exp(-v * FE_b * pow(_work_function[_qp], 1.5) / F);
-      _d_jFE_d_potential = jFE * (2 - (FE_b * FE_c) / (6 * sqrt(_work_function[_qp])) +
-                                  (FE_b * pow(_work_function[_qp], 1.5) / F)) *
+      _d_jFE_d_potential = jFE *
+                           (2 - (FE_b * FE_c) / (6 * sqrt(_work_function[_qp])) +
+                            (FE_b * pow(_work_function[_qp], 1.5) / F)) *
                            (_grad_phi[_j][_qp] * _normals[_qp]) /
                            (_grad_potential[_qp] * _normals[_qp]);
 

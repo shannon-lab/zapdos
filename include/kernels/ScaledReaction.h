@@ -29,5 +29,4 @@ protected:
 
 private:
   Real _nu;
-
 };

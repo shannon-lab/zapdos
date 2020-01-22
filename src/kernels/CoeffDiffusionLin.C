@@ -21,9 +21,8 @@ validParams<CoeffDiffusionLin>()
 {
   InputParameters params = validParams<Diffusion>();
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Generic linear diffusion term"
-    "(Values are NOT in log form)");
+  params.addClassDescription("Generic linear diffusion term"
+                             "(Values are NOT in log form)");
   return params;
 }
 

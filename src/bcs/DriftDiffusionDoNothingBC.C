@@ -30,8 +30,8 @@ validParams<DriftDiffusionDoNothingBC>()
   params.addParam<Real>("diff", "The diffusivity.");
   params.addParam<Real>("sign", "The sign of the charged particle.");
   params.addParam<bool>("use_material_props", true, "Whether to use a material for properties.");
-  params.addClassDescription(
-    "Boundary condition where the flux at the boundary is equal to the bulk dift-diffusion equation");
+  params.addClassDescription("Boundary condition where the flux at the boundary is equal to the "
+                             "bulk dift-diffusion equation");
   return params;
 }
 

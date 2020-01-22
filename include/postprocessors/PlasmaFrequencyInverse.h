@@ -24,7 +24,6 @@ InputParameters validParams<PlasmaFrequencyInverse>();
 class PlasmaFrequencyInverse : public ElementVariablePostprocessor
 {
 public:
-
   /**
    * Class constructor
    * @param parameters The input parameters

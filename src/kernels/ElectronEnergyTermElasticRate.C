@@ -23,8 +23,8 @@ validParams<ElectronEnergyTermElasticRate>()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredCoupledVar("potential", "The potential.");
   params.addClassDescription(
-    "Electron energy loss term for elastic collisions using reaction rate coefficient"
-    "(Densities must be in log form)");
+      "Electron energy loss term for elastic collisions using reaction rate coefficient"
+      "(Densities must be in log form)");
   return params;
 }
 

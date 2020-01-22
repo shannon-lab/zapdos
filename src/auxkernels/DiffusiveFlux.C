@@ -19,8 +19,7 @@ validParams<DiffusiveFlux>()
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Returns the diffusive flux of defined species");
+  params.addClassDescription("Returns the diffusive flux of defined species");
   return params;
 }
 

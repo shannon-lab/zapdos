@@ -19,9 +19,8 @@ validParams<CoeffDiffusionEnergy>()
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("em", "The log of the electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Electron energy specific diffusion term"
-    "(Densities must be in log form)");
+  params.addClassDescription("Electron energy specific diffusion term"
+                             "(Densities must be in log form)");
   return params;
 }
 
@@ -57,8 +56,9 @@ CoeffDiffusionEnergy::computeQpJacobian()
 {
   _d_diffel_d_u = _d_diffel_d_actual_mean_en[_qp] * std::exp(_u[_qp] - _em[_qp]) * _phi[_j][_qp];
 
-  return -_diffel[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units +
-                          std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) *
+  return -_diffel[_qp] *
+             (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units +
+              std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) *
              -_grad_test[_i][_qp] * _r_units -
          _d_diffel_d_u * std::exp(_u[_qp]) * _grad_u[_qp] * _r_units * -_grad_test[_i][_qp] *
              _r_units;

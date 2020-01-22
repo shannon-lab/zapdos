@@ -32,11 +32,11 @@ validParams<InterfaceAdvection>()
   params.addRequiredParam<Real>("neighbor_position_units",
                                 "The units of position in the neighboring domain.");
   params.addClassDescription(
-    "Used to include the electric field driven advective flux of species"
-    "into or out of a neighboring subdomain. Currently this interface kernel"
-    "is specific to electrons because the transport coefficients are assumed"
-    "to be a function of the mean electron energy. A generic interface"
-    "kernel with constant transport coefficients will have a much simpler Jacobian");
+      "Used to include the electric field driven advective flux of species"
+      "into or out of a neighboring subdomain. Currently this interface kernel"
+      "is specific to electrons because the transport coefficients are assumed"
+      "to be a function of the mean electron energy. A generic interface"
+      "kernel with constant transport coefficients will have a much simpler Jacobian");
   return params;
 }
 

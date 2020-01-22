@@ -30,8 +30,7 @@ validParams<SideTotFluxIntegral>()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<Real>(
       "user_velocity", -1., "Optional parameter if user wants to specify the thermal velocity");
-  params.addClassDescription(
-    "Returns the flux of a defined species at a boundary");
+  params.addClassDescription("Returns the flux of a defined species at a boundary");
   return params;
 }
 

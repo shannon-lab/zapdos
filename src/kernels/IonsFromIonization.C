@@ -21,9 +21,8 @@ validParams<IonsFromIonization>()
   params.addRequiredCoupledVar("potential", "The potential.");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Rate of production of ions from ionization using Townsend coefficient"
-    "(Ion density must be in log form)");
+  params.addClassDescription("Rate of production of ions from ionization using Townsend coefficient"
+                             "(Ion density must be in log form)");
   return params;
 }
 
