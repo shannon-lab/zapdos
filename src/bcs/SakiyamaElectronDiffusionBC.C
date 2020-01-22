@@ -17,12 +17,11 @@ InputParameters
 validParams<SakiyamaElectronDiffusionBC>()
 {
   InputParameters params = validParams<IntegratedBC>();
-  //params.addRequiredParam<Real>("r", "The reflection coefficient");
+  // params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("mean_en", "The mean energy.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Kinetic electron boundary condition"
-    "(Based on DOI: https://doi.org/10.1116/1.579300)");
+  params.addClassDescription("Kinetic electron boundary condition"
+                             "(Based on DOI: https://doi.org/10.1116/1.579300)");
   return params;
 }
 
@@ -52,8 +51,7 @@ SakiyamaElectronDiffusionBC::computeQpResidual()
   _v_thermal =
       std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
 
-  return _test[_i][_qp] * _r_units *
-         (0.25 * _v_thermal * std::exp(_u[_qp]));
+  return _test[_i][_qp] * _r_units * (0.25 * _v_thermal * std::exp(_u[_qp]));
 }
 
 Real
@@ -85,8 +83,7 @@ SakiyamaElectronDiffusionBC::computeQpOffDiagJacobian(unsigned int jvar)
                              _phi[_j][_qp];
     _actual_mean_en = std::exp(_mean_en[_qp] - _u[_qp]);
 
-    return _test[_i][_qp] * _r_units *
-           (0.25 * _d_v_thermal_d_mean_en * std::exp(_u[_qp]));
+    return _test[_i][_qp] * _r_units * (0.25 * _d_v_thermal_d_mean_en * std::exp(_u[_qp]));
   }
 
   else

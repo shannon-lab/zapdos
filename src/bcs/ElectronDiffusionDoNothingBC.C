@@ -20,8 +20,8 @@ validParams<ElectronDiffusionDoNothingBC>()
   params.addRequiredCoupledVar("mean_en",
                                "The log of the product of mean energy times electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position");
-  params.addClassDescription(
-    "Boundary condition where the election diffusion flux at the boundary is equal to the bulk election diffusion equation");
+  params.addClassDescription("Boundary condition where the election diffusion flux at the boundary "
+                             "is equal to the bulk election diffusion equation");
   return params;
 }
 
@@ -58,8 +58,9 @@ ElectronDiffusionDoNothingBC::computeQpJacobian()
   _d_diffem_d_u =
       _d_diffem_d_actual_mean_en[_qp] * std::exp(_mean_en[_qp] - _u[_qp]) * -_phi[_j][_qp];
 
-  return -_diffem[_qp] * (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units +
-                          std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) *
+  return -_diffem[_qp] *
+             (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units +
+              std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) *
              _normals[_qp] * _test[_i][_qp] * _r_units -
          _d_diffem_d_u * std::exp(_u[_qp]) * _grad_u[_qp] * _r_units * _normals[_qp] *
              _test[_i][_qp] * _r_units;

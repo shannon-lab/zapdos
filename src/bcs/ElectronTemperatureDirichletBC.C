@@ -20,8 +20,7 @@ validParams<ElectronTemperatureDirichletBC>()
   params.addRequiredParam<Real>("value", "Value of the BC");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addParam<Real>("penalty_value", 1.0, "The penalty value for the Dirichlet BC.");
-  params.addClassDescription(
-    "Electron temperature boundary condition");
+  params.addClassDescription("Electron temperature boundary condition");
   return params;
 }
 

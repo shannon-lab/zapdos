@@ -24,9 +24,8 @@ validParams<HagelaarIonDiffusionBC>()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<Real>(
       "user_velocity", -1., "Optional parameter if user wants to specify the thermal velocity");
-  params.addClassDescription(
-    "Kinetic diffusive ion boundary condition"
-    "(Based on DOI:https://doi.org/10.1103/PhysRevE.62.1452)");
+  params.addClassDescription("Kinetic diffusive ion boundary condition"
+                             "(Based on DOI:https://doi.org/10.1103/PhysRevE.62.1452)");
 
   return params;
 }

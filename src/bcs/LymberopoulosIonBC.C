@@ -22,9 +22,8 @@ validParams<LymberopoulosIonBC>()
   InputParameters params = validParams<IntegratedBC>();
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Simpified kinetic ion boundary condition"
-    "(Based on DOI: https://doi.org/10.1063/1.352926)");
+  params.addClassDescription("Simpified kinetic ion boundary condition"
+                             "(Based on DOI: https://doi.org/10.1063/1.352926)");
   return params;
 }
 
@@ -45,18 +44,16 @@ Real
 LymberopoulosIonBC::computeQpResidual()
 {
 
-  return _test[_i][_qp] * _r_units *
-          _mu[_qp] * -_grad_potential[_qp] * _r_units *
-          std::exp(_u[_qp]) * _normals[_qp];
+  return _test[_i][_qp] * _r_units * _mu[_qp] * -_grad_potential[_qp] * _r_units *
+         std::exp(_u[_qp]) * _normals[_qp];
 }
 
 Real
 LymberopoulosIonBC::computeQpJacobian()
 {
 
-  return _test[_i][_qp] * _r_units *
-          _mu[_qp] * -_grad_potential[_qp] * _r_units *
-          std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp];
+  return _test[_i][_qp] * _r_units * _mu[_qp] * -_grad_potential[_qp] * _r_units *
+         std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp];
 }
 
 Real
@@ -65,9 +62,8 @@ LymberopoulosIonBC::computeQpOffDiagJacobian(unsigned int jvar)
   if (jvar == _potential_id)
   {
 
-    return _test[_i][_qp] * _r_units *
-            _mu[_qp] * _grad_phi[_j][_qp] * _r_units *
-            std::exp(_u[_qp]) * _normals[_qp];
+    return _test[_i][_qp] * _r_units * _mu[_qp] * _grad_phi[_j][_qp] * _r_units *
+           std::exp(_u[_qp]) * _normals[_qp];
   }
 
   else

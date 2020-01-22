@@ -22,8 +22,7 @@ validParams<DCIonBC>()
   InputParameters params = validParams<IntegratedBC>();
   params.addRequiredCoupledVar("potential", "The electrical potential");
   params.addRequiredParam<Real>("position_units", "Units of position");
-  params.addClassDescription(
-    "Electric field driven outflow boundary condition");
+  params.addClassDescription("Electric field driven outflow boundary condition");
   return params;
 }
 
@@ -55,8 +54,9 @@ DCIonBC::computeQpResidual()
     _a = 0.0;
   }
 
-  return _test[_i][_qp] * _r_units * (_a * _mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * _r_units *
-                                      std::exp(_u[_qp]) * _normals[_qp]);
+  return _test[_i][_qp] * _r_units *
+         (_a * _mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) *
+          _normals[_qp]);
 }
 
 Real
@@ -71,8 +71,9 @@ DCIonBC::computeQpJacobian()
     _a = 0.0;
   }
 
-  return _test[_i][_qp] * _r_units * (_a * _mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * _r_units *
-                                      std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]);
+  return _test[_i][_qp] * _r_units *
+         (_a * _mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) *
+          _phi[_j][_qp] * _normals[_qp]);
 }
 
 Real
@@ -88,8 +89,9 @@ DCIonBC::computeQpOffDiagJacobian(unsigned int jvar)
     {
       _a = 0.0;
     }
-    return _test[_i][_qp] * _r_units * (_a * _mu[_qp] * _sgn[_qp] * -_grad_phi[_j][_qp] * _r_units *
-                                        std::exp(_u[_qp]) * _normals[_qp]);
+    return _test[_i][_qp] * _r_units *
+           (_a * _mu[_qp] * _sgn[_qp] * -_grad_phi[_j][_qp] * _r_units * std::exp(_u[_qp]) *
+            _normals[_qp]);
   }
   else
   {
