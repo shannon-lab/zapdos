@@ -79,8 +79,9 @@ LymberopoulosElectronBC::computeQpJacobian()
          (_sign * _ks * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp] * _normals[_qp]);
 }
 
+// need to fix
 Real
-LymberopoulosElectronBC::computeQpOffDiagJacobian(unsigned int jvar) // need to fix
+LymberopoulosElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _potential_id)
   {
