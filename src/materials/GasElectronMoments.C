@@ -58,11 +58,12 @@ validParams<GasElectronMoments>()
 
   params.addParam<Real>("user_electron_mobility", 0, "The electron mobility coefficient.");
   params.addParam<Real>("user_electron_diffusion_coeff", 0, "The electron diffusion coefficient.");
-  params.addParam<bool>("pressure_dependent_electron_coeff",false,
-                      "Are the values for the electron mobility and diffusion coefficient dependent on gas pressure");
-  params.addClassDescription(
-    "Material properties of electrons"
-    "(Defines reaction properties with rate coefficients)");
+  params.addParam<bool>("pressure_dependent_electron_coeff",
+                        false,
+                        "Are the values for the electron mobility and diffusion coefficient "
+                        "dependent on gas pressure");
+  params.addClassDescription("Material properties of electrons"
+                             "(Defines reaction properties with rate coefficients)");
 
   return params;
 }
@@ -188,9 +189,9 @@ GasElectronMoments::GasElectronMoments(const InputParameters & parameters)
     _voltage_scaling = 1000;
 
   std::vector<Real> actual_mean_energy;
-  //std::vector<Real> alpha;
-  //std::vector<Real> alphaEx;
-  //std::vector<Real> alphaEl;
+  // std::vector<Real> alpha;
+  // std::vector<Real> alphaEx;
+  // std::vector<Real> alphaEl;
   std::vector<Real> mu;
   std::vector<Real> diff;
   // std::vector<Real> d_alpha_d_actual_mean_energy;
@@ -206,12 +207,12 @@ GasElectronMoments::GasElectronMoments(const InputParameters & parameters)
     while (myfile >> value)
     {
       actual_mean_energy.push_back(value);
-      //myfile >> value;
-      //alpha.push_back(value);
-      //myfile >> value;
-      //alphaEx.push_back(value);
-      //myfile >> value;
-      //alphaEl.push_back(value);
+      // myfile >> value;
+      // alpha.push_back(value);
+      // myfile >> value;
+      // alphaEx.push_back(value);
+      // myfile >> value;
+      // alphaEl.push_back(value);
       myfile >> value;
       mu.push_back(value);
       myfile >> value;
@@ -270,114 +271,121 @@ GasElectronMoments::computeQpProperties()
   // if (!_jac_test)
   // {
 
-  if (_pressure_dependent) //If the mobility and diff. does depend on pressure
+  if (_pressure_dependent) // If the mobility and diff. does depend on pressure
   {
 
-  if (_interp_trans_coeffs)
-  {
-    if (_ramp_trans_coeffs)
+    if (_interp_trans_coeffs)
     {
-      _muem[_qp] =
-          (std::tanh(_t / 1e-6) * _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) +
-           (1. - std::tanh(_t / 1e-6)) * .0352) *
-          _voltage_scaling * _time_units * _N_inverse;
-      _d_muem_d_actual_mean_en[_qp] =
-          std::tanh(_t / 1e-6) *
-          _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling * _time_units * _N_inverse;
-      _diffem[_qp] =
-          std::tanh(_t / 1e-6) * _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) +
-          (1. - std::tanh(_t / 1e-6)) * .30 * _time_units * _N_inverse;
-      _d_diffem_d_actual_mean_en[_qp] =
-          std::tanh(_t / 1e-6) *
-          _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units * _N_inverse;
+      if (_ramp_trans_coeffs)
+      {
+        _muem[_qp] =
+            (std::tanh(_t / 1e-6) * _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) +
+             (1. - std::tanh(_t / 1e-6)) * .0352) *
+            _voltage_scaling * _time_units * _N_inverse;
+        _d_muem_d_actual_mean_en[_qp] =
+            std::tanh(_t / 1e-6) *
+            _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) *
+            _voltage_scaling * _time_units * _N_inverse;
+        _diffem[_qp] =
+            std::tanh(_t / 1e-6) * _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) +
+            (1. - std::tanh(_t / 1e-6)) * .30 * _time_units * _N_inverse;
+        _d_diffem_d_actual_mean_en[_qp] =
+            std::tanh(_t / 1e-6) *
+            _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units *
+            _N_inverse;
+      }
+      else
+      {
+        _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) *
+                     _voltage_scaling * _time_units * _N_inverse;
+        _d_muem_d_actual_mean_en[_qp] =
+            _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) *
+            _voltage_scaling * _time_units * _N_inverse;
+        _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) *
+                       _time_units * _N_inverse;
+        _d_diffem_d_actual_mean_en[_qp] =
+            _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units *
+            _N_inverse;
+      }
     }
     else
     {
-      _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling * _time_units * _N_inverse;
-      _d_muem_d_actual_mean_en[_qp] =
-          _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling * _time_units * _N_inverse;
-      _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units * _N_inverse;
-      _d_diffem_d_actual_mean_en[_qp] =
-          _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units * _N_inverse;
+
+      // Need to Change
+      // From bolos at atmospheric pressure and an EField of 2e5 V/m
+      //_muem[_qp] =
+      //    0.0352103411399 * _voltage_scaling * _time_units; // units of m^2/(kV*s) if
+      //    _voltage_scaling = 1000
+      _muem[_qp] = _user_muem * _voltage_scaling * _time_units * _N_inverse;
+      _d_muem_d_actual_mean_en[_qp] = 0.0;
+      //_diffem[_qp] = 0.297951680159 * _time_units;
+      _diffem[_qp] = _user_diffem * _time_units * _N_inverse;
+      _d_diffem_d_actual_mean_en[_qp] = 0.0;
     }
   }
-  else
+
+  else // If the mobility and diff. does not depend on pressure
   {
 
-    //Need to Change
-    // From bolos at atmospheric pressure and an EField of 2e5 V/m
-    //_muem[_qp] =
-    //    0.0352103411399 * _voltage_scaling * _time_units; // units of m^2/(kV*s) if _voltage_scaling = 1000
-    _muem[_qp] =
-        _user_muem * _voltage_scaling * _time_units * _N_inverse;
-    _d_muem_d_actual_mean_en[_qp] = 0.0;
-    //_diffem[_qp] = 0.297951680159 * _time_units;
-    _diffem[_qp] = _user_diffem * _time_units * _N_inverse;
-    _d_diffem_d_actual_mean_en[_qp] = 0.0;
+    if (_interp_trans_coeffs)
+    {
+      if (_ramp_trans_coeffs)
+      {
+        _muem[_qp] =
+            (std::tanh(_t / 1e-6) * _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) +
+             (1. - std::tanh(_t / 1e-6)) * .0352) *
+            _voltage_scaling * _time_units;
+        _d_muem_d_actual_mean_en[_qp] =
+            std::tanh(_t / 1e-6) *
+            _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) *
+            _voltage_scaling * _time_units;
+        _diffem[_qp] =
+            std::tanh(_t / 1e-6) * _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) +
+            (1. - std::tanh(_t / 1e-6)) * .30 * _time_units;
+        _d_diffem_d_actual_mean_en[_qp] =
+            std::tanh(_t / 1e-6) *
+            _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
+      }
+      else
+      {
+        _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) *
+                     _voltage_scaling * _time_units;
+        _d_muem_d_actual_mean_en[_qp] =
+            _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) *
+            _voltage_scaling * _time_units;
+        _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
+        _d_diffem_d_actual_mean_en[_qp] =
+            _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
+      }
+    }
+    else
+    {
+
+      // Need to Change
+      // From bolos at atmospheric pressure and an EField of 2e5 V/m
+      //_muem[_qp] =
+      //    0.0352103411399 * _voltage_scaling * _time_units; // units of m^2/(kV*s) if
+      //    _voltage_scaling = 1000
+      _muem[_qp] = _user_muem * _voltage_scaling * _time_units;
+      _d_muem_d_actual_mean_en[_qp] = 0.0;
+      //_diffem[_qp] = 0.297951680159 * _time_units;
+      _diffem[_qp] = _user_diffem * _time_units;
+      _d_diffem_d_actual_mean_en[_qp] = 0.0;
+    }
   }
 
-}
-
-else //If the mobility and diff. does not depend on pressure
-{
-
-if (_interp_trans_coeffs)
-{
-  if (_ramp_trans_coeffs)
-  {
-    _muem[_qp] =
-        (std::tanh(_t / 1e-6) * _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) +
-         (1. - std::tanh(_t / 1e-6)) * .0352) *
-        _voltage_scaling * _time_units;
-    _d_muem_d_actual_mean_en[_qp] =
-        std::tanh(_t / 1e-6) *
-        _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling * _time_units;
-    _diffem[_qp] =
-        std::tanh(_t / 1e-6) * _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) +
-        (1. - std::tanh(_t / 1e-6)) * .30 * _time_units;
-    _d_diffem_d_actual_mean_en[_qp] =
-        std::tanh(_t / 1e-6) *
-        _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
-  }
-  else
-  {
-    _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling * _time_units;
-    _d_muem_d_actual_mean_en[_qp] =
-        _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling * _time_units;
-    _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
-    _d_diffem_d_actual_mean_en[_qp] =
-        _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
-  }
-}
-else
-{
-
-  //Need to Change
-  // From bolos at atmospheric pressure and an EField of 2e5 V/m
-  //_muem[_qp] =
-  //    0.0352103411399 * _voltage_scaling * _time_units; // units of m^2/(kV*s) if _voltage_scaling = 1000
-  _muem[_qp] =
-      _user_muem * _voltage_scaling * _time_units;
-  _d_muem_d_actual_mean_en[_qp] = 0.0;
-  //_diffem[_qp] = 0.297951680159 * _time_units;
-  _diffem[_qp] = _user_diffem * _time_units;
-  _d_diffem_d_actual_mean_en[_qp] = 0.0;
-}
-
-}
-
-  //From H.W. Ellis for He^+ at T=300, K_0=10.6 [cm^2/Vs] and k_0=mu*(p/760)*(273.15/T)
-  //Using Einstein relation for diff, where diff=(mu*k_b*T)/e
+  // From H.W. Ellis for He^+ at T=300, K_0=10.6 [cm^2/Vs] and k_0=mu*(p/760)*(273.15/T)
+  // Using Einstein relation for diff, where diff=(mu*k_b*T)/e
   //_muArp[_qp] = 1.16e-3 * _voltage_scaling * _time_units;
-      //10.6 * 0.0001 * _voltage_scaling * _time_units
-      //* (300 / 273.15) * (760 / _p_gas[_qp]); // units of m^2/(kV*s) if _voltage_scaling = 1000
+  // 10.6 * 0.0001 * _voltage_scaling * _time_units
+  //* (300 / 273.15) * (760 / _p_gas[_qp]); // units of m^2/(kV*s) if _voltage_scaling = 1000
   //_diffArp[_qp] = _muArp[_qp] * _k_boltz[_qp] * 300 / _e[_qp]; // covert to m^2 and include press
 
   // 100 times less than electrons
   // _muArp[_qp] = 3.52e-4;
   // _diffArp[_qp] = 2.98e-3;
 
-  //Might need to change?
+  // Might need to change?
   // From curve fitting with bolos
 
   //_iz_coeff_efield_a[_qp] = 1.43171672e-1;
@@ -396,28 +404,28 @@ else
   //       _iz_coeff_energy_b[_qp] = -2.70610234e-1;
   //       _iz_coeff_energy_c[_qp] = 7.64727794e+1;
   // }
-/*
-  _actual_mean_energy[_qp] = std::exp(_mean_en[_qp] - _em[_qp]);
-  _alpha_iz[_qp] = _alpha_interpolation.sample(_actual_mean_energy[_qp]);
-  _d_iz_d_actual_mean_en[_qp] =
-      _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
-  // _d_iz_d_actual_mean_en[_qp] =
-  // _d_alpha_d_actual_mean_energy_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
-  _alpha_ex[_qp] = _alphaEx_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
-  _d_ex_d_actual_mean_en[_qp] =
-      _alphaEx_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
-  if (_interp_elastic_coeff)
-  {
-    _alpha_el[_qp] = _alphaEl_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
-    _d_el_d_actual_mean_en[_qp] =
-        _alphaEl_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
-  }
-  else
-  {
-    _alpha_el[_qp] = 5e8;
-    _d_el_d_actual_mean_en[_qp] = 0.0;
-  }
-  */
+  /*
+    _actual_mean_energy[_qp] = std::exp(_mean_en[_qp] - _em[_qp]);
+    _alpha_iz[_qp] = _alpha_interpolation.sample(_actual_mean_energy[_qp]);
+    _d_iz_d_actual_mean_en[_qp] =
+        _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+    // _d_iz_d_actual_mean_en[_qp] =
+    // _d_alpha_d_actual_mean_energy_interpolation.sample(std::exp(_mean_en[_qp]-_em[_qp]));
+    _alpha_ex[_qp] = _alphaEx_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
+    _d_ex_d_actual_mean_en[_qp] =
+        _alphaEx_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+    if (_interp_elastic_coeff)
+    {
+      _alpha_el[_qp] = _alphaEl_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
+      _d_el_d_actual_mean_en[_qp] =
+          _alphaEl_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+    }
+    else
+    {
+      _alpha_el[_qp] = 5e8;
+      _d_el_d_actual_mean_en[_qp] = 0.0;
+    }
+    */
 
   //_el_coeff_energy_a[_qp] = 1.60638169e-13;
   //_el_coeff_energy_b[_qp] = 3.17917979e-1;
@@ -450,7 +458,7 @@ else
     _d_diffmean_en_d_actual_mean_en[_qp] = 0.0;
   }
 
-  //Might needed to change
+  // Might needed to change
   _rate_coeff_elastic[_qp] = 1e-13;
 
   _TemVolts[_qp] = 2. / 3. * std::exp(_mean_en[_qp] - _em[_qp]);
@@ -458,15 +466,17 @@ else
 
   _kiz[_qp] = 2.34e-14 * std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]);
   _d_kiz_d_actual_mean_en[_qp] =
-      2.34e-14 * (.59 * std::pow(_TemVolts[_qp], .59 - 1.) * std::exp(-17.44 / _TemVolts[_qp]) +
-                  std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]) * 17.44 /
-                      std::pow(_TemVolts[_qp], 2.)) *
+      2.34e-14 *
+      (.59 * std::pow(_TemVolts[_qp], .59 - 1.) * std::exp(-17.44 / _TemVolts[_qp]) +
+       std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]) * 17.44 /
+           std::pow(_TemVolts[_qp], 2.)) *
       2. / 3.;
   _kex[_qp] = 2.48e-14 * std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]);
   _d_kex_d_actual_mean_en[_qp] =
-      2.48e-14 * (.33 * std::pow(_TemVolts[_qp], .33 - 1.) * std::exp(-12.78 / _TemVolts[_qp]) +
-                  std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]) * 12.78 /
-                      std::pow(_TemVolts[_qp], 2.)) *
+      2.48e-14 *
+      (.33 * std::pow(_TemVolts[_qp], .33 - 1.) * std::exp(-12.78 / _TemVolts[_qp]) +
+       std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]) * 12.78 /
+           std::pow(_TemVolts[_qp], 2.)) *
       2. / 3.;
   // _kel[_qp] = 2.3363-14 * std::pow(_TemVolts[_qp], 1.609) * std::exp(.0618 *
   // std::pow(std::log(_TemVolts[_qp]), 2.) - .1171 * std::pow(std::log(_TemVolts[_qp]), 3.));

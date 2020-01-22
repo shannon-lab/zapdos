@@ -54,9 +54,8 @@ validParams<Gas>()
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("mean_en", "The electron mean energy in log form.");
   params.addCoupledVar("ip", "The ion density.");
-  params.addClassDescription(
-    "Material properties of electron and ions for argon gas"
-     "(Defines reaction properties with Townsend coefficients)");
+  params.addClassDescription("Material properties of electron and ions for argon gas"
+                             "(Defines reaction properties with Townsend coefficients)");
   return params;
 }
 
@@ -371,15 +370,17 @@ Gas::computeQpProperties()
 
   _kiz[_qp] = 2.34e-14 * std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]);
   _d_kiz_d_actual_mean_en[_qp] =
-      2.34e-14 * (.59 * std::pow(_TemVolts[_qp], .59 - 1.) * std::exp(-17.44 / _TemVolts[_qp]) +
-                  std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]) * 17.44 /
-                      std::pow(_TemVolts[_qp], 2.)) *
+      2.34e-14 *
+      (.59 * std::pow(_TemVolts[_qp], .59 - 1.) * std::exp(-17.44 / _TemVolts[_qp]) +
+       std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]) * 17.44 /
+           std::pow(_TemVolts[_qp], 2.)) *
       2. / 3.;
   _kex[_qp] = 2.48e-14 * std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]);
   _d_kex_d_actual_mean_en[_qp] =
-      2.48e-14 * (.33 * std::pow(_TemVolts[_qp], .33 - 1.) * std::exp(-12.78 / _TemVolts[_qp]) +
-                  std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]) * 12.78 /
-                      std::pow(_TemVolts[_qp], 2.)) *
+      2.48e-14 *
+      (.33 * std::pow(_TemVolts[_qp], .33 - 1.) * std::exp(-12.78 / _TemVolts[_qp]) +
+       std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]) * 12.78 /
+           std::pow(_TemVolts[_qp], 2.)) *
       2. / 3.;
   // _kel[_qp] = 2.3363-14 * std::pow(_TemVolts[_qp], 1.609) * std::exp(.0618 *
   // std::pow(std::log(_TemVolts[_qp]), 2.) - .1171 * std::pow(std::log(_TemVolts[_qp]), 3.));
