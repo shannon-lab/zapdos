@@ -34,11 +34,11 @@ protected:
   std::string _potential_units;
   Real _voltage_scaling;
 
-  MaterialProperty<Real> & _massHeavy; // Replaces _massArp
+  MaterialProperty<Real> & _massHeavy;        // Replaces _massArp
   MaterialProperty<Real> & _temperatureHeavy; // Replaces _tempArp
-  MaterialProperty<Real> & _sgnHeavy; // Replaces _sgnArp (unused though)
-  MaterialProperty<Real> & _muHeavy;  // Replaces _muArp
-  MaterialProperty<Real> & _diffHeavy; // Replaces _diffArp
+  MaterialProperty<Real> & _sgnHeavy;         // Replaces _sgnArp (unused though)
+  MaterialProperty<Real> & _muHeavy;          // Replaces _muArp
+  MaterialProperty<Real> & _diffHeavy;        // Replaces _diffArp
 
   const MaterialProperty<Real> & _T_gas;
   const MaterialProperty<Real> & _p_gas;
@@ -50,9 +50,4 @@ protected:
   // MaterialProperty<Real> & _T_gas;
   // MaterialProperty<Real> & _p_gas;  // Replace with gas fraction?
   // MaterialProperty<Real> & _n_gas;
-
-
-
-
-
 };

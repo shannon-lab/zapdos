@@ -23,9 +23,8 @@ validParams<JouleHeating>()
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Joule heating term for electrons"
-    "(Densities must be in log form)");
+  params.addClassDescription("Joule heating term for electrons"
+                             "(Densities must be in log form)");
   return params;
 }
 

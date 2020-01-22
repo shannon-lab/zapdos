@@ -24,7 +24,7 @@ validParams<UserFlux>()
   params.addRequiredParam<Real>("sign", "The charge sign of the drift-diffusing particle.");
   params.addRequiredParam<Real>("EField", "The electric field moving the charges.");
   params.addClassDescription(
-    "Returns the total flux of defined species that requires constant user defined coefficients");
+      "Returns the total flux of defined species that requires constant user defined coefficients");
   return params;
 }
 

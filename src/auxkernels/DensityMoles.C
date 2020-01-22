@@ -19,8 +19,7 @@ validParams<DensityMoles>()
   InputParameters params = validParams<Density>();
 
   params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to #.");
-  params.addClassDescription(
-    "Returns physical densities in units of #/m^3");
+  params.addClassDescription("Returns physical densities in units of #/m^3");
   return params;
 }
 

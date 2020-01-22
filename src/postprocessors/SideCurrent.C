@@ -95,7 +95,8 @@ SideCurrent::computeQpIntegral()
   _ion_flux = 0.0;
 
   for (unsigned int i = 0; i < _num_ions; ++i)
-    _ion_flux += 0.5 * std::sqrt(8 * _kb[_qp] * (*_T_ions[i])[_qp] / (M_PI * (*_mass_ions[i])[_qp])) *
+    _ion_flux += 0.5 *
+                     std::sqrt(8 * _kb[_qp] * (*_T_ions[i])[_qp] / (M_PI * (*_mass_ions[i])[_qp])) *
                      std::exp((*_ions[i])[_qp]) +
                  (2 * _a - 1) * (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] * -_grad_potential[_qp] *
                      _r_units * std::exp((*_ions[i])[_qp]) * _normals[_qp];

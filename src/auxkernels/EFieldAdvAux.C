@@ -21,8 +21,7 @@ validParams<EFieldAdvAux>()
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Returns the electric field driven advective flux of defined species");
+  params.addClassDescription("Returns the electric field driven advective flux of defined species");
   return params;
 }
 

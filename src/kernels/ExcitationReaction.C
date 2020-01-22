@@ -24,11 +24,10 @@ validParams<ExcitationReaction>()
   params.addRequiredCoupledVar("potential", "The potential.");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addRequiredParam<bool>("reactant",
-                                "Checks if the variable is the reactant.");
+  params.addRequiredParam<bool>("reactant", "Checks if the variable is the reactant.");
   params.addClassDescription(
-    "Rate of production of metastables from excitation using Townsend coefficient"
-    "(Densities must be in log form)");
+      "Rate of production of metastables from excitation using Townsend coefficient"
+      "(Densities must be in log form)");
   return params;
 }
 
@@ -71,11 +70,14 @@ ExcitationReaction::computeQpResidual()
   // ("deexcitation"). Will be generalized into separate class
   // ("ElectronImpactReaction") to accept any townsend coefficient for any
   // generic electron-impact reaction.
-  if (_reactant) {
+  if (_reactant)
+  {
     Real alpha = _alpha_source[_qp] / _n_gas[_qp] * std::exp(_u[_qp]);
     Real iz_term = alpha * electron_flux_mag;
     return _test[_i][_qp] * iz_term;
-  } else {
+  }
+  else
+  {
     Real alpha = _alpha_source[_qp];
     Real iz_term = alpha * electron_flux_mag;
     return -_test[_i][_qp] * iz_term;
@@ -88,10 +90,13 @@ ExcitationReaction::computeQpJacobian()
   Real electron_flux_mag = (-_muem[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -
                             _diffem[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units)
                                .norm();
-  if (_reactant) {
+  if (_reactant)
+  {
     Real d_alpha = _alpha_source[_qp] / _n_gas[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp];
     return d_alpha * electron_flux_mag * -_test[_i][_qp];
-  } else {
+  }
+  else
+  {
     return 0.0;
   }
 }
@@ -101,9 +106,12 @@ ExcitationReaction::computeQpOffDiagJacobian(unsigned int jvar)
 {
   Real mult_factor = -1.0;
   Real alpha = 1.0;
-  if (_reactant) {
+  if (_reactant)
+  {
     alpha = _alpha_source[_qp] / _n_gas[_qp] * std::exp(_u[_qp]);
-  } else {
+  }
+  else
+  {
     alpha = _alpha_source[_qp];
   }
 
@@ -139,7 +147,6 @@ ExcitationReaction::computeQpOffDiagJacobian(unsigned int jvar)
   Real d_electron_flux_mag_d_em = electron_flux * d_electron_flux_d_em /
                                   (electron_flux_mag + std::numeric_limits<double>::epsilon());
 
-
   Real d_iz_term_d_potential = (alpha * d_electron_flux_mag_d_potential);
   Real d_iz_term_d_mean_en =
       (electron_flux_mag * d_iz_d_mean_en + alpha * d_electron_flux_mag_d_mean_en);
@@ -149,13 +156,13 @@ ExcitationReaction::computeQpOffDiagJacobian(unsigned int jvar)
     mult_factor = -1.0 * mult_factor;
 
   if (jvar == _potential_id)
-    return mult_factor*_test[_i][_qp] * d_iz_term_d_potential;
+    return mult_factor * _test[_i][_qp] * d_iz_term_d_potential;
 
   else if (jvar == _mean_en_id)
-    return mult_factor*_test[_i][_qp] * d_iz_term_d_mean_en;
+    return mult_factor * _test[_i][_qp] * d_iz_term_d_mean_en;
 
   else if (jvar == _em_id)
-    return mult_factor*_test[_i][_qp] * d_iz_term_d_em;
+    return mult_factor * _test[_i][_qp] * d_iz_term_d_em;
 
   else
     return 0.0;

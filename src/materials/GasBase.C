@@ -58,9 +58,8 @@ validParams<GasBase>()
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("mean_en", "The electron mean energy in log form.");
   params.addCoupledVar("ip", "The ion density.");
-  params.addClassDescription(
-    "Material properties of electrons"
-    "(Defines reaction properties with Townsend coefficients)");
+  params.addClassDescription("Material properties of electrons"
+                             "(Defines reaction properties with Townsend coefficients)");
   return params;
 }
 
@@ -256,7 +255,6 @@ GasBase::computeQpProperties()
   _sgnmean_en[_qp] = -1.;
   _diffpotential[_qp] = _eps[_qp];
 
-
   // With the exception of temperature/energy (generally in eV), all properties are in standard SI
   // units unless otherwise indicated
 
@@ -306,7 +304,6 @@ GasBase::computeQpProperties()
   _iz_coeff_energy_a[_qp] = 1.52165930e+8;
   _iz_coeff_energy_b[_qp] = -2.87277596e-1;
   _iz_coeff_energy_c[_qp] = 5.51972192e+1;
-
 
   _actual_mean_energy[_qp] = std::exp(_mean_en[_qp] - _em[_qp]);
   _alpha_iz[_qp] = _alpha_interpolation.sample(_actual_mean_energy[_qp]);
@@ -359,20 +356,22 @@ GasBase::computeQpProperties()
 
   _kiz[_qp] = 2.34e-14 * std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]);
   _d_kiz_d_actual_mean_en[_qp] =
-      2.34e-14 * (.59 * std::pow(_TemVolts[_qp], .59 - 1.) * std::exp(-17.44 / _TemVolts[_qp]) +
-                  std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]) * 17.44 /
-                      std::pow(_TemVolts[_qp], 2.)) *
+      2.34e-14 *
+      (.59 * std::pow(_TemVolts[_qp], .59 - 1.) * std::exp(-17.44 / _TemVolts[_qp]) +
+       std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]) * 17.44 /
+           std::pow(_TemVolts[_qp], 2.)) *
       2. / 3.;
   _kex[_qp] = 2.48e-14 * std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]);
   _kArp[_qp] = 2.48e-14 * std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]);
   _d_kex_d_actual_mean_en[_qp] =
-      2.48e-14 * (.33 * std::pow(_TemVolts[_qp], .33 - 1.) * std::exp(-12.78 / _TemVolts[_qp]) +
-                  std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]) * 12.78 /
-                      std::pow(_TemVolts[_qp], 2.)) *
+      2.48e-14 *
+      (.33 * std::pow(_TemVolts[_qp], .33 - 1.) * std::exp(-12.78 / _TemVolts[_qp]) +
+       std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]) * 12.78 /
+           std::pow(_TemVolts[_qp], 2.)) *
       2. / 3.;
 
   // EField calculation test
-  _EField[_qp] = _grad_potential[_qp](0)*_r_units;
+  _EField[_qp] = _grad_potential[_qp](0) * _r_units;
 
   // Townsend calculation test
   // _alpha_ArIz[_qp] = _n_gas[_qp]*_kArIz[_qp]/(_muem[_qp]*_EField[_qp]);

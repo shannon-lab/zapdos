@@ -20,9 +20,9 @@ validParams<ElectronsFromIonizationUser>()
   params.addRequiredParam<Real>("muem", "The mobility.");
   params.addRequiredParam<Real>("diffem", "The diffusivity.");
   params.addRequiredParam<Real>("alpha_iz", "The Townsend ionization coefficient.");
-  params.addClassDescription(
-    "Rate of production of electrons from ionization that requires constant user defined coefficients"
-    "(Electron density must be in log form)");
+  params.addClassDescription("Rate of production of electrons from ionization that requires "
+                             "constant user defined coefficients"
+                             "(Electron density must be in log form)");
   return params;
 }
 

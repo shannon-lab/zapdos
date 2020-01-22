@@ -19,7 +19,7 @@ validParams<EFieldMagnitudeSource>()
   InputParameters params = validParams<Kernel>();
   params.addRequiredCoupledVar("potential", "The electric potential.");
   params.addClassDescription(
-    "Electric field magnitude term based on the electrostatic approximation");
+      "Electric field magnitude term based on the electrostatic approximation");
   return params;
 }
 

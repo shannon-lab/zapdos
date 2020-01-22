@@ -39,8 +39,7 @@ validParams<Water>()
   params.addCoupledVar("O3", "ozone molecules");
   params.addCoupledVar("O3m", "ozone anions");
   params.addCoupledVar("potential", "The potential");
-  params.addClassDescription(
-    "Material properties of water species");
+  params.addClassDescription("Material properties of water species");
   return params;
 }
 

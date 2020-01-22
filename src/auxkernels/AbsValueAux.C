@@ -18,8 +18,7 @@ validParams<AbsValueAux>()
 {
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredCoupledVar("u", "Variable we want absolute value of.");
-  params.addClassDescription(
-    "Returns the absolute value of variable");
+  params.addClassDescription("Returns the absolute value of variable");
   return params;
 }
 

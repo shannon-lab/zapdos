@@ -25,9 +25,8 @@ validParams<HagelaarEnergyAdvectionBC>()
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredCoupledVar("ip", "The ion density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Kinetic advective electron energy boundary condition"
-    "(Based on DOI:https://doi.org/10.1063/1.2715745)");
+  params.addClassDescription("Kinetic advective electron energy boundary condition"
+                             "(Based on DOI:https://doi.org/10.1063/1.2715745)");
   return params;
 }
 
@@ -204,9 +203,10 @@ HagelaarEnergyAdvectionBC::computeQpOffDiagJacobian(unsigned int jvar)
                      _d_mumean_en_d_actual_mean_en[_qp] * _actual_mean_en * -_phi[_j][_qp] *
                      (2. * _a - 1.) -
                  5. * _d_v_thermal_d_em) +
-            (_r - 1.) * (6. * -_grad_potential[_qp] * _r_units * _normals[_qp] * _mumean_en[_qp] *
-                             (2. * _a - 1.) -
-                         5. * _v_thermal) *
+            (_r - 1.) *
+                (6. * -_grad_potential[_qp] * _r_units * _normals[_qp] * _mumean_en[_qp] *
+                     (2. * _a - 1.) -
+                 5. * _v_thermal) *
                 -_se_energy[_qp] * _d_n_gamma_d_em);
   }
 

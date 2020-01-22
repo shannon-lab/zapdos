@@ -20,12 +20,11 @@ InputParameters
 validParams<SakiyamaIonAdvectionBC>()
 {
   InputParameters params = validParams<IntegratedBC>();
-  //params.addRequiredParam<Real>("r", "The reflection coefficient");
+  // params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "Kinetic advective ion boundary condition"
-    "(Based on DOI: https://doi.org/10.1116/1.579300)");
+  params.addClassDescription("Kinetic advective ion boundary condition"
+                             "(Based on DOI: https://doi.org/10.1116/1.579300)");
   return params;
 }
 
@@ -58,8 +57,8 @@ SakiyamaIonAdvectionBC::computeQpResidual()
   }
 
   return _test[_i][_qp] * _r_units *
-         (_a * _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units *
-          std::exp(_u[_qp]) * _normals[_qp]);
+         (_a * _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) *
+          _normals[_qp]);
 }
 
 Real
@@ -75,8 +74,8 @@ SakiyamaIonAdvectionBC::computeQpJacobian()
   }
 
   return _test[_i][_qp] * _r_units *
-         (_a * _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units *
-          std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp]);
+         (_a * _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) *
+          _phi[_j][_qp] * _normals[_qp]);
 }
 
 Real
@@ -94,8 +93,8 @@ SakiyamaIonAdvectionBC::computeQpOffDiagJacobian(unsigned int jvar)
     }
 
     return _test[_i][_qp] * _r_units *
-           (_a * _sgn[_qp] * _mu[_qp] * -_grad_phi[_j][_qp] * _r_units *
-            std::exp(_u[_qp]) * _normals[_qp]);
+           (_a * _sgn[_qp] * _mu[_qp] * -_grad_phi[_j][_qp] * _r_units * std::exp(_u[_qp]) *
+            _normals[_qp]);
   }
 
   else

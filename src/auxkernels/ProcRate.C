@@ -25,8 +25,8 @@ validParams<ProcRate>()
       "The process that we want to get the townsend coefficient for. Options are iz, ex, and el.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
-    "Reaction rate for electron impact collisions in units of #/m^3s. User can pass"
-    "choice of elastic, excitation, or ionization Townsend coefficients");
+      "Reaction rate for electron impact collisions in units of #/m^3s. User can pass"
+      "choice of elastic, excitation, or ionization Townsend coefficients");
   return params;
 }
 
