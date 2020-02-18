@@ -42,12 +42,16 @@ ADGasElectronMoments<compute_stage>::ADGasElectronMoments(const InputParameters 
     _potential_units(getParam<std::string>("potential_units")),
     _time_units(getParam<Real>("time_units")),
     _use_moles(getParam<bool>("use_moles")),
-
     _muem(declareADProperty<Real>("muem")),
+    _d_muem_d_actual_mean_en(declareADProperty<Real>("d_muem_d_actual_mean_en")),
     _diffem(declareADProperty<Real>("diffem")),
+    _d_diffem_d_actual_mean_en(declareADProperty<Real>("d_diffem_d_actual_mean_en")),
     _mumean_en(declareADProperty<Real>("mumean_en")),
     _diffmean_en(declareADProperty<Real>("diffmean_en")),
     _sgnmean_en(declareADProperty<Real>("sgnmean_en")),
+    _sgnem(declareADProperty<Real>("sgnem")),
+    _d_mumean_en_d_actual_mean_en(declareADProperty<Real>("d_mumean_en_d_actual_mean_en")),
+    _d_diffmean_en_d_actual_mean_en(declareADProperty<Real>("d_diffmean_en_d_actual_mean_en")),
     //_massem(declareProperty<Real>("massem")),
     _em(adCoupledValue("em")),
     _mean_en(adCoupledValue("mean_en"))
@@ -98,15 +102,19 @@ ADGasElectronMoments<compute_stage>::computeQpProperties()
   //_sgnem[_qp] = -1.;
 
 
-  //_d_muem_d_actual_mean_en[_qp] =
-  //    _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling *
-  //    _time_units;
+  _d_muem_d_actual_mean_en[_qp] =
+      _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling *
+      _time_units;
   _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
   _muem[_qp] =
       _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling * _time_units;
   _mumean_en[_qp] = 5.0/3.0 * _muem[_qp];
   _diffmean_en[_qp] = 5.0/3.0 * _diffem[_qp];
+
   _sgnmean_en[_qp] = -1.0;
-  //_d_diffem_d_actual_mean_en[_qp] =
-  //    _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
+  _sgnem[_qp] = -1.0;
+  _d_diffem_d_actual_mean_en[_qp] =
+      _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
+  _d_mumean_en_d_actual_mean_en[_qp] = 5.0/3.0 * _d_muem_d_actual_mean_en[_qp]; 
+  _d_diffmean_en_d_actual_mean_en[_qp] = 5.0/3.0 * _d_diffem_d_actual_mean_en[_qp]; 
 }

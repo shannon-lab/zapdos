@@ -40,16 +40,18 @@ protected:
   bool _use_moles;
 
   ADMaterialProperty(Real) & _muem;
-  //MaterialProperty<Real> & _d_muem_d_actual_mean_en;
+  ADMaterialProperty(Real) & _d_muem_d_actual_mean_en;
   ADMaterialProperty(Real) & _diffem;
-  //MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
+  ADMaterialProperty(Real) & _d_diffem_d_actual_mean_en;
   // MaterialProperty<Real> & _muArp;
   // MaterialProperty<Real> & _diffArp;
   ADMaterialProperty(Real) & _mumean_en;
-  //MaterialProperty<Real> & _d_mumean_en_d_actual_mean_en;
+
   ADMaterialProperty(Real) & _diffmean_en;
   ADMaterialProperty(Real) & _sgnmean_en;
-  //MaterialProperty<Real> & _d_diffmean_en_d_actual_mean_en;
+  ADMaterialProperty(Real) & _sgnem;
+  ADMaterialProperty(Real) & _d_mumean_en_d_actual_mean_en;
+  ADMaterialProperty(Real) & _d_diffmean_en_d_actual_mean_en;
   //MaterialProperty<Real> & _massem;
   //MaterialProperty<Real> & _e;
   //MaterialProperty<Real> & _eps;

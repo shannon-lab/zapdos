@@ -66,6 +66,7 @@ dom1Scale=1.0
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
   # petsc_options = '-snes_test_display'
   solve_type = NEWTON
+  #solve_type = PJFNK
   line_search = 'basic'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -snes_stol'
   petsc_options_value = 'lu NONZERO 1.e-10 0'
@@ -125,6 +126,28 @@ dom1Scale=1.0
 []
 
 [Kernels]
+  [./source01]
+    type = ADEEDFRxnProd
+    variable = em
+    em = em
+    mean_en = mean_en
+    potential = potential
+    position_units = ${dom0Scale}
+    reaction = 'em + Ar -> em + em + Arp'
+    reaction_coefficient_name = 'alpha_em + Ar -> em + em + Arp'
+    block = 0
+  [../]
+  [./source02]
+    type = ADEEDFRxnProd
+    variable = Arp
+    em = em
+    mean_en = mean_en
+    potential = potential
+    position_units = ${dom0Scale}
+    reaction = 'em + Ar -> em + em + Arp'
+    reaction_coefficient_name = 'alpha_em + Ar -> em + em + Arp'
+    block = 0
+  [../]
   [./em_time_deriv]
     #type = ElectronTimeDerivative
     type = ADTimeDerivativeLog
@@ -351,14 +374,14 @@ dom1Scale=1.0
     variable = mean_en
     block = 0
   [../]
-  #[./mean_en_advection]
-  #  type = EFieldAdvectionEnergy
-  #  variable = mean_en
-  #  potential = potential
-  #  em = em
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
+  [./mean_en_advection]
+    type = EFieldAdvectionEnergy
+    variable = mean_en
+    potential = potential
+    em = em
+    block = 0
+    position_units = ${dom0Scale}
+  [../]
   #[./mean_en_diffusion]
   #  type = CoeffDiffusionEnergy
   #  variable = mean_en
@@ -366,13 +389,13 @@ dom1Scale=1.0
   #  block = 0
   #  position_units = ${dom0Scale}
   #[../]
-  [./mean_en_advection]
-    type = ADEFieldAdvection
-    variable = mean_en
-    potential = potential
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
+  #[./mean_en_advection]
+  #  type = ADEFieldAdvection
+  #  variable = mean_en
+  #  potential = potential
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
   [./mean_en_diffusion]
     type = ADCoeffDiffusion
     variable = mean_en
@@ -380,8 +403,8 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./mean_en_joule_heating]
-    type = JouleHeating
-    #type = ADJouleHeating
+    #type = JouleHeating
+    type = ADJouleHeating
     variable = mean_en
     potential = potential
     em = em
@@ -402,29 +425,29 @@ dom1Scale=1.0
   # [../]
 
   ### REACTIONS
-  #[./emliq_reactant_first_order_rxn]
-  #  type = ReactantFirstOrderRxn
-  #  variable = emliq
-  #  block = 1
-  #[../]
-  #[./emliq_water_bi_sink]
-  #  type = ReactantAARxn
-  #  variable = emliq
-  #  block = 1
-  #[../]
+  [./emliq_reactant_first_order_rxn]
+    type = ReactantFirstOrderRxn
+    variable = emliq
+    block = 1
+  [../]
+  [./emliq_water_bi_sink]
+    type = ReactantAARxn
+    variable = emliq
+    block = 1
+  [../]
 
-  #[./OHm_product_first_order_rxn]
-  #  type = ProductFirstOrderRxn
-  #  variable = OHm
-  #  v = emliq
-  #  block = 1
-  #[../]
-  #[./OHm_product_aabb_rxn]
-  #  type = ProductAABBRxn
-  #  variable = OHm
-  #  v = emliq
-  #  block = 1
-  #[../]
+  [./OHm_product_first_order_rxn]
+    type = ProductFirstOrderRxn
+    variable = OHm
+    v = emliq
+    block = 1
+  [../]
+  [./OHm_product_aabb_rxn]
+    type = ProductAABBRxn
+    variable = OHm
+    v = emliq
+    block = 1
+  [../]
 
   #[./Arp_ionization]
   #  type = IonsFromIonization
@@ -503,7 +526,8 @@ dom1Scale=1.0
     block = 0
     order = CONSTANT
     family = MONOMIAL
-    initial_condition = 2.43839813e25 
+    #initial_condition = 2.43839813e25 
+    initial_condition = 3.70109
   [../]
   [./e_temp]
     block = 0
@@ -1071,6 +1095,18 @@ dom1Scale=1.0
   #  block = 0
   #  property_tables_file = td_argon_mean_en.txt
  #[../]
+  [./adtest]
+    type = ADEEDFRateConstantTownsend
+    property_file = 'dc_argon_only/reaction_em + Ar -> em + em + Arp.txt'
+    file_location = ''
+    reaction = 'em + Ar -> em + em + Arp'
+    position_units = ${dom0Scale}
+    is_target_aux = true
+    target_species = Ar
+    mean_en = mean_en
+    em = em
+    block = 0
+  [../]
  [./water_block]
    type = Water
    block = 1
@@ -1085,12 +1121,19 @@ dom1Scale=1.0
    property_tables_file = 'dc_argon_only/moments.txt'
  [../]
 
- [./test1]
+ [./test_block0]
    type = GenericConstantMaterial
-   prop_names = 'e N_A sgnem'
-   prop_values = '1.602e-19 6.022e23 -1'
+   block = 0
+   prop_names = 'e N_A diffpotential k_boltz se_coeff se_energy T_gas massem p_gas n_gas'
+   prop_values = '1.602e-19 6.022e23 8.85e-12 1.38e-23 0.05 3. 300 9.11e-31 1.01e5 40.5'
  [../]
 
+ [./test_block1]
+   type = GenericConstantMaterial
+   block = 1
+   prop_names = 'T_gas p_gas'
+   prop_values = '300 1.01e5'
+ [../]
   
   [./gas_species_0]
     type = HeavySpeciesMaterial
@@ -1109,29 +1152,29 @@ dom1Scale=1.0
   [../]
 []
 
-[Reactions]
-  [./Argon]
-    species = 'em Arp Ar'
-    aux_species = 'Ar'
-    reaction_coefficient_format = 'townsend'
-    gas_species = 'Ar'
-    electron_energy = 'mean_en'
-    electron_density = 'em'
-    include_electrons = true
-    #file_location = 'Argon_reactions_paper_RateCoefficients'
-    file_location = 'dc_argon_only'
-    #equation_variables = 'mean_en em'
-    equation_variables = 'Te'
-    potential = 'potential'
-    use_log = true
-    position_units = ${dom0Scale}
-    track_rates = false
-    block = 0
-
-    reactions = 'em + Ar -> em + Ar               : EEDF [elastic]
-                 em + Ar -> em + Ar*              : EEDF [-11.56]
-                 em + Ar -> em + em + Ar+         : EEDF [-15.7]'
-                 #Arp + em + em -> em + Ar : {3.17314e14 * (Te)^(-4.5)}'
-                 #Arp + em + em -> em + Ar : {3.17314e9 * (2.0 / 3 * exp(mean_en - em))^(-4.5)}'
-  [../]
-[]
+#[Reactions]
+#  [./Argon]
+#    species = 'em Arp Ar'
+#    aux_species = 'Ar'
+#    reaction_coefficient_format = 'townsend'
+#    gas_species = 'Ar'
+#    electron_energy = 'mean_en'
+#    electron_density = 'em'
+#    include_electrons = true
+#    #file_location = 'Argon_reactions_paper_RateCoefficients'
+#    file_location = 'dc_argon_only'
+#    #equation_variables = 'mean_en em'
+#    equation_variables = 'Te'
+#    potential = 'potential'
+#    use_log = true
+#    position_units = ${dom0Scale}
+#    track_rates = false
+#    block = 0
+#
+#    #reactions = 'em + Ar -> em + Ar               : EEDF [elastic]
+#    #reactions = 'em + Ar -> em + Ar*              : EEDF 
+#    reactions =  'em + Ar -> em + em + Arp         : EEDF'
+#                 #Arp + em + em -> em + Ar : {3.17314e14 * (Te)^(-4.5)}'
+#                 #Arp + em + em -> em + Ar : {3.17314e9 * (2.0 / 3 * exp(mean_en - em))^(-4.5)}'
+#  [../]
+#[]

@@ -12,7 +12,7 @@
 #define GAS_H_
 
 #include "Material.h"
-/* #include "LinearInterpolation.h" */
+#include "LinearInterpolation.h"
 #include "SplineInterpolation.h"
 
 class Gas;
@@ -28,11 +28,19 @@ public:
 protected:
   virtual void computeQpProperties();
 
+  /*
   SplineInterpolation _alpha_interpolation;
   SplineInterpolation _alphaEx_interpolation;
   SplineInterpolation _alphaEl_interpolation;
   SplineInterpolation _mu_interpolation;
   SplineInterpolation _diff_interpolation;
+  */
+  LinearInterpolation _alpha_interpolation;
+  LinearInterpolation _alphaEx_interpolation;
+  LinearInterpolation _alphaEl_interpolation;
+  LinearInterpolation _mu_interpolation;
+  LinearInterpolation _diff_interpolation;
+  
   /* LinearInterpolation _d_alpha_d_actual_mean_energy_interpolation; */
 
   /* bool _townsend; */
