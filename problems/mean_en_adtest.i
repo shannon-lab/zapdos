@@ -73,12 +73,13 @@ dom1Scale=1.0
   #petsc_options_value = 'lu NONZERO 1.e-10'
   #petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
   #petsc_options_value = 'lu NONZERO 1.e-10 fgmres 1e-3'
-  # petsc_options_iname = '-pc_type -sub_pc_type'
-  # petsc_options_value = 'asm lu'
+  # petsc_options_iname = '-pc_type'
+  # petsc_options_value = 'asm'
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
   nl_rel_tol = 1e-8
-  nl_abs_tol = 2e-8
+  #nl_abs_tol = 2e-8
+  nl_abs_tol = 1e-6
   #nl_abs_tol = 1e-6
   dtmin = 1e-15
   l_max_its = 20
@@ -159,15 +160,7 @@ dom1Scale=1.0
     block = 0
     position_units = ${dom0Scale}
   [../]
-  [./em_ionization]
-    type = ElectronsFromIonization
-    variable = em
-    potential = potential
-    mean_en = mean_en
-    em = em
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
+
   [./em_log_stabilization]
     type = LogStabilizationMoles
     variable = em
@@ -212,16 +205,7 @@ dom1Scale=1.0
     block = 1
     position_units = ${dom1Scale}
   [../]
-  [./emliq_reactant_first_order_rxn]
-    type = ReactantFirstOrderRxn
-    variable = emliq
-    block = 1
-  [../]
-  [./emliq_water_bi_sink]
-    type = ReactantAARxn
-    variable = emliq
-    block = 1
-  [../]
+
   [./emliq_log_stabilization]
     type = LogStabilizationMoles
     variable = emliq
@@ -235,13 +219,13 @@ dom1Scale=1.0
   # [../]
 
   [./potential_diffusion_dom1]
-    type = CoeffDiffusionLin
+    type = ADCoeffDiffusionLin
     variable = potential
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./potential_diffusion_dom2]
-    type = CoeffDiffusionLin
+    type = ADCoeffDiffusionLin
     variable = potential
     block = 1
     position_units = ${dom1Scale}
@@ -303,15 +287,7 @@ dom1Scale=1.0
     block = 0
     position_units = ${dom0Scale}
   [../]
-  [./Arp_ionization]
-    type = IonsFromIonization
-    variable = Arp
-    potential = potential
-    em = em
-    mean_en = mean_en
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
+
   [./Arp_log_stabilization]
     type = LogStabilizationMoles
     variable = Arp
@@ -367,18 +343,7 @@ dom1Scale=1.0
   #   potential = potential
   #   block = 1
   # [../]
-  [./OHm_product_first_order_rxn]
-    type = ProductFirstOrderRxn
-    variable = OHm
-    v = emliq
-    block = 1
-  [../]
-  [./OHm_product_aabb_rxn]
-    type = ProductAABBRxn
-    variable = OHm
-    v = emliq
-    block = 1
-  [../]
+
 
   [./mean_en_time_deriv]
     #type = ElectronTimeDerivative
@@ -423,30 +388,6 @@ dom1Scale=1.0
     block = 0
     position_units = ${dom0Scale}
   [../]
-  [./mean_en_ionization]
-    type = ElectronEnergyLossFromIonization
-    variable = mean_en
-    potential = potential
-    em = em
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
-  [./mean_en_elastic]
-    type = ElectronEnergyLossFromElastic
-    variable = mean_en
-    potential = potential
-    em = em
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
-  [./mean_en_excitation]
-    type = ElectronEnergyLossFromExcitation
-    variable = mean_en
-    potential = potential
-    em = em
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
   [./mean_en_log_stabilization]
     type = LogStabilizationMoles
     variable = mean_en
@@ -459,6 +400,76 @@ dom1Scale=1.0
   #   potential = potential
   #   block = 0
   # [../]
+
+  ### REACTIONS
+  #[./emliq_reactant_first_order_rxn]
+  #  type = ReactantFirstOrderRxn
+  #  variable = emliq
+  #  block = 1
+  #[../]
+  #[./emliq_water_bi_sink]
+  #  type = ReactantAARxn
+  #  variable = emliq
+  #  block = 1
+  #[../]
+
+  #[./OHm_product_first_order_rxn]
+  #  type = ProductFirstOrderRxn
+  #  variable = OHm
+  #  v = emliq
+  #  block = 1
+  #[../]
+  #[./OHm_product_aabb_rxn]
+  #  type = ProductAABBRxn
+  #  variable = OHm
+  #  v = emliq
+  #  block = 1
+  #[../]
+
+  #[./Arp_ionization]
+  #  type = IonsFromIonization
+  #  variable = Arp
+  #  potential = potential
+  #  em = em
+  #  mean_en = mean_en
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
+
+  #[./em_ionization]
+  #  type = ElectronsFromIonization
+  #  variable = em
+  #  potential = potential
+  #  mean_en = mean_en
+  #  em = em
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
+
+  #[./mean_en_ionization]
+  #  type = ElectronEnergyLossFromIonization
+  #  variable = mean_en
+  #  potential = potential
+  #  em = em
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
+  #[./mean_en_elastic]
+  #  type = ElectronEnergyLossFromElastic
+  #  variable = mean_en
+  #  potential = potential
+  #  em = em
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
+  #[./mean_en_excitation]
+  #  type = ElectronEnergyLossFromExcitation
+  #  variable = mean_en
+  #  potential = potential
+  #  em = em
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
 []
 
 [Variables]
@@ -488,6 +499,12 @@ dom1Scale=1.0
 []
 
 [AuxVariables]
+  [./Ar]
+    block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    initial_condition = 2.43839813e25 
+  [../]
   [./e_temp]
     block = 0
     order = CONSTANT
@@ -598,21 +615,21 @@ dom1Scale=1.0
    family = MONOMIAL
    block = 0
   [../]
-  [./ProcRate_el]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
-  [../]
-  [./ProcRate_ex]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
-  [../]
-  [./ProcRate_iz]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
-  [../]
+  #[./ProcRate_el]
+  # order = CONSTANT
+  # family = MONOMIAL
+  # block = 0
+  #[../]
+  #[./ProcRate_ex]
+  # order = CONSTANT
+  # family = MONOMIAL
+  # block = 0
+  #[../]
+  #[./ProcRate_iz]
+  # order = CONSTANT
+  # family = MONOMIAL
+  # block = 0
+  #[../]
 []
 
 [AuxKernels]
@@ -636,33 +653,33 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
     block = 0
   [../]
-  [./ProcRate_el]
-    type = ProcRate
-    em = em
-    potential = potential
-    proc = el
-    variable = ProcRate_el
-    position_units = ${dom0Scale}
-    block = 0
-  [../]
-  [./ProcRate_ex]
-    type = ProcRate
-    em = em
-    potential = potential
-    proc = ex
-    variable = ProcRate_ex
-    position_units = ${dom0Scale}
-    block = 0
-  [../]
-  [./ProcRate_iz]
-    type = ProcRate
-    em = em
-    potential = potential
-    proc = iz
-    variable = ProcRate_iz
-    position_units = ${dom0Scale}
-    block = 0
-  [../]
+  #[./ProcRate_el]
+  #  type = ProcRate
+  #  em = em
+  #  potential = potential
+  #  proc = el
+  #  variable = ProcRate_el
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[../]
+  #[./ProcRate_ex]
+  #  type = ProcRate
+  #  em = em
+  #  potential = potential
+  #  proc = ex
+  #  variable = ProcRate_ex
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[../]
+  #[./ProcRate_iz]
+  #  type = ProcRate
+  #  em = em
+  #  potential = potential
+  #  proc = iz
+  #  variable = ProcRate_iz
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[../]
   [./e_temp]
     type = ElectronTemperature
     variable = e_temp
@@ -865,7 +882,7 @@ dom1Scale=1.0
 
 [BCs]
   [./mean_en_physical_right]
-    type = HagelaarEnergyBC
+    type = ADHagelaarEnergyBC
     variable = mean_en
     boundary = 'master0_interface'
     potential = potential
@@ -875,7 +892,7 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./mean_en_physical_left]
-    type = HagelaarEnergyBC
+    type = ADHagelaarEnergyBC
     variable = mean_en
     boundary = 'left'
     potential = potential
@@ -885,7 +902,7 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./secondary_energy_left]
-    type = SecondaryElectronEnergyBC
+    type = ADSecondaryElectronEnergyBC
     variable = mean_en
     boundary = 'left'
     potential = potential
@@ -909,13 +926,13 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./potential_dirichlet_right]
-    type = DirichletBC
+    type = ADDirichletBC
     variable = potential
     boundary = right
     value = 0
   [../]
   [./em_physical_right]
-    type = HagelaarElectronBC
+    type = ADHagelaarElectronBC
     variable = em
     boundary = 'master0_interface'
     potential = potential
@@ -924,14 +941,14 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_right_diffusion]
-    type = HagelaarIonDiffusionBC
+    type = ADHagelaarIonDiffusionBC
     variable = Arp
     boundary = 'master0_interface'
     r = 0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_right_advection]
-    type = HagelaarIonAdvectionBC
+    type = ADHagelaarIonAdvectionBC
     variable = Arp
     boundary = 'master0_interface'
     potential = potential
@@ -940,7 +957,7 @@ dom1Scale=1.0
   [../]
 
   [./em_physical_left]
-    type = HagelaarElectronBC
+    type = ADHagelaarElectronBC
     variable = em
     boundary = 'left'
     potential = potential
@@ -949,7 +966,7 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./sec_electrons_left]
-    type = SecondaryElectronBC
+    type = ADSecondaryElectronBC
     variable = em
     boundary = 'left'
     potential = potential
@@ -959,14 +976,14 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_left_diffusion]
-    type = HagelaarIonDiffusionBC
+    type = ADHagelaarIonDiffusionBC
     variable = Arp
     boundary = 'left'
     r = 0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_left_advection]
-    type = HagelaarIonAdvectionBC
+    type = ADHagelaarIonAdvectionBC
     variable = Arp
     boundary = 'left'
     potential = potential
@@ -975,14 +992,14 @@ dom1Scale=1.0
   [../]
 
   [./emliq_right]
-    type = DCIonBC
+    type = ADDCIonBC
     variable = emliq
     boundary = right
     potential = potential
     position_units = ${dom1Scale}
   [../]
   [./OHm_physical]
-    type = DCIonBC
+    type = ADDCIonBC
     variable = OHm
     boundary = 'right'
     potential = potential
@@ -1041,19 +1058,19 @@ dom1Scale=1.0
 []
 
 [Materials]
-  [./gas_block]
-    type = Gas
-    interp_trans_coeffs = true
-    interp_elastic_coeff = true
-    ramp_trans_coeffs = false
-    em = em
-    potential = potential
-    ip = Arp
-    mean_en = mean_en
-    user_se_coeff = 0.05
-    block = 0
-    property_tables_file = td_argon_mean_en.txt
- [../]
+  #[./gas_block]
+  #  type = Gas
+  #  interp_trans_coeffs = true
+  #  interp_elastic_coeff = true
+  #  ramp_trans_coeffs = false
+  #  em = em
+  #  potential = potential
+  #  ip = Arp
+  #  mean_en = mean_en
+  #  user_se_coeff = 0.05
+  #  block = 0
+  #  property_tables_file = td_argon_mean_en.txt
+ #[../]
  [./water_block]
    type = Water
    block = 1
@@ -1067,4 +1084,54 @@ dom1Scale=1.0
    mean_en = mean_en
    property_tables_file = 'dc_argon_only/moments.txt'
  [../]
+
+ [./test1]
+   type = GenericConstantMaterial
+   prop_names = 'e N_A sgnem'
+   prop_values = '1.602e-19 6.022e23 -1'
+ [../]
+
+  
+  [./gas_species_0]
+    type = HeavySpeciesMaterial
+    heavy_species_name = Arp
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    #mobility = 0.144409938
+    #diffusivity = 6.428571e-3
+  [../]
+
+  [./gas_species_2]
+    type = HeavySpeciesMaterial
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+  [../]
+[]
+
+[Reactions]
+  [./Argon]
+    species = 'em Arp Ar'
+    aux_species = 'Ar'
+    reaction_coefficient_format = 'townsend'
+    gas_species = 'Ar'
+    electron_energy = 'mean_en'
+    electron_density = 'em'
+    include_electrons = true
+    #file_location = 'Argon_reactions_paper_RateCoefficients'
+    file_location = 'dc_argon_only'
+    #equation_variables = 'mean_en em'
+    equation_variables = 'Te'
+    potential = 'potential'
+    use_log = true
+    position_units = ${dom0Scale}
+    track_rates = false
+    block = 0
+
+    reactions = 'em + Ar -> em + Ar               : EEDF [elastic]
+                 em + Ar -> em + Ar*              : EEDF [-11.56]
+                 em + Ar -> em + em + Ar+         : EEDF [-15.7]'
+                 #Arp + em + em -> em + Ar : {3.17314e14 * (Te)^(-4.5)}'
+                 #Arp + em + em -> em + Ar : {3.17314e9 * (2.0 / 3 * exp(mean_en - em))^(-4.5)}'
+  [../]
 []
