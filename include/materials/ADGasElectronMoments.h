@@ -13,9 +13,11 @@
 #include "ADMaterial.h"
 #include "LinearInterpolation.h"
 #include "SplineInterpolation.h"
+#include "DerivativeMaterialPropertyNameInterface.h"
 
 template <ComputeStage compute_stage>
-class ADGasElectronMoments : public ADMaterial<compute_stage>
+class ADGasElectronMoments : public ADMaterial<compute_stage>,
+                             public DerivativeMaterialPropertyNameInterface
 {
 public:
   static InputParameters validParams();
@@ -28,6 +30,8 @@ protected:
   //SplineInterpolation _diff_interpolation;
   ADLinearInterpolation _mu_interpolation;
   ADLinearInterpolation _diff_interpolation;
+  std::unique_ptr<LinearInterpolation> _mu_interpolation2;
+  std::unique_ptr<LinearInterpolation> _diff_interpolation2;
 
   /* bool _townsend; */
   std::string _potential_units;
@@ -60,5 +64,5 @@ protected:
   const ADVariableValue & _mean_en;
 
   usingMaterialMembers;
-  using ADMaterial<compute_stage>::_communicator;
+  //using ADMaterial<compute_stage>::_communicator;
 };

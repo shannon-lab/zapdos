@@ -890,7 +890,8 @@ dom1Scale=1.0
     potential = potential
     em = em
     ip = Arp
-    r = 0.99
+    #r = 0.99
+    r = 0.0
     position_units = ${dom0Scale}
   [../]
   [./mean_en_physical_left]
@@ -939,7 +940,8 @@ dom1Scale=1.0
     boundary = 'master0_interface'
     potential = potential
     mean_en = mean_en
-    r = 0.99
+    #r = 0.99
+    r = 0.0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_right_diffusion]
@@ -1130,18 +1132,18 @@ dom1Scale=1.0
     #file_location = 'Argon_reactions_paper_RateCoefficients'
     file_location = 'dc_argon_only'
     #equation_variables = 'mean_en em'
-    equation_variables = 'Te'
+    equation_variables = 'e_temp'
     potential = 'potential'
     use_log = true
     position_units = ${dom0Scale}
     track_rates = false
-    use_ad = true
+    #use_ad = true
     block = 0
 
     reactions = 'em + Ar -> em + Ar               : EEDF [elastic]
                  em + Ar -> em + Ar*              : EEDF [-11.5]
                  em + Ar -> em + em + Arp         : EEDF [-15.76]'
-                 #Arp + em + em -> em + Ar : {3.17314e14 * (Te)^(-4.5)}'
+                 #Arp + em + em -> em + Ar : {3.17314e18 * (e_temp)^(-4.5)}'
                  #Arp + em + em -> em + Ar : {3.17314e9 * (2.0 / 3 * exp(mean_en - em))^(-4.5)}'
   [../]
 []

@@ -89,32 +89,51 @@ ADGasElectronMoments<compute_stage>::ADGasElectronMoments(const InputParameters 
 
   _mu_interpolation.setData(actual_mean_energy, mu);
   _diff_interpolation.setData(actual_mean_energy, diff);
+  _mu_interpolation2 = libmesh_make_unique<LinearInterpolation>(actual_mean_energy, mu);
+  _diff_interpolation2 = libmesh_make_unique<LinearInterpolation>(actual_mean_energy, diff);
 }
 
 template <ComputeStage compute_stage>
 void
 ADGasElectronMoments<compute_stage>::computeQpProperties()
 {
-  //_massem[_qp] = 9.11e-31;
 
-  //_e[_qp] = 1.6e-19;
-  //_eps[_qp] = 8.85e-12;
-  //_sgnem[_qp] = -1.;
-
-
-  _d_muem_d_actual_mean_en[_qp] =
-      _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling *
-      _time_units;
-  _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
-  _muem[_qp] =
-      _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling * _time_units;
-  _mumean_en[_qp] = 5.0/3.0 * _muem[_qp];
-  _diffmean_en[_qp] = 5.0/3.0 * _diffem[_qp];
+  //_diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
+  //_muem[_qp] =
+  //    _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling * _time_units;
+  //_mumean_en[_qp] = 5.0/3.0 * _muem[_qp];
+  //_diffmean_en[_qp] = 5.0/3.0 * _diffem[_qp];
+  _diffmean_en[_qp] = 5.0/3.0 * _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
+  _mumean_en[_qp] = 5.0/3.0 * _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling * _time_units;
 
   _sgnmean_en[_qp] = -1.0;
   _sgnem[_qp] = -1.0;
+
+  // Unfortunately these derivatives still need to be explicitly added since they are used in InterfaceAdvection...
   _d_diffem_d_actual_mean_en[_qp] =
       _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
   _d_mumean_en_d_actual_mean_en[_qp] = 5.0/3.0 * _d_muem_d_actual_mean_en[_qp]; 
   _d_diffmean_en_d_actual_mean_en[_qp] = 5.0/3.0 * _d_diffem_d_actual_mean_en[_qp]; 
+  _d_muem_d_actual_mean_en[_qp] =
+      _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling *
+      _time_units;
+
+
+  _diffem[_qp].value() = _diff_interpolation2->sample(std::exp(_mean_en[_qp] - _em[_qp]).value()) * _time_units;
+  _diffem[_qp].derivatives() = _diff_interpolation2->sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) * std::exp(_mean_en[_qp].value() - _em[_qp].value()) * (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) * _time_units;
+
+  _muem[_qp].value() =
+      _mu_interpolation2->sample(std::exp(_mean_en[_qp] - _em[_qp]).value()) * _voltage_scaling * _time_units;
+  _muem[_qp].derivatives() = _mu_interpolation2->sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]).value()) * std::exp(_mean_en[_qp] - _em[_qp]).derivatives() * _voltage_scaling * _time_units;
 }
+
+
+template <>
+void
+ADGasElectronMoments<RESIDUAL>::computeQpProperties()
+{
+  _diffem[_qp] = _diff_interpolation2->sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
+  _muem[_qp] = _mu_interpolation2->sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
+  //_diffmean_en[_qp] = 5.0/3.0 * _diff_interpolation2->sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
+}
+
