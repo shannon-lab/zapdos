@@ -13,11 +13,12 @@
 registerADMooseObject("ZapdosApp", ADCoeffDiffusionLin);
 
 // defineADLegacyParams(ADCoeffDiffusionLin);
-//defineADValidParams(
+// defineADValidParams(
 //    ADCoeffDiffusionLin,
 //    ADKernel,
 //    params.addRequiredParam<Real>("position_units", "Units of position.");
-//    params.addClassDescription("Same as CoeffDiffusionLin, but the Jacobian is computed using forward "
+//    params.addClassDescription("Same as CoeffDiffusionLin, but the Jacobian is computed using
+//    forward "
 //                               "automatic differentiation."););
 
 template <ComputeStage compute_stage>
@@ -37,8 +38,8 @@ ADCoeffDiffusionLin<compute_stage>::ADCoeffDiffusionLin(const InputParameters & 
 {
 }
 
-//ADRealVectorValue
-//ADCoeffDiffusionLin<compute_stage>::precomputeQpResidual()
+// ADRealVectorValue
+// ADCoeffDiffusionLin<compute_stage>::precomputeQpResidual()
 template <ComputeStage compute_stage>
 ADReal
 ADCoeffDiffusionLin<compute_stage>::computeQpResidual()

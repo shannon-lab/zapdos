@@ -1,20 +1,18 @@
-#dom0Scale=1e-3
-#dom1Scale=1e-7
-dom0Scale=1.0
-dom1Scale=1.0
+# THIS INPUT FILE IS BASED ON mean_en.i (1d_dc test)
+
+dom0Scale=1e-3
+dom1Scale=1e-7
 
 [GlobalParams]
   offset = 20
-  # offset = 0
   potential_units = kV
   use_moles = true
-  # potential_units = V
 []
 
 [Mesh]
   [./file]
     type = FileMeshGenerator
-    file = 'liquidNew.msh'
+    file = 'townsend_units.msh'
   [../]
   [./interface]
     type = SideSetsBetweenSubdomainsGenerator
@@ -46,63 +44,40 @@ dom1Scale=1.0
 
 [Problem]
   type = FEProblem
-  # kernel_coverage_check = false
 []
 
 [Preconditioning]
   [./smp]
     type = SMP
     full = true
-    #ksp_norm = none
-    #ksp_norm = 'preconditioned'
   [../]
 []
 
 [Executioner]
   type = Transient
-  automatic_scaling = true
-  compute_scaling_once = false
   end_time = 1e-1
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
-  # petsc_options = '-snes_test_display'
   solve_type = NEWTON
-  #solve_type = PJFNK
-  line_search = 'basic'
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -snes_stol'
-  petsc_options_value = 'lu NONZERO 1.e-10 0'
-  #petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
-  #petsc_options_value = 'lu NONZERO 1.e-10'
-  #petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
-  #petsc_options_value = 'lu NONZERO 1.e-10 fgmres 1e-3'
-  # petsc_options_iname = '-pc_type'
-  # petsc_options_value = 'asm'
-  # petsc_options_iname = '-snes_type'
-  # petsc_options_value = 'test'
-  nl_rel_tol = 1e-8
-  #nl_abs_tol = 2e-8
-  nl_abs_tol = 1e-6
-  #nl_abs_tol = 1e-6
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
+  petsc_options_value = 'lu NONZERO 1.e-10'
+  nl_rel_tol = 1e-4
+  nl_abs_tol = 7.6e-5
   dtmin = 1e-15
   l_max_its = 20
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
     dt = 1e-11
-    # dt = 1.1
     growth_factor = 1.2
-   optimal_iterations = 30
+    optimal_iterations = 30
   [../]
-  #[./TimeIntegrator]
-  #  type = LStableDirk2
-  #[../]
 []
 
 [Outputs]
   perf_graph = true
-  # print_linear_residuals = false
   [./out]
     type = Exodus
-    #execute_on = 'final'
+    execute_on = 'final'
   [../]
   #[./dof_map]
   #  type = DOFMap
@@ -119,43 +94,25 @@ dom1Scale=1.0
     electrode_area = 5.02e-7 # Formerly 3.14e-6
     ballast_resist = 1e6
     e = 1.6e-19
-    # electrode_area = 1.1
-    # ballast_resist = 1.1
-    # e = 1.1
   [../]
 []
 
 [Kernels]
   [./em_time_deriv]
-    #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = ElectronTimeDerivative
     variable = em
     block = 0
   [../]
-  #[./em_advection]
-  #  type = EFieldAdvectionElectrons
-  #  variable = em
-  #  potential = potential
-  #  mean_en = mean_en
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-  #[./em_diffusion]
-  #  type = CoeffDiffusionElectrons
-  #  variable = em
-  #  mean_en = mean_en
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
   [./em_advection]
-    type = ADEFieldAdvection
+    type = EFieldAdvectionElectrons
     variable = em
     potential = potential
+    mean_en = mean_en
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./em_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusionElectrons
     variable = em
     mean_en = mean_en
     block = 0
@@ -167,41 +124,21 @@ dom1Scale=1.0
     variable = em
     block = 0
   [../]
-  # [./em_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = em
-  #   potential = potential
-  #   block = 0
-  # [../]
 
   [./emliq_time_deriv]
-    #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = ElectronTimeDerivative
     variable = emliq
     block = 1
   [../]
-  #[./emliq_advection]
-  #  type = EFieldAdvection
-  #  variable = emliq
-  #  potential = potential
-  #  block = 1
-  #  position_units = ${dom1Scale}
-  #[../]
-  #[./emliq_diffusion]
-  #  type = CoeffDiffusion
-  #  variable = emliq
-  #  block = 1
-  #  position_units = ${dom1Scale}
-  #[../]
   [./emliq_advection]
-    type = ADEFieldAdvection
+    type = EFieldAdvection
     variable = emliq
     potential = potential
     block = 1
     position_units = ${dom1Scale}
   [../]
   [./emliq_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusion
     variable = emliq
     block = 1
     position_units = ${dom1Scale}
@@ -212,21 +149,15 @@ dom1Scale=1.0
     variable = emliq
     block = 1
   [../]
-  # [./emliq_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = emliq
-  #   potential = potential
-  #   block = 1
-  # [../]
 
   [./potential_diffusion_dom1]
-    type = ADCoeffDiffusionLin
+    type = CoeffDiffusionLin
     variable = potential
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./potential_diffusion_dom2]
-    type = ADCoeffDiffusionLin
+    type = CoeffDiffusionLin
     variable = potential
     block = 1
     position_units = ${dom1Scale}
@@ -257,33 +188,19 @@ dom1Scale=1.0
   [../]
 
   [./Arp_time_deriv]
-    #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = ElectronTimeDerivative
     variable = Arp
     block = 0
   [../]
-  #[./Arp_advection]
-  #  type = EFieldAdvection
-  #  variable = Arp
-  #  potential = potential
-  #  position_units = ${dom0Scale}
-  #  block = 0
-  #[../]
   [./Arp_advection]
-    type = ADEFieldAdvection
+    type = EFieldAdvection
     variable = Arp
     potential = potential
     position_units = ${dom0Scale}
     block = 0
   [../]
-  #[./Arp_djffusion]
-  #  type = CoeffDiffusion
-  #  variable = Arp
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
   [./Arp_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusion
     variable = Arp
     block = 0
     position_units = ${dom0Scale}
@@ -294,41 +211,21 @@ dom1Scale=1.0
     variable = Arp
     block = 0
   [../]
-  # [./Arp_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = Arp
-  #   potential = potential
-  #   block = 0
-  # [../]
 
   [./OHm_time_deriv]
-    #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = ElectronTimeDerivative
     variable = OHm
     block = 1
   [../]
-  #[./OHm_advection]
-  #  type = EFieldAdvection
-  #  variable = OHm
-  #  potential = potential
-  #  block = 1
-  #  position_units = ${dom1Scale}
-  #[../]
-  #[./OHm_diffusion]
-  #  type = CoeffDiffusion
-  #  variable = OHm
-  #  block = 1
-  #  position_units = ${dom1Scale}
-  #[../]
   [./OHm_advection]
-    type = ADEFieldAdvection
+    type = EFieldAdvection
     variable = OHm
     potential = potential
     block = 1
     position_units = ${dom1Scale}
   [../]
   [./OHm_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusion
     variable = OHm
     block = 1
     position_units = ${dom1Scale}
@@ -338,17 +235,9 @@ dom1Scale=1.0
     variable = OHm
     block = 1
   [../]
-  # [./OHm_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = OHm
-  #   potential = potential
-  #   block = 1
-  # [../]
-
 
   [./mean_en_time_deriv]
-    #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = ElectronTimeDerivative
     variable = mean_en
     block = 0
   [../]
@@ -360,29 +249,15 @@ dom1Scale=1.0
     block = 0
     position_units = ${dom0Scale}
   [../]
-  #[./mean_en_diffusion]
-  #  type = CoeffDiffusionEnergy
-  #  variable = mean_en
-  #  em = em
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-  #[./mean_en_advection]
-  #  type = ADEFieldAdvection
-  #  variable = mean_en
-  #  potential = potential
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
   [./mean_en_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusionEnergy
     variable = mean_en
+    em = em
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./mean_en_joule_heating]
-    #type = JouleHeating
-    type = ADJouleHeating
+    type = JouleHeating
     variable = mean_en
     potential = potential
     em = em
@@ -395,93 +270,18 @@ dom1Scale=1.0
     block = 0
     offset = 15
   [../]
-  # [./mean_en_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = mean_en
-  #   potential = potential
-  #   block = 0
-  # [../]
-
-  ### REACTIONS
-  [./emliq_reactant_first_order_rxn]
-    type = ReactantFirstOrderRxn
-    variable = emliq
-    block = 1
-  [../]
-  [./emliq_water_bi_sink]
-    type = ReactantAARxn
-    variable = emliq
-    block = 1
-  [../]
-
-  [./OHm_product_first_order_rxn]
-    type = ProductFirstOrderRxn
-    variable = OHm
-    v = emliq
-    block = 1
-  [../]
-  [./OHm_product_aabb_rxn]
-    type = ProductAABBRxn
-    variable = OHm
-    v = emliq
-    block = 1
-  [../]
-
-  #[./Arp_ionization]
-  #  type = IonsFromIonization
-  #  variable = Arp
-  #  potential = potential
-  #  em = em
-  #  mean_en = mean_en
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-
-  #[./em_ionization]
-  #  type = ElectronsFromIonization
-  #  variable = em
-  #  potential = potential
-  #  mean_en = mean_en
-  #  em = em
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-
-  #[./mean_en_ionization]
-  #  type = ElectronEnergyLossFromIonization
-  #  variable = mean_en
-  #  potential = potential
-  #  em = em
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-  #[./mean_en_elastic]
-  #  type = ElectronEnergyLossFromElastic
-  #  variable = mean_en
-  #  potential = potential
-  #  em = em
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-  #[./mean_en_excitation]
-  #  type = ElectronEnergyLossFromExcitation
-  #  variable = mean_en
-  #  potential = potential
-  #  em = em
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
 []
 
 [Variables]
   [./potential]
   [../]
+
   [./em]
     block = 0
   [../]
+
   [./emliq]
     block = 1
-    # scaling = 1e-5
   [../]
 
   [./Arp]
@@ -490,21 +290,24 @@ dom1Scale=1.0
 
   [./mean_en]
     block = 0
-    # scaling = 1e-1
   [../]
 
   [./OHm]
     block = 1
-    # scaling = 1e-5
   [../]
 []
 
 [AuxVariables]
+  [./H2O]
+    order = CONSTANT
+    family = MONOMIAL
+    initial_condition = 10.92252
+    block = 1
+  [../]
   [./Ar]
     block = 0
     order = CONSTANT
     family = MONOMIAL
-    #initial_condition = 2.43839813e25 
     initial_condition = 3.70109
   [../]
   [./e_temp]
@@ -884,18 +687,18 @@ dom1Scale=1.0
 
 [BCs]
   [./mean_en_physical_right]
-    type = ADHagelaarEnergyBC
+    type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'master0_interface'
     potential = potential
     em = em
     ip = Arp
-    #r = 0.99
-    r = 0.0
+    r = 0.99
+    #r = 0.0
     position_units = ${dom0Scale}
   [../]
   [./mean_en_physical_left]
-    type = ADHagelaarEnergyBC
+    type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'left'
     potential = potential
@@ -905,7 +708,7 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./secondary_energy_left]
-    type = ADSecondaryElectronEnergyBC
+    type = SecondaryElectronEnergyBC
     variable = mean_en
     boundary = 'left'
     potential = potential
@@ -916,8 +719,7 @@ dom1Scale=1.0
   [../]
 
   [./potential_left]
-    #type = NeumannCircuitVoltageMoles_KV
-    type = ADNeumannCircuitVoltageMoles_KV
+    type = NeumannCircuitVoltageMoles_KV
     variable = potential
     boundary = left
     function = potential_bc_func
@@ -929,30 +731,30 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./potential_dirichlet_right]
-    type = ADDirichletBC
+    type = DirichletBC
     variable = potential
     boundary = right
     value = 0
   [../]
   [./em_physical_right]
-    type = ADHagelaarElectronBC
+    type = HagelaarElectronBC
     variable = em
     boundary = 'master0_interface'
     potential = potential
     mean_en = mean_en
-    #r = 0.99
-    r = 0.0
+    r = 0.99
+    #r = 0.0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_right_diffusion]
-    type = ADHagelaarIonDiffusionBC
+    type = HagelaarIonDiffusionBC
     variable = Arp
     boundary = 'master0_interface'
     r = 0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_right_advection]
-    type = ADHagelaarIonAdvectionBC
+    type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'master0_interface'
     potential = potential
@@ -961,7 +763,7 @@ dom1Scale=1.0
   [../]
 
   [./em_physical_left]
-    type = ADHagelaarElectronBC
+    type = HagelaarElectronBC
     variable = em
     boundary = 'left'
     potential = potential
@@ -970,7 +772,7 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./sec_electrons_left]
-    type = ADSecondaryElectronBC
+    type = SecondaryElectronBC
     variable = em
     boundary = 'left'
     potential = potential
@@ -980,14 +782,14 @@ dom1Scale=1.0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_left_diffusion]
-    type = ADHagelaarIonDiffusionBC
+    type = HagelaarIonDiffusionBC
     variable = Arp
     boundary = 'left'
     r = 0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_left_advection]
-    type = ADHagelaarIonAdvectionBC
+    type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'left'
     potential = potential
@@ -996,14 +798,14 @@ dom1Scale=1.0
   [../]
 
   [./emliq_right]
-    type = ADDCIonBC
+    type = DCIonBC
     variable = emliq
     boundary = right
     potential = potential
     position_units = ${dom1Scale}
   [../]
   [./OHm_physical]
-    type = ADDCIonBC
+    type = DCIonBC
     variable = OHm
     boundary = 'right'
     potential = potential
@@ -1062,19 +864,6 @@ dom1Scale=1.0
 []
 
 [Materials]
-  #[./gas_block]
-  #  type = Gas
-  #  interp_trans_coeffs = true
-  #  interp_elastic_coeff = true
-  #  ramp_trans_coeffs = false
-  #  em = em
-  #  potential = potential
-  #  ip = Arp
-  #  mean_en = mean_en
-  #  user_se_coeff = 0.05
-  #  block = 0
-  #  property_tables_file = td_argon_mean_en.txt
-  #[../]
  [./water_block]
    type = Water
    block = 1
@@ -1082,18 +871,17 @@ dom1Scale=1.0
  [../]
 
  [./test]
-   type = ADGasElectronMoments
-   block = 0
+   type = GasElectronMoments
+   interp_trans_coeffs = true
+   interp_elastic_coeff = true
+   ramp_trans_coeffs = false
+   user_p_gas = 101325
+   user_se_coeff = 0.05
    em = em
+   potential = potential
    mean_en = mean_en
-   property_tables_file = 'dc_argon_only/moments.txt'
- [../]
-
- [./test_block0]
-   type = GenericConstantMaterial
    block = 0
-   prop_names = ' e         N_A      diffpotential k_boltz eps  se_coeff se_energy T_gas massem   p_gas  n_gas'
-   prop_values = '1.6e-19 6.022e23 8.85e-12      1.38e-23 8.854e-12 0.05     3.        300   9.11e-31 1.01e5 40.4915'
+   property_tables_file = 'townsend_coefficients/moments.txt'
  [../]
 
  [./test_block1]
@@ -1102,14 +890,13 @@ dom1Scale=1.0
    prop_names = 'T_gas p_gas'
    prop_values = '300 1.01e5'
  [../]
-  
+
   [./gas_species_0]
     type = HeavySpeciesMaterial
     heavy_species_name = Arp
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
-    #mobility = 0.144409938
-    #diffusivity = 6.428571e-3
+    block = 0
   [../]
 
   [./gas_species_2]
@@ -1117,33 +904,38 @@ dom1Scale=1.0
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
+    block = 0
   [../]
 []
 
 [Reactions]
   [./Argon]
-    species = 'em Arp Ar'
+    species = 'em Arp'
     aux_species = 'Ar'
     reaction_coefficient_format = 'townsend'
     gas_species = 'Ar'
     electron_energy = 'mean_en'
     electron_density = 'em'
     include_electrons = true
-    #file_location = 'Argon_reactions_paper_RateCoefficients'
-    file_location = 'dc_argon_only'
-    #equation_variables = 'mean_en em'
-    equation_variables = 'e_temp'
+    file_location = 'townsend_coefficients'
     potential = 'potential'
     use_log = true
     position_units = ${dom0Scale}
     track_rates = false
-    #use_ad = true
     block = 0
 
     reactions = 'em + Ar -> em + Ar               : EEDF [elastic]
                  em + Ar -> em + Ar*              : EEDF [-11.5]
                  em + Ar -> em + em + Arp         : EEDF [-15.76]'
-                 #Arp + em + em -> em + Ar : {3.17314e18 * (e_temp)^(-4.5)}'
-                 #Arp + em + em -> em + Ar : {3.17314e9 * (2.0 / 3 * exp(mean_en - em))^(-4.5)}'
+  [../]
+
+  [./Water]
+    species = 'emliq OHm'
+    reaction_coefficient_format = 'rate'
+    use_log = true
+    aux_species = 'H2O'
+    block = 1
+    reactions = 'emliq -> H + OHm : 1064
+                 emliq + emliq -> H2 + OHm + OHm : 3.136e8'
   [../]
 []

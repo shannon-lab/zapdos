@@ -26,8 +26,6 @@ public:
 protected:
   virtual void computeQpProperties() override;
 
-  //SplineInterpolation _mu_interpolation;
-  //SplineInterpolation _diff_interpolation;
   ADLinearInterpolation _mu_interpolation;
   ADLinearInterpolation _diff_interpolation;
   std::unique_ptr<LinearInterpolation> _mu_interpolation2;
@@ -47,8 +45,6 @@ protected:
   ADMaterialProperty(Real) & _d_muem_d_actual_mean_en;
   ADMaterialProperty(Real) & _diffem;
   ADMaterialProperty(Real) & _d_diffem_d_actual_mean_en;
-  // MaterialProperty<Real> & _muArp;
-  // MaterialProperty<Real> & _diffArp;
   ADMaterialProperty(Real) & _mumean_en;
 
   ADMaterialProperty(Real) & _diffmean_en;
@@ -56,13 +52,8 @@ protected:
   ADMaterialProperty(Real) & _sgnem;
   ADMaterialProperty(Real) & _d_mumean_en_d_actual_mean_en;
   ADMaterialProperty(Real) & _d_diffmean_en_d_actual_mean_en;
-  //MaterialProperty<Real> & _massem;
-  //MaterialProperty<Real> & _e;
-  //MaterialProperty<Real> & _eps;
-  // MaterialProperty<Real> & _TArp;
   const ADVariableValue & _em;
   const ADVariableValue & _mean_en;
 
   usingMaterialMembers;
-  //using ADMaterial<compute_stage>::_communicator;
 };

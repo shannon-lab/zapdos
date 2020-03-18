@@ -21,11 +21,11 @@ public:
   ADJouleHeating(const InputParameters & parameters);
 
 protected:
-  //virtual ADRealVectorValue precomputeQpResidual() override;
+  // virtual ADRealVectorValue precomputeQpResidual() override;
   virtual ADReal computeQpResidual() override;
-  
-  //usingKernelGradMembers;
-  //using ADKernelGrad<compute_stage>::getPostprocessorValue;
+
+  // usingKernelGradMembers;
+  // using ADKernelGrad<compute_stage>::getPostprocessorValue;
   usingKernelMembers;
 
 private:

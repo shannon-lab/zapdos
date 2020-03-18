@@ -31,8 +31,7 @@ ADSecondaryElectronBC<compute_stage>::validParams()
 }
 
 template <ComputeStage compute_stage>
-ADSecondaryElectronBC<compute_stage>::ADSecondaryElectronBC(
-    const InputParameters & parameters)
+ADSecondaryElectronBC<compute_stage>::ADSecondaryElectronBC(const InputParameters & parameters)
   : ADIntegratedBC<compute_stage>(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),

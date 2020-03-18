@@ -75,7 +75,6 @@ ADSecondaryElectronEnergyBC<compute_stage>::ADSecondaryElectronEnergyBC(
     _Dip[i] = &getADMaterialProperty<Real>("diff" + (*getVar("ip", i)).name());
     _sgnip[i] = &getADMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
   }
-
 }
 
 template <ComputeStage compute_stage>

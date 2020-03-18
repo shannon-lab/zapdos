@@ -48,7 +48,7 @@ ADJouleHeating<compute_stage>::ADJouleHeating(const InputParameters & parameters
   else if (_potential_units.compare("kV") == 0)
     _voltage_scaling = 1000.;
   else
-    mooseError("Potential units "+_potential_units+" not valid! Use V or kV.");
+    mooseError("Potential units " + _potential_units + " not valid! Use V or kV.");
 }
 
 template <ComputeStage compute_stage>

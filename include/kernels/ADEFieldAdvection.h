@@ -21,11 +21,11 @@ public:
   ADEFieldAdvection(const InputParameters & parameters);
 
 protected:
-  //virtual ADRealVectorValue precomputeQpResidual() override;
+  // virtual ADRealVectorValue precomputeQpResidual() override;
   virtual ADReal computeQpResidual();
-  
-  //usingKernelGradMembers;
-  //using ADKernelGrad<compute_stage>::getPostprocessorValue;
+
+  // usingKernelGradMembers;
+  // using ADKernelGrad<compute_stage>::getPostprocessorValue;
   usingKernelMembers;
 
 private:

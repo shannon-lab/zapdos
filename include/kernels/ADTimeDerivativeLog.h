@@ -26,10 +26,9 @@ public:
   ADTimeDerivativeLog(const InputParameters & parameters);
 
 protected:
-  //virtual ADRealVectorValue precomputeQpResidual() override;
+  // virtual ADRealVectorValue precomputeQpResidual() override;
   virtual ADReal precomputeQpResidual() override;
-  
-private:
 
+private:
   usingTimeDerivativeMembers;
 };
