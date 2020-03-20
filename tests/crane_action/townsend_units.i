@@ -924,9 +924,9 @@ dom1Scale=1e-7
     track_rates = false
     block = 0
 
-    reactions = 'em + Ar -> em + Ar               : EEDF [elastic]
-                 em + Ar -> em + Ar*              : EEDF [-11.5]
-                 em + Ar -> em + em + Arp         : EEDF [-15.76]'
+    reactions = 'em + Ar -> em + Ar               : EEDF [elastic] (reaction1)
+                 em + Ar -> em + Ar*              : EEDF [-11.5] (reaction2)
+                 em + Ar -> em + em + Arp         : EEDF [-15.76] (reaction3)'
   [../]
 
   [./Water]

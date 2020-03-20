@@ -560,10 +560,10 @@ dom0Scale=25.4e-3
     use_log = true
     position_units = ${dom0Scale}
     block = 0
-    reactions = 'em + Ar -> em + Ar*        : EEDF [-11.56]
-                 em + Ar -> em + em + Ar+   : EEDF [-15.7]
-                 em + Ar* -> em + Ar        : EEDF [11.56]
-                 em + Ar* -> em + em + Ar+  : EEDF [-4.14]
+    reactions = 'em + Ar -> em + Ar*        : EEDF [-11.56] (reaction1)
+                 em + Ar -> em + em + Ar+   : EEDF [-15.7] (reaction2)
+                 em + Ar* -> em + Ar        : EEDF [11.56] (reaction3)
+                 em + Ar* -> em + em + Ar+  : EEDF [-4.14] (reaction4)
                  em + Ar* -> em + Ar_r      : 1.2044e11
                  Ar* + Ar* -> Ar+ + Ar + em : 373364000
                  Ar* + Ar -> Ar + Ar        : 1806.6

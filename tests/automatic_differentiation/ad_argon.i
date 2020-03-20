@@ -1,4 +1,4 @@
-dom0Scale=1.0
+dom0Scale=1e-3
 
 [GlobalParams]
   offset = 20
@@ -6,6 +6,7 @@ dom0Scale=1.0
   potential_units = kV
   use_moles = true
   # potential_units = V
+  #time_units = 1e-6
 []
 
 [Mesh]
@@ -43,20 +44,24 @@ dom0Scale=1.0
   type = Transient
   automatic_scaling = true
   compute_scaling_once = false
-  end_time = 1e1
+  end_time = 1e-1
+  #end_time = 1e6
+  #num_steps = 1
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
   solve_type = NEWTON
+  #solve_type = PJFNK
   line_search = 'basic'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
   petsc_options_value = 'lu NONZERO 1.e-10'
   nl_rel_tol = 1e-6
-  nl_abs_tol = 1e-7
+  nl_abs_tol = 1e-10
   dtmin = 1e-18
   l_max_its = 20
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
     dt = 1e-11
+    #dt = 1e-5
     growth_factor = 1.2
    optimal_iterations = 30
   [../]
@@ -89,12 +94,14 @@ dom0Scale=1.0
 
 [Kernels]
   [./Arex_time_deriv]
-    type = ElectronTimeDerivative
+    #type = ElectronTimeDerivative
+    type = ADTimeDerivativeLog
     variable = Ar*
     block = 0
   [../]
   [./Arex_diffusion]
-    type = CoeffDiffusion
+    #type = CoeffDiffusion
+    type = ADCoeffDiffusion
     variable = Ar*
     block = 0
     position_units = ${dom0Scale}
@@ -749,16 +756,16 @@ dom0Scale=1.0
     use_ad = true
     block = 0
 
-    reactions = 'em + Ar -> em + Ar               : EEDF [elastic]
-                 em + Ar -> em + Ar*              : EEDF [-11.5]
-                 em + Ar -> em + em + Arp         : EEDF [-15.76]
-                 em + Ar* -> em + Ar              : EEDF [11.5]
-                 em + Ar* -> em + em + Arp        : EEDF [-4.3]
+    reactions = 'em + Ar -> em + Ar               : EEDF [elastic] (reaction1)
+                 em + Ar -> em + Ar*              : EEDF [-11.5]   (reaction2)
+                 em + Ar -> em + em + Arp         : EEDF [-15.76]  (reaction3)
+                 em + Ar* -> em + Ar              : EEDF [11.5]    (reaction4)
+                 em + Ar* -> em + em + Arp        : EEDF [-4.3]    (reaction5)
                  Ar2p + em -> Ar* + Ar            : {5.1187e11 * (e_temp/300)^(-0.67)}
                  Ar2p + Ar -> Arp + Ar + Ar       : {3.649332e12 / Tgas * exp(-15130/Tgas)}
-                 Ar* + Ar* -> Ar2p + em           : 3.6132e8
+                 Ar* + Ar* -> Ar2p + em           : {3.6132e8}
                  Arp + em + em -> Ar + em         : {3.17314235e9 * (e_temp/11600)^(-4.5)}
-                 Ar* + Ar + Ar -> Ar + Ar + Ar    : 5077.02776
+                 Ar* + Ar + Ar -> Ar + Ar + Ar    : {5077.02776}
                  Arp + Ar + Ar -> Ar2p + Ar       : {81595.089 * (Tgas/300)^(-0.4)}'
   [../]
 []

@@ -832,7 +832,7 @@ dom0Scale=25.4e-3
     type = ZapdosEEDFRateConstant
     mean_energy = mean_en
     sampling_format = electron_energy
-    property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + Ar.txt'
+    property_file = 'Argon_reactions_paper_RateCoefficients/ar_elastic.txt'
     reaction = 'em + Ar -> em + Ar'
     position_units = ${dom0Scale}
     file_location = ''
@@ -841,7 +841,7 @@ dom0Scale=25.4e-3
   [./reaction_0]
     type = ZapdosEEDFRateConstant
     sampling_format = electron_energy
-    property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + Ar*.txt'
+    property_file = 'Argon_reactions_paper_RateCoefficients/ar_excitation.txt'
     reaction = 'em + Ar -> em + Ar*'
     position_units = ${dom0Scale}
     file_location = ''
@@ -851,7 +851,7 @@ dom0Scale=25.4e-3
   [./reaction_1]
     type = ZapdosEEDFRateConstant
     sampling_format = electron_energy
-    property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + em + Ar+.txt'
+    property_file = 'Argon_reactions_paper_RateCoefficients/ar_ionization.txt'
     reaction = 'em + Ar -> em + em + Ar+'
     position_units = ${dom0Scale}
     file_location = ''
@@ -861,8 +861,8 @@ dom0Scale=25.4e-3
   [./reaction_2]
     type = ZapdosEEDFRateConstant
     sampling_format = electron_energy
-    property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + Ar.txt'
     reaction = 'em + Ar* -> em + Ar'
+    property_file = 'Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt'
     position_units = ${dom0Scale}
     file_location = ''
     mean_energy = mean_en
@@ -871,8 +871,8 @@ dom0Scale=25.4e-3
   [./reaction_3]
     type = ZapdosEEDFRateConstant
     sampling_format = electron_energy
-    property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + em + Ar+.txt'
     reaction = 'em + Ar* -> em + em + Ar+'
+    property_file = 'Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt'
     position_units = ${dom0Scale}
     file_location = ''
     mean_energy = mean_en
