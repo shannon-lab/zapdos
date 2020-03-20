@@ -1,0 +1,61 @@
+
+#  *****************************************************************
+#             EXODIFF	(Version: 2.92) Modified: 2018-06-27
+#             Authors:  Richard Drake, rrdrake@sandia.gov           
+#                       Greg Sjaardema, gdsjaar@sandia.gov          
+#             Run on    2020/03/18   21:00:10 CDT
+#  *****************************************************************
+
+#  FILE 1: /home/shane/projects/zapdos/tests/automatic_differentiation/ad_argon_out.e
+#   Title: ad_argon_out.e
+#          Dim = 3, Blocks = 1, Nodes = 81, Elements = 80, Nodesets = 2, Sidesets = 2
+#          Vars: Global = 0, Nodal = 7, Element = 17, Nodeset = 0, Sideset = 0, Times = 175
+
+
+# ==============================================================
+#  NOTE: All node and element ids are reported as global ids.
+
+# NOTES:  - The min/max values are reporting the min/max in absolute value.
+#         - Time values (t) are 1-offset time step numbers.
+#         - Element block numbers are the block ids.
+#         - Node(n) and element(e) numbers are 1-offset.
+
+COORDINATES absolute 1.e-7    # min separation not calculated
+
+TIME STEPS relative 1.e-6 floor 0.0     # min:               0 @ t1 max:              10 @ t175
+
+
+# No GLOBAL VARIABLES
+
+NODAL VARIABLES relative 1.e-4 floor 0.0
+	Ar*        # min:       11.014396 @ t72,n24	max:              21 @ t1,n1
+	Ar2p       # min:       9.1982713 @ t65,n23	max:              21 @ t1,n1
+	Arp        # min:        9.351272 @ t47,n23	max:        21.04576 @ t75,n17
+	em         # min:       9.0779948 @ t60,n23	max:       24.960633 @ t48,n1
+	mean_en    # min:       6.7596279 @ t48,n23	max:       22.630283 @ t48,n1
+	potential  # min:               0 @ t3,n81	max:       0.8095904 @ t2,n1
+	x_node     # min:               0 @ t1,n1	max:           0.001 @ t2,n81
+
+ELEMENT VARIABLES relative 1.e-4 floor 0.0
+	Arex_lin          # min:               0 @ t1,b0,e1	max:   9.8888739e+18 @ t72,b0,e23
+	Ar2p_lin          # min:               0 @ t1,b0,e1	max:   6.0269277e+19 @ t65,b0,e23
+	Ar                # min:         3.70109 @ t1,b0,e4	max:         3.70109 @ t1,b0,e18
+	e_temp            # min:               0 @ t1,b0,e1	max:       39.922735 @ t52,b0,e13
+	x                 # min:               0 @ t1,b0,e1	max:    0.0009994758 @ t2,b0,e80
+	rho               # min:               0 @ t1,b0,e1	max:   3.5773647e+19 @ t50,b0,e20
+	em_lin            # min:               0 @ t1,b0,e1	max:   6.7492097e+19 @ t60,b0,e23
+	Arp_lin           # min:               0 @ t1,b0,e1	max:   4.8973993e+19 @ t46,b0,e23
+	Efield            # min:               0 @ t1,b0,e1	max:        15764082 @ t55,b0,e1
+	Current_em        # min:               0 @ t1,b0,e1	max:       170428.77 @ t39,b0,e25
+	Current_Arp       # min:               0 @ t1,b0,e1	max:       5898.4563 @ t50,b0,e19
+	Current_Ar2p      # min:               0 @ t1,b0,e1	max:       3253.4561 @ t57,b0,e16
+	tot_gas_current   # min:               0 @ t1,b0,e1	max:       171155.26 @ t39,b0,e25
+	EFieldAdvAux_em   # min:               0 @ t1,b0,e1	max:   9.1498921e+24 @ t49,b0,e21
+	DiffusiveFlux_em  # min:               0 @ t1,b0,e1	max:   9.0389121e+24 @ t49,b0,e21
+	PowerDep_em       # min:               0 @ t1,b0,e1	max:    4.384172e+11 @ t41,b0,e23
+	PowerDep_Arp      # min:               0 @ t1,b0,e1	max:   5.6004576e+10 @ t51,b0,e18
+
+# No NODESET VARIABLES
+
+# No SIDESET VARIABLES
+

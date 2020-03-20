@@ -1,0 +1,57 @@
+
+#  *****************************************************************
+#             EXODIFF	(Version: 2.92) Modified: 2018-06-27
+#             Authors:  Richard Drake, rrdrake@sandia.gov           
+#                       Greg Sjaardema, gdsjaar@sandia.gov          
+#             Run on    2020/03/18   21:03:10 CDT
+#  *****************************************************************
+
+#  FILE 1: /home/shane/projects/zapdos/tests/crane_action/rate_units_out.e
+#   Title: rate_units_out.e
+#          Dim = 3, Blocks = 1, Nodes = 212, Elements = 211, Nodesets = 2, Sidesets = 2
+#          Vars: Global = 1, Nodal = 11, Element = 9, Nodeset = 0, Sideset = 0, Times = 177
+
+
+# ==============================================================
+#  NOTE: All node and element ids are reported as global ids.
+
+# NOTES:  - The min/max values are reporting the min/max in absolute value.
+#         - Time values (t) are 1-offset time step numbers.
+#         - Element block numbers are the block ids.
+#         - Node(n) and element(e) numbers are 1-offset.
+
+COORDINATES absolute 1.e-6    # min separation not calculated
+
+TIME STEPS relative 1.e-6 floor 0.0     # min:               0 @ t1 max:           3e-07 @ t177
+
+GLOBAL VARIABLES relative 1.e-6 floor 0.0
+	InversePlasmaFreq  # min:     1.34428e-09 @ t177	max:    2.147112e-09 @ t22
+
+NODAL VARIABLES relative 1.e-4 floor 0.0
+	Ar            # min:        2.928623 @ t1,n1	max:        2.928623 @ t1,n1
+	Ar*           # min:       21.296891 @ t177,n103	max:       50.149706 @ t4,n1
+	Ar*_DeBug     # min:               0 @ t1,n1	max:   0.00016480297 @ t158,n103
+	Ar+           # min:       21.940415 @ t177,n103	max:       24.824031 @ t165,n211
+	Ar+_DeBug     # min:               0 @ t1,n1	max:   8.8829231e-05 @ t158,n103
+	em            # min:       21.962823 @ t177,n103	max:        30.21502 @ t170,n1
+	emDeBug       # min:               0 @ t1,n1	max:   0.00012955639 @ t156,n110
+	mean_en       # min:       20.010108 @ t160,n104	max:       30.502702 @ t170,n1
+	mean_enDeBug  # min:               0 @ t1,n1	max:    0.0038691312 @ t13,n1
+	potential     # min:               0 @ t2,n212	max:     0.099998858 @ t109,n1
+	x_node        # min:               0 @ t1,n1	max:          0.0254 @ t2,n212
+
+ELEMENT VARIABLES relative 1.e-4 floor 0.0
+	Te          # min:               0 @ t1,b0,e1	max:       5.4967305 @ t159,b0,e124
+	x           # min:               0 @ t1,b0,e1	max:     0.025399987 @ t2,b0,e211
+	rho         # min:               0 @ t1,b0,e1	max:               0 @ t1,b0,e1
+	em_lin      # min:               0 @ t1,b0,e1	max:   1.7326793e+14 @ t177,b0,e103
+	Ar+_lin     # min:               0 @ t1,b0,e1	max:   1.7756133e+14 @ t177,b0,e102
+	Ar*_lin     # min:               0 @ t1,b0,e1	max:   3.3742565e+14 @ t177,b0,e102
+	Efield      # min:               0 @ t1,b0,e1	max:       8652.0593 @ t162,b0,e1
+	Current_em  # min:               0 @ t1,b0,e1	max:       2.5520904 @ t156,b0,e103
+	Current_Ar  # min:               0 @ t1,b0,e1	max:     0.013894015 @ t158,b0,e98
+
+# No NODESET VARIABLES
+
+# No SIDESET VARIABLES
+
