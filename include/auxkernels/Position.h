@@ -34,6 +34,8 @@ public:
   virtual ~Position() {}
 
 protected:
+  
+  int _component;
   Real _r_units;
 
   virtual Real computeValue();

@@ -18,6 +18,8 @@ validParams<Position>()
 {
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<int>("component", 0,
+                               "The component of position. (0 = x, 1 = y, 2 = z)");
   params.addClassDescription(
       "Produces an elemental auxiliary variable useful for plotting against other"
       "elemental auxiliary variables. Mesh points automatically output by Zapdos only work"
@@ -27,7 +29,9 @@ validParams<Position>()
 }
 
 Position::Position(const InputParameters & parameters)
-  : AuxKernel(parameters), _r_units(1. / getParam<Real>("position_units"))
+  : AuxKernel(parameters),
+    _component(getParam<int>("component")),
+    _r_units(1. / getParam<Real>("position_units"))
 {
 }
 
@@ -35,7 +39,7 @@ Real
 Position::computeValue()
 {
   if (isNodal())
-    return (*_current_node)(0) / _r_units;
+    return (*_current_node)(_component) / _r_units;
   else
-    return _q_point[_qp](0) / _r_units;
+    return _q_point[_qp](_component) / _r_units;
 }
