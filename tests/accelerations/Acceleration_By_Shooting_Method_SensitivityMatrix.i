@@ -335,19 +335,21 @@ dom0Scale=25.4e-3
   [../]
   #Net excited Argon loss from step-wise ionization
   [./SM_Ar*_stepwise_ionization]
-    type = ReactionSecondOrderLogForShootMethod
+    type = EEDFReactionLogForShootMethod
     variable = SMDeriv
     density = Ar*
-    v = em
+    electron = em
+    energy = mean_en
     reaction = 'em + Ar* -> em + em + Ar+'
     coefficient = -1
   [../]
   #Net excited Argon loss from superelastic collisions
   [./SM_Ar*_collisions]
-    type = ReactionSecondOrderLogForShootMethod
+    type = EEDFReactionLogForShootMethod
     variable = SMDeriv
     density = Ar*
-    v = em
+    electron = em
+    energy = mean_en
     reaction = 'em + Ar* -> em + Ar'
     coefficient = -1
   [../]
