@@ -39,7 +39,7 @@ dom0Scale=25.4e-3
     Is_potential_unique = true
     mean_energy = mean_en
     position_units = ${dom0Scale}
-    Additional_Outputs = 'ElectronTemperature Current EFieldx'
+    Additional_Outputs = 'ElectronTemperature Current EField'
   [../]
 []
 
