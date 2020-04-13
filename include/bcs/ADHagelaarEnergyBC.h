@@ -13,13 +13,11 @@
 #include "ADIntegratedBC.h"
 
 // Forward Declarations
-template <ComputeStage>
 class ADHagelaarEnergyBC;
 
 declareADValidParams(ADHagelaarEnergyBC);
 
-template <ComputeStage compute_stage>
-class ADHagelaarEnergyBC : public ADIntegratedBC<compute_stage>
+class ADHagelaarEnergyBC : public ADIntegratedBC
 {
 public:
   static InputParameters validParams();
@@ -38,10 +36,9 @@ protected:
   const MaterialProperty<Real> & _e;
   const MaterialProperty<Real> & _se_coeff;
   const MaterialProperty<Real> & _se_energy;
-  const ADMaterialProperty(Real) & _mumean_en;
+  const ADMaterialProperty<Real> & _mumean_en;
 
   Real _a;
   ADReal _v_thermal;
 
-  usingIntegratedBCMembers;
 };

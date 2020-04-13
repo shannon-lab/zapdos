@@ -13,15 +13,13 @@
 
 #include "AuxKernel.h"
 
-class EFieldAdvAux;
-
-template <>
-InputParameters validParams<EFieldAdvAux>();
-
-class EFieldAdvAux : public AuxKernel
+template <bool is_ad>
+class EFieldAdvAuxTempl : public AuxKernel
 {
 public:
-  EFieldAdvAux(const InputParameters & parameters);
+  EFieldAdvAuxTempl(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
 protected:
   virtual Real computeValue();
@@ -36,8 +34,11 @@ protected:
 
   // Material properties
 
-  const MaterialProperty<Real> & _mu;
+  const GenericMaterialProperty<Real, is_ad> & _mu;
   const MaterialProperty<Real> & _sgn;
 };
+
+typedef EFieldAdvAuxTempl<false> EFieldAdvAux;
+typedef EFieldAdvAuxTempl<true> ADEFieldAdvAux;
 
 #endif // EFIELDADVAUX_H

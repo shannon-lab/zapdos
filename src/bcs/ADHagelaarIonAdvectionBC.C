@@ -17,11 +17,10 @@ registerADMooseObject("ZapdosApp", ADHagelaarIonAdvectionBC);
 
 defineADLegacyParams(ADHagelaarIonAdvectionBC);
 
-template <ComputeStage compute_stage>
 InputParameters
-ADHagelaarIonAdvectionBC<compute_stage>::validParams()
+ADHagelaarIonAdvectionBC::validParams()
 {
-  InputParameters params = ADIntegratedBC<compute_stage>::validParams();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
@@ -30,10 +29,8 @@ ADHagelaarIonAdvectionBC<compute_stage>::validParams()
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADHagelaarIonAdvectionBC<compute_stage>::ADHagelaarIonAdvectionBC(
-    const InputParameters & parameters)
-  : ADIntegratedBC<compute_stage>(parameters),
+ADHagelaarIonAdvectionBC::ADHagelaarIonAdvectionBC(const InputParameters & parameters)
+  : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
@@ -43,14 +40,13 @@ ADHagelaarIonAdvectionBC<compute_stage>::ADHagelaarIonAdvectionBC(
 
     _mu(getADMaterialProperty<Real>("mu" + _var.name())),
     _e(getMaterialProperty<Real>("e")),
-    _sgn(getADMaterialProperty<Real>("sgn" + _var.name()))
+    _sgn(getMaterialProperty<Real>("sgn" + _var.name()))
 {
   _a = 0.0;
 }
 
-template <ComputeStage compute_stage>
 ADReal
-ADHagelaarIonAdvectionBC<compute_stage>::computeQpResidual()
+ADHagelaarIonAdvectionBC::computeQpResidual()
 {
   if (_normals[_qp] * _sgn[_qp] * -_grad_potential[_qp] > 0.0)
   {

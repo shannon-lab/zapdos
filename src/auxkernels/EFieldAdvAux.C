@@ -10,13 +10,18 @@
 
 #include "EFieldAdvAux.h"
 
-registerMooseObject("ZapdosApp", EFieldAdvAux);
+#include "metaphysicl/raw_type.h"
 
-template <>
+using MetaPhysicL::raw_value;
+
+registerMooseObject("ZapdosApp", EFieldAdvAux);
+registerMooseObject("ZapdosApp", ADEFieldAdvAux);
+
+template <bool is_ad>
 InputParameters
-validParams<EFieldAdvAux>()
+EFieldAdvAuxTempl<is_ad>::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar(
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
@@ -25,7 +30,8 @@ validParams<EFieldAdvAux>()
   return params;
 }
 
-EFieldAdvAux::EFieldAdvAux(const InputParameters & parameters)
+template <bool is_ad>
+EFieldAdvAuxTempl<is_ad>::EFieldAdvAuxTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
 
@@ -37,14 +43,18 @@ EFieldAdvAux::EFieldAdvAux(const InputParameters & parameters)
 
     // Material properties
 
-    _mu(getMaterialProperty<Real>("mu" + _density_var.name())),
+    _mu(getGenericMaterialProperty<Real, is_ad>("mu" + _density_var.name())),
     _sgn(getMaterialProperty<Real>("sgn" + _density_var.name()))
 {
 }
 
+template <bool is_ad>
 Real
-EFieldAdvAux::computeValue()
+EFieldAdvAuxTempl<is_ad>::computeValue()
 {
-  return _sgn[_qp] * _mu[_qp] * std::exp(_density_log[_qp]) * -_grad_potential[_qp](0) * _r_units *
-         6.02e23;
+  return _sgn[_qp] * raw_value(_mu[_qp]) * std::exp(_density_log[_qp]) * -_grad_potential[_qp](0) *
+         _r_units * 6.02e23;
 }
+
+template class EFieldAdvAuxTempl<false>;
+template class EFieldAdvAuxTempl<true>;

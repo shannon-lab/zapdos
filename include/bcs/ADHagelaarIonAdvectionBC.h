@@ -13,13 +13,11 @@
 #include "ADIntegratedBC.h"
 
 // Forward Declarations
-template <ComputeStage>
 class ADHagelaarIonAdvectionBC;
 
 declareADValidParams(ADHagelaarIonAdvectionBC);
 
-template <ComputeStage compute_stage>
-class ADHagelaarIonAdvectionBC : public ADIntegratedBC<compute_stage>
+class ADHagelaarIonAdvectionBC : public ADIntegratedBC
 {
 public:
   static InputParameters validParams();
@@ -35,11 +33,9 @@ protected:
 
   const ADVariableGradient & _grad_potential;
 
-  const ADMaterialProperty(Real) & _mu;
+  const ADMaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _e;
-  const ADMaterialProperty(Real) & _sgn;
+  const MaterialProperty<Real> & _sgn;
 
   Real _a;
-
-  usingIntegratedBCMembers;
 };

@@ -13,15 +13,13 @@
 
 #include "AuxKernel.h"
 
-class DiffusiveFlux;
-
-template <>
-InputParameters validParams<DiffusiveFlux>();
-
-class DiffusiveFlux : public AuxKernel
+template <bool is_ad>
+class DiffusiveFluxTempl : public AuxKernel
 {
 public:
-  DiffusiveFlux(const InputParameters & parameters);
+  DiffusiveFluxTempl(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
 protected:
   virtual Real computeValue();
@@ -36,7 +34,9 @@ protected:
 
   // Material properties
 
-  const MaterialProperty<Real> & _diff;
+  const GenericMaterialProperty<Real, is_ad> & _diff;
 };
 
+typedef DiffusiveFluxTempl<false> DiffusiveFlux;
+typedef DiffusiveFluxTempl<true> ADDiffusiveFlux;
 #endif // DIFFUSIVEFLUX_H

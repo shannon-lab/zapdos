@@ -14,13 +14,11 @@
 #include "ProvideMobility.h"
 
 // Forward Declarations
-template <ComputeStage>
 class ADNeumannCircuitVoltageMoles_KV;
 
 declareADValidParams(ADNeumannCircuitVoltageMoles_KV);
 
-template <ComputeStage compute_stage>
-class ADNeumannCircuitVoltageMoles_KV : public ADIntegratedBC<compute_stage>
+class ADNeumannCircuitVoltageMoles_KV : public ADIntegratedBC
 {
 public:
   static InputParameters validParams();
@@ -41,15 +39,15 @@ protected:
   const ADVariableValue & _em;
 
   const MaterialProperty<Real> & _se_coeff;
-  std::vector<const ADMaterialProperty(Real) *> _muip;
+  std::vector<const ADMaterialProperty<Real> *> _muip;
   const MaterialProperty<Real> & _eps;
   const MaterialProperty<Real> & _N_A;
-  std::vector<const ADMaterialProperty(Real) *> _sgnip;
-  std::vector<const ADMaterialProperty(Real) *> _Dip;
-  const ADMaterialProperty(Real) & _muem;
+  std::vector<const MaterialProperty<Real> *> _sgnip;
+  std::vector<const ADMaterialProperty<Real> *> _Dip;
+  const ADMaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _e;
   const MaterialProperty<Real> & _massem;
-  std::vector<const MaterialProperty<Real> *> _T_heavy;
+  std::vector<const ADMaterialProperty<Real> *> _T_heavy;
   const MaterialProperty<Real> & _kb;
   std::vector<const MaterialProperty<Real> *> _mass;
 
@@ -71,6 +69,4 @@ protected:
   ADReal _ion_drift;
   ADReal _secondary_ion;
   unsigned int _num_ions;
-
-  usingIntegratedBCMembers;
 };

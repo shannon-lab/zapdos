@@ -8,31 +8,32 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#pragma once
+#ifndef ADEFIELDADVECTIONENERGY_H
+#define ADEFIELDADVECTIONENERGY_H
 
-#include "ADIntegratedBC.h"
+#include "ADKernelGrad.h"
 
-// Forward Declarations
-class ADDCIonBC;
-
-declareADValidParams(ADDCIonBC);
-
-class ADDCIonBC : public ADIntegratedBC
+class ADEFieldAdvectionEnergy : public ADKernelGrad
 {
 public:
+  ADEFieldAdvectionEnergy(const InputParameters & parameters);
+
   static InputParameters validParams();
-  ADDCIonBC(const InputParameters & parameters);
 
 protected:
-  virtual ADReal computeQpResidual() override;
+  ADRealVectorValue precomputeQpResidual() override;
+
+  // Material properties
 
   Real _r_units;
 
+  const ADMaterialProperty<Real> & _muel;
+  const MaterialProperty<Real> & _sign;
+
+private:
   // Coupled variables
   const ADVariableGradient & _grad_potential;
-
-  const ADMaterialProperty<Real> & _mu;
-  const MaterialProperty<Real> & _sgn;
-
-  Real _a;
+  const ADVariableValue & _em;
 };
+
+#endif // ADEFIELDADVECTIONENERGY_H

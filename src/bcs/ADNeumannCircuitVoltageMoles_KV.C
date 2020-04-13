@@ -18,11 +18,10 @@ registerADMooseObject("ZapdosApp", ADNeumannCircuitVoltageMoles_KV);
 
 defineADLegacyParams(ADNeumannCircuitVoltageMoles_KV);
 
-template <ComputeStage compute_stage>
 InputParameters
-ADNeumannCircuitVoltageMoles_KV<compute_stage>::validParams()
+ADNeumannCircuitVoltageMoles_KV::validParams()
 {
-  InputParameters params = ADIntegratedBC<compute_stage>::validParams();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<FunctionName>("function", "The function.");
   params.addRequiredParam<UserObjectName>(
       "data_provider",
@@ -39,10 +38,8 @@ ADNeumannCircuitVoltageMoles_KV<compute_stage>::validParams()
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADNeumannCircuitVoltageMoles_KV<compute_stage>::ADNeumannCircuitVoltageMoles_KV(
-    const InputParameters & parameters)
-  : ADIntegratedBC<compute_stage>(parameters),
+ADNeumannCircuitVoltageMoles_KV::ADNeumannCircuitVoltageMoles_KV(const InputParameters & parameters)
+  : ADIntegratedBC(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _V_bat(getFunction("function")),
     _data(getUserObject<ProvideMobility>("data_provider")),
@@ -95,17 +92,16 @@ ADNeumannCircuitVoltageMoles_KV<compute_stage>::ADNeumannCircuitVoltageMoles_KV(
   {
     _ip[i] = &adCoupledValue("ip", i);
     _grad_ip[i] = &adCoupledGradient("ip", i);
-    _T_heavy[i] = &getMaterialProperty<Real>("T" + (*getVar("ip", i)).name());
+    _T_heavy[i] = &getADMaterialProperty<Real>("T" + (*getVar("ip", i)).name());
     _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
     _Dip[i] = &getADMaterialProperty<Real>("diff" + (*getVar("ip", i)).name());
-    _sgnip[i] = &getADMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
+    _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
     _mass[i] = &getMaterialProperty<Real>("mass" + (*getVar("ip", i)).name());
   }
 }
 
-template <ComputeStage compute_stage>
 ADReal
-ADNeumannCircuitVoltageMoles_KV<compute_stage>::computeQpResidual()
+ADNeumannCircuitVoltageMoles_KV::computeQpResidual()
 {
   if (_normals[_qp] * -1.0 * -_grad_u[_qp] > 0.0)
   {

@@ -17,11 +17,10 @@ registerADMooseObject("ZapdosApp", ADDCIonBC);
 
 defineADLegacyParams(ADDCIonBC);
 
-template <ComputeStage compute_stage>
 InputParameters
-ADDCIonBC<compute_stage>::validParams()
+ADDCIonBC::validParams()
 {
-  InputParameters params = ADIntegratedBC<compute_stage>::validParams();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Electric field driven outflow boundary condition"
@@ -29,9 +28,8 @@ ADDCIonBC<compute_stage>::validParams()
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADDCIonBC<compute_stage>::ADDCIonBC(const InputParameters & parameters)
-  : ADIntegratedBC<compute_stage>(parameters),
+ADDCIonBC::ADDCIonBC(const InputParameters & parameters)
+  : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
 
@@ -39,14 +37,13 @@ ADDCIonBC<compute_stage>::ADDCIonBC(const InputParameters & parameters)
     _grad_potential(adCoupledGradient("potential")),
 
     _mu(getADMaterialProperty<Real>("mu" + _var.name())),
-    _sgn(getADMaterialProperty<Real>("sgn" + _var.name()))
+    _sgn(getMaterialProperty<Real>("sgn" + _var.name()))
 {
   _a = 0.0;
 }
 
-template <ComputeStage compute_stage>
 ADReal
-ADDCIonBC<compute_stage>::computeQpResidual()
+ADDCIonBC::computeQpResidual()
 {
   if (_normals[_qp] * _sgn[_qp] * -_grad_potential[_qp] > 0.0)
   {

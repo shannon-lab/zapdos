@@ -14,15 +14,13 @@
 /* #include "LinearInterpolation.h" */
 #include "SplineInterpolation.h"
 
-class HeavySpeciesMaterial;
-
-template <>
-InputParameters validParams<HeavySpeciesMaterial>();
-
-class HeavySpeciesMaterial : public Material
+template <bool is_ad>
+class HeavySpeciesMaterialTempl : public Material
 {
 public:
-  HeavySpeciesMaterial(const InputParameters & parameters);
+  HeavySpeciesMaterialTempl(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
 protected:
   virtual void computeQpProperties();
@@ -34,11 +32,11 @@ protected:
   std::string _potential_units;
   Real _voltage_scaling;
 
-  MaterialProperty<Real> & _massHeavy;        // Replaces _massArp
-  MaterialProperty<Real> & _temperatureHeavy; // Replaces _tempArp
-  MaterialProperty<Real> & _sgnHeavy;         // Replaces _sgnArp (unused though)
-  MaterialProperty<Real> & _muHeavy;          // Replaces _muArp
-  MaterialProperty<Real> & _diffHeavy;        // Replaces _diffArp
+  MaterialProperty<Real> & _massHeavy;                      // Replaces _massArp
+  GenericMaterialProperty<Real, is_ad> & _temperatureHeavy; // Replaces _tempArp
+  MaterialProperty<Real> & _sgnHeavy;                       // Replaces _sgnArp (unused though)
+  GenericMaterialProperty<Real, is_ad> & _muHeavy;          // Replaces _muArp
+  GenericMaterialProperty<Real, is_ad> & _diffHeavy;        // Replaces _diffArp
 
   const MaterialProperty<Real> & _T_gas;
   const MaterialProperty<Real> & _p_gas;
@@ -51,3 +49,6 @@ protected:
   // MaterialProperty<Real> & _p_gas;  // Replace with gas fraction?
   // MaterialProperty<Real> & _n_gas;
 };
+
+typedef HeavySpeciesMaterialTempl<false> HeavySpeciesMaterial;
+typedef HeavySpeciesMaterialTempl<true> ADHeavySpeciesMaterial;

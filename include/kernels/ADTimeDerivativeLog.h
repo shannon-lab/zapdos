@@ -12,13 +12,11 @@
 
 #include "ADTimeDerivative.h"
 
-template <ComputeStage>
 class ADTimeDerivativeLog;
 
 declareADValidParams(ADTimeDerivativeLog);
 
-template <ComputeStage compute_stage>
-class ADTimeDerivativeLog : public ADTimeDerivative<compute_stage>
+class ADTimeDerivativeLog : public ADTimeDerivative
 {
 public:
   static InputParameters validParams();
@@ -30,5 +28,4 @@ protected:
   virtual ADReal precomputeQpResidual() override;
 
 private:
-  usingTimeDerivativeMembers;
 };
