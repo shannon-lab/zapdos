@@ -38,5 +38,4 @@ protected:
   const MaterialProperty<Real> & _reaction_coeff;
   const MaterialProperty<Real> & _d_k_d_en;
   Real _stoichiometric_coeff;
-
 };

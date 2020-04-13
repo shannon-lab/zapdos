@@ -32,13 +32,14 @@ InputParameters
 validParams<AccelerationByAveraging>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addRequiredCoupledVar("density_at_start_cycle", "The accelerated density at the start of the cycle in log form");
-  params.addRequiredCoupledVar("density_at_end_cycle", "The accelerated density at the end of the cycle in log form");
-  params.addRequiredParam<Real>("time_of_averaging",
-                        "The time difference of the averaging");
-  params.addRequiredParam<Real>("time_of_acceleration",
-                        "The time of acceleration");
-  params.addClassDescription("An acceleration scheme based averaging a density over a periodic cycle");
+  params.addRequiredCoupledVar("density_at_start_cycle",
+                               "The accelerated density at the start of the cycle in log form");
+  params.addRequiredCoupledVar("density_at_end_cycle",
+                               "The accelerated density at the end of the cycle in log form");
+  params.addRequiredParam<Real>("time_of_averaging", "The time difference of the averaging");
+  params.addRequiredParam<Real>("time_of_acceleration", "The time of acceleration");
+  params.addClassDescription(
+      "An acceleration scheme based averaging a density over a periodic cycle");
   return params;
 }
 
@@ -56,9 +57,12 @@ AccelerationByAveraging::~AccelerationByAveraging() {}
 Real
 AccelerationByAveraging::computeQpResidual()
 {
-  Real _average_rate_of_change = (std::exp(_density_at_end_cycle[_qp]) - std::exp(_density_at_start_cycle[_qp])) / _time_average;
+  Real _average_rate_of_change =
+      (std::exp(_density_at_end_cycle[_qp]) - std::exp(_density_at_start_cycle[_qp])) /
+      _time_average;
 
-  return _test[_i][_qp] * (std::exp(_u[_qp]) - std::exp(_density_at_start_cycle[_qp]) - _time_accleration * _average_rate_of_change);
+  return _test[_i][_qp] * (std::exp(_u[_qp]) - std::exp(_density_at_start_cycle[_qp]) -
+                           _time_accleration * _average_rate_of_change);
 }
 
 Real

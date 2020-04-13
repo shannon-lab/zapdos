@@ -31,23 +31,24 @@ validParams<ReactionSecondOrderLogForShootMethod>()
       "reaction has multiple different rate coefficients (frequently the case when multiple "
       "species are lumped together to simplify a reaction network), this will prevent the same "
       "material property from being declared multiple times.");
-  params.addClassDescription(
-    "The derivative of an second order reaction term used to calculate the sensitivity variable for the shoothing method."
-    "(Densities must be in log form)");
+  params.addClassDescription("The derivative of an second order reaction term used to calculate "
+                             "the sensitivity variable for the shoothing method."
+                             "(Densities must be in log form)");
   return params;
 }
 
-ReactionSecondOrderLogForShootMethod::ReactionSecondOrderLogForShootMethod(const InputParameters & parameters)
+ReactionSecondOrderLogForShootMethod::ReactionSecondOrderLogForShootMethod(
+    const InputParameters & parameters)
   : Kernel(parameters),
-  _reaction_coeff(getMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
-                                            getParam<std::string>("reaction"))),
+    _reaction_coeff(getMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
+                                              getParam<std::string>("reaction"))),
 
-  _density(coupledValue("density")),
-  _density_id(coupled("density")),
-  _v(coupledValue("v")),
-  _v_id(coupled("v")),
+    _density(coupledValue("density")),
+    _density_id(coupled("density")),
+    _v(coupledValue("v")),
+    _v_id(coupled("v")),
 
-  _stoichiometric_coeff(getParam<Real>("coefficient"))
+    _stoichiometric_coeff(getParam<Real>("coefficient"))
 {
 }
 
@@ -57,12 +58,12 @@ ReactionSecondOrderLogForShootMethod::computeQpResidual()
   if (_v_id == _density_id)
   {
     return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 2.0 *
-            std::exp(_v[_qp]) * _u[_qp];
+           std::exp(_v[_qp]) * _u[_qp];
   }
   else
   {
     return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
-            std::exp(_v[_qp]) * _u[_qp];
+           std::exp(_v[_qp]) * _u[_qp];
   }
 }
 
@@ -72,12 +73,12 @@ ReactionSecondOrderLogForShootMethod::computeQpJacobian()
   if (_v_id == _density_id)
   {
     return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 2.0 *
-            std::exp(_v[_qp]) * _phi[_j][_qp];
+           std::exp(_v[_qp]) * _phi[_j][_qp];
   }
   else
   {
     return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
-            std::exp(_v[_qp]) * _phi[_j][_qp];
+           std::exp(_v[_qp]) * _phi[_j][_qp];
   }
 }
 
@@ -89,12 +90,12 @@ ReactionSecondOrderLogForShootMethod::computeQpOffDiagJacobian(unsigned int jvar
     if (_v_id == _density_id)
     {
       return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 2.0 *
-              std::exp(_v[_qp]) * _phi[_j][_qp] * _u[_qp];
+             std::exp(_v[_qp]) * _phi[_j][_qp] * _u[_qp];
     }
     else
     {
       return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
-              std::exp(_v[_qp]) * _phi[_j][_qp] * _u[_qp];
+             std::exp(_v[_qp]) * _phi[_j][_qp] * _u[_qp];
     }
   }
   else

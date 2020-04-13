@@ -31,5 +31,4 @@ protected:
   const VariableValue & _density_at_end_cycle;
   Real _time_average;
   Real _time_accleration;
-
 };

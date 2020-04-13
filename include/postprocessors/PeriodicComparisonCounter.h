@@ -29,7 +29,6 @@ public:
   virtual PostprocessorValue getValue() override;
 
 protected:
-
   /// Comparison type
   enum class ComparisonType
   {

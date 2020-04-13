@@ -8,7 +8,6 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-
 #pragma once
 
 #include "NodalVariablePostprocessor.h"
@@ -18,7 +17,6 @@ class AverageNodalDifference;
 
 template <>
 InputParameters validParams<AverageNodalDifference>();
-
 
 class AverageNodalDifference : public NodalVariablePostprocessor
 {
@@ -33,7 +31,6 @@ public:
   virtual void threadJoin(const UserObject & y) override;
 
 protected:
-
   const VariableValue & _other_var;
   Real _sum_of_squared_diff;
   Real _n;

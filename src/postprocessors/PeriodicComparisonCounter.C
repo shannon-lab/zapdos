@@ -21,17 +21,15 @@ PeriodicComparisonCounter::validParams()
   InputParameters params = GeneralPostprocessor::validParams();
 
   params.addRequiredParam<PostprocessorName>("value1", "First post-processor or value");
-  params.addRequiredParam<PostprocessorName>("value2",
-                                             "Second post-processor or value");
+  params.addRequiredParam<PostprocessorName>("value2", "Second post-processor or value");
 
   MooseEnum comparison_type("equals greater_than_equals less_than_equals greater_than less_than");
   params.addRequiredParam<MooseEnum>("comparison_type",
                                      comparison_type,
                                      "The type of comparison to perform. Options are: " +
-                                        comparison_type.getRawNames());
+                                         comparison_type.getRawNames());
 
-  params.addRequiredParam<Real>("frequency",
-                                "The frequency of the periodic cycle in Hz");
+  params.addRequiredParam<Real>("frequency", "The frequency of the periodic cycle in Hz");
 
   params.addClassDescription("Compares two Postprocessors or values and keeps count"
                              "of how many cycles in a row that comparision is true.");

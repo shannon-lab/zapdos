@@ -19,8 +19,7 @@ InputParameters
 AverageNodalDifference::validParams()
 {
   InputParameters params = NodalVariablePostprocessor::validParams();
-  params.addRequiredCoupledVar("other_variable",
-                               "The variable to compare to.");
+  params.addRequiredCoupledVar("other_variable", "The variable to compare to.");
   params.addClassDescription("Returns the average nodal differences between two variables");
   params.set<bool>("unique_node_execute") = true;
   return params;

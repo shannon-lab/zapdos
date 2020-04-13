@@ -19,7 +19,8 @@ DensityNormalization::validParams()
 {
   InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar("Density", "The variable to be normalized in log form");
-  params.addRequiredParam<PostprocessorName>("normalization", "The postprocessor to be the denominator");
+  params.addRequiredParam<PostprocessorName>("normalization",
+                                             "The postprocessor to be the denominator");
   params.addParam<PostprocessorName>("shift", "The postprocessor to shift the source");
   params.addParam<Real>("normal_factor", 1.0, "The normalization factor");
   params.addClassDescription("Similar to NormalizationAux except meant to "

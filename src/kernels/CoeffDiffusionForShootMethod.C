@@ -20,12 +20,11 @@ InputParameters
 validParams<CoeffDiffusionForShootMethod>()
 {
   InputParameters params = validParams<Diffusion>();
-  params.addRequiredCoupledVar("density",
-                               "The log of the accelerated density.");
+  params.addRequiredCoupledVar("density", "The log of the accelerated density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-    "The derivative of the generic diffusion term used to calculate the sensitivity value for the shoothing method."
-    "(Densities must be in log form)");
+  params.addClassDescription("The derivative of the generic diffusion term used to calculate the "
+                             "sensitivity value for the shoothing method."
+                             "(Densities must be in log form)");
   return params;
 }
 
@@ -43,13 +42,13 @@ CoeffDiffusionForShootMethod::~CoeffDiffusionForShootMethod() {}
 Real
 CoeffDiffusionForShootMethod::computeQpResidual()
 {
-  return -_diffusivity[_qp] * (_grad_test[_i][_qp] * _r_units) *
-         -_grad_test[_i][_qp] * _r_units * _u[_qp];
+  return -_diffusivity[_qp] * (_grad_test[_i][_qp] * _r_units) * -_grad_test[_i][_qp] * _r_units *
+         _u[_qp];
 }
 
 Real
 CoeffDiffusionForShootMethod::computeQpJacobian()
 {
-  return -_diffusivity[_qp] * (_grad_test[_i][_qp] * _r_units) *
-         -_grad_test[_i][_qp] * _r_units * _phi[_j][_qp];
+  return -_diffusivity[_qp] * (_grad_test[_i][_qp] * _r_units) * -_grad_test[_i][_qp] * _r_units *
+         _phi[_j][_qp];
 }
