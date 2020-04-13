@@ -120,6 +120,7 @@ vhigh = 103E-3 #kV
         [./em_ionization]
                 type = ElectronsFromIonization
                 variable = em
+                em = em
                 potential = potential
                 mean_en = mean_en
                 block = 0
