@@ -24,8 +24,8 @@ public:
   ReactionThirdOrderLogForShootMethod(const InputParameters & parameters);
 
 protected:
-  Real computeQpResidual() override;
-  Real computeQpJacobian() override;
+  virtual Real computeQpResidual();
+  virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   const MaterialProperty<Real> & _reaction_coeff;
