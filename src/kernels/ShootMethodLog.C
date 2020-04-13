@@ -28,7 +28,7 @@ at the beginning of the period must be equal to the
 solution at the end of the period). So, the current
 solution is increased by the different of the solution
 at the start and end of the cycle times a variable
-representative of the sensitivity of the problem. This 
+representative of the sensitivity of the problem. This
 sensitivity is calculated in a sub app.
 */
 
@@ -37,9 +37,12 @@ InputParameters
 validParams<ShootMethodLog>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addRequiredCoupledVar("density_at_start_cycle", "The accelerated density at the start of the cycle in log form");
-  params.addRequiredCoupledVar("density_at_end_cycle", "The accelerated density at the end of the cycle in log form");
-  params.addParam<Real>("growth_limit", 0.0,
+  params.addRequiredCoupledVar("density_at_start_cycle",
+                               "The accelerated density at the start of the cycle in log form");
+  params.addRequiredCoupledVar("density_at_end_cycle",
+                               "The accelerated density at the end of the cycle in log form");
+  params.addParam<Real>("growth_limit",
+                        0.0,
                         "A limit of the growth factor"
                         "(growth_limit = 0.0 means no limit)");
   params.addRequiredCoupledVar("sensitivity_variable",
@@ -51,11 +54,11 @@ validParams<ShootMethodLog>()
 
 ShootMethodLog::ShootMethodLog(const InputParameters & parameters)
   : Kernel(parameters),
-  _density_at_start_cycle(coupledValue("density_at_start_cycle")),
-  _density_at_end_cycle(coupledValue("density_at_end_cycle")),
-  _sensitivity(coupledValue("sensitivity_variable")),
-  _limit(getParam<Real>("growth_limit")),
-  _acceleration(0.0)
+    _density_at_start_cycle(coupledValue("density_at_start_cycle")),
+    _density_at_end_cycle(coupledValue("density_at_end_cycle")),
+    _sensitivity(coupledValue("sensitivity_variable")),
+    _limit(getParam<Real>("growth_limit")),
+    _acceleration(0.0)
 {
 }
 
@@ -65,25 +68,29 @@ Real
 ShootMethodLog::computeQpResidual()
 {
 
-    Real _acceleration_growth =  std::pow((1. - _sensitivity[_qp]), -1.);
+  Real _acceleration_growth = std::pow((1. - _sensitivity[_qp]), -1.);
 
-    if (_limit == 0.0)
+  if (_limit == 0.0)
+  {
+    _acceleration = _acceleration_growth *
+                    (std::exp(_density_at_start_cycle[_qp]) - std::exp(_density_at_end_cycle[_qp]));
+  }
+  else
+  {
+    if (_acceleration_growth > _limit)
     {
-      _acceleration = _acceleration_growth * (std::exp(_density_at_start_cycle[_qp]) - std::exp(_density_at_end_cycle[_qp]));
+      _acceleration =
+          _limit * (std::exp(_density_at_start_cycle[_qp]) - std::exp(_density_at_end_cycle[_qp]));
     }
     else
     {
-      if (_acceleration_growth > _limit)
-      {
-        _acceleration = _limit * (std::exp(_density_at_start_cycle[_qp]) - std::exp(_density_at_end_cycle[_qp]));
-      }
-      else
-      {
-        _acceleration = _acceleration_growth * (std::exp(_density_at_start_cycle[_qp]) - std::exp(_density_at_end_cycle[_qp]));
-      }
+      _acceleration = _acceleration_growth * (std::exp(_density_at_start_cycle[_qp]) -
+                                              std::exp(_density_at_end_cycle[_qp]));
     }
+  }
 
-    return _test[_i][_qp] * (std::exp(_u[_qp]) - std::exp(_density_at_start_cycle[_qp]) + _acceleration);
+  return _test[_i][_qp] *
+         (std::exp(_u[_qp]) - std::exp(_density_at_start_cycle[_qp]) + _acceleration);
 }
 
 Real

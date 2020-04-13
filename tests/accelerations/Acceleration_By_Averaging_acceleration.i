@@ -43,7 +43,6 @@ dom0Scale=25.4e-3
   [../]
   [./Ar*S]
   [../]
-
   [./Ar*T]
   [../]
 []
@@ -144,7 +143,6 @@ dom0Scale=25.4e-3
 
 [Executioner]
   type = Steady
-
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type'

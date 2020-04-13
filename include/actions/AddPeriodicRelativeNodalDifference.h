@@ -26,9 +26,7 @@ public:
   virtual void act();
 
 protected:
-
-  virtual void addPerviousSolutionsIC(const std::string & variable_name,
-                                      const Real & initial);
+  virtual void addPerviousSolutionsIC(const std::string & variable_name, const Real & initial);
   virtual void addPerviousSolutionsKernels(const std::string & variable_name,
                                            const std::string & var_old_name);
   virtual void addNormalizationKernels(const std::string & variable_name,
@@ -36,8 +34,7 @@ protected:
                                        const std::string & averaged,
                                        const bool & log);
 
-  virtual void addAverageNodalPP(const std::string & variable_name,
-                                 const bool & log);
+  virtual void addAverageNodalPP(const std::string & variable_name, const bool & log);
 
   virtual void addRelativePeriodicDiffPP(const std::string & variable_name,
                                          const std::string & var_old_name,

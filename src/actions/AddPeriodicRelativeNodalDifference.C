@@ -52,19 +52,19 @@ validParams<AddPeriodicRelativeNodalDifference>()
   InputParameters params = validParams<AddVariableAction>();
   params.addParam<std::vector<NonlinearVariableName>>(
       "periodic_variable_log", "The periodic variables that are in log form.");
-  params.addParam<std::vector<NonlinearVariableName>>(
-      "periodic_variable", "The periodic variables (Not in log form).");
-  params.addParam<Real>("starting_cycle", 0.0,
-      "The number of the cycles before starting the difference calculation");
-  params.addRequiredParam<Real>("cycle_frequency",
-      "The cycle's frequency in Hz");
-  params.addParam<Real>("num_cycles", 2000.0,
-      "The number of cycles to calculation the difference for.");
+  params.addParam<std::vector<NonlinearVariableName>>("periodic_variable",
+                                                      "The periodic variables (Not in log form).");
+  params.addParam<Real>(
+      "starting_cycle", 0.0, "The number of the cycles before starting the difference calculation");
+  params.addRequiredParam<Real>("cycle_frequency", "The cycle's frequency in Hz");
+  params.addParam<Real>(
+      "num_cycles", 2000.0, "The number of cycles to calculation the difference for.");
   params.addParam<std::vector<SubdomainName>>("block",
-      "The subdomain that this action applies to.");
+                                              "The subdomain that this action applies to.");
   params.addClassDescription(
       "This Action automatically adds the necessary objects to calculate the relative"
-      " periodic difference. Relative Difference will be outputted as an Postprocessor named: 'var'_periodic_difference");
+      " periodic difference. Relative Difference will be outputted as an Postprocessor named: "
+      "'var'_periodic_difference");
 
   return params;
 }
@@ -92,7 +92,7 @@ AddPeriodicRelativeNodalDifference::act()
   unsigned int number_var_log = var_log.size();
   unsigned int number_var = var.size();
 
-  //The variable type for the aux variables
+  // The variable type for the aux variables
   auto fe_type = AddVariableAction::feType(_pars);
   auto type = AddVariableAction::determineType(fe_type, 1);
   auto var_params = _factory.getValidParams(type);
@@ -101,7 +101,7 @@ AddPeriodicRelativeNodalDifference::act()
   var_params.set<std::vector<SubdomainName>>("block") =
       getParam<std::vector<SubdomainName>>("block");
 
-  //Defineding the indexs needed for the periodic controller
+  // Defineding the indexs needed for the periodic controller
   _enable_start.resize(3 * (number_var_log + number_var));
   _enable_end.resize(number_var_log + number_var);
 
@@ -109,29 +109,29 @@ AddPeriodicRelativeNodalDifference::act()
   {
     std::string var_log_name = var_log[i];
 
-    _enable_start[3*i] = "*::"+var_log_name+"_previous_cycle_sudo";
-    _enable_start[3*i+1] = "*::"+var_log_name+"_normalized";
-    _enable_start[3*i+2] = "*::"+var_log_name+"_previous_cycle_normalized";
+    _enable_start[3 * i] = "*::" + var_log_name + "_previous_cycle_sudo";
+    _enable_start[3 * i + 1] = "*::" + var_log_name + "_normalized";
+    _enable_start[3 * i + 2] = "*::" + var_log_name + "_previous_cycle_normalized";
   }
   for (unsigned int i = number_var_log; i < (number_var + number_var_log); i++)
   {
     std::string var_name = var[i - number_var_log];
 
-    _enable_start[3*i] = "*::"+var_name+"_previous_cycle_sudo";
-    _enable_start[3*i+1] = "*::"+var_name+"_normalized";
-    _enable_start[3*i+2] = "*::"+var_name+"_previous_cycle_normalized";
+    _enable_start[3 * i] = "*::" + var_name + "_previous_cycle_sudo";
+    _enable_start[3 * i + 1] = "*::" + var_name + "_normalized";
+    _enable_start[3 * i + 2] = "*::" + var_name + "_previous_cycle_normalized";
   }
   for (unsigned int i = 0; i < number_var_log; i++)
   {
     std::string var_log_name = var_log[i];
 
-    _enable_end[i] = "*::"+var_log_name+"_previous_cycle";
+    _enable_end[i] = "*::" + var_log_name + "_previous_cycle";
   }
   for (unsigned int i = number_var_log; i < (number_var + number_var_log); i++)
   {
     std::string var_name = var[i - number_var_log];
 
-    _enable_end[i] = "*::"+var_name+"_previous_cycle";
+    _enable_end[i] = "*::" + var_name + "_previous_cycle";
   }
 
   _enable_start_start_time_index.resize(_enable_start.size());
@@ -139,36 +139,36 @@ AddPeriodicRelativeNodalDifference::act()
   _enable_end_start_time_index.resize(_enable_end.size());
   _enable_end_end_time_index.resize(_enable_end.size());
 
-  //Adding Variables to store previous solutions and normalized solutions
-  //Note: A sudo previous solution is needed so that the '_previous_cycle'
-  //solutions are not overwritten too soon.
+  // Adding Variables to store previous solutions and normalized solutions
+  // Note: A sudo previous solution is needed so that the '_previous_cycle'
+  // solutions are not overwritten too soon.
   if (_current_task == "add_variable")
   {
-    //Dummy variable for the denominator in QuotientAux
+    // Dummy variable for the denominator in QuotientAux
     _problem->addAuxVariable(type, "Dummy_denominator", var_params);
 
     for (unsigned int cur_num = 0; cur_num < number_var_log; cur_num++)
     {
       std::string var_log_name = var_log[cur_num];
-      _problem->addAuxVariable(type, var_log_name+"_previous_cycle", var_params);
-      _problem->addAuxVariable(type, var_log_name+"_previous_cycle_sudo", var_params);
+      _problem->addAuxVariable(type, var_log_name + "_previous_cycle", var_params);
+      _problem->addAuxVariable(type, var_log_name + "_previous_cycle_sudo", var_params);
 
-      _problem->addAuxVariable(type, var_log_name+"_normalized", var_params);
-      _problem->addAuxVariable(type, var_log_name+"_previous_cycle_normalized", var_params);
+      _problem->addAuxVariable(type, var_log_name + "_normalized", var_params);
+      _problem->addAuxVariable(type, var_log_name + "_previous_cycle_normalized", var_params);
     }
     for (unsigned int cur_num = 0; cur_num < number_var; cur_num++)
     {
       std::string var_name = var[cur_num];
-      _problem->addAuxVariable(type, var_name+"_previous_cycle", var_params);
-      _problem->addAuxVariable(type, var_name+"_previous_cycle_sudo", var_params);
+      _problem->addAuxVariable(type, var_name + "_previous_cycle", var_params);
+      _problem->addAuxVariable(type, var_name + "_previous_cycle_sudo", var_params);
 
-      _problem->addAuxVariable(type, var_name+"_normalized", var_params);
-      _problem->addAuxVariable(type, var_name+"_previous_cycle_normalized", var_params);
+      _problem->addAuxVariable(type, var_name + "_normalized", var_params);
+      _problem->addAuxVariable(type, var_name + "_previous_cycle_normalized", var_params);
     }
   }
 
-  //Adding IC for the previous solution to avoid a 'divided by zero' for
-  //the first cycle.
+  // Adding IC for the previous solution to avoid a 'divided by zero' for
+  // the first cycle.
   else if (_current_task == "add_ic")
   {
     for (unsigned int cur_num = 0; cur_num < number_var_log; cur_num++)
@@ -176,8 +176,8 @@ AddPeriodicRelativeNodalDifference::act()
       std::string var_log_name = var_log[cur_num];
       Real initial = -21.;
 
-      addPerviousSolutionsIC(var_log_name+"_previous_cycle", initial);
-      addPerviousSolutionsIC(var_log_name+"_previous_cycle_sudo", initial);
+      addPerviousSolutionsIC(var_log_name + "_previous_cycle", initial);
+      addPerviousSolutionsIC(var_log_name + "_previous_cycle_sudo", initial);
     }
     for (unsigned int cur_num = 0; cur_num < number_var; cur_num++)
     {
@@ -185,61 +185,65 @@ AddPeriodicRelativeNodalDifference::act()
 
       Real initial = 0.0001;
 
-      addPerviousSolutionsIC(var_name+"_previous_cycle", initial);
-      addPerviousSolutionsIC(var_name+"_previous_cycle_sudo", initial);
+      addPerviousSolutionsIC(var_name + "_previous_cycle", initial);
+      addPerviousSolutionsIC(var_name + "_previous_cycle_sudo", initial);
     }
   }
 
   else if (_current_task == "add_aux_kernel")
   {
-    //Adding the Dummy kernel for the denominator in QuotientAux.
+    // Adding the Dummy kernel for the denominator in QuotientAux.
     InputParameters params = _factory.getValidParams("ConstantAux");
     params.set<AuxVariableName>("variable") = {"Dummy_denominator"};
     params.set<Real>("value") = 1.;
     params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
     _problem->addAuxKernel("ConstantAux", "Dummy_denominator", params);
 
-    //Adding Kernels to store previous solutions and to normalize solutions
+    // Adding Kernels to store previous solutions and to normalize solutions
     for (unsigned int cur_num = 0; cur_num < number_var_log; cur_num++)
     {
       std::string var_log_name = var_log[cur_num];
 
-      addPerviousSolutionsKernels(var_log_name+"_previous_cycle_sudo", var_log_name);
-      addPerviousSolutionsKernels(var_log_name+"_previous_cycle", var_log_name+"_previous_cycle_sudo");
+      addPerviousSolutionsKernels(var_log_name + "_previous_cycle_sudo", var_log_name);
+      addPerviousSolutionsKernels(var_log_name + "_previous_cycle",
+                                  var_log_name + "_previous_cycle_sudo");
 
-      addNormalizationKernels(var_log_name+"_normalized", var_log_name,
-                              var_log_name+"_NodalAverage", true);
-      addNormalizationKernels(var_log_name+"_previous_cycle_normalized", var_log_name+"_previous_cycle",
-                              var_log_name+"_previous_cycle_NodalAverage", true);
+      addNormalizationKernels(
+          var_log_name + "_normalized", var_log_name, var_log_name + "_NodalAverage", true);
+      addNormalizationKernels(var_log_name + "_previous_cycle_normalized",
+                              var_log_name + "_previous_cycle",
+                              var_log_name + "_previous_cycle_NodalAverage",
+                              true);
     }
 
     for (unsigned int cur_num = 0; cur_num < number_var; cur_num++)
     {
       std::string var_name = var[cur_num];
 
-      addPerviousSolutionsKernels(var_name+"_previous_cycle_sudo", var_name);
-      addPerviousSolutionsKernels(var_name+"_previous_cycle", var_name+"_previous_cycle_sudo");
+      addPerviousSolutionsKernels(var_name + "_previous_cycle_sudo", var_name);
+      addPerviousSolutionsKernels(var_name + "_previous_cycle", var_name + "_previous_cycle_sudo");
 
-      addNormalizationKernels(var_name+"_normalized", var_name,
-                              var_name+"_NodalAverage", false);
-      addNormalizationKernels(var_name+"_previous_cycle_normalized", var_name+"_previous_cycle",
-                              var_name+"_previous_cycle_NodalAverage", false);
+      addNormalizationKernels(
+          var_name + "_normalized", var_name, var_name + "_NodalAverage", false);
+      addNormalizationKernels(var_name + "_previous_cycle_normalized",
+                              var_name + "_previous_cycle",
+                              var_name + "_previous_cycle_NodalAverage",
+                              false);
     }
   }
 
-  //Adding Postprocessor to calculate nodal average and difference
+  // Adding Postprocessor to calculate nodal average and difference
   else if (_current_task == "add_postprocessor")
   {
     for (unsigned int cur_num = 0; cur_num < number_var_log; cur_num++)
     {
       std::string var_log_name = var_log[cur_num];
 
-
       addAverageNodalPP(var_log_name, true);
-      addAverageNodalPP(var_log_name+"_previous_cycle", true);
+      addAverageNodalPP(var_log_name + "_previous_cycle", true);
 
-      addRelativePeriodicDiffPP(var_log_name+"_normalized",
-                                var_log_name+"_previous_cycle_normalized", var_log_name);
+      addRelativePeriodicDiffPP(
+          var_log_name + "_normalized", var_log_name + "_previous_cycle_normalized", var_log_name);
     }
 
     for (unsigned int cur_num = 0; cur_num < number_var; cur_num++)
@@ -247,14 +251,14 @@ AddPeriodicRelativeNodalDifference::act()
       std::string var_name = var[cur_num];
 
       addAverageNodalPP(var_name, false);
-      addAverageNodalPP(var_name+"_previous_cycle", false);
+      addAverageNodalPP(var_name + "_previous_cycle", false);
 
-      addRelativePeriodicDiffPP(var_name+"_normalized",
-                                var_name+"_previous_cycle_normalized", var_name);
+      addRelativePeriodicDiffPP(
+          var_name + "_normalized", var_name + "_previous_cycle_normalized", var_name);
     }
   }
 
-  //Adding a periodic control, so Auxkernels only are on once par cycle
+  // Adding a periodic control, so Auxkernels only are on once par cycle
   else if (_current_task == "add_control")
   {
     for (unsigned int i = 0; i < _num_controller_set; ++i)
@@ -266,11 +270,12 @@ AddPeriodicRelativeNodalDifference::act()
       }
       for (MooseIndex(_enable_end) j = 0; j < _enable_end.size(); ++j)
       {
-        _enable_end_start_time_index[j] = (_start_time + _period) + _period * i + (_period * 0.0001);
+        _enable_end_start_time_index[j] =
+            (_start_time + _period) + _period * i + (_period * 0.0001);
         _enable_end_end_time_index[j] = (_start_time + _period) + _period * i + (_period * 0.0002);
       }
 
-      if(_enable_start.size() > 0)
+      if (_enable_start.size() > 0)
       {
         if (i == 0)
         {
@@ -281,8 +286,8 @@ AddPeriodicRelativeNodalDifference::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = true;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                             "PeriodicRelativeDifference_Enable_Begin_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", "PeriodicRelativeDifference_Enable_Begin_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
         else
@@ -294,13 +299,13 @@ AddPeriodicRelativeNodalDifference::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = false;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                            "PeriodicRelativeDifference_Enable_Begin_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", "PeriodicRelativeDifference_Enable_Begin_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
       }
 
-      if(_enable_end.size() > 0)
+      if (_enable_end.size() > 0)
       {
         if (i == 0)
         {
@@ -311,8 +316,8 @@ AddPeriodicRelativeNodalDifference::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = true;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                            "PeriodicRelativeDifference_Enable_End_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", "PeriodicRelativeDifference_Enable_End_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
         else
@@ -324,18 +329,16 @@ AddPeriodicRelativeNodalDifference::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = false;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                            "PeriodicRelativeDifference_Enable_End_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", "PeriodicRelativeDifference_Enable_End_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
       }
     }
   }
-
-
 }
 
-//Setting ICs for the previous and sudo previous solutions
+// Setting ICs for the previous and sudo previous solutions
 void
 AddPeriodicRelativeNodalDifference::addPerviousSolutionsIC(const std::string & variable_name,
                                                            const Real & initial)
@@ -343,12 +346,11 @@ AddPeriodicRelativeNodalDifference::addPerviousSolutionsIC(const std::string & v
   InputParameters params = _factory.getValidParams("ConstantIC");
   params.set<VariableName>("variable") = variable_name;
   params.set<Real>("value") = initial;
-  params.set<std::vector<SubdomainName>>("block") =
-      getParam<std::vector<SubdomainName>>("block");
-  _problem->addInitialCondition("ConstantIC", variable_name+"_ic", params);
+  params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+  _problem->addInitialCondition("ConstantIC", variable_name + "_ic", params);
 }
 
-//Setting AuxKernels for the previous and sudo previous solutions
+// Setting AuxKernels for the previous and sudo previous solutions
 void
 AddPeriodicRelativeNodalDifference::addPerviousSolutionsKernels(const std::string & variable_name,
                                                                 const std::string & var_old_name)
@@ -363,7 +365,7 @@ AddPeriodicRelativeNodalDifference::addPerviousSolutionsKernels(const std::strin
   _problem->addAuxKernel("QuotientAux", variable_name, params);
 }
 
-//Setting AuxKernels to normalize solutions
+// Setting AuxKernels to normalize solutions
 void
 AddPeriodicRelativeNodalDifference::addNormalizationKernels(const std::string & variable_name,
                                                             const std::string & source,
@@ -394,7 +396,7 @@ AddPeriodicRelativeNodalDifference::addNormalizationKernels(const std::string & 
   }
 }
 
-//Setting Postprocessor to take to nodal average
+// Setting Postprocessor to take to nodal average
 void
 AddPeriodicRelativeNodalDifference::addAverageNodalPP(const std::string & variable_name,
                                                       const bool & log)
@@ -405,7 +407,7 @@ AddPeriodicRelativeNodalDifference::addAverageNodalPP(const std::string & variab
     params.set<std::vector<VariableName>>("variable") = {variable_name};
     params.set<std::vector<OutputName>>("outputs") = {"none"};
     params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-    _problem->addPostprocessor("AverageNodalDensity", variable_name+"_NodalAverage", params);
+    _problem->addPostprocessor("AverageNodalDensity", variable_name + "_NodalAverage", params);
   }
   else
   {
@@ -413,11 +415,12 @@ AddPeriodicRelativeNodalDifference::addAverageNodalPP(const std::string & variab
     params.set<std::vector<VariableName>>("variable") = {variable_name};
     params.set<std::vector<OutputName>>("outputs") = {"none"};
     params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-    _problem->addPostprocessor("AverageNodalVariableValue", variable_name+"_NodalAverage", params);
+    _problem->addPostprocessor(
+        "AverageNodalVariableValue", variable_name + "_NodalAverage", params);
   }
 }
 
-//Setting Postprocessor to take to average nodal difference
+// Setting Postprocessor to take to average nodal difference
 void
 AddPeriodicRelativeNodalDifference::addRelativePeriodicDiffPP(const std::string & variable_name,
                                                               const std::string & var_old_name,
@@ -427,5 +430,5 @@ AddPeriodicRelativeNodalDifference::addRelativePeriodicDiffPP(const std::string 
   params.set<std::vector<VariableName>>("variable") = {variable_name};
   params.set<std::vector<VariableName>>("other_variable") = {var_old_name};
   params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-  _problem->addPostprocessor("AverageNodalDifference", name+"_periodic_difference", params);
+  _problem->addPostprocessor("AverageNodalDifference", name + "_periodic_difference", params);
 }

@@ -18,8 +18,7 @@ validParams<Position>()
 {
   InputParameters params = validParams<AuxKernel>();
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addParam<int>("component", 0,
-                               "The component of position. (0 = x, 1 = y, 2 = z)");
+  params.addParam<int>("component", 0, "The component of position. (0 = x, 1 = y, 2 = z)");
   params.addClassDescription(
       "Produces an elemental auxiliary variable useful for plotting against other"
       "elemental auxiliary variables. Mesh points automatically output by Zapdos only work"

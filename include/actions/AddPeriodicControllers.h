@@ -17,7 +17,7 @@ class AddPeriodicControllers;
 template <>
 InputParameters validParams<AddPeriodicControllers>();
 
-//class AddPeriodicControllers : public AddControlAction
+// class AddPeriodicControllers : public AddControlAction
 class AddPeriodicControllers : public Action
 {
 public:
@@ -26,7 +26,6 @@ public:
   virtual void act();
 
 protected:
-
   std::vector<std::string> _enable_start;
   std::vector<std::string> _enable_during;
   std::vector<std::string> _enable_end;

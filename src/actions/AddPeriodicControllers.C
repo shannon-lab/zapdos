@@ -46,32 +46,40 @@ validParams<AddPeriodicControllers>()
   InputParameters params = validParams<AddVariableAction>();
 
   params.addParam<std::vector<std::string>>(
-      "Enable_at_cycle_start", std::vector<std::string>(), "A list of objects names to enable at the start of the cycle.");
+      "Enable_at_cycle_start",
+      std::vector<std::string>(),
+      "A list of objects names to enable at the start of the cycle.");
+  params.addParam<std::vector<std::string>>("Enable_during_cycle",
+                                            std::vector<std::string>(),
+                                            "A list of objects names to enable during the cycle.");
   params.addParam<std::vector<std::string>>(
-      "Enable_during_cycle", std::vector<std::string>(), "A list of objects names to enable during the cycle.");
-  params.addParam<std::vector<std::string>>(
-      "Enable_at_cycle_end", std::vector<std::string>(), "A list of objects names to enable at the end of the cycle.");
+      "Enable_at_cycle_end",
+      std::vector<std::string>(),
+      "A list of objects names to enable at the end of the cycle.");
 
   params.addParam<std::vector<std::string>>(
-      "Disable_at_cycle_start", std::vector<std::string>(), "A list of objects names to disable at the start of the cycle.");
+      "Disable_at_cycle_start",
+      std::vector<std::string>(),
+      "A list of objects names to disable at the start of the cycle.");
+  params.addParam<std::vector<std::string>>("Disable_during_cycle",
+                                            std::vector<std::string>(),
+                                            "A list of objects names to disable during the cycle.");
   params.addParam<std::vector<std::string>>(
-      "Disable_during_cycle", std::vector<std::string>(), "A list of objects names to disable during the cycle.");
-  params.addParam<std::vector<std::string>>(
-      "Disable_at_cycle_end", std::vector<std::string>(), "A list of objects names to disable at the end of the cycle.");
+      "Disable_at_cycle_end",
+      std::vector<std::string>(),
+      "A list of objects names to disable at the end of the cycle.");
 
-  params.addParam<Real>("starting_cycle", 0.0,
-      "The number of the cycles before starting the control scheme");
-  params.addRequiredParam<Real>("cycle_frequency",
-      "The cycle's frequency in Hz");
-  params.addParam<Real>("cycles_between_controls", 1.0,
-      "The number of cycles between controllers"
-      "(e.g. the number of cycles between accelerations)");
+  params.addParam<Real>(
+      "starting_cycle", 0.0, "The number of the cycles before starting the control scheme");
+  params.addRequiredParam<Real>("cycle_frequency", "The cycle's frequency in Hz");
+  params.addParam<Real>("cycles_between_controls",
+                        1.0,
+                        "The number of cycles between controllers"
+                        "(e.g. the number of cycles between accelerations)");
   params.addRequiredParam<Real>("num_controller_set",
-      "The number of controller sets"
-      "(e.g. the number of accelerations)");
-  params.addRequiredParam<std::string>(
-      "name",
-      "Custom name for the 'PeriodicControllers'.");
+                                "The number of controller sets"
+                                "(e.g. the number of accelerations)");
+  params.addRequiredParam<std::string>("name", "Custom name for the 'PeriodicControllers'.");
 
   params.addClassDescription(
       "This Action automatically adds multiply 'TimePeriod' controllers for"
@@ -124,72 +132,86 @@ AddPeriodicControllers::act()
   {
     for (unsigned int i = 0; i < _num_controller_set; ++i)
     {
-      //Setting up the start and end times for the TimePeriod Controller.
-      //The end time is start time plus 0.0001 times the period
+      // Setting up the start and end times for the TimePeriod Controller.
+      // The end time is start time plus 0.0001 times the period
       for (MooseIndex(_enable_start) j = 0; j < _enable_start.size(); ++j)
       {
         _enable_start_start_time_index[j] = _start_time + _cycles_per_controls * _period * i;
-        _enable_start_end_time_index[j] = _start_time + _cycles_per_controls * _period * i + (_period * 0.0001);
+        _enable_start_end_time_index[j] =
+            _start_time + _cycles_per_controls * _period * i + (_period * 0.0001);
       }
 
       for (MooseIndex(_enable_during) j = 0; j < _enable_during.size(); ++j)
       {
         _enable_during_start_time_index[j] = _start_time + _cycles_per_controls * _period * i;
-        _enable_during_end_time_index[j] = (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
+        _enable_during_end_time_index[j] =
+            (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
       }
 
-      //If control cycles are back to back, then enable_start and enable_end times would be the same,
-      //To avoid this, if cycles are back to back, then the enable_end starts at + 0.0001*period.
+      // If control cycles are back to back, then enable_start and enable_end times would be the
+      // same, To avoid this, if cycles are back to back, then the enable_end starts at +
+      // 0.0001*period.
       if (_cycles_per_controls == 1.0)
       {
         for (MooseIndex(_enable_end) j = 0; j < _enable_end.size(); ++j)
         {
-          _enable_end_start_time_index[j] = (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
-          _enable_end_end_time_index[j] = (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0002);
+          _enable_end_start_time_index[j] =
+              (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
+          _enable_end_end_time_index[j] =
+              (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0002);
         }
       }
       else
       {
         for (MooseIndex(_enable_end) j = 0; j < _enable_end.size(); ++j)
         {
-          _enable_end_start_time_index[j] = (_start_time + _period) + _cycles_per_controls * _period * i;
-          _enable_end_end_time_index[j] = (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
+          _enable_end_start_time_index[j] =
+              (_start_time + _period) + _cycles_per_controls * _period * i;
+          _enable_end_end_time_index[j] =
+              (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
         }
       }
 
       for (MooseIndex(_disable_start) j = 0; j < _disable_start.size(); ++j)
       {
         _disable_start_start_time_index[j] = _start_time + _cycles_per_controls * _period * i;
-        _disable_start_end_time_index[j] = _start_time + _cycles_per_controls * _period * i + (_period * 0.0001);
+        _disable_start_end_time_index[j] =
+            _start_time + _cycles_per_controls * _period * i + (_period * 0.0001);
       }
 
       for (MooseIndex(_disable_during) j = 0; j < _disable_during.size(); ++j)
       {
         _disable_during_start_time_index[j] = _start_time + _cycles_per_controls * _period * i;
-        _disable_during_end_time_index[j] = (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
+        _disable_during_end_time_index[j] =
+            (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
       }
 
-      //If control cycles are back to back, then disable_start and disable_end times would be the same,
-      //To avoid this, if cycles are back to back, then the disable_end starts at + 0.0001*period
+      // If control cycles are back to back, then disable_start and disable_end times would be the
+      // same, To avoid this, if cycles are back to back, then the disable_end starts at +
+      // 0.0001*period
       if (_cycles_per_controls == 1.0)
       {
         for (MooseIndex(_disable_end) j = 0; j < _disable_end.size(); ++j)
         {
-          _disable_end_start_time_index[j] = (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
-          _disable_end_end_time_index[j] = (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0002);
+          _disable_end_start_time_index[j] =
+              (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
+          _disable_end_end_time_index[j] =
+              (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0002);
         }
       }
       else
       {
         for (MooseIndex(_disable_end) j = 0; j < _disable_end.size(); ++j)
         {
-          _disable_end_start_time_index[j] = (_start_time + _period) + _cycles_per_controls * _period * i;
-          _disable_end_end_time_index[j] = (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
+          _disable_end_start_time_index[j] =
+              (_start_time + _period) + _cycles_per_controls * _period * i;
+          _disable_end_end_time_index[j] =
+              (_start_time + _period) + _cycles_per_controls * _period * i + (_period * 0.0001);
         }
       }
 
-      //Adding the multiple TimePeriod controllers
-      if(_enable_start.size() > 0)
+      // Adding the multiple TimePeriod controllers
+      if (_enable_start.size() > 0)
       {
         if (i == 0)
         {
@@ -200,8 +222,8 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = true;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Enable_Begin_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Enable_Begin_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
         else
@@ -213,13 +235,13 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = false;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Enable_Begin_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Enable_Begin_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
       }
 
-      if(_enable_during.size() > 0)
+      if (_enable_during.size() > 0)
       {
         if (i == 0)
         {
@@ -230,8 +252,8 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = true;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Enable_During_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Enable_During_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
         else
@@ -243,13 +265,13 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = false;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Enable_During_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Enable_During_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
       }
 
-      if(_enable_end.size() > 0)
+      if (_enable_end.size() > 0)
       {
         if (i == 0)
         {
@@ -260,8 +282,8 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = true;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Enable_End_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Enable_End_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
         else
@@ -273,13 +295,13 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = false;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Enable_End_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Enable_End_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
       }
 
-      if(_disable_start.size() > 0)
+      if (_disable_start.size() > 0)
       {
         if (i == 0)
         {
@@ -290,8 +312,8 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = true;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Disable_Begin_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Disable_Begin_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
         else
@@ -303,13 +325,13 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = false;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Disable_Begin_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Disable_Begin_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
       }
 
-      if(_disable_during.size() > 0)
+      if (_disable_during.size() > 0)
       {
         if (i == 0)
         {
@@ -320,8 +342,8 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = true;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Disable_During_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Disable_During_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
         else
@@ -333,13 +355,13 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = false;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Disable_During_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Disable_During_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
       }
 
-      if(_disable_end.size() > 0)
+      if (_disable_end.size() > 0)
       {
         if (i == 0)
         {
@@ -350,8 +372,8 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = true;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Disable_End_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Disable_End_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
         else
@@ -363,12 +385,11 @@ AddPeriodicControllers::act()
           params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
           params.set<bool>("reverse_on_false") = false;
           params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod",
-                                                                      _name+"Disable_End_"+std::to_string(i), params);
+          std::shared_ptr<Control> control = _factory.create<Control>(
+              "TimePeriod", _name + "Disable_End_" + std::to_string(i), params);
           _problem->getControlWarehouse().addObject(control);
         }
       }
     }
   }
-
 }

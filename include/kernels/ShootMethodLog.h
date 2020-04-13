@@ -32,5 +32,4 @@ protected:
   const VariableValue & _sensitivity;
   Real _limit;
   Real _acceleration;
-
 };

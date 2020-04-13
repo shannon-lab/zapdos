@@ -32,13 +32,14 @@ validParams<ReactionThirdOrderLogForShootMethod>()
       "reaction has multiple different rate coefficients (frequently the case when multiple "
       "species are lumped together to simplify a reaction network), this will prevent the same "
       "material property from being declared multiple times.");
-  params.addClassDescription(
-    "The derivative of an third order reaction term used to calculate the sensitivity variable for the shoothing method."
-    "(Densities must be in log form)");
+  params.addClassDescription("The derivative of an third order reaction term used to calculate the "
+                             "sensitivity variable for the shoothing method."
+                             "(Densities must be in log form)");
   return params;
 }
 
-ReactionThirdOrderLogForShootMethod::ReactionThirdOrderLogForShootMethod(const InputParameters & parameters)
+ReactionThirdOrderLogForShootMethod::ReactionThirdOrderLogForShootMethod(
+    const InputParameters & parameters)
   : Kernel(parameters),
     _reaction_coeff(getMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
                                               getParam<std::string>("reaction"))),
@@ -89,16 +90,16 @@ ReactionThirdOrderLogForShootMethod::computeQpJacobian()
 Real
 ReactionThirdOrderLogForShootMethod::computeQpOffDiagJacobian(unsigned int jvar)
 {
-  if(_v_id == _w_id)
+  if (_v_id == _w_id)
   {
     if (jvar == _v_id)
     {
-      if (_v_id == _density_id)  //i.e. density == v == w
+      if (_v_id == _density_id) // i.e. density == v == w
       {
         return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 6.0 *
                _phi[_j][_qp] * std::exp(_v[_qp]) * std::exp(_w[_qp]) * _u[_qp];
       }
-      else  //i.e. density != v == w
+      else // i.e. density != v == w
       {
         return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 2.0 *
                _phi[_j][_qp] * std::exp(_v[_qp]) * std::exp(_w[_qp]) * _u[_qp];
@@ -111,12 +112,12 @@ ReactionThirdOrderLogForShootMethod::computeQpOffDiagJacobian(unsigned int jvar)
   {
     if (jvar == _v_id)
     {
-      if (_v_id == _density_id)  //i.e. density == v != w
+      if (_v_id == _density_id) // i.e. density == v != w
       {
         return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 2.0 *
                _phi[_j][_qp] * std::exp(_v[_qp]) * std::exp(_w[_qp]) * _u[_qp];
       }
-      else  //i.e. density != v != w
+      else // i.e. density != v != w
       {
         return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
                _phi[_j][_qp] * std::exp(_v[_qp]) * std::exp(_w[_qp]) * _u[_qp];
@@ -124,12 +125,12 @@ ReactionThirdOrderLogForShootMethod::computeQpOffDiagJacobian(unsigned int jvar)
     }
     if (jvar == _w_id)
     {
-      if (_w_id == _density_id)  //i.e. density == w != v
+      if (_w_id == _density_id) // i.e. density == w != v
       {
         return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 2.0 *
                _phi[_j][_qp] * std::exp(_v[_qp]) * std::exp(_w[_qp]) * _u[_qp];
       }
-      else  //i.e. density != v != w
+      else // i.e. density != v != w
       {
         return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
                _phi[_j][_qp] * std::exp(_v[_qp]) * std::exp(_w[_qp]) * _u[_qp];

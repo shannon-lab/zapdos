@@ -26,7 +26,6 @@ public:
   virtual void act();
 
 protected:
-
   virtual void addElectronKernels(const std::string & em_name,
                                   const std::string & potential_name,
                                   const std::string & mean_en_name,
@@ -42,16 +41,13 @@ protected:
                                     const bool & Using_offset);
   virtual void addChargeSourceKernels(const std::string & potential_name,
                                       const std::string & charged_particle_name);
-  virtual void addPosition(const std::string & position_name,
-                                       const int & component);
+  virtual void addPosition(const std::string & position_name, const int & component);
 
   virtual void addDensityLog(const std::string & particle_name);
-  virtual void addCurrent(const std::string & particle_name,
-                          const std::string & potential_name);
+  virtual void addCurrent(const std::string & particle_name, const std::string & potential_name);
   virtual void addEfield(const std::string & Efield_name,
                          const std::string & potential_name,
                          const int & component);
 
-  //virtual void addEEDFCoefficient(const unsigned & reaction_num);
-
+  // virtual void addEEDFCoefficient(const unsigned & reaction_num);
 };
