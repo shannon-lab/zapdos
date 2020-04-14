@@ -225,7 +225,7 @@ dom0Scale=1e-3
     block = 0
   [../]
   [./mean_en_advection]
-    type = EFieldAdvectionEnergy
+    type = ADEFieldAdvectionEnergy
     variable = mean_en
     potential = potential
     em = em
@@ -403,7 +403,7 @@ dom0Scale=1e-3
     block = 0
   [../]
   [./PowerDep_em]
-    type = PowerDep
+    type = ADPowerDep
     density_log = em
     potential = potential
     art_diff = false
@@ -413,7 +413,7 @@ dom0Scale=1e-3
     block = 0
   [../]
   [./PowerDep_Arp]
-    type = PowerDep
+    type = ADPowerDep
     density_log = Arp
     potential = potential
     art_diff = false
@@ -478,7 +478,7 @@ dom0Scale=1e-3
     block = 0
   [../]
   [./Current_em]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = em
     variable = Current_em
@@ -487,7 +487,7 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./Current_Arp]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = Arp
     variable = Current_Arp
@@ -496,7 +496,7 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./Current_Ar2p]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = Ar2p
     variable = Current_Ar2p
@@ -505,7 +505,7 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./EFieldAdvAux_em]
-    type = EFieldAdvAux
+    type = ADEFieldAdvAux
     potential = potential
     density_log = em
     variable = EFieldAdvAux_em
@@ -513,7 +513,7 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./DiffusiveFlux_em]
-    type = DiffusiveFlux
+    type = ADDiffusiveFlux
     density_log = em
     variable = DiffusiveFlux_em
     block = 0
@@ -697,12 +697,17 @@ dom0Scale=1e-3
   [./gas_constants]
     type = GenericConstantMaterial
     block = 0
-    prop_names = ' e         N_A      diffpotential k_boltz eps  se_coeff se_energy T_gas massem   p_gas  n_gas'
-    prop_values = '1.6e-19 6.022e23 8.85e-12      1.38e-23 8.854e-12 0.05     3.        300   9.11e-31 1.01e5 40.4915'
+    prop_names = ' e         N_A     k_boltz eps  se_coeff se_energy T_gas massem   p_gas  n_gas'
+    prop_values = '1.6e-19 6.022e23  1.38e-23 8.854e-12 0.05     3.        300   9.11e-31 1.01e5 40.4915'
   [../]
-
+  [ad_gas_constants]
+    type = ADGenericConstantMaterial
+    block = 0
+    prop_names = 'diffpotential'
+    prop_values = '8.85e-12'
+  []
   [./gas_species_0]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpeciesMaterial
     heavy_species_name = Arp
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
@@ -711,7 +716,7 @@ dom0Scale=1e-3
     block = 0
   [../]
   [./gas_species_1]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpeciesMaterial
     heavy_species_name = Ar2p
     heavy_species_mass = 1.328e-25
     heavy_species_charge = 1.0
@@ -719,7 +724,7 @@ dom0Scale=1e-3
   [../]
 
   [./gas_species_2]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpeciesMaterial
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
@@ -727,7 +732,7 @@ dom0Scale=1e-3
   [../]
 
   [./gas_species_3]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpeciesMaterial
     heavy_species_name = Ar*
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0

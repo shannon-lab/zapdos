@@ -20,11 +20,10 @@ registerADMooseObject("ZapdosApp", ADJouleHeating);
 //    params.addClassDescription("Same as JouleHeating, but the Jacobian is computed using forward "
 //                               "automatic differentiation."););
 
-template <ComputeStage compute_stage>
 InputParameters
-ADJouleHeating<compute_stage>::validParams()
+ADJouleHeating::validParams()
 {
-  InputParameters params = ADKernel<compute_stage>::validParams();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredCoupledVar("potential", "The electron density.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
@@ -32,9 +31,8 @@ ADJouleHeating<compute_stage>::validParams()
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADJouleHeating<compute_stage>::ADJouleHeating(const InputParameters & parameters)
-  : ADKernel<compute_stage>(parameters),
+ADJouleHeating::ADJouleHeating(const InputParameters & parameters)
+  : ADKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _potential_units(getParam<std::string>("potential_units")),
     _diff(getADMaterialProperty<Real>("diffem")),
@@ -51,9 +49,8 @@ ADJouleHeating<compute_stage>::ADJouleHeating(const InputParameters & parameters
     mooseError("Potential units " + _potential_units + " not valid! Use V or kV.");
 }
 
-template <ComputeStage compute_stage>
 ADReal
-ADJouleHeating<compute_stage>::computeQpResidual()
+ADJouleHeating::computeQpResidual()
 {
   return _test[_i][_qp] * -_grad_potential[_qp] * _r_units * _voltage_scaling *
          (-_mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -

@@ -10,20 +10,26 @@
 
 #include "DiffusiveFlux.h"
 
-registerMooseObject("ZapdosApp", DiffusiveFlux);
+#include "metaphysicl/raw_type.h"
 
-template <>
+using MetaPhysicL::raw_value;
+
+registerMooseObject("ZapdosApp", DiffusiveFlux);
+registerMooseObject("ZapdosApp", ADDiffusiveFlux);
+
+template <bool is_ad>
 InputParameters
-validParams<DiffusiveFlux>()
+DiffusiveFluxTempl<is_ad>::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Returns the diffusive flux of defined species");
   return params;
 }
 
-DiffusiveFlux::DiffusiveFlux(const InputParameters & parameters)
+template <bool is_ad>
+DiffusiveFluxTempl<is_ad>::DiffusiveFluxTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
 
@@ -35,12 +41,17 @@ DiffusiveFlux::DiffusiveFlux(const InputParameters & parameters)
 
     // Material properties
 
-    _diff(getMaterialProperty<Real>("diff" + _density_var.name()))
+    _diff(getGenericMaterialProperty<Real, is_ad>("diff" + _density_var.name()))
 {
 }
 
+template <bool is_ad>
 Real
-DiffusiveFlux::computeValue()
+DiffusiveFluxTempl<is_ad>::computeValue()
 {
-  return -_diff[_qp] * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0) * _r_units * 6.02e23;
+  return -raw_value(_diff[_qp]) * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0) *
+         _r_units * 6.02e23;
 }
+
+template class DiffusiveFluxTempl<false>;
+template class DiffusiveFluxTempl<true>;

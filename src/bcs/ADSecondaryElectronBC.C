@@ -17,11 +17,10 @@ registerADMooseObject("ZapdosApp", ADSecondaryElectronBC);
 
 defineADLegacyParams(ADSecondaryElectronBC);
 
-template <ComputeStage compute_stage>
 InputParameters
-ADSecondaryElectronBC<compute_stage>::validParams()
+ADSecondaryElectronBC::validParams()
 {
-  InputParameters params = ADIntegratedBC<compute_stage>::validParams();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("mean_en", "The electron density.");
@@ -30,9 +29,8 @@ ADSecondaryElectronBC<compute_stage>::validParams()
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADSecondaryElectronBC<compute_stage>::ADSecondaryElectronBC(const InputParameters & parameters)
-  : ADIntegratedBC<compute_stage>(parameters),
+ADSecondaryElectronBC::ADSecondaryElectronBC(const InputParameters & parameters)
+  : ADIntegratedBC(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
 
@@ -70,13 +68,12 @@ ADSecondaryElectronBC<compute_stage>::ADSecondaryElectronBC(const InputParameter
     _grad_ip[i] = &adCoupledGradient("ip", i);
     _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
     _Dip[i] = &getADMaterialProperty<Real>("diff" + (*getVar("ip", i)).name());
-    _sgnip[i] = &getADMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
+    _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
   }
 }
 
-template <ComputeStage compute_stage>
 ADReal
-ADSecondaryElectronBC<compute_stage>::computeQpResidual()
+ADSecondaryElectronBC::computeQpResidual()
 {
   if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
   {

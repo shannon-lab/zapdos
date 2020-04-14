@@ -16,13 +16,11 @@
 #include "MooseVariable.h"
 
 // Forward Declarations
-template <ComputeStage>
 class ADHagelaarIonDiffusionBC;
 
 declareADValidParams(ADHagelaarIonDiffusionBC);
 
-template <ComputeStage compute_stage>
-class ADHagelaarIonDiffusionBC : public ADIntegratedBC<compute_stage>
+class ADHagelaarIonDiffusionBC : public ADIntegratedBC
 {
 public:
   static InputParameters validParams();
@@ -35,11 +33,10 @@ protected:
   Real _r;
 
   const MaterialProperty<Real> & _kb;
-  const ADMaterialProperty(Real) & _T;
+  const ADMaterialProperty<Real> & _T;
   const MaterialProperty<Real> & _mass;
 
   ADReal _v_thermal;
   Real _user_velocity;
 
-  usingIntegratedBCMembers;
 };

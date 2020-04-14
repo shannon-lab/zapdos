@@ -13,11 +13,10 @@
 
 registerADMooseObject("ZapdosApp", ADGasElectronMoments);
 
-template <ComputeStage compute_stage>
 InputParameters
-ADGasElectronMoments<compute_stage>::validParams()
+ADGasElectronMoments::validParams()
 {
-  InputParameters params = ADMaterial<compute_stage>::validParams();
+  InputParameters params = ADMaterial::validParams();
 
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<bool>("use_moles",
@@ -36,9 +35,8 @@ ADGasElectronMoments<compute_stage>::validParams()
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADGasElectronMoments<compute_stage>::ADGasElectronMoments(const InputParameters & parameters)
-  : ADMaterial<compute_stage>(parameters),
+ADGasElectronMoments::ADGasElectronMoments(const InputParameters & parameters)
+  : ADMaterial(parameters),
     _potential_units(getParam<std::string>("potential_units")),
     _time_units(getParam<Real>("time_units")),
     _use_moles(getParam<bool>("use_moles")),
@@ -48,8 +46,8 @@ ADGasElectronMoments<compute_stage>::ADGasElectronMoments(const InputParameters 
     _d_diffem_d_actual_mean_en(declareADProperty<Real>("d_diffem_d_actual_mean_en")),
     _mumean_en(declareADProperty<Real>("mumean_en")),
     _diffmean_en(declareADProperty<Real>("diffmean_en")),
-    _sgnmean_en(declareADProperty<Real>("sgnmean_en")),
-    _sgnem(declareADProperty<Real>("sgnem")),
+    _sgnmean_en(declareProperty<Real>("sgnmean_en")),
+    _sgnem(declareProperty<Real>("sgnem")),
     _d_mumean_en_d_actual_mean_en(declareADProperty<Real>("d_mumean_en_d_actual_mean_en")),
     _d_diffmean_en_d_actual_mean_en(declareADProperty<Real>("d_diffmean_en_d_actual_mean_en")),
     //_massem(declareProperty<Real>("massem")),
@@ -93,9 +91,8 @@ ADGasElectronMoments<compute_stage>::ADGasElectronMoments(const InputParameters 
   _diff_interpolation2 = libmesh_make_unique<LinearInterpolation>(actual_mean_energy, diff);
 }
 
-template <ComputeStage compute_stage>
 void
-ADGasElectronMoments<compute_stage>::computeQpProperties()
+ADGasElectronMoments::computeQpProperties()
 {
   _sgnmean_en[_qp] = -1.0;
   _sgnem[_qp] = -1.0;
@@ -135,15 +132,4 @@ ADGasElectronMoments<compute_stage>::computeQpProperties()
 
   _mumean_en[_qp].value() = 5.0 / 3.0 * _muem[_qp].value();
   _mumean_en[_qp].derivatives() = 5.0 / 3.0 * _muem[_qp].derivatives();
-}
-
-template <>
-void
-ADGasElectronMoments<RESIDUAL>::computeQpProperties()
-{
-  _diffem[_qp] = _diff_interpolation2->sample(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
-  _muem[_qp] = _mu_interpolation2->sample(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling *
-               _time_units;
-  _diffmean_en[_qp] = 5.0 / 3.0 * _diffem[_qp];
-  _mumean_en[_qp] = 5.0 / 3.0 * _muem[_qp];
 }
