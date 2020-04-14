@@ -56,7 +56,7 @@ validParams<AddDriftDiffusionAction>()
       " an effective potential.");
   params.addParam<std::vector<NonlinearVariableName>>(
       "eff_potentials",
-      "The effective potentials that only effect their respective secondary"
+      "The effective potentials that only affect their respective secondary"
       " charged particle.");
   params.addParam<NonlinearVariableName>("electrons",
                                          "User given variable name for energy dependent electrons");
