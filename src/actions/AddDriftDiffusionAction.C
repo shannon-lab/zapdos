@@ -52,7 +52,7 @@ validParams<AddDriftDiffusionAction>()
       "charged_particle", "User given variable name for energy independent charged particle");
   params.addParam<std::vector<NonlinearVariableName>>(
       "secondary_charged_particles",
-      "These are charged particles who's advection term in determined by"
+      "These are charged particles whose advection term in determined by"
       " an effective potential.");
   params.addParam<std::vector<NonlinearVariableName>>(
       "eff_potentials",
