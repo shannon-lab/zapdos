@@ -126,7 +126,7 @@ AddDriftDiffusionAction::act()
   unsigned int number_eff_potentials = eff_potentials.size();
 
   if (number_sec_particle != number_eff_potentials)
-    mooseError("A secondary_charged_particles must have a corresponding eff_potentials");
+    mooseError("There are secondary_charged_particles that are missing their corresponding effective potential (eff_potentials)! Please check your input.");
 
   // Converting the given additional outputs
   std::vector<std::string> Outputs = getParam<std::vector<std::string>>("Additional_Outputs");
