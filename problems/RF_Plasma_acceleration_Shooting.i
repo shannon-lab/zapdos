@@ -1,5 +1,5 @@
 #This file performs the accelerated by Shooting Method
-#Desciption: Value are transfered from the main app to this file and then
+#Desciption: Value are transferred from the main app to this file and then
 #passed to an other sub app. In that sub app, the simulation runs for one
 #RF cycle and the results are transfer back to this file. Along with the
 #metastable from the sub app (Ar*T), sub app also calculates the
