@@ -137,6 +137,7 @@ dom1Scale=1e-7
   [./em_ionization]
     type = ElectronsFromIonization
     variable = em
+    em = em
     potential = potential
     mean_en = mean_en
     block = 0
@@ -1002,6 +1003,7 @@ dom1Scale=1e-7
     mean_en = mean_en
     user_se_coeff = .05
     block = 0
+    property_tables_file = td_argon_mean_en.txt
  [../]
  [./water_block]
    type = Water
