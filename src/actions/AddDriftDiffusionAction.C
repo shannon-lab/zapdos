@@ -60,13 +60,17 @@ validParams<AddDriftDiffusionAction>()
       " charged particle.");
   params.addParam<NonlinearVariableName>("electrons",
                                          "User given variable name for energy dependent electrons");
-  params.addParam<NonlinearVariableName>(
-      "potential", "potential", "The gives the potential a variable name");
+  params.addParam<NonlinearVariableName>("potential", "The gives the potential a variable name");
   params.addParam<bool>(
       "Is_potential_unique",
       false,
       "Is this potential unique to this block?"
       "If not, then the potential variable should be defined in the Variable Block.");
+  params.addParam<bool>("First_DriftDiffusionAction_in_block",
+                        true,
+                        "Is this the first DriftDiffusionAction for this block?"
+                        "If not, then the potential diffusion kernel and Position auxkernel will "
+                        "NOT be supplied by this action.");
   params.addParam<NonlinearVariableName>("mean_energy",
                                          "The gives the mean energy a variable name");
   params.addParam<std::vector<NonlinearVariableName>>(
@@ -100,14 +104,17 @@ AddDriftDiffusionAction::act()
   // Converting the given names into VariableName
   NonlinearVariableName em_name;
   NonlinearVariableName mean_en_name;
+  NonlinearVariableName potential_name;
 
   bool em_present = (isParamValid("electrons") ? true : false);
   bool mean_en_present = (isParamValid("mean_energy") ? true : false);
+  bool potential_present = (isParamValid("potential") ? true : false);
   if (em_present)
     em_name = getParam<NonlinearVariableName>("electrons");
   if (mean_en_present)
     mean_en_name = getParam<NonlinearVariableName>("mean_energy");
-  NonlinearVariableName potential_name = getParam<NonlinearVariableName>("potential");
+  if (potential_present)
+    potential_name = getParam<NonlinearVariableName>("potential");
 
   std::vector<NonlinearVariableName> Ions =
       getParam<std::vector<NonlinearVariableName>>("charged_particle");
@@ -116,6 +123,10 @@ AddDriftDiffusionAction::act()
 
   unsigned int number_ions = Ions.size();
   unsigned int number_neutrals = Neutrals.size();
+
+  if (!potential_present && (em_present || (number_ions > 0)))
+    mooseError("There are electrons or charged_particles that are missing their potential! Please "
+               "check your input.");
 
   std::vector<NonlinearVariableName> sec_particle =
       getParam<std::vector<NonlinearVariableName>>("secondary_charged_particles");
@@ -126,7 +137,8 @@ AddDriftDiffusionAction::act()
   unsigned int number_eff_potentials = eff_potentials.size();
 
   if (number_sec_particle != number_eff_potentials)
-    mooseError("There are secondary_charged_particles that are missing their corresponding effective potential (eff_potentials)! Please check your input.");
+    mooseError("There are secondary_charged_particles that are missing their corresponding "
+               "effective potential (eff_potentials)! Please check your input.");
 
   // Converting the given additional outputs
   std::vector<std::string> Outputs = getParam<std::vector<std::string>>("Additional_Outputs");
@@ -136,6 +148,7 @@ AddDriftDiffusionAction::act()
   // Converting the boolean statements
   bool Using_offset = getParam<bool>("using_offset");
   bool New_potential = getParam<bool>("Is_potential_unique");
+  bool First_Action = getParam<bool>("First_DriftDiffusionAction_in_block");
 
   // The variable type for the nonlinear variables
   auto fe_type = AddVariableAction::feType(_pars);
@@ -155,7 +168,6 @@ AddDriftDiffusionAction::act()
 
   if (_current_task == "add_variable")
   {
-
     // Add the ion variables and their density aux variables
     for (unsigned int cur_num = 0; cur_num < number_ions; cur_num++)
     {
@@ -182,7 +194,7 @@ AddDriftDiffusionAction::act()
     {
       _problem->addVariable(type, mean_en_name, var_params);
     }
-    if (New_potential)
+    if (New_potential && potential_present)
     {
       _problem->addVariable(type, potential_name, var_params);
     }
@@ -196,26 +208,29 @@ AddDriftDiffusionAction::act()
     }
 
     // Adding the position aux variable, needed if position scaling is used
-    if (_dim == 1)
+    if (First_Action)
     {
-      _problem->addAuxVariable(type,
-                               "position" +
-                                   Moose::stringify(getParam<std::vector<SubdomainName>>("block")),
-                               aux_params);
-    }
-    else
-    {
-      for (unsigned int component = 0; component < _dim; ++component)
+      if (_dim == 1)
       {
-        std::string dir = "x_";
-        if (component == 1)
-          dir = "y_";
-        if (component == 2)
-          dir = "z_";
         _problem->addAuxVariable(
             type,
-            dir + "position" + Moose::stringify(getParam<std::vector<SubdomainName>>("block")),
+            "position" + Moose::stringify(getParam<std::vector<SubdomainName>>("block")),
             aux_params);
+      }
+      else
+      {
+        for (unsigned int component = 0; component < _dim; ++component)
+        {
+          std::string dir = "x_";
+          if (component == 1)
+            dir = "y_";
+          if (component == 2)
+            dir = "z_";
+          _problem->addAuxVariable(
+              type,
+              dir + "position" + Moose::stringify(getParam<std::vector<SubdomainName>>("block")),
+              aux_params);
+        }
       }
     }
 
@@ -276,7 +291,6 @@ AddDriftDiffusionAction::act()
 
   else if (_current_task == "add_kernel")
   {
-
     // Adding energy dependent electron kernels, if present in block
     if (em_present)
     {
@@ -300,15 +314,19 @@ AddDriftDiffusionAction::act()
     }
 
     // Adding the diffusion Kernel for the potential
-    InputParameters params = _factory.getValidParams("CoeffDiffusionLin");
-    params.set<NonlinearVariableName>("variable") = {potential_name};
-    params.set<Real>("position_units") = getParam<Real>("position_units");
-    params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-    _problem->addKernel("CoeffDiffusionLin",
-                        potential_name + "_diffusion" +
-                            Moose::stringify(getParam<std::vector<SubdomainName>>("block")) +
-                            "_block",
-                        params);
+    if (potential_present && First_Action)
+    {
+      InputParameters params = _factory.getValidParams("CoeffDiffusionLin");
+      params.set<NonlinearVariableName>("variable") = {potential_name};
+      params.set<Real>("position_units") = getParam<Real>("position_units");
+      params.set<std::vector<SubdomainName>>("block") =
+          getParam<std::vector<SubdomainName>>("block");
+      _problem->addKernel("CoeffDiffusionLin",
+                          potential_name + "_diffusion" +
+                              Moose::stringify(getParam<std::vector<SubdomainName>>("block")) +
+                              "_block",
+                          params);
+    }
 
     // Adding Kernels for the neutrals
     for (unsigned int cur_num = 0; cur_num < number_neutrals; cur_num++)
@@ -332,22 +350,26 @@ AddDriftDiffusionAction::act()
   else if (_current_task == "add_aux_kernel")
   {
     // AuxKernels for position;
-    if (_dim == 1)
+    if (First_Action)
     {
-      addPosition("position" + Moose::stringify(getParam<std::vector<SubdomainName>>("block")), 0);
-    }
-    else
-    {
-      for (unsigned int component = 0; component < _dim; ++component)
+      if (_dim == 1)
       {
-        std::string dir = "x_";
-        if (component == 1)
-          dir = "y_";
-        if (component == 2)
-          dir = "z_";
-        addPosition(dir + "position" +
-                        Moose::stringify(getParam<std::vector<SubdomainName>>("block")),
-                    component);
+        addPosition("position" + Moose::stringify(getParam<std::vector<SubdomainName>>("block")),
+                    0);
+      }
+      else
+      {
+        for (unsigned int component = 0; component < _dim; ++component)
+        {
+          std::string dir = "x_";
+          if (component == 1)
+            dir = "y_";
+          if (component == 2)
+            dir = "z_";
+          addPosition(dir + "position" +
+                          Moose::stringify(getParam<std::vector<SubdomainName>>("block")),
+                      component);
+        }
       }
     }
 
