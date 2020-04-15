@@ -18,6 +18,7 @@
   [./smp]
     type = SMP
     full = true
+    ksp_norm = none
   [../]
 []
 
@@ -92,13 +93,22 @@
     variable = Hphi_mag
   [../]
   [./Er]
-    type = TM0CylindricalEr
+    type = TM0CylindricalErAux
     Hphi = Hphi
     variable = Er
   [../]
   [./Electric_z]
-    type = TM0CylindricalEz
+    type = TM0CylindricalEzAux
     Hphi = Hphi
     variable = Electric_z
   [../]
+[]
+
+[Materials]
+   [./vacuum]
+     type = GenericConstantMaterial
+     prop_names = 'eps_r'
+     prop_values = '1'
+     block = vacuum
+   [../]
 []
