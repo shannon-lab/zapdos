@@ -128,6 +128,9 @@ AddPeriodicControllers::act()
   _disable_end_start_time_index.resize(_disable_end.size());
   _disable_end_end_time_index.resize(_disable_end.size());
 
+  std::string name_num;
+  bool first_controller;
+
   if (_current_task == "add_control")
   {
     for (unsigned int i = 0; i < _num_controller_set; ++i)
@@ -213,183 +216,149 @@ AddPeriodicControllers::act()
       // Adding the multiple TimePeriod controllers
       if (_enable_start.size() > 0)
       {
+        name_num = "Enable_Begin_" + std::to_string(i);
+
         if (i == 0)
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("enable_objects") = _enable_start;
-          params.set<std::vector<Real>>("start_time") = _enable_start_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _enable_start_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = true;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Enable_Begin_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = true;
         }
         else
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("enable_objects") = _enable_start;
-          params.set<std::vector<Real>>("start_time") = _enable_start_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _enable_start_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = false;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Enable_Begin_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = false;
         }
+
+        AddTimePeriod("enable_objects",
+                      _enable_start,
+                      _enable_start_start_time_index,
+                      _enable_start_end_time_index,
+                      name_num,
+                      first_controller);
       }
 
       if (_enable_during.size() > 0)
       {
+        name_num = "Enable_During_" + std::to_string(i);
+
         if (i == 0)
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("enable_objects") = _enable_during;
-          params.set<std::vector<Real>>("start_time") = _enable_during_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _enable_during_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = true;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Enable_During_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = true;
         }
         else
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("enable_objects") = _enable_during;
-          params.set<std::vector<Real>>("start_time") = _enable_during_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _enable_during_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = false;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Enable_During_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = false;
         }
+
+        AddTimePeriod("enable_objects",
+                      _enable_during,
+                      _enable_during_start_time_index,
+                      _enable_during_end_time_index,
+                      name_num,
+                      first_controller);
       }
 
       if (_enable_end.size() > 0)
       {
+        name_num = "Enable_End_" + std::to_string(i);
+
         if (i == 0)
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("enable_objects") = _enable_end;
-          params.set<std::vector<Real>>("start_time") = _enable_end_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _enable_end_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = true;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Enable_End_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = true;
         }
         else
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("enable_objects") = _enable_end;
-          params.set<std::vector<Real>>("start_time") = _enable_end_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _enable_end_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = false;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Enable_End_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = false;
         }
+
+        AddTimePeriod("enable_objects",
+                      _enable_end,
+                      _enable_end_start_time_index,
+                      _enable_end_end_time_index,
+                      name_num,
+                      first_controller);
       }
 
       if (_disable_start.size() > 0)
       {
+        name_num = "Disable_Begin_" + std::to_string(i);
+
         if (i == 0)
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("disable_objects") = _disable_start;
-          params.set<std::vector<Real>>("start_time") = _disable_start_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _disable_start_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = true;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Disable_Begin_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = true;
         }
         else
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("disable_objects") = _disable_start;
-          params.set<std::vector<Real>>("start_time") = _disable_start_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _disable_start_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = false;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Disable_Begin_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = false;
         }
+
+        AddTimePeriod("disable_objects",
+                      _disable_start,
+                      _disable_start_start_time_index,
+                      _disable_start_end_time_index,
+                      name_num,
+                      first_controller);
       }
 
       if (_disable_during.size() > 0)
       {
+        name_num = "Disable_During_" + std::to_string(i);
+
         if (i == 0)
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("disable_objects") = _disable_during;
-          params.set<std::vector<Real>>("start_time") = _disable_during_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _disable_during_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = true;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Disable_During_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = true;
         }
         else
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("disable_objects") = _disable_during;
-          params.set<std::vector<Real>>("start_time") = _disable_during_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _disable_during_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = false;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Disable_During_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = false;
         }
+
+        AddTimePeriod("disable_objects",
+                      _disable_during,
+                      _disable_during_start_time_index,
+                      _disable_during_end_time_index,
+                      name_num,
+                      first_controller);
       }
 
       if (_disable_end.size() > 0)
       {
+        name_num = "Disable_End_" + std::to_string(i);
+
         if (i == 0)
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("disable_objects") = _disable_end;
-          params.set<std::vector<Real>>("start_time") = _disable_end_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _disable_end_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = true;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Disable_End_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = true;
         }
         else
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("disable_objects") = _disable_end;
-          params.set<std::vector<Real>>("start_time") = _disable_end_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _disable_end_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = false;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", _name + "Disable_End_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = false;
         }
+
+        AddTimePeriod("disable_objects",
+                      _disable_end,
+                      _disable_end_start_time_index,
+                      _disable_end_end_time_index,
+                      name_num,
+                      first_controller);
       }
     }
   }
+}
+
+void
+AddPeriodicControllers::AddTimePeriod(const std::string & enableORdisable,
+                                      const std::vector<std::string> & objects,
+                                      const std::vector<Real> & start_times,
+                                      const std::vector<Real> & end_times,
+                                      const std::string & name_num,
+                                      const bool & first_controller)
+{
+  InputParameters params = _factory.getValidParams("TimePeriod");
+  params.set<std::vector<std::string>>(enableORdisable) = objects;
+  params.set<std::vector<Real>>("start_time") = start_times;
+  params.set<std::vector<Real>>("end_time") = end_times;
+  params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
+  params.set<bool>("reverse_on_false") = first_controller;
+  params.set<bool>("set_sync_times") = true;
+  std::shared_ptr<Control> control =
+      _factory.create<Control>("TimePeriod", _name + name_num, params);
+  _problem->getControlWarehouse().addObject(control);
 }

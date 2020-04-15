@@ -26,6 +26,13 @@ public:
   virtual void act();
 
 protected:
+  virtual void AddTimePeriod(const std::string & enableORdisable,
+                             const std::vector<std::string> & objects,
+                             const std::vector<Real> & start_times,
+                             const std::vector<Real> & end_times,
+                             const std::string & name_num,
+                             const bool & first_controller);
+
   std::vector<std::string> _enable_start;
   std::vector<std::string> _enable_during;
   std::vector<std::string> _enable_end;

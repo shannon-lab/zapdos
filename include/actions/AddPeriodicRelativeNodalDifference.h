@@ -33,12 +33,15 @@ protected:
                                        const std::string & source,
                                        const std::string & averaged,
                                        const bool & log);
-
   virtual void addAverageNodalPP(const std::string & variable_name, const bool & log);
-
   virtual void addRelativePeriodicDiffPP(const std::string & variable_name,
                                          const std::string & var_old_name,
                                          const std::string & name);
+  virtual void AddTimePeriod(const std::vector<std::string> & objects,
+                             const std::vector<Real> & start_times,
+                             const std::vector<Real> & end_times,
+                             const std::string & name_num,
+                             const bool & first_controller);
 
   Real _start_time;
   Real _period;

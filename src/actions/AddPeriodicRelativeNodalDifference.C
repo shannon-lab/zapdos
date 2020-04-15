@@ -277,62 +277,44 @@ AddPeriodicRelativeNodalDifference::act()
 
       if (_enable_start.size() > 0)
       {
+        std::string name_num = "PeriodicRelativeDifference_Enable_Begin_" + std::to_string(i);
+        bool first_controller;
+
         if (i == 0)
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("enable_objects") = {_enable_start};
-          params.set<std::vector<Real>>("start_time") = _enable_start_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _enable_start_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = true;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", "PeriodicRelativeDifference_Enable_Begin_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = true;
         }
         else
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("enable_objects") = {_enable_start};
-          params.set<std::vector<Real>>("start_time") = _enable_start_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _enable_start_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = false;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", "PeriodicRelativeDifference_Enable_Begin_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = false;
         }
+
+        AddTimePeriod(_enable_start,
+                      _enable_start_start_time_index,
+                      _enable_start_end_time_index,
+                      name_num,
+                      first_controller);
       }
 
       if (_enable_end.size() > 0)
       {
+        std::string name_num = "PeriodicRelativeDifference_Enable_End_" + std::to_string(i);
+        bool first_controller;
+
         if (i == 0)
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("enable_objects") = _enable_end;
-          params.set<std::vector<Real>>("start_time") = _enable_end_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _enable_end_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = true;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", "PeriodicRelativeDifference_Enable_End_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = true;
         }
         else
         {
-          InputParameters params = _factory.getValidParams("TimePeriod");
-          params.set<std::vector<std::string>>("enable_objects") = _enable_end;
-          params.set<std::vector<Real>>("start_time") = _enable_end_start_time_index;
-          params.set<std::vector<Real>>("end_time") = _enable_end_end_time_index;
-          params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
-          params.set<bool>("reverse_on_false") = false;
-          params.set<bool>("set_sync_times") = true;
-          std::shared_ptr<Control> control = _factory.create<Control>(
-              "TimePeriod", "PeriodicRelativeDifference_Enable_End_" + std::to_string(i), params);
-          _problem->getControlWarehouse().addObject(control);
+          first_controller = false;
         }
+
+        AddTimePeriod(_enable_end,
+                      _enable_end_start_time_index,
+                      _enable_end_end_time_index,
+                      name_num,
+                      first_controller);
       }
     }
   }
@@ -431,4 +413,22 @@ AddPeriodicRelativeNodalDifference::addRelativePeriodicDiffPP(const std::string 
   params.set<std::vector<VariableName>>("other_variable") = {var_old_name};
   params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   _problem->addPostprocessor("AverageNodalDifference", name + "_periodic_difference", params);
+}
+
+void
+AddPeriodicRelativeNodalDifference::AddTimePeriod(const std::vector<std::string> & objects,
+                                                  const std::vector<Real> & start_times,
+                                                  const std::vector<Real> & end_times,
+                                                  const std::string & name_num,
+                                                  const bool & first_controller)
+{
+  InputParameters params = _factory.getValidParams("TimePeriod");
+  params.set<std::vector<std::string>>("enable_objects") = objects;
+  params.set<std::vector<Real>>("start_time") = start_times;
+  params.set<std::vector<Real>>("end_time") = end_times;
+  params.set<ExecFlagEnum>("execute_on", true) = {EXEC_INITIAL, EXEC_TIMESTEP_BEGIN};
+  params.set<bool>("reverse_on_false") = first_controller;
+  params.set<bool>("set_sync_times") = true;
+  std::shared_ptr<Control> control = _factory.create<Control>("TimePeriod", name_num, params);
+  _problem->getControlWarehouse().addObject(control);
 }
