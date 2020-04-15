@@ -12,8 +12,7 @@
 
 #include "ADKernel.h"
 
-template <ComputeStage compute_stage>
-class ADJouleHeating : public ADKernel<compute_stage>
+class ADJouleHeating : public ADKernel
 {
 public:
   static InputParameters validParams();
@@ -24,9 +23,7 @@ protected:
   // virtual ADRealVectorValue precomputeQpResidual() override;
   virtual ADReal computeQpResidual() override;
 
-  // usingKernelGradMembers;
-  // using ADKernelGrad<compute_stage>::getPostprocessorValue;
-  usingKernelMembers;
+  //  // using ADKernelGrad::getPostprocessorValue;
 
 private:
   /// Position units
@@ -34,8 +31,8 @@ private:
   std::string _potential_units;
 
   /// The diffusion coefficient (either constant or mixture-averaged)
-  const ADMaterialProperty(Real) & _diff;
-  const ADMaterialProperty(Real) & _mu;
+  const ADMaterialProperty<Real> & _diff;
+  const ADMaterialProperty<Real> & _mu;
   const ADVariableGradient & _grad_potential;
   const ADVariableValue & _em;
   const ADVariableGradient & _grad_em;

@@ -13,17 +13,15 @@
 
 #include "AuxKernel.h"
 
-class Current;
-
-template <>
-InputParameters validParams<Current>();
-
-class Current : public AuxKernel
+template <bool is_ad>
+class CurrentTempl : public AuxKernel
 {
 public:
-  Current(const InputParameters & parameters);
+  CurrentTempl(const InputParameters & parameters);
 
-  virtual ~Current() {}
+  static InputParameters validParams();
+
+  virtual ~CurrentTempl() {}
   virtual Real computeValue();
 
 protected:
@@ -33,10 +31,13 @@ protected:
   const VariableValue & _density_log;
   const VariableGradient & _grad_density_log;
   const VariableGradient & _grad_potential;
-  const MaterialProperty<Real> & _mu;
+  const GenericMaterialProperty<Real, is_ad> & _mu;
   const MaterialProperty<Real> & _sgn;
-  const MaterialProperty<Real> & _diff;
+  const GenericMaterialProperty<Real, is_ad> & _diff;
   bool _art_diff;
 };
+
+typedef CurrentTempl<false> Current;
+typedef CurrentTempl<true> ADCurrent;
 
 #endif // CURRENT_H

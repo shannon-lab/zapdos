@@ -14,11 +14,10 @@ registerADMooseObject("ZapdosApp", ADHagelaarEnergyBC);
 
 defineADLegacyParams(ADHagelaarEnergyBC);
 
-template <ComputeStage compute_stage>
 InputParameters
-ADHagelaarEnergyBC<compute_stage>::validParams()
+ADHagelaarEnergyBC::validParams()
 {
-  InputParameters params = ADIntegratedBC<compute_stage>::validParams();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("em", "The electron density.");
@@ -26,9 +25,8 @@ ADHagelaarEnergyBC<compute_stage>::validParams()
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADHagelaarEnergyBC<compute_stage>::ADHagelaarEnergyBC(const InputParameters & parameters)
-  : ADIntegratedBC<compute_stage>(parameters),
+ADHagelaarEnergyBC::ADHagelaarEnergyBC(const InputParameters & parameters)
+  : ADIntegratedBC(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
 
@@ -46,9 +44,8 @@ ADHagelaarEnergyBC<compute_stage>::ADHagelaarEnergyBC(const InputParameters & pa
   _v_thermal = 0.0;
 }
 
-template <ComputeStage compute_stage>
 ADReal
-ADHagelaarEnergyBC<compute_stage>::computeQpResidual()
+ADHagelaarEnergyBC::computeQpResidual()
 {
   if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
   {

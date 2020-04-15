@@ -12,8 +12,7 @@
 
 #include "ADKernel.h"
 
-template <ComputeStage compute_stage>
-class ADCoeffDiffusionElectrons : public ADKernel<compute_stage>
+class ADCoeffDiffusionElectrons : public ADKernel
 {
 public:
   static InputParameters validParams();
@@ -24,14 +23,12 @@ protected:
   // virtual ADRealVectorValue precomputeQpResidual() override;
   virtual ADReal computeQpResidual();
 
-  // usingKernelGradMembers;
-  // using ADKernelGrad<compute_stage>::getPostprocessorValue;
-  usingKernelMembers;
+  //  // using ADKernelGrad::getPostprocessorValue;
 
 private:
   /// Position units
   const Real _r_units;
 
   /// The diffusion coefficient (either constant or mixture-averaged)
-  const ADMaterialProperty(Real) & _diffem;
+  const ADMaterialProperty<Real> & _diffem;
 };

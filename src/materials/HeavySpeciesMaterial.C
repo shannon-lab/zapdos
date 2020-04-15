@@ -15,12 +15,13 @@
 #include "MooseVariable.h"
 
 registerMooseObject("ZapdosApp", HeavySpeciesMaterial);
+registerMooseObject("ZapdosApp", ADHeavySpeciesMaterial);
 
-template <>
+template <bool is_ad>
 InputParameters
-validParams<HeavySpeciesMaterial>()
+HeavySpeciesMaterialTempl<is_ad>::validParams()
 {
-  InputParameters params = validParams<Material>();
+  InputParameters params = Material::validParams();
 
   params.addRequiredParam<std::string>("heavy_species_name", "The name of the heavy species");
   params.addRequiredParam<Real>("heavy_species_mass", "Mass of the heavy species");
@@ -36,16 +37,20 @@ validParams<HeavySpeciesMaterial>()
   return params;
 }
 
-HeavySpeciesMaterial::HeavySpeciesMaterial(const InputParameters & parameters)
+template <bool is_ad>
+HeavySpeciesMaterialTempl<is_ad>::HeavySpeciesMaterialTempl(const InputParameters & parameters)
   : Material(parameters),
     _user_massHeavy(getParam<Real>("heavy_species_mass")),
     _user_sgnHeavy(getParam<Real>("heavy_species_charge")),
     _potential_units(getParam<std::string>("potential_units")),
     _massHeavy(declareProperty<Real>("mass" + getParam<std::string>("heavy_species_name"))),
-    _temperatureHeavy(declareProperty<Real>("T" + getParam<std::string>("heavy_species_name"))),
+    _temperatureHeavy(
+        declareGenericProperty<Real, is_ad>("T" + getParam<std::string>("heavy_species_name"))),
     _sgnHeavy(declareProperty<Real>("sgn" + getParam<std::string>("heavy_species_name"))),
-    _muHeavy(declareProperty<Real>("mu" + getParam<std::string>("heavy_species_name"))),
-    _diffHeavy(declareProperty<Real>("diff" + getParam<std::string>("heavy_species_name"))),
+    _muHeavy(
+        declareGenericProperty<Real, is_ad>("mu" + getParam<std::string>("heavy_species_name"))),
+    _diffHeavy(
+        declareGenericProperty<Real, is_ad>("diff" + getParam<std::string>("heavy_species_name"))),
     _T_gas(getMaterialProperty<Real>("T_gas")),
     _p_gas(getMaterialProperty<Real>("p_gas")),
     _time_units(getParam<Real>("time_units"))
@@ -73,8 +78,9 @@ HeavySpeciesMaterial::HeavySpeciesMaterial(const InputParameters & parameters)
   }
 }
 
+template <bool is_ad>
 void
-HeavySpeciesMaterial::computeQpProperties()
+HeavySpeciesMaterialTempl<is_ad>::computeQpProperties()
 {
   if (_potential_units.compare("V") == 0)
     _voltage_scaling = 1.;
@@ -143,3 +149,6 @@ HeavySpeciesMaterial::computeQpProperties()
   }
   */
 }
+
+template class HeavySpeciesMaterialTempl<false>;
+template class HeavySpeciesMaterialTempl<true>;

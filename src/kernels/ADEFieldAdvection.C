@@ -12,11 +12,10 @@
 
 registerADMooseObject("ZapdosApp", ADEFieldAdvection);
 
-template <ComputeStage compute_stage>
 InputParameters
-ADEFieldAdvection<compute_stage>::validParams()
+ADEFieldAdvection::validParams()
 {
-  InputParameters params = ADKernel<compute_stage>::validParams();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar(
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
@@ -25,21 +24,19 @@ ADEFieldAdvection<compute_stage>::validParams()
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADEFieldAdvection<compute_stage>::ADEFieldAdvection(const InputParameters & parameters)
-  : ADKernel<compute_stage>(parameters),
+ADEFieldAdvection::ADEFieldAdvection(const InputParameters & parameters)
+  : ADKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _mu(getADMaterialProperty<Real>("mu" + _var.name())),
-    _sign(getADMaterialProperty<Real>("sgn" + _var.name())),
+    _sign(getMaterialProperty<Real>("sgn" + _var.name())),
     _grad_potential(adCoupledGradient("potential"))
 {
 }
 
 // ADRealVectorValue
-// ADEFieldAdvection<compute_stage>::precomputeQpResidual()
-template <ComputeStage compute_stage>
+// ADEFieldAdvection::precomputeQpResidual()
 ADReal
-ADEFieldAdvection<compute_stage>::computeQpResidual()
+ADEFieldAdvection::computeQpResidual()
 {
   return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * -_grad_potential[_qp] * _r_units *
          -_grad_test[_i][_qp] * _r_units;

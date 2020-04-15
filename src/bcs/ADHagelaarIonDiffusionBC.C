@@ -14,11 +14,10 @@ registerADMooseObject("ZapdosApp", ADHagelaarIonDiffusionBC);
 
 defineADLegacyParams(ADHagelaarIonDiffusionBC);
 
-template <ComputeStage compute_stage>
 InputParameters
-ADHagelaarIonDiffusionBC<compute_stage>::validParams()
+ADHagelaarIonDiffusionBC::validParams()
 {
-  InputParameters params = ADIntegratedBC<compute_stage>::validParams();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<Real>(
@@ -28,10 +27,8 @@ ADHagelaarIonDiffusionBC<compute_stage>::validParams()
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADHagelaarIonDiffusionBC<compute_stage>::ADHagelaarIonDiffusionBC(
-    const InputParameters & parameters)
-  : ADIntegratedBC<compute_stage>(parameters),
+ADHagelaarIonDiffusionBC::ADHagelaarIonDiffusionBC(const InputParameters & parameters)
+  : ADIntegratedBC(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
 
@@ -43,9 +40,8 @@ ADHagelaarIonDiffusionBC<compute_stage>::ADHagelaarIonDiffusionBC(
   _v_thermal = 0.0;
 }
 
-template <ComputeStage compute_stage>
 ADReal
-ADHagelaarIonDiffusionBC<compute_stage>::computeQpResidual()
+ADHagelaarIonDiffusionBC::computeQpResidual()
 {
   if (_user_velocity > 0.)
     _v_thermal = _user_velocity;

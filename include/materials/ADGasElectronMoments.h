@@ -15,9 +15,7 @@
 #include "SplineInterpolation.h"
 #include "DerivativeMaterialPropertyNameInterface.h"
 
-template <ComputeStage compute_stage>
-class ADGasElectronMoments : public ADMaterial<compute_stage>,
-                             public DerivativeMaterialPropertyNameInterface
+class ADGasElectronMoments : public ADMaterial, public DerivativeMaterialPropertyNameInterface
 {
 public:
   static InputParameters validParams();
@@ -41,19 +39,17 @@ protected:
 
   bool _use_moles;
 
-  ADMaterialProperty(Real) & _muem;
-  ADMaterialProperty(Real) & _d_muem_d_actual_mean_en;
-  ADMaterialProperty(Real) & _diffem;
-  ADMaterialProperty(Real) & _d_diffem_d_actual_mean_en;
-  ADMaterialProperty(Real) & _mumean_en;
+  ADMaterialProperty<Real> & _muem;
+  ADMaterialProperty<Real> & _d_muem_d_actual_mean_en;
+  ADMaterialProperty<Real> & _diffem;
+  ADMaterialProperty<Real> & _d_diffem_d_actual_mean_en;
+  ADMaterialProperty<Real> & _mumean_en;
 
-  ADMaterialProperty(Real) & _diffmean_en;
-  ADMaterialProperty(Real) & _sgnmean_en;
-  ADMaterialProperty(Real) & _sgnem;
-  ADMaterialProperty(Real) & _d_mumean_en_d_actual_mean_en;
-  ADMaterialProperty(Real) & _d_diffmean_en_d_actual_mean_en;
+  ADMaterialProperty<Real> & _diffmean_en;
+  MaterialProperty<Real> & _sgnmean_en;
+  MaterialProperty<Real> & _sgnem;
+  ADMaterialProperty<Real> & _d_mumean_en_d_actual_mean_en;
+  ADMaterialProperty<Real> & _d_diffmean_en_d_actual_mean_en;
   const ADVariableValue & _em;
   const ADVariableValue & _mean_en;
-
-  usingMaterialMembers;
 };

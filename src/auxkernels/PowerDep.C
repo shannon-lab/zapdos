@@ -10,13 +10,18 @@
 
 #include "PowerDep.h"
 
-registerMooseObject("ZapdosApp", PowerDep);
+#include "metaphysicl/raw_type.h"
 
-template <>
+using MetaPhysicL::raw_value;
+
+registerMooseObject("ZapdosApp", PowerDep);
+registerMooseObject("ZapdosApp", ADPowerDep);
+
+template <bool is_ad>
 InputParameters
-validParams<PowerDep>()
+PowerDepTempl<is_ad>::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
 
   params.addRequiredCoupledVar("density_log", "The electron density");
   params.addRequiredCoupledVar("potential", "The potential");
@@ -29,7 +34,8 @@ validParams<PowerDep>()
   return params;
 }
 
-PowerDep::PowerDep(const InputParameters & parameters)
+template <bool is_ad>
+PowerDepTempl<is_ad>::PowerDepTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
@@ -37,9 +43,9 @@ PowerDep::PowerDep(const InputParameters & parameters)
     _density_log(coupledValue("density_log")),
     _grad_density_log(coupledGradient("density_log")),
     _grad_potential(coupledGradient("potential")),
-    _mu(getMaterialProperty<Real>("mu" + _density_var.name())),
+    _mu(getGenericMaterialProperty<Real, is_ad>("mu" + _density_var.name())),
     _sgn(getMaterialProperty<Real>("sgn" + _density_var.name())),
-    _diff(getMaterialProperty<Real>("diff" + _density_var.name())),
+    _diff(getGenericMaterialProperty<Real, is_ad>("diff" + _density_var.name())),
     _art_diff(getParam<bool>("art_diff")),
     _potential_units(getParam<std::string>("potential_units")),
     _current(0, 0, 0)
@@ -50,17 +56,19 @@ PowerDep::PowerDep(const InputParameters & parameters)
     _voltage_scaling = 1000;
 }
 
+template <bool is_ad>
 Real
-PowerDep::computeValue()
+PowerDepTempl<is_ad>::computeValue()
 {
   _current =
       _sgn[_qp] * 1.6e-19 * 6.02e23 *
-      (_sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_density_log[_qp]) -
-       _diff[_qp] * std::exp(_density_log[_qp]) * _grad_density_log[_qp] * _r_units);
+      (_sgn[_qp] * raw_value(_mu[_qp]) * -_grad_potential[_qp] * _r_units *
+           std::exp(_density_log[_qp]) -
+       raw_value(_diff[_qp]) * std::exp(_density_log[_qp]) * _grad_density_log[_qp] * _r_units);
 
   if (_art_diff)
   {
-    Real vd_mag = _mu[_qp] * _grad_potential[_qp].norm() * _r_units;
+    Real vd_mag = raw_value(_mu[_qp]) * _grad_potential[_qp].norm() * _r_units;
     Real delta = vd_mag * _current_elem->hmax() / 2.;
     _current += _sgn[_qp] * 1.6e-19 * 6.02e23 * -delta * std::exp(_density_log[_qp]) *
                 _grad_density_log[_qp] * _r_units;
@@ -68,3 +76,6 @@ PowerDep::computeValue()
 
   return _current * -_grad_potential[_qp] * _r_units * _voltage_scaling;
 }
+
+template class PowerDepTempl<false>;
+template class PowerDepTempl<true>;

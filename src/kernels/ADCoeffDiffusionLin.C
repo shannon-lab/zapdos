@@ -21,28 +21,25 @@ registerADMooseObject("ZapdosApp", ADCoeffDiffusionLin);
 //    forward "
 //                               "automatic differentiation."););
 
-template <ComputeStage compute_stage>
 InputParameters
-ADCoeffDiffusionLin<compute_stage>::validParams()
+ADCoeffDiffusionLin::validParams()
 {
-  InputParameters params = ADKernel<compute_stage>::validParams();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("position_units", "Units of position.");
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADCoeffDiffusionLin<compute_stage>::ADCoeffDiffusionLin(const InputParameters & parameters)
-  : ADKernel<compute_stage>(parameters),
+ADCoeffDiffusionLin::ADCoeffDiffusionLin(const InputParameters & parameters)
+  : ADKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _diffusivity(getADMaterialProperty<Real>("diff" + _var.name()))
 {
 }
 
 // ADRealVectorValue
-// ADCoeffDiffusionLin<compute_stage>::precomputeQpResidual()
-template <ComputeStage compute_stage>
+// ADCoeffDiffusionLin::precomputeQpResidual()
 ADReal
-ADCoeffDiffusionLin<compute_stage>::computeQpResidual()
+ADCoeffDiffusionLin::computeQpResidual()
 {
   return -_diffusivity[_qp] * _grad_u[_qp] * _r_units * -_grad_test[_i][_qp] * _r_units;
 }

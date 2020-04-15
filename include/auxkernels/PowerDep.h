@@ -13,17 +13,15 @@
 
 #include "AuxKernel.h"
 
-class PowerDep;
-
-template <>
-InputParameters validParams<PowerDep>();
-
-class PowerDep : public AuxKernel
+template <bool is_ad>
+class PowerDepTempl : public AuxKernel
 {
 public:
-  PowerDep(const InputParameters & parameters);
+  PowerDepTempl(const InputParameters & parameters);
 
-  virtual ~PowerDep() {}
+  static InputParameters validParams();
+
+  virtual ~PowerDepTempl() {}
   virtual Real computeValue();
 
 protected:
@@ -33,13 +31,15 @@ protected:
   const VariableValue & _density_log;
   const VariableGradient & _grad_density_log;
   const VariableGradient & _grad_potential;
-  const MaterialProperty<Real> & _mu;
+  const GenericMaterialProperty<Real, is_ad> & _mu;
   const MaterialProperty<Real> & _sgn;
-  const MaterialProperty<Real> & _diff;
+  const GenericMaterialProperty<Real, is_ad> & _diff;
   bool _art_diff;
   std::string _potential_units;
   RealVectorValue _current;
   Real _voltage_scaling;
 };
 
+typedef PowerDepTempl<false> PowerDep;
+typedef PowerDepTempl<true> ADPowerDep;
 #endif // POWERDEP_H

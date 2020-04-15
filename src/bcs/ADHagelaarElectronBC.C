@@ -14,11 +14,10 @@ registerADMooseObject("ZapdosApp", ADHagelaarElectronBC);
 
 defineADLegacyParams(ADHagelaarElectronBC);
 
-template <ComputeStage compute_stage>
 InputParameters
-ADHagelaarElectronBC<compute_stage>::validParams()
+ADHagelaarElectronBC::validParams()
 {
-  InputParameters params = ADIntegratedBC<compute_stage>::validParams();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("mean_en", "The mean energy.");
@@ -28,9 +27,8 @@ ADHagelaarElectronBC<compute_stage>::validParams()
   return params;
 }
 
-template <ComputeStage compute_stage>
-ADHagelaarElectronBC<compute_stage>::ADHagelaarElectronBC(const InputParameters & parameters)
-  : ADIntegratedBC<compute_stage>(parameters),
+ADHagelaarElectronBC::ADHagelaarElectronBC(const InputParameters & parameters)
+  : ADIntegratedBC(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
 
@@ -46,9 +44,8 @@ ADHagelaarElectronBC<compute_stage>::ADHagelaarElectronBC(const InputParameters 
   _v_thermal = 0.0;
 }
 
-template <ComputeStage compute_stage>
 ADReal
-ADHagelaarElectronBC<compute_stage>::computeQpResidual()
+ADHagelaarElectronBC::computeQpResidual()
 {
   if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
   {

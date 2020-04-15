@@ -13,13 +13,11 @@
 #include "ADIntegratedBC.h"
 
 // Forward Declarations
-template <ComputeStage>
 class ADSecondaryElectronEnergyBC;
 
 declareADValidParams(ADSecondaryElectronEnergyBC);
 
-template <ComputeStage compute_stage>
-class ADSecondaryElectronEnergyBC : public ADIntegratedBC<compute_stage>
+class ADSecondaryElectronEnergyBC : public ADIntegratedBC
 {
 public:
   static InputParameters validParams();
@@ -38,15 +36,15 @@ protected:
   std::vector<const ADVariableValue *> _ip;
   std::vector<const ADVariableGradient *> _grad_ip;
 
-  const ADMaterialProperty(Real) & _muem;
+  const ADMaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _e;
-  std::vector<const ADMaterialProperty(Real) *> _sgnip;
-  std::vector<const ADMaterialProperty(Real) *> _muip;
-  std::vector<const ADMaterialProperty(Real) *> _Dip;
+  std::vector<const MaterialProperty<Real> *> _sgnip;
+  std::vector<const ADMaterialProperty<Real> *> _muip;
+  std::vector<const ADMaterialProperty<Real> *> _Dip;
   const MaterialProperty<Real> & _se_coeff;
   const MaterialProperty<Real> & _se_energy;
-  const ADMaterialProperty(Real) & _mumean_en;
+  const ADMaterialProperty<Real> & _mumean_en;
 
   Real _a;
   ADReal _v_thermal;
@@ -54,6 +52,4 @@ protected:
   ADReal _n_gamma;
 
   unsigned int _num_ions;
-
-  usingIntegratedBCMembers;
 };
