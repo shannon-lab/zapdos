@@ -21,7 +21,8 @@ InputParameters
 ADSecondaryElectronBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredParam<Real>("r", "The reflection coefficient");
+  params.addRequiredParam<Real>("r", "The reflection coefficient of the electrons.");
+  params.addParam<Real>("r_ion", 0, "The reflection coefficient of the ions.");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("mean_en", "The electron density.");
   params.addRequiredCoupledVar("ip", "The ion density.");
@@ -33,6 +34,8 @@ ADSecondaryElectronBC::ADSecondaryElectronBC(const InputParameters & parameters)
   : ADIntegratedBC(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
+    _r_ion(getParam<Real>("r_ion")),
+    _kb(getMaterialProperty<Real>("k_boltz")),
 
     // Coupled Variables
     _grad_potential(adCoupledGradient("potential")),
@@ -43,8 +46,9 @@ ADSecondaryElectronBC::ADSecondaryElectronBC(const InputParameters & parameters)
     _e(getMaterialProperty<Real>("e")),
     _se_coeff(getMaterialProperty<Real>("se_coeff"))
 {
-  _ion_flux.zero();
+  _ion_flux = 0;
   _a = 0.5;
+  _b = 0.5;
   _v_thermal = 0.0;
   _n_gamma = 0.0;
 
@@ -54,7 +58,8 @@ ADSecondaryElectronBC::ADSecondaryElectronBC(const InputParameters & parameters)
   _ip.resize(_num_ions);
   _grad_ip.resize(_num_ions);
   _muip.resize(_num_ions);
-  _Dip.resize(_num_ions);
+  _Tip.resize(_num_ions);
+  _massip.resize(_num_ions);
   _sgnip.resize(_num_ions);
 
   // Retrieve the values for each ion and store in the relevant vectors.
@@ -67,7 +72,8 @@ ADSecondaryElectronBC::ADSecondaryElectronBC(const InputParameters & parameters)
     _ip[i] = &adCoupledValue("ip", i);
     _grad_ip[i] = &adCoupledGradient("ip", i);
     _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
-    _Dip[i] = &getADMaterialProperty<Real>("diff" + (*getVar("ip", i)).name());
+    _Tip[i] = &getADMaterialProperty<Real>("T" + (*getVar("ip", i)).name());
+    _massip[i] = &getMaterialProperty<Real>("mass" + (*getVar("ip", i)).name());
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
   }
 }
@@ -84,20 +90,27 @@ ADSecondaryElectronBC::computeQpResidual()
     _a = 0.0;
   }
 
-  _ion_flux.zero();
+  _ion_flux = 0;
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _ion_flux += (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
-                     std::exp((*_ip[i])[_qp]) -
-                 (*_Dip[i])[_qp] * std::exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units;
+    if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential[_qp] > 0.0)
+      _b = 1.0;
+    else
+      _b = 0.0;
+    _ion_flux += std::exp((*_ip[i])[_qp]) *
+                 (0.5 * std::sqrt(8 * _kb[_qp] * (*_Tip[i])[_qp] / (M_PI * (*_massip[i])[_qp])) +
+                  (2 * _b - 1) * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] *
+                      _r_units * _normals[_qp]);
   }
-  _n_gamma = (1. - _a) * _se_coeff[_qp] * _ion_flux * _normals[_qp] /
+  _ion_flux *= (1.0 - _r_ion) / (1.0 + _r_ion);
+
+  _n_gamma = (1. - _a) * _se_coeff[_qp] * _ion_flux /
              (_muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
               std::numeric_limits<double>::epsilon());
   _v_thermal =
       std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
 
-  return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) * (-0.5 * _v_thermal * _n_gamma) -
-         _test[_i][_qp] * _r_units * 2. / (1. + _r) * (1. - _a) * _se_coeff[_qp] * _ion_flux *
-             _normals[_qp];
+  return _test[_i][_qp] * _r_units *
+         ((1. - _r) / (1. + _r) * (-0.5 * _v_thermal * _n_gamma) -
+          2. / (1. + _r) * (1. - _a) * _se_coeff[_qp] * _ion_flux);
 }
