@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef SakiyamaEnergySecondaryElectronBC_H
-#define SakiyamaEnergySecondaryElectronBC_H
+#pragma once
 
 #include "IntegratedBC.h"
 
@@ -61,5 +60,3 @@ protected:
   unsigned int _ip_index;
   std::vector<unsigned int>::iterator _iter;
 };
-
-#endif // SakiyamaEnergySecondaryElectronBC_H

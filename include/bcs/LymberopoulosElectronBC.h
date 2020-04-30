@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef LYMBEROPOULOSELECTRONBC_H
-#define LYMBEROPOULOSELECTRONBC_H
+#pragma once
 
 #include "IntegratedBC.h"
 
@@ -53,4 +52,3 @@ protected:
   RealVectorValue _d_ion_flux_d_ion;
 };
 
-#endif // LymberopoulosElectronBC_H

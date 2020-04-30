@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef SakiyamaIonAdvectionBC_H
-#define SakiyamaIonAdvectionBC_H
+#pragma once
 
 #include "IntegratedBC.h"
 
@@ -41,5 +40,3 @@ protected:
 
   Real _a;
 };
-
-#endif // SakiyamaIonAdvectionBC_H

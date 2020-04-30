@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef SakiyamaEnergyDiffusionBC_H
-#define SakiyamaEnergyDiffusionBC_H
+#pragma once
 
 #include "IntegratedBC.h"
 
@@ -44,5 +43,3 @@ protected:
   Real _d_v_thermal_d_em;
   Real _actual_mean_en;
 };
-
-#endif // SakiyamaEnergyDiffusionBC_H
