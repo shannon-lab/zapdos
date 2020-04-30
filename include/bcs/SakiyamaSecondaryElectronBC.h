@@ -36,18 +36,21 @@ protected:
   unsigned int _potential_id;
   const VariableValue & _mean_en;
   unsigned int _mean_en_id;
-  MooseVariable & _ip_var;
-  const VariableValue & _ip;
-  const VariableGradient & _grad_ip;
-  unsigned int _ip_id;
+  //MooseVariable & _ip_var;
+  //const VariableValue & _ip;
+  //const VariableGradient & _grad_ip;
+  //unsigned int _ip_id;
+  std::vector<MooseVariable *> _ip_var;
+  std::vector<const VariableValue *> _ip;
+  std::vector<const VariableGradient *> _gradip;
 
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _e;
-  const MaterialProperty<Real> & _sgnip;
-  const MaterialProperty<Real> & _muip;
-  const MaterialProperty<Real> & _Dip;
+  //const MaterialProperty<Real> & _sgnip;
+  //const MaterialProperty<Real> & _muip;
+  //const MaterialProperty<Real> & _Dip;
 
   Real _a;
   Real _v_thermal;
@@ -66,12 +69,22 @@ protected:
 
   const MaterialProperty<Real> & _kb;
   const MaterialProperty<Real> & _massNeutral;
-  const MaterialProperty<Real> & _massip;
-  const MaterialProperty<Real> & _T;
+  //const MaterialProperty<Real> & _massip;
+  //const MaterialProperty<Real> & _T;
   bool _variable_temp;
   Real _temp;
   Real _d_temp_d_potential;
   Real _d_v_thermal_d_potential;
+
+  std::vector<const MaterialProperty<Real> *> _sgnip;
+  std::vector<const MaterialProperty<Real> *> _muip;
+  std::vector<const MaterialProperty<Real> *> _Tip;
+  std::vector<const MaterialProperty<Real> *> _massip;
+
+  std::vector<unsigned int> _ion_id;
+  unsigned int _num_ions;
+  unsigned int _ip_index;
+  std::vector<unsigned int>::iterator _iter;
 };
 
 #endif // SakiyamaSecondaryElectronBC_H

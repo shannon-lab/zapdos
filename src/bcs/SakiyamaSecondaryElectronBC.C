@@ -47,18 +47,18 @@ SakiyamaSecondaryElectronBC::SakiyamaSecondaryElectronBC(const InputParameters &
     _potential_id(coupled("potential")),
     _mean_en(coupledValue("mean_en")),
     _mean_en_id(coupled("mean_en")),
-    _ip_var(*getVar("ip", 0)),
-    _ip(coupledValue("ip")),
-    _grad_ip(coupledGradient("ip")),
-    _ip_id(coupled("ip")),
+    //_ip_var(*getVar("ip", 0)),
+    //_ip(coupledValue("ip")),
+    //_grad_ip(coupledGradient("ip")),
+    //_ip_id(coupled("ip")),
 
     _muem(getMaterialProperty<Real>("muem")),
     _d_muem_d_actual_mean_en(getMaterialProperty<Real>("d_muem_d_actual_mean_en")),
     _massem(getMaterialProperty<Real>("massem")),
     _e(getMaterialProperty<Real>("e")),
-    _sgnip(getMaterialProperty<Real>("sgn" + _ip_var.name())),
-    _muip(getMaterialProperty<Real>("mu" + _ip_var.name())),
-    _Dip(getMaterialProperty<Real>("diff" + _ip_var.name())),
+    //_sgnip(getMaterialProperty<Real>("sgn" + _ip_var.name())),
+    //_muip(getMaterialProperty<Real>("mu" + _ip_var.name())),
+    //_Dip(getMaterialProperty<Real>("diff" + _ip_var.name())),
     _a(0.5),
     _v_thermal(0),
     _ion_flux(0, 0, 0),
@@ -76,42 +76,71 @@ SakiyamaSecondaryElectronBC::SakiyamaSecondaryElectronBC(const InputParameters &
 
     _kb(getMaterialProperty<Real>("k_boltz")),
     _massNeutral(getMaterialProperty<Real>("mass" + (*getVar("neutral_gas", 0)).name())),
-    _massip(getMaterialProperty<Real>("mass" + _ip_var.name())),
-    _T(getMaterialProperty<Real>("T" + _ip_var.name())),
+    //_massip(getMaterialProperty<Real>("mass" + _ip_var.name())),
+    //_T(getMaterialProperty<Real>("T" + _ip_var.name())),
     _variable_temp(getParam<bool>("variable_temp")),
     _temp(0),
     _d_temp_d_potential(0),
     _d_v_thermal_d_potential(0)
 {
+  _num_ions = coupledComponents("ip");
+
+  _ip.resize(_num_ions);
+  _ip_var.resize(_num_ions);
+  _muip.resize(_num_ions);
+  _sgnip.resize(_num_ions);
+  _ion_id.resize(_num_ions);
+  _massip.resize(_num_ions);
+  _Tip.resize(_num_ions);
+  _gradip.resize(_num_ions);
+
+  for (unsigned int i = 0; i < _num_ions; ++i)
+  {
+    _ip_var[i] = getVar("ip", i);
+    _ip[i] = &coupledValue("ip", i);
+    _gradip[i] = &coupledGradient("ip", i);
+    _muip[i] = &getMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
+    _ion_id[i] = _ip_var[i]->number();
+    _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
+    _massip[i] = &getMaterialProperty<Real>("mass" + (*getVar("ip", i)).name());
+    _Tip[i] = &getMaterialProperty<Real>("T" + (*getVar("ip", i)).name());
+  }
 }
 
 Real
 SakiyamaSecondaryElectronBC::computeQpResidual()
 {
-  if (_normals[_qp] * 1.0 * -_grad_potential[_qp] > 0.0)
+  _ion_flux.zero();
+  for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _a = 1.0;
-  }
-  else
-  {
-    _a = 0.0;
-  }
+    if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential[_qp] > 0.0)
+    {
+      _a = 1.0;
+    }
+    else
+    {
+      _a = 0.0;
+    }
 
-  if (_variable_temp)
-  {
-    _temp = _T[_qp] +
-            (_massip[_qp] + _massNeutral[_qp]) / (5.0 * _massip[_qp] + 3.0 * _massNeutral[_qp]) *
-                (_massNeutral[_qp] *
-                 std::pow((_muip[_qp] * (_grad_potential[_qp] * _r_units).norm()), 2) / _kb[_qp]);
-  }
-  else
-  {
-    _temp = _T[_qp]; // Needs to be changed.
-  }
+    if (_variable_temp)
+    {
+      _temp = (*_Tip[i])[_qp] +
+              ((*_massip[i])[_qp] + _massNeutral[_qp]) /
+                  (5.0 * (*_massip[i])[_qp] + 3.0 * _massNeutral[_qp]) *
+                  (_massNeutral[_qp] *
+                   std::pow(((*_muip[i])[_qp] * (_grad_potential[_qp] * _r_units).norm()), 2) /
+                   _kb[_qp]);
+    }
+    else
+    {
+      _temp = (*_Tip[i])[_qp]; // Needs to be changed.
+    }
 
-  _v_thermal = std::sqrt(8 * _kb[_qp] * _temp / (M_PI * _massip[_qp]));
+    _v_thermal = std::sqrt(8 * _kb[_qp] * _temp / (M_PI * (*_massip[i])[_qp]));
 
-  _ion_flux = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]);
+    _ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
+                 std::exp((*_ip[i])[_qp]);
+  }
 
   return -_test[_i][_qp] * _r_units * _a * _user_se_coeff * _ion_flux * _normals[_qp];
 }
@@ -119,75 +148,58 @@ SakiyamaSecondaryElectronBC::computeQpResidual()
 Real
 SakiyamaSecondaryElectronBC::computeQpJacobian()
 {
-  if (_normals[_qp] * 1.0 * -_grad_potential[_qp] > 0.0)
-  {
-    _a = 1.0;
-  }
-  else
-  {
-    _a = 0.0;
-  }
-
   return 0.;
 }
 
 Real
 SakiyamaSecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
+  _iter = std::find(_ion_id.begin(), _ion_id.end(), jvar);
   if (jvar == _potential_id)
   {
-    if (_normals[_qp] * 1.0 * -_grad_potential[_qp] > 0.0)
-    {
-      _a = 1.0;
-    }
-    else
-    {
-      _a = 0.0;
-    }
+    Real _d_grad_potential_d_potential_mag = _grad_potential[_qp] * _r_units * _grad_phi[_j][_qp] *
+                                             _r_units / (_grad_phi[_j][_qp] * _r_units).norm();
 
-    if (_variable_temp)
+    _ion_flux.zero();
+    for (unsigned int i = 0; i < _num_ions; ++i)
     {
-      Real _d_grad_potential_d_potential_mag = _grad_potential[_qp] * _r_units *
-                                               _grad_phi[_j][_qp] * _r_units /
-                                               (_grad_phi[_j][_qp] * _r_units).norm();
+      if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential[_qp] > 0.0)
+      {
+        _a = 1.0;
+      }
+      else
+      {
+        _a = 0.0;
+      }
 
-      _d_temp_d_potential =
-          (_massip[_qp] + _massNeutral[_qp]) / (5.0 * _massip[_qp] + 3.0 * _massNeutral[_qp]) *
-          (_massNeutral[_qp] * std::pow((_muip[_qp] * _d_grad_potential_d_potential_mag), 2) /
-           _kb[_qp]);
+      if (_variable_temp)
+      {
+        _d_temp_d_potential +=
+            ((*_massip[i])[_qp] + _massNeutral[_qp]) /
+            (5.0 * (*_massip[i])[_qp] + 3.0 * _massNeutral[_qp]) *
+            (_massNeutral[_qp] *
+             std::pow(((*_muip[i])[_qp] * _d_grad_potential_d_potential_mag), 2) / _kb[_qp]);
+      }
+      else
+      {
+        _d_temp_d_potential = 0;
+      }
+
+      _d_v_thermal_d_potential =
+          std::sqrt(8 * _kb[_qp] * _d_temp_d_potential / (M_PI * (*_massip[i])[_qp]));
+
+      _d_ion_flux_d_potential = (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_phi[_j][_qp] *
+                                _r_units * std::exp((*_ip[i])[_qp]);
     }
-    else
-    {
-      _d_temp_d_potential = 0;
-    }
-
-    _d_v_thermal_d_potential =
-        std::sqrt(8 * _kb[_qp] * _d_temp_d_potential / (M_PI * _massip[_qp]));
-
-    _d_ion_flux_d_potential =
-        _sgnip[_qp] * _muip[_qp] * -_grad_phi[_j][_qp] * _r_units * std::exp(_ip[_qp]);
 
     return -_test[_i][_qp] * _r_units * _a * _user_se_coeff * _d_ion_flux_d_potential *
            _normals[_qp];
   }
 
-  else if (jvar == _mean_en_id)
+  else if (_iter != _ion_id.end())
   {
-    if (_normals[_qp] * 1.0 * -_grad_potential[_qp] > 0.0)
-    {
-      _a = 1.0;
-    }
-    else
-    {
-      _a = 0.0;
-    }
-
-    return 0.;
-  }
-
-  else if (jvar == _ip_id)
-  {
-    if (_normals[_qp] * 1.0 * -_grad_potential[_qp] > 0.0)
+    _ip_index = std::distance(_ion_id.begin(), _iter);
+    if (_normals[_qp] * (*_sgnip[_ip_index])[_qp] * -_grad_potential[_qp] > 0.0)
     {
       _a = 1.0;
     }
@@ -198,20 +210,24 @@ SakiyamaSecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
 
     if (_variable_temp)
     {
-      _temp = _T[_qp] +
-              (_massip[_qp] + _massNeutral[_qp]) / (5.0 * _massip[_qp] + 3.0 * _massNeutral[_qp]) *
-                  (_massNeutral[_qp] *
-                   std::pow((_muip[_qp] * (_grad_potential[_qp] * _r_units).norm()), 2) / _kb[_qp]);
+      _temp =
+          (*_Tip[_ip_index])[_qp] +
+          ((*_massip[_ip_index])[_qp] + _massNeutral[_qp]) /
+              (5.0 * (*_massip[_ip_index])[_qp] + 3.0 * _massNeutral[_qp]) *
+              (_massNeutral[_qp] *
+               std::pow(((*_muip[_ip_index])[_qp] * (_grad_potential[_qp] * _r_units).norm()), 2) /
+               _kb[_qp]);
     }
     else
     {
-      _temp = _T[_qp]; // Needs to be changed.
+      _temp = (*_Tip[_ip_index])[_qp]; // Needs to be changed.
     }
 
-    _v_thermal = std::sqrt(8 * _kb[_qp] * _temp / (M_PI * _massip[_qp]));
+    _v_thermal = std::sqrt(8 * _kb[_qp] * _temp / (M_PI * (*_massip[_ip_index])[_qp]));
 
-    _d_ion_flux_d_ip = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units *
-                       std::exp(_u[_qp]) * _phi[_j][_qp];
+    _d_ion_flux_d_ip = _a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] *
+                       -_grad_potential[_qp] * _r_units * std::exp((*_ip[_ip_index])[_qp]) *
+                       _phi[_j][_qp];
 
     return -_test[_i][_qp] * _r_units * _a * _user_se_coeff * _d_ion_flux_d_ip * _normals[_qp];
   }
