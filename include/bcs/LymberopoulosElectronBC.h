@@ -33,16 +33,24 @@ protected:
   Real _gamma;
 
   // Coupled variables
-
   const VariableGradient & _grad_potential;
   unsigned int _potential_id;
-  const VariableValue & _Arp;
-  const VariableGradient & _grad_Arp;
-  unsigned int _Arp_id;
+  std::vector<MooseVariable *> _ion_var;
+  std::vector<const VariableValue *> _ion;
 
-  const MaterialProperty<Real> & _muion;
-  const MaterialProperty<Real> & _diffion;
   Real _sign;
+
+  std::vector<const MaterialProperty<Real> *> _sgnion;
+  std::vector<const MaterialProperty<Real> *> _muion;
+
+  std::vector<unsigned int> _ion_id;
+  unsigned int _num_ions;
+  unsigned int _ip_index;
+  std::vector<unsigned int>::iterator _iter;
+
+  RealVectorValue _ion_flux;
+  RealVectorValue _d_ion_flux_d_V;
+  RealVectorValue _d_ion_flux_d_ion;
 };
 
 #endif // LymberopoulosElectronBC_H
