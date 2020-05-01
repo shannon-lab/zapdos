@@ -85,6 +85,31 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
   _potential_ion_id.resize(_num_ions);
   _grad_potential_ion.resize(_num_ions);
 
+  bool fill_potential_vector = false;
+  // There are two checks in the next loop:
+  //
+  //   1. There are effective potentials, but potential_ion and ip vectors are not the same length.
+  //   If so, throw error.
+  //
+  //   2. There are no effective potentials, and potential_ion = potential. If so, ensure
+  //   potential_ion is still same size as _ip.
+  if (coupledComponents("potential_ion") != _num_ions)
+  {
+    if ((coupledComponents("potential_ion") == 1) &&
+        (getVar("potential_ion", 0)->number() == _var.number()))
+    {
+      fill_potential_vector = true;
+    }
+    else
+    {
+      mooseError(
+          "EconomouDielectricBC: ip and potential_ion vectors are not same length. There are two "
+          "possible options: \n 1) Ions respond to an effective potential. If so, make sure each "
+          "ion has an associated effective potential. \n 2) Ions and electrons respond to the same "
+          "potential. If so, set potential_ion equal to this potential.\n");
+    }
+  }
+
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
     _ip_var[i] = getVar("ip", i);
@@ -92,9 +117,19 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
     _muip[i] = &getMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
     _ion_id[i] = _ip_var[i]->number();
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
-    _potential_ion[i] = &coupledValue("potential_ion", i);
-    _potential_ion_id[i] = getVar("potential_ion", i)->number();
-    _grad_potential_ion[i] = &coupledGradient("potential_ion", i);
+
+    if (fill_potential_vector)
+    {
+      _potential_ion[i] = &coupledValue("potential_ion", 0);
+      _potential_ion_id[i] = getVar("potential_ion", 0)->number();
+      _grad_potential_ion[i] = &coupledGradient("potential_ion", 0);
+    }
+    else
+    {
+      _potential_ion[i] = &coupledValue("potential_ion", i);
+      _potential_ion_id[i] = getVar("potential_ion", i)->number();
+      _grad_potential_ion[i] = &coupledGradient("potential_ion", i);
+    }
   }
 }
 
