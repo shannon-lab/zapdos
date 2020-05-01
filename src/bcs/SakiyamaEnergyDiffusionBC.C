@@ -41,8 +41,7 @@ SakiyamaEnergyDiffusionBC::SakiyamaEnergyDiffusionBC(const InputParameters & par
     _a(0.5),
     _v_thermal(0),
     _d_v_thermal_d_u(0),
-    _d_v_thermal_d_em(0),
-    _actual_mean_en(0)
+    _d_v_thermal_d_em(0)
 {
 }
 
@@ -60,7 +59,6 @@ Real
 SakiyamaEnergyDiffusionBC::computeQpJacobian()
 {
 
-  _actual_mean_en = std::exp(_u[_qp] - _em[_qp]);
   _v_thermal =
       std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
   _d_v_thermal_d_u = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) /
@@ -77,7 +75,6 @@ SakiyamaEnergyDiffusionBC::computeQpOffDiagJacobian(unsigned int jvar)
   if (jvar == _em_id)
   {
 
-    _actual_mean_en = std::exp(_u[_qp] - _em[_qp]);
     _v_thermal =
         std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
     _d_v_thermal_d_em = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) /

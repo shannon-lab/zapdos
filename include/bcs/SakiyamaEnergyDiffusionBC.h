@@ -41,5 +41,4 @@ protected:
   Real _v_thermal;
   Real _d_v_thermal_d_u;
   Real _d_v_thermal_d_em;
-  Real _actual_mean_en;
 };

@@ -38,9 +38,8 @@ protected:
   unsigned int _mean_en_id;
   const VariableValue & _em;
   unsigned int _em_id;
-  const VariableValue & _ip;
-  MooseVariable & _ip_var;
-  unsigned int _ip_id;
+  std::vector<MooseVariable *> _ip_var;
+  std::vector<const VariableValue *> _ip;
   const VariableValue & _potential_ion;
   unsigned int _potential_ion_id;
   const VariableGradient & _grad_potential_ion;
@@ -49,8 +48,8 @@ protected:
   const VariableValue & _du_dot_du;
 
   const MaterialProperty<Real> & _e;
-  const MaterialProperty<Real> & _sgnip;
-  const MaterialProperty<Real> & _muip;
+  std::vector<const MaterialProperty<Real> *> _sgnip;
+  std::vector<const MaterialProperty<Real> *> _muip;
   const MaterialProperty<Real> & _massem;
   Real _user_se_coeff;
 
@@ -73,6 +72,11 @@ protected:
   std::string _potential_units;
 
   Real _voltage_scaling;
+
+  std::vector<unsigned int> _ion_id;
+  unsigned int _num_ions;
+  unsigned int _ip_index;
+  std::vector<unsigned int>::iterator _iter;
 };
 
 #endif // LymberopoulosElectronBC_H
