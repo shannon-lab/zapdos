@@ -42,9 +42,6 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
     _mean_en_id(coupled("mean_en")),
     _em(coupledValue("em")),
     _em_id(coupled("em")),
-    _potential_ion(coupledValue("potential_ion")),
-    _potential_ion_id(coupled("potential_ion")),
-    _grad_potential_ion(coupledGradient("potential_ion")),
     _grad_u_dot(_var.gradSlnDot()),
     _u_dot(_var.uDot()),
     _du_dot_du(_var.duDotDu()),
@@ -84,6 +81,9 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
   _muip.resize(_num_ions);
   _sgnip.resize(_num_ions);
   _ion_id.resize(_num_ions);
+  _potential_ion.resize(_num_ions);
+  _potential_ion_id.resize(_num_ions);
+  _grad_potential_ion.resize(_num_ions);
 
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
@@ -92,6 +92,9 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
     _muip[i] = &getMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
     _ion_id[i] = _ip_var[i]->number();
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
+    _potential_ion[i] = &coupledValue("potential_ion", i);
+    _potential_ion_id[i] = getVar("potential_ion", i)->number();
+    _grad_potential_ion[i] = &coupledGradient("potential_ion", i);
   }
 }
 
@@ -101,7 +104,7 @@ EconomouDielectricBC::computeQpResidual()
   _ion_flux.zero();
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential_ion[_qp] > 0.0)
+    if (_normals[_qp] * (*_sgnip[i])[_qp] * -(*_grad_potential_ion[i])[_qp] > 0.0)
     {
       _a = 1.0;
     }
@@ -110,8 +113,8 @@ EconomouDielectricBC::computeQpResidual()
       _a = 0.0;
     }
 
-    _ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential_ion[_qp] * _r_units *
-                 std::exp((*_ip[i])[_qp]);
+    _ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -(*_grad_potential_ion[i])[_qp] *
+                 _r_units * std::exp((*_ip[i])[_qp]);
   }
 
   _v_thermal =
@@ -131,22 +134,24 @@ Real
 EconomouDielectricBC::computeQpJacobian()
 {
   _d_ion_flux_du.zero();
-  if (_var.number() == _potential_ion_id)
-  {
-    for (unsigned int i = 0; i < _num_ions; ++i)
-    {
-      if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential_ion[_qp] > 0.0)
-      {
-        _a = 1.0;
-      }
-      else
-      {
-        _a = 0.0;
-      }
 
-      _d_ion_flux_du += (_a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_phi[_j][_qp] *
-                         _r_units * std::exp((*_ip[i])[_qp]));
+  // Check if any of the 'potential_ion' variables are the same as _potential.
+  // If any are, add the Jacobian contribution.
+  _iter_potential = std::find(_potential_ion_id.begin(), _potential_ion_id.end(), _var.number());
+  if (_iter_potential != _potential_ion_id.end())
+  {
+    _ip_index = std::distance(_potential_ion_id.begin(), _iter_potential);
+    if (_normals[_qp] * (*_sgnip[_ip_index])[_qp] * -(*_grad_potential_ion[_ip_index])[_qp] > 0.0)
+    {
+      _a = 1.0;
     }
+    else
+    {
+      _a = 0.0;
+    }
+
+    _d_ion_flux_du += (_a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] *
+                       -_grad_phi[_j][_qp] * _r_units * std::exp((*_ip[_ip_index])[_qp]));
   }
 
   return _test[_i][_qp] * _r_units *
@@ -161,6 +166,7 @@ Real
 EconomouDielectricBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
   _iter = std::find(_ion_id.begin(), _ion_id.end(), jvar);
+  _iter_potential = std::find(_potential_ion_id.begin(), _potential_ion_id.end(), jvar);
   if (jvar == _mean_en_id)
   {
     _v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
@@ -193,7 +199,7 @@ EconomouDielectricBC::computeQpOffDiagJacobian(unsigned int jvar)
   else if (_iter != _ion_id.end())
   {
     _ip_index = std::distance(_ion_id.begin(), _iter);
-    if (_normals[_qp] * (*_sgnip[_ip_index])[_qp] * -_grad_potential_ion[_qp] > 0.0)
+    if (_normals[_qp] * (*_sgnip[_ip_index])[_qp] * -(*_grad_potential_ion[_ip_index])[_qp] > 0.0)
     {
       _a = 1.0;
     }
@@ -202,9 +208,9 @@ EconomouDielectricBC::computeQpOffDiagJacobian(unsigned int jvar)
       _a = 0.0;
     }
 
-    _d_ion_flux_d_ip =
-        (_a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] * -_grad_potential_ion[_qp] *
-         _r_units * std::exp((*_ip[_ip_index])[_qp]) * _phi[_j][_qp]);
+    _d_ion_flux_d_ip = (_a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] *
+                        -(*_grad_potential_ion[_ip_index])[_qp] * _r_units *
+                        std::exp((*_ip[_ip_index])[_qp]) * _phi[_j][_qp]);
 
     _d_em_flux_d_ip = -_user_se_coeff * _d_ion_flux_d_ip;
 
@@ -212,23 +218,21 @@ EconomouDielectricBC::computeQpOffDiagJacobian(unsigned int jvar)
            (_d_ion_flux_d_ip - _d_em_flux_d_ip) * _normals[_qp] / _voltage_scaling;
   }
 
-  else if (jvar == _potential_ion_id)
+  else if (_iter_potential != _potential_ion_id.end())
   {
-    _d_ion_flux_d_potential_ion.zero();
-    for (unsigned int i = 0; i < _num_ions; ++i)
+    _ip_index = std::distance(_potential_ion_id.begin(), _iter_potential);
+    if (_normals[_qp] * (*_sgnip[_ip_index])[_qp] * -(*_grad_potential_ion[_ip_index])[_qp] > 0.0)
     {
-      if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential_ion[_qp] > 0.0)
-      {
-        _a = 1.0;
-      }
-      else
-      {
-        _a = 0.0;
-      }
-
-      _d_ion_flux_d_potential_ion += (_a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] *
-                                      -_grad_phi[_j][_qp] * _r_units * std::exp((*_ip[i])[_qp]));
+      _a = 1.0;
     }
+    else
+    {
+      _a = 0.0;
+    }
+
+    _d_ion_flux_d_potential_ion =
+        (_a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] * -_grad_phi[_j][_qp] *
+         _r_units * std::exp((*_ip[_ip_index])[_qp]));
 
     _d_em_flux_d_potential_ion = -_user_se_coeff * _d_ion_flux_d_potential_ion;
 
