@@ -203,8 +203,8 @@ SakiyamaEnergySecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
       _d_se_energy_d_em = 0;
     }
 
-    return -_test[_i][_qp] * _r_units * _se_coeff * (5.0 / 3.0) * _d_se_energy_d_em *
-           _ion_flux * _normals[_qp];
+    return -_test[_i][_qp] * _r_units * _se_coeff * (5.0 / 3.0) * _d_se_energy_d_em * _ion_flux *
+           _normals[_qp];
   }
 
   else if (_iter != _ion_id.end())
@@ -229,10 +229,11 @@ SakiyamaEnergySecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
     }
 
     _d_ion_flux_d_ip = _a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] *
-                       -_grad_potential[_qp] * _r_units * std::exp((*_ip[_ip_index])[_qp]) * _phi[_j][_qp];
+                       -_grad_potential[_qp] * _r_units * std::exp((*_ip[_ip_index])[_qp]) *
+                       _phi[_j][_qp];
 
-    return -_test[_i][_qp] * _r_units * _se_coeff * (5.0 / 3.0) * _se_energy *
-           _d_ion_flux_d_ip * _normals[_qp];
+    return -_test[_i][_qp] * _r_units * _se_coeff * (5.0 / 3.0) * _se_energy * _d_ion_flux_d_ip *
+           _normals[_qp];
   }
 
   else

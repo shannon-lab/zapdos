@@ -254,7 +254,6 @@ SecondaryElectronEnergyBC::computeQpOffDiagJacobian(unsigned int jvar)
                         _r_units * _normals[_qp]);
     }
 
-
     _v_thermal =
         std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
     _d_v_thermal_d_em = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) /
