@@ -164,11 +164,11 @@ SecondaryElectronBC::computeQpJacobian()
              (_muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
               std::numeric_limits<double>::epsilon());
   _actual_mean_en = std::exp(_mean_en[_qp] - _u[_qp]);
-  _d_n_gamma_d_u = -1. * (1. - _a) * _se_coeff[_qp] * _ion_flux /
-                   (std::pow(_muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp], 2.) +
+
+  _d_n_gamma_d_u = (1. - _a) * _se_coeff[_qp] * _ion_flux /
+                   (-_grad_potential[_qp] * _r_units * _normals[_qp] * _muem[_qp] * _muem[_qp] +
                     std::numeric_limits<double>::epsilon()) *
-                   -_grad_potential[_qp] * _r_units * _normals[_qp] *
-                   _d_muem_d_actual_mean_en[_qp] * _actual_mean_en * -_phi[_j][_qp];
+                   _d_muem_d_actual_mean_en[_qp] * _actual_mean_en * _phi[_j][_qp];
   _v_thermal =
       std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
   _d_v_thermal_d_u = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
@@ -259,10 +259,9 @@ SecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
 
     _d_n_gamma_d_mean_en =
         -1. * (1. - _a) * _se_coeff[_qp] * _ion_flux /
-        (std::pow(_muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp], 2.) +
+        (-_grad_potential[_qp] * _r_units * _normals[_qp] * _muem[_qp] * _muem[_qp] +
          std::numeric_limits<double>::epsilon()) *
-        -_grad_potential[_qp] * _r_units * _normals[_qp] * _d_muem_d_actual_mean_en[_qp] *
-        _actual_mean_en * _phi[_j][_qp];
+        _d_muem_d_actual_mean_en[_qp] * _actual_mean_en * _phi[_j][_qp];
 
     return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) * -0.5 *
            (_d_v_thermal_d_mean_en * _n_gamma + _v_thermal * _d_n_gamma_d_mean_en);
