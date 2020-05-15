@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef SakiyamaEnergySecondaryElectronBC_H
-#define SakiyamaEnergySecondaryElectronBC_H
+#pragma once
 
 #include "IntegratedBC.h"
 
@@ -39,12 +38,12 @@ protected:
   const VariableValue & _em;
   unsigned int _em_id;
 
-  MooseVariable & _ip_var;
-  const VariableValue & _ip;
-  unsigned int _ip_id;
+  std::vector<MooseVariable *> _ip_var;
+  std::vector<const VariableValue *> _ip;
+  std::vector<unsigned int> _ip_id;
 
-  const MaterialProperty<Real> & _sgnip;
-  const MaterialProperty<Real> & _muip;
+  std::vector<const MaterialProperty<Real> *> _sgnip;
+  std::vector<const MaterialProperty<Real> *> _muip;
   Real _se_coeff;
   Real _user_se_energy;
 
@@ -55,6 +54,9 @@ protected:
   RealVectorValue _ion_flux;
   RealVectorValue _d_ion_flux_d_potential;
   RealVectorValue _d_ion_flux_d_ip;
-};
 
-#endif // SakiyamaEnergySecondaryElectronBC_H
+  std::vector<unsigned int> _ion_id;
+  unsigned int _num_ions;
+  unsigned int _ip_index;
+  std::vector<unsigned int>::iterator _iter;
+};
