@@ -49,12 +49,6 @@ SakiyamaEnergySecondaryElectronBC::SakiyamaEnergySecondaryElectronBC(
     _em(coupledValue("em")),
     _em_id(coupled("em")),
 
-    _ip_var(*getVar("ip", 0)),
-    _ip(coupledValue("ip")),
-    _ip_id(coupled("ip")),
-
-    _sgnip(getMaterialProperty<Real>("sgn" + _ip_var.name())),
-    _muip(getMaterialProperty<Real>("mu" + _ip_var.name())),
     _se_coeff(getParam<Real>("se_coeff")),
     _user_se_energy(getParam<Real>("user_se_energy")),
     _a(0.5),
@@ -65,18 +59,41 @@ SakiyamaEnergySecondaryElectronBC::SakiyamaEnergySecondaryElectronBC(
     _d_ion_flux_d_potential(0, 0, 0),
     _d_ion_flux_d_ip(0, 0, 0)
 {
+  _num_ions = coupledComponents("ip");
+
+  _ip.resize(_num_ions);
+  _ip_var.resize(_num_ions);
+  _muip.resize(_num_ions);
+  _sgnip.resize(_num_ions);
+  _ion_id.resize(_num_ions);
+
+  for (unsigned int i = 0; i < _num_ions; ++i)
+  {
+    _ip_var[i] = getVar("ip", i);
+    _ip[i] = &coupledValue("ip", i);
+    _muip[i] = &getMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
+    _ion_id[i] = _ip_var[i]->number();
+    _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
+  }
 }
 
 Real
 SakiyamaEnergySecondaryElectronBC::computeQpResidual()
 {
-  if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
+  _ion_flux.zero();
+  for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _a = 1.0;
-  }
-  else
-  {
-    _a = 0.0;
+    if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential[_qp] > 0.0)
+    {
+      _a = 1.0;
+    }
+    else
+    {
+      _a = 0.0;
+    }
+
+    _ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
+                 std::exp((*_ip[i])[_qp]);
   }
 
   if (Te_dependent)
@@ -88,22 +105,27 @@ SakiyamaEnergySecondaryElectronBC::computeQpResidual()
     _se_energy = _user_se_energy;
   }
 
-  _ion_flux = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]);
-
-  return -_test[_i][_qp] * _r_units * _a * _se_coeff * (5.0 / 3.0) * _se_energy * _ion_flux *
+  return -_test[_i][_qp] * _r_units * _se_coeff * (5.0 / 3.0) * _se_energy * _ion_flux *
          _normals[_qp];
 }
 
 Real
 SakiyamaEnergySecondaryElectronBC::computeQpJacobian()
 {
-  if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
+  _ion_flux.zero();
+  for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _a = 1.0;
-  }
-  else
-  {
-    _a = 0.0;
+    if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential[_qp] > 0.0)
+    {
+      _a = 1.0;
+    }
+    else
+    {
+      _a = 0.0;
+    }
+
+    _ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
+                 std::exp((*_ip[i])[_qp]);
   }
 
   if (Te_dependent)
@@ -115,24 +137,30 @@ SakiyamaEnergySecondaryElectronBC::computeQpJacobian()
     _d_se_energy_d_u = 0;
   }
 
-  _ion_flux = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]);
-
-  return -_test[_i][_qp] * _r_units * _a * _se_coeff * (5.0 / 3.0) * _d_se_energy_d_u * _ion_flux *
+  return -_test[_i][_qp] * _r_units * _se_coeff * (5.0 / 3.0) * _d_se_energy_d_u * _ion_flux *
          _normals[_qp];
 }
 
 Real
 SakiyamaEnergySecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
 {
+  _iter = std::find(_ion_id.begin(), _ion_id.end(), jvar);
   if (jvar == _potential_id)
   {
-    if (_normals[_qp] * 1.0 * -_grad_potential[_qp] > 0.0)
+    _ion_flux.zero();
+    for (unsigned int i = 0; i < _num_ions; ++i)
     {
-      _a = 1.0;
-    }
-    else
-    {
-      _a = 0.0;
+      if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential[_qp] > 0.0)
+      {
+        _a = 1.0;
+      }
+      else
+      {
+        _a = 0.0;
+      }
+
+      _d_ion_flux_d_potential += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_phi[_j][_qp] *
+                                 _r_units * std::exp((*_ip[i])[_qp]);
     }
 
     if (Te_dependent)
@@ -144,22 +172,26 @@ SakiyamaEnergySecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
       _se_energy = _user_se_energy;
     }
 
-    _d_ion_flux_d_potential =
-        _a * _sgnip[_qp] * _muip[_qp] * -_grad_phi[_j][_qp] * _r_units * std::exp(_u[_qp]);
-
-    return -_test[_i][_qp] * _r_units * _a * _se_coeff * (5.0 / 3.0) * _se_energy *
+    return -_test[_i][_qp] * _r_units * _se_coeff * (5.0 / 3.0) * _se_energy *
            _d_ion_flux_d_potential * _normals[_qp];
   }
 
   else if (jvar == _em_id)
   {
-    if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
+    _ion_flux.zero();
+    for (unsigned int i = 0; i < _num_ions; ++i)
     {
-      _a = 1.0;
-    }
-    else
-    {
-      _a = 0.0;
+      if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential[_qp] > 0.0)
+      {
+        _a = 1.0;
+      }
+      else
+      {
+        _a = 0.0;
+      }
+
+      _ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
+                   std::exp((*_ip[i])[_qp]);
     }
 
     if (Te_dependent)
@@ -171,16 +203,14 @@ SakiyamaEnergySecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
       _d_se_energy_d_em = 0;
     }
 
-    _ion_flux =
-        _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]);
-
-    return -_test[_i][_qp] * _r_units * _a * _se_coeff * (5.0 / 3.0) * _d_se_energy_d_em *
-           _ion_flux * _normals[_qp];
+    return -_test[_i][_qp] * _r_units * _se_coeff * (5.0 / 3.0) * _d_se_energy_d_em * _ion_flux *
+           _normals[_qp];
   }
 
-  else if (jvar == _ip_id)
+  else if (_iter != _ion_id.end())
   {
-    if (_normals[_qp] * 1.0 * -_grad_potential[_qp] > 0.0)
+    _ip_index = std::distance(_ion_id.begin(), _iter);
+    if (_normals[_qp] * (*_sgnip[_ip_index])[_qp] * -_grad_potential[_qp] > 0.0)
     {
       _a = 1.0;
     }
@@ -198,11 +228,12 @@ SakiyamaEnergySecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
       _se_energy = _user_se_energy;
     }
 
-    _d_ion_flux_d_ip = _a * _sgnip[_qp] * _muip[_qp] * -_grad_potential[_qp] * _r_units *
-                       std::exp(_u[_qp]) * _phi[_j][_qp];
+    _d_ion_flux_d_ip = _a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] *
+                       -_grad_potential[_qp] * _r_units * std::exp((*_ip[_ip_index])[_qp]) *
+                       _phi[_j][_qp];
 
-    return -_test[_i][_qp] * _r_units * _a * _se_coeff * (5.0 / 3.0) * _se_energy *
-           _d_ion_flux_d_ip * _normals[_qp];
+    return -_test[_i][_qp] * _r_units * _se_coeff * (5.0 / 3.0) * _se_energy * _d_ion_flux_d_ip *
+           _normals[_qp];
   }
 
   else

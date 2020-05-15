@@ -29,6 +29,7 @@ protected:
 
   Real _r_units;
   Real _r;
+  Real _r_ion;
 
   // Coupled variables
 
@@ -47,17 +48,20 @@ protected:
   const MaterialProperty<Real> & _e;
   std::vector<const MaterialProperty<Real> *> _sgnip;
   std::vector<const MaterialProperty<Real> *> _muip;
-  std::vector<const MaterialProperty<Real> *> _Dip;
+  std::vector<const MaterialProperty<Real> *> _Tip;
+  std::vector<const MaterialProperty<Real> *> _massip;
   const MaterialProperty<Real> & _se_coeff;
 
   Real _a;
+  Real _b;
+  const MaterialProperty<Real> & _kb;
   Real _v_thermal;
-  RealVectorValue _ion_flux;
+  Real _ion_flux;
   Real _n_gamma;
   Real _d_v_thermal_d_u;
   Real _d_v_thermal_d_mean_en;
-  RealVectorValue _d_ion_flux_d_potential;
-  RealVectorValue _d_ion_flux_d_ip;
+  Real _d_ion_flux_d_potential;
+  Real _d_ion_flux_d_ip;
   Real _d_n_gamma_d_potential;
   Real _d_n_gamma_d_ip;
   Real _d_n_gamma_d_u;

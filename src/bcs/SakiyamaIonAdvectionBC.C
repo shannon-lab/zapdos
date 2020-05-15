@@ -20,7 +20,6 @@ InputParameters
 validParams<SakiyamaIonAdvectionBC>()
 {
   InputParameters params = validParams<IntegratedBC>();
-  // params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Kinetic advective ion boundary condition"
