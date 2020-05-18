@@ -12,19 +12,6 @@ dom0Scale=25.4e-3
   file = 'Acceleration_By_Shooting_Method_Initial_Conditions.e'
 []
 
-[MeshModifiers]
-  [./left]
-    type = SideSetsFromNormals
-    normals = '-1 0 0'
-    new_boundary = 'left'
-  [../]
-  [./right]
-    type = SideSetsFromNormals
-    normals = '1 0 0'
-    new_boundary = 'right'
-  [../]
-[]
-
 [Problem]
   type = FEProblem
 []
