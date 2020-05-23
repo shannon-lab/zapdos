@@ -29,7 +29,7 @@ protected:
   const Real _r_units;
   const MaterialProperty<Real> & _D;
   const MaterialProperty<Real> & _D_neighbor;
-  //const VariableValue & _sigma;
+  // const VariableValue & _sigma;
   const MaterialProperty<Real> & _sigma;
   const MaterialProperty<Real> & _d_sigma_d_potential;
   const MaterialProperty<Real> & _d_sigma_d_em;
@@ -42,6 +42,4 @@ protected:
   unsigned int _num_ions;
   unsigned int _ip_index;
   std::vector<unsigned int>::iterator _iter;
-
-  //std::vector<unsigned int> _ion_id;
 };

@@ -29,13 +29,14 @@ protected:
   void computeHagelaarFlux();
   void computeSakiyamaFlux();
   void computeLymberopoulosFlux();
+  void computeComsolFlux();
 
   int _bc_type;
   MaterialProperty<Real> & _sigma;
   const MaterialProperty<Real> & _sigma_old;
-  //const MaterialProperty<Real> & _d_sigma_d_potential_old;
-  //const MaterialProperty<Real> & _d_sigma_d_em_old;
-  //const MaterialProperty<Real> & _d_sigma_d_mean_en_old;
+  // const MaterialProperty<Real> & _d_sigma_d_potential_old;
+  // const MaterialProperty<Real> & _d_sigma_d_em_old;
+  // const MaterialProperty<Real> & _d_sigma_d_mean_en_old;
   MaterialProperty<Real> & _d_sigma_d_potential;
   MaterialProperty<Real> & _d_sigma_d_em;
   MaterialProperty<Real> & _d_sigma_d_mean_en;
@@ -66,7 +67,7 @@ protected:
   const MaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
   const MaterialProperty<Real> & _massem;
-  //const MaterialProperty<Real> & _diffem;
+  // const MaterialProperty<Real> & _diffem;
 
   Real _r_units;
   Real _r_ion;
@@ -92,7 +93,7 @@ protected:
   std::vector<const VariableValue *> _ions;
   std::vector<const VariableGradient *> _grad_ions;
   std::vector<const MaterialProperty<Real> *> _mu_ions;
-  //std::vector<const MaterialProperty<Real> *> _diff_ions;
+  // std::vector<const MaterialProperty<Real> *> _diff_ions;
   std::vector<const MaterialProperty<Real> *> _sgn_ions;
   std::vector<const MaterialProperty<Real> *> _mass_ions;
   std::vector<const MaterialProperty<Real> *> _T_ions;
@@ -105,10 +106,10 @@ protected:
   Real _ion_charge_flux;
   Real _n_gamma;
 
-  //Real _d_ion_flux_d_potential;
-  //Real _d_electron_flux_d_potential;
-  //Real _d_ion_charge_flux_d_potential;
-  //Real _d_n_gamma_d_potential;
+  // Real _d_ion_flux_d_potential;
+  // Real _d_electron_flux_d_potential;
+  // Real _d_ion_charge_flux_d_potential;
+  // Real _d_n_gamma_d_potential;
 
   Real _actual_mean_energy;
   Real _electron_flux;
@@ -117,5 +118,4 @@ protected:
   Real _r_factor_ion;
   Real _r_factor_electron;
 };
-
 

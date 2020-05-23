@@ -117,6 +117,10 @@ SurfaceCharge::SurfaceCharge(const InputParameters & parameters)
     else
       _ks = getParam<Real>("ks");
   }
+  else if (bc == "Comsol")
+  {
+    _bc_type = 3;
+  }
   else
     mooseError("SurfaceCharge: bc_type = " + getParam<std::string>("bc_type") +
                " is not supported. Please select Hagelaar, Sakiyama, or Lymberopoulos. (The choice "
@@ -168,9 +172,9 @@ SurfaceCharge::initQpStatefulProperties()
 {
   _sigma[_qp] = 0;
 
-  _d_sigma_d_potential[_qp] = 0;
-  _d_sigma_d_em[_qp] = 0;
-  _d_sigma_d_mean_en[_qp] = 0;
+  //_d_sigma_d_potential[_qp] = 0;
+  //_d_sigma_d_em[_qp] = 0;
+  //_d_sigma_d_mean_en[_qp] = 0;
 }
 
 void
@@ -200,7 +204,7 @@ SurfaceCharge::computeQpProperties()
     _d_ion_flux_d_potential = 0.0;
     _d_ion_charge_flux_d_potential = 0.0;
     _d_electron_flux_d_potential = 0.0;
-    //_d_sigma_d_potential[_qp] = 0;
+    _d_sigma_d_potential[_qp] = 0;
 
     // Ion and electron fluxes, including secondary electron contributions, are computed based on
     // the selected BC form.
@@ -215,10 +219,22 @@ SurfaceCharge::computeQpProperties()
       case 2:
         computeLymberopoulosFlux();
         break;
+      case 3:
+        computeComsolFlux();
+        break;
     }
+    // Real k1, k2, k3, k4;
+    // Real net_flux;
+    // net_flux = (_ion_charge_flux - _electron_flux) * _q_times_NA;
 
     // Regardless of the case, the surface charge formulation is identical.
+
     _sigma[_qp] = _sigma_old[_qp] + (_ion_charge_flux - _electron_flux) * _q_times_NA * _dt;
+    // k1 = net_flux;
+    // k2 = (net_flux + 0.5 * k1 * _dt)*_dt;
+    // k3 = (net_flux + 0.5 * k2 * _dt)*_dt;
+    // k4 = (net_flux + k3 * _dt)*_dt;
+    //_sigma[_qp] = _sigma_old[_qp] + (1.0/6.0)*(k1 + k2 + k3 + k4);
 
     // The derivative of surface charge w.r.t. potential
     // (Except the _phi and _grad_phi terms, of course.)
@@ -262,12 +278,13 @@ SurfaceCharge::computeHagelaarFlux()
     _b = 0.0;
   }
 
-  _electron_flux = _r_factor_electron * (-(2 * _b - 1) * _muem[_qp] * -_grad_potential[_qp] *
-                                             _r_units * std::exp(_em[_qp]) * _normals[_qp] +
-                                         0.5 * _ve_thermal * std::exp(_em[_qp]));
+  _electron_flux = _r_factor_electron * std::exp(_em[_qp]) *
+                   (-(2 * _b - 1) * _muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
+                    0.5 * _ve_thermal);
 
-  _d_electron_flux_d_potential = (1.0 - _r_electron) / (1.0 + _r_electron) *
-                                 (-(2 * _b - 1) * _muem[_qp] * _r_units * std::exp(_em[_qp]));
+  _d_electron_flux_d_potential =
+      _r_factor_electron * (-(2 * _b - 1) * _muem[_qp] * _r_units *
+                            std::exp(_em[_qp])); // * -_grad_phi[_j][_qp] * _r_units * _normals[_qp]
 
   _d_electron_flux_d_em = _r_factor_electron * std::exp(_em[_qp]) *
                           (-(2 * _b - 1) * -_grad_potential[_qp] * _r_units * _normals[_qp] *
@@ -317,7 +334,7 @@ SurfaceCharge::computeHagelaarFlux()
     _d_ion_flux_d_ion[i] = _single_ion_flux * _r_factor_ion;
     _d_ion_charge_flux_d_ion[i] = _d_ion_flux_d_ion[i] * (*_sgn_ions[i])[_qp];
 
-    if (_include_secondary_electrons == true)
+    if (_include_secondary_electrons == true && (*_sgn_ions[i])[_qp] >= 0)
     {
       _d_n_gamma_d_ion[i] = (1. - _b) * _se_coeff * _d_ion_flux_d_ion[i] /
                             (_muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
@@ -445,5 +462,87 @@ SurfaceCharge::computeLymberopoulosFlux()
   if (_include_secondary_electrons == true)
   {
     _electron_flux -= _se_coeff * _ion_flux;
+  }
+}
+
+void
+SurfaceCharge::computeComsolFlux()
+{
+  if (_normals[_qp] * -1 * -_grad_potential[_qp] > 0.0)
+  {
+    _b = 1.0;
+  }
+  else
+  {
+    _b = 0.0;
+  }
+
+  _electron_flux = _r_factor_electron * std::exp(_em[_qp]) * 0.5 * _ve_thermal;
+
+  _d_electron_flux_d_potential = 0.0;
+
+  _d_electron_flux_d_em =
+      _r_factor_electron * std::exp(_em[_qp]) * 0.5 * (_d_ve_thermal_d_em + _ve_thermal);
+
+  _d_electron_flux_d_mean_en =
+      _r_factor_electron * std::exp(_em[_qp]) * 0.5 * _d_ve_thermal_d_mean_en;
+
+  // Compute the ion fluxes.
+  for (unsigned int i = 0; i < _num_ions; ++i)
+  {
+    if (_normals[_qp] * (*_sgn_ions[i])[_qp] * -_grad_potential[_qp] > 0.0)
+    {
+      _a = 1.0;
+    }
+    else
+    {
+      _a = 0.0;
+    }
+
+    _single_ion_flux =
+        std::exp((*_ions[i])[_qp]) *
+        (0.5 * std::sqrt(8 * _kb[_qp] * (*_T_ions[i])[_qp] / (M_PI * (*_mass_ions[i])[_qp])) +
+         (_a * (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] * -_grad_potential[_qp] * _r_units *
+          _normals[_qp]));
+
+    // _ion_flux is the total particle flux striking the wall. This needs to be separate from the
+    // charge flux to account for negative ions striking the wall and emitting secondary electrons.
+    // Otherwise the secondary electron emission would be lower than the boundary condition's
+    // calculation, causing a charge imbalance.
+    _ion_flux += _single_ion_flux;
+
+    // _ion_charge_flux is the net charge per area per unit time impacting a given boundary.
+    _ion_charge_flux += (*_sgn_ions[i])[_qp] * _single_ion_flux;
+
+    _d_ion_flux_d_potential +=
+        std::exp((*_ions[i])[_qp]) * _a * (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] * _r_units;
+
+    _d_ion_charge_flux_d_potential += (*_sgn_ions[i])[_qp] * std::exp((*_ions[i])[_qp]) * _a *
+                                      (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] * _r_units;
+
+    _d_ion_flux_d_ion[i] = _single_ion_flux * _r_factor_ion;
+    _d_ion_charge_flux_d_ion[i] = _d_ion_flux_d_ion[i] * (*_sgn_ions[i])[_qp];
+
+    if (_include_secondary_electrons == true && (*_sgn_ions[i])[_qp] >= 0)
+    {
+      _d_electron_flux_d_ion[i] = -_se_coeff * _d_ion_flux_d_ion[i];
+    }
+    else
+    {
+      _d_electron_flux_d_ion[i] = 0.0;
+    }
+  }
+  _ion_flux *= _r_factor_ion;
+  _ion_charge_flux *= _r_factor_ion;
+  _d_ion_flux_d_potential *= _r_factor_ion;
+  _d_ion_charge_flux_d_potential *= _r_factor_ion;
+
+  // Subtract secondary electrons from the electron flux if the secondary_electrons option is set to
+  // true. Otherwise the _electron_flux is already correct.
+  if (_include_secondary_electrons == true)
+  {
+    _electron_flux -= _se_coeff * _ion_flux;
+
+    _d_electron_flux_d_potential -= _se_coeff * _d_ion_flux_d_potential;
   }
 }

@@ -73,14 +73,8 @@ InterfacePotential::computeQpResidual(Moose::DGResidualType type)
       break;
 
     case Moose::Neighbor:
-      // r = _test_neighbor[_i][_qp] * (_D[_qp] * _grad_u[_qp] * _r_units * _normals[_qp]);
-      // r = 0.0;
       r = _test_neighbor[_i][_qp] *
           (_D[_qp] * _grad_u[_qp] * _r_units * _normals[_qp] - _sigma[_qp]);
-      /*
-      r = _test_neighbor[_i][_qp] *
-          (_D[_qp] * _grad_u[_qp] * _r_units * _normals[_qp] + _sigma[_qp]);
-          */
       break;
   }
 
@@ -107,8 +101,7 @@ InterfacePotential::computeQpJacobian(Moose::DGJacobianType type)
     case Moose::NeighborElement:
       jac = _test_neighbor[_i][_qp] * _grad_phi[_j][_qp] * _normals[_qp] * _r_units *
             (_D[_qp] - _d_sigma_d_potential[_qp]);
-      // jac = _test_neighbor[_i][_qp] * _D[_qp] * _grad_phi[_j][_qp] * _normals[_qp] * _r_units;
-      // jac = 0.0;
+      // jac = _test_neighbor[_i][_qp] * _grad_phi[_j][_qp] * _normals[_qp] * _r_units * _D[_qp];
       break;
 
     case Moose::ElementNeighbor:
