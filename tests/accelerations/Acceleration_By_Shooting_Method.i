@@ -539,12 +539,14 @@ dom0Scale=25.4e-3
     variable = potential
     boundary = 'left'
     function = potential_bc_func
+    preset = false
   [../]
   [./potential_dirichlet_right]
     type = DirichletBC
     variable = potential
     boundary = 'right'
     value = 0
+    preset = false
   [../]
 
 #Boundary conditions for electons
