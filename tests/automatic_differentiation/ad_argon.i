@@ -572,6 +572,7 @@ dom0Scale=1e-3
     variable = potential
     boundary = right
     value = 0
+    preset = false
   [../]
   [./em_physical_right]
     type = ADHagelaarElectronBC
