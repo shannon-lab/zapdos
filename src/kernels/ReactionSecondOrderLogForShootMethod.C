@@ -10,16 +10,12 @@
 
 #include "ReactionSecondOrderLogForShootMethod.h"
 
-// MOOSE includes
-#include "MooseVariable.h"
-
 registerMooseObject("ZapdosApp", ReactionSecondOrderLogForShootMethod);
 
-template <>
 InputParameters
-validParams<ReactionSecondOrderLogForShootMethod>()
+ReactionSecondOrderLogForShootMethod::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = ADKernel::validParams();
   params.addCoupledVar("density", "The accelerated density variable.");
   params.addCoupledVar("v", "The Second variable that is reacting.");
   params.addRequiredParam<std::string>("reaction", "The full reaction equation.");
@@ -39,20 +35,20 @@ validParams<ReactionSecondOrderLogForShootMethod>()
 
 ReactionSecondOrderLogForShootMethod::ReactionSecondOrderLogForShootMethod(
     const InputParameters & parameters)
-  : Kernel(parameters),
-    _reaction_coeff(getMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
+  : ADKernel(parameters),
+    _reaction_coeff(getADMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
                                               getParam<std::string>("reaction"))),
 
-    _density(coupledValue("density")),
+    _density(adCoupledValue("density")),
     _density_id(coupled("density")),
-    _v(coupledValue("v")),
+    _v(adCoupledValue("v")),
     _v_id(coupled("v")),
 
     _stoichiometric_coeff(getParam<Real>("coefficient"))
 {
 }
 
-Real
+ADReal
 ReactionSecondOrderLogForShootMethod::computeQpResidual()
 {
   if (_v_id == _density_id)
@@ -65,39 +61,4 @@ ReactionSecondOrderLogForShootMethod::computeQpResidual()
     return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
            std::exp(_v[_qp]) * _u[_qp];
   }
-}
-
-Real
-ReactionSecondOrderLogForShootMethod::computeQpJacobian()
-{
-  if (_v_id == _density_id)
-  {
-    return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 2.0 *
-           std::exp(_v[_qp]) * _phi[_j][_qp];
-  }
-  else
-  {
-    return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
-           std::exp(_v[_qp]) * _phi[_j][_qp];
-  }
-}
-
-Real
-ReactionSecondOrderLogForShootMethod::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  if (jvar == _v_id)
-  {
-    if (_v_id == _density_id)
-    {
-      return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 2.0 *
-             std::exp(_v[_qp]) * _phi[_j][_qp] * _u[_qp];
-    }
-    else
-    {
-      return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
-             std::exp(_v[_qp]) * _phi[_j][_qp] * _u[_qp];
-    }
-  }
-  else
-    return 0.0;
 }

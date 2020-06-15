@@ -8,42 +8,29 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef ELECTRONENERGYTERMRATE_H
-#define ELECTRONENERGYTERMRATE_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class ElectronEnergyTermRate;
-
-template <>
-InputParameters validParams<ElectronEnergyTermRate>();
-
-class ElectronEnergyTermRate : public Kernel
+class ElectronEnergyTermRate : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   ElectronEnergyTermRate(const InputParameters & parameters);
-  virtual ~ElectronEnergyTermRate();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
-  bool _elastic;
-  Real _threshold_energy;
+  const Real _r_units;
+  const bool & _elastic;
+  const Real & _threshold_energy;
   Real _energy_change;
 
-  // const MaterialProperty<Real> & _elastic_energy;
-  const MaterialProperty<Real> & _n_gas;
-  const MaterialProperty<Real> & _rate_coefficient;
-  const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
+  const ADMaterialProperty<Real> & _n_gas;
+  const ADMaterialProperty<Real> & _rate_coefficient;
 
-  const VariableValue & _em;
-  const VariableValue & _v;
-  const VariableGradient & _grad_em;
-  unsigned int _em_id;
-  unsigned int _v_id;
+  const ADVariableValue & _em;
+  const ADVariableValue & _v;
+  const ADVariableGradient & _grad_em;
 };
-
-#endif /* ELECTRONENERGYTERMRATE_H */

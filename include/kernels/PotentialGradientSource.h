@@ -8,31 +8,21 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef POTENTIALGRADIENTSOURCE_H
-#define POTENTIALGRADIENTSOURCE_H
+#pragma once
 
-#include "Kernel.h"
-
-class PotentialGradientSource;
-
-template <>
-InputParameters validParams<PotentialGradientSource>();
+#include "ADKernel.h"
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
 
-class PotentialGradientSource : public Kernel
+class PotentialGradientSource : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   PotentialGradientSource(const InputParameters & parameters);
-  virtual ~PotentialGradientSource();
 
 protected:
-  virtual Real computeQpResidual() override;
-  virtual Real computeQpJacobian() override;
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar) override;
+  virtual ADReal computeQpResidual() override;
 
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
+  const ADVariableGradient & _grad_potential;
 };
-
-#endif /* POTENTIALGRADIENTSOURCE_H */

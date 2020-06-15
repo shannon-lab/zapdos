@@ -8,31 +8,29 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef COEFFDIFFUSION_H
-#define COEFFDIFFUSION_H
+#pragma once
 
-#include "Diffusion.h"
+#include "ADKernel.h"
 
-class CoeffDiffusion;
+/*
+* This diffusion kernel should only be used with species whose values are in
+* the logarithmic form.
+*/
 
-template <>
-InputParameters validParams<CoeffDiffusion>();
-
-// This diffusion kernel should only be used with species whose values are in the logarithmic form.
-
-class CoeffDiffusion : public Diffusion
+class CoeffDiffusion : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   CoeffDiffusion(const InputParameters & parameters);
-  virtual ~CoeffDiffusion();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
+private:
+  /// Position units
+  const Real _r_units;
 
-  const MaterialProperty<Real> & _diffusivity;
+  /// The diffusion coefficient (either constant or mixture-averaged)
+  const ADMaterialProperty<Real> & _diffusivity;
 };
-
-#endif /* COEFFDIFFUSION_H */

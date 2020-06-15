@@ -12,13 +12,10 @@
 
 registerADMooseObject("ZapdosApp", ADTimeDerivativeLog);
 
-defineADLegacyParams(ADTimeDerivativeLog);
-
 InputParameters
 ADTimeDerivativeLog::validParams()
 {
   InputParameters params = ADTimeDerivative::validParams();
-  // params.addParam<bool>("lumping", false, "True for mass matrix lumping, false otherwise.");
   params.addClassDescription("Generic accumulation term for variables in log form.");
   return params;
 }
@@ -28,8 +25,6 @@ ADTimeDerivativeLog::ADTimeDerivativeLog(const InputParameters & parameters)
 {
 }
 
-// ADRealVectorValue
-// ADTimeDerivativeLog::precomputeQpResidual()
 ADReal
 ADTimeDerivativeLog::precomputeQpResidual()
 {

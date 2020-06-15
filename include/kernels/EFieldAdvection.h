@@ -8,37 +8,27 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef EFIELDADVECTION_H
-#define EFIELDADVECTION_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class EFieldAdvection;
-
-template <>
-InputParameters validParams<EFieldAdvection>();
-
-class EFieldAdvection : public Kernel
+class EFieldAdvection : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   EFieldAdvection(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-
-  // Material properties
-
-  Real _r_units;
-
-  const MaterialProperty<Real> & _mu;
-  const MaterialProperty<Real> & _sign;
+  virtual ADReal computeQpResidual() override;
 
 private:
-  // Coupled variables
-  unsigned int _potential_id;
-  const VariableGradient & _grad_potential;
-};
+  /// Position units
+  const Real _r_units;
 
-#endif // EFIELDADVECTION_H
+  /// The diffusion coefficient (either constant or mixture-averaged)
+  const ADMaterialProperty<Real> & _mu;
+  const MaterialProperty<Real> & _sign;
+
+  const ADVariableGradient & _grad_potential;
+};

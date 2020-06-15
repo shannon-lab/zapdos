@@ -8,39 +8,26 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef EFIELDARTDIFF_H
-#define EFIELDARTDIFF_H
+#pragma once
 
-// Including the "Diffusion" Kernel here so we can extend it
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class EFieldArtDiff;
-
-template <>
-InputParameters validParams<EFieldArtDiff>();
-
-class EFieldArtDiff : public Kernel
+class EFieldArtDiff : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   EFieldArtDiff(const InputParameters & parameters);
-  virtual ~EFieldArtDiff();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  // Coupled variables
+  /// Coupled variables
+  const ADVariableGradient & _grad_potential;
 
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
+  const Real & _scale;
+  const Real _r_units;
 
-  Real _scale;
-  Real _r_units;
-
-  // Material Properties
-
-  const MaterialProperty<Real> & _mu;
+  /// Material Properties
+  const ADMaterialProperty<Real> & _mu;
 };
-
-#endif /* EFIELDARTDIFF_H */

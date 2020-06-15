@@ -10,25 +10,19 @@
 
 #pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class AccelerationByAveraging;
-
-template <>
-InputParameters validParams<AccelerationByAveraging>();
-
-class AccelerationByAveraging : public Kernel
+class AccelerationByAveraging : public ADKernel
 {
 public:
+  static InputParameters validParams();
   AccelerationByAveraging(const InputParameters & parameters);
-  virtual ~AccelerationByAveraging();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual();
 
-  const VariableValue & _density_at_start_cycle;
-  const VariableValue & _density_at_end_cycle;
-  Real _time_average;
-  Real _time_accleration;
+  const ADVariableValue & _density_at_start_cycle;
+  const ADVariableValue & _density_at_end_cycle;
+  const Real & _time_average;
+  const Real & _time_acceleration;
 };

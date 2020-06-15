@@ -8,44 +8,33 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef DRIFTDIFFUSION_H
-#define DRIFTDIFFUSION_H
+#pragma once
 
-#include "Kernel.h"
-
-class DriftDiffusion;
-
-template <>
-InputParameters validParams<DriftDiffusion>();
+#include "ADKernel.h"
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
 
-class DriftDiffusion : public Kernel
+class DriftDiffusion : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   DriftDiffusion(const InputParameters & parameters);
-  virtual ~DriftDiffusion();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
+  const Real _r_units;
 
-  const MaterialProperty<Real> & _mu;
+  const ADMaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sign;
-  MaterialProperty<Real> _user_mu;
+  ADMaterialProperty<Real> _user_mu;
   MaterialProperty<Real> _user_sign;
 
-  const MaterialProperty<Real> & _diffusivity;
-  MaterialProperty<Real> _user_diff;
+  const ADMaterialProperty<Real> & _diffusivity;
+  ADMaterialProperty<Real> _user_diff;
 
   unsigned int _potential_id;
-  const VariableGradient & _grad_potential;
-  VariableGradient _minus_e_field;
-
-  Real _d_diffusivity_d_u;
+  const ADVariableGradient & _grad_potential;
+  ADVariableGradient _minus_e_field;
 };
-
-#endif /* DRIFTDIFFUSION_H */

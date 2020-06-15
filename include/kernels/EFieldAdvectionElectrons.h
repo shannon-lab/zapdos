@@ -8,45 +8,27 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef EFIELDADVECTIONELECTRONS_H
-#define EFIELDADVECTIONELECTRONS_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class EFieldAdvectionElectrons;
-
-template <>
-InputParameters validParams<EFieldAdvectionElectrons>();
-
-class EFieldAdvectionElectrons : public Kernel
+class EFieldAdvectionElectrons : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   EFieldAdvectionElectrons(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  Real _position_units;
+  const Real _position_units;
 
-  // Material properties
-
-  const MaterialProperty<Real> & _muem;
-  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
+  /// Material properties
+  const ADMaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _sign;
 
-private:
-  // Coupled variables
-  unsigned int _potential_id;
-  const VariableGradient & _grad_potential;
-  const VariableValue & _mean_en;
-  unsigned int _mean_en_id;
-
-  Real _d_actual_mean_en_d_mean_en;
-  Real _d_muem_d_mean_en;
-  Real _d_actual_mean_en_d_u;
-  Real _d_muem_d_u;
+  /// Coupled variables
+  const ADVariableGradient & _grad_potential;
+  const ADVariableValue & _mean_en;
 };
-
-#endif // EFIELDADVECTIONELECTRONS_H

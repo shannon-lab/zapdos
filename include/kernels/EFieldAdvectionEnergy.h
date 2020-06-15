@@ -8,45 +8,27 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef EFIELDADVECTIONENERGY_H
-#define EFIELDADVECTIONENERGY_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernelGrad.h"
 
-class EFieldAdvectionEnergy;
-
-template <>
-InputParameters validParams<EFieldAdvectionEnergy>();
-
-class EFieldAdvectionEnergy : public Kernel
+class EFieldAdvectionEnergy : public ADKernelGrad
 {
 public:
+  static InputParameters validParams();
+
   EFieldAdvectionEnergy(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  ADRealVectorValue precomputeQpResidual() override;
 
-  // Material properties
+  const Real _r_units;
 
-  Real _r_units;
-
-  const MaterialProperty<Real> & _muel;
-  const MaterialProperty<Real> & _d_muel_d_actual_mean_en;
+  /// Material properties
+  const ADMaterialProperty<Real> & _muel;
   const MaterialProperty<Real> & _sign;
 
-private:
-  // Coupled variables
-  unsigned int _potential_id;
-  const VariableGradient & _grad_potential;
-  const VariableValue & _em;
-  unsigned int _em_id;
-
-  Real _d_actual_mean_en_d_em;
-  Real _d_muel_d_em;
-  Real _d_actual_mean_en_d_u;
-  Real _d_muel_d_u;
+  /// Coupled variables
+  const ADVariableGradient & _grad_potential;
+  const ADVariableValue & _em;
 };
-
-#endif // EFIELDADVECTIONENERGY_H

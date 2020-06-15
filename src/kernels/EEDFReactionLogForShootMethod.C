@@ -10,21 +10,17 @@
 
 #include "EEDFReactionLogForShootMethod.h"
 
-// MOOSE includes
-#include "MooseVariable.h"
-
 registerMooseObject("ZapdosApp", EEDFReactionLogForShootMethod);
 
-template <>
 InputParameters
-validParams<EEDFReactionLogForShootMethod>()
+EEDFReactionLogForShootMethod::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("electron", "The electron species variable.");
   params.addRequiredCoupledVar("density", "The accelerated density variable.");
   params.addRequiredCoupledVar("energy", "The energy variable.");
   params.addRequiredParam<std::string>("reaction", "The full reaction equation.");
-  params.addRequiredParam<Real>("coefficient", "The stoichiometric coeffient.");
+  params.addRequiredParam<Real>("coefficient", "The stoichiometric coefficient.");
   params.addParam<std::string>(
       "number",
       "",
@@ -39,57 +35,19 @@ validParams<EEDFReactionLogForShootMethod>()
 }
 
 EEDFReactionLogForShootMethod::EEDFReactionLogForShootMethod(const InputParameters & parameters)
-  : Kernel(parameters),
-    _electron(coupledValue("electron")),
-    _density(coupledValue("density")),
-    _energy(coupledValue("energy")),
-    _electron_id(coupled("electron")),
-    _density_id(coupled("density")),
-    _energy_id(coupled("energy")),
-    _reaction_coeff(getMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
+  : ADKernel(parameters),
+    _electron(adCoupledValue("electron")),
+    _density(adCoupledValue("density")),
+    _energy(adCoupledValue("energy")),
+    _reaction_coeff(getADMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
                                               getParam<std::string>("reaction"))),
-    _d_k_d_en(getMaterialProperty<Real>("d_k" + getParam<std::string>("number") + "_d_en_" +
-                                        getParam<std::string>("reaction"))),
     _stoichiometric_coeff(getParam<Real>("coefficient"))
 {
 }
 
-Real
+ADReal
 EEDFReactionLogForShootMethod::computeQpResidual()
 {
   return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
          std::exp(_electron[_qp]) * _u[_qp];
-}
-
-Real
-EEDFReactionLogForShootMethod::computeQpJacobian()
-{
-  return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
-         std::exp(_electron[_qp]) * _phi[_j][_qp];
-}
-
-Real
-EEDFReactionLogForShootMethod::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  Real actual_mean_en, d_ame_d_electron, d_ame_d_energy;
-
-  if (jvar == _electron_id)
-  {
-    actual_mean_en = std::exp(_energy[_qp] - _electron[_qp]);
-    d_ame_d_electron = -actual_mean_en;
-
-    return -_test[_i][_qp] * _stoichiometric_coeff *
-           (_reaction_coeff[_qp] + (_d_k_d_en[_qp] * d_ame_d_electron)) * _phi[_j][_qp] *
-           std::exp(_electron[_qp]) * _u[_qp];
-  }
-  if (jvar == _energy_id)
-  {
-    actual_mean_en = std::exp(_energy[_qp] - _electron[_qp]);
-    d_ame_d_energy = actual_mean_en;
-
-    return -_test[_i][_qp] * _stoichiometric_coeff * (_d_k_d_en[_qp] * d_ame_d_energy) *
-           _phi[_j][_qp] * std::exp(_electron[_qp]) * _u[_qp];
-  }
-  else
-    return 0.0;
 }

@@ -8,39 +8,28 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef COEFFDIFFUSIONENERGY_H
-#define COEFFDIFFUSIONENERGY_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class CoeffDiffusionEnergy;
+/*
+* This diffusion kernel should only be used with species whose values are in
+* the logarithmic form.
+*/
 
-template <>
-InputParameters validParams<CoeffDiffusionEnergy>();
-
-// This diffusion kernel should only be used with species whose values are in the logarithmic form.
-
-class CoeffDiffusionEnergy : public Kernel
+class CoeffDiffusionEnergy : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   CoeffDiffusionEnergy(const InputParameters & parameters);
-  virtual ~CoeffDiffusionEnergy();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
+  const Real _r_units;
 
-  const MaterialProperty<Real> & _diffel;
-  const MaterialProperty<Real> & _d_diffel_d_actual_mean_en;
+  const ADMaterialProperty<Real> & _diffel;
 
   const VariableValue & _em;
-  unsigned int _em_id;
-
-  Real _d_diffel_d_u;
-  Real _d_diffel_d_em;
 };
-
-#endif /* COEFFDIFFUSIONENERGY_H */

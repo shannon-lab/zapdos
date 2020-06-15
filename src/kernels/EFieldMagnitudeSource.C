@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", EFieldMagnitudeSource);
 
-template <>
 InputParameters
-validParams<EFieldMagnitudeSource>()
+EFieldMagnitudeSource::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("potential", "The electric potential.");
   params.addClassDescription(
       "Electric field magnitude term based on the electrostatic approximation");
@@ -24,32 +23,13 @@ validParams<EFieldMagnitudeSource>()
 }
 
 EFieldMagnitudeSource::EFieldMagnitudeSource(const InputParameters & parameters)
-  : Kernel(parameters),
-    _grad_potential(coupledGradient("potential")),
-    _potential_id(coupled("potential"))
+  : ADKernel(parameters),
+    _grad_potential(adCoupledGradient("potential"))
 {
 }
 
-EFieldMagnitudeSource::~EFieldMagnitudeSource() {}
-
-Real
+ADReal
 EFieldMagnitudeSource::computeQpResidual()
 {
   return -_test[_i][_qp] * _grad_potential[_qp] * _grad_potential[_qp];
-}
-
-Real
-EFieldMagnitudeSource::computeQpJacobian()
-{
-  return 0.;
-}
-
-Real
-EFieldMagnitudeSource::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  if (jvar == _potential_id)
-    return -_test[_i][_qp] * 2. * _grad_potential[_qp] * _grad_phi[_j][_qp];
-
-  else
-    return 0.;
 }

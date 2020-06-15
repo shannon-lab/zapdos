@@ -12,10 +12,6 @@
 
 #include "ADTimeDerivative.h"
 
-class ADTimeDerivativeLog;
-
-declareADValidParams(ADTimeDerivativeLog);
-
 class ADTimeDerivativeLog : public ADTimeDerivative
 {
 public:
@@ -24,8 +20,6 @@ public:
   ADTimeDerivativeLog(const InputParameters & parameters);
 
 protected:
-  // virtual ADRealVectorValue precomputeQpResidual() override;
   virtual ADReal precomputeQpResidual() override;
 
-private:
 };

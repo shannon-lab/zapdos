@@ -8,46 +8,31 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef EXCITATIONREACTION_H
-#define EXCITATIONREACTION_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class ExcitationReaction;
-
-template <>
-InputParameters validParams<ExcitationReaction>();
-
-class ExcitationReaction : public Kernel
+class ExcitationReaction : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   ExcitationReaction(const InputParameters & parameters);
-  virtual ~ExcitationReaction();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
+  const Real _r_units;
+
   const MaterialProperty<Real> & _n_gas;
-  const MaterialProperty<Real> & _diffem;
-  const MaterialProperty<Real> & _muem;
-  const MaterialProperty<Real> & _alpha_source;
-  // const MaterialProperty<Real> & _alpha_sink;
-  const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
-  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
-  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
+  const ADMaterialProperty<Real> & _diffem;
+  const ADMaterialProperty<Real> & _muem;
+  const ADMaterialProperty<Real> & _alpha_source;
 
-  const VariableValue & _mean_en;
-  const VariableGradient & _grad_potential;
-  const VariableValue & _em;
-  const VariableGradient & _grad_em;
-  unsigned int _mean_en_id;
-  unsigned int _potential_id;
-  unsigned int _em_id;
+  const ADVariableValue & _mean_en;
+  const ADVariableGradient & _grad_potential;
+  const ADVariableValue & _em;
+  const ADVariableGradient & _grad_em;
 
-  bool _reactant;
+  const bool & _reactant;
 };
-
-#endif /* EXCITATIONREACTION_H */
