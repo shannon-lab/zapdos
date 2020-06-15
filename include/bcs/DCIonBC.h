@@ -8,36 +8,28 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef DCIONBC_H
-#define DCIONBC_H
+#pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class DCIonBC;
-
-template <>
-InputParameters validParams<DCIonBC>();
-
-class DCIonBC : public IntegratedBC
+class DCIonBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   DCIonBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  const MaterialProperty<Real> & _mu;
+  const Real _r_units;
+
+  /// Coupled variables
+  const ADVariableGradient & _grad_potential;
+
+  /// Material properties
+  const ADMaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sgn;
-  /* const MaterialProperty<Real> & _vthermal_ip; */
+
   Real _a;
-  Real _r_units;
-
-  // coupled variables
-
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
 };
-
-#endif // DCIONBC_H

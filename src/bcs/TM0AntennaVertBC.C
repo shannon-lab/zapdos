@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", TM0AntennaVertBC);
 
-template <>
 InputParameters
-validParams<TM0AntennaVertBC>()
+TM0AntennaVertBC::validParams()
 {
-  InputParameters params = validParams<IntegratedBC>();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("f", "The drive frequency.");
   params.addParam<Real>("eps_r", 1., "The relative permittivity.");
   params.addParam<bool>(
@@ -25,7 +24,7 @@ validParams<TM0AntennaVertBC>()
 }
 
 TM0AntennaVertBC::TM0AntennaVertBC(const InputParameters & parameters)
-  : IntegratedBC(parameters),
+  : ADIntegratedBC(parameters),
     _omega(2. * libMesh::pi * getParam<Real>("f")),
     _eps_r(getParam<Real>("eps_r")),
     _eps0(8.85e-12),
@@ -33,7 +32,7 @@ TM0AntennaVertBC::TM0AntennaVertBC(const InputParameters & parameters)
 {
 }
 
-Real
+ADReal
 TM0AntennaVertBC::computeQpResidual()
 {
   if (_time_dependent)
@@ -42,10 +41,4 @@ TM0AntennaVertBC::computeQpResidual()
 
   else
     return _test[_i][_qp] * (-_u[_qp] / _q_point[_qp](0) + _omega * _eps_r * _eps0);
-}
-
-Real
-TM0AntennaVertBC::computeQpJacobian()
-{
-  return _test[_i][_qp] * (-_phi[_j][_qp] / _q_point[_qp](0));
 }

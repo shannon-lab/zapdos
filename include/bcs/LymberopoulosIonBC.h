@@ -10,29 +10,22 @@
 
 #pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class LymberopoulosIonBC;
-
-template <>
-InputParameters validParams<LymberopoulosIonBC>();
-
-class LymberopoulosIonBC : public IntegratedBC
+class LymberopoulosIonBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   LymberopoulosIonBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
   Real _r_units;
 
   // Coupled variables
+  const ADVariableGradient & _grad_potential;
 
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
-
-  const MaterialProperty<Real> & _mu;
+  const ADMaterialProperty<Real> & _mu;
 };

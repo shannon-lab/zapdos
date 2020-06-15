@@ -8,31 +8,23 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef POTENTIALDRIFTOUTFLOWBC_H
-#define POTENTIALDRIFTOUTFLOWBC_H
+#pragma once
 
-#include "IntegratedBC.h"
-
-class PotentialDriftOutflowBC;
-
-template <>
-InputParameters validParams<PotentialDriftOutflowBC>();
+#include "ADIntegratedBC.h"
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
 
-class PotentialDriftOutflowBC : public IntegratedBC
+class PotentialDriftOutflowBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   PotentialDriftOutflowBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual() override;
-  virtual Real computeQpJacobian() override;
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar) override;
+  virtual ADReal computeQpResidual() override;
 
   int _charge_sign;
   unsigned int _potential_id;
-  const VariableGradient & _grad_potential;
+  const ADVariableGradient & _grad_potential;
 };
-
-#endif /* POTENTIALDRIFTOUTFLOWBC_H */

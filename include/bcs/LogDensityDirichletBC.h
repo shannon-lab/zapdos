@@ -8,30 +8,22 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef LOGDENSITYDIRICHLETBC_H
-#define LOGDENSITYDIRICHLETBC_H
+#pragma once
 
-#include "NodalBC.h"
-
-// Forward Declarations
-class LogDensityDirichletBC;
-
-template <>
-InputParameters validParams<LogDensityDirichletBC>();
+#include "ADNodalBC.h"
 
 /**
  * Implements a simple coupled boundary condition where u=v on the boundary.
  */
-class LogDensityDirichletBC : public NodalBC
+class LogDensityDirichletBC : public ADNodalBC
 {
 public:
+  static InputParameters validParams();
+
   LogDensityDirichletBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 
   Real _value;
 };
-
-#endif // LogDensityDirichletBC_H

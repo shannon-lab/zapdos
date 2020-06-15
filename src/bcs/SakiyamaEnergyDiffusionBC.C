@@ -10,16 +10,12 @@
 
 #include "SakiyamaEnergyDiffusionBC.h"
 
-// MOOSE includes
-#include "MooseVariable.h"
-
 registerMooseObject("ZapdosApp", SakiyamaEnergyDiffusionBC);
 
-template <>
 InputParameters
-validParams<SakiyamaEnergyDiffusionBC>()
+SakiyamaEnergyDiffusionBC::validParams()
 {
-  InputParameters params = validParams<IntegratedBC>();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Kinetic advective electron energy boundary condition"
@@ -28,24 +24,20 @@ validParams<SakiyamaEnergyDiffusionBC>()
 }
 
 SakiyamaEnergyDiffusionBC::SakiyamaEnergyDiffusionBC(const InputParameters & parameters)
-  : IntegratedBC(parameters),
+  : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
 
     // Coupled Variables
-    _em(coupledValue("em")),
-    _em_id(coupled("em")),
+    _em(adCoupledValue("em")),
 
     _massem(getMaterialProperty<Real>("massem")),
     _e(getMaterialProperty<Real>("e")),
-    _a(0.5),
-    _v_thermal(0),
-    _d_v_thermal_d_u(0),
-    _d_v_thermal_d_em(0)
+    _v_thermal(0)
 {
 }
 
-Real
+ADReal
 SakiyamaEnergyDiffusionBC::computeQpResidual()
 {
 
@@ -53,36 +45,4 @@ SakiyamaEnergyDiffusionBC::computeQpResidual()
       std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * ((5.0 / 3.0) * 0.25 * _v_thermal * std::exp(_u[_qp]));
-}
-
-Real
-SakiyamaEnergyDiffusionBC::computeQpJacobian()
-{
-
-  _v_thermal =
-      std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
-  _d_v_thermal_d_u = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) /
-                     (M_PI * _massem[_qp]) * _phi[_j][_qp];
-
-  return _test[_i][_qp] * _r_units *
-         ((5.0 / 3.0) * 0.25 * _d_v_thermal_d_u * std::exp(_u[_qp]) +
-          (5.0 / 3.0) * 0.25 * _v_thermal * std::exp(_u[_qp]) * _phi[_j][_qp]);
-}
-
-Real
-SakiyamaEnergyDiffusionBC::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  if (jvar == _em_id)
-  {
-
-    _v_thermal =
-        std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
-    _d_v_thermal_d_em = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) /
-                        (M_PI * _massem[_qp]) * -_phi[_j][_qp];
-
-    return _test[_i][_qp] * _r_units * ((5.0 / 3.0) * 0.25 * _d_v_thermal_d_em * std::exp(_u[_qp]));
-  }
-
-  else
-    return 0.0;
 }

@@ -8,46 +8,33 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef HAGELAARELECTRONBC_H
-#define HAGELAARELECTRONBC_H
+#pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class HagelaarElectronBC;
-
-template <>
-InputParameters validParams<HagelaarElectronBC>();
-
-class HagelaarElectronBC : public IntegratedBC
+class HagelaarElectronBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   HagelaarElectronBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
-  Real _r;
+  const Real _r_units;
+  const Real & _r;
 
-  // Coupled variables
+  /// Coupled variables
+  const ADVariableGradient & _grad_potential;
+  const ADVariableValue & _mean_en;
 
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
-  const VariableValue & _mean_en;
-  unsigned int _mean_en_id;
-
-  const MaterialProperty<Real> & _muem;
-  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
+  /// Material properties
+  const ADMaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _e;
 
   Real _a;
-  Real _v_thermal;
-  Real _d_v_thermal_d_u;
-  Real _d_v_thermal_d_mean_en;
-  Real _actual_mean_en;
-};
+  ADReal _v_thermal;
 
-#endif // HAGELAARELECTRONBC_H
+};

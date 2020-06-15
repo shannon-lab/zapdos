@@ -8,29 +8,22 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef TM0ANTENNAVERTBC_H
-#define TM0ANTENNAVERTBC_H
+#pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class TM0AntennaVertBC;
-
-template <>
-InputParameters validParams<TM0AntennaVertBC>();
-
-class TM0AntennaVertBC : public IntegratedBC
+class TM0AntennaVertBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   TM0AntennaVertBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 
   Real _omega;
   Real _eps_r;
   Real _eps0;
   bool _time_dependent;
 };
-
-#endif // TM0ANTENNAVERTBC_H

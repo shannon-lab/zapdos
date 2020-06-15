@@ -10,16 +10,12 @@
 
 #include "DriftDiffusionDoNothingBC.h"
 
-// MOOSE includes
-#include "MooseVariable.h"
-
 registerMooseObject("ZapdosApp", DriftDiffusionDoNothingBC);
 
-template <>
 InputParameters
-validParams<DriftDiffusionDoNothingBC>()
+DriftDiffusionDoNothingBC::validParams()
 {
-  InputParameters params = validParams<IntegratedBC>();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addCoupledVar(
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
@@ -36,21 +32,20 @@ validParams<DriftDiffusionDoNothingBC>()
 }
 
 DriftDiffusionDoNothingBC::DriftDiffusionDoNothingBC(const InputParameters & parameters)
-  : IntegratedBC(parameters),
+  : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
 
-    _mu(getParam<bool>("use_material_props") ? getMaterialProperty<Real>("mu" + _var.name())
+    _mu(getParam<bool>("use_material_props") ? getADMaterialProperty<Real>("mu" + _var.name())
                                              : _user_mu),
     _sign(getParam<bool>("use_material_props") ? getMaterialProperty<Real>("sgn" + _var.name())
                                                : _user_sign),
     _diffusivity(getParam<bool>("use_material_props")
-                     ? getMaterialProperty<Real>("diff" + _var.name())
+                     ? getADMaterialProperty<Real>("diff" + _var.name())
                      : _user_diff),
 
     // Coupled variables
-    _potential_id(coupled("potential")),
-    _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _minus_e_field)
+    _grad_potential(isCoupled("potential") ? adCoupledGradient("potential") : _minus_e_field)
 {
   if (!(isCoupled("potential") || parameters.isParamSetByUser("EField")))
     mooseError("You must either couple in a potential variable or set an EField.");
@@ -71,38 +66,11 @@ DriftDiffusionDoNothingBC::DriftDiffusionDoNothingBC(const InputParameters & par
   }
 }
 
-DriftDiffusionDoNothingBC::~DriftDiffusionDoNothingBC() {}
-
-Real
+ADReal
 DriftDiffusionDoNothingBC::computeQpResidual()
 {
   return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * -_grad_potential[_qp] * _r_units *
              _normals[_qp] * _test[_i][_qp] * _r_units -
          _diffusivity[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _r_units * _normals[_qp] *
              _test[_i][_qp] * _r_units;
-}
-
-Real
-DriftDiffusionDoNothingBC::computeQpJacobian()
-{
-  return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * _phi[_j][_qp] * -_grad_potential[_qp] *
-             _r_units * _normals[_qp] * _test[_i][_qp] * _r_units -
-         _diffusivity[_qp] *
-             (std::exp(_u[_qp]) * _grad_phi[_j][_qp] * _r_units +
-              std::exp(_u[_qp]) * _phi[_j][_qp] * _grad_u[_qp] * _r_units) *
-             _normals[_qp] * _test[_i][_qp] * _r_units;
-}
-
-Real
-DriftDiffusionDoNothingBC::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  if (jvar == _potential_id)
-  {
-    return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * -_grad_phi[_j][_qp] * _r_units *
-           _normals[_qp] * _test[_i][_qp] * _r_units;
-  }
-  else
-  {
-    return 0.;
-  }
 }

@@ -10,45 +10,35 @@
 
 #pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class LymberopoulosElectronBC;
-
-template <>
-InputParameters validParams<LymberopoulosElectronBC>();
-
-class LymberopoulosElectronBC : public IntegratedBC
+class LymberopoulosElectronBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   LymberopoulosElectronBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
   Real _r_units;
   Real _ks;
   Real _gamma;
 
   // Coupled variables
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
+  const ADVariableGradient & _grad_potential;
   std::vector<MooseVariable *> _ion_var;
-  std::vector<const VariableValue *> _ion;
+  std::vector<const ADVariableValue *> _ion;
 
   Real _sign;
 
   std::vector<const MaterialProperty<Real> *> _sgnion;
-  std::vector<const MaterialProperty<Real> *> _muion;
+  std::vector<const ADMaterialProperty<Real> *> _muion;
 
-  std::vector<unsigned int> _ion_id;
   unsigned int _num_ions;
   unsigned int _ip_index;
   std::vector<unsigned int>::iterator _iter;
 
-  RealVectorValue _ion_flux;
-  RealVectorValue _d_ion_flux_d_V;
-  RealVectorValue _d_ion_flux_d_ion;
+  ADRealVectorValue _ion_flux;
 };
-

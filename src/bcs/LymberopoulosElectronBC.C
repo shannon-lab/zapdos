@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", LymberopoulosElectronBC);
 
-template <>
 InputParameters
-validParams<LymberopoulosElectronBC>()
+LymberopoulosElectronBC::validParams()
 {
-  InputParameters params = validParams<IntegratedBC>();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("ks", "The recombination coefficient");
   params.addRequiredParam<Real>("gamma", "The secondary electron coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
@@ -28,15 +27,14 @@ validParams<LymberopoulosElectronBC>()
 }
 
 LymberopoulosElectronBC::LymberopoulosElectronBC(const InputParameters & parameters)
-  : IntegratedBC(parameters),
+  : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
     _ks(getParam<Real>("ks")),
     _gamma(getParam<Real>("gamma")),
 
     // Coupled Variables
-    _grad_potential(coupledGradient("potential")),
-    _potential_id(coupled("potential")),
+    _grad_potential(adCoupledGradient("potential")),
 
     _sign(1)
 {
@@ -45,7 +43,6 @@ LymberopoulosElectronBC::LymberopoulosElectronBC(const InputParameters & paramet
   // Resize the vectors to store _num_ions values:
   _ion.resize(_num_ions);
   _ion_var.resize(_num_ions);
-  _ion_id.resize(_num_ions);
   _muion.resize(_num_ions);
   _sgnion.resize(_num_ions);
 
@@ -57,14 +54,13 @@ LymberopoulosElectronBC::LymberopoulosElectronBC(const InputParameters & paramet
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
     _ion_var[i] = getVar("ion", i);
-    _ion[i] = &coupledValue("ion", i);
-    _ion_id[i] = _ion_var[i]->number();
-    _muion[i] = &getMaterialProperty<Real>("mu" + (*getVar("ion", i)).name());
+    _ion[i] = &adCoupledValue("ion", i);
+    _muion[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ion", i)).name());
     _sgnion[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ion", i)).name());
   }
 }
 
-Real
+ADReal
 LymberopoulosElectronBC::computeQpResidual()
 {
   _ion_flux.zero();
@@ -77,40 +73,4 @@ LymberopoulosElectronBC::computeQpResidual()
   return _test[_i][_qp] * _r_units *
          (_sign * _ks * std::exp(_u[_qp]) * _normals[_qp] * _normals[_qp] -
           _gamma * _ion_flux * _normals[_qp]);
-}
-
-Real
-LymberopoulosElectronBC::computeQpJacobian()
-{
-  return _test[_i][_qp] * _r_units *
-         (_sign * _ks * std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp] * _normals[_qp]);
-}
-
-Real
-LymberopoulosElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  _iter = std::find(_ion_id.begin(), _ion_id.end(), jvar);
-  if (jvar == _potential_id)
-  {
-    _d_ion_flux_d_V.zero();
-    for (unsigned int i = 0; i < _num_ions; ++i)
-    {
-      _d_ion_flux_d_V += (*_sgnion[i])[_qp] * (*_muion[i])[_qp] * -_grad_phi[_j][_qp] * _r_units *
-                         std::exp((*_ion[i])[_qp]);
-    }
-
-    return _test[_i][_qp] * _r_units * ((-_gamma * _d_ion_flux_d_V * _normals[_qp]));
-  }
-  else if (_iter != _ion_id.end())
-  {
-    _ip_index = std::distance(_ion_id.begin(), _iter);
-
-    _d_ion_flux_d_ion =
-        ((*_sgnion[_ip_index])[_qp] * (*_muion[_ip_index])[_qp] * -_grad_potential[_qp] * _r_units *
-         std::exp((*_ion[_ip_index])[_qp]) * _phi[_j][_qp]);
-
-    return _test[_i][_qp] * _r_units * ((-_gamma * _d_ion_flux_d_ion * _normals[_qp]));
-  }
-  else
-    return 0.0;
 }

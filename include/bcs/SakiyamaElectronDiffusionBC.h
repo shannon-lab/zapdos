@@ -10,36 +10,25 @@
 
 #pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class SakiyamaElectronDiffusionBC;
-
-template <>
-InputParameters validParams<SakiyamaElectronDiffusionBC>();
-
-class SakiyamaElectronDiffusionBC : public IntegratedBC
+class SakiyamaElectronDiffusionBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   SakiyamaElectronDiffusionBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
   Real _r_units;
 
   // Coupled variables
-
-  const VariableValue & _mean_en;
-  unsigned int _mean_en_id;
+  const ADVariableValue & _mean_en;
 
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _e;
 
-  Real _a;
-  Real _v_thermal;
-  Real _d_v_thermal_d_u;
-  Real _d_v_thermal_d_mean_en;
-  Real _actual_mean_en;
+  ADReal _v_thermal;
 };

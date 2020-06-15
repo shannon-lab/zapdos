@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", LogDensityDirichletBC);
 
-template <>
 InputParameters
-validParams<LogDensityDirichletBC>()
+LogDensityDirichletBC::validParams()
 {
-  InputParameters params = validParams<NodalBC>();
+  InputParameters params = ADNodalBC::validParams();
   params.addRequiredParam<Real>("value", "Value of the BC");
   params.addClassDescription("Density Dirichlet boundary condition"
                              "(Densities must be in log form and in moles/m^3)");
@@ -24,18 +23,12 @@ validParams<LogDensityDirichletBC>()
 }
 
 LogDensityDirichletBC::LogDensityDirichletBC(const InputParameters & parameters)
-  : NodalBC(parameters), _value(getParam<Real>("value"))
+  : ADNodalBC(parameters), _value(getParam<Real>("value"))
 {
 }
 
-Real
+ADReal
 LogDensityDirichletBC::computeQpResidual()
 {
-  return (std::exp(_u[_qp]) * 6.022e23) - _value;
-}
-
-Real
-LogDensityDirichletBC::computeQpJacobian()
-{
-  return (std::exp(_u[_qp]) * 6.022e23);
+  return (std::exp(_u) * 6.022e23) - _value;
 }

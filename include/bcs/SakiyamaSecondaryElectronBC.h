@@ -10,48 +10,31 @@
 
 #pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class SakiyamaSecondaryElectronBC;
-
-template <>
-InputParameters validParams<SakiyamaSecondaryElectronBC>();
-
-class SakiyamaSecondaryElectronBC : public IntegratedBC
+class SakiyamaSecondaryElectronBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   SakiyamaSecondaryElectronBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
   Real _r_units;
 
   // Coupled variables
 
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
-  unsigned int _mean_en_id;
-  std::vector<MooseVariable *> _ip_var;
-  std::vector<const VariableValue *> _ip;
-  std::vector<const VariableGradient *> _gradip;
+  const ADVariableGradient & _grad_potential;
+  std::vector<const ADVariableValue *> _ip;
 
   Real _a;
-  RealVectorValue _ion_flux;
-  RealVectorValue _d_ion_flux_d_potential;
-  RealVectorValue _d_ion_flux_d_ip;
-  Real _actual_mean_en;
+  ADRealVectorValue _ion_flux;
   Real _user_se_coeff;
 
   std::vector<const MaterialProperty<Real> *> _sgnip;
-  std::vector<const MaterialProperty<Real> *> _muip;
-  std::vector<const MaterialProperty<Real> *> _Tip;
-  std::vector<const MaterialProperty<Real> *> _massip;
+  std::vector<const ADMaterialProperty<Real> *> _muip;
 
-  std::vector<unsigned int> _ion_id;
   unsigned int _num_ions;
-  unsigned int _ip_index;
-  std::vector<unsigned int>::iterator _iter;
 };
