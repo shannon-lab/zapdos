@@ -24,10 +24,14 @@ public:
 protected:
   virtual void computeQpProperties() override;
 
-  ADLinearInterpolation _mu_interpolation;
-  ADLinearInterpolation _diff_interpolation;
-  std::unique_ptr<LinearInterpolation> _mu_interpolation2;
-  std::unique_ptr<LinearInterpolation> _diff_interpolation2;
+  //LinearInterpolation _mu_interpolation;
+  //LinearInterpolation _diff_interpolation;
+  SplineInterpolation _mu_interpolation;
+  SplineInterpolation _diff_interpolation;
+  //std::unique_ptr<LinearInterpolation> _mu_interpolation2;
+  //std::unique_ptr<LinearInterpolation> _diff_interpolation2;
+  SplineInterpolation _mu_interpolation2;
+  SplineInterpolation _diff_interpolation2;
 
   /* bool _townsend; */
   std::string _potential_units;
@@ -40,16 +44,16 @@ protected:
   bool _use_moles;
 
   ADMaterialProperty<Real> & _muem;
-  ADMaterialProperty<Real> & _d_muem_d_actual_mean_en;
+  MaterialProperty<Real> & _d_muem_d_actual_mean_en;
   ADMaterialProperty<Real> & _diffem;
-  ADMaterialProperty<Real> & _d_diffem_d_actual_mean_en;
+  MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
   ADMaterialProperty<Real> & _mumean_en;
 
   ADMaterialProperty<Real> & _diffmean_en;
   MaterialProperty<Real> & _sgnmean_en;
   MaterialProperty<Real> & _sgnem;
-  ADMaterialProperty<Real> & _d_mumean_en_d_actual_mean_en;
-  ADMaterialProperty<Real> & _d_diffmean_en_d_actual_mean_en;
+  MaterialProperty<Real> & _d_mumean_en_d_actual_mean_en;
+  MaterialProperty<Real> & _d_diffmean_en_d_actual_mean_en;
   const ADVariableValue & _em;
   const ADVariableValue & _mean_en;
 };

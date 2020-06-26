@@ -41,8 +41,8 @@ HagelaarEnergyBC::HagelaarEnergyBC(const InputParameters & parameters)
 
     _massem(getMaterialProperty<Real>("massem")),
     _e(getMaterialProperty<Real>("e")),
-    _se_coeff(getMaterialProperty<Real>("se_coeff")),
-    _se_energy(getMaterialProperty<Real>("se_energy")),
+    //_se_coeff(getMaterialProperty<Real>("se_coeff")),
+    //_se_energy(getMaterialProperty<Real>("se_energy")),
     _mumean_en(getMaterialProperty<Real>("mumean_en")),
     _d_mumean_en_d_actual_mean_en(getMaterialProperty<Real>("d_mumean_en_d_actual_mean_en")),
     _a(0.5),

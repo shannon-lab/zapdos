@@ -60,7 +60,11 @@ validParams<AddDriftDiffusionAction>()
       " charged particle.");
   params.addParam<NonlinearVariableName>("electrons",
                                          "User given variable name for energy dependent electrons");
+  params.addParam<std::vector<NonlinearVariableName>>("reference_residual",
+                                                      "The reference residual.");
+  // params.addParam<std::vector<TagName>>("extra_tags", "The extra tags.");
   params.addParam<NonlinearVariableName>("potential", "The gives the potential a variable name");
+  params.addParam<bool>("use_ad", false, "Whether or not to use automatic differentiation.");
   params.addParam<bool>(
       "Is_potential_unique",
       false,
@@ -90,7 +94,14 @@ validParams<AddDriftDiffusionAction>()
   return params;
 }
 
-AddDriftDiffusionAction::AddDriftDiffusionAction(InputParameters params) : Action(params) {}
+AddDriftDiffusionAction::AddDriftDiffusionAction(InputParameters params)
+  : Action(params), _use_ad(getParam<bool>("use_ad"))
+{
+  if (_use_ad)
+    _ad_prepend = "AD";
+  else
+    _ad_prepend = "";
+}
 
 void
 AddDriftDiffusionAction::act()
@@ -291,17 +302,29 @@ AddDriftDiffusionAction::act()
 
   else if (_current_task == "add_kernel")
   {
+    // This section adds all necessary kernels for electrons, ions, neutrals,
+    // and electron temperature.
+    // Note that the same kernels are added for electrons, temperature, and
+    // ions when using automatic differentiation. (Same with neutrals, but
+    // with no advection term.)
+
     // Adding energy dependent electron kernels, if present in block
     if (em_present)
     {
-      addElectronKernels(em_name, potential_name, mean_en_name, Using_offset);
+      if (_use_ad)
+        addADKernels(em_name, potential_name, Using_offset, true, false);
+      else
+        addElectronKernels(em_name, potential_name, mean_en_name, Using_offset);
       addChargeSourceKernels(potential_name, em_name);
     }
 
     // Adding energy electron mean energy kernels, if present in block
     if (mean_en_present)
     {
-      addMeanEnergyKernels(em_name, potential_name, mean_en_name, Using_offset);
+      if (_use_ad)
+        addADKernels(mean_en_name, potential_name, Using_offset, true, true);
+      else
+        addMeanEnergyKernels(em_name, potential_name, mean_en_name, Using_offset);
     }
 
     // Adding Kernels for the charged particle
@@ -309,7 +332,10 @@ AddDriftDiffusionAction::act()
     {
       std::string ion_name = Ions[cur_num];
 
-      addChargedParticlesKernels(ion_name, potential_name, Using_offset);
+      if (_use_ad)
+        addADKernels(ion_name, potential_name, Using_offset, true, false);
+      else
+        addChargedParticlesKernels(ion_name, potential_name, Using_offset);
       addChargeSourceKernels(potential_name, ion_name);
     }
 
@@ -333,7 +359,10 @@ AddDriftDiffusionAction::act()
     {
       std::string neutral_name = Neutrals[cur_num];
 
-      addNeutralParticlesKernels(neutral_name, Using_offset);
+      if (_use_ad)
+        addADKernels(neutral_name, potential_name, Using_offset, false, false);
+      else
+        addNeutralParticlesKernels(neutral_name, Using_offset);
     }
 
     // Adding Kernels for charged particles who are effective by an effective potential
@@ -585,6 +614,10 @@ AddDriftDiffusionAction::addMeanEnergyKernels(const std::string & em_name,
   InputParameters params = _factory.getValidParams("ElectronTimeDerivative");
   params.set<NonlinearVariableName>("variable") = {mean_en_name};
   params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+  /*
+  params.set<std::vector<TagName>>("extra_vector_tags") =
+      getParam<std::vector<TagName>>("extra_tags");
+      */
   _problem->addKernel("ElectronTimeDerivative", mean_en_name + "_time_deriv", params);
 
   InputParameters params1 = _factory.getValidParams("EFieldAdvectionEnergy");
@@ -593,6 +626,10 @@ AddDriftDiffusionAction::addMeanEnergyKernels(const std::string & em_name,
   params1.set<std::vector<VariableName>>("em") = {em_name};
   params1.set<Real>("position_units") = getParam<Real>("position_units");
   params1.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+  /*
+  params1.set<std::vector<TagName>>("extra_vector_tags") =
+      getParam<std::vector<TagName>>("extra_tags");
+  */
   _problem->addKernel("EFieldAdvectionEnergy", mean_en_name + "_advection", params1);
 
   InputParameters params2 = _factory.getValidParams("CoeffDiffusionEnergy");
@@ -600,6 +637,10 @@ AddDriftDiffusionAction::addMeanEnergyKernels(const std::string & em_name,
   params2.set<std::vector<VariableName>>("em") = {em_name};
   params2.set<Real>("position_units") = getParam<Real>("position_units");
   params2.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+  /*
+  params2.set<std::vector<TagName>>("extra_vector_tags") =
+      getParam<std::vector<TagName>>("extra_tags");
+  */
   _problem->addKernel("CoeffDiffusionEnergy", mean_en_name + "_diffusion", params2);
 
   InputParameters params3 = _factory.getValidParams("JouleHeating");
@@ -609,15 +650,25 @@ AddDriftDiffusionAction::addMeanEnergyKernels(const std::string & em_name,
   params3.set<std::string>("potential_units") = getParam<std::string>("potential_units");
   params3.set<Real>("position_units") = getParam<Real>("position_units");
   params3.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+  /*
+  params3.set<std::vector<TagName>>("extra_vector_tags") =
+      getParam<std::vector<TagName>>("extra_tags");
+      */
   _problem->addKernel("JouleHeating", mean_en_name + "_joule_heating", params3);
 
   if (Using_offset)
   {
     InputParameters params4 = _factory.getValidParams("LogStabilizationMoles");
     params4.set<NonlinearVariableName>("variable") = {mean_en_name};
-    params4.set<Real>("offset") = (getParam<Real>("offset") - 5.0);
+    // params4.set<Real>("offset") = (getParam<Real>("offset") - 5.0);
+    // params4.set<Real>("offset") = (getParam<Real>("offset") - 2.0);
+    params4.set<Real>("offset") = getParam<Real>("offset");
     params4.set<std::vector<SubdomainName>>("block") =
         getParam<std::vector<SubdomainName>>("block");
+    /*
+    params4.set<std::vector<TagName>>("extra_vector_tags") =
+        getParam<std::vector<TagName>>("extra_tags");
+        */
     _problem->addKernel("LogStabilizationMoles", mean_en_name + "_log_stabilization", params4);
   }
 }
@@ -648,6 +699,70 @@ AddDriftDiffusionAction::addChargeSourceADKernels(const std::string & potential_
                                              const std::string & charged_particle_name)
 {
 }*/
+
+// Adding Kernels for the electrons
+void
+AddDriftDiffusionAction::addADKernels(const std::string & name,
+                                      const std::string & potential_name,
+                                      const bool & Using_offset,
+                                      const bool & charged,
+                                      const bool & energy)
+{
+  _problem->haveADObjects(true);
+
+  InputParameters params = _factory.getValidParams("ADTimeDerivativeLog");
+  params.set<NonlinearVariableName>("variable") = {name};
+  params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+  _problem->addKernel("ADTimeDerivativeLog", name + "_time_deriv", params);
+
+  if (charged)
+  {
+    InputParameters params1 = _factory.getValidParams("ADEFieldAdvection");
+    params1.set<NonlinearVariableName>("variable") = {name};
+    params1.set<std::vector<VariableName>>("potential") = {potential_name};
+    params1.set<Real>("position_units") = getParam<Real>("position_units");
+    params1.set<std::vector<SubdomainName>>("block") =
+        getParam<std::vector<SubdomainName>>("block");
+    _problem->addKernel("ADEFieldAdvection", name + "_advection", params1);
+    //_problem->haveADObjects(true);
+  }
+
+  InputParameters params2 = _factory.getValidParams("ADCoeffDiffusion");
+  params2.set<NonlinearVariableName>("variable") = {name};
+  params2.set<Real>("position_units") = getParam<Real>("position_units");
+  params2.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+  _problem->addKernel("ADCoeffDiffusion", name + "_diffusion", params2);
+  //_problem->haveADObjects(true);
+
+  if (energy)
+  {
+    InputParameters params3 = _factory.getValidParams("ADJouleHeating");
+    params3.set<NonlinearVariableName>("variable") = {name};
+    params3.set<std::vector<VariableName>>("potential") = {potential_name};
+    params3.set<std::vector<VariableName>>("em") = {getParam<NonlinearVariableName>("electrons")};
+    params3.set<std::string>("potential_units") = getParam<std::string>("potential_units");
+    params3.set<Real>("position_units") = getParam<Real>("position_units");
+    params3.set<std::vector<SubdomainName>>("block") =
+        getParam<std::vector<SubdomainName>>("block");
+    /*
+    params3.set<std::vector<TagName>>("extra_vector_tags") =
+        getParam<std::vector<TagName>>("extra_tags");
+        */
+    _problem->addKernel("ADJouleHeating", name + "_joule_heating", params3);
+    //_problem->haveADObjects(true);
+  }
+
+  if (Using_offset)
+  {
+    InputParameters params4 = _factory.getValidParams("LogStabilizationMoles");
+    params4.set<NonlinearVariableName>("variable") = {name};
+    params4.set<Real>("offset") = getParam<Real>("offset");
+    params4.set<std::vector<SubdomainName>>("block") =
+        getParam<std::vector<SubdomainName>>("block");
+    _problem->addKernel("LogStabilizationMoles", name + "_log_stabilization", params4);
+    //_problem->haveADObjects(true);
+  }
+}
 
 // Adding the Aux kernels to convert scaled position units
 void
@@ -683,7 +798,7 @@ AddDriftDiffusionAction::addCurrent(const std::string & particle_name,
   params.set<std::vector<VariableName>>("density_log") = {particle_name};
   params.set<Real>("position_units") = getParam<Real>("position_units");
   params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-  _problem->addAuxKernel("Current", "Current_" + particle_name, params);
+  _problem->addAuxKernel(_ad_prepend + "Current", "Current_" + particle_name, params);
 }
 
 // Adding the Aux kernels for the Efield

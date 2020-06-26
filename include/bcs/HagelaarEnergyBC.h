@@ -39,8 +39,8 @@ protected:
 
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _e;
-  const MaterialProperty<Real> & _se_coeff;
-  const MaterialProperty<Real> & _se_energy;
+  //const MaterialProperty<Real> & _se_coeff;
+  //const MaterialProperty<Real> & _se_energy;
   const MaterialProperty<Real> & _mumean_en;
   const MaterialProperty<Real> & _d_mumean_en_d_actual_mean_en;
 

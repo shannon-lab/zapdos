@@ -49,6 +49,7 @@ SurfaceCharge::SurfaceCharge(const InputParameters & parameters)
     // Declare material properties
     _sigma(declareProperty<Real>("surface_charge")),
     _sigma_old(getMaterialPropertyOld<Real>("surface_charge")),
+    _sigma_older(getMaterialPropertyOlder<Real>("surface_charge")),
     //_d_sigma_d_potential_old(getMaterialPropertyOld<Real>("d_surface_charge_d_potential")),
     //_d_sigma_d_em_old(getMaterialPropertyOld<Real>("d_surface_charge_d_em")),
     //_d_sigma_d_mean_en_old(getMaterialPropertyOld<Real>("d_surface_charge_d_mean_en")),
@@ -56,6 +57,11 @@ SurfaceCharge::SurfaceCharge(const InputParameters & parameters)
     _d_sigma_d_em(declareProperty<Real>("d_surface_charge_d_em")),
     _d_sigma_d_mean_en(declareProperty<Real>("d_surface_charge_d_mean_en")),
     _d_sigma_d_ion(declareProperty<std::vector<Real>>("d_surface_charge_d_ion")),
+
+    _ion_current(declareProperty<Real>("ion_current")),
+    _electron_current(declareProperty<Real>("electron_current")),
+    _ion_current_old(getMaterialPropertyOld<Real>("ion_current")),
+    _electron_current_old(getMaterialPropertyOld<Real>("electron_current")),
 
     // Potential derivative jacobian terms
     _d_electron_flux_d_potential(0),
@@ -172,6 +178,9 @@ SurfaceCharge::initQpStatefulProperties()
 {
   _sigma[_qp] = 0;
 
+  _ion_current[_qp] = 0;
+  _electron_current[_qp] = 0;
+
   //_d_sigma_d_potential[_qp] = 0;
   //_d_sigma_d_em[_qp] = 0;
   //_d_sigma_d_mean_en[_qp] = 0;
@@ -199,7 +208,10 @@ SurfaceCharge::computeQpProperties()
      * _ion_charge_flux - the total CHARGE flux to the wall. If there are only positive or negative
      * ions this is identical to _ion_flux, but if there is a mix this will be smaller.
      */
+    _positive_ion_flux = 0.0;
+    //_negative_ion_flux = 0.0;
     _ion_flux = 0.0;
+    _n_gamma = 0.0;
     _ion_charge_flux = 0.0;
     _d_ion_flux_d_potential = 0.0;
     _d_ion_charge_flux_d_potential = 0.0;
@@ -223,18 +235,16 @@ SurfaceCharge::computeQpProperties()
         computeComsolFlux();
         break;
     }
-    // Real k1, k2, k3, k4;
-    // Real net_flux;
-    // net_flux = (_ion_charge_flux - _electron_flux) * _q_times_NA;
-
     // Regardless of the case, the surface charge formulation is identical.
+    _ion_current[_qp] = _ion_charge_flux * _q_times_NA;
+    _electron_current[_qp] = -_electron_flux * _q_times_NA;
 
     _sigma[_qp] = _sigma_old[_qp] + (_ion_charge_flux - _electron_flux) * _q_times_NA * _dt;
-    // k1 = net_flux;
-    // k2 = (net_flux + 0.5 * k1 * _dt)*_dt;
-    // k3 = (net_flux + 0.5 * k2 * _dt)*_dt;
-    // k4 = (net_flux + k3 * _dt)*_dt;
-    //_sigma[_qp] = _sigma_old[_qp] + (1.0/6.0)*(k1 + k2 + k3 + k4);
+    //_sigma[_qp] = _sigma_old[_qp] + 1.5 * _dt * (_ion_charge_flux - _electron_flux) * _q_times_NA
+    //-
+    //              0.5 * _dt * _sigma_older[_qp];
+    //_sigma[_qp] = _sigma_old[_qp] + 1.5 * _dt * (_ion_current[_qp] + _electron_current[_qp]) -
+    //              0.5 * _dt * (_ion_current_old[_qp] + _electron_current_old[_qp]);
 
     // The derivative of surface charge w.r.t. potential
     // (Except the _phi and _grad_phi terms, of course.)
@@ -321,21 +331,42 @@ SurfaceCharge::computeHagelaarFlux()
     // calculation, causing a charge imbalance.
     _ion_flux += _single_ion_flux;
 
+    // Here the positive and negative fluxes are split up.
+    // This is done because of secondary electron emission.
+    // (Negative ions do not contribute to secondary electron emission!)
+    if ((*_sgn_ions[i])[_qp] > 0)
+    {
+      _positive_ion_flux += _single_ion_flux;
+
+      _d_ion_flux_d_potential += std::exp((*_ions[i])[_qp]) * (2 * _a - 1) * (*_sgn_ions[i])[_qp] *
+                                 (*_mu_ions[i])[_qp] * _r_units;
+
+      _d_ion_charge_flux_d_potential += (*_sgn_ions[i])[_qp] * std::exp((*_ions[i])[_qp]) *
+                                        (2 * _a - 1) * (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] *
+                                        _r_units;
+    }
+    //else
+    //  _negative_ion_flux += _single_ion_flux;
+
     // _ion_charge_flux is the net charge per area per unit time impacting a given boundary.
     _ion_charge_flux += (*_sgn_ions[i])[_qp] * _single_ion_flux;
 
+    /*
     _d_ion_flux_d_potential += std::exp((*_ions[i])[_qp]) * (2 * _a - 1) * (*_sgn_ions[i])[_qp] *
                                (*_mu_ions[i])[_qp] * _r_units;
 
     _d_ion_charge_flux_d_potential += (*_sgn_ions[i])[_qp] * std::exp((*_ions[i])[_qp]) *
                                       (2 * _a - 1) * (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] *
                                       _r_units;
+                                      */
 
     _d_ion_flux_d_ion[i] = _single_ion_flux * _r_factor_ion;
     _d_ion_charge_flux_d_ion[i] = _d_ion_flux_d_ion[i] * (*_sgn_ions[i])[_qp];
 
     if (_include_secondary_electrons == true && (*_sgn_ions[i])[_qp] >= 0)
     {
+      //_n_gamma += _se_coeff * _single_ion_flux;
+
       _d_n_gamma_d_ion[i] = (1. - _b) * _se_coeff * _d_ion_flux_d_ion[i] /
                             (_muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
                              std::numeric_limits<double>::epsilon());
@@ -359,23 +390,38 @@ SurfaceCharge::computeHagelaarFlux()
   // true. Otherwise the _electron_flux is already correct.
   if (_include_secondary_electrons == true)
   {
+    //_n_gamma *= (1. - _b) / (_muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
+    //                        std::numeric_limits<double>::epsilon());
+    /*
     _n_gamma = (1. - _b) * _se_coeff * _ion_flux /
+               (_muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
+                std::numeric_limits<double>::epsilon());
+                */
+    _n_gamma = (1. - _b) * _se_coeff * _positive_ion_flux /
                (_muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
                 std::numeric_limits<double>::epsilon());
 
     // All derivative terms are missing multiplication by -_grad_phi[_i][_j]. This will be added in
     // the InterfaceKernel
+    /*
     _d_n_gamma_d_potential =
         (1. - _b) * _se_coeff / _muem[_qp] *
         (_d_ion_flux_d_potential / (-_grad_potential[_qp] * _r_units * _normals[_qp] +
                                     std::numeric_limits<double>::epsilon()) -
          _ion_flux / (std::pow(-_grad_potential[_qp] * _r_units * _normals[_qp], 2.) +
                       std::numeric_limits<double>::epsilon()));
+                      */
+    _d_n_gamma_d_potential =
+        (1. - _b) * _se_coeff / _muem[_qp] *
+        (_d_ion_flux_d_potential / (-_grad_potential[_qp] * _r_units * _normals[_qp] +
+                                    std::numeric_limits<double>::epsilon()) -
+         _positive_ion_flux / (std::pow(-_grad_potential[_qp] * _r_units * _normals[_qp], 2.) +
+                      std::numeric_limits<double>::epsilon()));
 
     // Derivative of _n_gamma w.r.t. electron density
     // Note that the SIGN (but not the actual VALUE) of _phi is included here
     _d_n_gamma_d_em =
-        (1. - _b) * _se_coeff * _ion_flux /
+        (1. - _b) * _se_coeff * _positive_ion_flux /
         (-_grad_potential[_qp] * _r_units * _normals[_qp] * (_muem[_qp] * _muem[_qp]) +
          std::numeric_limits<double>::epsilon()) *
         _d_muem_d_actual_mean_en[_qp] * _actual_mean_energy;
@@ -388,7 +434,7 @@ SurfaceCharge::computeHagelaarFlux()
                       */
 
     _d_n_gamma_d_mean_en =
-        (1. - _b) * _se_coeff * _ion_flux /
+        (1. - _b) * _se_coeff * _positive_ion_flux /
         (-_muem[_qp] * _muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
          std::numeric_limits<double>::epsilon()) *
         _d_muem_d_actual_mean_en[_qp] * _actual_mean_energy;
@@ -402,7 +448,7 @@ SurfaceCharge::computeHagelaarFlux()
         */
 
     _electron_flux += (_r_factor_electron * (-0.5 * _ve_thermal * _n_gamma) -
-                       (2.0 / (1 + _r_electron) * (1. - _b) * _se_coeff * _ion_flux));
+                       (2.0 / (1 + _r_electron) * (1. - _b) * _se_coeff * _positive_ion_flux));
 
     _d_electron_flux_d_potential +=
         _r_factor_electron *

@@ -34,6 +34,7 @@ protected:
   int _bc_type;
   MaterialProperty<Real> & _sigma;
   const MaterialProperty<Real> & _sigma_old;
+  const MaterialProperty<Real> & _sigma_older;
   // const MaterialProperty<Real> & _d_sigma_d_potential_old;
   // const MaterialProperty<Real> & _d_sigma_d_em_old;
   // const MaterialProperty<Real> & _d_sigma_d_mean_en_old;
@@ -41,6 +42,10 @@ protected:
   MaterialProperty<Real> & _d_sigma_d_em;
   MaterialProperty<Real> & _d_sigma_d_mean_en;
   MaterialProperty<std::vector<Real>> & _d_sigma_d_ion;
+  MaterialProperty<Real> & _ion_current;
+  MaterialProperty<Real> & _electron_current;
+  const MaterialProperty<Real> & _ion_current_old;
+  const MaterialProperty<Real> & _electron_current_old;
   /*
   MaterialProperty<Real> & _d_electron_flux_d_potential;
   MaterialProperty<Real> & _d_ion_flux_d_potential;
@@ -102,6 +107,7 @@ protected:
   Real _ks;
 
   Real _ion_flux;
+  Real _positive_ion_flux;
   Real _single_ion_flux;
   Real _ion_charge_flux;
   Real _n_gamma;

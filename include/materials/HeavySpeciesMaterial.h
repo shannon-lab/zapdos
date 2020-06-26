@@ -42,6 +42,7 @@ protected:
   const MaterialProperty<Real> & _p_gas;
 
   Real _time_units;
+  bool _compute_ion_temperature;
   bool _calc_mobility;
   bool _calc_diffusivity;
 

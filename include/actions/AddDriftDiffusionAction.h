@@ -41,6 +41,11 @@ protected:
                                     const bool & Using_offset);
   virtual void addChargeSourceKernels(const std::string & potential_name,
                                       const std::string & charged_particle_name);
+  virtual void addADKernels(const std::string & name,
+                            const std::string & potential_name,
+                            const bool & Using_offset,
+                            const bool & charged,
+                            const bool & energy);
   virtual void addPosition(const std::string & position_name, const int & component);
 
   virtual void addDensityLog(const std::string & particle_name);
@@ -49,5 +54,7 @@ protected:
                          const std::string & potential_name,
                          const int & component);
 
+  const bool _use_ad;
+  std::string _ad_prepend;
   // virtual void addEEDFCoefficient(const unsigned & reaction_num);
 };

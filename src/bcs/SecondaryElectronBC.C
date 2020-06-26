@@ -275,7 +275,7 @@ SecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
     else
       _b = 0.0;
 
-    _v_thermal += std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
+    _v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
                             (M_PI * _massem[_qp]));
 
     _d_ion_flux_d_ip = (1.0 - _r_ion) / (1.0 + _r_ion) * std::exp((*_ip[_ip_index])[_qp]) *

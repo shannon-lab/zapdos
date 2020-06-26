@@ -111,7 +111,7 @@ GasElectronMoments::GasElectronMoments(const InputParameters & parameters)
     _massem(declareProperty<Real>("massem")),
     _massGas(declareProperty<Real>("massGas")),
     //_massArp(declareProperty<Real>("massArp")),
-    _se_coeff(declareProperty<Real>("se_coeff")),
+    //_se_coeff(declareProperty<Real>("se_coeff")),
     _work_function(declareProperty<Real>("work_function")),
     _field_enhancement(declareProperty<Real>("field_enhancement")),
 
@@ -247,15 +247,17 @@ GasElectronMoments::computeQpProperties()
     _n_gas[_qp] = _p_gas[_qp] / (_k_boltz[_qp] * _T_gas[_qp]);
   Real _N_inverse = (_k_boltz[_qp] * _T_gas[_qp]) / _p_gas[_qp];
 
-  _se_coeff[_qp] = _user_se_coeff;
+  //_se_coeff[_qp] = _user_se_coeff;
   _work_function[_qp] = _user_work_function;
   _field_enhancement[_qp] = _user_field_enhancement;
 
   _Richardson_coefficient[_qp] = _user_Richardson_coefficient;
   _cathode_temperature[_qp] = _user_cathode_temperature;
 
-  _se_energy[_qp] = 2. * 3. / 2.; // Emi uses 2 Volts coming off the wall (presumably for Te).
+  //_se_energy[_qp] = 2. * 3. / 2.; // Emi uses 2 Volts coming off the wall (presumably for Te).
                                   // Multiply by 3/2 to get mean_en
+  //_se_energy[_qp] = 2.5;
+  _se_energy[_qp] = 1.0;
   _e[_qp] = 1.6e-19;
   _eps[_qp] = 8.85e-12;
   _sgnem[_qp] = -1.;

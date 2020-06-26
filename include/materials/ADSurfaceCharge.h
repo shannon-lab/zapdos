@@ -31,8 +31,10 @@ protected:
   int _bc_type;
   ADMaterialProperty<Real> & _sigma;
   const MaterialProperty<Real> & _sigma_old;
+  MaterialProperty<Real> & _plasma_current;
 
   const bool _include_secondary_electrons;
+  const MaterialProperty<Real> & _se_coeff;
 
   const ADMaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _massem;
@@ -44,7 +46,7 @@ protected:
   ADReal _v_thermal;
   ADReal _ve_thermal;
   const MaterialProperty<Real> & _e;
-  Real _se_coeff;
+  //Real _se_coeff;
   const std::string _potential_units;
   Real _a;
   Real _b;

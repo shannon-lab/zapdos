@@ -112,6 +112,7 @@ dom2Scale=1
   #[../]
   [./out]
     type = Exodus
+    output_material_properties = false
   [../]
 []
 
