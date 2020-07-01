@@ -30,7 +30,7 @@ public:
   ArbitrarilyTiedValueConstraint(const InputParameters & parameters);
   virtual ~ArbitrarilyTiedValueConstraint() {}
 
-  virtual Real computeQpSlaveValue();
+  virtual Real computeQpSecondaryValue();
 
   virtual Real computeQpResidual(Moose::ConstraintType type);
 
