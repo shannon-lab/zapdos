@@ -30,8 +30,6 @@ HeavySpeciesMaterialTempl<is_ad>::validParams()
   params.addParam<Real>("time_units", 1, "Units of time");
   params.addParam<Real>("mobility", "The species mobility (if applicable).");
   params.addParam<Real>("diffusivity", "The species diffusivity (if applicable).");
-  params.addParam<bool>("compute_ion_temperature", false, "Calculates the ion temperature based on local field approximation.");
-  params.addParam<Real>("background_mass", "The average mass of the mixture. (Currently assumed to be background gas mass.");
   // params.addRequiredParam<FileName>(
   // "reactions_file", "The file containing interpolation tables for material properties.");
   // params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
@@ -55,8 +53,7 @@ HeavySpeciesMaterialTempl<is_ad>::HeavySpeciesMaterialTempl(const InputParameter
         declareGenericProperty<Real, is_ad>("diff" + getParam<std::string>("heavy_species_name"))),
     _T_gas(getMaterialProperty<Real>("T_gas")),
     _p_gas(getMaterialProperty<Real>("p_gas")),
-    _time_units(getParam<Real>("time_units")),
-    _compute_ion_temperature(getParam<bool>("compute_ion_temperature"))
+    _time_units(getParam<Real>("time_units"))
 
 {
   if (isParamValid("mobility") && isParamValid("diffusivity"))
@@ -79,11 +76,6 @@ HeavySpeciesMaterialTempl<is_ad>::HeavySpeciesMaterialTempl(const InputParameter
     _calc_mobility = true;
     _calc_diffusivity = true;
   }
-
-  if (_compute_ion_temperature && !isParamValid("background_mass"))
-    mooseError("ADHeavySpeciesMaterial: compute ion temperature is set to true, but no background_mass is provided.");
-  //else
-  //  std::cout << "Nothing yet" << std::endl;
 }
 
 template <bool is_ad>
@@ -101,12 +93,7 @@ HeavySpeciesMaterialTempl<is_ad>::computeQpProperties()
   // _T_gas[_qp] = _user_T_gas;
   // _p_gas[_qp] = _user_p_gas;
 
-  if (_compute_ion_temperature && _sgnHeavy[_qp] != 0)
-  {
-    _temperatureHeavy[_qp] = _T_gas[_qp];
-  }
-  else 
-    _temperatureHeavy[_qp] = _T_gas[_qp]; // Needs to be changed.
+  _temperatureHeavy[_qp] = _T_gas[_qp]; // Needs to be changed.
 
   // _n_gas[_qp] = _p_gas[_qp] / (8.3145 * _T_gas[_qp]);
 

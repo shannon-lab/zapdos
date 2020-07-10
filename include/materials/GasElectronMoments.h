@@ -78,7 +78,7 @@ protected:
   MaterialProperty<Real> & _massem;
   MaterialProperty<Real> & _massGas;
   // MaterialProperty<Real> & _massArp;
-  //MaterialProperty<Real> & _se_coeff;
+  MaterialProperty<Real> & _se_coeff;
   MaterialProperty<Real> & _work_function;
   MaterialProperty<Real> & _field_enhancement;
   MaterialProperty<Real> & _Richardson_coefficient;

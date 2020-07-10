@@ -43,6 +43,5 @@ ADRealVectorValue
 ADEFieldAdvectionEnergy::precomputeQpResidual()
 {
   // We're going to multiply by _grad_test in ADKernelGrad
-  return _muel[_qp] * _sign[_qp] * std::exp(_u[_qp]) * -_grad_potential[_qp] * _r_units * -1. *
-         /*_grad_test[_i][_qp] * */ _r_units;
+  return _muel[_qp] * _sign[_qp] * std::exp(_u[_qp]) * -_grad_potential[_qp] * _r_units * -1. * _r_units;
 }

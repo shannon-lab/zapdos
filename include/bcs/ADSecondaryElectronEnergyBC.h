@@ -36,7 +36,6 @@ protected:
   const ADVariableGradient & _grad_potential;
   const ADVariableValue & _em;
   std::vector<const ADVariableValue *> _ip;
-  std::vector<const ADVariableGradient *> _grad_ip;
 
   const ADMaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _massem;

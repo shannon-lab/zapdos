@@ -58,7 +58,6 @@ ADSecondaryElectronEnergyBC::ADSecondaryElectronEnergyBC(const InputParameters &
 
   // Resize the vectors to store _num_ions values:
   _ip.resize(_num_ions);
-  _grad_ip.resize(_num_ions);
   _muip.resize(_num_ions);
   _Tip.resize(_num_ions);
   _massip.resize(_num_ions);
@@ -72,7 +71,6 @@ ADSecondaryElectronEnergyBC::ADSecondaryElectronEnergyBC(const InputParameters &
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
     _ip[i] = &adCoupledValue("ip", i);
-    _grad_ip[i] = &adCoupledGradient("ip", i);
     _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
     _Tip[i] = &getADMaterialProperty<Real>("T" + (*getVar("ip", i)).name());
     _massip[i] = &getMaterialProperty<Real>("mass" + (*getVar("ip", i)).name());

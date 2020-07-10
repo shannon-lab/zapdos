@@ -1,6 +1,6 @@
-dom0Mult = 1;
-dom1Mult = 1;
-dom2Mult = 1;
+dom0Mult = 1e4;
+dom1Mult = 1e4;
+dom2Mult = 1e4;
 
 d0_length = 1e-4;
 d1_length = 1e-4;

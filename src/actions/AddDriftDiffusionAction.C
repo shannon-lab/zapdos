@@ -60,9 +60,6 @@ validParams<AddDriftDiffusionAction>()
       " charged particle.");
   params.addParam<NonlinearVariableName>("electrons",
                                          "User given variable name for energy dependent electrons");
-  params.addParam<std::vector<NonlinearVariableName>>("reference_residual",
-                                                      "The reference residual.");
-  // params.addParam<std::vector<TagName>>("extra_tags", "The extra tags.");
   params.addParam<NonlinearVariableName>("potential", "The gives the potential a variable name");
   params.addParam<bool>("use_ad", false, "Whether or not to use automatic differentiation.");
   params.addParam<bool>(
@@ -614,10 +611,6 @@ AddDriftDiffusionAction::addMeanEnergyKernels(const std::string & em_name,
   InputParameters params = _factory.getValidParams("ElectronTimeDerivative");
   params.set<NonlinearVariableName>("variable") = {mean_en_name};
   params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-  /*
-  params.set<std::vector<TagName>>("extra_vector_tags") =
-      getParam<std::vector<TagName>>("extra_tags");
-      */
   _problem->addKernel("ElectronTimeDerivative", mean_en_name + "_time_deriv", params);
 
   InputParameters params1 = _factory.getValidParams("EFieldAdvectionEnergy");
@@ -626,10 +619,6 @@ AddDriftDiffusionAction::addMeanEnergyKernels(const std::string & em_name,
   params1.set<std::vector<VariableName>>("em") = {em_name};
   params1.set<Real>("position_units") = getParam<Real>("position_units");
   params1.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-  /*
-  params1.set<std::vector<TagName>>("extra_vector_tags") =
-      getParam<std::vector<TagName>>("extra_tags");
-  */
   _problem->addKernel("EFieldAdvectionEnergy", mean_en_name + "_advection", params1);
 
   InputParameters params2 = _factory.getValidParams("CoeffDiffusionEnergy");
@@ -637,10 +626,6 @@ AddDriftDiffusionAction::addMeanEnergyKernels(const std::string & em_name,
   params2.set<std::vector<VariableName>>("em") = {em_name};
   params2.set<Real>("position_units") = getParam<Real>("position_units");
   params2.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-  /*
-  params2.set<std::vector<TagName>>("extra_vector_tags") =
-      getParam<std::vector<TagName>>("extra_tags");
-  */
   _problem->addKernel("CoeffDiffusionEnergy", mean_en_name + "_diffusion", params2);
 
   InputParameters params3 = _factory.getValidParams("JouleHeating");
@@ -650,36 +635,18 @@ AddDriftDiffusionAction::addMeanEnergyKernels(const std::string & em_name,
   params3.set<std::string>("potential_units") = getParam<std::string>("potential_units");
   params3.set<Real>("position_units") = getParam<Real>("position_units");
   params3.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-  /*
-  params3.set<std::vector<TagName>>("extra_vector_tags") =
-      getParam<std::vector<TagName>>("extra_tags");
-      */
   _problem->addKernel("JouleHeating", mean_en_name + "_joule_heating", params3);
 
   if (Using_offset)
   {
     InputParameters params4 = _factory.getValidParams("LogStabilizationMoles");
     params4.set<NonlinearVariableName>("variable") = {mean_en_name};
-    // params4.set<Real>("offset") = (getParam<Real>("offset") - 5.0);
-    // params4.set<Real>("offset") = (getParam<Real>("offset") - 2.0);
-    params4.set<Real>("offset") = getParam<Real>("offset");
+    params4.set<Real>("offset") = (getParam<Real>("offset") - 5.0);
     params4.set<std::vector<SubdomainName>>("block") =
         getParam<std::vector<SubdomainName>>("block");
-    /*
-    params4.set<std::vector<TagName>>("extra_vector_tags") =
-        getParam<std::vector<TagName>>("extra_tags");
-        */
     _problem->addKernel("LogStabilizationMoles", mean_en_name + "_log_stabilization", params4);
   }
 }
-
-/*void
-AddDriftDiffusionAction::addMeanEnergyADKernels(const std::string & em_name,
-                                         const std::string & potential_name,
-                                         const std::string & mean_en_name,
-                                         const bool & Using_offset)
-{
-}*/
 
 // Adding potentials charge sources
 void
@@ -694,13 +661,6 @@ AddDriftDiffusionAction::addChargeSourceKernels(const std::string & potential_na
   _problem->addKernel("ChargeSourceMoles_KV", charged_particle_name + "_charge_source", params);
 }
 
-/*void
-AddDriftDiffusionAction::addChargeSourceADKernels(const std::string & potential_name,
-                                             const std::string & charged_particle_name)
-{
-}*/
-
-// Adding Kernels for the electrons
 void
 AddDriftDiffusionAction::addADKernels(const std::string & name,
                                       const std::string & potential_name,

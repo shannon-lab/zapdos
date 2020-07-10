@@ -1,6 +1,24 @@
-dom0Scale=1
-dom1Scale=1
-dom2Scale=1
+# This simulation is modeled after the COMSOL plasma moduleexample problem, 
+# "Dielectric Barrier Discharge". 
+#
+# The domain is 1D and consists of 3 blocks, each 0.1 mm thick.
+# The plasma discharge region is set from  0.1 mm <= x <= 0.2 mm
+# and is bounded on either side by a 0.1 mm thick dielectric region.
+#
+# Only argon ions, electrons, and a single excited state are included for simplicity. 
+#
+# Surface charge is allowed to accumulate on the dielectric surfaces based on the
+# total charged particle flux (\sum_i q_i \Gamma_i - \Gamma_e).   
+# Two different secondary electron emission coefficients are supplied to the
+# left and right boundaries through the GenericConstantMaterial interface. 
+#
+# Potential boundary conditions are included as both InterfaceKernels and normal BCs.
+# 
+# In this case the mesh is scaled such that the domain goes 
+# from 0 to 3.
+dom0Scale=1e-4
+dom1Scale=1e-4
+dom2Scale=1e-4
 
 [GlobalParams]
   offset = 40
@@ -9,6 +27,14 @@ dom2Scale=1
 []
 
 [Mesh]
+  # The mesh file generates the appropriate 1D mesh, but the interfaces
+  # needed for the potential and surface charge have not been defined.
+  # Here SideSetsBetweenSubdomainsGenerator is used to generate the
+  # appropriate interfaces at the dielectrics.
+  #
+  # Block 0 = left dielectric
+  # Block 1 = plasma region
+  # Block 2 = right dielectric
   [./file]
     type = FileMeshGenerator
     file = 'argon_dbd_mesh.msh'
@@ -83,11 +109,18 @@ dom2Scale=1
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -snes_stol'
   petsc_options_value = 'lu NONZERO 1.e-10 0'
   nl_rel_tol = 1e-8
-  dtmin = 1e-18
-  dtmax = 1e-7
   l_max_its = 100
   nl_max_its = 25
 
+  # Adaptive timesteppers are useful for plasma simulations since the 
+  # timestep requirements may vary widely over the course of a simulation.
+  # In this case timesteps of 0.1-10 ns are required between pulses as the 
+  # electron current becomes large, but larger timesteps are allowed otherwise.
+  #
+  # A maximum timestep of 100 ns is set to make sure the voltage pulse (period 
+  # of 20 microseconds) is finely sampled.  
+  dtmin = 1e-14
+  dtmax = 1e-7
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
@@ -95,24 +128,19 @@ dom2Scale=1
     growth_factor = 1.2
    optimal_iterations = 30
   [../]
-
-  #[./TimeIntegrator]
-    #type = BDF2
-    #type = LStableDirk2
-  #[../]
-
 []
 
 [Outputs]
+  # Surface charge is provided from a Material property.
+  # Here the option output_material_properties is set to 
+  # true and the surface_charge material property is named.
+  # Now "surface_charge" will appear as an AuxVariable in 
+  # the exodus file.
   perf_graph = true
-  #[./out]
-  #  type = Exodus
-  #  output_material_properties = true
-  #  show_material_properties = 'surface_charge'
-  #[../]
   [./out]
     type = Exodus
-    output_material_properties = false
+    output_material_properties = true
+    show_material_properties = 'surface_charge'
   [../]
 []
 
@@ -147,33 +175,33 @@ dom2Scale=1
   [./d_em_dt]
     type = ADTimeDerivativeLog
     variable = em
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./em_advection]
     type = ADEFieldAdvection
     variable = em
     potential = potential_dom1
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./em_diffusion]
     type = ADCoeffDiffusion
     variable = em
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./em_offset]
     type = LogStabilizationMoles
     variable = em
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
 
   [./d_mean_en_dt]
     type = ADTimeDerivativeLog
     variable = mean_en
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./mean_en_advection]
@@ -181,13 +209,13 @@ dom2Scale=1
     em = em
     variable = mean_en
     potential = potential_dom1
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./mean_en_diffusion]
     type = ADCoeffDiffusion
     variable = mean_en
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./mean_en_joule_heating]
@@ -195,58 +223,58 @@ dom2Scale=1
     variable = mean_en
     em = em
     potential = potential_dom1
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./mean_en_offset]
     type = LogStabilizationMoles
     variable = mean_en
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
 
   [./d_Arp_dt]
     type = ADTimeDerivativeLog
     variable = Arp
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./Arp_advection]
     type = ADEFieldAdvection
     variable = Arp
     potential = potential_dom1
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./Arp_diffusion]
     type = ADCoeffDiffusion
     variable = Arp
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./Arp_offset]
     type = LogStabilizationMoles
     variable = Arp
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
 
   [./d_Arex_dt]
     type = ADTimeDerivativeLog
     variable = Ar*
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./Arex_diffusion]
     type = ADCoeffDiffusion
     variable = Ar*
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./Arex_offset]
     type = LogStabilizationMoles
     variable = Ar*
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
 
@@ -254,14 +282,14 @@ dom2Scale=1
     type = ChargeSourceMoles_KV
     variable = potential_dom1
     charged = em
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
   [./Arp_source]
     type = ChargeSourceMoles_KV
     variable = potential_dom1
     charged = Arp
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     block = 1
   [../]
 
@@ -271,21 +299,27 @@ dom2Scale=1
     block = 0
     position_units = ${dom0Scale}
   [../]
-  [./potential_dom1_diffusion1_block]
+  [./potential_diffusion_dom1]
     type = CoeffDiffusionLin
     variable = potential_dom1
     block = 1
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
   [../]
   [./potential_diffusion_dom2]
     type = CoeffDiffusionLin
     variable = potential_dom2
     block = 2
-    position_units = ${dom0Scale}
+    position_units = ${dom2Scale}
   [../]
 []
 
 [InterfaceKernels] 
+  # At the dielectric interfaces, the potential is required to be continuous 
+  # in value but discontinuous in slope due to surface charge accumulation. 
+  #
+  # The potential requires two different boundary conditions on each side: 
+  #    (1) An InterfaceKernel to provide the Neumann boundary condition
+  #    (2) A MatchedValueBC to ensure that 
   [./potential_left]
     type = ADPotentialSurfaceCharge
     neighbor_var = potential_dom0
@@ -293,7 +327,7 @@ dom2Scale=1
     ions = 'Arp'
     em = em
     mean_en = mean_en
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
     neighbor_position_units = ${dom0Scale}
     boundary = master10_interface
   [../]
@@ -305,170 +339,61 @@ dom2Scale=1
     ions = 'Arp'
     em = em
     mean_en = mean_en
-    position_units = ${dom0Scale}
-    neighbor_position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
+    neighbor_position_units = ${dom2Scale}
     boundary = master12_interface
   [../]
-
-  #[./potential_left2]
-  #  type = PenaltyInterfaceDiffusion
-  #  penalty = 1e6
-  #  variable = potential_dom0
-  #  neighbor_var = potential_dom1
-  #  boundary = 'master01_interface'
-  #[../]
-  #[./potential_right2]
-  #  type = PenaltyInterfaceDiffusion
-  #  penalty = 1e6
-  #  variable = potential_dom2
-  #  neighbor_var = potential_dom1
-  #  boundary = 'master21_interface'
-  #[../]
 []
 
 [AuxVariables]
-  [./e_temp]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./Ar_density]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./em_density]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./Arp_density]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./Ars_density]
-    block = 1
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
+  # Argon is considered to be a static background
+  # Here it is defined as an AuxVariable
+  # Units: log(mol m^-3)
   [./Ar]
     block = 1
     order = CONSTANT
     family = MONOMIAL
     initial_condition = 3.70109
   [../]
-  [./x]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./Efield]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  #[./rho]
-  #  order = CONSTANT
-  #  family = MONOMIAL
-  #  block = 1
-  #[../]
-  [./Current_em]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 1
-  [../]
-  [./Current_Arp]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 1
-  [../]
-  [./tot_gas_current]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 1
-  [../]
-[]
-
-[AuxKernels]
-  [./e_temp]
-    type = ElectronTemperature
-    variable = e_temp
-    electron_density = em
-    mean_en = mean_en
-    block = 1
-  [../]
-  [./Ar_density]
-    type = DensityMoles
-    variable = Ar_density
-    density_log = Ar
-    use_moles = true
-    block = 1
-  [../]
-  [./em_density]
-    type = DensityMoles
-    variable = Ar_density
-    density_log = em
-    use_moles = true
-    block = 1
-  [../]
-  [./Arp_density]
-    type = DensityMoles
-    variable = Ar_density
-    density_log = Arp
-    use_moles = true
-    block = 1
-  [../]
-  [./Ars_density]
-    type = DensityMoles
-    variable = Ars_density
-    density_log = Ar*
-    use_moles = true
-    block = 1
-  [../]
-  [./x_g0]
-    type = Position
-    variable = x
-    position_units = ${dom0Scale}
-    block = 0
-  [../]
-  [./x_g1]
-    type = Position
-    variable = x
-    position_units = ${dom0Scale}
-    block = 1
-  [../]
-  [./x_g2]
-    type = Position
-    variable = x
-    position_units = ${dom0Scale}
-    block = 2
-  [../]
-  [./Efield_d0]
-    type = Efield
-    component = 0
-    potential = potential_dom0
-    variable = Efield
-    position_units = ${dom0Scale}
-    block = 0
-  [../]
-  [./Efield_d1]
-    type = Efield
-    component = 0
-    potential = potential_dom1
-    variable = Efield
-    position_units = ${dom0Scale}
-    block = 1
-  [../]
-  [./Efield_d2]
-    type = Efield
-    component = 0
-    potential = potential_dom2
-    variable = Efield
-    position_units = ${dom0Scale}
-    block = 2
-  [../]
 []
 
 [BCs]
+  ######
+  # POTENTIAL BOUNDARY CONDITIONS
+  ######
+  # Interface BCs:
+  [./match_phi_left]
+    type = MatchedValueBC
+    variable = potential_dom0
+    v = potential_dom1
+    boundary = 'master01_interface'
+  [../]
+  [./match_phi_right]
+    type = MatchedValueBC
+    variable = potential_dom2
+    v = potential_dom1
+    boundary = 'master21_interface'
+  [../]
+
+  # Electrode and ground BCs: 
+  # Electrode is at x = 0, named 'left'
+  [./potential_left]
+    type = FunctionDirichletBC
+    variable = potential_dom0
+    function = potential_input
+    #function = potential_input_test
+    boundary = 'left'
+  [../]
+  # Ground is at x = 0.3 mm, named 'right'
+  [./potential_dirichlet_right]
+    type = DirichletBC
+    variable = potential_dom2
+    #variable = potential
+    boundary = right
+    value = 0
+    preset = false
+  [../]
+
   ######
   # HAGELAAR BCS
   ######
@@ -479,7 +404,7 @@ dom2Scale=1
     potential = potential_dom1
     mean_en = mean_en
     r = 0.0
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
   [../]
   [./sec_electrons_left]
     type = ADSecondaryElectronBC
@@ -489,18 +414,8 @@ dom2Scale=1
     ip = 'Arp'
     mean_en = mean_en
     r = 0
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
   [../]
-  #[./sec_electrons_right]
-  #  type = ADSecondaryElectronBC
-  #  variable = em
-  #  boundary = 'master12_interface'
-  #  potential = potential_dom1
-  #  ip = 'Arp'
-  #  mean_en = mean_en
-  #  r = 0
-  #  position_units = ${dom0Scale}
-  #[../]
   [./mean_en_physical]
     type = ADHagelaarEnergyBC
     variable = mean_en
@@ -508,7 +423,7 @@ dom2Scale=1
     potential = potential_dom1
     em = em
     r = 0
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
   [../]
   [./secondary_energy_left]
     type = ADSecondaryElectronEnergyBC
@@ -518,18 +433,8 @@ dom2Scale=1
     em = em
     ip = 'Arp'
     r = 0
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
   [../]
-  #[./secondary_energy_right]
-  #  type = ADSecondaryElectronEnergyBC
-  #  variable = mean_en
-  #  boundary = 'master12_interface'
-  #  potential = potential_dom1
-  #  em = em
-  #  ip = 'Arp'
-  #  r = 0
-  #  position_units = ${dom0Scale}
-  #[../]
   [./Arp_bcs]
     type = ADHagelaarIonAdvectionBC
     variable = Arp
@@ -544,7 +449,7 @@ dom2Scale=1
     boundary = 'master10_interface master12_interface'
     potential = potential_dom1
     r = 0
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
   [../]
   [./Arex_bcs]
     type = ADHagelaarIonDiffusionBC
@@ -552,40 +457,10 @@ dom2Scale=1
     boundary = 'master10_interface master12_interface'
     potential = potential_dom1
     r = 0
-    position_units = ${dom0Scale}
+    position_units = ${dom1Scale}
   [../]
   #########
   #########
-
-  [./match_phi_left]
-    type = MatchedValueBC
-    variable = potential_dom0
-    v = potential_dom1
-    boundary = 'master01_interface'
-  [../]
-  [./match_phi_right]
-    type = MatchedValueBC
-    variable = potential_dom2
-    v = potential_dom1
-    boundary = 'master21_interface'
-  [../]
-
-  [./potential_left]
-    type = FunctionDirichletBC
-    variable = potential_dom0
-    function = potential_input
-    #function = potential_input_test
-    boundary = 'left'
-  [../]
-
-  [./potential_dirichlet_right]
-    type = DirichletBC
-    variable = potential_dom2
-    #variable = potential
-    boundary = right
-    value = 0
-    preset = false
-  [../]
 []
 
 [ICs]
@@ -632,6 +507,11 @@ dom2Scale=1
 []
 
 [Functions]
+  # Define a sinusoidal voltage pulse with a frequency of 50 kHz
+  # Amplitude is set to 750 Volts
+  # (Note that here the amplitude is set to 0.75. Potential units are 
+  # typically included as kV, not V. This option is set in the
+  # GlobalParams block.)
   [./potential_input]
     type = ParsedFunction
     vars = 'f0'
@@ -641,7 +521,7 @@ dom2Scale=1
 
   # Set the initial condition to a line from -10 V on the left and
   # 0 on the right.
-  # (Poisson solver works better with a nonzero potential IC.)
+  # (Poisson solver tends to struggle with a uniformly zero potential IC.)
   [./potential_ic_func]
     type = ParsedFunction
     value = '-0.01 * (3.0001e-4 - x)'
@@ -680,12 +560,20 @@ dom2Scale=1
   #########
   # Define some necessary constants.
   # Energy of secondary electrons is set to 1 eV here. 
+  # e: fundamental charge
+  # N_A: Avogadro's number
+  # k_boltz: Boltzmann constant
+  # eps: permittivity of free space
+  # se_energy: Secondary electron coefficient - emitted energy (set to 1 eV here)
+  # T_gas: Gas temperature (Kelvin)
+  # massem: 9.11e-31 (electron mass)
+  # p_gas: Gas pressure (Pascals)
   #########
   [./gas_constants]
     type = GenericConstantMaterial
     block = 1
-    prop_names = ' e       N_A      k_boltz  eps         se_energy T_gas  massem   p_gas  n_gas'
-    prop_values = '1.6e-19 6.022e23 1.38e-23 8.854e-12   1.        400    9.11e-31 1.01e5 40.4915'
+    prop_names = ' e       N_A      k_boltz  eps         se_energy T_gas  massem   p_gas'
+    prop_values = '1.6e-19 6.022e23 1.38e-23 8.854e-12   1.        400    9.11e-31 1.01e5'
   [../]
 
   
@@ -704,8 +592,6 @@ dom2Scale=1
     mean_en = mean_en
     em = em
     ions = 'Arp'
-    se_coeff = 0.01
-    #se_coeff = 0.005
     position_units = ${dom0Scale}
     boundary = 'master10_interface'
   [../]
@@ -718,8 +604,6 @@ dom2Scale=1
     mean_en = mean_en
     em = em
     ions = 'Arp'
-    se_coeff = 1e-6
-    #se_coeff = 0.5e-6
     position_units = ${dom0Scale}
     boundary = 'master12_interface'
   [../]
@@ -786,8 +670,21 @@ dom2Scale=1
 []
 
 [Reactions]
-  # Note that rate coefficients are in molar units. 
-  # For a two-body reaction, units are [m^3 mol^-1 s^-1]
+  # Here a list of plasma reactions are included to account for 
+  # electron-impact processes during the discharge.
+  # All cross sections were taken from the COMSOL Plasma
+  # Module example problem, "Dielectric Barrier Discharge". 
+  # (The example files are freely available.)
+  # 
+  # Cross sections are typically found from LXCat.
+  #
+  # Rate coefficients and electron transport coefficients
+  # (mobility, diffusivity) are computed from the cross sections
+  # through an external Boltzmann solver. (In this case, BOLSIG+ 
+  # was used assuming a Maxwellian electron distribution function.)
+  # The tabulated rate coefficients are stored in the dbd_data 
+  # directory, as specified by the file_location input parameter.
+
   [./Argon]
     species = 'em Arp Ar*'
     aux_species = 'Ar'
@@ -803,6 +700,8 @@ dom2Scale=1
     position_units = ${dom1Scale}
     block = 1
 
+    # Note that rate coefficients are in molar units. 
+    # Two-body reaction units:  m^3 mol^-1 s^-1
     reactions = 'em + Ar -> em + Ar               : EEDF [elastic] (C1_Ar_Elastic)
                  em + Ar -> em + Ar*              : EEDF [-11.5] (C2_Ar_Excitation_11.50_eV)
                  em + Ar -> em + em + Arp         : EEDF [-15.76] (C3_Ar_Ionization_15.80_eV)

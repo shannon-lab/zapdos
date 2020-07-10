@@ -26,7 +26,6 @@ protected:
   void computeHagelaarFlux();
   void computeSakiyamaFlux();
   void computeLymberopoulosFlux();
-  void computeComsolFlux();
 
   int _bc_type;
   ADMaterialProperty<Real> & _sigma;

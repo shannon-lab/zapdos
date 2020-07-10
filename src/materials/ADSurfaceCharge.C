@@ -29,7 +29,7 @@ ADSurfaceCharge::validParams()
   params.addRequiredCoupledVar("em", "Electron density.");
   params.addRequiredCoupledVar("ions", "All of the ions that can interact with this boundary.");
   params.addParam<Real>("ks", "The recombination coefficient (for Lymberopoulos-type BC)");
-  //params.addParam<Real>("se_coeff", "The secondary electron emission coefficient.");
+  // params.addParam<Real>("se_coeff", "The secondary electron emission coefficient.");
   params.addParam<bool>(
       "secondary_electrons",
       true,
@@ -180,17 +180,14 @@ ADSurfaceCharge::computeQpProperties()
       case 2:
         computeLymberopoulosFlux();
         break;
-      case 3:
-        computeComsolFlux();
-        break;
     }
-    
-    _plasma_current[_qp] = (MetaPhysicL::raw_value(_ion_charge_flux - _electron_flux)) * 1.602e-19 * 6.022e23;
+
+    // The total plasma current to the wall is included as an optional output.
+    _plasma_current[_qp] =
+        (MetaPhysicL::raw_value(_ion_charge_flux - _electron_flux)) * 1.602e-19 * 6.022e23;
 
     // Regardless of the case, the surface charge formulation is identical.
     _sigma[_qp] = _sigma_old[_qp] + (_ion_charge_flux - _electron_flux) * _q_times_NA * _dt;
-    //_sigma[_qp] = _sigma_old[_qp] + MetaPhysicL::raw_value(_ion_charge_flux - _electron_flux) *
-    //_q_times_NA * _dt;
   }
   else
     _sigma[_qp] = 0.;
@@ -208,9 +205,9 @@ ADSurfaceCharge::computeHagelaarFlux()
     _b = 0.0;
   }
 
-  _electron_flux = _r_factor_electron * (-(2 * _b - 1) * _muem[_qp] * -_grad_potential[_qp] *
-                                             _r_units * std::exp(_em[_qp]) * _normals[_qp] +
-                                         0.5 * _ve_thermal * std::exp(_em[_qp]));
+  _electron_flux = _r_factor_electron * std::exp(_em[_qp]) *
+                   (-(2 * _b - 1) * _muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
+                    0.5 * _ve_thermal);
 
   // Compute the ion fluxes.
   for (unsigned int i = 0; i < _num_ions; ++i)
@@ -230,8 +227,8 @@ ADSurfaceCharge::computeHagelaarFlux()
          (2 * _a - 1) * (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] * -_grad_potential[_qp] *
              _r_units * _normals[_qp]);
 
-    // _ion_flux is the total particle flux striking the wall. 
-    // This must be separated from _single_ion_flux to exclude negative ions from secondary 
+    // _ion_flux is the total particle flux striking the wall.
+    // This must be separated from _single_ion_flux to exclude negative ions from secondary
     // electron emission.
     // Otherwise the secondary electron emission would be lower than the boundary condition's
     // calculation, causing a charge imbalance.
@@ -246,11 +243,11 @@ ADSurfaceCharge::computeHagelaarFlux()
 
   // Subtract secondary electrons from the electron flux if the secondary_electrons option is set to
   // true. Otherwise the _electron_flux is already correct.
-  // Note that only positive ions are included in _ion_flux, so negative ions do not contribute to 
+  // Note that only positive ions are included in _ion_flux, so negative ions do not contribute to
   // secondary electron emission.
   // This makes physical sense; if negative ions are being accelerated to the wall, it is unlikely
-  // that the emitted electrons would have sufficient energy to leave the wall region. Any negative ion-
-  // induced secondary electrons will thus be confined to the wall.
+  // that the emitted electrons would have sufficient energy to leave the wall region. Any negative
+  // ion- induced secondary electrons will thus be confined to the wall.
   if (_include_secondary_electrons == true)
   {
     _n_gamma = (1. - _b) * _se_coeff[_qp] * _ion_flux /
@@ -303,58 +300,6 @@ ADSurfaceCharge::computeLymberopoulosFlux()
     _ion_charge_flux += (*_sgn_ions[i])[_qp] * _single_ion_flux;
   }
 
-  if (_include_secondary_electrons == true)
-  {
-    _electron_flux -= _se_coeff[_qp] * _ion_flux;
-  }
-}
-
-void
-ADSurfaceCharge::computeComsolFlux()
-{
-  if (_normals[_qp] * -1 * -_grad_potential[_qp] > 0.0)
-  {
-    _b = 1.0;
-  }
-  else
-  {
-    _b = 0.0;
-  }
-
-  _electron_flux = _r_factor_electron * std::exp(_em[_qp]) * 0.5 * _ve_thermal;
-
-  // Compute the ion fluxes.
-  for (unsigned int i = 0; i < _num_ions; ++i)
-  {
-    if (_normals[_qp] * (*_sgn_ions[i])[_qp] * -_grad_potential[_qp] > 0.0)
-    {
-      _a = 1.0;
-    }
-    else
-    {
-      _a = 0.0;
-    }
-
-    _single_ion_flux =
-        std::exp((*_ions[i])[_qp]) *
-        (0.5 * std::sqrt(8 * _kb[_qp] * (*_T_ions[i])[_qp] / (M_PI * (*_mass_ions[i])[_qp])) +
-         (_a * (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] * -_grad_potential[_qp] * _r_units *
-          _normals[_qp]));
-
-    // _ion_flux is the total particle flux striking the wall. This needs to be separate from the
-    // charge flux to account for negative ions striking the wall and emitting secondary electrons.
-    // Otherwise the secondary electron emission would be lower than the boundary condition's
-    // calculation, causing a charge imbalance.
-    _ion_flux += _single_ion_flux;
-
-    // _ion_charge_flux is the net charge per area per unit time impacting a given boundary.
-    _ion_charge_flux += (*_sgn_ions[i])[_qp] * _single_ion_flux;
-  }
-  _ion_flux *= _r_factor_ion;
-  _ion_charge_flux *= _r_factor_ion;
-
-  // Subtract secondary electrons from the electron flux if the secondary_electrons option is set to
-  // true. Otherwise the _electron_flux is already correct.
   if (_include_secondary_electrons == true)
   {
     _electron_flux -= _se_coeff[_qp] * _ion_flux;

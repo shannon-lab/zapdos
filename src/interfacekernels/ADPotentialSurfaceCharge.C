@@ -17,12 +17,14 @@ ADPotentialSurfaceCharge::validParams()
 {
   InputParameters params = ADInterfaceKernel::validParams();
   params.addParam<Real>("position_units", 1.0, "The units of position.");
+  params.addParam<Real>("neighbor_position_units", 1.0, "The units of position.");
   return params;
 }
 
 ADPotentialSurfaceCharge::ADPotentialSurfaceCharge(const InputParameters & parameters)
   : ADInterfaceKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
+    _r_neighbor_units(1. / getParam<Real>("neighbor_position_units")),
     _D(getMaterialProperty<Real>("diff" + _var.name())),
     _D_neighbor(getNeighborMaterialProperty<Real>("diff" + _neighbor_var.name())),
     _sigma(getADMaterialProperty<Real>("surface_charge"))
@@ -37,13 +39,14 @@ ADPotentialSurfaceCharge::computeQpResidual(Moose::DGResidualType type)
   switch (type)
   {
     case Moose::Element:
-      r = -_test[_i][_qp] *
-          (_D_neighbor[_qp] * _grad_neighbor_value[_qp] * _r_units * _normals[_qp] + _sigma[_qp]);
+      r = -_test[_i][_qp] * _r_units *
+          (_D_neighbor[_qp] * _grad_neighbor_value[_qp] * _r_neighbor_units * _normals[_qp] +
+           _sigma[_qp]);
       break;
 
     case Moose::Neighbor:
-      r = _test_neighbor[_i][_qp] *
-         (_D[_qp] * _grad_u[_qp] * _r_units * _normals[_qp] - _sigma[_qp]);
+      r = _test_neighbor[_i][_qp] * _r_neighbor_units *
+          (_D[_qp] * _grad_u[_qp] * _r_units * _normals[_qp] - _sigma[_qp]);
       break;
   }
 
