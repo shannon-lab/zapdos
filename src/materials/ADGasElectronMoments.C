@@ -87,6 +87,8 @@ ADGasElectronMoments::ADGasElectronMoments(const InputParameters & parameters)
 void
 ADGasElectronMoments::computeQpProperties()
 {
+  actual_mean_en = std::exp(_mean_en[_qp].value() - _em[_qp].value());
+  
   _sgnmean_en[_qp] = -1.0;
   _sgnem[_qp] = -1.0;
 
@@ -94,21 +96,21 @@ ADGasElectronMoments::computeQpProperties()
 
   // Electron diffusion coefficient - value and derivatives
   _diffem[_qp].value() =
-      _diff_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) * _time_units;
+      _diff_interpolation.sample(actual_mean_en) * _time_units;
 
   _diffem[_qp].derivatives() =
-      _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-      std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+      _diff_interpolation.sampleDerivative(actual_mean_en) *
+      actual_mean_en *
       (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) * _time_units;
 
   // Electron mobility - value and derivatives
   _muem[_qp].value() =
-      _mu_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
+      _mu_interpolation.sample(actual_mean_en) *
       _voltage_scaling * _time_units;
 
   _muem[_qp].derivatives() =
-      _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-      std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+      _mu_interpolation.sampleDerivative(actual_mean_en) *
+      actual_mean_en *
       (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) * _voltage_scaling * _time_units;
 
   // Mean electron energy diffusivity and mobility:

@@ -46,4 +46,6 @@ protected:
 
   const ADVariableValue & _em;
   const ADVariableValue & _mean_en;
+
+  Real actual_mean_en;
 };
