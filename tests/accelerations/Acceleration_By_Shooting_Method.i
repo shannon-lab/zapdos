@@ -12,19 +12,6 @@ dom0Scale=25.4e-3
   file = 'Acceleration_By_Shooting_Method_Initial_Conditions.e'
 []
 
-[MeshModifiers]
-  [./left]
-    type = SideSetsFromNormals
-    normals = '-1 0 0'
-    new_boundary = 'left'
-  [../]
-  [./right]
-    type = SideSetsFromNormals
-    normals = '1 0 0'
-    new_boundary = 'right'
-  [../]
-[]
-
 [Problem]
   type = FEProblem
 []
@@ -552,12 +539,14 @@ dom0Scale=25.4e-3
     variable = potential
     boundary = 'left'
     function = potential_bc_func
+    preset = false
   [../]
   [./potential_dirichlet_right]
     type = DirichletBC
     variable = potential
     boundary = 'right'
     value = 0
+    preset = false
   [../]
 
 #Boundary conditions for electons

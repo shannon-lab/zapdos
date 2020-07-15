@@ -648,18 +648,21 @@ dom0Scale=25.4e-3
     variable = potential
     boundary = 'Top_Electrode'
     function = potential_top_bc_func
+    preset = false
   [../]
   [./potential_bottom_plate]
     type = FunctionDirichletBC
     variable = potential
     boundary = 'Bottom_Electrode'
     function = potential_bottom_bc_func
+    preset = false
   [../]
   [./potential_dirichlet_bottom_plate]
     type = DirichletBC
     variable = potential
     boundary = 'Walls'
     value = 0
+    preset = false
   [../]
   [./potential_Dielectric]
     type = EconomouDielectricBC

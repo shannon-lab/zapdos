@@ -1,25 +1,26 @@
 dom0Scale=25.4e-3
 
-[Mesh]
-  type = FileMesh
-  file = 'Lymberopoulos_paper.msh'
-[]
-
 [GlobalParams]
   potential_units = kV
   use_moles = true
 []
 
-[MeshModifiers]
+[Mesh]
+  [./file]
+    type = FileMeshGenerator
+    file = 'Lymberopoulos_paper.msh'
+  [../]
   [./left]
-    type = SideSetsFromNormals
+    type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
+    input = file
   [../]
   [./right]
-    type = SideSetsFromNormals
+    type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
+    input = left
   [../]
 []
 
@@ -64,12 +65,14 @@ dom0Scale=25.4e-3
     variable = Ar*
     boundary = 'right'
     value = 1e-5
+    preset = false
   [../]
   [./Ar*_physical_left_diffusion]
     type = LogDensityDirichletBC
     variable = Ar*
     boundary = 'left'
     value = 1e-5
+    preset = false
   [../]
 []
 
@@ -150,7 +153,7 @@ dom0Scale=25.4e-3
 []
 
 [Outputs]
-  print_perf_log = true
+  perf_graph = true
   [./out]
     type = Exodus
   [../]

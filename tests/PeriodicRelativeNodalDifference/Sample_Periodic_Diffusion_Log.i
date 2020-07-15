@@ -1,21 +1,21 @@
 [Mesh]
-  type = FileMesh
-  file = 'Sample_Periodic_Diffusion.msh'
-[]
-
-[MeshModifiers]
+  [./file]
+    type = FileMeshGenerator
+    file = 'Sample_Periodic_Diffusion.msh'
+  [../]
   [./left]
-    type = SideSetsFromNormals
+    type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
+    input = file
   [../]
   [./right]
-    type = SideSetsFromNormals
+    type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
+    input = left
   [../]
 []
-
 
 [Problem]
   type = FEProblem
@@ -157,7 +157,7 @@
 []
 
 [Outputs]
-  print_perf_log = true
+  perf_graph = true
   [./out]
     type = Exodus
   [../]

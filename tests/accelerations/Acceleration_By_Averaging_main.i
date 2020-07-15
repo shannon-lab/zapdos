@@ -9,20 +9,21 @@ dom0Scale=25.4e-3
 []
 
 [Mesh]
-  type = FileMesh
-  file = 'Lymberopoulos_paper.msh'
-[]
-
-[MeshModifiers]
+  [./file]
+    type = FileMeshGenerator
+    file = 'Lymberopoulos_paper.msh'
+  [../]
   [./left]
-    type = SideSetsFromNormals
+    type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
+    input = file
   [../]
   [./right]
-    type = SideSetsFromNormals
+    type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
+    input = left
   [../]
 []
 
@@ -548,12 +549,14 @@ dom0Scale=25.4e-3
     variable = potential
     boundary = 'left'
     function = potential_bc_func
+    preset = false
   [../]
   [./potential_dirichlet_right]
     type = DirichletBC
     variable = potential
     boundary = 'right'
     value = 0
+    preset = false
   [../]
 
 #Boundary conditions for electons
