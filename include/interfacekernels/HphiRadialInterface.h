@@ -8,31 +8,23 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef HPHIRADIALINTERFACE_H
-#define HPHIRADIALINTERFACE_H
+#pragma once
 
-#include "InterfaceKernel.h"
-
-// Forward Declarations
-class HphiRadialInterface;
-
-template <>
-InputParameters validParams<HphiRadialInterface>();
+#include "ADInterfaceKernel.h"
 
 /**
  * DG kernel for interfacing diffusion between two variables on adjacent blocks
  */
-class HphiRadialInterface : public InterfaceKernel
+class HphiRadialInterface : public ADInterfaceKernel
 {
 public:
+  static InputParameters validParams();
+
   HphiRadialInterface(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual(Moose::DGResidualType type);
-  virtual Real computeQpJacobian(Moose::DGJacobianType type);
+  virtual ADReal computeQpResidual(Moose::DGResidualType type) override;
 
-  const MaterialProperty<Real> & _eps_r_neighbor;
-  const MaterialProperty<Real> & _eps_r;
+  const ADMaterialProperty<Real> & _eps_r_neighbor;
+  const ADMaterialProperty<Real> & _eps_r;
 };
-
-#endif
