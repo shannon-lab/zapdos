@@ -12,32 +12,31 @@
 #include "MooseMesh.h"
 #include "Function.h"
 
-template <>
 InputParameters
-validParams<NeumannCircuitVoltageNew>()
+NeumannCircuitVoltageNew::validParams()
 {
-  InputParameters p = validParams<NonlocalIntegratedBC>();
-  p.addRequiredParam<FunctionName>("source_voltage",
+  InputParameters params = NonlocalIntegratedBC::validParams();
+  params.addRequiredParam<FunctionName>("source_voltage",
                                    "The function describing the time dependent source voltage.");
-  p.addRequiredParam<UserObjectName>("current", "The current in the circuit.");
-  p.addRequiredParam<std::string>("surface",
+  params.addRequiredParam<UserObjectName>("current", "The current in the circuit.");
+  params.addRequiredParam<std::string>("surface",
                                   "Whether you are specifying the potential on the "
                                   "anode or the cathode with the requirement that the "
                                   "other metal surface be grounded.");
-  p.addRequiredParam<UserObjectName>(
+  params.addRequiredParam<UserObjectName>(
       "data_provider",
       "The name of the UserObject that can provide some data to materials, bcs, etc.");
-  p.addRequiredCoupledVar("em", "The electron variable.");
-  p.addRequiredCoupledVar("ip", "The ion variable.");
-  p.addRequiredCoupledVar("mean_en", "The ion variable.");
-  p.addParam<Real>("area", "Must be provided when the number of dimensions equals 1.");
-  p.addRequiredParam<std::string>("potential_units", "The potential units.");
-  p.addRequiredParam<Real>("position_units", "Units of position.");
-  p.addRequiredParam<Real>("resistance", "The ballast resistance in Ohms.");
-  p.addClassDescription(
+  params.addRequiredCoupledVar("em", "The electron variable.");
+  params.addRequiredCoupledVar("ip", "The ion variable.");
+  params.addRequiredCoupledVar("mean_en", "The ion variable.");
+  params.addParam<Real>("area", "Must be provided when the number of dimensions equals 1.");
+  params.addRequiredParam<std::string>("potential_units", "The potential units.");
+  params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addRequiredParam<Real>("resistance", "The ballast resistance in Ohms.");
+  params.addClassDescription(
       "Circuit boundary condition for potential"
       "(Similar to 'NeumannCircuitVoltageNew' BC but current is given through an UserObject)");
-  return p;
+  return params;
 }
 
 NeumannCircuitVoltageNew::NeumannCircuitVoltageNew(const InputParameters & parameters)

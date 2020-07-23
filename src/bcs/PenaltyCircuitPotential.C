@@ -13,34 +13,33 @@
 
 registerMooseObject("ZapdosApp", PenaltyCircuitPotential);
 
-template <>
 InputParameters
-validParams<PenaltyCircuitPotential>()
+PenaltyCircuitPotential::validParams()
 {
-  InputParameters p = validParams<NonlocalIntegratedBC>();
-  p.addRequiredParam<UserObjectName>(
+  InputParameters params = NonlocalIntegratedBC::validParams();
+  params.addRequiredParam<UserObjectName>(
       "current",
       "The postprocessor response for calculating the current passing through the needle surface.");
-  p.addRequiredParam<Real>(
+  params.addRequiredParam<Real>(
       "surface_potential",
       "The electrical potential applied to the surface if no current was flowing in the circuit.");
-  p.addRequiredParam<std::string>("surface",
+  params.addRequiredParam<std::string>("surface",
                                   "Whether you are specifying the potential on the "
                                   "anode or the cathode with the requirement that the "
                                   "other metal surface be grounded.");
-  p.addRequiredParam<Real>("penalty", "The constant multiplying the penalty term.");
-  p.addRequiredParam<UserObjectName>(
+  params.addRequiredParam<Real>("penalty", "The constant multiplying the penalty term.");
+  params.addRequiredParam<UserObjectName>(
       "data_provider",
       "The name of the UserObject that can provide some data to materials, bcs, etc.");
-  p.addRequiredCoupledVar("em", "The electron variable.");
-  p.addRequiredCoupledVar("ip", "The ion variable.");
-  p.addRequiredCoupledVar("mean_en", "The ion variable.");
-  p.addParam<Real>("area", "Must be provided when the number of dimensions equals 1.");
-  p.addRequiredParam<std::string>("potential_units", "The potential units.");
-  p.addRequiredParam<Real>("position_units", "Units of position.");
-  p.addRequiredParam<Real>("resistance", "The ballast resistance in Ohms.");
-  p.addClassDescription("Circuit boundary condition for potential multiplied by a penalty term");
-  return p;
+  params.addRequiredCoupledVar("em", "The electron variable.");
+  params.addRequiredCoupledVar("ip", "The ion variable.");
+  params.addRequiredCoupledVar("mean_en", "The ion variable.");
+  params.addParam<Real>("area", "Must be provided when the number of dimensions equals 1.");
+  params.addRequiredParam<std::string>("potential_units", "The potential units.");
+  params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addRequiredParam<Real>("resistance", "The ballast resistance in Ohms.");
+  params.addClassDescription("Circuit boundary condition for potential multiplied by a penalty term");
+  return params;
 }
 
 PenaltyCircuitPotential::PenaltyCircuitPotential(const InputParameters & parameters)
