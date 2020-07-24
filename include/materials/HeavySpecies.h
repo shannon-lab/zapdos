@@ -15,10 +15,10 @@
 #include "SplineInterpolation.h"
 
 template <bool is_ad>
-class HeavySpeciesMaterialTempl : public Material
+class HeavySpeciesTempl : public Material
 {
 public:
-  HeavySpeciesMaterialTempl(const InputParameters & parameters);
+  HeavySpeciesTempl(const InputParameters & parameters);
 
   static InputParameters validParams();
 
@@ -50,5 +50,5 @@ protected:
   // MaterialProperty<Real> & _n_gas;
 };
 
-typedef HeavySpeciesMaterialTempl<false> HeavySpeciesMaterial;
-typedef HeavySpeciesMaterialTempl<true> ADHeavySpeciesMaterial;
+typedef HeavySpeciesTempl<false> HeavySpecies;
+typedef HeavySpeciesTempl<true> ADHeavySpecies;

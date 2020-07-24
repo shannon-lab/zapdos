@@ -8,18 +8,18 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#include "HeavySpeciesMaterial.h"
+#include "HeavySpecies.h"
 #include "MooseUtils.h"
 
 // MOOSE includes
 #include "MooseVariable.h"
 
-registerMooseObject("ZapdosApp", HeavySpeciesMaterial);
-registerMooseObject("ZapdosApp", ADHeavySpeciesMaterial);
+registerMooseObject("ZapdosApp", HeavySpecies);
+registerMooseObject("ZapdosApp", ADHeavySpecies);
 
 template <bool is_ad>
 InputParameters
-HeavySpeciesMaterialTempl<is_ad>::validParams()
+HeavySpeciesTempl<is_ad>::validParams()
 {
   InputParameters params = Material::validParams();
 
@@ -38,7 +38,7 @@ HeavySpeciesMaterialTempl<is_ad>::validParams()
 }
 
 template <bool is_ad>
-HeavySpeciesMaterialTempl<is_ad>::HeavySpeciesMaterialTempl(const InputParameters & parameters)
+HeavySpeciesTempl<is_ad>::HeavySpeciesTempl(const InputParameters & parameters)
   : Material(parameters),
     _user_massHeavy(getParam<Real>("heavy_species_mass")),
     _user_sgnHeavy(getParam<Real>("heavy_species_charge")),
@@ -80,7 +80,7 @@ HeavySpeciesMaterialTempl<is_ad>::HeavySpeciesMaterialTempl(const InputParameter
 
 template <bool is_ad>
 void
-HeavySpeciesMaterialTempl<is_ad>::computeQpProperties()
+HeavySpeciesTempl<is_ad>::computeQpProperties()
 {
   if (_potential_units.compare("V") == 0)
     _voltage_scaling = 1.;
@@ -150,5 +150,5 @@ HeavySpeciesMaterialTempl<is_ad>::computeQpProperties()
   */
 }
 
-template class HeavySpeciesMaterialTempl<false>;
-template class HeavySpeciesMaterialTempl<true>;
+template class HeavySpeciesTempl<false>;
+template class HeavySpeciesTempl<true>;
