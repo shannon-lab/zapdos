@@ -42,7 +42,7 @@ dom2Scale=1e-4
   [./dielectric_left]
     # left dielectric master
     type = SideSetsBetweenSubdomainsGenerator
-    master_block = '0'
+    primary_block = '0'
     paired_block = '1'
     new_boundary = 'master01_interface'
     input = file
@@ -50,7 +50,7 @@ dom2Scale=1e-4
   [./plasma_left]
     # plasma master
     type = SideSetsBetweenSubdomainsGenerator
-    master_block = '1'
+    primary_block = '1'
     paired_block = '0'
     new_boundary = 'master10_interface'
     input = dielectric_left
@@ -58,7 +58,7 @@ dom2Scale=1e-4
   [./plasma_right]
     # plasma master
     type = SideSetsBetweenSubdomainsGenerator
-    master_block = '1'
+    primary_block = '1'
     paired_block = '2'
     new_boundary = 'master12_interface'
     input = plasma_left
@@ -66,7 +66,7 @@ dom2Scale=1e-4
   [./dielectric_right]
     # left dielectric master
     type = SideSetsBetweenSubdomainsGenerator
-    master_block = '2'
+    primary_block = '2'
     paired_block = '1'
     new_boundary = 'master21_interface'
     input = plasma_right
@@ -175,7 +175,6 @@ dom2Scale=1e-4
   [./d_em_dt]
     type = ADTimeDerivativeLog
     variable = em
-    position_units = ${dom1Scale}
     block = 1
   [../]
   [./em_advection]
@@ -194,14 +193,12 @@ dom2Scale=1e-4
   [./em_offset]
     type = LogStabilizationMoles
     variable = em
-    position_units = ${dom1Scale}
     block = 1
   [../]
 
   [./d_mean_en_dt]
     type = ADTimeDerivativeLog
     variable = mean_en
-    position_units = ${dom1Scale}
     block = 1
   [../]
   [./mean_en_advection]
@@ -229,14 +226,12 @@ dom2Scale=1e-4
   [./mean_en_offset]
     type = LogStabilizationMoles
     variable = mean_en
-    position_units = ${dom1Scale}
     block = 1
   [../]
 
   [./d_Arp_dt]
     type = ADTimeDerivativeLog
     variable = Arp
-    position_units = ${dom1Scale}
     block = 1
   [../]
   [./Arp_advection]
@@ -255,14 +250,12 @@ dom2Scale=1e-4
   [./Arp_offset]
     type = LogStabilizationMoles
     variable = Arp
-    position_units = ${dom1Scale}
     block = 1
   [../]
 
   [./d_Arex_dt]
     type = ADTimeDerivativeLog
     variable = Ar*
-    position_units = ${dom1Scale}
     block = 1
   [../]
   [./Arex_diffusion]
@@ -274,7 +267,6 @@ dom2Scale=1e-4
   [./Arex_offset]
     type = LogStabilizationMoles
     variable = Ar*
-    position_units = ${dom1Scale}
     block = 1
   [../]
 
@@ -282,14 +274,12 @@ dom2Scale=1e-4
     type = ChargeSourceMoles_KV
     variable = potential_dom1
     charged = em
-    position_units = ${dom1Scale}
     block = 1
   [../]
   [./Arp_source]
     type = ChargeSourceMoles_KV
     variable = potential_dom1
     charged = Arp
-    position_units = ${dom1Scale}
     block = 1
   [../]
 
@@ -324,9 +314,6 @@ dom2Scale=1e-4
     type = ADPotentialSurfaceCharge
     neighbor_var = potential_dom0
     variable = potential_dom1
-    ions = 'Arp'
-    em = em
-    mean_en = mean_en
     position_units = ${dom1Scale}
     neighbor_position_units = ${dom0Scale}
     boundary = master10_interface
@@ -336,9 +323,6 @@ dom2Scale=1e-4
     type = ADPotentialSurfaceCharge
     neighbor_var = potential_dom2
     variable = potential_dom1
-    ions = 'Arp'
-    em = em
-    mean_en = mean_en
     position_units = ${dom1Scale}
     neighbor_position_units = ${dom2Scale}
     boundary = master12_interface
@@ -447,7 +431,6 @@ dom2Scale=1e-4
     type = ADHagelaarIonDiffusionBC
     variable = Arp
     boundary = 'master10_interface master12_interface'
-    potential = potential_dom1
     r = 0
     position_units = ${dom1Scale}
   [../]
@@ -455,7 +438,6 @@ dom2Scale=1e-4
     type = ADHagelaarIonDiffusionBC
     variable = Ar*
     boundary = 'master10_interface master12_interface'
-    potential = potential_dom1
     r = 0
     position_units = ${dom1Scale}
   [../]
@@ -702,6 +684,13 @@ dom2Scale=1e-4
 
     # Note that rate coefficients are in molar units. 
     # Two-body reaction units:  m^3 mol^-1 s^-1
+    # 
+    # EEDF - rate coefficients taken from tabulated files located in 'file_location', 
+    #        computed from cross section data with Bolsig+. 
+    #
+    # Energy changes are included in square brackets, with the units in eV. Note that the
+    # sign is with respect to electrons; e.g. a negative sign indicates that electrons
+    # lose energy in the reaction.
     reactions = 'em + Ar -> em + Ar               : EEDF [elastic] (C1_Ar_Elastic)
                  em + Ar -> em + Ar*              : EEDF [-11.5] (C2_Ar_Excitation_11.50_eV)
                  em + Ar -> em + em + Arp         : EEDF [-15.76] (C3_Ar_Ionization_15.80_eV)
