@@ -10,13 +10,18 @@
 
 #include "ProcRate.h"
 
-registerMooseObject("ZapdosApp", ProcRate);
+#include "metaphysicl/raw_type.h"
 
-template <>
+using MetaPhysicL::raw_value;
+
+registerMooseObject("ZapdosApp", ProcRate);
+registerMooseObject("ZapdosApp", ADProcRate);
+
+template <bool is_ad>
 InputParameters
-validParams<ProcRate>()
+ProcRateTempl<is_ad>::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
 
   params.addRequiredCoupledVar("em", "The electron density");
   params.addRequiredCoupledVar("potential", "The potential");
@@ -30,27 +35,32 @@ validParams<ProcRate>()
   return params;
 }
 
-ProcRate::ProcRate(const InputParameters & parameters)
+template <bool is_ad>
+ProcRateTempl<is_ad>::ProcRateTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
     _em(coupledValue("em")),
     _grad_em(coupledGradient("em")),
     _grad_potential(coupledGradient("potential")),
-    _muem(getMaterialProperty<Real>("muem")),
+    _muem(getGenericMaterialProperty<Real, is_ad>("muem")),
     _sgnem(getMaterialProperty<Real>("sgnem")),
-    _diffem(getMaterialProperty<Real>("diffem")),
-    _alpha(getMaterialProperty<Real>("alpha_" + getParam<std::string>("proc"))),
+    _diffem(getGenericMaterialProperty<Real, is_ad>("diffem")),
+    _alpha(getGenericMaterialProperty<Real, is_ad>("alpha_" + getParam<std::string>("proc"))),
     _em_current(0, 0, 0)
 {
 }
 
+template <bool is_ad>
 Real
-ProcRate::computeValue()
+ProcRateTempl<is_ad>::computeValue()
 {
   _em_current =
-      6.02e23 * (_sgnem[_qp] * _muem[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -
-                 _diffem[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units);
+      6.02e23 * (_sgnem[_qp] * raw_value(_muem[_qp]) * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -
+                 raw_value(_diffem[_qp]) * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units);
 
-  return _alpha[_qp] * _em_current.norm();
+  return raw_value(_alpha[_qp]) * _em_current.norm();
 }
+
+template class ProcRateTempl<false>;
+template class ProcRateTempl<true>;

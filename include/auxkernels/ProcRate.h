@@ -8,23 +8,19 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef PROCRATE_H
-#define PROCRATE_H
+#pragma once
 
 #include "AuxKernel.h"
 
-class ProcRate;
-
-template <>
-InputParameters validParams<ProcRate>();
-
-class ProcRate : public AuxKernel
+template <bool is_ad>
+class ProcRateTempl : public AuxKernel
 {
 public:
-  ProcRate(const InputParameters & parameters);
+  static InputParameters validParams();
 
-  virtual ~ProcRate() {}
-  virtual Real computeValue();
+  ProcRateTempl(const InputParameters & parameters);
+
+  virtual Real computeValue() override;
 
 protected:
   Real _r_units;
@@ -32,12 +28,13 @@ protected:
   const VariableValue & _em;
   const VariableGradient & _grad_em;
   const VariableGradient & _grad_potential;
-  const MaterialProperty<Real> & _muem;
+  const GenericMaterialProperty<Real, is_ad> & _muem;
   const MaterialProperty<Real> & _sgnem;
-  const MaterialProperty<Real> & _diffem;
-  const MaterialProperty<Real> & _alpha;
+  const GenericMaterialProperty<Real, is_ad> & _diffem;
+  const GenericMaterialProperty<Real, is_ad> & _alpha;
 
   RealVectorValue _em_current;
 };
 
-#endif // PROCRATE_H
+typedef ProcRateTempl<false> ProcRate;
+typedef ProcRateTempl<true> ADProcRate;
