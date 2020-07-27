@@ -8,23 +8,19 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef WATER_H_
-#define WATER_H_
+#pragma once
 
-#include "Material.h"
+#include "ADMaterial.h"
 
-class Water;
-
-template <>
-InputParameters validParams<Water>();
-
-class Water : public Material
+class Water : public ADMaterial
 {
 public:
+  static InputParameters validParams();
+
   Water(const InputParameters & parameters);
 
 protected:
-  virtual void computeQpProperties();
+  virtual void computeQpProperties() override;
 
   // Input Parameters
 
@@ -43,10 +39,10 @@ protected:
   MaterialProperty<Real> & _e;
   MaterialProperty<Real> & _k;
   MaterialProperty<Real> & _T;
-  MaterialProperty<Real> & _kemliq;
-  MaterialProperty<Real> & _kem;
-  MaterialProperty<Real> & _kemliqemliq;
-  MaterialProperty<Real> & _kemem;
+  ADMaterialProperty<Real> & _kemliq;
+  ADMaterialProperty<Real> & _kem;
+  ADMaterialProperty<Real> & _kemliqemliq;
+  ADMaterialProperty<Real> & _kemem;
   MaterialProperty<Real> & _k3;
   MaterialProperty<Real> & _k4;
   MaterialProperty<Real> & _k5;
@@ -84,17 +80,17 @@ protected:
   MaterialProperty<Real> & _k37;
   MaterialProperty<Real> & _k38;
   MaterialProperty<Real> & _k39;
-  MaterialProperty<Real> & _diffemliq;
-  MaterialProperty<Real> & _diffem;
-  MaterialProperty<Real> & _diffpotentialliq;
-  MaterialProperty<Real> & _diffpotential;
+  ADMaterialProperty<Real> & _diffemliq;
+  ADMaterialProperty<Real> & _diffem;
+  ADMaterialProperty<Real> & _diffpotentialliq;
+  ADMaterialProperty<Real> & _diffpotential;
   MaterialProperty<Real> & _DH;
-  MaterialProperty<Real> & _diffOHm;
+  ADMaterialProperty<Real> & _diffOHm;
   MaterialProperty<Real> & _DH2Op;
   MaterialProperty<Real> & _DOH;
   MaterialProperty<Real> & _DH2;
   MaterialProperty<Real> & _DOm;
-  MaterialProperty<Real> & _diffH3Op;
+  ADMaterialProperty<Real> & _diffH3Op;
   MaterialProperty<Real> & _DH2O2;
   MaterialProperty<Real> & _DHO2m;
   MaterialProperty<Real> & _DO2;
@@ -119,99 +115,26 @@ protected:
   MaterialProperty<Real> & _zHO2;
   MaterialProperty<Real> & _zO3;
   MaterialProperty<Real> & _zO3m;
-  MaterialProperty<Real> & _muemliq;
-  MaterialProperty<Real> & _muem;
-  MaterialProperty<Real> & _muH;
-  MaterialProperty<Real> & _muOHm;
-  MaterialProperty<Real> & _muH2Op;
-  MaterialProperty<Real> & _muOH;
-  MaterialProperty<Real> & _muH2;
-  MaterialProperty<Real> & _muOm;
-  MaterialProperty<Real> & _muH3Op;
-  MaterialProperty<Real> & _muH2O2;
-  MaterialProperty<Real> & _muHO2m;
-  MaterialProperty<Real> & _muO2;
-  MaterialProperty<Real> & _muO2m;
-  MaterialProperty<Real> & _muO;
-  MaterialProperty<Real> & _muHO2;
-  MaterialProperty<Real> & _muO3;
-  MaterialProperty<Real> & _muO3m;
+  ADMaterialProperty<Real> & _muemliq;
+  ADMaterialProperty<Real> & _muem;
+  ADMaterialProperty<Real> & _muH;
+  ADMaterialProperty<Real> & _muOHm;
+  ADMaterialProperty<Real> & _muH2Op;
+  ADMaterialProperty<Real> & _muOH;
+  ADMaterialProperty<Real> & _muH2;
+  ADMaterialProperty<Real> & _muOm;
+  ADMaterialProperty<Real> & _muH3Op;
+  ADMaterialProperty<Real> & _muH2O2;
+  ADMaterialProperty<Real> & _muHO2m;
+  ADMaterialProperty<Real> & _muO2;
+  ADMaterialProperty<Real> & _muO2m;
+  ADMaterialProperty<Real> & _muO;
+  ADMaterialProperty<Real> & _muHO2;
+  ADMaterialProperty<Real> & _muO3;
+  ADMaterialProperty<Real> & _muO3m;
   MaterialProperty<Real> & _Dunity;
   MaterialProperty<Real> & _muunity;
   MaterialProperty<Real> & _munegunity;
-  MaterialProperty<Real> & _rxn1;
-  MaterialProperty<Real> & _rxn2;
-  MaterialProperty<Real> & _rxn3;
-  MaterialProperty<Real> & _rxn4;
-  MaterialProperty<Real> & _rxn5;
-  MaterialProperty<Real> & _rxn6;
-  MaterialProperty<Real> & _rxn7;
-  MaterialProperty<Real> & _rxn8;
-  MaterialProperty<Real> & _rxn9;
-  MaterialProperty<Real> & _rxn10;
-  MaterialProperty<Real> & _rxn11;
-  MaterialProperty<Real> & _rxn12;
-  MaterialProperty<Real> & _rxn13;
-  MaterialProperty<Real> & _rxn14;
-  MaterialProperty<Real> & _rxn15;
-  MaterialProperty<Real> & _rxn16;
-  MaterialProperty<Real> & _rxn17;
-  MaterialProperty<Real> & _rxn18;
-  MaterialProperty<Real> & _rxn19;
-  MaterialProperty<Real> & _rxn20;
-  MaterialProperty<Real> & _rxn21;
-  MaterialProperty<Real> & _rxn22;
-  MaterialProperty<Real> & _rxn23;
-  MaterialProperty<Real> & _rxn24;
-  MaterialProperty<Real> & _rxn25;
-  MaterialProperty<Real> & _rxn26;
-  MaterialProperty<Real> & _rxn27;
-  MaterialProperty<Real> & _rxn28;
-  MaterialProperty<Real> & _rxn29;
-  MaterialProperty<Real> & _rxn30;
-  MaterialProperty<Real> & _rxn31;
-  MaterialProperty<Real> & _rxn32;
-  MaterialProperty<Real> & _rxn33;
-  MaterialProperty<Real> & _rxn34;
-  MaterialProperty<Real> & _rxn35;
-  MaterialProperty<Real> & _rxn36;
-  MaterialProperty<Real> & _rxn37;
-  MaterialProperty<Real> & _rxn38;
-  MaterialProperty<Real> & _rxn39;
-  MaterialProperty<Real> & _sem;
-  MaterialProperty<Real> & _sH;
-  MaterialProperty<Real> & _sOHm;
-  MaterialProperty<Real> & _sH2Op;
-  MaterialProperty<Real> & _sOH;
-  MaterialProperty<Real> & _sH2;
-  MaterialProperty<Real> & _sOm;
-  MaterialProperty<Real> & _sH3Op;
-  MaterialProperty<Real> & _sH2O2;
-  MaterialProperty<Real> & _sHO2m;
-  MaterialProperty<Real> & _sO2;
-  MaterialProperty<Real> & _sO2m;
-  MaterialProperty<Real> & _sO;
-  MaterialProperty<Real> & _sHO2;
-  MaterialProperty<Real> & _sO3;
-  MaterialProperty<Real> & _sO3m;
-  MaterialProperty<Real> & _spotential;
-  MaterialProperty<Real> & _Jac_em;
-  MaterialProperty<Real> & _Jac_H;
-  MaterialProperty<Real> & _Jac_OHm;
-  MaterialProperty<Real> & _Jac_H2Op;
-  MaterialProperty<Real> & _Jac_OH;
-  MaterialProperty<Real> & _Jac_H2;
-  MaterialProperty<Real> & _Jac_Om;
-  MaterialProperty<Real> & _Jac_H3Op;
-  MaterialProperty<Real> & _Jac_H2O2;
-  MaterialProperty<Real> & _Jac_HO2m;
-  MaterialProperty<Real> & _Jac_O2;
-  MaterialProperty<Real> & _Jac_O2m;
-  MaterialProperty<Real> & _Jac_O;
-  MaterialProperty<Real> & _Jac_HO2;
-  MaterialProperty<Real> & _Jac_O3;
-  MaterialProperty<Real> & _Jac_O3m;
-  MaterialProperty<Real> & _Jac_potential;
   MaterialProperty<Real> & _eps;
   MaterialProperty<Real> & _sgnemliq;
   MaterialProperty<Real> & _sgnem;
@@ -219,33 +142,31 @@ protected:
   MaterialProperty<Real> & _sgnH3Op;
   MaterialProperty<Real> & _sgnNap;
   MaterialProperty<Real> & _sgnClm;
-  MaterialProperty<Real> & _muNap;
-  MaterialProperty<Real> & _muClm;
-  MaterialProperty<Real> & _diffNap;
-  MaterialProperty<Real> & _diffClm;
+  ADMaterialProperty<Real> & _muNap;
+  ADMaterialProperty<Real> & _muClm;
+  ADMaterialProperty<Real> & _diffNap;
+  ADMaterialProperty<Real> & _diffClm;
 
-  MaterialProperty<Real> & _EField;
-  MaterialProperty<Real> & _OHm_lin;
-  MaterialProperty<Real> & _H3Op_lin;
+  ADMaterialProperty<Real> & _EField;
+  ADMaterialProperty<Real> & _OHm_lin;
+  ADMaterialProperty<Real> & _H3Op_lin;
 
 private:
-  const VariableValue & _emliq;
-  const VariableValue & _H;
-  const VariableValue & _OHm;
-  const VariableValue & _H2Op;
-  const VariableValue & _OH;
-  const VariableValue & _H2;
-  const VariableValue & _Om;
-  const VariableValue & _H3Op;
-  const VariableValue & _H2O2;
-  const VariableValue & _HO2m;
-  const VariableValue & _O2;
-  const VariableValue & _O2m;
-  const VariableValue & _O;
-  const VariableValue & _HO2;
-  const VariableValue & _O3;
-  const VariableValue & _O3m;
-  const VariableGradient & _grad_potential;
+  const ADVariableValue & _emliq;
+  const ADVariableValue & _H;
+  const ADVariableValue & _OHm;
+  const ADVariableValue & _H2Op;
+  const ADVariableValue & _OH;
+  const ADVariableValue & _H2;
+  const ADVariableValue & _Om;
+  const ADVariableValue & _H3Op;
+  const ADVariableValue & _H2O2;
+  const ADVariableValue & _HO2m;
+  const ADVariableValue & _O2;
+  const ADVariableValue & _O2m;
+  const ADVariableValue & _O;
+  const ADVariableValue & _HO2;
+  const ADVariableValue & _O3;
+  const ADVariableValue & _O3m;
+  const ADVariableGradient & _grad_potential;
 };
-
-#endif // WATER_H

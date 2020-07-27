@@ -23,7 +23,7 @@ public:
   static InputParameters validParams();
 
 protected:
-  virtual void computeQpProperties();
+  virtual void computeQpProperties() override;
 
   Real _user_massHeavy;
   Real _user_sgnHeavy;
