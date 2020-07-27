@@ -681,11 +681,4 @@ vhigh=-0.15 #kV
                 property_tables_file = td_argon_mean_en.txt
                 block = 0
         [../]
- # [./jac]
- #              type = JacMat
- #              mean_en = mean_en
- #              em = em
- #              emliq = emliq
- #              block = '0 1'
- #      [../]
 []

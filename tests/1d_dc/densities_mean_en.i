@@ -1002,11 +1002,4 @@ dom1Scale=1e-7
    block = 1
    potential = potential
  [../]
- # [./jac]
- #   type = JacMat
- #   mean_en = mean_en
- #   em = em
- #   emliq = emliq
- #   block = '0 1'
- #  [../]
 []
