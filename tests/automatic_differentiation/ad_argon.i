@@ -758,17 +758,17 @@ dom0Scale=1e-3
     equation_values = '300'
 
     # For function-based reactions (e.g. those whose rate coefficients are
-    # enclosed in curly braces, {}), the e_temp auxiliary variable is 
+    # enclosed in curly braces, {}), the e_temp auxiliary variable is
     # named as a variable. Note that while e_temp is an AuxVariable, it does
     # depend on nonlinear variables and therefore should contribute to the
-    # jacobian of any functions which depend on it. 
-    # At the moment this jacobian contribution is not included, but the  
+    # jacobian of any functions which depend on it.
+    # At the moment this jacobian contribution is not included, but the
     # contribution is minimal compared to advection and diffusion so we
     # can get away with a NEWTON solver in this case.
     #
     # For more complex reaction networks with many functions that depend on
-    # electron temperature, it may be necessary to use PJFNK instead of 
-    # NEWTON. 
+    # electron temperature, it may be necessary to use PJFNK instead of
+    # NEWTON.
     equation_variables = 'e_temp'
     potential = 'potential'
     use_log = true

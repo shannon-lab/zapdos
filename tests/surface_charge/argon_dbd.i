@@ -1,20 +1,20 @@
-# This simulation is modeled after the COMSOL plasma moduleexample problem, 
-# "Dielectric Barrier Discharge". 
+# This simulation is modeled after the COMSOL plasma moduleexample problem,
+# "Dielectric Barrier Discharge".
 #
 # The domain is 1D and consists of 3 blocks, each 0.1 mm thick.
 # The plasma discharge region is set from  0.1 mm <= x <= 0.2 mm
 # and is bounded on either side by a 0.1 mm thick dielectric region.
 #
-# Only argon ions, electrons, and a single excited state are included for simplicity. 
+# Only argon ions, electrons, and a single excited state are included for simplicity.
 #
 # Surface charge is allowed to accumulate on the dielectric surfaces based on the
-# total charged particle flux (\sum_i q_i \Gamma_i - \Gamma_e).   
+# total charged particle flux (\sum_i q_i \Gamma_i - \Gamma_e).
 # Two different secondary electron emission coefficients are supplied to the
-# left and right boundaries through the GenericConstantMaterial interface. 
+# left and right boundaries through the GenericConstantMaterial interface.
 #
 # Potential boundary conditions are included as both InterfaceKernels and normal BCs.
-# 
-# In this case the mesh is scaled such that the domain goes 
+#
+# In this case the mesh is scaled such that the domain goes
 # from 0 to 3.
 dom0Scale=1e-4
 dom1Scale=1e-4
@@ -112,13 +112,13 @@ dom2Scale=1e-4
   l_max_its = 100
   nl_max_its = 25
 
-  # Adaptive timesteppers are useful for plasma simulations since the 
+  # Adaptive timesteppers are useful for plasma simulations since the
   # timestep requirements may vary widely over the course of a simulation.
-  # In this case timesteps of 0.1-10 ns are required between pulses as the 
+  # In this case timesteps of 0.1-10 ns are required between pulses as the
   # electron current becomes large, but larger timesteps are allowed otherwise.
   #
-  # A maximum timestep of 100 ns is set to make sure the voltage pulse (period 
-  # of 20 microseconds) is finely sampled.  
+  # A maximum timestep of 100 ns is set to make sure the voltage pulse (period
+  # of 20 microseconds) is finely sampled.
   dtmin = 1e-14
   dtmax = 1e-7
   [./TimeStepper]
@@ -132,9 +132,9 @@ dom2Scale=1e-4
 
 [Outputs]
   # Surface charge is provided from a Material property.
-  # Here the option output_material_properties is set to 
+  # Here the option output_material_properties is set to
   # true and the surface_charge material property is named.
-  # Now "surface_charge" will appear as an AuxVariable in 
+  # Now "surface_charge" will appear as an AuxVariable in
   # the exodus file.
   perf_graph = true
   [./out]
@@ -303,13 +303,13 @@ dom2Scale=1e-4
   [../]
 []
 
-[InterfaceKernels] 
-  # At the dielectric interfaces, the potential is required to be continuous 
-  # in value but discontinuous in slope due to surface charge accumulation. 
+[InterfaceKernels]
+  # At the dielectric interfaces, the potential is required to be continuous
+  # in value but discontinuous in slope due to surface charge accumulation.
   #
-  # The potential requires two different boundary conditions on each side: 
+  # The potential requires two different boundary conditions on each side:
   #    (1) An InterfaceKernel to provide the Neumann boundary condition
-  #    (2) A MatchedValueBC to ensure that 
+  #    (2) A MatchedValueBC to ensure that
   [./potential_left]
     type = ADPotentialSurfaceCharge
     neighbor_var = potential_dom0
@@ -359,7 +359,7 @@ dom2Scale=1e-4
     boundary = 'master21_interface'
   [../]
 
-  # Electrode and ground BCs: 
+  # Electrode and ground BCs:
   # Electrode is at x = 0, named 'left'
   [./potential_left]
     type = FunctionDirichletBC
@@ -491,7 +491,7 @@ dom2Scale=1e-4
 [Functions]
   # Define a sinusoidal voltage pulse with a frequency of 50 kHz
   # Amplitude is set to 750 Volts
-  # (Note that here the amplitude is set to 0.75. Potential units are 
+  # (Note that here the amplitude is set to 0.75. Potential units are
   # typically included as kV, not V. This option is set in the
   # GlobalParams block.)
   [./potential_input]
@@ -512,7 +512,7 @@ dom2Scale=1e-4
 
 [Materials]
   #########
-  # Define secondary electron emission coefficients on the left and right 
+  # Define secondary electron emission coefficients on the left and right
   # dielectrics.
   #########
   [./se_left]
@@ -529,7 +529,7 @@ dom2Scale=1e-4
   [../]
 
   #########
-  # Define electron transport coefficients 
+  # Define electron transport coefficients
   #########
   [./electron_moments_ad]
     type = ADGasElectronMoments
@@ -541,7 +541,7 @@ dom2Scale=1e-4
 
   #########
   # Define some necessary constants.
-  # Energy of secondary electrons is set to 1 eV here. 
+  # Energy of secondary electrons is set to 1 eV here.
   # e: fundamental charge
   # N_A: Avogadro's number
   # k_boltz: Boltzmann constant
@@ -558,11 +558,11 @@ dom2Scale=1e-4
     prop_values = '1.6e-19 6.022e23 1.38e-23 8.854e-12   1.        400    9.11e-31 1.01e5'
   [../]
 
-  
+
   #########
   # Define surface charge on left and right boundaries
-  # bc_type is 'Hagelaar' by default. 
-  # Other options are 'Lymberopoulos' and 'Sakiyama'. 
+  # bc_type is 'Hagelaar' by default.
+  # Other options are 'Lymberopoulos' and 'Sakiyama'.
   # For charge consistency, the bc_type and BCs should be consistent.
   #########
   [./Test]
@@ -594,7 +594,7 @@ dom2Scale=1e-4
   ######
   # Diffusion coefficients for the potential in each region must be defined.
   # Here a GenericConstantMaterial is used for simplicity.
-  # For all variables, potential included, diffusivity is defined as: 
+  # For all variables, potential included, diffusivity is defined as:
   # "diff" + [variable name]
   ######
   [./dielectric_left_side]
@@ -618,10 +618,10 @@ dom2Scale=1e-4
 
   ######
   # HeavySpeciesMaterial defines charge, mass, transport coefficients, and
-  # temperature for each species. 
+  # temperature for each species.
   #
   # Transport coefficients and temperature are defined as ADMaterialProperties.
-  # Although they currently (as of June 16, 2020) remain constant, future 
+  # Although they currently (as of June 16, 2020) remain constant, future
   # implementations may include mixture-averaged diffusion coefficients and
   # effective ion temperatures with nonlinear dependence on other variables.
   ######
@@ -652,19 +652,19 @@ dom2Scale=1e-4
 []
 
 [Reactions]
-  # Here a list of plasma reactions are included to account for 
+  # Here a list of plasma reactions are included to account for
   # electron-impact processes during the discharge.
   # All cross sections were taken from the COMSOL Plasma
-  # Module example problem, "Dielectric Barrier Discharge". 
+  # Module example problem, "Dielectric Barrier Discharge".
   # (The example files are freely available.)
-  # 
+  #
   # Cross sections are typically found from LXCat.
   #
   # Rate coefficients and electron transport coefficients
   # (mobility, diffusivity) are computed from the cross sections
-  # through an external Boltzmann solver. (In this case, BOLSIG+ 
+  # through an external Boltzmann solver. (In this case, BOLSIG+
   # was used assuming a Maxwellian electron distribution function.)
-  # The tabulated rate coefficients are stored in the dbd_data 
+  # The tabulated rate coefficients are stored in the dbd_data
   # directory, as specified by the file_location input parameter.
 
   [./Argon]
@@ -682,11 +682,11 @@ dom2Scale=1e-4
     position_units = ${dom1Scale}
     block = 1
 
-    # Note that rate coefficients are in molar units. 
+    # Note that rate coefficients are in molar units.
     # Two-body reaction units:  m^3 mol^-1 s^-1
-    # 
-    # EEDF - rate coefficients taken from tabulated files located in 'file_location', 
-    #        computed from cross section data with Bolsig+. 
+    #
+    # EEDF - rate coefficients taken from tabulated files located in 'file_location',
+    #        computed from cross section data with Bolsig+.
     #
     # Energy changes are included in square brackets, with the units in eV. Note that the
     # sign is with respect to electrons; e.g. a negative sign indicates that electrons
