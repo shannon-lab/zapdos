@@ -45,7 +45,7 @@ protected:
   ADReal _v_thermal;
   ADReal _ve_thermal;
   const MaterialProperty<Real> & _e;
-  //Real _se_coeff;
+  // Real _se_coeff;
   const std::string _potential_units;
   Real _a;
   Real _b;
