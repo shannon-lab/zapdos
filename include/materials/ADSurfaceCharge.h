@@ -23,53 +23,29 @@ protected:
   virtual void computeQpProperties() override;
   virtual void initQpStatefulProperties() override;
 
-  void computeHagelaarFlux();
-  void computeSakiyamaFlux();
-  void computeLymberopoulosFlux();
+  void computeChargeFlux();
 
   int _bc_type;
   ADMaterialProperty<Real> & _sigma;
   const MaterialProperty<Real> & _sigma_old;
   MaterialProperty<Real> & _plasma_current;
 
-  const bool _include_secondary_electrons;
-  const MaterialProperty<Real> & _se_coeff;
-
-  const ADMaterialProperty<Real> & _muem;
-  const MaterialProperty<Real> & _massem;
-
   Real _r_units;
-  Real _r_ion;
-  Real _r_electron;
-  const MaterialProperty<Real> & _kb;
-  ADReal _v_thermal;
-  ADReal _ve_thermal;
-  const MaterialProperty<Real> & _e;
-  // Real _se_coeff;
   const std::string _potential_units;
-  Real _a;
-  Real _b;
 
   const ADVariableGradient & _grad_potential;
-  const ADVariableValue & _mean_en;
-  const ADVariableValue & _em;
-  const ADVariableGradient & _grad_em;
 
-  unsigned int _num_ions;
-  std::vector<const ADVariableValue *> _ions;
-  std::vector<const ADVariableGradient *> _grad_ions;
-  std::vector<const ADMaterialProperty<Real> *> _mu_ions;
-  std::vector<const MaterialProperty<Real> *> _sgn_ions;
-  std::vector<const MaterialProperty<Real> *> _mass_ions;
-  std::vector<const ADMaterialProperty<Real> *> _T_ions;
+  unsigned int _num_species;
+  std::vector<const ADVariableValue *> _species;
+  std::vector<const ADVariableGradient *> _grad_species;
+  std::vector<const ADMaterialProperty<Real> *> _mu;
+  std::vector<const ADMaterialProperty<Real> *> _diff;
+  std::vector<const MaterialProperty<Real> *> _sgn;
 
   // Recombination coefficient for Lymberopoulos-style BCs
   Real _ks;
 
-  ADReal _ion_flux;
-  ADReal _single_ion_flux;
-  ADReal _ion_charge_flux;
-  ADReal _n_gamma;
+  ADReal _charge_flux;
 
   ADReal _actual_mean_energy;
   ADReal _electron_flux;

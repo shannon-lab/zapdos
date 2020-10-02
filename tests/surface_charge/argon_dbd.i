@@ -103,6 +103,8 @@ dom2Scale=1e-4
   compute_scaling_once = false
   end_time = 10e-5
   num_steps = 50
+  #num_steps = 1
+  #petsc_options = '-snes_converged_reason -snes_linesearch_monitor -snes_test_jacobian'
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
   solve_type = NEWTON
   line_search = 'basic'
@@ -124,7 +126,7 @@ dom2Scale=1e-4
   [./TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
-    dt = 1e-11
+    dt = 1e-8
     growth_factor = 1.2
    optimal_iterations = 30
   [../]
@@ -151,7 +153,7 @@ dom2Scale=1e-4
   [./em]
     block = 1
   [../]
-  [./Ar*]
+  [./Ars]
     block = 1
   [../]
   [./mean_en]
@@ -255,18 +257,18 @@ dom2Scale=1e-4
 
   [./d_Arex_dt]
     type = ADTimeDerivativeLog
-    variable = Ar*
+    variable = Ars
     block = 1
   [../]
   [./Arex_diffusion]
     type = ADCoeffDiffusion
-    variable = Ar*
+    variable = Ars
     position_units = ${dom1Scale}
     block = 1
   [../]
   [./Arex_offset]
     type = LogStabilizationMoles
-    variable = Ar*
+    variable = Ars
     block = 1
   [../]
 
@@ -339,6 +341,58 @@ dom2Scale=1e-4
     family = MONOMIAL
     initial_condition = 3.70109
   [../]
+  [Ars_density]
+    block = 1
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [em_density]
+    block = 1
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [x]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+[]
+
+[AuxKernels]
+  [Ars_density_calc]
+    type = DensityMoles
+    convert_moles = true
+    variable = Ars_density
+    density_log = Ars
+    block = 1
+  []
+  [em_density_calc]
+    type = DensityMoles
+    convert_moles = true
+    variable = em_density
+    density_log = em
+    block = 1
+  []
+  [x_d0]
+    type = Position
+    variable = x
+    position_units = ${dom0Scale}
+    execute_on = 'initial timestep_end'
+    block = 0
+  []
+  [x_d1]
+    type = Position
+    variable = x
+    position_units = ${dom1Scale}
+    execute_on = 'initial timestep_end'
+    block = 1
+  []
+  [x_d2]
+    type = Position
+    variable = x
+    position_units = ${dom2Scale}
+    execute_on = 'initial timestep_end'
+    block = 2
+  []
 []
 
 [BCs]
@@ -436,7 +490,7 @@ dom2Scale=1e-4
   [../]
   [./Arex_bcs]
     type = ADHagelaarIonDiffusionBC
-    variable = Ar*
+    variable = Ars
     boundary = 'master10_interface master12_interface'
     r = 0
     position_units = ${dom1Scale}
@@ -476,7 +530,7 @@ dom2Scale=1e-4
   [../]
   [./Arex_ic]
     type = ConstantIC
-    variable = Ar*
+    variable = Ars
     value = -45
     block = 1
   [../]
@@ -568,26 +622,9 @@ dom2Scale=1e-4
   [./Test]
     type = ADSurfaceCharge
     potential = potential_dom1
-    bc_type = 'Hagelaar'
-    r_electron = 0
-    r_ion = 0
-    mean_en = mean_en
-    em = em
-    ions = 'Arp'
+    species = 'em Arp'
     position_units = ${dom0Scale}
-    boundary = 'master10_interface'
-  [../]
-  [./Test2]
-    type = ADSurfaceCharge
-    potential = potential_dom1
-    bc_type = 'Hagelaar'
-    r_electron = 0
-    r_ion = 0
-    mean_en = mean_en
-    em = em
-    ions = 'Arp'
-    position_units = ${dom0Scale}
-    boundary = 'master12_interface'
+    boundary = 'master10_interface master12_interface'
   [../]
 
 
@@ -643,7 +680,7 @@ dom2Scale=1e-4
   [../]
   [./gas_species_3]
     type = ADHeavySpeciesMaterial
-    heavy_species_name = Ar*
+    heavy_species_name = Ars
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
     diffusivity = 1.6897e-5
@@ -668,7 +705,7 @@ dom2Scale=1e-4
   # directory, as specified by the file_location input parameter.
 
   [./Argon]
-    species = 'em Arp Ar*'
+    species = 'em Arp Ars'
     aux_species = 'Ar'
     reaction_coefficient_format = 'townsend'
     gas_species = 'Ar'
@@ -692,11 +729,11 @@ dom2Scale=1e-4
     # sign is with respect to electrons; e.g. a negative sign indicates that electrons
     # lose energy in the reaction.
     reactions = 'em + Ar -> em + Ar               : EEDF [elastic] (C1_Ar_Elastic)
-                 em + Ar -> em + Ar*              : EEDF [-11.5] (C2_Ar_Excitation_11.50_eV)
+                 em + Ar -> em + Ars              : EEDF [-11.5] (C2_Ar_Excitation_11.50_eV)
                  em + Ar -> em + em + Arp         : EEDF [-15.76] (C3_Ar_Ionization_15.80_eV)
-                 em + Ar* -> em + Ar              : EEDF [11.5] (C4_Ars_De-excitation_11.50_eV)
-                 em + Ar* -> em + em + Arp        : EEDF [-4.43] (C5_Ars_Ionization_4.43_eV)
-                 Ar* + Ar -> Ar + Ar              : 1807
-                 Ar* + Ar* -> em + Ar + Arp       : 3.3734e8'
+                 em + Ars -> em + Ar              : EEDF [11.5] (C4_Ars_De-excitation_11.50_eV)
+                 em + Ars -> em + em + Arp        : EEDF [-4.43] (C5_Ars_Ionization_4.43_eV)
+                 Ars + Ar -> Ar + Ar              : 1807
+                 Ars + Ars -> em + Ar + Arp       : 3.3734e8'
   [../]
 []
