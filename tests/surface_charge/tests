@@ -1,18 +1,34 @@
 [Tests]
-  [./dbd_simulation]
+  [dbd_simulation]
     type = 'Exodiff'
-    input = 'argon_dbd.i'
-    exodiff = 'argon_dbd_out.e'
+    input = 'dbd_test.i'
+    exodiff = 'dbd_test_out.e'
     #custom_cmp = 'argon_dbd_out.cmp'
     group = 'surface_charge'
-  [../]
-  [./dbd_jacobian_testing]
+  []
+  [dbd_jacobian_testing]
     type = 'PetscJacobianTester'
-    input = 'argon_dbd.i'
+    input = 'dbd_test.i'
     cli_args = 'Outputs/exodus=false Executioner/num_steps=1'
     run_sim = True
-    ratio_tol = 1e-4
-    difference_tol = 1e-1
+    ratio_tol = 1e-8
+    difference_tol = 1e-6
     group = 'surface_charge'
-  [../]
+  []
+
+  [dielectric_interface]
+    type = 'Exodiff'
+    input = 'interface_test.i'
+    exodiff = 'interface_test_out.e'
+    group = 'surface_charge'
+  []
+  [dielectric_interface_jacobian]
+    type = 'PetscJacobianTester'
+    input = 'interface_test.i'
+    cli_args = 'Outputs/exodus=false Executioner/num_steps=1'
+    run_sim = True
+    ratio_tol = 1e-8
+    difference_tol = 1e-6
+    group = 'surface_charge'
+  []
 []
