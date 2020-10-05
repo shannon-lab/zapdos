@@ -25,7 +25,8 @@ ADSurfaceCharge::validParams()
   params.addParam<Real>("r_ion", 0.0, "The ion reflection coefficient on this boundary.");
   params.addParam<Real>("r_electron", 0.0, "The electron reflection coefficient on this boundary.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addRequiredCoupledVar("species", "All of the charged species that interact with this boundary.");
+  params.addRequiredCoupledVar("species",
+                               "All of the charged species that interact with this boundary.");
   params.addParam<Real>("ks", "The recombination coefficient (for Lymberopoulos-type BC)");
   // params.addParam<Real>("se_coeff", "The secondary electron emission coefficient.");
   params.addParam<bool>(
@@ -96,11 +97,10 @@ ADSurfaceCharge::computeQpProperties()
     _charge_flux = 0.0;
     for (unsigned int i = 0; i < _num_species; ++i)
     {
-      _charge_flux +=
-          (*_sgn[i])[_qp] * std::exp((*_species[i])[_qp]) *
-          ((*_sgn[i])[_qp] * (*_mu[i])[_qp] * -_grad_potential[_qp] * _r_units -
-           (*_diff[i])[_qp] * (*_grad_species[i])[_qp] * _r_units) *
-          _normals[_qp];
+      _charge_flux += (*_sgn[i])[_qp] * std::exp((*_species[i])[_qp]) *
+                      ((*_sgn[i])[_qp] * (*_mu[i])[_qp] * -_grad_potential[_qp] * _r_units -
+                       (*_diff[i])[_qp] * (*_grad_species[i])[_qp] * _r_units) *
+                      _normals[_qp];
     }
 
     _plasma_current[_qp] = MetaPhysicL::raw_value(_charge_flux) * 1.602e-19 * 6.022e23;
