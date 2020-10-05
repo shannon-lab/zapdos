@@ -1,22 +1,22 @@
-# This example sets up a simple varying-voltage discharge with a 
-# dielectric at the right boundary. 
+# This example sets up a simple varying-voltage discharge with a
+# dielectric at the right boundary.
 #
-# Two charged particle species are considered, creatively named 'pos' 
-# and 'neg'. They both have the same initial conditions and boundary 
-# conditions; the only difference is their charge. 
+# Two charged particle species are considered, creatively named 'pos'
+# and 'neg'. They both have the same initial conditions and boundary
+# conditions; the only difference is their charge.
 # As the voltage varies, the particle flux to the right boundary
 # (including both advection and diffusion) will switch polarity and
-# the surface charge will become increasingly negative or positive.  
+# the surface charge will become increasingly negative or positive.
 #
 # The left boundary is a driven electrode with a sinusoidal waveform.
 # A dielectric boundary condition including surface charge accumulation
-# is included on the right boundary. 
-# 
-# Note that without surface charge the electric field across both 
+# is included on the right boundary.
+#
+# Note that without surface charge the electric field across both
 # boundaries should be identical since their permittivities are
-# both set to the same value. 
-# Surface charge shields the electric field in the gas region, 
-# preventing strong field buildup. 
+# both set to the same value.
+# Surface charge shields the electric field in the gas region,
+# preventing strong field buildup.
 
 dom0Scale=1e-4
 dom1Scale=1e-4
@@ -352,9 +352,9 @@ dom1Scale=1e-4
   # The potential requires two different boundary conditions on each side:
   #    (1) An InterfaceKernel to provide the Neumann boundary condition
   #    (2) A MatchedValueBC to ensure that the potential remains continuous
-  # 
-  # This interface kernel simply applies a dielectric BC with surface charge 
-  # accumulation.  
+  #
+  # This interface kernel simply applies a dielectric BC with surface charge
+  # accumulation.
   [potential_right]
     type = ADPotentialSurfaceCharge
     neighbor_var = potential_dom1
@@ -393,10 +393,10 @@ dom1Scale=1e-4
   [../]
 
   # Both charged species will have a specified dirichlet BC on the driven electrode
-  # and a diffusion BC on the right side. 
+  # and a diffusion BC on the right side.
   # As the voltage varies with time, the charged particle flux on the right will
   # switch between positive and negative, effectively changing the surface
-  # charge polarity. 
+  # charge polarity.
   [neg_left]
     type = DirichletBC
     variable = neg
@@ -476,10 +476,10 @@ dom1Scale=1e-4
 
 [Materials]
   # This material creates a boundary-restricted material property called "surface_charge"
-  # The value of surface charge is based on the total charged particle flux impacting 
-  # the specified boundary. 
+  # The value of surface charge is based on the total charged particle flux impacting
+  # the specified boundary.
   # In this case we have two charged species, 'pos' (positively charged) and 'neg'
-  # (negatively charged). 
+  # (negatively charged).
   [surface_charge_material]
     type = ADSurfaceCharge
     potential = potential_dom0
@@ -495,7 +495,7 @@ dom1Scale=1e-4
     prop_names = ' e       N_A      k_boltz  eps         se_energy T_gas  massem   p_gas'
     prop_values = '1.6e-19 6.022e23 1.38e-23 8.854e-12   1.        400    9.11e-31 1.01e5'
   [../]
-  
+
   #
   [./dielectric_left_side]
     type = GenericConstantMaterial

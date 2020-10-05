@@ -1,8 +1,8 @@
 # This example is a simple steady state potential with a constant
-# surface charge. 
-# The surface charge is taken into account with an interface kernel, 
-# causing a discontinuity in the electric field. 
-# A MatchedValueBC is also needed to ensure the potential is 
+# surface charge.
+# The surface charge is taken into account with an interface kernel,
+# causing a discontinuity in the electric field.
+# A MatchedValueBC is also needed to ensure the potential is
 # continuous across the two regions.
 
 dom0Scale=1e-4
