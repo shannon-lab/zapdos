@@ -28,7 +28,6 @@ ADSurfaceCharge::validParams()
   params.addRequiredCoupledVar("species",
                                "All of the charged species that interact with this boundary.");
   params.addParam<Real>("ks", "The recombination coefficient (for Lymberopoulos-type BC)");
-  // params.addParam<Real>("se_coeff", "The secondary electron emission coefficient.");
   params.addParam<bool>(
       "secondary_electrons",
       true,

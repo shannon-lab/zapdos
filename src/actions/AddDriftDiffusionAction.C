@@ -518,14 +518,6 @@ AddDriftDiffusionAction::addElectronKernels(const std::string & em_name,
   }
 }
 
-/*void
-AddDriftDiffusionAction::addElectronADKernels(const std::string & em_name,
-                                         const std::string & potential_name,
-                                         const std::string & mean_en_name,
-                                         const bool & Using_offset)
-{
-}*/
-
 // Adding Kernels for the energy independent charged particles
 void
 AddDriftDiffusionAction::addChargedParticlesKernels(const std::string & ion_name,
@@ -561,12 +553,6 @@ AddDriftDiffusionAction::addChargedParticlesKernels(const std::string & ion_name
   }
 }
 
-/*void
-AddDriftDiffusionAction::addChargedParticlesADKernels(const std::string & ion_name,
-                                                 const std::string & potential_name,
-                                                 const bool & Using_offset)
-{
-}*/
 
 // Adding Kernels for the neutral particles
 void
@@ -594,12 +580,6 @@ AddDriftDiffusionAction::addNeutralParticlesKernels(const std::string & neutral_
     _problem->addKernel("LogStabilizationMoles", neutral_name + "_log_stabilization", params2);
   }
 }
-
-/*AddDriftDiffusionAction::addNeutralParticlesADKernels(const std::string & ion_name,
-                                                 const std::string & potential_name,
-                                                 const bool & Using_offset)
-{
-}*/
 
 // Adding Kernels for the electron mean energy
 void
@@ -684,7 +664,6 @@ AddDriftDiffusionAction::addADKernels(const std::string & name,
     params1.set<std::vector<SubdomainName>>("block") =
         getParam<std::vector<SubdomainName>>("block");
     _problem->addKernel("ADEFieldAdvection", name + "_advection", params1);
-    //_problem->haveADObjects(true);
   }
 
   InputParameters params2 = _factory.getValidParams("ADCoeffDiffusion");
@@ -692,7 +671,6 @@ AddDriftDiffusionAction::addADKernels(const std::string & name,
   params2.set<Real>("position_units") = getParam<Real>("position_units");
   params2.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   _problem->addKernel("ADCoeffDiffusion", name + "_diffusion", params2);
-  //_problem->haveADObjects(true);
 
   if (energy)
   {
@@ -704,12 +682,7 @@ AddDriftDiffusionAction::addADKernels(const std::string & name,
     params3.set<Real>("position_units") = getParam<Real>("position_units");
     params3.set<std::vector<SubdomainName>>("block") =
         getParam<std::vector<SubdomainName>>("block");
-    /*
-    params3.set<std::vector<TagName>>("extra_vector_tags") =
-        getParam<std::vector<TagName>>("extra_tags");
-        */
     _problem->addKernel("ADJouleHeating", name + "_joule_heating", params3);
-    //_problem->haveADObjects(true);
   }
 
   if (Using_offset)
@@ -720,7 +693,6 @@ AddDriftDiffusionAction::addADKernels(const std::string & name,
     params4.set<std::vector<SubdomainName>>("block") =
         getParam<std::vector<SubdomainName>>("block");
     _problem->addKernel("LogStabilizationMoles", name + "_log_stabilization", params4);
-    //_problem->haveADObjects(true);
   }
 }
 

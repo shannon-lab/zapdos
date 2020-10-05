@@ -2,11 +2,8 @@ dom0Scale=1e-3
 
 [GlobalParams]
   offset = 30
-  # offset = 0
   potential_units = kV
   use_moles = true
-  # potential_units = V
-  #time_units = 1e-6
 []
 
 [Mesh]
@@ -30,7 +27,6 @@ dom0Scale=1e-3
 
 [Problem]
   type = FEProblem
-  # kernel_coverage_check = false
 []
 
 [Preconditioning]
@@ -65,18 +61,10 @@ dom0Scale=1e-3
 
 [Outputs]
   perf_graph = true
-  # print_linear_residuals = false
   [./out]
     type = Exodus
     execute_on = 'final'
   [../]
-  #[./dof_map]
-  #  type = DOFMap
-  #[../]
-[]
-
-[Debug]
-  #show_var_residual_norms = true
 []
 
 [UserObjects]
@@ -90,13 +78,11 @@ dom0Scale=1e-3
 
 [Kernels]
   [./Arex_time_deriv]
-    #type = ElectronTimeDerivative
     type = ADTimeDerivativeLog
     variable = Ar*
     block = 0
   [../]
   [./Arex_diffusion]
-    #type = CoeffDiffusion
     type = ADCoeffDiffusion
     variable = Ar*
     block = 0
@@ -111,7 +97,6 @@ dom0Scale=1e-3
 
 
   [./em_time_deriv]
-    #type = ElectronTimeDerivative
     type = ADTimeDerivativeLog
     variable = em
     block = 0
@@ -163,7 +148,6 @@ dom0Scale=1e-3
   [../]
 
   [./Arp_time_deriv]
-    #type = ElectronTimeDerivative
     type = ADTimeDerivativeLog
     variable = Arp
     block = 0
@@ -215,13 +199,11 @@ dom0Scale=1e-3
   [../]
 
   [./mean_en_time_deriv]
-    #type = ElectronTimeDerivative
     type = ADTimeDerivativeLog
     variable = mean_en
     block = 0
   [../]
   [./mean_en_advection]
-    #type = ADEFieldAdvectionEnergy
     type = ADEFieldAdvection
     variable = mean_en
     potential = potential
@@ -236,7 +218,6 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./mean_en_joule_heating]
-    #type = JouleHeating
     type = ADJouleHeating
     variable = mean_en
     potential = potential
@@ -262,7 +243,6 @@ dom0Scale=1e-3
   [../]
 
   [./Arp]
-    #initial_condition = -21
     initial_condition = -24.69314718056
     block = 0
   [../]
@@ -273,7 +253,6 @@ dom0Scale=1e-3
   [../]
 
   [./Ar2p]
-    #initial_condition = -21
     initial_condition = -24.69314718056
     block = 0
   [../]
@@ -371,21 +350,6 @@ dom0Scale=1e-3
    family = MONOMIAL
    block = 0
   [../]
-  #[./ProcRate_el]
-  # order = CONSTANT
-  # family = MONOMIAL
-  # block = 0
-  #[../]
-  #[./ProcRate_ex]
-  # order = CONSTANT
-  # family = MONOMIAL
-  # block = 0
-  #[../]
-  #[./ProcRate_iz]
-  # order = CONSTANT
-  # family = MONOMIAL
-  # block = 0
-  #[../]
 []
 
 [AuxKernels]
@@ -528,7 +492,6 @@ dom0Scale=1e-3
     potential = potential
     em = em
     ip = Arp
-    #r = 0.99
     r = 0.0
     position_units = ${dom0Scale}
   [../]
@@ -554,7 +517,6 @@ dom0Scale=1e-3
   [../]
 
   [./potential_left]
-    #type = NeumannCircuitVoltageMoles_KV
     type = ADNeumannCircuitVoltageMoles_KV
     variable = potential
     boundary = left
@@ -579,7 +541,6 @@ dom0Scale=1e-3
     boundary = 'right'
     potential = potential
     mean_en = mean_en
-    #r = 0.99
     r = 0.0
     position_units = ${dom0Scale}
   [../]
@@ -676,12 +637,10 @@ dom0Scale=1e-3
 [Functions]
   [./potential_bc_func]
     type = ParsedFunction
-    # value = '1.25*tanh(1e6*t)'
     value = 0.8
   [../]
   [./potential_ic_func]
     type = ParsedFunction
-    #value = '-0.8 * (1.0001e-3 - x)'
     value = '-0.8 * (1 - x)'
   [../]
 []
@@ -712,8 +671,6 @@ dom0Scale=1e-3
     heavy_species_name = Arp
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
-    #mobility = 0.144409938
-    #diffusivity = 6.428571e-3
     block = 0
   [../]
   [./gas_species_1]
