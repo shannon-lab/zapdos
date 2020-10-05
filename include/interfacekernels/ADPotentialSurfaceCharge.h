@@ -15,7 +15,7 @@
 /**
  * DGKernel for enforcing a dielectric boundary condition on
  * a potential variable, including surface charge as an
- * ADMaterialProperty. 
+ * ADMaterialProperty.
  * Jacobians computed through automatic differentiation.
  */
 class ADPotentialSurfaceCharge : public ADInterfaceKernel
