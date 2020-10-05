@@ -71,6 +71,7 @@ dom1Scale=1e-4
 [Executioner]
   type = Steady
   automatic_scaling = true
+  solve_type = NEWTON
   #petsc_options = '-snes_test_jacobian'
 []
 
@@ -211,7 +212,7 @@ dom1Scale=1e-4
     type = ADGenericConstantMaterial
     boundary = 'plasma_right'
     prop_names = 'surface_charge'
-    prop_values = '1e-7'
+    prop_values = '-1e-6'
   []
 
   [./dielectric_left_side]
