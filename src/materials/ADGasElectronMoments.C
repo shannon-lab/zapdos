@@ -41,16 +41,11 @@ ADGasElectronMoments::ADGasElectronMoments(const InputParameters & parameters)
     _time_units(getParam<Real>("time_units")),
     _use_moles(getParam<bool>("use_moles")),
     _muem(declareADProperty<Real>("muem")),
-    _d_muem_d_actual_mean_en(declareADProperty<Real>("d_muem_d_actual_mean_en")),
     _diffem(declareADProperty<Real>("diffem")),
-    _d_diffem_d_actual_mean_en(declareADProperty<Real>("d_diffem_d_actual_mean_en")),
     _mumean_en(declareADProperty<Real>("mumean_en")),
     _diffmean_en(declareADProperty<Real>("diffmean_en")),
     _sgnmean_en(declareProperty<Real>("sgnmean_en")),
     _sgnem(declareProperty<Real>("sgnem")),
-    _d_mumean_en_d_actual_mean_en(declareADProperty<Real>("d_mumean_en_d_actual_mean_en")),
-    _d_diffmean_en_d_actual_mean_en(declareADProperty<Real>("d_diffmean_en_d_actual_mean_en")),
-    //_massem(declareProperty<Real>("massem")),
     _em(adCoupledValue("em")),
     _mean_en(adCoupledValue("mean_en"))
 {
@@ -87,49 +82,38 @@ ADGasElectronMoments::ADGasElectronMoments(const InputParameters & parameters)
 
   _mu_interpolation.setData(actual_mean_energy, mu);
   _diff_interpolation.setData(actual_mean_energy, diff);
-  _mu_interpolation2 = libmesh_make_unique<LinearInterpolation>(actual_mean_energy, mu);
-  _diff_interpolation2 = libmesh_make_unique<LinearInterpolation>(actual_mean_energy, diff);
 }
 
 void
 ADGasElectronMoments::computeQpProperties()
 {
+  actual_mean_en = std::exp(_mean_en[_qp].value() - _em[_qp].value());
+
   _sgnmean_en[_qp] = -1.0;
   _sgnem[_qp] = -1.0;
 
-  /*
-   * Unfortunately these derivatives still need to be explicitly added since they are used in
-   * InterfaceAdvection... Unfortunate, but hopefully temporary.
-   * In normal kernels the AD versions are used.
-   */
-  _d_diffem_d_actual_mean_en[_qp] =
-      _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _time_units;
-  _d_muem_d_actual_mean_en[_qp] =
-      _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling *
-      _time_units;
-  _d_mumean_en_d_actual_mean_en[_qp] = 5.0 / 3.0 * _d_muem_d_actual_mean_en[_qp];
-  _d_diffmean_en_d_actual_mean_en[_qp] = 5.0 / 3.0 * _d_diffem_d_actual_mean_en[_qp];
+  // For interpolated values the derivative propagation needs to be explicitly defined.
 
-  // Here we define the AD values of mobility and diffusivity
-  _diffem[_qp].value() =
-      _diff_interpolation2->sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-      _time_units;
-  _diffem[_qp].derivatives() =
-      _diff_interpolation2->sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-      std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
-      (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) * _time_units;
+  // Electron diffusion coefficient - value and derivatives
+  _diffem[_qp].value() = _diff_interpolation.sample(actual_mean_en) * _time_units;
 
-  _muem[_qp].value() =
-      _mu_interpolation2->sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-      _voltage_scaling * _time_units;
-  _muem[_qp].derivatives() =
-      _mu_interpolation2->sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-      std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
-      (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) * _voltage_scaling * _time_units;
+  _diffem[_qp].derivatives() = _diff_interpolation.sampleDerivative(actual_mean_en) *
+                               actual_mean_en *
+                               (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) * _time_units;
 
+  // Electron mobility - value and derivatives
+  _muem[_qp].value() = _mu_interpolation.sample(actual_mean_en) * _voltage_scaling * _time_units;
+
+  _muem[_qp].derivatives() = _mu_interpolation.sampleDerivative(actual_mean_en) * actual_mean_en *
+                             (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) *
+                             _voltage_scaling * _time_units;
+
+  // Mean electron energy diffusivity and mobility:
   _diffmean_en[_qp].value() = 5.0 / 3.0 * _diffem[_qp].value();
+
   _diffmean_en[_qp].derivatives() = 5.0 / 3.0 * _diffem[_qp].derivatives();
 
   _mumean_en[_qp].value() = 5.0 / 3.0 * _muem[_qp].value();
+
   _mumean_en[_qp].derivatives() = 5.0 / 3.0 * _muem[_qp].derivatives();
 }
