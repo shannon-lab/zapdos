@@ -1,12 +1,9 @@
 dom0Scale=1e-3
 
 [GlobalParams]
-  offset = 20
-  # offset = 0
+  offset = 30
   potential_units = kV
   use_moles = true
-  # potential_units = V
-  #time_units = 1e-6
 []
 
 [Mesh]
@@ -30,7 +27,6 @@ dom0Scale=1e-3
 
 [Problem]
   type = FEProblem
-  # kernel_coverage_check = false
 []
 
 [Preconditioning]
@@ -45,11 +41,8 @@ dom0Scale=1e-3
   automatic_scaling = true
   compute_scaling_once = false
   end_time = 1e-1
-  #end_time = 1e6
-  #num_steps = 1
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
   solve_type = NEWTON
-  #solve_type = PJFNK
   line_search = 'basic'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
   petsc_options_value = 'lu NONZERO 1.e-10'
@@ -61,26 +54,17 @@ dom0Scale=1e-3
     type = IterationAdaptiveDT
     cutback_factor = 0.4
     dt = 1e-11
-    #dt = 1e-5
     growth_factor = 1.2
-   optimal_iterations = 30
+    optimal_iterations = 30
   [../]
 []
 
 [Outputs]
   perf_graph = true
-  # print_linear_residuals = false
   [./out]
     type = Exodus
     execute_on = 'final'
   [../]
-  #[./dof_map]
-  #  type = DOFMap
-  #[../]
-[]
-
-[Debug]
-  #show_var_residual_norms = true
 []
 
 [UserObjects]
@@ -94,13 +78,11 @@ dom0Scale=1e-3
 
 [Kernels]
   [./Arex_time_deriv]
-    #type = ElectronTimeDerivative
     type = ADTimeDerivativeLog
     variable = Ar*
     block = 0
   [../]
   [./Arex_diffusion]
-    #type = CoeffDiffusion
     type = ADCoeffDiffusion
     variable = Ar*
     block = 0
@@ -115,7 +97,6 @@ dom0Scale=1e-3
 
 
   [./em_time_deriv]
-    #type = ElectronTimeDerivative
     type = ADTimeDerivativeLog
     variable = em
     block = 0
@@ -167,7 +148,6 @@ dom0Scale=1e-3
   [../]
 
   [./Arp_time_deriv]
-    #type = ElectronTimeDerivative
     type = ADTimeDerivativeLog
     variable = Arp
     block = 0
@@ -219,13 +199,12 @@ dom0Scale=1e-3
   [../]
 
   [./mean_en_time_deriv]
-    #type = ElectronTimeDerivative
     type = ADTimeDerivativeLog
     variable = mean_en
     block = 0
   [../]
   [./mean_en_advection]
-    type = ADEFieldAdvectionEnergy
+    type = ADEFieldAdvection
     variable = mean_en
     potential = potential
     em = em
@@ -239,7 +218,6 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./mean_en_joule_heating]
-    #type = JouleHeating
     type = ADJouleHeating
     variable = mean_en
     potential = potential
@@ -260,28 +238,28 @@ dom0Scale=1e-3
   [../]
 
   [./em]
-    initial_condition = -21
+    initial_condition = -24
     block = 0
   [../]
 
   [./Arp]
-    initial_condition = -21
+    initial_condition = -24.69314718056
     block = 0
   [../]
 
   [./Ar*]
-    initial_condition = -21
+    initial_condition = -26
     block = 0
   [../]
 
   [./Ar2p]
-    initial_condition = -21
+    initial_condition = -24.69314718056
     block = 0
   [../]
 
   [./mean_en]
     block = 0
-    initial_condition = -20
+    initial_condition = -24
   [../]
 []
 
@@ -372,21 +350,6 @@ dom0Scale=1e-3
    family = MONOMIAL
    block = 0
   [../]
-  #[./ProcRate_el]
-  # order = CONSTANT
-  # family = MONOMIAL
-  # block = 0
-  #[../]
-  #[./ProcRate_ex]
-  # order = CONSTANT
-  # family = MONOMIAL
-  # block = 0
-  #[../]
-  #[./ProcRate_iz]
-  # order = CONSTANT
-  # family = MONOMIAL
-  # block = 0
-  #[../]
 []
 
 [AuxKernels]
@@ -529,7 +492,6 @@ dom0Scale=1e-3
     potential = potential
     em = em
     ip = Arp
-    #r = 0.99
     r = 0.0
     position_units = ${dom0Scale}
   [../]
@@ -555,7 +517,6 @@ dom0Scale=1e-3
   [../]
 
   [./potential_left]
-    #type = NeumannCircuitVoltageMoles_KV
     type = ADNeumannCircuitVoltageMoles_KV
     variable = potential
     boundary = left
@@ -580,7 +541,6 @@ dom0Scale=1e-3
     boundary = 'right'
     potential = potential
     mean_en = mean_en
-    #r = 0.99
     r = 0.0
     position_units = ${dom0Scale}
   [../]
@@ -677,12 +637,11 @@ dom0Scale=1e-3
 [Functions]
   [./potential_bc_func]
     type = ParsedFunction
-    # value = '1.25*tanh(1e6*t)'
     value = 0.8
   [../]
   [./potential_ic_func]
     type = ParsedFunction
-    value = '-0.8 * (1.0001e-3 - x)'
+    value = '-0.8 * (1 - x)'
   [../]
 []
 
@@ -712,8 +671,6 @@ dom0Scale=1e-3
     heavy_species_name = Arp
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
-    #mobility = 0.144409938
-    #diffusivity = 6.428571e-3
     block = 0
   [../]
   [./gas_species_1]
@@ -754,8 +711,22 @@ dom0Scale=1e-3
     electron_density = 'em'
     include_electrons = true
     file_location = 'argon_chemistry_rates'
-    equation_constants = 'Tgas e_temp'
-    equation_values = '300 34800'
+    equation_constants = 'Tgas'
+    equation_values = '300'
+
+    # For function-based reactions (e.g. those whose rate coefficients are
+    # enclosed in curly braces, {}), the e_temp auxiliary variable is
+    # named as a variable. Note that while e_temp is an AuxVariable, it does
+    # depend on nonlinear variables and therefore should contribute to the
+    # jacobian of any functions which depend on it.
+    # At the moment this jacobian contribution is not included, but the
+    # contribution is minimal compared to advection and diffusion so we
+    # can get away with a NEWTON solver in this case.
+    #
+    # For more complex reaction networks with many functions that depend on
+    # electron temperature, it may be necessary to use PJFNK instead of
+    # NEWTON.
+    equation_variables = 'e_temp'
     potential = 'potential'
     use_log = true
     position_units = ${dom0Scale}
@@ -767,11 +738,11 @@ dom0Scale=1e-3
                  em + Ar -> em + em + Arp         : EEDF [-15.76]  (reaction3)
                  em + Ar* -> em + Ar              : EEDF [11.5]    (reaction4)
                  em + Ar* -> em + em + Arp        : EEDF [-4.3]    (reaction5)
-                 Ar2p + em -> Ar* + Ar            : {5.1187e11 * (e_temp/300)^(-0.67)}
-                 Ar2p + Ar -> Arp + Ar + Ar       : {3.649332e12 / Tgas * exp(-15130/Tgas)}
-                 Ar* + Ar* -> Ar2p + em           : {3.6132e8}
-                 Arp + em + em -> Ar + em         : {3.17314235e9 * (e_temp/11600)^(-4.5)}
-                 Ar* + Ar + Ar -> Ar + Ar + Ar    : {5077.02776}
-                 Arp + Ar + Ar -> Ar2p + Ar       : {81595.089 * (Tgas/300)^(-0.4)}'
+                 Ar2p + em -> Ar* + Ar            : {5.1187e11*(e_temp/300)^(-0.67)}
+                 Ar2p + Ar -> Arp + Ar + Ar       : {3.649332e12/Tgas*exp(-15130/Tgas)}
+                 Ar* + Ar* -> Ar2p + em           : 3.6132e8
+                 Arp + em + em -> Ar + em         : {3.17314235e9*(e_temp/11600)^(-4.5)}
+                 Ar* + Ar + Ar -> Ar + Ar + Ar    : 5077.02776
+                 Arp + Ar + Ar -> Ar2p + Ar       : {81595.089*(Tgas/300)^(-0.4)}'
   [../]
 []

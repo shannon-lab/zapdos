@@ -52,7 +52,6 @@ ADJouleHeating::ADJouleHeating(const InputParameters & parameters)
 ADReal
 ADJouleHeating::computeQpResidual()
 {
-  return _test[_i][_qp] * -_grad_potential[_qp] * _r_units * _voltage_scaling *
-         (-_mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -
-          _diff[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units);
+  return _test[_i][_qp] * -_grad_potential[_qp] * _r_units * _voltage_scaling * std::exp(_em[_qp]) *
+         (-_mu[_qp] * -_grad_potential[_qp] * _r_units - _diff[_qp] * _grad_em[_qp] * _r_units);
 }
