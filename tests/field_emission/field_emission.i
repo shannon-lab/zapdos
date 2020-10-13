@@ -1,6 +1,6 @@
 dom0Scale=1
 dom0Size=5E-6 #m
-vhigh=0.15 #kV
+vhigh=-0.15 #kV
 
 [GlobalParams]
         offset = 20
@@ -648,7 +648,7 @@ vhigh=0.15 #kV
         [./potential_bc_func]
                 type = ParsedFunction
                 vars = 'period dutyCycle riseTime VHigh VLow'
-                vals = '3E-6 0.1 5E-7 ${vhigh} 0.001')
+                vals = '3E-6 0.1 5E-7 ${vhigh} -0.001')
                 value = 'if((t % period) < dutyCycle*period           , VHigh                                                                  ,
                                  if((t % period) < dutyCycle*period + riseTime, ((VLow - VHigh)/riseTime) * ((t % period) - period * dutyCycle) + VHigh,
                                  if((t % period) < period - riseTime          , VLow                                                                                                                               ,

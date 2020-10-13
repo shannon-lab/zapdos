@@ -1,6 +1,6 @@
 dom0Scale = 1
 dom0Size = 2E-6 #m
-vhigh = 230E-3 #kV
+vhigh = -230E-3 #kV
 relaxTime = 50E-6 #s
 
 [GlobalParams]

@@ -855,7 +855,7 @@ dom1Scale=1e-7
   [./potential_bc_func]
     type = ParsedFunction
     # value = '1.25*tanh(1e6*t)'
-    value = 1.25
+    value = -1.25
   [../]
   [./potential_ic_func]
     type = ParsedFunction
