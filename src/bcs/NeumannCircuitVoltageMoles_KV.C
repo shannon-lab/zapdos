@@ -160,7 +160,7 @@ NeumannCircuitVoltageMoles_KV::computeQpResidual()
                       (M_PI * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * _eps[_qp] *
-         (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * _V_bat.value(_t, _q_point[_qp]) +
+         (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * -_V_bat.value(_t, _q_point[_qp]) +
           _data.electrode_area() * _data.coulomb_charge() * _data.ballast_resist() /
               _voltage_scaling * (-1. + _r) *
               ((-1. + (-1. + _a) * _se_coeff[_qp]) * _N_A[_qp] * _ion_drift +
@@ -219,7 +219,7 @@ NeumannCircuitVoltageMoles_KV::computeQpJacobian()
   _v_e_th = std::sqrt(8 * _data.coulomb_charge() * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
                       (M_PI * _massem[_qp]));
 
-  _numerator = (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * _V_bat.value(_t, _q_point[_qp]) +
+  _numerator = (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * -_V_bat.value(_t, _q_point[_qp]) +
                 _data.electrode_area() * _data.coulomb_charge() * _data.ballast_resist() /
                     _voltage_scaling * (-1. + _r) *
                     ((-1. + (-1. + _a) * _se_coeff[_qp]) * _N_A[_qp] * _ion_drift +
@@ -300,7 +300,7 @@ NeumannCircuitVoltageMoles_KV::computeQpOffDiagJacobian(unsigned int jvar)
     _v_e_th = std::sqrt(8 * _data.coulomb_charge() * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
                         (M_PI * _massem[_qp]));
 
-    _numerator = (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * _V_bat.value(_t, _q_point[_qp]) +
+    _numerator = (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * -_V_bat.value(_t, _q_point[_qp]) +
                   _data.electrode_area() * _data.coulomb_charge() * _data.ballast_resist() /
                       _voltage_scaling * (-1. + _r) *
                       ((-1. + (-1. + _a) * _se_coeff[_qp]) * _N_A[_qp] * _ion_drift +
@@ -373,7 +373,7 @@ NeumannCircuitVoltageMoles_KV::computeQpOffDiagJacobian(unsigned int jvar)
     _d_v_e_th_d_em = 0.5 / _v_e_th * 8 * _data.coulomb_charge() * 2.0 / 3 * _actual_mean_en /
                      (M_PI * _massem[_qp]) * -_phi[_j][_qp];
 
-    _numerator = (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * _V_bat.value(_t, _q_point[_qp]) +
+    _numerator = (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * -_V_bat.value(_t, _q_point[_qp]) +
                   _data.electrode_area() * _data.coulomb_charge() * _data.ballast_resist() /
                       _voltage_scaling * (-1. + _r) *
                       ((-1. + (-1. + _a) * _se_coeff[_qp]) * _N_A[_qp] * _ion_drift +
@@ -443,7 +443,7 @@ NeumannCircuitVoltageMoles_KV::computeQpOffDiagJacobian(unsigned int jvar)
     _d_v_e_th_d_mean_en = 0.5 / _v_e_th * 8 * _data.coulomb_charge() * 2.0 / 3 * _actual_mean_en /
                           (M_PI * _massem[_qp]) * _phi[_j][_qp];
 
-    _numerator = (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * _V_bat.value(_t, _q_point[_qp]) +
+    _numerator = (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * -_V_bat.value(_t, _q_point[_qp]) +
                   _data.electrode_area() * _data.coulomb_charge() * _data.ballast_resist() /
                       _voltage_scaling * (-1. + _r) *
                       ((-1. + (-1. + _a) * _se_coeff[_qp]) * _N_A[_qp] * _ion_drift +
