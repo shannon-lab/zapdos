@@ -637,7 +637,7 @@ dom0Scale=1e-3
 [Functions]
   [./potential_bc_func]
     type = ParsedFunction
-    value = 0.8
+    value = -0.8
   [../]
   [./potential_ic_func]
     type = ParsedFunction
