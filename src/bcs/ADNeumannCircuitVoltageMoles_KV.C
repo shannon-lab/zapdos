@@ -136,7 +136,7 @@ ADNeumannCircuitVoltageMoles_KV::computeQpResidual()
                       (M_PI * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * _eps[_qp] *
-         (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * _V_bat.value(_t, _q_point[_qp]) +
+         (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * -_V_bat.value(_t, _q_point[_qp]) +
           _data.electrode_area() * _data.coulomb_charge() * _data.ballast_resist() /
               _voltage_scaling * (-1. + _r) *
               ((-1. + (-1. + _a) * _se_coeff[_qp]) * _N_A[_qp] * _ion_drift +

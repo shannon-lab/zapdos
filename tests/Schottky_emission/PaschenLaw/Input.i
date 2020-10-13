@@ -1,6 +1,6 @@
 dom0Scale = 1
 dom0Size = 5E-6 #m
-vhigh = 0.10 #kV
+vhigh = -0.10 #kV
 
 [GlobalParams]
 #       offset = 25
