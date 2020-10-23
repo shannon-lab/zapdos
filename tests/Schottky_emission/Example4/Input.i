@@ -1,7 +1,9 @@
 dom0Scale = 1
 dom0Size = 2E-6 #m
 vhigh = -230E-3 #kV
+negVHigh = 230E-3 #kV
 relaxTime = 1e-9 #s
+threeTimesRelaxTime = 3e-9 #s
 resistance = 1
 area = 5.02e-7 # Formerly 3.14e-6
 
@@ -11,21 +13,22 @@ area = 5.02e-7 # Formerly 3.14e-6
 []
 
 [Mesh]
-        type = FileMesh
-        file = 'Geometry.msh'
-[]
-
-[MeshModifiers]
-        [./left]
-                type = SideSetsFromNormals
-                normals = '-1 0 0'
-                new_boundary = 'left'
-        [../]
-        [./right]
-                type = SideSetsFromNormals
-                normals = '1 0 0'
-                new_boundary = 'right'
-        [../]
+  [./file]
+    type = FileMeshGenerator
+    file = 'Geometry.msh'
+  [../]
+  [./add_left]
+    type = SideSetsFromNormalsGenerator
+    normals = '-1 0 0'
+    new_boundary = 'left'
+    input = file
+  [../]
+  [./add_right]
+    type = SideSetsFromNormalsGenerator
+    normals = '1 0 0'
+    new_boundary = 'right'
+    input = add_left
+  [../]
 []
 
 [Problem]
@@ -45,9 +48,9 @@ area = 5.02e-7 # Formerly 3.14e-6
 #       line_search = none
         end_time = 10E-6
 
-        trans_ss_check = 1
-        ss_check_tol = 1E-15
-        ss_tmin = 3*${relaxTime}
+        steady_state_detection = 1
+        steady_state_tolerance = 1E-15
+        steady_state_start_time = ${threeTimesRelaxTime}
 
         petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
         solve_type = NEWTON
@@ -532,7 +535,7 @@ area = 5.02e-7 # Formerly 3.14e-6
           type = PenaltyCircuitPotential
           variable = potential
           current = current_density_user_object
-          surface_potential = -${vhigh}
+          surface_potential = ${negVHigh}
           surface = 'cathode'
           penalty = 1
           data_provider = data_provider
@@ -677,7 +680,7 @@ area = 5.02e-7 # Formerly 3.14e-6
         [./potential_bc_func]
                 type = ParsedFunction
                 vars = 'VHigh'
-                vals = '${vhigh}')
+                vals = '${vhigh}'
                 value = 'VHigh'
         [../]
         [./potential_ic_func]

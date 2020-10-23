@@ -10,34 +10,22 @@ vhigh = -80E-3 #kV
 []
 
 [Mesh]
-        type = FileMesh
-        file = 'Geometry.msh'
-[]
-
-[MeshModifiers]
-#       [./interface]
-#               type = SideSetsBetweenSubdomains
-#               master_block = '0'
-#               paired_block = '1'
-#               new_boundary = right
-#       [../]
-#       [./interface_again]
-#               type = SideSetsBetweenSubdomains
-#               master_block = '1'
-#               paired_block = '0'
-#               new_boundary = 'master1_interface'
-#                depends_on = 'box'
-#       [../]
-        [./left]
-                type = SideSetsFromNormals
-                normals = '-1 0 0'
-                new_boundary = 'left'
-        [../]
-        [./right]
-                type = SideSetsFromNormals
-                normals = '1 0 0'
-                new_boundary = 'right'
-        [../]
+  [./file]
+    type = FileMeshGenerator
+    file = 'Geometry.msh'
+  [../]
+  [./add_left]
+    type = SideSetsFromNormalsGenerator
+    normals = '-1 0 0'
+    new_boundary = 'left'
+    input = file
+  [../]
+  [./add_right]
+    type = SideSetsFromNormalsGenerator
+    normals = '1 0 0'
+    new_boundary = 'right'
+    input = add_left
+  [../]
 []
 
 [Problem]
@@ -57,9 +45,9 @@ vhigh = -80E-3 #kV
 #       line_search = none
         end_time = 10E6
 
-        trans_ss_check = 1
-        ss_check_tol = 1E-15
-        ss_tmin = 10E-6
+        steady_state_detection = 1
+        steady_state_tolerance = 1E-15
+        steady_state_start_time = 10E-6
 
         petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
         solve_type = NEWTON
@@ -649,7 +637,7 @@ vhigh = -80E-3 #kV
         [./potential_bc_func]
                 type = ParsedFunction
                 vars = 'VHigh'
-                vals = '${vhigh}')
+                vals = '${vhigh}'
                 value = 'VHigh'
         [../]
         [./potential_ic_func]

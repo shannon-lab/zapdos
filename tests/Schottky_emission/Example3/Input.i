@@ -2,6 +2,7 @@ dom0Scale = 1
 dom0Size = 2E-6 #m
 vhigh = -230E-3 #kV
 relaxTime = 50E-6 #s
+threeTimesRelaxTime = 150E-6 #s
 
 [GlobalParams]
 #       offset = 25
@@ -11,34 +12,22 @@ relaxTime = 50E-6 #s
 []
 
 [Mesh]
-        type = FileMesh
-        file = 'Geometry.msh'
-[]
-
-[MeshModifiers]
-#       [./interface]
-#               type = SideSetsBetweenSubdomains
-#               master_block = '0'
-#               paired_block = '1'
-#               new_boundary = right
-#       [../]
-#       [./interface_again]
-#               type = SideSetsBetweenSubdomains
-#               master_block = '1'
-#               paired_block = '0'
-#               new_boundary = 'master1_interface'
-#                depends_on = 'box'
-#       [../]
-        [./left]
-                type = SideSetsFromNormals
-                normals = '-1 0 0'
-                new_boundary = 'left'
-        [../]
-        [./right]
-                type = SideSetsFromNormals
-                normals = '1 0 0'
-                new_boundary = 'right'
-        [../]
+  [./file]
+    type = FileMeshGenerator
+    file = 'Geometry.msh'
+  [../]
+  [./add_left]
+    type = SideSetsFromNormalsGenerator
+    normals = '-1 0 0'
+    new_boundary = 'left'
+    input = file
+  [../]
+  [./add_right]
+    type = SideSetsFromNormalsGenerator
+    normals = '1 0 0'
+    new_boundary = 'right'
+    input = add_left
+  [../]
 []
 
 [Problem]
@@ -58,9 +47,9 @@ relaxTime = 50E-6 #s
 #       line_search = none
         end_time = 10E6
 
-        trans_ss_check = 1
-        ss_check_tol = 1E-15
-        ss_tmin = 3*${relaxTime}
+        steady_state_detection = 1
+        steady_state_tolerance = 1E-15
+        steady_state_start_time = ${threeTimesRelaxTime}
 
         petsc_options = '-snes_converged_reason -snes_linesearch_monitor -snes_ksp_ew'
         solve_type = NEWTON
@@ -649,7 +638,7 @@ relaxTime = 50E-6 #s
         [./potential_bc_func]
                 type = ParsedFunction
                 vars = 'VHigh'
-                vals = '${vhigh}')
+                vals = '${vhigh}'
                 value = 'VHigh'
         [../]
         [./potential_ic_func]
