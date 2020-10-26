@@ -20,14 +20,14 @@ dom1Scale=1e-7
   [../]
   [./interface]
     type = SideSetsBetweenSubdomainsGenerator
-    master_block = '0'
+    primary_block = '0'
     paired_block = '1'
     new_boundary = 'master0_interface'
     input = file
   [../]
   [./interface_again]
     type = SideSetsBetweenSubdomainsGenerator
-    master_block = '1'
+    primary_block = '1'
     paired_block = '0'
     new_boundary = 'master1_interface'
     input = interface

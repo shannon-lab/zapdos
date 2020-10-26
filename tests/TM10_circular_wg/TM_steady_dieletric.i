@@ -10,7 +10,7 @@
   [../]
   [./interface_dielectric]
     type = SideSetsBetweenSubdomainsGenerator
-    master_block = '1'
+    primary_block = '1'
     paired_block = '0'
     new_boundary = 'interface_dielectric'
     input = file
