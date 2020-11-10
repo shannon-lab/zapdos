@@ -1,59 +1,58 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.801834.svg)](https://doi.org/10.5281/zenodo.801834)
 
-Zapdos
-=====
+# Zapdos
 
-Free (in all senses of the word) and open source software for modelling atmospheric plasmas using finite elements.
-This application is built on top of the MOOSE framework, which can be found at [http://mooseframework.org](http://mooseframework.org)
+Free (in all senses of the word) and open source software for modeling plasmas using finite elements. This application is built on top of [the MOOSE Framework](https://mooseframework.inl.gov).
 
-The best documentation so far for this project is in Chapter 3 of the thesis located at
-`doc/Lindsay_thesis_coupling_of_plasmas_and_liquids.pdf`. Some notes on
-understanding existing chemistry kernels and/or implementing new ones in
-Zapdos/MOOSE are given in `doc/Chemical_Reactions.ipynb`.
+## Documentation
 
-**Instructions for installing Zapdos:**
+There are three main pieces of file-based documentation for Zapdos, all located in the `doc` directory:
 
-<ol>
-  <li>Follow the <a href="https://mooseframework.inl.gov/getting_started/index.html">getting started instructions</a> for setting up the MOOSE environment. <b>Note that</b> Zapdos can be used with MOOSE installed in its own directory, or as a submodule within Zapdos. The latter option allows for a version of MOOSE that is guaranteed to work with the current version of Zapdos. If using MOOSE as a submodule is desired, proceed to Step 3, otherwise continue to Step 2.</li>
-  <li><b>Using MOOSE in its own directory:</b> After installing the MOOSE environment execute the following commands in
-  the directory above your MOOSE directory. E.g. if MOOSE is in
-  <code>~/projects/moose</code>, then these commands should be executed from the
-  <code>~/projects</code> directory
-  <ul>
-    <li><code>git clone https://github.com/shannon-lab/zapdos</code></li>
-    <li><code>cd zapdos</code></li>
-	  <li><code>git submodule init squirrel crane</code></li>
-	  <li><code>git submodule update squirrel crane</code></li>
-    <li><code>make -jn</code> where "n" is the number of logical processors on
-  your computer</li>
-  </ul>
-  then continue to Step 4.</li>
-  <li><b>Using MOOSE as a submodule:</b> After installing the MOOSE environment execute the following commands in
-  the directory in which you are installing Zapdos (we recommend <code>~/projects/</code> to stay consistent with MOOSE conventions)
-  <ul>
-    <li><code>git clone https://github.com/shannon-lab/zapdos</code></li>
-    <li><code>cd zapdos</code></li>
-	  <li><code>git submodule init</code></li>
-	  <li><code>git submodule update</code></li>
-    <li><code>cd moose</code></li>
-    <li><code>scripts/update_and_rebuild_libmesh.sh</code></li>
-    <li><code>cd test</code></li>
-    <li><code>make -jn</code> where "n" is the number of logical processors on your computer</li>
-    <li><code>run_tests -jn</code></li>
-    <li>If all tests pass, <code>cd ../../</code> to get back to the <code>zapdos</code> directory.</li>
-    <li><code>make -jn</code></li>
-  </ul>
-  then continue to Step 4.</li>
-  <li>To make sure the installation is working correctly, execute <code>./run_tests -jn</code>, substituting 'n' with your number of processors. All tests should pass with 'OK'
-  <li>If everything checks out, you should now be able to run input files using the <code>zapdos-opt</code> executable in the <code>~/projects/zapdos</code> directory. Input files demonstrating the capabilities of zapdos can be found in the sub-directories of <code>~/projects/zapdos/tests</code>. If you want to start modifying an input file, a good one to choose is <code>mean_en.i</code> in <code>~/projects/zapdos/problems</code>. I typically run an input file like <code>mean_en.i</code> using the following command:</li>
-  <ul>
-    <li><code>cd ~/projects/zapdos/problems; ../zapdos-opt -i mean_en.i --color off 2>&1 | tee log.txt</code></li>
-    <li>The above command will parse information of the iterative solution process to both the console and to the log file <code>log.txt</code></li>
-    <li>The above command will also create an output file named <code>mean_en_out.e</code> containing all the solution variable values. These results are best viewed using a visualization tool like <b>Paraview</b>, downloadable <a href="http://www.paraview.org/download/">here</a></li>
-    <li><b>Important note:</b> Many of the existing input files in the <code>problems</code> directory require <code>fileName.msh</code>. In order to create the requisite <code>.msh</code> file, you must run the command <code>gmsh -d fileName.geo</code> where <code>d</code> is the dimension of the mesh and <code>fileName.geo</code> is the source file for the mesh. <code>gmsh</code> can be installed on Ubuntu using <code>sudo apt-get install gmsh</code> or it can be downloaded <a href="http://gmsh.info/#Download">here</a>. Some of the <code>*.msh</code> files can also be found in the <code>tests</code> directory.</li>
-  </ul>
-  <li>In general the <code>problems</code> directory is meant to be the user work-space. S/he should feel welcome to modify any files in that directory. The <code>tests</code> directory, on the other hand, is meant to be a showcase and provide examples of the capabilities already established in zapdos. As zapdos is developed (by you hopefully!) and more capabilities are added, the tests directory will continue to grow. If you feel that you have added important new functionality, please create a test for it, such that any future changes will not break that capability.</li>
-</ol>
+- `Zapdos_Tutorial.pdf` - A general tutorial of Zapdos capabilities, with explanations of the finite element method, code and input file structure, the Peacock GUI (from MOOSE), and examples of usage.
+- `Chemical_Reactions.ipynb` - A Jupiter notebook containing notes on understanding existing chemistry kernels and/or implementing new ones in Zapdos/MOOSE.
+- `Lindsay_thesis_coupling_of_plasmas_and_liquids.pdf` - Chapter 3 of the original PhD dissertation introducing Zapdos ("Coupling of Plasmas and Liquids" by Alex Lindsay).
+
+Alternatively, there are two websites available:
+
+- [https://mooseframework.inl.gov](https://mooseframework.inl.gov) - for information on the underpinnings of Zapdos and other available resources from MOOSE.
+- [https://shannon-lab.github.io/zapdos](https://shannon-lab.github.io/zapdos) - for source code documentation and general info (UNDER CONSTRUCTION, last updated: Oct 2019)
+
+## Step-by-step instructions for installing Zapdos
+
+1. Follow the [MOOSE getting started instructions](https://mooseframework.inl.gov/getting_started/installation/index.html) for setting up the MOOSE environment.
+3. Choose a directory (we recommend creating one named `projects` in the user home directory) to hold Zapdos and clone this repository by running the command:
+   * `git clone https://github.com/shannon-lab/zapdos`
+4. Download CRANE, MOOSE, and squirrel. These dependencies are contained with Zapdos as submodules, set to a particular version (git commit hash) that has been tested successfully on Linux and Mac against the current version of Zapdos. To download, navigate to the `zapdos` directory and run the following commands in the terminal:
+   * `git submodule init`
+   * `git submodule update`
+5. Build and test MOOSE. To do this, run the following commands in the `zapdos` directory:
+   * `cd moose/test`
+   * `make -j4` where `4` could be changed to represent the number of logical processors on your computer
+   * `./run_tests -j4`
+   * If any tests fail, check [the MOOSE troubleshooting page for failing test issues](https://mooseframework.inl.gov/help/troubleshooting.html#failingtests).
+6. Build and test Zapdos. To do this, run the following commands in the `zapdos` directory:
+   * `make -j4`
+   * `./run_tests -j4`
+
+If all tests pass, you should now be able to run input files using the `zapdos-opt` executable found in the `zapdos` directory. Input files demonstrating the capabilities of zapdos can be found in the `tests` directory. If you want to start modifying an input file, it is recommended that you first copy this file to a "workspace" directory so that the original test is not modified unintentionally.
+
+Again, the `tests` directory is meant to be a showcase and provide examples of the capabilities already established in Zapdos. As Zapdos is developed (by you hopefully!) and more capabilities are added, the tests directory will continue to grow. If you feel that you have added important new functionality, please create a test for it, such that any future changes will not break that capability.
+
+## Example of running a Zapdos input file
+
+A good input file to start with is located at `zapdos/tests/1d_dc/mean_en.i`. An input file like `mean_en.i` can be run using the following commands. **Note:** It is assumed here that Zapdos has been placed within the `~/projects` directory and that `mean_en.i` and `liquidNew.msh` (the mesh file required to run `mean_en.i`) has been copied to a user-created workspace directory located at `~/projects/zapdos/workspace`.
+ * `cd ~/projects/zapdos/workspace`
+ * `../zapdos-opt -i mean_en.i --color off 2>&1 | tee log.txt`
+   * The above command will parse information of the iterative solution process to both the console and to the log file `log.txt`
+   * The above command will also create an output file named `mean_en_out.e` containing all the solution variable values. These results are best viewed using a visualization tool like **Paraview**, downloadable [here](http://www.paraview.org/download/).
+
+## Meshing
+
+Meshing in Zapdos can be performed using the internal MOOSE [Mesh system](https://mooseframework.inl.gov/syntax/Mesh/index.html) or through external tools, such as [gmsh](http://gmsh.info). Many of the existing input files in the `tests` subdirectories use gmsh and require a `.msh` file to operate (example: `liquidNew.msh` for `mean_en.i`). These should exist alongside the gmsh program file that created them (`.geo` files).
+
+In order to create the requisite `.msh` file yourself, you must run the command `gmsh -d fileName.geo` where `d` is the dimension of the mesh and `fileName.geo` is the source file for the mesh. gmsh can be installed for Linux and Mac via download [here](http://gmsh.info/#Download).
+
+## Questions? Issues? Want to Contribute?
 
 Please do not hesitate to contact the zapdos google-group list if you have any questions about using or contributing to this software.
 
