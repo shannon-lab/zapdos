@@ -54,7 +54,4 @@ In order to create the requisite `.msh` file yourself, you must run the command 
 
 ## Questions? Issues? Want to Contribute?
 
-Please do not hesitate to contact the zapdos google-group list if you have any questions about using or contributing to this software.
-
-Email: <zapdos-users@googlegroups.com><br>
-Google group: <https://groups.google.com/forum/#!forum/zapdos-users>
+Please do not hesitate to contact the [Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions) if you have any questions about using or contributing to this software.
