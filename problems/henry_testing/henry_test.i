@@ -129,7 +129,7 @@ dom1Scale=1.0
 [Outputs]
   # perf_graph = true
   #print_densityear_residuals = false
-  [out_09]
+  [out_01]
     type = Exodus
   [../]
 []
@@ -611,8 +611,8 @@ dom1Scale=1.0
     #kf = 6.48e3
     #kb = 1
     kf = 1
-    #kb = 6.2e2 
-    kb = 1
+    kb = 6.2e2 
+    #kb = 1
     position_units = ${dom1Scale}
     neighbor_position_units = ${dom0Scale}
     boundary = 'water_left'
@@ -631,8 +631,8 @@ dom1Scale=1.0
   [OH_bc]
     type = ADHagelaarIonDiffusionBC
     variable = OH
-    boundary = 'left gas_right'
-    #boundary = 'left'
+    #boundary = 'left gas_right'
+    boundary = 'left'
     r = 0
     position_units = ${dom0Scale}
   []
@@ -838,7 +838,8 @@ dom1Scale=1.0
    type = ADGasElectronMoments
    em = em
    mean_en = mean_en
-   property_tables_file = '/home/shane/projects/zapdos/problems/argon_cm_test/electron_mobility_diffusion.txt'
+   #property_tables_file = '/home/shane/projects/zapdos/problems/argon_cm_test/electron_mobility_diffusion.txt'
+   property_tables_file = 'argon_chemistry_rates/electron_moments.txt'
    block = 0
  [../]
  [gas_constants]
