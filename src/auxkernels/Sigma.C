@@ -26,7 +26,7 @@ validParams<Sigma>()
 
 Sigma::Sigma(const InputParameters & parameters)
   : AuxKernel(parameters),
-    _u_old(_nodal ? _var.nodalValueOldArray() : _var.slnOld()),
+    _u_old(uOld()),
     _n(coupledValue("n")),
     _grad_potential(coupledGradient("potential"))
 {
