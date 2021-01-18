@@ -77,7 +77,7 @@ dom1Scale=1.0
 [Outputs]
   # perf_graph = true
   #print_densityear_residuals = false
-  [out_02]
+  [out_01]
     type = Exodus
   [../]
 []
@@ -169,17 +169,17 @@ dom1Scale=1.0
     potential = potential
     position_units = ${dom0Scale}
   []
-  [ElasticTest]
-    type = GasTemperatureElastic
-    variable = Tg
-    potential = potential
-    electrons = em
-    mean_energy = mean_en
-    target = Ar
-    reaction = 'em + Ar -> em + Ar'
-    position_units = ${dom0Scale}
-    number = 0
-  []
+  #[ElasticTest]
+  #  type = GasTemperatureElastic
+  #  variable = Tg
+  #  potential = potential
+  #  electrons = em
+  #  mean_energy = mean_en
+  #  target = Ar
+  #  reaction = 'em + Ar -> em + Ar'
+  #  position_units = ${dom0Scale}
+  #  number = 0
+  #[]
 []
 
 [AuxVariables]
