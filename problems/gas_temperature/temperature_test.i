@@ -378,12 +378,19 @@ dom1Scale=1.0
   #  value = 300
   #[]
   # H2O evaporation boundary condition
+  #[H2O_interface]
+  #  type = DirichletBC
+  #  variable = H2O
+  #  value = 0.367321
+  #  boundary = 'right'
+  #[]
   [H2O_interface]
-    type = DirichletBC
+    type = H2OTempBC
     variable = H2O
-    value = 0.367321
+    gas_temp = Tg
     boundary = 'right'
   []
+
   [OH_bc]
     type = ADHagelaarIonDiffusionBC
     variable = OH
@@ -566,7 +573,7 @@ dom1Scale=1.0
   [convective_bc_props]
     type = ADGenericConstantMaterial
     prop_names = 'Tinf htc'
-    prop_values = '300 10' 
+    prop_values = '300 10'
   []
   [density_argon]
     type = ADGenericConstantMaterial
@@ -650,7 +657,7 @@ dom1Scale=1.0
     type = ADHeavySpeciesMaterial
     heavy_species_name = OH
     heavy_species_mass = 2.82420e-26
-    heavy_species_charge = 0 
+    heavy_species_charge = 0
     diffusivity = 4e-5
     block = 0
   []
