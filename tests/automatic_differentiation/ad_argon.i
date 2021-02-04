@@ -83,7 +83,7 @@ dom0Scale=1e-3
     block = 0
   [../]
   [./Arex_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusion
     variable = Ar*
     block = 0
     position_units = ${dom0Scale}
@@ -102,14 +102,14 @@ dom0Scale=1e-3
     block = 0
   [../]
   [./em_advection]
-    type = ADEFieldAdvection
+    type = EFieldAdvection
     variable = em
     potential = potential
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./em_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusion
     variable = em
     mean_en = mean_en
     block = 0
@@ -123,7 +123,7 @@ dom0Scale=1e-3
   [../]
 
   [./potential_diffusion_dom1]
-    type = ADCoeffDiffusionLin
+    type = CoeffDiffusionLin
     variable = potential
     block = 0
     position_units = ${dom0Scale}
@@ -153,14 +153,14 @@ dom0Scale=1e-3
     block = 0
   [../]
   [./Arp_advection]
-    type = ADEFieldAdvection
+    type = EFieldAdvection
     variable = Arp
     potential = potential
     position_units = ${dom0Scale}
     block = 0
   [../]
   [./Arp_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusion
     variable = Arp
     block = 0
     position_units = ${dom0Scale}
@@ -179,14 +179,14 @@ dom0Scale=1e-3
     block = 0
   [../]
   [./Ar2p_advection]
-    type = ADEFieldAdvection
+    type = EFieldAdvection
     variable = Ar2p
     potential = potential
     position_units = ${dom0Scale}
     block = 0
   [../]
   [./Ar2p_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusion
     variable = Ar2p
     block = 0
     position_units = ${dom0Scale}
@@ -204,7 +204,7 @@ dom0Scale=1e-3
     block = 0
   [../]
   [./mean_en_advection]
-    type = ADEFieldAdvection
+    type = EFieldAdvection
     variable = mean_en
     potential = potential
     em = em
@@ -212,13 +212,13 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./mean_en_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusion
     variable = mean_en
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./mean_en_joule_heating]
-    type = ADJouleHeating
+    type = JouleHeating
     variable = mean_en
     potential = potential
     em = em
@@ -486,7 +486,7 @@ dom0Scale=1e-3
 
 [BCs]
   [./mean_en_physical_right]
-    type = ADHagelaarEnergyBC
+    type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'right'
     potential = potential
@@ -496,7 +496,7 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./mean_en_physical_left]
-    type = ADHagelaarEnergyBC
+    type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'left'
     potential = potential
@@ -506,7 +506,7 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./secondary_energy_left]
-    type = ADSecondaryElectronEnergyBC
+    type = SecondaryElectronEnergyBC
     variable = mean_en
     boundary = 'left'
     potential = potential
@@ -517,7 +517,7 @@ dom0Scale=1e-3
   [../]
 
   [./potential_left]
-    type = ADNeumannCircuitVoltageMoles_KV
+    type = NeumannCircuitVoltageMoles_KV
     variable = potential
     boundary = left
     function = potential_bc_func
@@ -529,14 +529,14 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./potential_dirichlet_right]
-    type = ADDirichletBC
+    type = DirichletBC
     variable = potential
     boundary = right
     value = 0
     preset = false
   [../]
   [./em_physical_right]
-    type = ADHagelaarElectronBC
+    type = HagelaarElectronBC
     variable = em
     boundary = 'right'
     potential = potential
@@ -545,14 +545,14 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_right_diffusion]
-    type = ADHagelaarIonDiffusionBC
+    type = HagelaarIonDiffusionBC
     variable = Arp
     boundary = 'right'
     r = 0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_right_advection]
-    type = ADHagelaarIonAdvectionBC
+    type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'right'
     potential = potential
@@ -560,14 +560,14 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./Ar2p_physical_right_diffusion]
-    type = ADHagelaarIonDiffusionBC
+    type = HagelaarIonDiffusionBC
     variable = Ar2p
     boundary = 'right'
     r = 0
     position_units = ${dom0Scale}
   [../]
   [./Ar2p_physical_right_advection]
-    type = ADHagelaarIonAdvectionBC
+    type = HagelaarIonAdvectionBC
     variable = Ar2p
     boundary = 'right'
     potential = potential
@@ -576,7 +576,7 @@ dom0Scale=1e-3
   [../]
 
   [./em_physical_left]
-    type = ADHagelaarElectronBC
+    type = HagelaarElectronBC
     variable = em
     boundary = 'left'
     potential = potential
@@ -585,7 +585,7 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./sec_electrons_left]
-    type = ADSecondaryElectronBC
+    type = SecondaryElectronBC
     variable = em
     boundary = 'left'
     potential = potential
@@ -595,14 +595,14 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_left_diffusion]
-    type = ADHagelaarIonDiffusionBC
+    type = HagelaarIonDiffusionBC
     variable = Arp
     boundary = 'left'
     r = 0
     position_units = ${dom0Scale}
   [../]
   [./Arp_physical_left_advection]
-    type = ADHagelaarIonAdvectionBC
+    type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'left'
     potential = potential
@@ -610,14 +610,14 @@ dom0Scale=1e-3
     position_units = ${dom0Scale}
   [../]
   [./Ar2p_physical_left_diffusion]
-    type = ADHagelaarIonDiffusionBC
+    type = HagelaarIonDiffusionBC
     variable = Ar2p
     boundary = 'left'
     r = 0
     position_units = ${dom0Scale}
   [../]
   [./Ar2p_physical_left_advection]
-    type = ADHagelaarIonAdvectionBC
+    type = HagelaarIonAdvectionBC
     variable = Ar2p
     boundary = 'left'
     potential = potential
@@ -657,24 +657,24 @@ dom0Scale=1e-3
   [./gas_constants]
     type = GenericConstantMaterial
     block = 0
-    prop_names = ' e         N_A     k_boltz eps  se_coeff se_energy T_gas massem   p_gas  n_gas'
-    prop_values = '1.6e-19 6.022e23  1.38e-23 8.854e-12 0.05     3.        300   9.11e-31 1.01e5 40.4915'
+    prop_names = ' e         N_A     k_boltz  eps       T_gas massem   p_gas  n_gas'
+    prop_values = '1.6e-19 6.022e23  1.38e-23 8.854e-12 300   9.11e-31 1.01e5 40.4915'
   [../]
   [ad_gas_constants]
     type = ADGenericConstantMaterial
     block = 0
-    prop_names = 'diffpotential'
-    prop_values = '8.85e-12'
+    prop_names = 'diffpotential se_coeff se_energy'
+    prop_values = '8.85e-12     0.05     3.'
   []
   [./gas_species_0]
-    type = ADHeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Arp
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
     block = 0
   [../]
   [./gas_species_1]
-    type = ADHeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar2p
     heavy_species_mass = 1.328e-25
     heavy_species_charge = 1.0
@@ -682,7 +682,7 @@ dom0Scale=1e-3
   [../]
 
   [./gas_species_2]
-    type = ADHeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
@@ -690,7 +690,7 @@ dom0Scale=1e-3
   [../]
 
   [./gas_species_3]
-    type = ADHeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar*
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
