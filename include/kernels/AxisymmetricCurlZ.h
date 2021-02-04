@@ -15,7 +15,6 @@
 class AxisymmetricCurlZ : public ADKernel
 {
 public:
-
   static InputParameters validParams();
 
   AxisymmetricCurlZ(const InputParameters & parameters);

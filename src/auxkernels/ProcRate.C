@@ -55,9 +55,9 @@ template <bool is_ad>
 Real
 ProcRateTempl<is_ad>::computeValue()
 {
-  _em_current =
-      6.02e23 * (_sgnem[_qp] * raw_value(_muem[_qp]) * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -
-                 raw_value(_diffem[_qp]) * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units);
+  _em_current = 6.02e23 * (_sgnem[_qp] * raw_value(_muem[_qp]) * -_grad_potential[_qp] * _r_units *
+                               std::exp(_em[_qp]) -
+                           raw_value(_diffem[_qp]) * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units);
 
   return raw_value(_alpha[_qp]) * _em_current.norm();
 }

@@ -36,5 +36,4 @@ protected:
 
   Real _a;
   ADReal _v_thermal;
-
 };

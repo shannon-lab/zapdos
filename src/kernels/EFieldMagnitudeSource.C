@@ -23,8 +23,7 @@ EFieldMagnitudeSource::validParams()
 }
 
 EFieldMagnitudeSource::EFieldMagnitudeSource(const InputParameters & parameters)
-  : ADKernel(parameters),
-    _grad_potential(adCoupledGradient("potential"))
+  : ADKernel(parameters), _grad_potential(adCoupledGradient("potential"))
 {
 }
 

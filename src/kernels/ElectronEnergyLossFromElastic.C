@@ -47,8 +47,8 @@ ADReal
 ElectronEnergyLossFromElastic::computeQpResidual()
 {
   ADReal electron_flux_mag = (-_muem[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -
-                            _diffem[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units)
-                               .norm();
+                              _diffem[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units)
+                                 .norm();
   ADReal Eel = -3.0 * _massem[_qp] / _massGas[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]);
   ADReal el_term = _alpha_el[_qp] * electron_flux_mag * Eel;
 

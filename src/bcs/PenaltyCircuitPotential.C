@@ -24,9 +24,9 @@ PenaltyCircuitPotential::validParams()
       "surface_potential",
       "The electrical potential applied to the surface if no current was flowing in the circuit.");
   params.addRequiredParam<std::string>("surface",
-                                  "Whether you are specifying the potential on the "
-                                  "anode or the cathode with the requirement that the "
-                                  "other metal surface be grounded.");
+                                       "Whether you are specifying the potential on the "
+                                       "anode or the cathode with the requirement that the "
+                                       "other metal surface be grounded.");
   params.addRequiredParam<Real>("penalty", "The constant multiplying the penalty term.");
   params.addRequiredParam<UserObjectName>(
       "data_provider",
@@ -38,7 +38,8 @@ PenaltyCircuitPotential::validParams()
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<Real>("resistance", "The ballast resistance in Ohms.");
-  params.addClassDescription("Circuit boundary condition for potential multiplied by a penalty term");
+  params.addClassDescription(
+      "Circuit boundary condition for potential multiplied by a penalty term");
   return params;
 }
 

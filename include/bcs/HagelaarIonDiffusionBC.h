@@ -31,5 +31,4 @@ protected:
 
   ADReal _v_thermal;
   const Real & _user_velocity;
-
 };

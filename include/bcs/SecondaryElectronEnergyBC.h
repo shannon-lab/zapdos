@@ -17,7 +17,7 @@ class SecondaryElectronEnergyBC : public ADIntegratedBC
 public:
   static InputParameters validParams();
 
-  SecondaryElectronEnergyBC (const InputParameters & parameters);
+  SecondaryElectronEnergyBC(const InputParameters & parameters);
 
 protected:
   virtual ADReal computeQpResidual() override;

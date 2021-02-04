@@ -42,7 +42,7 @@ ADReal
 ElectronEnergyTermElasticRate::computeQpResidual()
 {
   ADReal energy_elastic = -3.0 * (_massIncident[_qp] / _massTarget[_qp]) * 2.0 / 3.0 *
-                        std::exp(_u[_qp] - _electron[_qp]);
+                          std::exp(_u[_qp] - _electron[_qp]);
 
   return -_test[_i][_qp] * _rate_coefficient[_qp] * std::exp(_target[_qp]) *
          std::exp(_electron[_qp]) * energy_elastic;

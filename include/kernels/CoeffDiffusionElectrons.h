@@ -13,9 +13,9 @@
 #include "ADKernel.h"
 
 /*
-* This diffusion kernel should only be used with species whose values are in
-* the logarithmic form.
-*/
+ * This diffusion kernel should only be used with species whose values are in
+ * the logarithmic form.
+ */
 
 class CoeffDiffusionElectrons : public ADKernel
 {

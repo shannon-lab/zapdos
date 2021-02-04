@@ -24,8 +24,7 @@ PotentialGradientSource::validParams()
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
 
 PotentialGradientSource::PotentialGradientSource(const InputParameters & parameters)
-  : ADKernel(parameters),
-    _grad_potential(adCoupledGradient("potential"))
+  : ADKernel(parameters), _grad_potential(adCoupledGradient("potential"))
 {
 }
 

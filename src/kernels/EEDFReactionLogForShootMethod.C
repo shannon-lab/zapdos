@@ -40,7 +40,7 @@ EEDFReactionLogForShootMethod::EEDFReactionLogForShootMethod(const InputParamete
     _density(adCoupledValue("density")),
     _energy(adCoupledValue("energy")),
     _reaction_coeff(getADMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
-                                              getParam<std::string>("reaction"))),
+                                                getParam<std::string>("reaction"))),
     _stoichiometric_coeff(getParam<Real>("coefficient"))
 {
 }

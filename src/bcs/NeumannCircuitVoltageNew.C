@@ -16,13 +16,13 @@ InputParameters
 NeumannCircuitVoltageNew::validParams()
 {
   InputParameters params = NonlocalIntegratedBC::validParams();
-  params.addRequiredParam<FunctionName>("source_voltage",
-                                   "The function describing the time dependent source voltage.");
+  params.addRequiredParam<FunctionName>(
+      "source_voltage", "The function describing the time dependent source voltage.");
   params.addRequiredParam<UserObjectName>("current", "The current in the circuit.");
   params.addRequiredParam<std::string>("surface",
-                                  "Whether you are specifying the potential on the "
-                                  "anode or the cathode with the requirement that the "
-                                  "other metal surface be grounded.");
+                                       "Whether you are specifying the potential on the "
+                                       "anode or the cathode with the requirement that the "
+                                       "other metal surface be grounded.");
   params.addRequiredParam<UserObjectName>(
       "data_provider",
       "The name of the UserObject that can provide some data to materials, bcs, etc.");

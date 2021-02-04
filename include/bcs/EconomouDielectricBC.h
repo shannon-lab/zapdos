@@ -30,7 +30,7 @@ protected:
   std::vector<const ADVariableValue *> _ip;
   std::vector<const ADVariableValue *> _potential_ion;
   std::vector<const ADVariableGradient *> _grad_potential_ion;
-  const VariableGradient & _grad_u_dot; //TODO: fix this up
+  const VariableGradient & _grad_u_dot; // TODO: fix this up
   const ADVariableValue & _u_dot;
 
   const MaterialProperty<Real> & _e;
