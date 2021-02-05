@@ -13,12 +13,12 @@
 #include "MooseVariable.h"
 
 
-class H2OTempBC : public ADNodalBC
+class WaterVaporPressureBC : public ADNodalBC
 {
 public:
   static InputParameters validParams();
 
-  H2OTempBC(const InputParameters & parameters);
+  WaterVaporPressureBC(const InputParameters & parameters);
 
 protected:
   virtual ADReal computeQpResidual() override;

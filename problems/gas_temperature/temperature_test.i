@@ -385,7 +385,7 @@ dom1Scale=1.0
   #  boundary = 'right'
   #[]
   [H2O_interface]
-    type = H2OTempBC
+    type = WaterVaporPressureBC
     variable = H2O
     gas_temp = Tg
     boundary = 'right'
