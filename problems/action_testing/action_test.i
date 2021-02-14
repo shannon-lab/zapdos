@@ -108,7 +108,7 @@ dom1Scale=1.0
 [Outputs]
   # perf_graph = true
   #print_densityear_residuals = false
-  [out_01_greg_nonaction]
+  [out_01_greg_action_no_log]
     type = Exodus
   [../]
 []
@@ -182,6 +182,18 @@ dom1Scale=1.0
   [../]
 []
 
+[ElectronAction]
+  electrons = em
+  potential = potential
+  mean_energy = mean_en
+  block = 0
+  position_units = ${dom0Scale}
+  potential_units = kV
+  #I think we can just equate the above to the
+  #global parameter "potential_units"
+  Using_offset = true
+  offset = 20
+[]
 [Kernels]
   # Plasma potential kernels
   [./potential_diffusion_dom1]
@@ -199,26 +211,26 @@ dom1Scale=1.0
 
 
   # Electron kernels
-  [./em_time_deriv]
-    type = ADTimeDerivativeLog
-    variable = em
-    block = 0
-  [../]
-  [./em_advection]
-    type = ADEFieldAdvection
-    variable = em
-    potential = potential
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
-  [./em_diffusion]
-    type = ADCoeffDiffusion
-    variable = em
-    mean_en = mean_en
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
 
+  ##[./em_time_deriv]
+  #  type = ADTimeDerivativeLog
+  #  variable = em
+  #  block = 0
+  #[../]
+  ##[./em_advection]
+  #  type = ADEFieldAdvection
+  #  variable = em
+  #  potential = potential
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
+  ##[./em_diffusion]
+  #  type = ADCoeffDiffusion
+  #  variable = em
+  #  mean_en = mean_en
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
   [./em_log_stabilization]
     type = LogStabilizationMoles
     variable = em
@@ -226,39 +238,39 @@ dom1Scale=1.0
   [../]
 
   # Electron energy kernels
-  [./mean_en_time_deriv]
-    type = ADTimeDerivativeLog
-    variable = mean_en
-    block = 0
-  [../]
-  [./mean_en_advection]
-    type = ADEFieldAdvection
-    variable = mean_en
-    potential = potential
-    em = em
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
-  [./mean_en_diffusion]
-    type = ADCoeffDiffusion
-    variable = mean_en
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
-  [./mean_en_joule_heating]
-    type = ADJouleHeating
-    variable = mean_en
-    potential = potential
-    em = em
-    block = 0
-    position_units = ${dom0Scale}
-  [../]
-  [./mean_en_log_stabilization]
-    type = LogStabilizationMoles
-    variable = mean_en
-    block = 0
-    offset = 15
-  [../]
+  ##[./mean_en_time_deriv]
+  #  type = ADTimeDerivativeLog
+  #  variable = mean_en
+  #  block = 0
+  #[../]
+  ##[./mean_en_advection]
+  #  type = ADEFieldAdvection
+  #  variable = mean_en
+  #  potential = potential
+  #  em = em
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
+  ##[./mean_en_diffusion]
+  #  type = ADCoeffDiffusion
+  #  variable = mean_en
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
+  ##[./mean_en_joule_heating]
+  #  type = ADJouleHeating
+  #  variable = mean_en
+  #  potential = potential
+  #  em = em
+  #  block = 0
+  #  position_units = ${dom0Scale}
+  #[../]
+  ##[./mean_en_log_stabilization]
+  #  type = LogStabilizationMoles
+  #  variable = mean_en
+  #  block = 0
+  #  offset = 15
+  #[../]
 []
 
 [AuxVariables]
