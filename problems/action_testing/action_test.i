@@ -108,7 +108,7 @@ dom1Scale=1.0
 [Outputs]
   # perf_graph = true
   #print_densityear_residuals = false
-  [out_01_greg_action_no_log]
+  [out_01_greg_action_output_test_same_offset]
     type = Exodus
   [../]
 []
@@ -181,7 +181,9 @@ dom1Scale=1.0
     # scaling = 1e-1
   [../]
 []
-
+#Questions:
+#how does it differe between actions, ie add_kernel, add_variable
+#log stabilzations use two different offsets
 [ElectronAction]
   electrons = em
   potential = potential
@@ -192,8 +194,9 @@ dom1Scale=1.0
   #I think we can just equate the above to the
   #global parameter "potential_units"
   Using_offset = true
-  offset = 20
+  offset = 15
 []
+
 [Kernels]
   # Plasma potential kernels
   [./potential_diffusion_dom1]
@@ -230,7 +233,7 @@ dom1Scale=1.0
   #  mean_en = mean_en
   #  block = 0
   #  position_units = ${dom0Scale}
-  #[../]
+  #../]
   [./em_log_stabilization]
     type = LogStabilizationMoles
     variable = em
@@ -238,7 +241,7 @@ dom1Scale=1.0
   [../]
 
   # Electron energy kernels
-  ##[./mean_en_time_deriv]
+  #[./mean_en_time_deriv]
   #  type = ADTimeDerivativeLog
   #  variable = mean_en
   #  block = 0

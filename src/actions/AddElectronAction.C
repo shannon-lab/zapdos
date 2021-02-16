@@ -210,7 +210,4 @@ void AddElectronAction::addElectronKernels(const std::string & em_name,
   params7.set<Real>("offset") = getParam<Real>("offset");
   _problem->addKernel("LogStabilizationMoles", mean_en_name + "_log_stabilization", params7);
 
-  //probably make this into two function, one for electron kernels and
-  //one for electron energy Kernels
-  //they log stabilazations use two different kernels
 }
