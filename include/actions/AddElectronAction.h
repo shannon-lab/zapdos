@@ -27,7 +27,9 @@ public:
 protected:
   virtual void addElectronKernels(const std::string & em_name,
                                   const std::string & potential_name,
-                                  const std::string & mean_en_name,
-                                  const bool & Using_offset);
+                                  const std::string & mean_en_name);
+  virtual void addElectronBoundaries(const std::string & em_name,
+                                     const std::string & potential_name,
+                                     const std::string & mean_en_name);
 
 };

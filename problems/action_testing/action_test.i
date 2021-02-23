@@ -108,7 +108,7 @@ dom1Scale=1.0
 [Outputs]
   # perf_graph = true
   #print_densityear_residuals = false
-  [out_01_greg_action_output_test_same_offset]
+  [out_01_greg_action_output_bound_test]
     type = Exodus
   [../]
 []
@@ -181,9 +181,7 @@ dom1Scale=1.0
     # scaling = 1e-1
   [../]
 []
-#Questions:
-#how does it differe between actions, ie add_kernel, add_variable
-#log stabilzations use two different offsets
+
 [ElectronAction]
   electrons = em
   potential = potential
@@ -194,7 +192,10 @@ dom1Scale=1.0
   #I think we can just equate the above to the
   #global parameter "potential_units"
   Using_offset = true
-  offset = 15
+  offset = 20
+  mean_offset = 15
+  boundary = 'left right'
+  r = 0
 []
 
 [Kernels]
@@ -205,6 +206,7 @@ dom1Scale=1.0
     block = 0
     position_units = ${dom0Scale}
   [../]
+  #include in action
   [./em_charge_source]
     type = ChargeSourceMoles_KV
     variable = potential
@@ -233,15 +235,15 @@ dom1Scale=1.0
   #  mean_en = mean_en
   #  block = 0
   #  position_units = ${dom0Scale}
-  #../]
-  [./em_log_stabilization]
-    type = LogStabilizationMoles
-    variable = em
-    block = 0
-  [../]
+  #[../]
+  ##[./em_log_stabilization]
+  #  type = LogStabilizationMoles
+  #  variable = em
+  #  block = 0
+  #[../]
 
   # Electron energy kernels
-  #[./mean_en_time_deriv]
+  ##[./mean_en_time_deriv]
   #  type = ADTimeDerivativeLog
   #  variable = mean_en
   #  block = 0
@@ -494,17 +496,17 @@ dom1Scale=1.0
     boundary = right
     value = 0
   [../]
-  [./em_bc]
-    type = ADHagelaarElectronBC
-    variable = em
-    boundary = 'left right'
-    potential = potential
+  ##[./em_bc]
+  #  type = ADHagelaarElectronBC
+  #  variable = em
+  #  boundary = 'left right'
+  #  potential = potential
     #ip = Arp
-    mean_en = mean_en
+  #  mean_en = mean_en
     #r = 0.99
-    r = 0.0
-    position_units = ${dom0Scale}
-  [../]
+  #  r = 0.0
+  #  position_units = ${dom0Scale}
+  #[../]
   [./Arp_physical_right_diffusion]
     type = ADHagelaarIonDiffusionBC
     variable = Arp
@@ -520,16 +522,16 @@ dom1Scale=1.0
     r = 0
     position_units = ${dom0Scale}
   [../]
-  [./mean_en_bc]
-    type = ADHagelaarEnergyBC
-    variable = mean_en
-    boundary = 'left right'
-    potential = potential
-    em = em
+  ##[./mean_en_bc]
+  #  type = ADHagelaarEnergyBC
+  #  variable = mean_en
+  #  boundary = 'left right'
+  #  potential = potential
+  #  em = em
     #r = 0.99
-    r = 0.0
-    position_units = ${dom0Scale}
-  [../]
+  #  r = 0.0
+  #  position_units = ${dom0Scale}
+  #[../]
 
   # Secondary electrons are only emitted from the cathode (left boundary)
   # in this case

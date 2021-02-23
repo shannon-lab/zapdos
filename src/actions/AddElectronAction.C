@@ -33,6 +33,9 @@
 
 
 registerMooseAction("ZapdosApp", AddElectronAction, "add_kernel");
+registerMooseAction("ZapdosApp", AddElectronAction, "add_aux_kernel");
+registerMooseAction("ZapdosApp", AddElectronAction, "add_bc");
+
 template <>
 InputParameters
 validParams<AddElectronAction>()
@@ -75,6 +78,8 @@ validParams<AddElectronAction>()
   params.addParam<bool>("using_offset", false, "Is the LogStabilizationMoles Kernel being used");
   params.addParam<Real>(
       "offset", 20.0, "The offset parameter that goes into the exponential function");
+  params.addParam<Real>(
+      "mean_offset", 15.0, "The offset parameter for the mean energy that goes into the exponential function");
   params.addRequiredParam<std::string>("potential_units", "Units of potential");
   params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to #.");
   params.addParam<std::vector<std::string>>(
@@ -82,6 +87,8 @@ validParams<AddElectronAction>()
       "Current list of available ouputs options in this action: Current, ElectronTemperature,"
       " EField");
   params.addParam<MooseEnum>("order", "FIRST", "The variable order.");
+  params.addParam<std::vector<BoundaryName>>("boundary","Boundary for first electrons");
+  params.addParam<Real>("r","the reflection coefficient");
   return params;
 }
 AddElectronAction::AddElectronAction(InputParameters params)
@@ -105,7 +112,7 @@ void AddElectronAction::act()
   bool mean_en_present = (isParamValid("mean_energy") ? true : false);
 
   if (em_present)
-    em_name = getParam<NonlinearVariableName>("electrons");
+    em_name = getParam<NonlinearVariableName>("electrons"); //why is this necessary?
   if (potential_present)
     potential_name = getParam<NonlinearVariableName>("potential");
   if (mean_en_present)
@@ -115,12 +122,12 @@ void AddElectronAction::act()
   // Converting the given additional outputs
   std::vector<std::string> Outputs = getParam<std::vector<std::string>>("Additional_Outputs");
 
-  unsigned int number_outputs = Outputs.size();
+  ///unsigned int number_outputs = Outputs.size();
 
   // Converting the boolean statements
-  bool Using_offset = getParam<bool>("using_offset");
-  bool New_potential = getParam<bool>("Is_potential_unique");
-  bool First_Action = getParam<bool>("First_DriftDiffusionActionAD_in_block");
+  ///bool Using_offset = getParam<bool>("using_offset");
+  ///bool New_potential = getParam<bool>("Is_potential_unique");
+  ///bool First_Action = getParam<bool>("First_DriftDiffusionActionAD_in_block");
   // The variable type for the nonlinear variables
   auto fe_type = AddVariableAction::feType(_pars);
   auto type = AddVariableAction::determineType(fe_type, 1);
@@ -143,18 +150,22 @@ void AddElectronAction::act()
   {
     if (em_present)
     {
-      addElectronKernels(em_name, potential_name, mean_en_name, Using_offset);
+      addElectronKernels(em_name, potential_name, mean_en_name);
     }
   }
 
+  if (_current_task == "add_bc")
+  {
+    addElectronBoundaries(em_name, potential_name, mean_en_name);
+  }
 
 
 }
 
 void AddElectronAction::addElectronKernels(const std::string & em_name,
                                            const std::string & potential_name,
-                                           const std::string & mean_en_name,
-                                           const bool & Using_offset)
+                                           const std::string & mean_en_name
+                                           )
 {
 
   InputParameters params = _factory.getValidParams("ADEFieldAdvection");
@@ -207,7 +218,36 @@ void AddElectronAction::addElectronKernels(const std::string & em_name,
   InputParameters params7 = _factory.getValidParams("LogStabilizationMoles");
   params7.set<NonlinearVariableName>("variable") = {mean_en_name};
   params7.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-  params7.set<Real>("offset") = getParam<Real>("offset");
+  params7.set<Real>("offset") = getParam<Real>("mean_offset");
   _problem->addKernel("LogStabilizationMoles", mean_en_name + "_log_stabilization", params7);
 
+  InputParameters params8 = _factory.getValidParams("LogStabilizationMoles");
+  params8.set<NonlinearVariableName>("variable") = {em_name}; //why the brackets?
+  params8.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+  params8.set<Real>("offset") = getParam<Real>("offset");
+  _problem->addKernel("LogStabilizationMoles", em_name + "_log_stabilization", params8);
+
+}
+void AddElectronAction::addElectronBoundaries(const std::string & em_name,
+                                           const std::string & potential_name,
+                                           const std::string & mean_en_name
+                                           )
+{
+  InputParameters params = _factory.getValidParams("ADHagelaarElectronBC");
+  params.set<NonlinearVariableName>("variable") = {em_name};
+  params.set<std::vector<BoundaryName>>("boundary") = getParam<std::vector<BoundaryName>>("boundary");
+  params.set<Real>("r") = getParam<Real>("r");
+  params.set<std::vector<VariableName>>("potential") = {potential_name};
+  params.set<std::vector<VariableName>>("mean_en") = {mean_en_name};
+  params.set<Real>("position_units") = getParam<Real>("position_units");
+  _problem->addBoundaryCondition("ADHagelaarElectronBC", em_name + "_bc", params);
+
+  InputParameters params2 = _factory.getValidParams("ADHagelaarEnergyBC");
+  params2.set<NonlinearVariableName>("variable") = {mean_en_name};
+  params2.set<std::vector<BoundaryName>>("boundary") = getParam<std::vector<BoundaryName>>("boundary");
+  params2.set<Real>("r") = getParam<Real>("r");
+  params2.set<std::vector<VariableName>>("potential") = {potential_name};
+  params2.set<std::vector<VariableName>>("em") = {em_name};
+  params2.set<Real>("position_units") = getParam<Real>("position_units");
+  _problem->addBoundaryCondition("ADHagelaarEnergyBC", mean_en_name + "_bc", params2);
 }
