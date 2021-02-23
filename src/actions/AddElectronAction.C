@@ -35,6 +35,7 @@
 registerMooseAction("ZapdosApp", AddElectronAction, "add_kernel");
 registerMooseAction("ZapdosApp", AddElectronAction, "add_aux_kernel");
 registerMooseAction("ZapdosApp", AddElectronAction, "add_bc");
+registerMooseAction("ZapdosApp", AddElectronAction, "add_variable");
 
 template <>
 InputParameters
@@ -44,34 +45,16 @@ validParams<AddElectronAction>()
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
   InputParameters params = validParams<AddVariableAction>();
-  params.addParam<std::vector<NonlinearVariableName>>(
-      "charged_particle", "User given variable name for energy independent charged particle");
-  params.addParam<std::vector<NonlinearVariableName>>(
-      "secondary_charged_particles",
-      "These are charged particles whose advection term in determined by"
-      " an effective potential.");
-  params.addParam<std::vector<NonlinearVariableName>>(
-      "eff_potentials",
-      "The effective potentials that only affect their respective secondary"
-      " charged particle.");
   params.addParam<NonlinearVariableName>("electrons",
                                          "User given variable name for energy dependent electrons");
   params.addParam<NonlinearVariableName>("potential", "The gives the potential a variable name");
-  params.addParam<bool>("use_ad", false, "Whether or not to use automatic differentiation.");
   params.addParam<bool>(
       "Is_potential_unique",
       false,
       "Is this potential unique to this block?"
       "If not, then the potential variable should be defined in the Variable Block.");
-  params.addParam<bool>("First_DriftDiffusionActionAD_in_block",
-                        true,
-                        "Is this the first DriftDiffusionActionAD for this block?"
-                        "If not, then the potential diffusion kernel and Position auxkernel will "
-                        "NOT be supplied by this action.");
   params.addParam<NonlinearVariableName>("mean_energy",
                                          "The gives the mean energy a variable name");
-  params.addParam<std::vector<NonlinearVariableName>>(
-      "Neutrals", "The names of the neutrals that should be added");
   params.addParam<std::vector<SubdomainName>>("block",
                                               "The subdomain that this action applies to.");
   params.addRequiredParam<Real>("position_units", "Units of position");
@@ -82,10 +65,6 @@ validParams<AddElectronAction>()
       "mean_offset", 15.0, "The offset parameter for the mean energy that goes into the exponential function");
   params.addRequiredParam<std::string>("potential_units", "Units of potential");
   params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to #.");
-  params.addParam<std::vector<std::string>>(
-      "Additional_Outputs",
-      "Current list of available ouputs options in this action: Current, ElectronTemperature,"
-      " EField");
   params.addParam<MooseEnum>("order", "FIRST", "The variable order.");
   params.addParam<std::vector<BoundaryName>>("boundary","Boundary for first electrons");
   params.addParam<Real>("r","the reflection coefficient");
@@ -111,40 +90,20 @@ void AddElectronAction::act()
   bool potential_present = (isParamValid("potential") ? true : false);
   bool mean_en_present = (isParamValid("mean_energy") ? true : false);
 
+  if (!em_present)
+    mooseError("Missing electron parameter");
+  if (!potential_present)
+    mooseError("Missing potential parameter");
+  if (!mean_en_present)
+    mooseError("Missing mean energy parameter");
+
+
   if (em_present)
-    em_name = getParam<NonlinearVariableName>("electrons"); //why is this necessary?
+    em_name = getParam<NonlinearVariableName>("electrons");
   if (potential_present)
     potential_name = getParam<NonlinearVariableName>("potential");
   if (mean_en_present)
     mean_en_name = getParam<NonlinearVariableName>("mean_energy");
-
-
-  // Converting the given additional outputs
-  std::vector<std::string> Outputs = getParam<std::vector<std::string>>("Additional_Outputs");
-
-  ///unsigned int number_outputs = Outputs.size();
-
-  // Converting the boolean statements
-  ///bool Using_offset = getParam<bool>("using_offset");
-  ///bool New_potential = getParam<bool>("Is_potential_unique");
-  ///bool First_Action = getParam<bool>("First_DriftDiffusionActionAD_in_block");
-  // The variable type for the nonlinear variables
-  auto fe_type = AddVariableAction::feType(_pars);
-  auto type = AddVariableAction::determineType(fe_type, 1);
-  auto var_params = _factory.getValidParams(type);
-  //var_params.set<MooseEnum>("order") = "FIRST";
-  var_params.set<MooseEnum>("order") = getParam<MooseEnum>("order");
-  //var_params.set<MooseEnum>("order") = "SECOND";
-  var_params.set<MooseEnum>("family") = "LAGRANGE";
-  var_params.set<std::vector<SubdomainName>>("block") =
-      getParam<std::vector<SubdomainName>>("block");
-
-  // The variable type for the aux variables
-  auto aux_params = _factory.getValidParams(type);
-  aux_params.set<MooseEnum>("order") = "CONSTANT";
-  aux_params.set<MooseEnum>("family") = "MONOMIAL";
-  aux_params.set<std::vector<SubdomainName>>("block") =
-      getParam<std::vector<SubdomainName>>("block");
 
   if (_current_task == "add_kernel")
   {
@@ -153,10 +112,14 @@ void AddElectronAction::act()
       addElectronKernels(em_name, potential_name, mean_en_name);
     }
   }
-
   if (_current_task == "add_bc")
   {
     addElectronBoundaries(em_name, potential_name, mean_en_name);
+  }
+
+  if (_current_task == "add_variable")
+  {
+
   }
 
 
@@ -182,7 +145,6 @@ void AddElectronAction::addElectronKernels(const std::string & em_name,
 
   InputParameters params2 = _factory.getValidParams("ADCoeffDiffusion");
   params2.set<NonlinearVariableName>("variable") = {em_name};
-  //params2.set<std::vector<VariableName>>("mean_en") = {mean_en_name};
   params2.set<Real>("position_units") = getParam<Real>("position_units");
   params2.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   _problem->addKernel("ADCoeffDiffusion", em_name + "_diffusion", params2);
@@ -222,7 +184,7 @@ void AddElectronAction::addElectronKernels(const std::string & em_name,
   _problem->addKernel("LogStabilizationMoles", mean_en_name + "_log_stabilization", params7);
 
   InputParameters params8 = _factory.getValidParams("LogStabilizationMoles");
-  params8.set<NonlinearVariableName>("variable") = {em_name}; //why the brackets?
+  params8.set<NonlinearVariableName>("variable") = {em_name};
   params8.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   params8.set<Real>("offset") = getParam<Real>("offset");
   _problem->addKernel("LogStabilizationMoles", em_name + "_log_stabilization", params8);

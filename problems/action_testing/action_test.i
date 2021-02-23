@@ -188,11 +188,7 @@ dom1Scale=1.0
   mean_energy = mean_en
   block = 0
   position_units = ${dom0Scale}
-  potential_units = kV
-  #I think we can just equate the above to the
-  #global parameter "potential_units"
   Using_offset = true
-  offset = 20
   mean_offset = 15
   boundary = 'left right'
   r = 0
