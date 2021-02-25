@@ -108,7 +108,7 @@ dom1Scale=1.0
 [Outputs]
   # perf_graph = true
   #print_densityear_residuals = false
-  [out_01_greg_action_output_bound_test]
+  [out_01_greg_action_output_heavy_species_test03]
     type = Exodus
   [../]
 []
@@ -575,6 +575,48 @@ dom1Scale=1.0
   [../]
 []
 
+[HeavySpeciesTransport]
+  [./H20_mat]
+    name = H2O
+    mass = 2.9907e-26
+    charge = 0
+    diffusivity = 2.3e-5
+  [../]
+  [./Arp]
+    name = Arp
+    mass = 6.64e-26
+    charge = 1.0
+    block = 0
+  [../]
+  [./Ar_species]
+    name = Ar
+    mass = 6.64e-26
+    charge = 0.0
+    block = 0
+  [../]
+  [./gas_species_1]
+    name = Ar2p
+    mass = 13.28e-26
+    charge = 1.0
+    block = 0
+  [../]
+  [./gas_species_2]
+    name = Ar*
+    mass = 6.64e-26
+    charge = 0
+    block = 0
+  [../]
+  [./OH_mat]
+    name = OH
+    mass = 2.82420e-26
+    charge = 0
+    diffusivity = 4e-5
+    block = 0
+  [../]
+[]
+
+
+
 [Materials]
   [./se_coefficient]
     type = GenericConstantMaterial
@@ -606,51 +648,51 @@ dom1Scale=1.0
    block = 0
  []
 
- [H2O_mat]
-   type = ADHeavySpeciesMaterial
-   heavy_species_name = H2O
-   heavy_species_mass = 2.9907e-26
-   heavy_species_charge = 0
-   diffusivity = 2.3e-5
- []
+ #[H2O_mat]
+  # type = ADHeavySpeciesMaterial
+   #heavy_species_name = H2O
+   #heavy_species_mass = 2.9907e-26
+   #heavy_species_charge = 0
+   #diffusivity = 2.3e-5
+ #[]
 
-  [./gas_species_0]
-    type = ADHeavySpeciesMaterial
-    heavy_species_name = Arp
-    heavy_species_mass = 6.64e-26
-    heavy_species_charge = 1.0
-    block = 0
-  [../]
-  [./Ar_species]
-    type = ADHeavySpeciesMaterial
-    heavy_species_name = Ar
-    heavy_species_mass = 6.64e-26
-    heavy_species_charge = 0.0
-    block = 0
-  [../]
-  [./gas_species_1]
-    type = ADHeavySpeciesMaterial
-    heavy_species_name = Ar2p
-    heavy_species_mass = 13.28e-26
-    heavy_species_charge = 1.0
-    block = 0
-  [../]
-  [./gas_species_2]
-    type = ADHeavySpeciesMaterial
-    heavy_species_name = Ar*
-    heavy_species_mass = 6.64e-26
-    heavy_species_charge = 0
-    block = 0
-  [../]
+  #[./gas_species_0]
+  #  type = ADHeavySpeciesMaterial
+  #  heavy_species_name = Arp
+  #  heavy_species_mass = 6.64e-26
+  #  heavy_species_charge = 1.0
+  #  block = 0
+  #[../]
+  #[./Ar_species]
+  #  type = ADHeavySpeciesMaterial
+  #  heavy_species_name = Ar
+  #  heavy_species_mass = 6.64e-26
+  #  heavy_species_charge = 0.0
+  #  block = 0
+  #[../]
+  #[./gas_species_1]
+  #  type = ADHeavySpeciesMaterial
+  #  heavy_species_name = Ar2p
+  #  heavy_species_mass = 13.28e-26
+  #  heavy_species_charge = 1.0
+  #  block = 0
+  #[../]
+  #[./gas_species_2]
+  #  type = ADHeavySpeciesMaterial
+  #  heavy_species_name = Ar*
+  #  heavy_species_mass = 6.64e-26
+  #  heavy_species_charge = 0
+  #  block = 0
+  #[../]
 
-  [OH_mat]
-    type = ADHeavySpeciesMaterial
-    heavy_species_name = OH
-    heavy_species_mass = 2.82420e-26
-    heavy_species_charge = 0
-    diffusivity = 4e-5
-    block = 0
-  []
+  #[OH_mat]
+  #  type = ADHeavySpeciesMaterial
+  #  heavy_species_name = OH
+  #  heavy_species_mass = 2.82420e-26
+  #  heavy_species_charge = 0
+  #  diffusivity = 4e-5
+  #  block = 0
+  #[]
 []
 
 [Reactions]

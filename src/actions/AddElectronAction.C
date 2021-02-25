@@ -121,8 +121,6 @@ void AddElectronAction::act()
   {
 
   }
-
-
 }
 
 void AddElectronAction::addElectronKernels(const std::string & em_name,
