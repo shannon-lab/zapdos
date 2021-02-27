@@ -114,7 +114,6 @@ dom1Scale=1e-7
   [./em_diffusion]
     type = CoeffDiffusionElectrons
     variable = em
-    mean_en = mean_en
     block = 0
     position_units = ${dom0Scale}
   [../]
@@ -439,7 +438,7 @@ dom1Scale=1e-7
 
 [AuxKernels]
   [./PowerDep_em]
-    type = PowerDep
+    type = ADPowerDep
     density_log = em
     potential = potential
     art_diff = false
@@ -449,7 +448,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./PowerDep_Arp]
-    type = PowerDep
+    type = ADPowerDep
     density_log = Arp
     potential = potential
     art_diff = false
@@ -589,7 +588,7 @@ dom1Scale=1e-7
     block = 1
   [../]
   [./Current_em]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = em
     variable = Current_em
@@ -598,7 +597,7 @@ dom1Scale=1e-7
     position_units = ${dom0Scale}
   [../]
   [./Current_emliq]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = emliq
     variable = Current_emliq
@@ -607,7 +606,7 @@ dom1Scale=1e-7
     position_units = ${dom1Scale}
   [../]
   [./Current_Arp]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = Arp
     variable = Current_Arp
@@ -617,7 +616,7 @@ dom1Scale=1e-7
   [../]
   [./Current_OHm]
     block = 1
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = OHm
     variable = Current_OHm
@@ -626,13 +625,13 @@ dom1Scale=1e-7
   [../]
   [./tot_flux_OHm]
     block = 1
-    type = TotalFlux
+    type = ADTotalFlux
     potential = potential
     density_log = OHm
     variable = tot_flux_OHm
   [../]
   [./EFieldAdvAux_em]
-    type = EFieldAdvAux
+    type = ADEFieldAdvAux
     potential = potential
     density_log = em
     variable = EFieldAdvAux_em
@@ -640,14 +639,14 @@ dom1Scale=1e-7
     position_units = ${dom0Scale}
   [../]
   [./DiffusiveFlux_em]
-    type = DiffusiveFlux
+    type = ADDiffusiveFlux
     density_log = em
     variable = DiffusiveFlux_em
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./EFieldAdvAux_emliq]
-    type = EFieldAdvAux
+    type = ADEFieldAdvAux
     potential = potential
     density_log = emliq
     variable = EFieldAdvAux_emliq
@@ -655,7 +654,7 @@ dom1Scale=1e-7
     position_units = ${dom1Scale}
   [../]
   [./DiffusiveFlux_emliq]
-    type = DiffusiveFlux
+    type = ADDiffusiveFlux
     density_log = emliq
     variable = DiffusiveFlux_emliq
     block = 1
@@ -692,7 +691,6 @@ dom1Scale=1e-7
     boundary = 'master0_interface'
     potential = potential
     em = em
-    ip = Arp
     r = 0.99
     #r = 0.0
     position_units = ${dom0Scale}
@@ -703,7 +701,6 @@ dom1Scale=1e-7
     boundary = 'left'
     potential = potential
     em = em
-    ip = Arp
     r = 0
     position_units = ${dom0Scale}
   [../]
@@ -892,7 +889,7 @@ dom1Scale=1e-7
  [../]
 
   [./gas_species_0]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Arp
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
@@ -900,7 +897,7 @@ dom1Scale=1e-7
   [../]
 
   [./gas_species_2]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
@@ -920,6 +917,7 @@ dom1Scale=1e-7
     file_location = 'townsend_coefficients'
     potential = 'potential'
     use_log = true
+    use_ad = true
     position_units = ${dom0Scale}
     track_rates = false
     block = 0
@@ -933,6 +931,7 @@ dom1Scale=1e-7
     species = 'emliq OHm'
     reaction_coefficient_format = 'rate'
     use_log = true
+    use_ad = true
     aux_species = 'H2O'
     block = 1
     reactions = 'emliq -> H + OHm : 1064

@@ -66,7 +66,6 @@ dom0Scale=25.4e-3
     [./em_diffusion]
       type = CoeffDiffusionElectrons
       variable = em
-      mean_en = mean_en
       position_units = ${dom0Scale}
     [../]
 
@@ -263,19 +262,16 @@ dom0Scale=25.4e-3
 
   [./em_lin]
     type = DensityMoles
-    convert_moles = true
     variable = em_lin
     density_log = em
   [../]
   [./Ar+_lin]
     type = DensityMoles
-    convert_moles = true
     variable = Ar+_lin
     density_log = Ar+
   [../]
   [./Ar*_lin]
     type = DensityMoles
-    convert_moles = true
     variable = Ar*_lin
     density_log = Ar*
   [../]
@@ -296,7 +292,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   [../]
   [./Current_em]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = em
     variable = Current_em
@@ -305,7 +301,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   [../]
   [./Current_Ar]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = Ar+
     variable = Current_Ar
@@ -473,7 +469,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   [../]
   [./gas_species_0]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
@@ -481,14 +477,14 @@ dom0Scale=25.4e-3
     diffusivity = 6.428571e-3
   [../]
   [./gas_species_1]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar*
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
     diffusivity = 7.515528e-3
   [../]
   [./gas_species_2]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
