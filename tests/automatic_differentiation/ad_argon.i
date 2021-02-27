@@ -111,7 +111,6 @@ dom0Scale=1e-3
   [./em_diffusion]
     type = CoeffDiffusion
     variable = em
-    mean_en = mean_en
     block = 0
     position_units = ${dom0Scale}
   [../]
@@ -207,7 +206,6 @@ dom0Scale=1e-3
     type = EFieldAdvection
     variable = mean_en
     potential = potential
-    em = em
     block = 0
     position_units = ${dom0Scale}
   [../]
@@ -491,7 +489,6 @@ dom0Scale=1e-3
     boundary = 'right'
     potential = potential
     em = em
-    ip = Arp
     r = 0.0
     position_units = ${dom0Scale}
   [../]
@@ -501,7 +498,6 @@ dom0Scale=1e-3
     boundary = 'left'
     potential = potential
     em = em
-    ip = 'Arp Ar2p'
     r = 0
     position_units = ${dom0Scale}
   [../]
@@ -657,14 +653,14 @@ dom0Scale=1e-3
   [./gas_constants]
     type = GenericConstantMaterial
     block = 0
-    prop_names = ' e         N_A     k_boltz  eps       T_gas massem   p_gas  n_gas'
-    prop_values = '1.6e-19 6.022e23  1.38e-23 8.854e-12 300   9.11e-31 1.01e5 40.4915'
+    prop_names = ' e         N_A     k_boltz  eps       T_gas massem   p_gas  n_gas    se_coeff se_energy'
+    prop_values = '1.6e-19 6.022e23  1.38e-23 8.854e-12 300   9.11e-31 1.01e5 40.4915  0.05     3.'
   [../]
   [ad_gas_constants]
     type = ADGenericConstantMaterial
     block = 0
-    prop_names = 'diffpotential se_coeff se_energy'
-    prop_values = '8.85e-12     0.05     3.'
+    prop_names = 'diffpotential'
+    prop_values = '8.85e-12'
   []
   [./gas_species_0]
     type = ADHeavySpecies
