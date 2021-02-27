@@ -8,21 +8,16 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef CURRENTDENSITYSHAPESIDEUSEROBJECT_H
-#define CURRENTDENSITYSHAPESIDEUSEROBJECT_H
+#pragma once
 
 #include "ShapeSideUserObject.h"
-
-// Forward Declarations
-class CurrentDensityShapeSideUserObject;
-
-template <>
-InputParameters validParams<CurrentDensityShapeSideUserObject>();
 
 class CurrentDensityShapeSideUserObject : public ShapeSideUserObject
 {
 public:
   CurrentDensityShapeSideUserObject(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual ~CurrentDensityShapeSideUserObject() {}
 
@@ -52,15 +47,11 @@ protected:
   unsigned int _potential_id;
   const VariableValue & _mean_en;
   unsigned int _mean_en_id;
-  const MaterialProperty<Real> & _muip;
-  const MaterialProperty<Real> & _diffip;
-  const MaterialProperty<Real> & _muem;
-  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
-  const MaterialProperty<Real> & _diffem;
-  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
+  const ADMaterialProperty<Real> & _muip;
+  const ADMaterialProperty<Real> & _diffip;
+  const ADMaterialProperty<Real> & _muem;
+  const ADMaterialProperty<Real> & _diffem;
   Real _e;
   bool _use_moles;
   Real _avogadro;
 };
-
-#endif
