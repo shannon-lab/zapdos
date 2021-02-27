@@ -30,7 +30,7 @@ protected:
 
   const Real _r_units;
   const Real _r_neighbor_units;
-  const MaterialProperty<Real> & _D;
-  const MaterialProperty<Real> & _D_neighbor;
+  const ADMaterialProperty<Real> & _D;
+  const ADMaterialProperty<Real> & _D_neighbor;
   const ADMaterialProperty<Real> & _sigma;
 };

@@ -25,8 +25,8 @@ ADPotentialSurfaceCharge::ADPotentialSurfaceCharge(const InputParameters & param
   : ADInterfaceKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _r_neighbor_units(1. / getParam<Real>("neighbor_position_units")),
-    _D(getMaterialProperty<Real>("diff" + _var.name())),
-    _D_neighbor(getNeighborMaterialProperty<Real>("diff" + _neighbor_var.name())),
+    _D(getADMaterialProperty<Real>("diff" + _var.name())),
+    _D_neighbor(getNeighborADMaterialProperty<Real>("diff" + _neighbor_var.name())),
     _sigma(getADMaterialProperty<Real>("surface_charge"))
 {
 }
