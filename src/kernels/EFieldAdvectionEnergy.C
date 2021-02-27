@@ -18,7 +18,6 @@ EFieldAdvectionEnergy::validParams()
   InputParameters params = ADKernelGrad::validParams();
   params.addRequiredCoupledVar(
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
-  params.addRequiredCoupledVar("em", "The log of the electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position");
   params.addClassDescription("Electron energy specific electric field driven advection term"
                              "(Densities must be in log form)");
@@ -34,8 +33,7 @@ EFieldAdvectionEnergy::EFieldAdvectionEnergy(const InputParameters & parameters)
     _sign(getMaterialProperty<Real>("sgnem")),
 
     // Coupled variables
-    _grad_potential(adCoupledGradient("potential")),
-    _em(adCoupledValue("em"))
+    _grad_potential(adCoupledGradient("potential"))
 {
 }
 

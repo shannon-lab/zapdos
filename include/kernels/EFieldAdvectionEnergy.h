@@ -30,5 +30,4 @@ protected:
 
   /// Coupled variables
   const ADVariableGradient & _grad_potential;
-  const ADVariableValue & _em;
 };
