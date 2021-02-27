@@ -59,6 +59,7 @@ dom1Scale=1e-7
   type = Transient
   end_time = 1e-1
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
+  #petsc_options = '-snes_converged_reason -snes_linesearch_monitor -snes_test_jacobian'
   # petsc_options = '-snes_test_display'
   solve_type = NEWTON
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
@@ -103,9 +104,6 @@ dom1Scale=1e-7
     electrode_area = 5.02e-7 # Formerly 3.14e-6
     ballast_resist = 1e6
     e = 1.6e-19
-    # electrode_area = 1.1
-    # ballast_resist = 1.1
-    # e = 1.1
   [../]
 []
 
@@ -126,7 +124,6 @@ dom1Scale=1e-7
   [./em_diffusion]
     type = CoeffDiffusionElectrons
     variable = em
-    mean_en = mean_en
     block = 0
     position_units = ${dom0Scale}
   [../]
@@ -144,12 +141,6 @@ dom1Scale=1e-7
     variable = em
     block = 0
   [../]
-  # [./em_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = em
-  #   potential = potential
-  #   block = 0
-  # [../]
 
   [./emliq_time_deriv]
     type = ElectronTimeDerivative
@@ -184,12 +175,6 @@ dom1Scale=1e-7
     variable = emliq
     block = 1
   [../]
-  # [./emliq_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = emliq
-  #   potential = potential
-  #   block = 1
-  # [../]
 
   [./potential_diffusion_dom1]
     type = CoeffDiffusionLin
@@ -260,12 +245,6 @@ dom1Scale=1e-7
     variable = Arp
     block = 0
   [../]
-  # [./Arp_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = Arp
-  #   potential = potential
-  #   block = 0
-  # [../]
 
   [./OHm_time_deriv]
     type = ElectronTimeDerivative
@@ -290,12 +269,6 @@ dom1Scale=1e-7
     variable = OHm
     block = 1
   [../]
-  # [./OHm_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = OHm
-  #   potential = potential
-  #   block = 1
-  # [../]
   [./OHm_product_first_order_rxn]
     type = ProductFirstOrderRxn
     variable = OHm
@@ -367,12 +340,6 @@ dom1Scale=1e-7
     block = 0
     offset = 15
   [../]
-  # [./mean_en_advection_stabilization]
-  #   type = EFieldArtDiff
-  #   variable = mean_en
-  #   potential = potential
-  #   block = 0
-  # [../]
 []
 
 [Variables]
@@ -531,7 +498,7 @@ dom1Scale=1e-7
 
 [AuxKernels]
   [./PowerDep_em]
-    type = PowerDep
+    type = ADPowerDep
     density_log = em
     potential = potential
     art_diff = false
@@ -541,7 +508,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./PowerDep_Arp]
-    type = PowerDep
+    type = ADPowerDep
     density_log = Arp
     potential = potential
     art_diff = false
@@ -551,7 +518,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./ProcRate_el]
-    type = ProcRate
+    type = ADProcRate
     em = em
     potential = potential
     proc = el
@@ -560,7 +527,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./ProcRate_ex]
-    type = ProcRate
+    type = ADProcRate
     em = em
     potential = potential
     proc = ex
@@ -569,7 +536,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./ProcRate_iz]
-    type = ProcRate
+    type = ADProcRate
     em = em
     potential = potential
     proc = iz
@@ -681,7 +648,7 @@ dom1Scale=1e-7
     block = 1
   [../]
   [./Current_em]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = em
     variable = Current_em
@@ -690,7 +657,7 @@ dom1Scale=1e-7
     position_units = ${dom0Scale}
   [../]
   [./Current_emliq]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = emliq
     variable = Current_emliq
@@ -699,7 +666,7 @@ dom1Scale=1e-7
     position_units = ${dom1Scale}
   [../]
   [./Current_Arp]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = Arp
     variable = Current_Arp
@@ -709,7 +676,7 @@ dom1Scale=1e-7
   [../]
   [./Current_OHm]
     block = 1
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = OHm
     variable = Current_OHm
@@ -718,13 +685,13 @@ dom1Scale=1e-7
   [../]
   [./tot_flux_OHm]
     block = 1
-    type = TotalFlux
+    type = ADTotalFlux
     potential = potential
     density_log = OHm
     variable = tot_flux_OHm
   [../]
   [./EFieldAdvAux_em]
-    type = EFieldAdvAux
+    type = ADEFieldAdvAux
     potential = potential
     density_log = em
     variable = EFieldAdvAux_em
@@ -732,14 +699,14 @@ dom1Scale=1e-7
     position_units = ${dom0Scale}
   [../]
   [./DiffusiveFlux_em]
-    type = DiffusiveFlux
+    type = ADDiffusiveFlux
     density_log = em
     variable = DiffusiveFlux_em
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./EFieldAdvAux_emliq]
-    type = EFieldAdvAux
+    type = ADEFieldAdvAux
     potential = potential
     density_log = emliq
     variable = EFieldAdvAux_emliq
@@ -747,7 +714,7 @@ dom1Scale=1e-7
     position_units = ${dom1Scale}
   [../]
   [./DiffusiveFlux_emliq]
-    type = DiffusiveFlux
+    type = ADDiffusiveFlux
     density_log = emliq
     variable = DiffusiveFlux_emliq
     block = 1
@@ -784,7 +751,6 @@ dom1Scale=1e-7
     boundary = 'master0_interface'
     potential = potential
     em = em
-    ip = Arp
     r = 0.99
     position_units = ${dom0Scale}
   [../]
@@ -794,7 +760,6 @@ dom1Scale=1e-7
     boundary = 'left'
     potential = potential
     em = em
-    ip = Arp
     r = 0
     position_units = ${dom0Scale}
   [../]
