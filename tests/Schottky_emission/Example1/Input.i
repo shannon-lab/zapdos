@@ -3,7 +3,6 @@ dom0Size = 4E-6 #m
 vhigh = -200E-3 #kV
 
 [GlobalParams]
-        offset = 25
         potential_units = kV
 #        potential_units = V
         use_moles = true
@@ -66,7 +65,6 @@ vhigh = -200E-3 #kV
                 dt = 1e-11
                 growth_factor = 1.2
                 optimal_iterations = 100
-                nl_max_its = 200
         [../]
 []
 
@@ -135,7 +133,6 @@ vhigh = -200E-3 #kV
         [./em_diffusion]
                 type = CoeffDiffusionElectrons
                 variable = em
-                mean_en = mean_en
                 block = 0
                 position_units = ${dom0Scale}
         [../]
@@ -352,7 +349,7 @@ vhigh = -200E-3 #kV
 
 [AuxKernels]
         [./PowerDep_em]
-                type = PowerDep
+                type = ADPowerDep
                 density_log = em
                 potential = potential
                 art_diff = false
@@ -362,7 +359,7 @@ vhigh = -200E-3 #kV
                 block = 0
         [../]
         [./PowerDep_Arp]
-                type = PowerDep
+                type = ADPowerDep
                 density_log = Arp
                 potential = potential
                 art_diff = false
@@ -372,7 +369,7 @@ vhigh = -200E-3 #kV
                 block = 0
         [../]
         [./ProcRate_el]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = el
@@ -381,7 +378,7 @@ vhigh = -200E-3 #kV
                 block = 0
         [../]
         [./ProcRate_ex]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = ex
@@ -390,7 +387,7 @@ vhigh = -200E-3 #kV
                 block = 0
         [../]
         [./ProcRate_iz]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = iz
@@ -456,7 +453,7 @@ vhigh = -200E-3 #kV
                 block = 0
         [../]
         [./Current_em]
-                type = Current
+                type = ADCurrent
                 potential = potential
                 density_log = em
                 variable = Current_em
@@ -465,7 +462,7 @@ vhigh = -200E-3 #kV
                 position_units = ${dom0Scale}
         [../]
         [./Current_Arp]
-                type = Current
+                type = ADCurrent
                 potential = potential
                 density_log = Arp
                 variable = Current_Arp
@@ -474,7 +471,7 @@ vhigh = -200E-3 #kV
                 position_units = ${dom0Scale}
         [../]
         [./EFieldAdvAux_em]
-                type = EFieldAdvAux
+                type = ADEFieldAdvAux
                 potential = potential
                 density_log = em
                 variable = EFieldAdvAux_em
@@ -482,7 +479,7 @@ vhigh = -200E-3 #kV
                 position_units = ${dom0Scale}
         [../]
         [./DiffusiveFlux_em]
-                type = DiffusiveFlux
+                type = ADDiffusiveFlux
                 density_log = em
                 variable = DiffusiveFlux_em
                 block = 0
@@ -542,7 +539,6 @@ vhigh = -200E-3 #kV
                 variable = em
                 boundary = right
                 potential = potential
-                mean_en = mean_en
                 r = 0
                 position_units = ${dom0Scale}
         [../]
@@ -587,7 +583,6 @@ vhigh = -200E-3 #kV
                 boundary = 'left'
                 potential = potential
                 em = em
-                ip = Arp
                 r = 0
                 position_units = ${dom0Scale}
         [../]
@@ -598,7 +593,6 @@ vhigh = -200E-3 #kV
                 boundary = right
                 potential = potential
                 em = em
-                ip = Arp
                 r = 0
                 position_units = ${dom0Scale}
         [../]

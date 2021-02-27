@@ -89,7 +89,6 @@ area = 5.02e-7 # Formerly 3.14e-6
         [./current_density_user_object]
                 type = CurrentDensityShapeSideUserObject
                 boundary = left
-                data_provider = data_provider
                 potential = potential
                 em = em
                 ip = Arp
@@ -147,7 +146,6 @@ area = 5.02e-7 # Formerly 3.14e-6
         [./em_diffusion]
                 type = CoeffDiffusionElectrons
                 variable = em
-                mean_en = mean_en
                 block = 0
                 position_units = ${dom0Scale}
         [../]
@@ -364,7 +362,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 
 [AuxKernels]
         [./PowerDep_em]
-                type = PowerDep
+                type = ADPowerDep
                 density_log = em
                 potential = potential
                 art_diff = false
@@ -374,7 +372,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 block = 0
         [../]
         [./PowerDep_Arp]
-                type = PowerDep
+                type = ADPowerDep
                 density_log = Arp
                 potential = potential
                 art_diff = false
@@ -384,7 +382,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 block = 0
         [../]
         [./ProcRate_el]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = el
@@ -393,7 +391,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 block = 0
         [../]
         [./ProcRate_ex]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = ex
@@ -402,7 +400,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 block = 0
         [../]
         [./ProcRate_iz]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = iz
@@ -468,7 +466,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 block = 0
         [../]
         [./Current_em]
-                type = Current
+                type = ADCurrent
                 potential = potential
                 density_log = em
                 variable = Current_em
@@ -477,7 +475,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 position_units = ${dom0Scale}
         [../]
         [./Current_Arp]
-                type = Current
+                type = ADCurrent
                 potential = potential
                 density_log = Arp
                 variable = Current_Arp
@@ -486,7 +484,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 position_units = ${dom0Scale}
         [../]
         [./EFieldAdvAux_em]
-                type = EFieldAdvAux
+                type = ADEFieldAdvAux
                 potential = potential
                 density_log = em
                 variable = EFieldAdvAux_em
@@ -494,7 +492,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 position_units = ${dom0Scale}
         [../]
         [./DiffusiveFlux_em]
-                type = DiffusiveFlux
+                type = ADDiffusiveFlux
                 density_log = em
                 variable = DiffusiveFlux_em
                 block = 0
@@ -585,7 +583,6 @@ area = 5.02e-7 # Formerly 3.14e-6
                 variable = em
                 boundary = right
                 potential = potential
-                mean_en = mean_en
                 r = 0
                 position_units = ${dom0Scale}
         [../]
@@ -630,7 +627,6 @@ area = 5.02e-7 # Formerly 3.14e-6
                 boundary = 'left'
                 potential = potential
                 em = em
-                ip = Arp
                 r = 0
                 position_units = ${dom0Scale}
         [../]
@@ -641,7 +637,6 @@ area = 5.02e-7 # Formerly 3.14e-6
                 boundary = right
                 potential = potential
                 em = em
-                ip = Arp
                 r = 0
                 position_units = ${dom0Scale}
         [../]

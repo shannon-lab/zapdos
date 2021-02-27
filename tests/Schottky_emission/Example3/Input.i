@@ -1,7 +1,7 @@
 dom0Scale = 1
 dom0Size = 2E-6 #m
 vhigh = -230E-3 #kV
-relaxTime = 50E-6 #s
+# relaxTime = 50E-6 #s
 threeTimesRelaxTime = 150E-6 #s
 
 [GlobalParams]
@@ -136,7 +136,6 @@ threeTimesRelaxTime = 150E-6 #s
         [./em_diffusion]
                 type = CoeffDiffusionElectrons
                 variable = em
-                mean_en = mean_en
                 block = 0
                 position_units = ${dom0Scale}
         [../]
@@ -353,7 +352,7 @@ threeTimesRelaxTime = 150E-6 #s
 
 [AuxKernels]
         [./PowerDep_em]
-                type = PowerDep
+                type = ADPowerDep
                 density_log = em
                 potential = potential
                 art_diff = false
@@ -363,7 +362,7 @@ threeTimesRelaxTime = 150E-6 #s
                 block = 0
         [../]
         [./PowerDep_Arp]
-                type = PowerDep
+                type = ADPowerDep
                 density_log = Arp
                 potential = potential
                 art_diff = false
@@ -373,7 +372,7 @@ threeTimesRelaxTime = 150E-6 #s
                 block = 0
         [../]
         [./ProcRate_el]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = el
@@ -382,7 +381,7 @@ threeTimesRelaxTime = 150E-6 #s
                 block = 0
         [../]
         [./ProcRate_ex]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = ex
@@ -391,7 +390,7 @@ threeTimesRelaxTime = 150E-6 #s
                 block = 0
         [../]
         [./ProcRate_iz]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = iz
@@ -457,7 +456,7 @@ threeTimesRelaxTime = 150E-6 #s
                 block = 0
         [../]
         [./Current_em]
-                type = Current
+                type = ADCurrent
                 potential = potential
                 density_log = em
                 variable = Current_em
@@ -466,7 +465,7 @@ threeTimesRelaxTime = 150E-6 #s
                 position_units = ${dom0Scale}
         [../]
         [./Current_Arp]
-                type = Current
+                type = ADCurrent
                 potential = potential
                 density_log = Arp
                 variable = Current_Arp
@@ -475,7 +474,7 @@ threeTimesRelaxTime = 150E-6 #s
                 position_units = ${dom0Scale}
         [../]
         [./EFieldAdvAux_em]
-                type = EFieldAdvAux
+                type = ADEFieldAdvAux
                 potential = potential
                 density_log = em
                 variable = EFieldAdvAux_em
@@ -483,7 +482,7 @@ threeTimesRelaxTime = 150E-6 #s
                 position_units = ${dom0Scale}
         [../]
         [./DiffusiveFlux_em]
-                type = DiffusiveFlux
+                type = ADDiffusiveFlux
                 density_log = em
                 variable = DiffusiveFlux_em
                 block = 0
@@ -543,7 +542,6 @@ threeTimesRelaxTime = 150E-6 #s
                 variable = em
                 boundary = right
                 potential = potential
-                mean_en = mean_en
                 r = 0
                 position_units = ${dom0Scale}
         [../]
@@ -588,7 +586,6 @@ threeTimesRelaxTime = 150E-6 #s
                 boundary = 'left'
                 potential = potential
                 em = em
-                ip = Arp
                 r = 0
                 position_units = ${dom0Scale}
         [../]
@@ -599,7 +596,6 @@ threeTimesRelaxTime = 150E-6 #s
                 boundary = right
                 potential = potential
                 em = em
-                ip = Arp
                 r = 0
                 position_units = ${dom0Scale}
         [../]
