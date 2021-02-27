@@ -255,28 +255,28 @@ dom1Scale=1e-4
   #  block = 0
   #[../]
   [./neg_advection]
-    type = ADEFieldAdvection
+    type = EFieldAdvection
     variable = neg
     potential = potential_dom0
     position_units = ${dom0Scale}
     block = 0
   [../]
   [./neg_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusion
     variable = neg
     position_units = ${dom0Scale}
     block = 0
   [../]
 
   [./pos_advection]
-    type = ADEFieldAdvection
+    type = EFieldAdvection
     variable = pos
     potential = potential_dom0
     position_units = ${dom0Scale}
     block = 0
   [../]
   [./pos_diffusion]
-    type = ADCoeffDiffusion
+    type = CoeffDiffusion
     variable = pos
     position_units = ${dom0Scale}
     block = 0
@@ -404,7 +404,7 @@ dom1Scale=1e-4
     boundary = 'left'
   []
   [neg_right]
-    type = ADHagelaarIonDiffusionBC
+    type = HagelaarIonDiffusionBC
     variable = neg
     r = 0
     position_units = ${dom0Scale}
@@ -418,7 +418,7 @@ dom1Scale=1e-4
     boundary = 'left'
   []
   [pos_right]
-    type = ADHagelaarIonDiffusionBC
+    type = HagelaarIonDiffusionBC
     variable = pos
     r = 0
     position_units = ${dom0Scale}
@@ -498,13 +498,13 @@ dom1Scale=1e-4
 
   #
   [./dielectric_left_side]
-    type = GenericConstantMaterial
+    type = ADGenericConstantMaterial
     prop_names = 'diffpotential_dom0'
     prop_values = '8.85e-12'
     block = 0
   [../]
   [./gas_phase]
-    type = GenericConstantMaterial
+    type = ADGenericConstantMaterial
     prop_names = 'diffpotential_dom1'
     prop_values = '8.85e-12'
     block = 1
@@ -520,7 +520,7 @@ dom1Scale=1e-4
   # effective ion temperatures with nonlinear dependence on other variables.
   ######
   [./gas_species_0]
-    type = ADHeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = neg
     heavy_species_mass = 6.64e-26
     heavy_species_charge = -1.0
@@ -528,7 +528,7 @@ dom1Scale=1e-4
     block = 0
   [../]
   [./gas_species_2]
-    type = ADHeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = pos
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0

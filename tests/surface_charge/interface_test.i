@@ -8,12 +8,6 @@
 dom0Scale=1e-4
 dom1Scale=1e-4
 
-[GlobalParams]
-  offset = 40
-  potential_units = kV
-  use_moles = true
-[]
-
 [Mesh]
   # The mesh file generates the appropriate 1D mesh, but the interfaces
   # needed for the potential and surface charge have not been defined.
@@ -216,13 +210,13 @@ dom1Scale=1e-4
   []
 
   [./dielectric_left_side]
-    type = GenericConstantMaterial
+    type = ADGenericConstantMaterial
     prop_names = 'diffpotential_dom0'
     prop_values = '8.85e-12'
     block = 0
   [../]
   [./gas_phase]
-    type = GenericConstantMaterial
+    type = ADGenericConstantMaterial
     prop_names = 'diffpotential_dom1'
     prop_values = '8.85e-11'
     block = 1
