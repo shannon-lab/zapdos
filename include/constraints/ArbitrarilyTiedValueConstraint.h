@@ -13,12 +13,6 @@
 // MOOSE includes
 #include "NodeFaceConstraint.h"
 
-// Forward Declarations
-class ArbitrarilyTiedValueConstraint;
-
-template <>
-InputParameters validParams<ArbitrarilyTiedValueConstraint>();
-
 /**
  * A ArbitrarilyTiedValueConstraint forces the value of a variable to be the same on both sides of
  * an interface.
@@ -27,6 +21,9 @@ class ArbitrarilyTiedValueConstraint : public NodeFaceConstraint
 {
 public:
   ArbitrarilyTiedValueConstraint(const InputParameters & parameters);
+
+  static InputParameters validParams();
+
   virtual ~ArbitrarilyTiedValueConstraint() {}
 
   virtual Real computeQpSecondaryValue();

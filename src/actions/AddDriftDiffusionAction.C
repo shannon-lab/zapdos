@@ -39,14 +39,13 @@ registerMooseAction("ZapdosApp", AddDriftDiffusionAction, "add_variable");
 registerMooseAction("ZapdosApp", AddDriftDiffusionAction, "add_kernel");
 registerMooseAction("ZapdosApp", AddDriftDiffusionAction, "add_aux_kernel");
 
-template <>
 InputParameters
-validParams<AddDriftDiffusionAction>()
+AddDriftDiffusionAction::validParams()
 {
   MooseEnum families(AddVariableAction::getNonlinearVariableFamilies());
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
-  InputParameters params = validParams<AddVariableAction>();
+  InputParameters params = AddVariableAction::validParams();
 
   params.addParam<std::vector<NonlinearVariableName>>(
       "charged_particle", "User given variable name for energy independent charged particle");

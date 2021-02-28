@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", DriftDiffusionFluxAux);
 
-template <>
 InputParameters
-validParams<DriftDiffusionFluxAux>()
+DriftDiffusionFluxAux::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar("potential", "The potential responsible for charge advection");
   params.addParam<bool>("positive_charge",
                         true,

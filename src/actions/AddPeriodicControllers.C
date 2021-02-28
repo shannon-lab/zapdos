@@ -39,11 +39,10 @@
 
 registerMooseAction("ZapdosApp", AddPeriodicControllers, "add_control");
 
-template <>
 InputParameters
-validParams<AddPeriodicControllers>()
+AddPeriodicControllers::validParams()
 {
-  InputParameters params = validParams<AddVariableAction>();
+  InputParameters params = AddVariableAction::validParams();
 
   params.addParam<std::vector<std::string>>(
       "Enable_at_cycle_start",

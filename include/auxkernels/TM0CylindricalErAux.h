@@ -12,15 +12,12 @@
 
 #include "AuxKernel.h"
 
-class TM0CylindricalErAux;
-
-template <>
-InputParameters validParams<TM0CylindricalErAux>();
-
 class TM0CylindricalErAux : public AuxKernel
 {
 public:
   TM0CylindricalErAux(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
 protected:
   virtual Real computeValue();

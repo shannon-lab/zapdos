@@ -12,12 +12,6 @@
 
 #include "AuxKernel.h"
 
-// Forward Declarations
-class Efield;
-
-template <>
-InputParameters validParams<Efield>();
-
 /**
  * Constant auxiliary value
  */
@@ -25,6 +19,8 @@ class Efield : public AuxKernel
 {
 public:
   Efield(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual ~Efield() {}
 

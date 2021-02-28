@@ -16,11 +16,10 @@
 #include "SquirrelApp.h"
 #include "CraneApp.h"
 
-template <>
 InputParameters
-validParams<ZapdosApp>()
+ZapdosApp::validParams()
 {
-  InputParameters params = validParams<MooseApp>();
+  InputParameters params = MooseApp::validParams();
 
   params.set<bool>("use_legacy_output_syntax") = false;
   params.set<bool>("use_legacy_uo_initialization") = false;

@@ -12,15 +12,12 @@
 
 #include "Density.h"
 
-class DensityMoles;
-
-template <>
-InputParameters validParams<DensityMoles>();
-
 class DensityMoles : public Density
 {
 public:
   DensityMoles(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual ~DensityMoles() {}
 

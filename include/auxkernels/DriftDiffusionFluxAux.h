@@ -12,15 +12,12 @@
 
 #include "AuxKernel.h"
 
-class DriftDiffusionFluxAux;
-
-template <>
-InputParameters validParams<DriftDiffusionFluxAux>();
-
 class DriftDiffusionFluxAux : public AuxKernel
 {
 public:
   DriftDiffusionFluxAux(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
 protected:
   virtual Real computeValue();

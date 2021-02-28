@@ -12,12 +12,6 @@
 
 #include "AuxKernel.h"
 
-// Forward Declarations
-class Position;
-
-template <>
-InputParameters validParams<Position>();
-
 /**
  * Function auxiliary value
  */
@@ -29,6 +23,8 @@ public:
    * constructor.
    */
   Position(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual ~Position() {}
 

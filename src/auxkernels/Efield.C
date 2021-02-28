@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", Efield);
 
-template <>
 InputParameters
-validParams<Efield>()
+Efield::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
 
   params.addRequiredCoupledVar("potential", "The potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");

@@ -12,15 +12,12 @@
 
 #include "AuxKernel.h"
 
-class ProcRateForRateCoeffThreeBody;
-
-template <>
-InputParameters validParams<ProcRateForRateCoeffThreeBody>();
-
 class ProcRateForRateCoeffThreeBody : public AuxKernel
 {
 public:
   ProcRateForRateCoeffThreeBody(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual ~ProcRateForRateCoeffThreeBody() {}
   virtual Real computeValue();

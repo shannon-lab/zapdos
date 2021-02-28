@@ -13,12 +13,6 @@
 // MOOSE includes
 #include "SideIntegralVariablePostprocessor.h"
 
-// Forward Declarations
-class SideTotFluxIntegral;
-
-template <>
-InputParameters validParams<SideTotFluxIntegral>();
-
 /**
  * This postprocessor computes a side integral of the mass flux.
  */
@@ -26,6 +20,8 @@ class SideTotFluxIntegral : public SideIntegralVariablePostprocessor
 {
 public:
   SideTotFluxIntegral(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
 protected:
   virtual Real computeQpIntegral();

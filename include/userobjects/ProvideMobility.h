@@ -12,16 +12,12 @@
 
 #include "GeneralUserObject.h"
 
-// Forward Declarations
-class ProvideMobility;
-
-template <>
-InputParameters validParams<ProvideMobility>();
-
 class ProvideMobility : public GeneralUserObject
 {
 public:
   ProvideMobility(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   Real electrode_area() const;
   Real ballast_resist() const;

@@ -15,11 +15,10 @@
 
 registerMooseObject("ZapdosApp", SideCurrent);
 
-template <>
 InputParameters
-validParams<SideCurrent>()
+SideCurrent::validParams()
 {
-  InputParameters params = validParams<SideIntegralVariablePostprocessor>();
+  InputParameters params = SideIntegralVariablePostprocessor::validParams();
   // params.addRequiredParam<std::string>("diffusivity", "The name of the diffusivity material
   // property that will be used in the flux computation.");
   params.addRequiredParam<std::string>(

@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", AbsValueAux);
 
-template <>
 InputParameters
-validParams<AbsValueAux>()
+AbsValueAux::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar("u", "Variable we want absolute value of.");
   params.addClassDescription("Returns the absolute value of variable");
   return params;

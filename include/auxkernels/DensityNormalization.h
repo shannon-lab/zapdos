@@ -12,18 +12,12 @@
 
 #include "AuxKernel.h"
 
-// Forward Declarations
-class DensityNormalization;
-
-template <>
-InputParameters validParams<DensityNormalization>();
-
 class DensityNormalization : public AuxKernel
 {
 public:
-  static InputParameters validParams();
-
   DensityNormalization(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
 protected:
   virtual Real computeValue() override;

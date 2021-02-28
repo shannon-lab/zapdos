@@ -12,15 +12,13 @@
 
 #include "ElementIntegralIndicator.h"
 
-class AnalyticalDiffIndicator;
-
-template <>
-InputParameters validParams<AnalyticalDiffIndicator>();
-
 class AnalyticalDiffIndicator : public ElementIntegralIndicator
 {
 public:
   AnalyticalDiffIndicator(const InputParameters & parameters);
+
+  static InputParameters validParams();
+
   virtual ~AnalyticalDiffIndicator(){};
 
 protected:

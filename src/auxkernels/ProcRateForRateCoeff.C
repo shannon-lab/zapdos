@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", ProcRateForRateCoeff);
 
-template <>
 InputParameters
-validParams<ProcRateForRateCoeff>()
+ProcRateForRateCoeff::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
 
   params.addCoupledVar("v", "The first variable that is reacting to create u.");
   params.addCoupledVar("w", "The second variable that is reacting to create u.");

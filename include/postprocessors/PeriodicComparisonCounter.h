@@ -12,17 +12,12 @@
 
 #include "GeneralPostprocessor.h"
 
-class PeriodicComparisonCounter;
-
-template <>
-InputParameters validParams<PeriodicComparisonCounter>();
-
 class PeriodicComparisonCounter : public GeneralPostprocessor
 {
 public:
-  static InputParameters validParams();
-
   PeriodicComparisonCounter(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual void initialize() override;
   virtual void execute() override;

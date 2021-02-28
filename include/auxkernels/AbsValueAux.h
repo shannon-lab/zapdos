@@ -12,15 +12,12 @@
 
 #include "AuxKernel.h"
 
-class AbsValueAux;
-
-template <>
-InputParameters validParams<AbsValueAux>();
-
 class AbsValueAux : public AuxKernel
 {
 public:
   AbsValueAux(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
 protected:
   virtual Real computeValue();

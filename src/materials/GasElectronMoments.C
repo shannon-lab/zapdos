@@ -13,11 +13,10 @@
 
 registerMooseObject("ZapdosApp", GasElectronMoments);
 
-template <>
 InputParameters
-validParams<GasElectronMoments>()
+GasElectronMoments::validParams()
 {
-  InputParameters params = validParams<Material>();
+  InputParameters params = Material::validParams();
 
   params.addParam<Real>(
       "user_relative_permittivity", 1.0, "Multiplies the permittivity of free space.");

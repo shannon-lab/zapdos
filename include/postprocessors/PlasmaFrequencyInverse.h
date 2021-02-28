@@ -12,13 +12,6 @@
 
 #include "ElementVariablePostprocessor.h"
 
-// Forward Declarations
-class PlasmaFrequencyInverse;
-
-// Input parameters
-template <>
-InputParameters validParams<PlasmaFrequencyInverse>();
-
 /// A postprocessor for collecting the nodal min or max value
 class PlasmaFrequencyInverse : public ElementVariablePostprocessor
 {
@@ -28,6 +21,8 @@ public:
    * @param parameters The input parameters
    */
   PlasmaFrequencyInverse(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual void initialize() override;
   virtual Real getValue() override;

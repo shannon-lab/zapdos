@@ -13,15 +13,12 @@
 #include "AddVariableAction.h"
 #include "Action.h"
 
-class AddDriftDiffusionAction;
-
-template <>
-InputParameters validParams<AddDriftDiffusionAction>();
-
 class AddDriftDiffusionAction : public Action
 {
 public:
   AddDriftDiffusionAction(InputParameters params);
+
+  static InputParameters validParams();
 
   virtual void act();
 

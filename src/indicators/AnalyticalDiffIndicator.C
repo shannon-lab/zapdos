@@ -13,11 +13,10 @@
 
 registerMooseObject("ZapdosApp", AnalyticalDiffIndicator);
 
-template <>
 InputParameters
-validParams<AnalyticalDiffIndicator>()
+AnalyticalDiffIndicator::validParams()
 {
-  InputParameters params = validParams<ElementIntegralIndicator>();
+  InputParameters params = ElementIntegralIndicator::validParams();
   params.addRequiredParam<FunctionName>("function", "The analytic solution to compare against");
   params.addClassDescription("Returns the difference between the function of the analytic solution "
                              "vs the computed solution");

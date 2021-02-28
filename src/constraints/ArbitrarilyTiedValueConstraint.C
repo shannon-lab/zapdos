@@ -19,11 +19,10 @@
 
 registerMooseObject("ZapdosApp", ArbitrarilyTiedValueConstraint);
 
-template <>
 InputParameters
-validParams<ArbitrarilyTiedValueConstraint>()
+ArbitrarilyTiedValueConstraint::validParams()
 {
-  InputParameters params = validParams<NodeFaceConstraint>();
+  InputParameters params = NodeFaceConstraint::validParams();
   params.addParam<Real>("scaling", 1, "scaling factor to be applied to constraint equations");
   params.addRequiredParam<Real>("H", "The value of u_secondary/u_primary.");
   params.set<bool>("use_displaced_mesh") = true;

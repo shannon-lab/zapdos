@@ -12,15 +12,12 @@
 
 #include "AuxKernel.h"
 
-class Sigma;
-
-template <>
-InputParameters validParams<Sigma>();
-
 class Sigma : public AuxKernel
 {
 public:
   Sigma(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual ~Sigma() {}
   virtual Real computeValue() override;

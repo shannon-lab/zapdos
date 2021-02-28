@@ -12,15 +12,13 @@
 
 #include "MooseApp.h"
 
-class ZapdosApp;
-
-template <>
-InputParameters validParams<ZapdosApp>();
-
 class ZapdosApp : public MooseApp
 {
 public:
   ZapdosApp(InputParameters parameters);
+
+  static InputParameters validParams();
+
   virtual ~ZapdosApp();
 
   static void registerApps();

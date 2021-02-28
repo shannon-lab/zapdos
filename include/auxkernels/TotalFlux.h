@@ -16,9 +16,9 @@ template <bool is_ad>
 class TotalFluxTempl : public AuxKernel
 {
 public:
-  static InputParameters validParams();
-
   TotalFluxTempl(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual Real computeValue() override;
 

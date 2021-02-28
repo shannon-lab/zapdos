@@ -12,21 +12,15 @@
 
 #include "ElementIntegralVariablePostprocessor.h"
 
-// Forward Declarations
-class RelativeElementL2Difference;
-
-template <>
-InputParameters validParams<RelativeElementL2Difference>();
-
 /**
  * Computes the L2-Norm difference between two solution fields.
  */
 class RelativeElementL2Difference : public ElementIntegralVariablePostprocessor
 {
 public:
-  static InputParameters validParams();
-
   RelativeElementL2Difference(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual Real getValue() override;
 

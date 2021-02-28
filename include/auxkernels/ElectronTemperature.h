@@ -12,15 +12,12 @@
 
 #include "AuxKernel.h"
 
-class ElectronTemperature;
-
-template <>
-InputParameters validParams<ElectronTemperature>();
-
 class ElectronTemperature : public AuxKernel
 {
 public:
   ElectronTemperature(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual ~ElectronTemperature() {}
 
