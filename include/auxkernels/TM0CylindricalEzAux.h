@@ -20,7 +20,7 @@ public:
   static InputParameters validParams();
 
 protected:
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
 private:
   const VariableGradient & _grad_Hphi;

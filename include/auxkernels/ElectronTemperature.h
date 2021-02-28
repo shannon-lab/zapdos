@@ -22,7 +22,7 @@ public:
   virtual ~ElectronTemperature() {}
 
 protected:
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
   const VariableValue & _electron_density;
   const VariableValue & _mean_en;

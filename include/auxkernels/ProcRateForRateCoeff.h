@@ -20,7 +20,7 @@ public:
   static InputParameters validParams();
 
   virtual ~ProcRateForRateCoeff() {}
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
 protected:
   const VariableValue & _v;

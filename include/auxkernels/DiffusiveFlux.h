@@ -21,7 +21,7 @@ public:
   static InputParameters validParams();
 
 protected:
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
   Real _r_units;
 

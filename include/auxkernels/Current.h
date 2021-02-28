@@ -21,7 +21,7 @@ public:
   static InputParameters validParams();
 
   virtual ~CurrentTempl() {}
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
 protected:
   Real _r_units;
