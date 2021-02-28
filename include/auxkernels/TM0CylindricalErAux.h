@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef TM0CYLINDRICALERAUX_H
-#define TM0CYLINDRICALERAUX_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -33,5 +32,3 @@ private:
   Real _eps_r;
   Real _eps0;
 };
-
-#endif // TM0CYLINDRICALERAUX_H

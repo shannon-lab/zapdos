@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef ELECTRONTEMPERATURE_H
-#define ELECTRONTEMPERATURE_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -31,5 +30,3 @@ protected:
   const VariableValue & _electron_density;
   const VariableValue & _mean_en;
 };
-
-#endif // ELECTRONTEMPERATURE_H

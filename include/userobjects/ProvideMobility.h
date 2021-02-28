@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef PROVIDEMOBILITY_H
-#define PROVIDEMOBILITY_H
+#pragma once
 
 #include "GeneralUserObject.h"
 
@@ -39,5 +38,3 @@ protected:
   Real _ballast_resist;
   Real _e;
 };
-
-#endif

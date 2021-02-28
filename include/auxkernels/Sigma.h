@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef SIGMA_H
-#define SIGMA_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -31,5 +30,3 @@ protected:
   const VariableValue & _n;
   const VariableGradient & _grad_potential;
 };
-
-#endif // SIGMA_H

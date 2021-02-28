@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef BLOCKAVERAGEVALUE_H
-#define BLOCKAVERAGEVALUE_H
+#pragma once
 
 #include "ElementIntegralVariablePostprocessor.h"
 
@@ -73,5 +72,3 @@ protected:
   // This map will hold our averages for each block
   std::map<SubdomainID, Real> _average_values;
 };
-
-#endif

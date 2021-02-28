@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef PlasmaFrequencyInverse_H
-#define PlasmaFrequencyInverse_H
+#pragma once
 
 #include "ElementVariablePostprocessor.h"
 
@@ -43,5 +42,3 @@ protected:
   Real _em_density;
   bool _use_moles;
 };
-
-#endif

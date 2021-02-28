@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef POWERDEP_H
-#define POWERDEP_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -42,4 +41,3 @@ protected:
 
 typedef PowerDepTempl<false> PowerDep;
 typedef PowerDepTempl<true> ADPowerDep;
-#endif // POWERDEP_H

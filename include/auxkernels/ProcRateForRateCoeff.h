@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef PROCRATEFORRATECOEFF_H
-#define PROCRATEFORRATECOEFF_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -31,5 +30,3 @@ protected:
   const VariableValue & _w;
   const MaterialProperty<Real> & _reaction_coeff;
 };
-
-#endif // ProcRateForRateCoeff_H

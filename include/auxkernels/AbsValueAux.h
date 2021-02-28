@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef ABSVALUEAUX_H
-#define ABSVALUEAUX_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -29,5 +28,3 @@ protected:
 private:
   const VariableValue & _u;
 };
-
-#endif // ABSVALUEAUX_H

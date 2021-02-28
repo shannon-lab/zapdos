@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef CURRENT_H
-#define CURRENT_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -39,5 +38,3 @@ protected:
 
 typedef CurrentTempl<false> Current;
 typedef CurrentTempl<true> ADCurrent;
-
-#endif // CURRENT_H

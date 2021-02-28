@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef EFIELD_H
-#define EFIELD_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -45,5 +44,3 @@ protected:
   const VariableGradient & _grad_potential;
   Real _voltage_scaling;
 };
-
-#endif // EFIELD_H

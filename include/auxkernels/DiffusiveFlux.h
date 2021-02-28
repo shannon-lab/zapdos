@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef DIFFUSIVEFLUX_H
-#define DIFFUSIVEFLUX_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -39,4 +38,3 @@ protected:
 
 typedef DiffusiveFluxTempl<false> DiffusiveFlux;
 typedef DiffusiveFluxTempl<true> ADDiffusiveFlux;
-#endif // DIFFUSIVEFLUX_H

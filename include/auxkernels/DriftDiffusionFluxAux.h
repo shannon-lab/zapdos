@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef DRIFTDIFFUSIONFLUXAUX_H_
-#define DRIFTDIFFUSIONFLUXAUX_H_
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -33,5 +32,3 @@ private:
   const VariableGradient & _grad_u;
   const int _component;
 };
-
-#endif // DRIFTDIFFUSIONFLUXAUX_H

@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef DENSITYMOLES_H
-#define DENSITYMOLES_H
+#pragma once
 
 #include "Density.h"
 
@@ -31,5 +30,3 @@ protected:
   bool _convert_moles;
   const MaterialProperty<Real> & _N_A;
 };
-
-#endif // DENSITYMOLES_H

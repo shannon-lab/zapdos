@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef SIDETOTFLUXINTEGRAL_H
-#define SIDETOTFLUXINTEGRAL_H
+#pragma once
 
 // MOOSE includes
 #include "SideIntegralVariablePostprocessor.h"
@@ -49,5 +48,3 @@ protected:
 
   const VariableGradient & _grad_potential;
 };
-
-#endif // SIDETOTFLUXINTEGRAL_H
