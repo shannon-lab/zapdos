@@ -108,7 +108,7 @@ dom1Scale=1.0
 [Outputs]
   # perf_graph = true
   #print_densityear_residuals = false
-  [out_01_greg_action_output_heavy_species_test03]
+  [out_01_greg_action_output_heavy]
     type = Exodus
   [../]
 []
@@ -576,35 +576,53 @@ dom1Scale=1.0
 []
 
 [HeavySpeciesTransport]
+
   [./H20_mat]
     name = H2O
     mass = 2.9907e-26
     charge = 0
     diffusivity = 2.3e-5
+    position_units = ${dom0Scale}
+    potential = potential
+    potential_units = kV
   [../]
   [./Arp]
     name = Arp
     mass = 6.64e-26
     charge = 1.0
     block = 0
+    position_units = ${dom0Scale}
+    potential = potential
+    potential_units = kV
+    aux_var = false
   [../]
   [./Ar_species]
     name = Ar
     mass = 6.64e-26
     charge = 0.0
     block = 0
+    position_units = ${dom0Scale}
+    potential = potential
+    potential_units = kV
   [../]
   [./gas_species_1]
     name = Ar2p
     mass = 13.28e-26
     charge = 1.0
     block = 0
+    position_units = ${dom0Scale}
+    potential = potential
+    potential_units = kV
   [../]
   [./gas_species_2]
     name = Ar*
     mass = 6.64e-26
     charge = 0
     block = 0
+    position_units = ${dom0Scale}
+    potential = potential
+    potential_units = kV
+    aux_var = false
   [../]
   [./OH_mat]
     name = OH
@@ -612,6 +630,9 @@ dom1Scale=1.0
     charge = 0
     diffusivity = 4e-5
     block = 0
+    position_units = ${dom0Scale}
+    potential = potential
+    potential_units = kV
   [../]
 []
 

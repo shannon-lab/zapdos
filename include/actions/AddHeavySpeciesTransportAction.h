@@ -26,6 +26,12 @@ public:
   virtual void act(); //does this need override?
 
 protected:
-  virtual void addADHeavySpeciesMaterial();
+  virtual void addADHeavySpeciesMaterial(const std::string & name,
+                                         const Real & mass,
+                                         const Real & charge);
+  virtual void addADHeavySpeciesChargedKernels(const std::string & name,
+                                               const std::string & potential_name);
+  virtual void addADHeavySpeciesNeutralKernels(const std::string & name);
+
 
 };
