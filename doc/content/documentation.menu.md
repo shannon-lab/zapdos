@@ -2,7 +2,6 @@
 !col! small=12 medium=6 large=4
 ## Code Documentation
 
-- [Source Pages](source/index.md)
 - [Syntax](syntax/index.md)
 !col-end!
 
