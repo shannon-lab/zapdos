@@ -8,7 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#include "ZapdosApp.h"
+#include "ZapdosTestApp.h"
 #include "MooseInit.h"
 #include "Moose.h"
 #include "MooseApp.h"
@@ -24,10 +24,10 @@ int main(int argc, char *argv[])
   MooseInit init(argc, argv);
 
   // Register this application's MooseApp and any it depends on
-  ZapdosApp::registerApps();
+  ZapdosTestApp::registerApps();
 
   // This creates dynamic memory that we're responsible for deleting
-  std::shared_ptr<MooseApp> app = AppFactory::createAppShared("ZapdosApp", argc, argv);
+  std::shared_ptr<MooseApp> app = AppFactory::createAppShared("ZapdosTestApp", argc, argv);
 
   // Execute the application
   app->run();
