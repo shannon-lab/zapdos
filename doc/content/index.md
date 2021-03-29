@@ -26,7 +26,7 @@ spatial domains.
 ### Getting Started class=center style=font-weight:200;
 
 Zapdos works on Mac OS, Linux, and Windows and is easy to get started with. Begin by exploring
-[our getting started page](getting_started/index.md).
+[our installation page](getting_started/installation.md).
 !col-end!
 !row-end!
 
