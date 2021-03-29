@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/Sigma
+!syntax description /AuxKernels/Sigma
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the Sigma object.
 
-!syntax parameters /Bounds/Sigma
+!syntax parameters /AuxKernels/Sigma
 
-!syntax inputs /Bounds/Sigma
+!syntax inputs /AuxKernels/Sigma
 
-!syntax children /Bounds/Sigma
+!syntax children /AuxKernels/Sigma

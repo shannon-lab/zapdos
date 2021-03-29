@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/DriftDiffusionFluxAux
+!syntax description /AuxKernels/DriftDiffusionFluxAux
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the DriftDiffusionFluxAux object.
 
-!syntax parameters /Bounds/DriftDiffusionFluxAux
+!syntax parameters /AuxKernels/DriftDiffusionFluxAux
 
-!syntax inputs /Bounds/DriftDiffusionFluxAux
+!syntax inputs /AuxKernels/DriftDiffusionFluxAux
 
-!syntax children /Bounds/DriftDiffusionFluxAux
+!syntax children /AuxKernels/DriftDiffusionFluxAux

@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/PowerDep
+!syntax description /AuxKernels/PowerDep
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the PowerDep object.
 
-!syntax parameters /Bounds/PowerDep
+!syntax parameters /AuxKernels/PowerDep
 
-!syntax inputs /Bounds/PowerDep
+!syntax inputs /AuxKernels/PowerDep
 
-!syntax children /Bounds/PowerDep
+!syntax children /AuxKernels/PowerDep

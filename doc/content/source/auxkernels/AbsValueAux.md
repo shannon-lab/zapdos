@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/AbsValueAux
+!syntax description /AuxKernels/AbsValueAux
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the AbsValueAux object.
 
-!syntax parameters /Bounds/AbsValueAux
+!syntax parameters /AuxKernels/AbsValueAux
 
-!syntax inputs /Bounds/AbsValueAux
+!syntax inputs /AuxKernels/AbsValueAux
 
-!syntax children /Bounds/AbsValueAux
+!syntax children /AuxKernels/AbsValueAux

@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/Efield
+!syntax description /AuxKernels/Efield
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the Efield object.
 
-!syntax parameters /Bounds/Efield
+!syntax parameters /AuxKernels/Efield
 
-!syntax inputs /Bounds/Efield
+!syntax inputs /AuxKernels/Efield
 
-!syntax children /Bounds/Efield
+!syntax children /AuxKernels/Efield

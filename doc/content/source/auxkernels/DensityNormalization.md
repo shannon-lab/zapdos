@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/DensityNormalization
+!syntax description /AuxKernels/DensityNormalization
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the DensityNormalization object.
 
-!syntax parameters /Bounds/DensityNormalization
+!syntax parameters /AuxKernels/DensityNormalization
 
-!syntax inputs /Bounds/DensityNormalization
+!syntax inputs /AuxKernels/DensityNormalization
 
-!syntax children /Bounds/DensityNormalization
+!syntax children /AuxKernels/DensityNormalization

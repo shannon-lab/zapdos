@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/DiffusiveFlux
+!syntax description /AuxKernels/DiffusiveFlux
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the DiffusiveFlux object.
 
-!syntax parameters /Bounds/DiffusiveFlux
+!syntax parameters /AuxKernels/DiffusiveFlux
 
-!syntax inputs /Bounds/DiffusiveFlux
+!syntax inputs /AuxKernels/DiffusiveFlux
 
-!syntax children /Bounds/DiffusiveFlux
+!syntax children /AuxKernels/DiffusiveFlux

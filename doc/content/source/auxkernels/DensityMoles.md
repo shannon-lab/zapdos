@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/DensityMoles
+!syntax description /AuxKernels/DensityMoles
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the DensityMoles object.
 
-!syntax parameters /Bounds/DensityMoles
+!syntax parameters /AuxKernels/DensityMoles
 
-!syntax inputs /Bounds/DensityMoles
+!syntax inputs /AuxKernels/DensityMoles
 
-!syntax children /Bounds/DensityMoles
+!syntax children /AuxKernels/DensityMoles

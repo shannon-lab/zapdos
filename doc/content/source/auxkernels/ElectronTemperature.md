@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/ElectronTemperature
+!syntax description /AuxKernels/ElectronTemperature
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the ElectronTemperature object.
 
-!syntax parameters /Bounds/ElectronTemperature
+!syntax parameters /AuxKernels/ElectronTemperature
 
-!syntax inputs /Bounds/ElectronTemperature
+!syntax inputs /AuxKernels/ElectronTemperature
 
-!syntax children /Bounds/ElectronTemperature
+!syntax children /AuxKernels/ElectronTemperature

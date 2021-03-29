@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/EFieldAdvAux
+!syntax description /AuxKernels/EFieldAdvAux
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the EFieldAdvAux object.
 
-!syntax parameters /Bounds/EFieldAdvAux
+!syntax parameters /AuxKernels/EFieldAdvAux
 
-!syntax inputs /Bounds/EFieldAdvAux
+!syntax inputs /AuxKernels/EFieldAdvAux
 
-!syntax children /Bounds/EFieldAdvAux
+!syntax children /AuxKernels/EFieldAdvAux

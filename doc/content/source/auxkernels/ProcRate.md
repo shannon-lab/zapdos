@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/ProcRate
+!syntax description /AuxKernels/ProcRate
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the ProcRate object.
 
-!syntax parameters /Bounds/ProcRate
+!syntax parameters /AuxKernels/ProcRate
 
-!syntax inputs /Bounds/ProcRate
+!syntax inputs /AuxKernels/ProcRate
 
-!syntax children /Bounds/ProcRate
+!syntax children /AuxKernels/ProcRate

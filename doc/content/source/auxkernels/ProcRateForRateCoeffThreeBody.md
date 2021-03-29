@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/ProcRateForRateCoeffThreeBody
+!syntax description /AuxKernels/ProcRateForRateCoeffThreeBody
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the ProcRateForRateCoeffThreeBody object.
 
-!syntax parameters /Bounds/ProcRateForRateCoeffThreeBody
+!syntax parameters /AuxKernels/ProcRateForRateCoeffThreeBody
 
-!syntax inputs /Bounds/ProcRateForRateCoeffThreeBody
+!syntax inputs /AuxKernels/ProcRateForRateCoeffThreeBody
 
-!syntax children /Bounds/ProcRateForRateCoeffThreeBody
+!syntax children /AuxKernels/ProcRateForRateCoeffThreeBody

@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/TotalFlux
+!syntax description /AuxKernels/TotalFlux
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the TotalFlux object.
 
-!syntax parameters /Bounds/TotalFlux
+!syntax parameters /AuxKernels/TotalFlux
 
-!syntax inputs /Bounds/TotalFlux
+!syntax inputs /AuxKernels/TotalFlux
 
-!syntax children /Bounds/TotalFlux
+!syntax children /AuxKernels/TotalFlux

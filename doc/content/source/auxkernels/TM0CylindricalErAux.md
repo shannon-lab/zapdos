@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/TM0CylindricalErAux
+!syntax description /AuxKernels/TM0CylindricalErAux
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the TM0CylindricalErAux object.
 
-!syntax parameters /Bounds/TM0CylindricalErAux
+!syntax parameters /AuxKernels/TM0CylindricalErAux
 
-!syntax inputs /Bounds/TM0CylindricalErAux
+!syntax inputs /AuxKernels/TM0CylindricalErAux
 
-!syntax children /Bounds/TM0CylindricalErAux
+!syntax children /AuxKernels/TM0CylindricalErAux

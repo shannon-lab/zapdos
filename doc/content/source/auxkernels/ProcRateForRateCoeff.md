@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Bounds/ProcRateForRateCoeff
+!syntax description /AuxKernels/ProcRateForRateCoeff
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the ProcRateForRateCoeff object.
 
-!syntax parameters /Bounds/ProcRateForRateCoeff
+!syntax parameters /AuxKernels/ProcRateForRateCoeff
 
-!syntax inputs /Bounds/ProcRateForRateCoeff
+!syntax inputs /AuxKernels/ProcRateForRateCoeff
 
-!syntax children /Bounds/ProcRateForRateCoeff
+!syntax children /AuxKernels/ProcRateForRateCoeff
