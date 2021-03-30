@@ -1,0 +1,1 @@
+# Zapdos Code Standards
