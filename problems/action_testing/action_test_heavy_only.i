@@ -108,10 +108,9 @@ dom1Scale=1.0
 [Outputs]
   # perf_graph = true
   #print_densityear_residuals = false
-  [out_01_greg_ad_time_deriv_and_offset02]
+  [out_01_greg_solely_drift_and_e_action]
     type = Exodus
-    show_material_properties = conserved_density
-    output_material_properties = true
+
   [../]
 []
 
@@ -132,23 +131,23 @@ dom1Scale=1.0
   [../]
 []
 
-#[DriftDiffusionActionAD]
-#  [./Plasma]
-#    #electrons = em
-#    #charged_particle = 'Arp Ar2p'
-#    #Neutrals = 'Ar* H2O OH'
-#    charged_particle = 'Arp'
-#    Neutrals = 'Ar*'
-#    #mean_energy = mean_en
-#    potential = potential
-#    Is_potential_unique = false
-#    using_offset = true
-#    offset = 30
-#    use_ad = true
-#    position_units = ${dom0Scale}
-#    block = 0
-#  [../]
-#[]
+[DriftDiffusionActionAD]
+  [./Plasma]
+    #electrons = em
+    #charged_particle = 'Arp Ar2p'
+    #Neutrals = 'Ar* H2O OH'
+    charged_particle = 'Arp'
+    Neutrals = 'Ar*'
+    #mean_energy = mean_en
+    potential = potential
+    Is_potential_unique = false
+    using_offset = true
+    offset = 30
+    use_ad = true
+    position_units = ${dom0Scale}
+    block = 0
+  [../]
+[]
 
 [Variables]
   [./potential]
@@ -215,38 +214,38 @@ dom1Scale=1.0
 
   # Electron kernels
 
-  ##[./em_time_deriv]
+  #[./em_time_deriv]
   #  type = ADTimeDerivativeLog
   #  variable = em
   #  block = 0
   #[../]
-  ##[./em_advection]
+  #[./em_advection]
   #  type = ADEFieldAdvection
   #  variable = em
   #  potential = potential
   #  block = 0
   #  position_units = ${dom0Scale}
   #[../]
-  ##[./em_diffusion]
+  #[./em_diffusion]
   #  type = ADCoeffDiffusion
   #  variable = em
   #  mean_en = mean_en
   #  block = 0
   #  position_units = ${dom0Scale}
   #[../]
-  ##[./em_log_stabilization]
+  #[./em_log_stabilization]
   #  type = LogStabilizationMoles
   #  variable = em
   #  block = 0
   #[../]
 
   # Electron energy kernels
-  ##[./mean_en_time_deriv]
+  #[./mean_en_time_deriv]
   #  type = ADTimeDerivativeLog
   #  variable = mean_en
   #  block = 0
   #[../]
-  ##[./mean_en_advection]
+  #[./mean_en_advection]
   #  type = ADEFieldAdvection
   #  variable = mean_en
   #  potential = potential
@@ -254,13 +253,13 @@ dom1Scale=1.0
   #  block = 0
   #  position_units = ${dom0Scale}
   #[../]
-  ##[./mean_en_diffusion]
+  #[./mean_en_diffusion]
   #  type = ADCoeffDiffusion
   #  variable = mean_en
   #  block = 0
   #  position_units = ${dom0Scale}
   #[../]
-  ##[./mean_en_joule_heating]
+  #[./mean_en_joule_heating]
   #  type = ADJouleHeating
   #  variable = mean_en
   #  potential = potential
@@ -268,7 +267,7 @@ dom1Scale=1.0
   #  block = 0
   #  position_units = ${dom0Scale}
   #[../]
-  ##[./mean_en_log_stabilization]
+  #[./mean_en_log_stabilization]
   #  type = LogStabilizationMoles
   #  variable = mean_en
   #  block = 0
@@ -506,14 +505,14 @@ dom1Scale=1.0
     boundary = right
     value = 0
   [../]
-  ##[./em_bc]
+  #[./em_bc]
   #  type = ADHagelaarElectronBC
   #  variable = em
   #  boundary = 'left right'
   #  potential = potential
-    #ip = Arp
+  #  #ip = Arp
   #  mean_en = mean_en
-    #r = 0.99
+  #  #r = 0.99
   #  r = 0.0
   #  position_units = ${dom0Scale}
   #[../]
@@ -532,13 +531,13 @@ dom1Scale=1.0
     r = 0
     position_units = ${dom0Scale}
   [../]
-  ##[./mean_en_bc]
+  #[./mean_en_bc]
   #  type = ADHagelaarEnergyBC
   #  variable = mean_en
   #  boundary = 'left right'
   #  potential = potential
   #  em = em
-    #r = 0.99
+  #  #r = 0.99
   #  r = 0.0
   #  position_units = ${dom0Scale}
   #[../]
@@ -589,29 +588,27 @@ dom1Scale=1.0
   [../]
 []
 
-[HeavySpeciesTransport]
+#[HeavySpeciesTransport]
 
-  [./H20_mat]
-    name = H2O
-    mass = 2.9907e-26
-    charge = 0
-    diffusivity = 2.3e-5
-    position_units = ${dom0Scale}
-    potential = potential
-    potential_units = kV
-  [../]
-  [./Arp]
-    name = Arp
-    mass = 6.64e-26
-    charge = 1.0
-    block = 0
-    position_units = ${dom0Scale}
-    potential = potential
-    potential_units = kV
-    aux_var = false
-    using_offset = true
-    offset = 30
-  [../]
+#  [./H20_mat]
+#    name = H2O
+#    mass = 2.9907e-26
+#    charge = 0
+#    diffusivity = 2.3e-5
+#    position_units = ${dom0Scale}
+#    potential = potential
+#    potential_units = kV
+#  [../]
+#  [./Arp]
+#    name = Arp
+#    mass = 6.64e-26
+#    charge = 1.0
+#  potential = potential
+#    potential_units = kV
+#    aux_var = false
+#    using_offset = true
+#    offset = 30
+#  [../]
   #[./Ar_species]
   #  name = Ar
   #  mass = 6.64e-26
@@ -631,38 +628,38 @@ dom1Scale=1.0
     #tried without any kernels, result vary slightly now
     #how to track conserved_density
   #[../]
-  [./gas_species_1]
-    name = Ar2p
-    mass = 13.28e-26
-    charge = 1.0
-    block = 0
-    position_units = ${dom0Scale}
-    potential = potential
-    potential_units = kV
-  [../]
-  [./gas_species_2]
-    name = Ar*
-    mass = 6.64e-26
-    charge = 0
-    block = 0
-    position_units = ${dom0Scale}
-    potential = potential
-    potential_units = kV
-    aux_var = false
-    using_offset = true
-    offset = 30
-  [../]
-  [./OH_mat]
-    name = OH
-    mass = 2.82420e-26
-    charge = 0
-    diffusivity = 4e-5
-    block = 0
-    position_units = ${dom0Scale}
-    potential = potential
-    potential_units = kV
-  [../]
-[]
+#  [./gas_species_1]
+#    name = Ar2p
+#    mass = 13.28e-26
+#    charge = 1.0
+#    block = 0
+#    position_units = ${dom0Scale}
+#    potential = potential
+#    potential_units = kV
+#  [../]
+#  [./gas_species_2]
+#    name = Ar*
+#    mass = 6.64e-26
+#    charge = 0
+#    block = 0
+#    position_units = ${dom0Scale}
+#    potential = potential
+#    potential_units = kV
+#    aux_var = false
+#    using_offset = true
+#    offset = 30
+#  [../]
+#  [./OH_mat]
+#    name = OH
+#    mass = 2.82420e-26
+#    charge = 0
+#    diffusivity = 4e-5
+#    block = 0
+#    position_units = ${dom0Scale}
+#    potential = potential
+#    potential_units = kV
+#  [../]
+#[]
 
 
 
@@ -697,21 +694,21 @@ dom1Scale=1.0
    block = 0
  []
 
- #[H2O_mat]
-  # type = ADHeavySpeciesMaterial
-   #heavy_species_name = H2O
-   #heavy_species_mass = 2.9907e-26
-   #heavy_species_charge = 0
-   #diffusivity = 2.3e-5
- #[]
+ [H2O_mat]
+   type = ADHeavySpeciesMaterial
+   heavy_species_name = H2O
+   heavy_species_mass = 2.9907e-26
+   heavy_species_charge = 0
+   diffusivity = 2.3e-5
+ []
 
-  #[./gas_species_0]
-  #  type = ADHeavySpeciesMaterial
-  #  heavy_species_name = Arp
-  #  heavy_species_mass = 6.64e-26
-  #  heavy_species_charge = 1.0
-  #  block = 0
-  #[../]
+  [./gas_species_0]
+    type = ADHeavySpeciesMaterial
+    heavy_species_name = Arp
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    block = 0
+  [../]
   [./Ar_species]
     type = ADHeavySpeciesMaterial
     heavy_species_name = Ar
@@ -719,29 +716,29 @@ dom1Scale=1.0
     heavy_species_charge = 0.0
     block = 0
   [../]
-  #[./gas_species_1]
-  #  type = ADHeavySpeciesMaterial
-  #  heavy_species_name = Ar2p
-  #  heavy_species_mass = 13.28e-26
-  #  heavy_species_charge = 1.0
-  #  block = 0
-  #[../]
-  #[./gas_species_2]
-  #  type = ADHeavySpeciesMaterial
-  #  heavy_species_name = Ar*
-  #  heavy_species_mass = 6.64e-26
-  #  heavy_species_charge = 0
-  #  block = 0
-  #[../]
+  [./gas_species_1]
+    type = ADHeavySpeciesMaterial
+    heavy_species_name = Ar2p
+    heavy_species_mass = 13.28e-26
+    heavy_species_charge = 1.0
+    block = 0
+  [../]
+  [./gas_species_2]
+    type = ADHeavySpeciesMaterial
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0
+    block = 0
+  [../]
 
-  #[OH_mat]
-  #  type = ADHeavySpeciesMaterial
-  #  heavy_species_name = OH
-  #  heavy_species_mass = 2.82420e-26
-  #  heavy_species_charge = 0
-  #  diffusivity = 4e-5
-  #  block = 0
-  #[]
+  [OH_mat]
+    type = ADHeavySpeciesMaterial
+    heavy_species_name = OH
+    heavy_species_mass = 2.82420e-26
+    heavy_species_charge = 0
+    diffusivity = 4e-5
+    block = 0
+  []
 []
 
 [Reactions]

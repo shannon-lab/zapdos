@@ -32,6 +32,7 @@ registerMooseAction("ZapdosApp", AddHeavySpeciesTransportAction, "add_kernel");
 registerMooseAction("ZapdosApp", AddHeavySpeciesTransportAction, "add_aux_kernel");
 registerMooseAction("ZapdosApp", AddHeavySpeciesTransportAction, "add_material");
 registerMooseAction("ZapdosApp", AddHeavySpeciesTransportAction, "add_variable");
+registerMooseAction("ZapdosApp", AddHeavySpeciesTransportAction, "add_nodal_kernel");
 
 template <>
 InputParameters
@@ -56,19 +57,27 @@ params.addParam<NonlinearVariableName>("potential",  "The gives the potential a 
 params.addRequiredParam<Real>("position_units", "Units of position");
 params.addParam<std::string>("transport_properties", "Describes calculation for transport expression");
 params.addParam<bool>("aux_var", true,  "boolean to describe whether the material is an auxiliary variable");
+params.addParam<bool>("conserved_particle", false, "Is particle used for conservation");
+params.addParam<std::vector<VariableName>>("nonconserved", "this will be all the nonconserved particles");
+params.addParam<bool>("using_offset", false, "Is the LogStabilizationMoles Kernel being used");
+params.addParam<Real>(
+    "offset", 20.0, "The offset parameter that goes into the exponential function");
 return params;
 }
+
 AddHeavySpeciesTransportAction::AddHeavySpeciesTransportAction(InputParameters params)
 : Action(params){}
 
 void AddHeavySpeciesTransportAction::act()
 {
+
   MooseSharedPointer<Action> action;
   MooseSharedPointer<MooseObjectAction> moose_object_action;
   NonlinearVariableName name_ = getParam<NonlinearVariableName>("name");
   NonlinearVariableName potential_name_ = getParam<NonlinearVariableName>("potential");
   Real mass_ = getParam<Real>("mass");
   Real charge_ = getParam<Real>("charge");
+  std::vector<VariableName> _nonconserved = getParam<std::vector<VariableName>>("nonconserved");
 
   // The variable type for the nonlinear variables
   auto fe_type = AddVariableAction::feType(_pars);
@@ -87,29 +96,45 @@ void AddHeavySpeciesTransportAction::act()
     charged = true;
 
 
-
-
-
-  if (_current_task == "add_material") //there is no register moose action add_material
+  if (_current_task == "add_material")
   {
     addADHeavySpeciesMaterial(name_, mass_, charge_);
+    if (getParam<bool>("conserved_particle"))
+    {
+      if (isParamValid("nonconserved") ? false : true)
+      {
+        mooseError("You need to add include all the other unconserved particles within the conserve particle block");
+      }
+      addParticleConservation(name_, _nonconserved);
+
+    }
   }
+
   if (_current_task == "add_kernel")
   {
-    if (charged)
+    if (is_aux_var)
     {
-      addADHeavySpeciesChargedKernels(name_, potential_name_);
+        //do nothing
     }
+
     else
     {
-      addADHeavySpeciesNeutralKernels(name_);
+      if (charged)
+      {
+        addADHeavySpeciesChargedKernels(name_, potential_name_);
+      }
+      else
+      {
+        addADHeavySpeciesNeutralKernels(name_);
+      }
     }
+
   }
   if (_current_task == "add_variable")
   {
     if (is_aux_var)
     {
-      std::cout << "nice " << name_ << std::endl;
+
       _problem->addAuxVariable(type, name_ + "_density_", var_params);
     }
     else
@@ -138,9 +163,6 @@ void AddHeavySpeciesTransportAction::addADHeavySpeciesMaterial(const std::string
     params.set<Real>("mobility") = getParam<Real>("mobility");
   if (isParamValid("time_units") ? true : false)
     params.set<Real>("time_units") = getParam<Real>("time_units");
-  //if necessary We can do the same if statements for
-  //time_units and mobility, but it looks like we dont use it so
-  //we can save some processing (not really that much more efficient tho)
   _problem->addMaterial("ADHeavySpeciesMaterial", name + "_mat", params);
 }
 
@@ -149,11 +171,18 @@ void AddHeavySpeciesTransportAction::addADHeavySpeciesChargedKernels(const std::
 {
   if (isParamValid("block") ? true : false)
   {
+
     InputParameters params = _factory.getValidParams("ADTimeDerivativeLog");
     params.set<NonlinearVariableName>("variable") = {name};
     params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
     _problem->addKernel("ADTimeDerivativeLog", name + "_time_deriv_", params);
 
+/*
+    InputParameters params = _factory.getValidParams("ElectronTimeDerivative");
+    params.set<NonlinearVariableName>("variable") = name;
+    params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+    _problem->addKernel("ElectronTimeDerivative", name + "_time_deriv", params);
+*/
     InputParameters params2 = _factory.getValidParams("ADCoeffDiffusion");
     params2.set<NonlinearVariableName>("variable") = {name};
     params2.set<Real>("position_units") = getParam<Real>("position_units");
@@ -176,20 +205,58 @@ void AddHeavySpeciesTransportAction::addADHeavySpeciesChargedKernels(const std::
   params4.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   _problem->addKernel("ChargeSourceMoles_KV", name + "_charge_source_", params4);
 
+  if (getParam<bool>("using_offset"))
+  {
+    InputParameters params5 = _factory.getValidParams("LogStabilizationMoles");
+    params5.set<NonlinearVariableName>("variable") = {name};
+    params5.set<Real>("offset") = getParam<Real>("offset");
+    params5.set<std::vector<SubdomainName>>("block") =
+        getParam<std::vector<SubdomainName>>("block");
+    _problem->addKernel("LogStabilizationMoles", name + "_log_stabilization", params5);
+  }
+
+
 }
 void AddHeavySpeciesTransportAction::addADHeavySpeciesNeutralKernels(const std::string & name)
 {
   if (isParamValid("block") ? true : false)
   {
+
     InputParameters params = _factory.getValidParams("ADTimeDerivativeLog");
     params.set<NonlinearVariableName>("variable") = {name};
     params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
     _problem->addKernel("ADTimeDerivativeLog", name + "_time_deriv_", params);
 
+/*
+    InputParameters params = _factory.getValidParams("ElectronTimeDerivative");
+    params.set<NonlinearVariableName>("variable") = name;
+    params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+    _problem->addKernel("ElectronTimeDerivative", name + "_time_deriv", params);
+*/
+  }
     InputParameters params2 = _factory.getValidParams("ADCoeffDiffusion");
     params2.set<NonlinearVariableName>("variable") = {name};
     params2.set<Real>("position_units") = getParam<Real>("position_units");
     params2.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
     _problem->addKernel("ADCoeffDiffusion", name + "_diffusion_", params2);
-  }
+
+    if (getParam<bool>("using_offset"))
+    {
+      InputParameters params3 = _factory.getValidParams("LogStabilizationMoles");
+      params3.set<NonlinearVariableName>("variable") = {name};
+      params3.set<Real>("offset") = getParam<Real>("offset");
+      params3.set<std::vector<SubdomainName>>("block") =
+          getParam<std::vector<SubdomainName>>("block");
+      _problem->addKernel("LogStabilizationMoles", name + "_log_stabilization", params3);
+    }
+
+
+}
+void AddHeavySpeciesTransportAction::addParticleConservation(const std::string & name,
+                                                             const std::vector<VariableName> & nonconserved)
+{
+  InputParameters params = _factory.getValidParams("ParticleConservation");
+  params.set<std::vector<VariableName>>("nonconserved") = nonconserved;
+  params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+  _problem->addMaterial("ParticleConservation", name + "_conserved_", params);
 }

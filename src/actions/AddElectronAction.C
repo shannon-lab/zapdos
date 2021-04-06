@@ -146,7 +146,7 @@ void AddElectronAction::addElectronKernels(const std::string & em_name,
   params2.set<Real>("position_units") = getParam<Real>("position_units");
   params2.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   _problem->addKernel("ADCoeffDiffusion", em_name + "_diffusion", params2);
-
+  //Repeat for mean energy
   InputParameters params3 = _factory.getValidParams("ADTimeDerivativeLog");
   params3.set<NonlinearVariableName>("variable") = {mean_en_name};
   params3.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
@@ -174,7 +174,6 @@ void AddElectronAction::addElectronKernels(const std::string & em_name,
   params6.set<std::string>("potential_units") = getParam<std::string>("potential_units");
   _problem->addKernel("ADJouleHeating", mean_en_name + "_joule_heating", params6);
 
-
   InputParameters params7 = _factory.getValidParams("LogStabilizationMoles");
   params7.set<NonlinearVariableName>("variable") = {mean_en_name};
   params7.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
@@ -186,6 +185,13 @@ void AddElectronAction::addElectronKernels(const std::string & em_name,
   params8.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   params8.set<Real>("offset") = getParam<Real>("offset");
   _problem->addKernel("LogStabilizationMoles", em_name + "_log_stabilization", params8);
+
+  InputParameters params9 = _factory.getValidParams("ChargeSourceMoles_KV");
+  params9.set<NonlinearVariableName>("variable") = {potential_name};
+  params9.set<std::vector<VariableName>>("charged") = {em_name};
+  params9.set<std::string>("potential_units") = getParam<std::string>("potential_units");
+  params9.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+  _problem->addKernel("ChargeSourceMoles_KV", em_name + "_charge_source_", params9);
 
 }
 void AddElectronAction::addElectronBoundaries(const std::string & em_name,

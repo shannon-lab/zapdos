@@ -32,6 +32,9 @@ protected:
   virtual void addADHeavySpeciesChargedKernels(const std::string & name,
                                                const std::string & potential_name);
   virtual void addADHeavySpeciesNeutralKernels(const std::string & name);
+  virtual void addParticleConservation(const std::string & name,
+                                       const std::vector<VariableName> & nonconserved);
+  //virtual void addDensityLog(const std::string & particle_name);
 
 
 };
