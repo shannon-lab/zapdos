@@ -132,7 +132,7 @@ dom1Scale=1.0
   [../]
 []
 
-#[DriftDiffusionActionAD]
+##[DriftDiffusionActionAD]
 #  [./Plasma]
 #    #electrons = em
 #    #charged_particle = 'Arp Ar2p'

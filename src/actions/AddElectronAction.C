@@ -146,7 +146,7 @@ void AddElectronAction::addElectronKernels(const std::string & em_name,
   params2.set<Real>("position_units") = getParam<Real>("position_units");
   params2.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   _problem->addKernel("ADCoeffDiffusion", em_name + "_diffusion", params2);
-  //Repeat for mean energy
+  ///Repeat for mean energy
   InputParameters params3 = _factory.getValidParams("ADTimeDerivativeLog");
   params3.set<NonlinearVariableName>("variable") = {mean_en_name};
   params3.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
