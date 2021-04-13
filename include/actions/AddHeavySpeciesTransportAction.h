@@ -23,7 +23,7 @@ class AddHeavySpeciesTransportAction : public Action
 public:
   AddHeavySpeciesTransportAction(InputParameters params);
 
-  virtual void act(); //does this need override?
+  virtual void act(); 
 
 protected:
   virtual void addADHeavySpeciesMaterial(const std::string & name,

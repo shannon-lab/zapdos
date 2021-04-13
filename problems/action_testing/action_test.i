@@ -84,8 +84,8 @@ dom1Scale=1.0
   #resid_vs_jac_scaling_param = 1
   line_search = 'basic'
   petsc_options = '-snes_converged_reason'
-  solve_type = newton
   #solve_type = pjfnk
+  solve_type = newton
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
   petsc_options_value = 'lu NONZERO 1.e-10'
   nl_rel_tol = 1e-6
@@ -108,7 +108,7 @@ dom1Scale=1.0
 [Outputs]
   # perf_graph = true
   #print_densityear_residuals = false
-  [out_01_greg_ad_time_deriv_and_offset02]
+  [out_01_greg_ad_time_deriv_and_offset06_pjfnk]
     type = Exodus
     show_material_properties = conserved_density
     output_material_properties = true
@@ -132,23 +132,7 @@ dom1Scale=1.0
   [../]
 []
 
-##[DriftDiffusionActionAD]
-#  [./Plasma]
-#    #electrons = em
-#    #charged_particle = 'Arp Ar2p'
-#    #Neutrals = 'Ar* H2O OH'
-#    charged_particle = 'Arp'
-#    Neutrals = 'Ar*'
-#    #mean_energy = mean_en
-#    potential = potential
-#    Is_potential_unique = false
-#    using_offset = true
-#    offset = 30
-#    use_ad = true
-#    position_units = ${dom0Scale}
-#    block = 0
-#  [../]
-#[]
+
 
 [Variables]
   [./potential]
@@ -204,76 +188,6 @@ dom1Scale=1.0
     block = 0
     position_units = ${dom0Scale}
   [../]
-  #include in action
-  #[./em_charge_source]
-  #  type = ChargeSourceMoles_KV
-  #  variable = potential
-  #  charged = em
-  #  block = 0
-  #[../]
-
-
-  # Electron kernels
-
-  ##[./em_time_deriv]
-  #  type = ADTimeDerivativeLog
-  #  variable = em
-  #  block = 0
-  #[../]
-  ##[./em_advection]
-  #  type = ADEFieldAdvection
-  #  variable = em
-  #  potential = potential
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-  ##[./em_diffusion]
-  #  type = ADCoeffDiffusion
-  #  variable = em
-  #  mean_en = mean_en
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-  ##[./em_log_stabilization]
-  #  type = LogStabilizationMoles
-  #  variable = em
-  #  block = 0
-  #[../]
-
-  # Electron energy kernels
-  ##[./mean_en_time_deriv]
-  #  type = ADTimeDerivativeLog
-  #  variable = mean_en
-  #  block = 0
-  #[../]
-  ##[./mean_en_advection]
-  #  type = ADEFieldAdvection
-  #  variable = mean_en
-  #  potential = potential
-  #  em = em
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-  ##[./mean_en_diffusion]
-  #  type = ADCoeffDiffusion
-  #  variable = mean_en
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-  ##[./mean_en_joule_heating]
-  #  type = ADJouleHeating
-  #  variable = mean_en
-  #  potential = potential
-  #  em = em
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-  ##[./mean_en_log_stabilization]
-  #  type = LogStabilizationMoles
-  #  variable = mean_en
-  #  block = 0
-  #  offset = 15
-  #[../]
 []
 
 [AuxVariables]
@@ -456,14 +370,6 @@ dom1Scale=1.0
 []
 
 [BCs]
-  # H2O evaporation boundary condition
-  #[OH_right]
-  #  type = ADHagelaarIonDiffusionBC
-  #  variable = OH
-  #  boundary = 'left master0_interface'
-  #  r = 0
-  #  position_units = ${dom0Scale}
-  #[]
 
   [./Arex_physical_diffusion]
     type = ADHagelaarIonDiffusionBC
@@ -472,21 +378,7 @@ dom1Scale=1.0
     r = 0
     position_units = ${dom0Scale}
   [../]
-  #[./Ar2p_physical_diffusion]
-  #  type = ADHagelaarIonDiffusionBC
-  #  variable = Ar2p
-  #  boundary = 'left master0_interface'
-  #  r = 0
-  #  position_units = ${dom0Scale}
-  #[../]
-  #[./Ar2p_physical_advection]
-  #  type = ADHagelaarIonAdvectionBC
-  #  variable = Ar2p
-  #  boundary = 'left master0_interface'
-  #  potential = potential
-  #  r = 0
-  #  position_units = ${dom0Scale}
-  #[../]
+
   [./potential_left]
     type = ADNeumannCircuitVoltageMoles_KV
     variable = potential
@@ -506,17 +398,7 @@ dom1Scale=1.0
     boundary = right
     value = 0
   [../]
-  ##[./em_bc]
-  #  type = ADHagelaarElectronBC
-  #  variable = em
-  #  boundary = 'left right'
-  #  potential = potential
-    #ip = Arp
-  #  mean_en = mean_en
-    #r = 0.99
-  #  r = 0.0
-  #  position_units = ${dom0Scale}
-  #[../]
+
   [./Arp_physical_right_diffusion]
     type = ADHagelaarIonDiffusionBC
     variable = Arp
@@ -532,16 +414,6 @@ dom1Scale=1.0
     r = 0
     position_units = ${dom0Scale}
   [../]
-  ##[./mean_en_bc]
-  #  type = ADHagelaarEnergyBC
-  #  variable = mean_en
-  #  boundary = 'left right'
-  #  potential = potential
-  #  em = em
-    #r = 0.99
-  #  r = 0.0
-  #  position_units = ${dom0Scale}
-  #[../]
 
   # Secondary electrons are only emitted from the cathode (left boundary)
   # in this case
@@ -612,34 +484,6 @@ dom1Scale=1.0
     using_offset = true
     offset = 30
   [../]
-  #[./Ar_species]
-  #  name = Ar
-  #  mass = 6.64e-26
-  #  charge = 0.0
-  #  block = 0
-  #  position_units = ${dom0Scale}
-  #  potential = potential
-  #  potential_units = kV
-  #  conserved_particle = true
-  #  nonconserved = 'Arp Ar*'
-    #Ar2p can't be set in _nonconserved
-    #its its not a coupled variable that can be found
-    #it is commented out in the variables block
-
-    #Ar is an aux varaible not a non linear varaible
-    #does it still have adcoeef diffusion Kernels
-    #tried without any kernels, result vary slightly now
-    #how to track conserved_density
-  #[../]
-  [./gas_species_1]
-    name = Ar2p
-    mass = 13.28e-26
-    charge = 1.0
-    block = 0
-    position_units = ${dom0Scale}
-    potential = potential
-    potential_units = kV
-  [../]
   [./gas_species_2]
     name = Ar*
     mass = 6.64e-26
@@ -697,21 +541,6 @@ dom1Scale=1.0
    block = 0
  []
 
- #[H2O_mat]
-  # type = ADHeavySpeciesMaterial
-   #heavy_species_name = H2O
-   #heavy_species_mass = 2.9907e-26
-   #heavy_species_charge = 0
-   #diffusivity = 2.3e-5
- #[]
-
-  #[./gas_species_0]
-  #  type = ADHeavySpeciesMaterial
-  #  heavy_species_name = Arp
-  #  heavy_species_mass = 6.64e-26
-  #  heavy_species_charge = 1.0
-  #  block = 0
-  #[../]
   [./Ar_species]
     type = ADHeavySpeciesMaterial
     heavy_species_name = Ar
@@ -719,29 +548,6 @@ dom1Scale=1.0
     heavy_species_charge = 0.0
     block = 0
   [../]
-  #[./gas_species_1]
-  #  type = ADHeavySpeciesMaterial
-  #  heavy_species_name = Ar2p
-  #  heavy_species_mass = 13.28e-26
-  #  heavy_species_charge = 1.0
-  #  block = 0
-  #[../]
-  #[./gas_species_2]
-  #  type = ADHeavySpeciesMaterial
-  #  heavy_species_name = Ar*
-  #  heavy_species_mass = 6.64e-26
-  #  heavy_species_charge = 0
-  #  block = 0
-  #[../]
-
-  #[OH_mat]
-  #  type = ADHeavySpeciesMaterial
-  #  heavy_species_name = OH
-  #  heavy_species_mass = 2.82420e-26
-  #  heavy_species_charge = 0
-  #  diffusivity = 4e-5
-  #  block = 0
-  #[]
 []
 
 [Reactions]

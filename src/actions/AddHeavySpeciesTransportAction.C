@@ -149,7 +149,7 @@ void AddHeavySpeciesTransportAction::addADHeavySpeciesMaterial(const std::string
                                                                const Real & mass,
                                                                const Real & charge)
 {
-  //const std::string & potential_name = getParam<NonlinearVariableName>("potential");
+
   InputParameters params = _factory.getValidParams("ADHeavySpeciesMaterial");
   params.set<std::string>("heavy_species_name") = name;
   params.set<Real>("heavy_species_mass") = mass;
@@ -177,12 +177,6 @@ void AddHeavySpeciesTransportAction::addADHeavySpeciesChargedKernels(const std::
     params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
     _problem->addKernel("ADTimeDerivativeLog", name + "_time_deriv_", params);
 
-/*
-    InputParameters params = _factory.getValidParams("ElectronTimeDerivative");
-    params.set<NonlinearVariableName>("variable") = name;
-    params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-    _problem->addKernel("ElectronTimeDerivative", name + "_time_deriv", params);
-*/
     InputParameters params2 = _factory.getValidParams("ADCoeffDiffusion");
     params2.set<NonlinearVariableName>("variable") = {name};
     params2.set<Real>("position_units") = getParam<Real>("position_units");
@@ -227,12 +221,6 @@ void AddHeavySpeciesTransportAction::addADHeavySpeciesNeutralKernels(const std::
     params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
     _problem->addKernel("ADTimeDerivativeLog", name + "_time_deriv_", params);
 
-/*
-    InputParameters params = _factory.getValidParams("ElectronTimeDerivative");
-    params.set<NonlinearVariableName>("variable") = name;
-    params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-    _problem->addKernel("ElectronTimeDerivative", name + "_time_deriv", params);
-*/
   }
     InputParameters params2 = _factory.getValidParams("ADCoeffDiffusion");
     params2.set<NonlinearVariableName>("variable") = {name};
