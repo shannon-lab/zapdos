@@ -59,7 +59,10 @@ ZapdosApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)
                          "LotsOfPotentialDrivenArtificialDiff");
   s.registerActionSyntax("AddPeriodicControllers", "PeriodicControllers/*");
   s.registerActionSyntax("AddDriftDiffusionAction", "DriftDiffusionAction/*");
+  s.registerActionSyntax("AddDriftDiffusionActionAD", "DriftDiffusionActionAD/*");
   s.registerActionSyntax("AddPeriodicRelativeNodalDifference", "PeriodicRelativeNodalDifference/*");
+  s.registerActionSyntax("AddElectronAction", "ElectronAction");
+  s.registerActionSyntax("AddHeavySpeciesTransportAction", "HeavySpeciesTransport/*");
 }
 
 void
