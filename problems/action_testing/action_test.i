@@ -108,7 +108,7 @@ dom1Scale=1.0
 [Outputs]
   # perf_graph = true
   #print_densityear_residuals = false
-  [out_01_greg_ad_time_deriv_and_offset06_pjfnk]
+  [out_01_greg_electron_and_heavy_action]
     type = Exodus
     show_material_properties = conserved_density
     output_material_properties = true
