@@ -25,7 +25,7 @@ console output can be sent to a text file:
 The `--color off` option is to de-clutter the log file from extraneous
 mark-up resulting from the displayed console text colors.
 
-Many test input files also create an output file with the format
+Many test input files also create an output file with the name format
 `example_input_out.e` that contains all the simulation results that have been
 selected for output. These results are best viewed using a visualization tool
 like [Paraview](http://www.paraview.org/download/).
@@ -44,13 +44,3 @@ As Zapdos is developed (by you hopefully!) and more capabilities are added, the
 tests directory will continue to grow. If you feel that you have added important
 new functionality, please create a test for it, such that any future changes
 will not break that capability.
-
-## Meshing with Zapdos
-
-!style halign=left
-Many of the existing input files in the `problems` directory require
-`fileName.msh`. In order to create the requisite `.msh` file, you must run the
-command `gmsh -d fileName.geo` where `d` is the dimensionality (1, 2, or 3) of
-the mesh and `fileName.geo` is the source file for the mesh. `gmsh` can be
-downloaded [here](http://gmsh.info/#Download). Some of the `*.msh` files can also
-be found in the `tests` directory.
