@@ -12,19 +12,22 @@
 
 #include "AuxKernel.h"
 
-class ProcRateForRateCoeffThreeBody : public AuxKernel
+template <bool is_ad>
+class ProcRateForRateCoeffThreeBodyTempl : public AuxKernel
 {
 public:
-  ProcRateForRateCoeffThreeBody(const InputParameters & parameters);
+  ProcRateForRateCoeffThreeBodyTempl(const InputParameters & parameters);
 
   static InputParameters validParams();
 
-  virtual ~ProcRateForRateCoeffThreeBody() {}
   virtual Real computeValue() override;
 
 protected:
   const VariableValue & _v;
   const VariableValue & _w;
   const VariableValue & _vv;
-  const MaterialProperty<Real> & _reaction_coeff;
+  const GenericMaterialProperty<Real, is_ad> & _reaction_coeff;
 };
+
+typedef ProcRateForRateCoeffThreeBodyTempl<false> ProcRateForRateCoeffThreeBody;
+typedef ProcRateForRateCoeffThreeBodyTempl<true> ADProcRateForRateCoeffThreeBody;

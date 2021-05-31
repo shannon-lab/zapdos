@@ -10,10 +10,14 @@
 
 #include "ProcRateForRateCoeffThreeBody.h"
 
-registerMooseObject("ZapdosApp", ProcRateForRateCoeffThreeBody);
+using MetaPhysicL::raw_value;
 
+registerMooseObject("ZapdosApp", ProcRateForRateCoeffThreeBody);
+registerMooseObject("ZapdosApp", ADProcRateForRateCoeffThreeBody);
+
+template <bool is_ad>
 InputParameters
-ProcRateForRateCoeffThreeBody::validParams()
+ProcRateForRateCoeffThreeBodyTempl<is_ad>::validParams()
 {
   InputParameters params = AuxKernel::validParams();
 
@@ -28,20 +32,25 @@ ProcRateForRateCoeffThreeBody::validParams()
   return params;
 }
 
-ProcRateForRateCoeffThreeBody::ProcRateForRateCoeffThreeBody(const InputParameters & parameters)
+template <bool is_ad>
+ProcRateForRateCoeffThreeBodyTempl<is_ad>::ProcRateForRateCoeffThreeBodyTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
 
     _v(coupledValue("v")),
     _w(coupledValue("w")),
     _vv(coupledValue("vv")),
-    _reaction_coeff(getMaterialProperty<Real>("k_" + getParam<std::string>("reaction")))
+    _reaction_coeff(getGenericMaterialProperty<Real, is_ad>("k_" + getParam<std::string>("reaction")))
 {
 }
 
+template <bool is_ad>
 Real
-ProcRateForRateCoeffThreeBody::computeValue()
+ProcRateForRateCoeffThreeBodyTempl<is_ad>::computeValue()
 {
 
-  return 6.02e23 * _reaction_coeff[_qp] * std::exp(_v[_qp]) * std::exp(_w[_qp]) *
+  return 6.02e23 * raw_value(_reaction_coeff[_qp]) * std::exp(_v[_qp]) * std::exp(_w[_qp]) *
          std::exp(_vv[_qp]);
 }
+
+typedef ProcRateForRateCoeffThreeBodyTempl<false> ProcRateForRateCoeffThreeBody;
+typedef ProcRateForRateCoeffThreeBodyTempl<true> ADProcRateForRateCoeffThreeBody;
