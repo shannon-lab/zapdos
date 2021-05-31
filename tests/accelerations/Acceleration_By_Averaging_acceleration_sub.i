@@ -444,7 +444,7 @@ dom0Scale = 25.4e-3
     position_units = ${dom0Scale}
   [../]
   [./gas_species_0]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
@@ -452,14 +452,14 @@ dom0Scale = 25.4e-3
     diffusivity = 6.428571e-3
   [../]
   [./gas_species_1]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar*
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
     diffusivity = 7.515528e-3
   [../]
   [./gas_species_2]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
