@@ -145,7 +145,7 @@ dom1Scale=1.0
 
   [./em_time_deriv]
     #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = em
     block = 0
   [../]
@@ -172,7 +172,7 @@ dom1Scale=1.0
 
   [./emliq_time_deriv]
     #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = emliq
     block = 1
   [../]
@@ -241,7 +241,7 @@ dom1Scale=1.0
 
   [./Arp_time_deriv]
     #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = Arp
     block = 0
   [../]
@@ -267,7 +267,7 @@ dom1Scale=1.0
 
   [./Ar2p_time_deriv]
     #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = Ar2p
     block = 0
   [../]
@@ -293,7 +293,7 @@ dom1Scale=1.0
 
   [./OHm_time_deriv]
     #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = OHm
     block = 1
   [../]
@@ -318,7 +318,7 @@ dom1Scale=1.0
 
   [./mean_en_time_deriv]
     #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = mean_en
     block = 0
   [../]

@@ -250,7 +250,7 @@ dom1Scale=1e-4
   #
   # Electrons
   #[./d_em_dt]
-  #  type = ADTimeDerivativeLog
+  #  type = TimeDerivativeLog
   #  variable = em
   #  block = 0
   #[../]
@@ -288,7 +288,7 @@ dom1Scale=1e-4
   #[../]
   #
   #[./d_mean_en_dt]
-  #  type = ADTimeDerivativeLog
+  #  type = TimeDerivativeLog
   #  variable = mean_en
   #  block = 0
   #[../]
@@ -321,7 +321,7 @@ dom1Scale=1e-4
   #[../]
   #
   #[./d_Arp_dt]
-  #  type = ADTimeDerivativeLog
+  #  type = TimeDerivativeLog
   #  variable = Arp
   #  block = 0
   #[../]

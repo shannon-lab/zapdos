@@ -78,7 +78,7 @@ dom0Scale=1e-3
 
 [Kernels]
   [./Arex_time_deriv]
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = Ar*
     block = 0
   [../]
@@ -97,7 +97,7 @@ dom0Scale=1e-3
 
 
   [./em_time_deriv]
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = em
     block = 0
   [../]
@@ -147,7 +147,7 @@ dom0Scale=1e-3
   [../]
 
   [./Arp_time_deriv]
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = Arp
     block = 0
   [../]
@@ -173,7 +173,7 @@ dom0Scale=1e-3
 
   [./Ar2p_time_deriv]
     #type = ElectronTimeDerivative
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = Ar2p
     block = 0
   [../]
@@ -198,7 +198,7 @@ dom0Scale=1e-3
   [../]
 
   [./mean_en_time_deriv]
-    type = ADTimeDerivativeLog
+    type = TimeDerivativeLog
     variable = mean_en
     block = 0
   [../]

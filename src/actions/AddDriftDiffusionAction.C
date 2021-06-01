@@ -485,10 +485,10 @@ AddDriftDiffusionAction::addADKernels(const std::string & name,
 {
   _problem->haveADObjects(true);
 
-  InputParameters params = _factory.getValidParams("ADTimeDerivativeLog");
+  InputParameters params = _factory.getValidParams("TimeDerivativeLog");
   params.set<NonlinearVariableName>("variable") = {name};
   params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
-  _problem->addKernel("ADTimeDerivativeLog", name + "_time_deriv", params);
+  _problem->addKernel("TimeDerivativeLog", name + "_time_deriv", params);
 
   if (charged)
   {
