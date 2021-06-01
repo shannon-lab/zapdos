@@ -67,8 +67,9 @@ CurrentDensityShapeSideUserObject::execute()
 {
   for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
   {
-    RealVectorValue ion_current = _e * (_muip[qp].value() * -_grad_potential[qp] * std::exp(_ip[qp]) -
-                                        _diffip[qp].value() * std::exp(_ip[qp]) * _grad_ip[qp]);
+    RealVectorValue ion_current =
+        _e * (_muip[qp].value() * -_grad_potential[qp] * std::exp(_ip[qp]) -
+              _diffip[qp].value() * std::exp(_ip[qp]) * _grad_ip[qp]);
     RealVectorValue electron_current =
         -_e * (-_muem[qp].value() * -_grad_potential[qp] * std::exp(_em[qp]) -
                _diffem[qp].value() * std::exp(_em[qp]) * _grad_em[qp]);
@@ -92,7 +93,7 @@ CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
       RealVectorValue d_ion_current_d_ip =
           _e * (_muip[qp].value() * -_grad_potential[qp] * std::exp(_ip[qp]) * _phi[_j][qp] -
                 _diffip[qp].value() * (std::exp(_ip[qp]) * _phi[_j][qp] * _grad_ip[qp] +
-                               std::exp(_ip[qp]) * _grad_phi[_j][qp]));
+                                       std::exp(_ip[qp]) * _grad_phi[_j][qp]));
       if (_use_moles)
         d_ion_current_d_ip *= _avogadro;
       sum += _JxW[qp] * _coord[qp] * _normals[qp] * d_ion_current_d_ip;
@@ -115,7 +116,7 @@ CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
           -_e * (-_muem[qp].value() * -_grad_potential[qp] * std::exp(_em[qp]) * _phi[_j][qp] -
                  d_muem_d_em * -_grad_potential[qp] * std::exp(_em[qp]) -
                  _diffem[qp].value() * (std::exp(_em[qp]) * _phi[_j][qp] * _grad_em[qp] +
-                                std::exp(_em[qp]) * _grad_phi[_j][qp]) -
+                                        std::exp(_em[qp]) * _grad_phi[_j][qp]) -
                  d_diffem_d_em * std::exp(_em[qp]) * _grad_em[qp]);
       if (_use_moles)
         d_electron_current_d_em *= _avogadro;

@@ -89,10 +89,7 @@ AddDriftDiffusionAction::validParams()
   return params;
 }
 
-AddDriftDiffusionAction::AddDriftDiffusionAction(InputParameters params)
-  : Action(params)
-{
-}
+AddDriftDiffusionAction::AddDriftDiffusionAction(InputParameters params) : Action(params) {}
 
 void
 AddDriftDiffusionAction::act()
@@ -513,7 +510,8 @@ AddDriftDiffusionAction::addADKernels(const std::string & name,
     params3.set<NonlinearVariableName>("variable") = {name};
     params3.set<std::vector<VariableName>>("potential") = {potential_name};
     params3.set<Real>("position_units") = getParam<Real>("position_units");
-    params3.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
+    params3.set<std::vector<SubdomainName>>("block") =
+        getParam<std::vector<SubdomainName>>("block");
     _problem->addKernel("EFieldAdvectionEnergy", name + "_advection", params3);
 
     InputParameters params4 = _factory.getValidParams("JouleHeating");

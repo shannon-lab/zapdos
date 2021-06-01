@@ -37,7 +37,8 @@ ProcRateForRateCoeffTempl<is_ad>::ProcRateForRateCoeffTempl(const InputParameter
 
     _v(coupledValue("v")),
     _w(coupledValue("w")),
-    _reaction_coeff(getGenericMaterialProperty<Real, is_ad>("k_" + getParam<std::string>("reaction")))
+    _reaction_coeff(
+        getGenericMaterialProperty<Real, is_ad>("k_" + getParam<std::string>("reaction")))
 {
 }
 

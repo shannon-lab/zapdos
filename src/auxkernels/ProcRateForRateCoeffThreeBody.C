@@ -33,13 +33,15 @@ ProcRateForRateCoeffThreeBodyTempl<is_ad>::validParams()
 }
 
 template <bool is_ad>
-ProcRateForRateCoeffThreeBodyTempl<is_ad>::ProcRateForRateCoeffThreeBodyTempl(const InputParameters & parameters)
+ProcRateForRateCoeffThreeBodyTempl<is_ad>::ProcRateForRateCoeffThreeBodyTempl(
+    const InputParameters & parameters)
   : AuxKernel(parameters),
 
     _v(coupledValue("v")),
     _w(coupledValue("w")),
     _vv(coupledValue("vv")),
-    _reaction_coeff(getGenericMaterialProperty<Real, is_ad>("k_" + getParam<std::string>("reaction")))
+    _reaction_coeff(
+        getGenericMaterialProperty<Real, is_ad>("k_" + getParam<std::string>("reaction")))
 {
 }
 
