@@ -1,0 +1,40 @@
+[Tests]
+  [./electrostatic]
+    type = Exodiff
+    input = 'field_solver_material_electrostatic.i'
+    exodiff = 'field_solver_material_electrostatic_out.e'
+  [../]
+  [./electromagnetic_temp]
+    type = Exodiff
+    input = 'field_solver_material_electromagnetic.i'
+    exodiff = 'field_solver_material_electromagnetic_out.e'
+  [../]
+  [./error_potential_when_em]
+    type = RunException
+    input = 'field_solver_material_electrostatic.i'
+    cli_args = 'Materials/field_solver/solver=electromagnetic'
+    expect_err = "Solver mode is electromagnetic, but potential was provided. Please either change the mode or provide an electric field variable."
+    prereq = electrostatic
+  [../]
+  [./error_efield_when_es]
+    type = RunException
+    input = 'field_solver_material_electrostatic.i'
+    cli_args = 'Materials/active=field_solver_error_check Materials/field_solver_error_check/electric_field=dummy_efield'
+    expect_err = "Solver mode is electrostatic, but electric field was provided. Please either change the mode or provide a potential variable."
+    prereq = electrostatic
+  [../]
+  [./error_efield_and_potential]
+    type = RunException
+    input = 'field_solver_material_electrostatic.i'
+    cli_args = 'Materials/field_solver/electric_field=dummy_efield'
+    expect_err = "Both electric field and potential variables have been provided. Please provide only one, consistent with the solver mode parameter."
+    prereq = electrostatic
+  [../]
+  [./error_no_field]
+    type = RunException
+    input = 'field_solver_material_electrostatic.i'
+    cli_args = 'Materials/active=field_solver_error_check'
+    expect_err = "Neither potential nor electric field variables are defined. Please provide a variable for field determination."
+    prereq = electrostatic
+  [../]
+[]
