@@ -33,7 +33,5 @@ private:
   const ADMaterialProperty<Real> & _mu;
   /// Charge sign of the species
   const MaterialProperty<Real> & _sign;
-
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

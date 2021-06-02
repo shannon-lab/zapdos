@@ -19,6 +19,9 @@ ElectronEnergyLossFromIonization::validParams()
   params.addRequiredCoupledVar("potential", "The potential.");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Electron energy loss term for inelastic ionization collisions "
                              "using Townsend coefficients, the energy lost in Volts in a single "
                              "ionization collision (Densities must be in logarithmic form)");
@@ -35,8 +38,9 @@ ElectronEnergyLossFromIonization::ElectronEnergyLossFromIonization(
     _muem(getADMaterialProperty<Real>("muem")),
     _alpha_iz(getADMaterialProperty<Real>("alpha_iz")),
     _Eiz(getMaterialProperty<Real>("Eiz")),
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
 
-    _grad_potential(adCoupledGradient("potential")),
     _em(adCoupledValue("em")),
     _grad_em(adCoupledGradient("em"))
 {
@@ -45,7 +49,7 @@ ElectronEnergyLossFromIonization::ElectronEnergyLossFromIonization(
 ADReal
 ElectronEnergyLossFromIonization::computeQpResidual()
 {
-  ADReal electron_flux_mag = (-_muem[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -
+  ADReal electron_flux_mag = (-_muem[_qp] * _electric_field[_qp] * _r_units * std::exp(_em[_qp]) -
                               _diffem[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units)
                                  .norm();
   ADReal iz_term = _alpha_iz[_qp] * electron_flux_mag;

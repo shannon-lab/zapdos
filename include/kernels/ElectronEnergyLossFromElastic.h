@@ -37,9 +37,8 @@ protected:
   const MaterialProperty<Real> & _massGas;
   /// Townsend coefficient for elastic collisions
   const ADMaterialProperty<Real> & _alpha_el;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
-  /// Gradient of the coupled gradient
-  const ADVariableGradient & _grad_potential;
   /// Electron density
   const ADVariableValue & _em;
   /// Gradient of the electron density

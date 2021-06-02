@@ -16,19 +16,22 @@ InputParameters
 EFieldMagnitudeSource::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("potential", "The electric potential.");
-  params.addClassDescription(
-      "Electric field magnitude term based on the electrostatic approximation");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
+  params.addClassDescription("Electric field magnitude source term");
   return params;
 }
 
 EFieldMagnitudeSource::EFieldMagnitudeSource(const InputParameters & parameters)
-  : ADKernel(parameters), _grad_potential(adCoupledGradient("potential"))
+  : ADKernel(parameters),
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
 }
 
 ADReal
 EFieldMagnitudeSource::computeQpResidual()
 {
-  return -_test[_i][_qp] * _grad_potential[_qp] * _grad_potential[_qp];
+  return -_test[_i][_qp] * _electric_field[_qp].norm();
 }

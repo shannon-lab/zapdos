@@ -35,11 +35,10 @@ protected:
   const ADMaterialProperty<Real> & _muem;
   /// Townsend coefficient for ionization
   const ADMaterialProperty<Real> & _alpha_iz;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Electron mean energy density
   const ADVariableValue & _mean_en;
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Electron density
   const ADVariableValue & _em;
   /// Gradient of the electron density

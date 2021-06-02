@@ -38,9 +38,8 @@ protected:
   const ADMaterialProperty<Real> & _alpha_ex;
   /// Energy threshold for excitation
   const MaterialProperty<Real> & _Eex;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Electron density
   const ADVariableValue & _em;
   /// Gradient of the electron density

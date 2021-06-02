@@ -35,8 +35,7 @@ private:
   const ADMaterialProperty<Real> & _diff;
   /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Electron density
   const ADVariableValue & _em;
   /// Gradient of electron density

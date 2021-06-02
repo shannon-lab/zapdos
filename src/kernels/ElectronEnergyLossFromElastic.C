@@ -16,9 +16,11 @@ InputParameters
 ElectronEnergyLossFromElastic::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("potential", "The potential.");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription(
       "Electron energy loss term for elastic collisions using Townsend coefficient "
       "(Densities must be in logarithmic form)");
@@ -36,8 +38,9 @@ ElectronEnergyLossFromElastic::ElectronEnergyLossFromElastic(const InputParamete
     _massem(getMaterialProperty<Real>("massem")),
     _massGas(getMaterialProperty<Real>("massGas")),
     _alpha_el(getADMaterialProperty<Real>("alpha_el")),
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
 
-    _grad_potential(adCoupledGradient("potential")),
     _em(adCoupledValue("em")),
     _grad_em(adCoupledGradient("em"))
 {
@@ -46,7 +49,7 @@ ElectronEnergyLossFromElastic::ElectronEnergyLossFromElastic(const InputParamete
 ADReal
 ElectronEnergyLossFromElastic::computeQpResidual()
 {
-  ADReal electron_flux_mag = (-_muem[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -
+  ADReal electron_flux_mag = (-_muem[_qp] * _electric_field[_qp] * _r_units * std::exp(_em[_qp]) -
                               _diffem[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units)
                                  .norm();
   ADReal Eel = -3.0 * _massem[_qp] / _massGas[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]);
