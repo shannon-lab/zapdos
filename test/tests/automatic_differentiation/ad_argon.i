@@ -697,6 +697,11 @@ dom0Scale = 1e-3
     heavy_species_charge = 0.0
     block = 0
   []
+
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
 []
 
 [Reactions]

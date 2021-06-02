@@ -671,6 +671,10 @@ area = 5.02e-7 # Formerly 3.14e-6
 []
 
 [Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
   [gas_block]
     type = Gas
     interp_trans_coeffs = true

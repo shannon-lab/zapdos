@@ -309,8 +309,12 @@ dom1Scale = 1e-7
 []
 
 [Materials]
-  [water_block]
-    type = Water
-    potential = potential
-  []
+ [water_block]
+   type = Water
+   potential = potential
+ []
+ [field_solver]
+   type = FieldSolverMaterial
+   potential = potential
+ []
 []

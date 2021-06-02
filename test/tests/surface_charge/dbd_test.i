@@ -534,4 +534,16 @@ dom1Scale = 1e-4
     diffusivity = 1.6897e-5
     block = 0
   []
+
+  [field_solver0]
+    type = FieldSolverMaterial
+    potential = potential_dom0
+    block = 0
+  []
+
+  [field_solver1]
+    type = FieldSolverMaterial
+    potential = potential_dom1
+    block = 1
+  []
 []

@@ -686,4 +686,8 @@ area = 5.02e-7 # Formerly 3.14e-6
     property_tables_file = td_argon_mean_en.txt
     block = 0
   []
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
 []

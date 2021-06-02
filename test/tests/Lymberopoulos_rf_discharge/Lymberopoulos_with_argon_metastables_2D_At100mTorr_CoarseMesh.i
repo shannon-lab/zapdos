@@ -766,6 +766,15 @@ dom0Scale = 25.4e-3
 []
 
 [Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [field_solver_ion]
+    type = FieldSolverMaterial
+    potential = potential_ion
+    property_name = field_ion
+  []
   [GasBasics]
     type = GasElectronMoments
     interp_trans_coeffs = true

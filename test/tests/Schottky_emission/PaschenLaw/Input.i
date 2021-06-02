@@ -642,6 +642,10 @@ vhigh = -0.10 #kV
 []
 
 [Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
   [gas_block]
     type = Gas
     interp_trans_coeffs = true
