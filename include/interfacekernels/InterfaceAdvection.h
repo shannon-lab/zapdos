@@ -30,10 +30,8 @@ protected:
   /// Scaling units for the position for the neighbor variable
   Real _r_neighbor_units;
 
-  /// Potential acting on the neighbor variable
-  MooseVariable & _potential_neighbor_var;
-  /// Gradient of the potential acting on the neighbor variable
-  const ADVariableGradient & _grad_potential_neighbor;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field_neighbor;
 
   /// Mobility coefficient of the neighbor variable
   const ADMaterialProperty<Real> & _mu_neighbor;
