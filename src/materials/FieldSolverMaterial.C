@@ -17,6 +17,9 @@ FieldSolverMaterial::validParams()
   params.addCoupledVar("potential", "Electrostatic potential variable.");
   params.addCoupledVar("electric_field",
                        "Electric field variable provided by electromagnetic solver.");
+  params.addParam<std::string>("property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   return params;
 }
 
@@ -25,7 +28,7 @@ FieldSolverMaterial::FieldSolverMaterial(const InputParameters & parameters)
     _grad_potential(isCoupled("potential") ? adCoupledGradient("potential") : _ad_grad_zero),
     _electric_field(isCoupled("electric_field") ? adCoupledVectorValue("electric_field")
                                                 : _ad_grad_zero),
-    _field(declareADProperty<RealVectorValue>("field_solver_interface_property")),
+    _field(declareADProperty<RealVectorValue>(getParam<std::string>("property_name"))),
     _mode(getParam<MooseEnum>("solver"))
 {
   enum ComparisonEnum

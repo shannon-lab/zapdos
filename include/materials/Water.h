@@ -417,6 +417,6 @@ private:
   const ADVariableValue & _O3;
   /// Coupled O3- ion
   const ADVariableValue & _O3m;
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

@@ -49,9 +49,7 @@ protected:
   Real _r_units;
   /// Scaling units for the potential (V or kV)
   const std::string _potential_units;
-
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Number of charged species
   unsigned int _num_species;
