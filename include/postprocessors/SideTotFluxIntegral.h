@@ -51,6 +51,6 @@ protected:
   const MaterialProperty<Real> & _sgn;
   /// Equal to 1 when the ion drift velocity is direct towards the wall and zero otherwise
   Real _a;
-  /// Gradient of the potential
-  const VariableGradient & _grad_potential;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };
