@@ -506,13 +506,13 @@ AddDriftDiffusionAction::addADKernels(const std::string & name,
 
   if (energy)
   {
-    InputParameters params3 = _factory.getValidParams("EFieldAdvectionEnergy");
+    InputParameters params3 = _factory.getValidParams("EFieldAdvection");
     params3.set<NonlinearVariableName>("variable") = {name};
     params3.set<std::vector<VariableName>>("potential") = {potential_name};
     params3.set<Real>("position_units") = getParam<Real>("position_units");
     params3.set<std::vector<SubdomainName>>("block") =
         getParam<std::vector<SubdomainName>>("block");
-    _problem->addKernel("EFieldAdvectionEnergy", name + "_advection", params3);
+    _problem->addKernel("EFieldAdvection", name + "_advection", params3);
 
     InputParameters params4 = _factory.getValidParams("JouleHeating");
     params4.set<NonlinearVariableName>("variable") = {name};

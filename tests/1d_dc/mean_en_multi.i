@@ -106,7 +106,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./em_advection]
-    type = EFieldAdvectionElectrons
+    type = EFieldAdvection
     variable = em
     potential = potential
     mean_en = mean_en
@@ -114,7 +114,7 @@ dom1Scale=1e-7
     position_units = ${dom0Scale}
   [../]
   [./em_diffusion]
-    type = CoeffDiffusionElectrons
+    type = CoeffDiffusion
     variable = em
     mean_en = mean_en
     block = 0
@@ -342,7 +342,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./mean_en_advection]
-    type = EFieldAdvectionEnergy
+    type = EFieldAdvection
     variable = mean_en
     potential = potential
     em = em
@@ -350,7 +350,7 @@ dom1Scale=1e-7
     position_units = ${dom0Scale}
   [../]
   [./mean_en_diffusion]
-    type = CoeffDiffusionEnergy
+    type = CoeffDiffusion
     variable = mean_en
     em = em
     block = 0

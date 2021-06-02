@@ -108,7 +108,7 @@ dom1Scale=1e-4
   #    (1) An InterfaceKernel to provide the Neumann boundary condition
   #    (2) A MatchedValueBC to ensure that the potential remains continuous
   [./potential_left]
-    type = ADPotentialSurfaceCharge
+    type = PotentialSurfaceCharge
     neighbor_var = potential_dom1
     variable = potential_dom0
     position_units = ${dom0Scale}

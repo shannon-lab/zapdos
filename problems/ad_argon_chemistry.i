@@ -323,7 +323,7 @@ dom1Scale=1.0
     block = 0
   [../]
   [./mean_en_advection]
-    type = EFieldAdvectionEnergy
+    type = EFieldAdvection
     variable = mean_en
     potential = potential
     em = em

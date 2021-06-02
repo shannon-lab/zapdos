@@ -47,7 +47,7 @@ dom0Scale=25.4e-3
     [../]
     #Advection term of electron
     [./em_advection]
-      type = EFieldAdvectionElectrons
+      type = EFieldAdvection
       variable = em
       potential = potential
       mean_en = mean_en
@@ -55,7 +55,7 @@ dom0Scale=25.4e-3
     [../]
     #Diffusion term of electrons
     [./em_diffusion]
-      type = CoeffDiffusionElectrons
+      type = CoeffDiffusion
       variable = em
       mean_en = mean_en
       position_units = ${dom0Scale}
@@ -252,7 +252,7 @@ dom0Scale=25.4e-3
     [../]
     #Advection term of electron energy
     [./mean_en_advection]
-      type = EFieldAdvectionEnergy
+      type = EFieldAdvection
       variable = mean_en
       potential = potential
       em = em
@@ -260,7 +260,7 @@ dom0Scale=25.4e-3
     [../]
     #Diffusion term of electrons energy
     [./mean_en_diffusion]
-      type = CoeffDiffusionEnergy
+      type = CoeffDiffusion
       variable = mean_en
       em = em
       position_units = ${dom0Scale}

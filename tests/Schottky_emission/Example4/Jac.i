@@ -128,7 +128,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 #               block = 0
 #       [../]
 #       [./em_advection]
-#               type = EFieldAdvectionElectrons
+#               type = EFieldAdvection
 #               variable = em
 #               potential = potential
 #               mean_en = mean_en
@@ -136,7 +136,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 #               position_units = ${dom0Scale}
 #       [../]
 #       [./em_diffusion]
-#               type = CoeffDiffusionElectrons
+#               type = CoeffDiffusion
 #               variable = em
 #               mean_en = mean_en
 #               block = 0
@@ -207,7 +207,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 #               block = 0
 #       [../]
 #       [./mean_en_advection]
-#               type = EFieldAdvectionEnergy
+#               type = EFieldAdvection
 #               variable = mean_en
 #               potential = potential
 #               em = em
@@ -215,7 +215,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 #               position_units = ${dom0Scale}
 #       [../]
 #       [./mean_en_diffusion]
-#               type = CoeffDiffusionEnergy
+#               type = CoeffDiffusion
 #               variable = mean_en
 #               em = em
 #               block = 0

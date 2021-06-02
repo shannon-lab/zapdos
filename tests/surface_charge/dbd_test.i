@@ -356,7 +356,7 @@ dom1Scale=1e-4
   # This interface kernel simply applies a dielectric BC with surface charge
   # accumulation.
   [potential_right]
-    type = ADPotentialSurfaceCharge
+    type = PotentialSurfaceCharge
     neighbor_var = potential_dom1
     variable = potential_dom0
     position_units = ${dom0Scale}

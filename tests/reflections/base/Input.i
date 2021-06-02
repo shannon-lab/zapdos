@@ -92,7 +92,7 @@ vhigh = -175E-3 #kV
                 block = 0
         [../]
         [./em_advection]
-                type = EFieldAdvectionElectrons
+                type = EFieldAdvection
                 variable = em
                 potential = potential
                 mean_en = mean_en
@@ -100,7 +100,7 @@ vhigh = -175E-3 #kV
                 position_units = ${dom0Scale}
         [../]
         [./em_diffusion]
-                type = CoeffDiffusionElectrons
+                type = CoeffDiffusion
                 variable = em
                 block = 0
                 position_units = ${dom0Scale}
@@ -179,7 +179,7 @@ vhigh = -175E-3 #kV
                 block = 0
         [../]
         [./mean_en_advection]
-                type = EFieldAdvectionEnergy
+                type = EFieldAdvection
                 variable = mean_en
                 potential = potential
                 em = em
@@ -187,7 +187,7 @@ vhigh = -175E-3 #kV
                 position_units = ${dom0Scale}
         [../]
         [./mean_en_diffusion]
-                type = CoeffDiffusionEnergy
+                type = CoeffDiffusion
                 variable = mean_en
                 em = em
                 block = 0

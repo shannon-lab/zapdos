@@ -10,10 +10,10 @@
 
 #include "ADPotentialSurfaceCharge.h"
 
-registerMooseObject("ZapdosApp", ADPotentialSurfaceCharge);
+registerMooseObject("ZapdosApp", PotentialSurfaceCharge);
 
 InputParameters
-ADPotentialSurfaceCharge::validParams()
+PotentialSurfaceCharge::validParams()
 {
   InputParameters params = ADInterfaceKernel::validParams();
   params.addParam<Real>("position_units", 1.0, "The units of position.");
@@ -21,7 +21,7 @@ ADPotentialSurfaceCharge::validParams()
   return params;
 }
 
-ADPotentialSurfaceCharge::ADPotentialSurfaceCharge(const InputParameters & parameters)
+PotentialSurfaceCharge::PotentialSurfaceCharge(const InputParameters & parameters)
   : ADInterfaceKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _r_neighbor_units(1. / getParam<Real>("neighbor_position_units")),
@@ -32,7 +32,7 @@ ADPotentialSurfaceCharge::ADPotentialSurfaceCharge(const InputParameters & param
 }
 
 ADReal
-ADPotentialSurfaceCharge::computeQpResidual(Moose::DGResidualType type)
+PotentialSurfaceCharge::computeQpResidual(Moose::DGResidualType type)
 {
   ADReal r = 0;
 

@@ -13,17 +13,17 @@
 #include "ADInterfaceKernel.h"
 
 /**
- * DGKernel for enforcing a dielectric boundary condition on
+ * InterfaceKernel for enforcing a dielectric boundary condition on
  * a potential variable, including surface charge as an
  * ADMaterialProperty.
  * Jacobians computed through automatic differentiation.
  */
-class ADPotentialSurfaceCharge : public ADInterfaceKernel
+class PotentialSurfaceCharge : public ADInterfaceKernel
 {
 public:
   static InputParameters validParams();
 
-  ADPotentialSurfaceCharge(const InputParameters & parameters);
+  PotentialSurfaceCharge(const InputParameters & parameters);
 
 protected:
   virtual ADReal computeQpResidual(Moose::DGResidualType type) override;
