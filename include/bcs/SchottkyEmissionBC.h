@@ -32,9 +32,6 @@ protected:
   const std::vector<std::string> _se_coeff_names;
   /// Material value of secondary electron coefficient
   std::vector<const ADMaterialProperty<Real> *> _se_coeff;
-
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Electron mean energy density
   const ADVariableValue & _mean_en;
 
@@ -78,6 +75,8 @@ protected:
 
   /// Scaling units for the potential (V or kV)
   std::string _potential_units;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Scaling value for the potential
   Real _voltage_scaling;
 

@@ -32,9 +32,6 @@ protected:
 
   /// Number of ions defined
   const unsigned int _num_ions;
-
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Ion density variables
   std::vector<MooseVariable *> _ip_var;
   /// Ion density values
@@ -62,6 +59,10 @@ protected:
   const MaterialProperty<Real> & _work_function;
   /// Field enhancement factor of surface
   const MaterialProperty<Real> & _field_enhancement;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise
   Real _a;

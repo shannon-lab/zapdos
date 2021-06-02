@@ -18,10 +18,12 @@ SecondaryElectronBC::validParams()
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient of the electrons.");
   params.addParam<Real>("r_ion", 0, "The reflection coefficient of the ions.");
-  params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs", "A list of species-dependent secondary electron emission coefficients");
   params.addClassDescription("Kinetic secondary electron boundary condition");
@@ -37,13 +39,14 @@ SecondaryElectronBC::SecondaryElectronBC(const InputParameters & parameters)
     _num_ions(coupledComponents("ions")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     // Coupled Variables
-    _grad_potential(adCoupledGradient("potential")),
     _mean_en(adCoupledValue("electron_energy")),
 
     _muem(getADMaterialProperty<Real>("muem")),
     _massem(getMaterialProperty<Real>("massem")),
-    _e(getMaterialProperty<Real>("e"))
+    _e(getMaterialProperty<Real>("e")),
 
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
   _ion_flux = 0;
   _a = 0.5;
@@ -84,7 +87,7 @@ SecondaryElectronBC::SecondaryElectronBC(const InputParameters & parameters)
 ADReal
 SecondaryElectronBC::computeQpResidual()
 {
-  if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
+  if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
   }
@@ -96,19 +99,19 @@ SecondaryElectronBC::computeQpResidual()
   _ion_flux = 0;
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential[_qp] > 0.0)
+    if (_normals[_qp] * (*_sgnip[i])[_qp] * _electric_field[_qp] > 0.0)
       _b = 1.0;
     else
       _b = 0.0;
     _ion_flux += (*_se_coeff[i])[_qp] * std::exp((*_ip[i])[_qp]) *
                  (0.5 * std::sqrt(8 * _kb[_qp] * (*_Tip[i])[_qp] / (M_PI * (*_massip[i])[_qp])) +
-                  (2 * _b - 1) * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] *
+                  (2 * _b - 1) * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * _electric_field[_qp] *
                       _r_units * _normals[_qp]);
   }
   _ion_flux *= (1.0 - _r_ion) / (1.0 + _r_ion);
 
   _n_gamma = (1. - _a) * _ion_flux /
-             (_muem[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
+             (_muem[_qp] * _electric_field[_qp] * _r_units * _normals[_qp] +
               std::numeric_limits<double>::epsilon());
   _v_thermal =
       std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));

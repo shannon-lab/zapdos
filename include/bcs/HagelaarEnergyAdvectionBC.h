@@ -31,9 +31,6 @@ protected:
   const Real _r;
   /// Number of ions defined
   const unsigned int _num_ions;
-
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Ion density variables
   std::vector<MooseVariable *> _ip_var;
   /// Ion density values
@@ -55,6 +52,10 @@ protected:
   const Real _se_energy;
   /// Mobility coefficient of the electron mean energy density
   const ADMaterialProperty<Real> & _mumean_en;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise
   Real _a;

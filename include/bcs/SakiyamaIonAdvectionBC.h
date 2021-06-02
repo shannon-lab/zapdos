@@ -28,13 +28,12 @@ protected:
   /// Scaling units for the position
   const Real _r_units;
 
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
-
   /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
   /// Charge sign of the species
   const MaterialProperty<Real> & _sgn;
-  /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+
   Real _a;
 };

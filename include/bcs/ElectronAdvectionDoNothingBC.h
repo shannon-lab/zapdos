@@ -33,8 +33,5 @@ protected:
   const ADMaterialProperty<Real> & _muem;
   /// Charge sign of electrons
   const MaterialProperty<Real> & _sign;
-
-private:
-  // Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

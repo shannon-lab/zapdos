@@ -30,11 +30,10 @@ protected:
   /// Reflection coefficient
   const Real _r;
 
-  // Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
-
   /// Mobility coefficient of electrons
   const ADMaterialProperty<Real> & _muem;
   /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise
   Real _a;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

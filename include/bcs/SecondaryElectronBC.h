@@ -39,9 +39,6 @@ protected:
   const std::vector<std::string> _se_coeff_names;
   /// Material value of secondary electron coefficient
   std::vector<const ADMaterialProperty<Real> *> _se_coeff;
-
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Electron mean energy density
   const ADVariableValue & _mean_en;
   /// Ion density values
@@ -63,6 +60,10 @@ protected:
   std::vector<const ADMaterialProperty<Real> *> _Tip;
   /// Mass of ions
   std::vector<const MaterialProperty<Real> *> _massip;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Equal to 1 when the electron drift velocity is direct towards the wall and zero otherwise
   Real _a;

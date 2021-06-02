@@ -27,8 +27,9 @@ protected:
 
   /// Scaling units for the position
   const Real _r_units;
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+
   /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
   /// Charge sign of the species

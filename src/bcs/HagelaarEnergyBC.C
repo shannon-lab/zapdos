@@ -17,9 +17,11 @@ HagelaarEnergyBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
-  params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Kinetic electron mean energy boundary condition"
                              " (Based on [!cite](hagelaar2000boundary))");
   return params;
@@ -31,12 +33,16 @@ HagelaarEnergyBC::HagelaarEnergyBC(const InputParameters & parameters)
     _r(getParam<Real>("r")),
 
     // Coupled Variables
-    _grad_potential(adCoupledGradient("potential")),
     _em(adCoupledValue("electrons")),
 
     _massem(getMaterialProperty<Real>("massem")),
     _e(getMaterialProperty<Real>("e")),
-    _mumean_en(getADMaterialProperty<Real>("mumean_en"))
+    _se_coeff(getMaterialProperty<Real>("se_coeff")),
+    _se_energy(getMaterialProperty<Real>("se_energy")),
+    _mumean_en(getADMaterialProperty<Real>("mumean_en")),
+
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
   _a = 0.5;
   _v_thermal = 0.0;
@@ -45,7 +51,7 @@ HagelaarEnergyBC::HagelaarEnergyBC(const InputParameters & parameters)
 ADReal
 HagelaarEnergyBC::computeQpResidual()
 {
-  if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
+  if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
   }
@@ -57,7 +63,7 @@ HagelaarEnergyBC::computeQpResidual()
       std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) *
-         (-(2. * _a - 1.) * _mumean_en[_qp] * -_grad_potential[_qp] * _r_units * _normals[_qp] +
+         (-(2. * _a - 1.) * _mumean_en[_qp] * _electric_field[_qp] * _r_units * _normals[_qp] +
           5. / 6. * _v_thermal) *
          std::exp(_u[_qp]);
 }

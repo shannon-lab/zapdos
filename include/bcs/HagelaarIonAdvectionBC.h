@@ -30,8 +30,7 @@ protected:
   /// Reflection coefficient
   const Real & _r;
 
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Mobility coefficient of ions
   const ADMaterialProperty<Real> & _mu;

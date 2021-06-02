@@ -27,6 +27,5 @@ protected:
 
   /// Charge sign of the species
   const int _charge_sign;
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };
