@@ -28,8 +28,7 @@ protected:
 private:
   /// Charge sign of the coupled species
   const Real _sgn;
-  /// Gradient of the coupled potential
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Value of the coupled density variable
   const VariableValue & _u;
   /// Gradient of the coupled density variable

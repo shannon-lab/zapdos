@@ -17,9 +17,10 @@ InputParameters
 Sigma::validParams()
 {
   InputParameters params = AuxKernel::validParams();
-
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addRequiredCoupledVar("n", "The density of the ions.");
-  params.addRequiredCoupledVar("potential", "The potential");
   params.addClassDescription(
       "Calculates the surface charge due to a simplified version of the ion flux "
       "to a boundary.");
@@ -30,12 +31,13 @@ Sigma::Sigma(const InputParameters & parameters)
   : AuxKernel(parameters),
     _u_old(uOld()),
     _n(coupledValue("n")),
-    _grad_potential(coupledGradient("potential"))
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
 }
 
 Real
 Sigma::computeValue()
 {
-  return _u_old[_qp] + _dt * -_grad_potential[_qp] * _n[_qp] * _assembly.normals()[_qp];
+  return _u_old[_qp] + _dt * raw_value(_electric_field[_qp]) * _n[_qp] * _assembly.normals()[_qp];
 }

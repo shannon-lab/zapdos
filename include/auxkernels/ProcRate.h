@@ -33,8 +33,7 @@ protected:
   const VariableValue & _em;
   /// Gradient of the electron density
   const VariableGradient & _grad_em;
-  /// Gradient of the coupled potential
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Electron mobility coefficient
   const GenericMaterialProperty<Real, is_ad> & _muem;
   /// Charge sign of electrons

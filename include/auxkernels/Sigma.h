@@ -31,6 +31,5 @@ protected:
   const VariableValue & _u_old;
   /// Coupled ion density
   const VariableValue & _n;
-  /// Gradient of the coupled potential
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

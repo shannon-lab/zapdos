@@ -31,8 +31,7 @@ protected:
   const VariableValue & _density_log;
   /// Gradient of the coupled density variable
   const VariableGradient & _grad_density_log;
-  /// Gradient of coupled potential
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Mobility coefficient
   const GenericMaterialProperty<Real, is_ad> & _mu;
   /// Charge sign of the coupled species
