@@ -8,29 +8,26 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef PROCRATEFORRATECOEFFTHREEBODY_H
-#define PROCRATEFORRATECOEFFTHREEBODY_H
+#pragma once
 
 #include "AuxKernel.h"
 
-class ProcRateForRateCoeffThreeBody;
-
-template <>
-InputParameters validParams<ProcRateForRateCoeffThreeBody>();
-
-class ProcRateForRateCoeffThreeBody : public AuxKernel
+template <bool is_ad>
+class ProcRateForRateCoeffThreeBodyTempl : public AuxKernel
 {
 public:
-  ProcRateForRateCoeffThreeBody(const InputParameters & parameters);
+  ProcRateForRateCoeffThreeBodyTempl(const InputParameters & parameters);
 
-  virtual ~ProcRateForRateCoeffThreeBody() {}
-  virtual Real computeValue();
+  static InputParameters validParams();
+
+  virtual Real computeValue() override;
 
 protected:
   const VariableValue & _v;
   const VariableValue & _w;
   const VariableValue & _vv;
-  const MaterialProperty<Real> & _reaction_coeff;
+  const GenericMaterialProperty<Real, is_ad> & _reaction_coeff;
 };
 
-#endif // ProcRateForRateCoeffThreeBody_H
+typedef ProcRateForRateCoeffThreeBodyTempl<false> ProcRateForRateCoeffThreeBody;
+typedef ProcRateForRateCoeffThreeBodyTempl<true> ADProcRateForRateCoeffThreeBody;

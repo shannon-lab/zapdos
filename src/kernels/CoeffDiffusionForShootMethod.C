@@ -10,16 +10,12 @@
 
 #include "CoeffDiffusionForShootMethod.h"
 
-// MOOSE includes
-#include "MooseVariable.h"
-
 registerMooseObject("ZapdosApp", CoeffDiffusionForShootMethod);
 
-template <>
 InputParameters
-validParams<CoeffDiffusionForShootMethod>()
+CoeffDiffusionForShootMethod::validParams()
 {
-  InputParameters params = validParams<Diffusion>();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("density", "The log of the accelerated density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("The derivative of the generic diffusion term used to calculate the "
@@ -29,26 +25,16 @@ validParams<CoeffDiffusionForShootMethod>()
 }
 
 CoeffDiffusionForShootMethod::CoeffDiffusionForShootMethod(const InputParameters & parameters)
-  : Diffusion(parameters),
-
+  : ADKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _density_var(*getVar("density", 0)),
-    _diffusivity(getMaterialProperty<Real>("diff" + _density_var.name()))
+    _diffusivity(getADMaterialProperty<Real>("diff" + _density_var.name()))
 {
 }
 
-CoeffDiffusionForShootMethod::~CoeffDiffusionForShootMethod() {}
-
-Real
+ADReal
 CoeffDiffusionForShootMethod::computeQpResidual()
 {
   return -_diffusivity[_qp] * (_grad_test[_i][_qp] * _r_units) * -_grad_test[_i][_qp] * _r_units *
          _u[_qp];
-}
-
-Real
-CoeffDiffusionForShootMethod::computeQpJacobian()
-{
-  return -_diffusivity[_qp] * (_grad_test[_i][_qp] * _r_units) * -_grad_test[_i][_qp] * _r_units *
-         _phi[_j][_qp];
 }

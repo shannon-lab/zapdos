@@ -16,16 +16,13 @@
 
 registerMooseObject("ZapdosApp", GasBase);
 
-template <>
 InputParameters
-validParams<GasBase>()
+GasBase::validParams()
 {
-  InputParameters params = validParams<Material>();
+  InputParameters params = ADMaterial::validParams();
 
   params.addParam<Real>(
       "user_relative_permittivity", 1.0, "Multiplies the permittivity of free space.");
-  // params.addRequiredParam<bool>("townsend","Whether to use the townsend formulation for the rate
-  // terms.");
   params.addRequiredParam<bool>("interp_trans_coeffs",
                                 "Whether to interpolate transport "
                                 "coefficients as a function of the mean "
@@ -64,8 +61,7 @@ validParams<GasBase>()
 }
 
 GasBase::GasBase(const InputParameters & parameters)
-  : Material(parameters),
-    // _townsend(getParam<bool>("townsend")),
+  : ADMaterial(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _interp_trans_coeffs(getParam<bool>("interp_trans_coeffs")),
     _interp_elastic_coeff(getParam<bool>("interp_elastic_coeff")),
@@ -82,24 +78,16 @@ GasBase::GasBase(const InputParameters & parameters)
     _user_p_gas(getParam<Real>("user_p_gas")),
     _use_moles(getParam<bool>("use_moles")),
 
-    _muem(declareProperty<Real>("muem")),
-    _d_muem_d_actual_mean_en(declareProperty<Real>("d_muem_d_actual_mean_en")),
-    _diffem(declareProperty<Real>("diffem")),
-    _d_diffem_d_actual_mean_en(declareProperty<Real>("d_diffem_d_actual_mean_en")),
-    // _muArp(declareProperty<Real>("muArp")),
-    // _diffArp(declareProperty<Real>("diffArp")),
+    _muem(declareADProperty<Real>("muem")),
+    _diffem(declareADProperty<Real>("diffem")),
     _rate_coeff_ion(declareProperty<Real>("rate_coeff_ion")),
     _Eiz(declareProperty<Real>("Eiz")),
     _Eex(declareProperty<Real>("Eex")),
-    // _Ar(declareProperty<Real>("Ar")),
-    _mumean_en(declareProperty<Real>("mumean_en")),
-    _d_mumean_en_d_actual_mean_en(declareProperty<Real>("d_mumean_en_d_actual_mean_en")),
-    _diffmean_en(declareProperty<Real>("diffmean_en")),
-    _d_diffmean_en_d_actual_mean_en(declareProperty<Real>("d_diffmean_en_d_actual_mean_en")),
+    _mumean_en(declareADProperty<Real>("mumean_en")),
+    _diffmean_en(declareADProperty<Real>("diffmean_en")),
     _rate_coeff_elastic(declareProperty<Real>("rate_coeff_elastic")),
     _massem(declareProperty<Real>("massem")),
     _massGas(declareProperty<Real>("massGas")),
-    // _massArp(declareProperty<Real>("massArp")),
     _se_coeff(declareProperty<Real>("se_coeff")),
     _work_function(declareProperty<Real>("work_function")),
     _field_enhancement(declareProperty<Real>("field_enhancement")),
@@ -117,7 +105,6 @@ GasBase::GasBase(const InputParameters & parameters)
     _IonTotalFlux(declareProperty<Real>("IonTotalFlux")),
     _IonAdvectiveFlux(declareProperty<Real>("IonAdvectiveFlux")),
     _IonDiffusiveFlux(declareProperty<Real>("IonDiffusiveFlux")),
-    _EField(declareProperty<Real>("EField")),
     _Source_term(declareProperty<Real>("Source_term")),
     _Source_term_coeff(declareProperty<Real>("Source_term_coeff")),
     _e(declareProperty<Real>("e")),
@@ -138,44 +125,28 @@ GasBase::GasBase(const InputParameters & parameters)
     _el_coeff_energy_a(declareProperty<Real>("el_coeff_energy_a")),
     _el_coeff_energy_b(declareProperty<Real>("el_coeff_energy_b")),
     _el_coeff_energy_c(declareProperty<Real>("el_coeff_energy_c")),
-    _alpha_iz(declareProperty<Real>("alpha_iz")),
-    // _kArIz(declareProperty<Real>("kArIz")),
-    // _alpha_ArIz(declareProperty<Real>("alpha_ArIz")),
-    _d_iz_d_actual_mean_en(declareProperty<Real>("d_iz_d_actual_mean_en")),
-    _alpha_ex(declareProperty<Real>("alpha_ex")),
-    _d_ex_d_actual_mean_en(declareProperty<Real>("d_ex_d_actual_mean_en")),
-    _alpha_el(declareProperty<Real>("alpha_el")),
-    _d_el_d_actual_mean_en(declareProperty<Real>("d_el_d_actual_mean_en")),
-    // _kArEx(declareProperty<Real>("kArEx")),
+    _alpha_iz(declareADProperty<Real>("alpha_iz")),
+    _alpha_ex(declareADProperty<Real>("alpha_ex")),
+    _alpha_el(declareADProperty<Real>("alpha_el")),
     _sgnem(declareProperty<Real>("sgnem")),
     _sgnmean_en(declareProperty<Real>("sgnmean_en")),
-    // _sgnArp(declareProperty<Real>("sgnArp")),
-    _diffpotential(declareProperty<Real>("diffpotential")),
-    _actual_mean_energy(declareProperty<Real>("actual_mean_energy")),
-    // _TArp(declareProperty<Real>("TArp")),
-    _Tem(declareProperty<Real>("Tem")),
-    // _muu(declareProperty<Real>("muu")),
+    _diffpotential(declareADProperty<Real>("diffpotential")),
+    _actual_mean_energy(declareADProperty<Real>("actual_mean_energy")),
+    _Tem(declareADProperty<Real>("Tem")),
     _diffu(declareProperty<Real>("diffu")),
     _sgnu(declareProperty<Real>("sgnu")),
     _T_gas(declareProperty<Real>("T_gas")),
     _p_gas(declareProperty<Real>("p_gas")),
     _n_gas(declareProperty<Real>("n_gas")),
-    _kiz(declareProperty<Real>("kiz")),
-    _kex(declareProperty<Real>("kex")),
-    _kArp(declareProperty<Real>("kArp")),
-    _kel(declareProperty<Real>("kel")),
-    _d_kiz_d_actual_mean_en(declareProperty<Real>("d_kiz_d_actual_mean_en")),
-    _d_kex_d_actual_mean_en(declareProperty<Real>("d_kex_d_actual_mean_en")),
-    _d_kel_d_actual_mean_en(declareProperty<Real>("d_kel_d_actual_mean_en")),
-    _TemVolts(declareProperty<Real>("TemVolts")),
+    _kiz(declareADProperty<Real>("kiz")),
+    _kex(declareADProperty<Real>("kex")),
+    _kArp(declareADProperty<Real>("kArp")),
+    _kel(declareADProperty<Real>("kel")),
+    _TemVolts(declareADProperty<Real>("TemVolts")),
 
-    // _grad_potential(isCoupled("potential") ? coupledGradient("potential") : _grad_zero),
-    _em(isCoupled("em") ? coupledValue("em") : _zero),
-    _ip(isCoupled("ip") ? coupledValue("ip") : _zero),
-    _grad_em(isCoupled("em") ? coupledGradient("em") : _grad_zero),
-    _grad_ip(isCoupled("ip") ? coupledGradient("ip") : _grad_zero),
-    _mean_en(isCoupled("mean_en") ? coupledValue("mean_en") : _zero),
-    _grad_potential(coupledGradient("potential"))
+    _em(isCoupled("em") ? adCoupledValue("em") : _ad_zero),
+    _mean_en(isCoupled("mean_en") ? adCoupledValue("mean_en") : _ad_zero),
+    _grad_potential(adCoupledGradient("potential"))
 {
   if (_potential_units.compare("V") == 0)
     _voltage_scaling = 1.;
@@ -184,13 +155,10 @@ GasBase::GasBase(const InputParameters & parameters)
 
   std::vector<Real> actual_mean_energy;
   std::vector<Real> alpha;
-  // std::vector<Real> kArIz;
   std::vector<Real> alphaEx;
   std::vector<Real> alphaEl;
-  // std::vector<Real> kArExIz;
   std::vector<Real> mu;
   std::vector<Real> diff;
-  // std::vector<Real> d_alpha_d_actual_mean_energy;
 
   std::string file_name = getParam<FileName>("property_tables_file");
   MooseUtils::checkFileReadable(file_name);
@@ -262,38 +230,51 @@ GasBase::computeQpProperties()
   {
     if (_ramp_trans_coeffs)
     {
-      _muem[_qp] =
-          (std::tanh(_t / 1e-6) * _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) +
+      _muem[_qp].value() =
+          (std::tanh(_t / 1e-6) *
+               _mu_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) +
            (1. - std::tanh(_t / 1e-6)) * .0352) *
           _voltage_scaling;
-      _d_muem_d_actual_mean_en[_qp] =
+      _muem[_qp].derivatives() =
           std::tanh(_t / 1e-6) *
-          _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling;
-      _diffem[_qp] =
-          std::tanh(_t / 1e-6) * _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) +
+          _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
+          std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+          (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) * _voltage_scaling;
+      _diffem[_qp].value() =
+          std::tanh(_t / 1e-6) *
+              _diff_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) +
           (1. - std::tanh(_t / 1e-6)) * .30;
-      _d_diffem_d_actual_mean_en[_qp] =
+      _diffem[_qp].derivatives() =
           std::tanh(_t / 1e-6) *
-          _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+          _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
+          std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+          (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
     }
     else
     {
-      _muem[_qp] = _mu_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling;
-      _d_muem_d_actual_mean_en[_qp] =
-          _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp])) * _voltage_scaling;
-      _diffem[_qp] = _diff_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
-      _d_diffem_d_actual_mean_en[_qp] =
-          _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+      _muem[_qp].value() =
+          _mu_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
+          _voltage_scaling;
+      _muem[_qp].derivatives() =
+          _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
+          std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+          (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) * _voltage_scaling;
+      _diffem[_qp].value() =
+          _diff_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value()));
+      _diffem[_qp].derivatives() =
+          _diff_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
+          std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+          (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
     }
   }
   else
   {
     // From bolos at atmospheric pressure and an EField of 2e5 V/m
-    _muem[_qp] =
+    _muem[_qp].value() =
         0.0352103411399 * _voltage_scaling; // units of m^2/(kV*s) if _voltage_scaling = 1000
-    _d_muem_d_actual_mean_en[_qp] = 0.0;
-    _diffem[_qp] = 0.297951680159;
-    _d_diffem_d_actual_mean_en[_qp] = 0.0;
+    _muem[_qp].derivatives() = 0.0;
+    _diffem[_qp].value() = 0.297951680159;
+    _diffem[_qp].derivatives() = 0.0;
   }
 
   // From curve fitting with bolos
@@ -306,24 +287,31 @@ GasBase::computeQpProperties()
   _iz_coeff_energy_c[_qp] = 5.51972192e+1;
 
   _actual_mean_energy[_qp] = std::exp(_mean_en[_qp] - _em[_qp]);
-  _alpha_iz[_qp] = _alpha_interpolation.sample(_actual_mean_energy[_qp]);
-  // _kArIz[_qp] = _kArIz_interpolation.sample(_actual_mean_energy[_qp]);
-  _d_iz_d_actual_mean_en[_qp] =
-      _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
-  // _kArEx[_qp] = _kArExIz_interpolation.sample(_actual_mean_energy[_qp]);
-  _alpha_ex[_qp] = _alphaEx_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
-  _d_ex_d_actual_mean_en[_qp] =
-      _alphaEx_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+  _alpha_iz[_qp].value() =
+      _alpha_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value()));
+  _alpha_iz[_qp].derivatives() =
+      _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
+      std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+      (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
+  _alpha_ex[_qp].value() =
+      _alphaEx_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value()));
+  _alpha_ex[_qp].derivatives() =
+      _alphaEx_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
+      std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+      (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
   if (_interp_elastic_coeff)
   {
-    _alpha_el[_qp] = _alphaEl_interpolation.sample(std::exp(_mean_en[_qp] - _em[_qp]));
-    _d_el_d_actual_mean_en[_qp] =
-        _alphaEl_interpolation.sampleDerivative(std::exp(_mean_en[_qp] - _em[_qp]));
+    _alpha_el[_qp].value() =
+        _alphaEl_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value()));
+    _alpha_el[_qp].derivatives() = _alphaEl_interpolation.sampleDerivative(
+                                       std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
+                                   std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+                                   (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
   }
   else
   {
-    _alpha_el[_qp] = 5e8;
-    _d_el_d_actual_mean_en[_qp] = 0.0;
+    _alpha_el[_qp].value() = 5e8;
+    _alpha_el[_qp].derivatives() = 0.0;
   }
 
   _el_coeff_energy_a[_qp] = 1.60638169e-13;
@@ -336,17 +324,17 @@ GasBase::computeQpProperties()
 
   // From Hagelaar: The below approximations can be derived assumption Maxwell EEDF, const
   // momentum-transfer frequency, and constant kinetic pressure.
-  _mumean_en[_qp] = 5.0 / 3.0 * _muem[_qp];
-  _diffmean_en[_qp] = 5.0 / 3.0 * _diffem[_qp];
+  _mumean_en[_qp].value() = 5.0 / 3.0 * _muem[_qp].value();
+  _diffmean_en[_qp].value() = 5.0 / 3.0 * _diffem[_qp].value();
   if (_interp_trans_coeffs)
   {
-    _d_mumean_en_d_actual_mean_en[_qp] = 5.0 / 3.0 * _d_muem_d_actual_mean_en[_qp];
-    _d_diffmean_en_d_actual_mean_en[_qp] = 5.0 / 3.0 * _d_diffem_d_actual_mean_en[_qp];
+    _mumean_en[_qp].derivatives() = 5.0 / 3.0 * _muem[_qp].derivatives();
+    _diffmean_en[_qp].derivatives() = 5.0 / 3.0 * _diffem[_qp].derivatives();
   }
   else
   {
-    _d_mumean_en_d_actual_mean_en[_qp] = 0.0;
-    _d_diffmean_en_d_actual_mean_en[_qp] = 0.0;
+    _mumean_en[_qp].derivatives() = 0.0;
+    _diffmean_en[_qp].derivatives() = 0.0;
   }
 
   _rate_coeff_elastic[_qp] = 1e-13;
@@ -355,37 +343,16 @@ GasBase::computeQpProperties()
   _Tem[_qp] = _e[_qp] * _TemVolts[_qp] / _k_boltz[_qp];
 
   _kiz[_qp] = 2.34e-14 * std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]);
-  _d_kiz_d_actual_mean_en[_qp] =
-      2.34e-14 *
-      (.59 * std::pow(_TemVolts[_qp], .59 - 1.) * std::exp(-17.44 / _TemVolts[_qp]) +
-       std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]) * 17.44 /
-           std::pow(_TemVolts[_qp], 2.)) *
-      2. / 3.;
   _kex[_qp] = 2.48e-14 * std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]);
   _kArp[_qp] = 2.48e-14 * std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]);
-  _d_kex_d_actual_mean_en[_qp] =
-      2.48e-14 *
-      (.33 * std::pow(_TemVolts[_qp], .33 - 1.) * std::exp(-12.78 / _TemVolts[_qp]) +
-       std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]) * 12.78 /
-           std::pow(_TemVolts[_qp], 2.)) *
-      2. / 3.;
 
-  // EField calculation test
-  _EField[_qp] = _grad_potential[_qp](0) * _r_units;
-
-  // Townsend calculation test
-  // _alpha_ArIz[_qp] = _n_gas[_qp]*_kArIz[_qp]/(_muem[_qp]*_EField[_qp]);
-
-  _kel[_qp] = 1e-13; // Approximate elastic rate coefficient
-  _d_kel_d_actual_mean_en[_qp] = 0.;
+  _kel[_qp].value() = 1e-13; // Approximate elastic rate coefficient
+  _kel[_qp].derivatives() = 0.;
   if (_use_moles)
   {
     _kiz[_qp] = _kiz[_qp] * _N_A[_qp];
-    _d_kiz_d_actual_mean_en[_qp] = _d_kiz_d_actual_mean_en[_qp] * _N_A[_qp];
     _kex[_qp] = _kex[_qp] * _N_A[_qp];
     _kArp[_qp] = _kArp[_qp] * _N_A[_qp];
-    _d_kex_d_actual_mean_en[_qp] = _d_kex_d_actual_mean_en[_qp] * _N_A[_qp];
     _kel[_qp] = _kel[_qp] * _N_A[_qp];
-    _d_kel_d_actual_mean_en[_qp] = _d_kel_d_actual_mean_en[_qp] * _N_A[_qp];
   }
 }

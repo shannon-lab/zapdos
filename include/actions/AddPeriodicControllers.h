@@ -12,16 +12,13 @@
 
 #include "Action.h"
 
-class AddPeriodicControllers;
-
-template <>
-InputParameters validParams<AddPeriodicControllers>();
-
 // class AddPeriodicControllers : public AddControlAction
 class AddPeriodicControllers : public Action
 {
 public:
   AddPeriodicControllers(InputParameters params);
+
+  static InputParameters validParams();
 
   virtual void act();
 

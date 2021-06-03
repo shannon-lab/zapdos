@@ -1,7 +1,6 @@
 dom1Scale=1e-7
 
 [GlobalParams]
-  offset = 20
   potential_units = kV
   use_moles = true
 []
@@ -207,13 +206,11 @@ dom1Scale=1e-7
   [../]
   [./emliq_lin]
     type = DensityMoles
-    convert_moles = true
     variable = emliq_lin
     density_log = emliq
   [../]
   [./OHm_lin]
     type = DensityMoles
-    convert_moles = true
     variable = OHm_lin
     density_log = OHm
   [../]
@@ -225,7 +222,7 @@ dom1Scale=1e-7
     position_units = ${dom1Scale}
   [../]
   [./Current_emliq]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = emliq
     variable = Current_emliq
@@ -233,7 +230,7 @@ dom1Scale=1e-7
     position_units = ${dom1Scale}
   [../]
   [./Current_OHm]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = OHm
     variable = Current_OHm
@@ -241,20 +238,20 @@ dom1Scale=1e-7
     position_units = ${dom1Scale}
   [../]
   [./tot_flux_OHm]
-    type = TotalFlux
+    type = ADTotalFlux
     potential = potential
     density_log = OHm
     variable = tot_flux_OHm
   [../]
   [./EFieldAdvAux_emliq]
-    type = EFieldAdvAux
+    type = ADEFieldAdvAux
     potential = potential
     density_log = emliq
     variable = EFieldAdvAux_emliq
     position_units = ${dom1Scale}
   [../]
   [./DiffusiveFlux_emliq]
-    type = DiffusiveFlux
+    type = ADDiffusiveFlux
     density_log = emliq
     variable = DiffusiveFlux_emliq
     position_units = ${dom1Scale}

@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", ProvideMobility);
 
-template <>
 InputParameters
-validParams<ProvideMobility>()
+ProvideMobility::validParams()
 {
-  InputParameters params = validParams<GeneralUserObject>();
+  InputParameters params = GeneralUserObject::validParams();
   params.addRequiredParam<Real>("electrode_area", "The area of the electrode or plasma.");
   params.addRequiredParam<Real>("ballast_resist", "The magnitude of the ballasting resistance.");
   params.addRequiredParam<Real>("e", "The Coulomb charge");

@@ -14,12 +14,6 @@
 // MOOSE includes
 #include "SideIntegralVariablePostprocessor.h"
 
-// Forward Declarations
-class SideCurrent;
-
-template <>
-InputParameters validParams<SideCurrent>();
-
 /**
  * This postprocessor computes a side integral of current density.
  */
@@ -27,6 +21,8 @@ class SideCurrent : public SideIntegralVariablePostprocessor
 {
 public:
   SideCurrent(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
 protected:
   virtual Real computeQpIntegral();

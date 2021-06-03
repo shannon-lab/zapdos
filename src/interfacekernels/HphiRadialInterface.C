@@ -10,22 +10,19 @@
 
 #include "HphiRadialInterface.h"
 
-#include <cmath>
-
 registerMooseObject("ZapdosApp", HphiRadialInterface);
 
-template <>
 InputParameters
-validParams<HphiRadialInterface>()
+HphiRadialInterface::validParams()
 {
-  InputParameters params = validParams<InterfaceKernel>();
+  InputParameters params = ADInterfaceKernel::validParams();
   return params;
 }
 
 HphiRadialInterface::HphiRadialInterface(const InputParameters & parameters)
-  : InterfaceKernel(parameters),
-    _eps_r_neighbor(getNeighborMaterialProperty<Real>("eps_r")),
-    _eps_r(getMaterialProperty<Real>("eps_r"))
+  : ADInterfaceKernel(parameters),
+    _eps_r_neighbor(getNeighborADMaterialProperty<Real>("eps_r")),
+    _eps_r(getADMaterialProperty<Real>("eps_r"))
 {
   if (!parameters.isParamValid("boundary"))
   {
@@ -34,13 +31,10 @@ HphiRadialInterface::HphiRadialInterface(const InputParameters & parameters)
   }
 }
 
-Real
+ADReal
 HphiRadialInterface::computeQpResidual(Moose::DGResidualType type)
 {
-  // if (_eps_r_neighbor[_qp] < std::numeric_limits<double>::epsilon())
-  //   mooseError("It doesn't appear that DG material properties got passed.");
-
-  Real r = 0;
+  ADReal r = 0;
 
   switch (type)
   {
@@ -57,24 +51,4 @@ HphiRadialInterface::computeQpResidual(Moose::DGResidualType type)
   }
 
   return r;
-}
-
-Real
-HphiRadialInterface::computeQpJacobian(Moose::DGJacobianType type)
-{
-  Real jac = 0;
-  switch (type)
-  {
-    case Moose::ElementNeighbor:
-      jac += _test[_i][_qp] * _eps_r[_qp] / _eps_r_neighbor[_qp] *
-                 (_grad_phi_neighbor[_j][_qp] * _normals[_qp] +
-                  _phi_neighbor[_j][_qp] / _q_point[_qp](0)) -
-             _test[_i][_qp] * _phi_neighbor[_j][_qp] / _q_point[_qp](0);
-      break;
-
-    default:
-      break;
-  }
-
-  return jac;
 }

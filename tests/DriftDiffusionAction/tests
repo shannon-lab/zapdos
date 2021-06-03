@@ -6,16 +6,41 @@
     custom_cmp = 'mean_en_out.cmp'
     group = 'drift_diffusion'
   [../]
+  [./WaterPlasma_no_action_syntax]
+    type = RunApp
+    input = 'mean_en_no_actions.i'
+    check_input = True
+    method = opt
+    prereq = WaterPlasma
+    group = 'drift_diffusion'
+  [../]
   [./RFPlasma]
     type = 'Exodiff'
     input = 'RF_Plasma_actions.i'
     exodiff = 'RF_out.e'
     group = 'drift_diffusion'
   [../]
+  [./RFPlasma_no_action_syntax]
+    type = RunApp
+    input = 'RF_Plasma_no_actions.i'
+    check_input = True
+    method = opt
+    prereq = RFPlasma
+    group = 'drift_diffusion'
+  [../]
   [./2D_RFPlasma]
     type = 'Exodiff'
     input = '2D_RF_Plasma_actions.i'
     exodiff = '2D_RF_out.e'
+    custom_cmp = '2D_RF_out.cmp'
+    group = 'drift_diffusion'
+  [../]
+  [./2D_RFPlasma_no_action_syntax]
+    type = RunApp
+    input = '2D_RF_Plasma_no_actions.i'
+    check_input = True
+    method = opt
+    prereq = 2D_RFPlasma
     group = 'drift_diffusion'
   [../]
 []

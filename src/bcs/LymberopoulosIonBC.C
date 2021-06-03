@@ -10,16 +10,12 @@
 
 #include "LymberopoulosIonBC.h"
 
-// MOOSE includes
-#include "MooseVariable.h"
-
 registerMooseObject("ZapdosApp", LymberopoulosIonBC);
 
-template <>
 InputParameters
-validParams<LymberopoulosIonBC>()
+LymberopoulosIonBC::validParams()
 {
-  InputParameters params = validParams<IntegratedBC>();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Simpified kinetic ion boundary condition"
@@ -28,44 +24,20 @@ validParams<LymberopoulosIonBC>()
 }
 
 LymberopoulosIonBC::LymberopoulosIonBC(const InputParameters & parameters)
-  : IntegratedBC(parameters),
+  : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
 
     // Coupled Variables
-    _grad_potential(coupledGradient("potential")),
-    _potential_id(coupled("potential")),
+    _grad_potential(adCoupledGradient("potential")),
 
-    _mu(getMaterialProperty<Real>("mu" + _var.name()))
+    _mu(getADMaterialProperty<Real>("mu" + _var.name()))
 {
 }
 
-Real
+ADReal
 LymberopoulosIonBC::computeQpResidual()
 {
-
   return _test[_i][_qp] * _r_units * _mu[_qp] * -_grad_potential[_qp] * _r_units *
          std::exp(_u[_qp]) * _normals[_qp];
-}
-
-Real
-LymberopoulosIonBC::computeQpJacobian()
-{
-
-  return _test[_i][_qp] * _r_units * _mu[_qp] * -_grad_potential[_qp] * _r_units *
-         std::exp(_u[_qp]) * _phi[_j][_qp] * _normals[_qp];
-}
-
-Real
-LymberopoulosIonBC::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  if (jvar == _potential_id)
-  {
-
-    return _test[_i][_qp] * _r_units * _mu[_qp] * _grad_phi[_j][_qp] * _r_units *
-           std::exp(_u[_qp]) * _normals[_qp];
-  }
-
-  else
-    return 0.0;
 }

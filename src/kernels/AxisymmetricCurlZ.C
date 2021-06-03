@@ -12,26 +12,17 @@
 
 registerMooseObject("ZapdosApp", AxisymmetricCurlZ);
 
-template <>
 InputParameters
-validParams<AxisymmetricCurlZ>()
+AxisymmetricCurlZ::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = ADKernel::validParams();
   return params;
 }
 
-AxisymmetricCurlZ::AxisymmetricCurlZ(const InputParameters & parameters) : Kernel(parameters) {}
+AxisymmetricCurlZ::AxisymmetricCurlZ(const InputParameters & parameters) : ADKernel(parameters) {}
 
-AxisymmetricCurlZ::~AxisymmetricCurlZ() {}
-
-Real
+ADReal
 AxisymmetricCurlZ::computeQpResidual()
 {
   return _test[_i][_qp] * (_u[_qp] / _q_point[_qp](0) + _grad_u[_qp](0));
-}
-
-Real
-AxisymmetricCurlZ::computeQpJacobian()
-{
-  return _test[_i][_qp] * (_phi[_j][_qp] / _q_point[_qp](0) + _grad_phi[_j][_qp](0));
 }

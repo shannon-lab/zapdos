@@ -13,11 +13,10 @@
 
 registerMooseObject("ZapdosApp", CurrentDensityShapeSideUserObject);
 
-template <>
 InputParameters
-validParams<CurrentDensityShapeSideUserObject>()
+CurrentDensityShapeSideUserObject::validParams()
 {
-  InputParameters params = validParams<ShapeSideUserObject>();
+  InputParameters params = ShapeSideUserObject::validParams();
   params.addRequiredCoupledVar("em", "The electron  density.");
   params.addRequiredCoupledVar("ip", "The ion density density.");
   params.addRequiredCoupledVar("potential", "The electrical potential.");
@@ -41,12 +40,10 @@ CurrentDensityShapeSideUserObject::CurrentDensityShapeSideUserObject(
     _potential_id(coupled("potential")),
     _mean_en(coupledValue("mean_en")),
     _mean_en_id(coupled("mean_en")),
-    _muip(getMaterialProperty<Real>("mu" + _ip_var.name())),
-    _diffip(getMaterialProperty<Real>("diff" + _ip_var.name())),
-    _muem(getMaterialProperty<Real>("muem")),
-    _d_muem_d_actual_mean_en(getMaterialProperty<Real>("d_muem_d_actual_mean_en")),
-    _diffem(getMaterialProperty<Real>("diffem")),
-    _d_diffem_d_actual_mean_en(getMaterialProperty<Real>("d_diffem_d_actual_mean_en")),
+    _muip(getADMaterialProperty<Real>("mu" + _ip_var.name())),
+    _diffip(getADMaterialProperty<Real>("diff" + _ip_var.name())),
+    _muem(getADMaterialProperty<Real>("muem")),
+    _diffem(getADMaterialProperty<Real>("diffem")),
     _e(1.6e-19),
     _use_moles(getParam<bool>("use_moles")),
     _avogadro(6.02e23)
@@ -70,11 +67,12 @@ CurrentDensityShapeSideUserObject::execute()
 {
   for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
   {
-    RealVectorValue ion_current = _e * (_muip[qp] * -_grad_potential[qp] * std::exp(_ip[qp]) -
-                                        _diffip[qp] * std::exp(_ip[qp]) * _grad_ip[qp]);
+    RealVectorValue ion_current =
+        _e * (_muip[qp].value() * -_grad_potential[qp] * std::exp(_ip[qp]) -
+              _diffip[qp].value() * std::exp(_ip[qp]) * _grad_ip[qp]);
     RealVectorValue electron_current =
-        -_e * (-_muem[qp] * -_grad_potential[qp] * std::exp(_em[qp]) -
-               _diffem[qp] * std::exp(_em[qp]) * _grad_em[qp]);
+        -_e * (-_muem[qp].value() * -_grad_potential[qp] * std::exp(_em[qp]) -
+               _diffem[qp].value() * std::exp(_em[qp]) * _grad_em[qp]);
     Real outgoing_current = _normals[qp] * (ion_current + electron_current);
     if (_use_moles)
       outgoing_current *= _avogadro;
@@ -93,9 +91,9 @@ CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
     for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
     {
       RealVectorValue d_ion_current_d_ip =
-          _e * (_muip[qp] * -_grad_potential[qp] * std::exp(_ip[qp]) * _phi[_j][qp] -
-                _diffip[qp] * (std::exp(_ip[qp]) * _phi[_j][qp] * _grad_ip[qp] +
-                               std::exp(_ip[qp]) * _grad_phi[_j][qp]));
+          _e * (_muip[qp].value() * -_grad_potential[qp] * std::exp(_ip[qp]) * _phi[_j][qp] -
+                _diffip[qp].value() * (std::exp(_ip[qp]) * _phi[_j][qp] * _grad_ip[qp] +
+                                       std::exp(_ip[qp]) * _grad_phi[_j][qp]));
       if (_use_moles)
         d_ion_current_d_ip *= _avogadro;
       sum += _JxW[qp] * _coord[qp] * _normals[qp] * d_ion_current_d_ip;
@@ -111,14 +109,14 @@ CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
     for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
     {
       Real d_actual_mean_en_d_em = std::exp(_mean_en[qp] - _em[qp]) * -_phi[_j][qp];
-      Real d_muem_d_em = _d_muem_d_actual_mean_en[qp] * d_actual_mean_en_d_em;
-      Real d_diffem_d_em = _d_diffem_d_actual_mean_en[qp] * d_actual_mean_en_d_em;
+      Real d_muem_d_em = _muem[qp].derivatives()[jvar] * d_actual_mean_en_d_em;
+      Real d_diffem_d_em = _diffem[qp].derivatives()[jvar] * d_actual_mean_en_d_em;
 
       RealVectorValue d_electron_current_d_em =
-          -_e * (-_muem[qp] * -_grad_potential[qp] * std::exp(_em[qp]) * _phi[_j][qp] -
+          -_e * (-_muem[qp].value() * -_grad_potential[qp] * std::exp(_em[qp]) * _phi[_j][qp] -
                  d_muem_d_em * -_grad_potential[qp] * std::exp(_em[qp]) -
-                 _diffem[qp] * (std::exp(_em[qp]) * _phi[_j][qp] * _grad_em[qp] +
-                                std::exp(_em[qp]) * _grad_phi[_j][qp]) -
+                 _diffem[qp].value() * (std::exp(_em[qp]) * _phi[_j][qp] * _grad_em[qp] +
+                                        std::exp(_em[qp]) * _grad_phi[_j][qp]) -
                  d_diffem_d_em * std::exp(_em[qp]) * _grad_em[qp]);
       if (_use_moles)
         d_electron_current_d_em *= _avogadro;
@@ -135,9 +133,9 @@ CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
     for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
     {
       RealVectorValue d_ion_current_d_potential =
-          _e * (_muip[qp] * -_grad_phi[_j][qp] * std::exp(_ip[qp]));
+          _e * (_muip[qp].value() * -_grad_phi[_j][qp] * std::exp(_ip[qp]));
       RealVectorValue d_electron_current_d_potential =
-          -_e * (-_muem[qp] * -_grad_phi[_j][qp] * std::exp(_em[qp]));
+          -_e * (-_muem[qp].value() * -_grad_phi[_j][qp] * std::exp(_em[qp]));
       Real d_outgoing_current_d_potential =
           _normals[qp] * (d_ion_current_d_potential + d_electron_current_d_potential);
       if (_use_moles)
@@ -155,8 +153,8 @@ CurrentDensityShapeSideUserObject::executeJacobian(unsigned int jvar)
     for (unsigned int qp = 0; qp < _qrule->n_points(); ++qp)
     {
       Real d_actual_mean_en_d_mean_en = std::exp(_mean_en[qp] - _em[qp]) * _phi[_j][qp];
-      Real d_muem_d_mean_en = _d_muem_d_actual_mean_en[qp] * d_actual_mean_en_d_mean_en;
-      Real d_diffem_d_mean_en = _d_diffem_d_actual_mean_en[qp] * d_actual_mean_en_d_mean_en;
+      Real d_muem_d_mean_en = _muem[qp].derivatives()[jvar] * d_actual_mean_en_d_mean_en;
+      Real d_diffem_d_mean_en = _diffem[qp].derivatives()[jvar] * d_actual_mean_en_d_mean_en;
 
       RealVectorValue d_electron_current_d_mean_en =
           -_e * (-d_muem_d_mean_en * -_grad_potential[qp] * std::exp(_em[qp]) -

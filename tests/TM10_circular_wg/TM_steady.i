@@ -106,7 +106,7 @@
 
 [Materials]
    [./vacuum]
-     type = GenericConstantMaterial
+     type = ADGenericConstantMaterial
      prop_names = 'eps_r'
      prop_values = '1'
      block = vacuum

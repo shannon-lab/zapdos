@@ -10,43 +10,28 @@
 
 #include "CoeffDiffusionLin.h"
 
-// MOOSE includes
-#include "MooseVariable.h"
+registerADMooseObject("ZapdosApp", CoeffDiffusionLin);
 
-registerMooseObject("ZapdosApp", CoeffDiffusionLin);
-
-template <>
 InputParameters
-validParams<CoeffDiffusionLin>()
+CoeffDiffusionLin::validParams()
 {
-  InputParameters params = validParams<Diffusion>();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription("Generic linear diffusion term"
-                             "(Values are NOT in log form)");
+  params.addClassDescription(
+      "Generic linear diffusion term (Values are NOT in log form), where the "
+      "Jacobian is computed using forward automatic differentiation.");
   return params;
 }
 
-// This diffusion kernel should only be used with species whose values are in the logarithmic form.
-
 CoeffDiffusionLin::CoeffDiffusionLin(const InputParameters & parameters)
-  : Diffusion(parameters),
-
+  : ADKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
-
-    _diffusivity(getMaterialProperty<Real>("diff" + _var.name()))
+    _diffusivity(getADMaterialProperty<Real>("diff" + _var.name()))
 {
 }
 
-CoeffDiffusionLin::~CoeffDiffusionLin() {}
-
-Real
+ADReal
 CoeffDiffusionLin::computeQpResidual()
 {
   return -_diffusivity[_qp] * _grad_u[_qp] * _r_units * -_grad_test[_i][_qp] * _r_units;
-}
-
-Real
-CoeffDiffusionLin::computeQpJacobian()
-{
-  return -_diffusivity[_qp] * _grad_phi[_j][_qp] * _r_units * -_grad_test[_i][_qp] * _r_units;
 }

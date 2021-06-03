@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef EFIELDADVAUX_H
-#define EFIELDADVAUX_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -22,7 +21,7 @@ public:
   static InputParameters validParams();
 
 protected:
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
   Real _r_units;
 
@@ -40,5 +39,3 @@ protected:
 
 typedef EFieldAdvAuxTempl<false> EFieldAdvAux;
 typedef EFieldAdvAuxTempl<true> ADEFieldAdvAux;
-
-#endif // EFIELDADVAUX_H

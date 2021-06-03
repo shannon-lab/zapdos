@@ -16,16 +16,14 @@
 #include "SquirrelApp.h"
 #include "CraneApp.h"
 
-template <>
 InputParameters
-validParams<ZapdosApp>()
+ZapdosApp::validParams()
 {
-  InputParameters params = validParams<MooseApp>();
+  InputParameters params = MooseApp::validParams();
 
   params.set<bool>("use_legacy_output_syntax") = false;
   params.set<bool>("use_legacy_uo_initialization") = false;
   params.set<bool>("use_legacy_uo_aux_computation") = false;
-  params.set<bool>("use_legacy_dirichlet_bc") = false;
   return params;
 }
 
@@ -50,13 +48,6 @@ ZapdosApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)
   Registry::registerActionsTo(af, {"ZapdosApp"});
 
   /* register custom execute flags, action syntax, etc. here */
-  s.registerActionSyntax("AddLotsOfCoeffDiffusion", "LotsOfCoeffDiffusion");
-  s.registerActionSyntax("AddLotsOfVariables", "LotsOfVariables");
-  s.registerActionSyntax("AddLotsOfSources", "LotsOfSources");
-  s.registerActionSyntax("AddLotsOfTimeDerivatives", "LotsOfTimeDerivatives");
-  s.registerActionSyntax("AddLotsOfEFieldAdvection", "LotsOfEFieldAdvection");
-  s.registerActionSyntax("AddLotsOfPotentialDrivenArtificialDiff",
-                         "LotsOfPotentialDrivenArtificialDiff");
   s.registerActionSyntax("AddPeriodicControllers", "PeriodicControllers/*");
   s.registerActionSyntax("AddDriftDiffusionAction", "DriftDiffusionAction/*");
   s.registerActionSyntax("AddPeriodicRelativeNodalDifference", "PeriodicRelativeNodalDifference/*");

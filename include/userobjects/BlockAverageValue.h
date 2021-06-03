@@ -8,19 +8,12 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef BLOCKAVERAGEVALUE_H
-#define BLOCKAVERAGEVALUE_H
+#pragma once
 
 #include "ElementIntegralVariablePostprocessor.h"
 
 // libmesh includes
 #include "libmesh/mesh_tools.h"
-
-// Forward Declarations
-class BlockAverageValue;
-
-template <>
-InputParameters validParams<BlockAverageValue>();
 
 /**
  * Computes the average value of a variable on each block
@@ -29,6 +22,8 @@ class BlockAverageValue : public ElementIntegralVariablePostprocessor
 {
 public:
   BlockAverageValue(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   /**
    * Given a block ID return the average value for a variable on that block
@@ -73,5 +68,3 @@ protected:
   // This map will hold our averages for each block
   std::map<SubdomainID, Real> _average_values;
 };
-
-#endif

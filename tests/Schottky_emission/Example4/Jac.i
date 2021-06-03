@@ -2,7 +2,7 @@ dom0Scale = 1
 dom0Size = 2E-6 #m
 vhigh = 230E-3 #kV
 negVHigh = -230E-3 #kV
-relaxTime = 50E-6 #s
+# relaxTime = 50E-6 #s
 threeTimesRelaxTime = 150E-6 #s
 resistance = 1
 area = 5.02e-7 # Formerly 3.14e-6
@@ -81,7 +81,6 @@ area = 5.02e-7 # Formerly 3.14e-6
         [./current_density_user_object]
                 type = CurrentDensityShapeSideUserObject
                 boundary = left
-                data_provider = data_provider
                 potential = potential
                 em = em
                 ip = Arp
@@ -129,7 +128,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 #               block = 0
 #       [../]
 #       [./em_advection]
-#               type = EFieldAdvectionElectrons
+#               type = EFieldAdvection
 #               variable = em
 #               potential = potential
 #               mean_en = mean_en
@@ -137,7 +136,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 #               position_units = ${dom0Scale}
 #       [../]
 #       [./em_diffusion]
-#               type = CoeffDiffusionElectrons
+#               type = CoeffDiffusion
 #               variable = em
 #               mean_en = mean_en
 #               block = 0
@@ -208,7 +207,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 #               block = 0
 #       [../]
 #       [./mean_en_advection]
-#               type = EFieldAdvectionEnergy
+#               type = EFieldAdvection
 #               variable = mean_en
 #               potential = potential
 #               em = em
@@ -216,7 +215,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 #               position_units = ${dom0Scale}
 #       [../]
 #       [./mean_en_diffusion]
-#               type = CoeffDiffusionEnergy
+#               type = CoeffDiffusion
 #               variable = mean_en
 #               em = em
 #               block = 0
@@ -356,7 +355,7 @@ area = 5.02e-7 # Formerly 3.14e-6
 
 [AuxKernels]
         [./PowerDep_em]
-                type = PowerDep
+                type = ADPowerDep
                 density_log = em
                 potential = potential
                 art_diff = false
@@ -366,7 +365,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 block = 0
         [../]
         [./PowerDep_Arp]
-                type = PowerDep
+                type = ADPowerDep
                 density_log = Arp
                 potential = potential
                 art_diff = false
@@ -376,7 +375,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 block = 0
         [../]
         [./ProcRate_el]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = el
@@ -385,7 +384,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 block = 0
         [../]
         [./ProcRate_ex]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = ex
@@ -394,7 +393,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 block = 0
         [../]
         [./ProcRate_iz]
-                type = ProcRate
+                type = ADProcRate
                 em = em
                 potential = potential
                 proc = iz
@@ -460,7 +459,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 block = 0
         [../]
         [./Current_em]
-                type = Current
+                type = ADCurrent
                 potential = potential
                 density_log = em
                 variable = Current_em
@@ -469,7 +468,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 position_units = ${dom0Scale}
         [../]
         [./Current_Arp]
-                type = Current
+                type = ADCurrent
                 potential = potential
                 density_log = Arp
                 variable = Current_Arp
@@ -478,7 +477,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 position_units = ${dom0Scale}
         [../]
         [./EFieldAdvAux_em]
-                type = EFieldAdvAux
+                type = ADEFieldAdvAux
                 potential = potential
                 density_log = em
                 variable = EFieldAdvAux_em
@@ -486,7 +485,7 @@ area = 5.02e-7 # Formerly 3.14e-6
                 position_units = ${dom0Scale}
         [../]
         [./DiffusiveFlux_em]
-                type = DiffusiveFlux
+                type = ADDiffusiveFlux
                 density_log = em
                 variable = DiffusiveFlux_em
                 block = 0

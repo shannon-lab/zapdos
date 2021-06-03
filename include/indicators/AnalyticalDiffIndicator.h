@@ -8,20 +8,17 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef ANALYTICALDIFFINDICATOR_H
-#define ANALYTICALDIFFINDICATOR_H
+#pragma once
 
 #include "ElementIntegralIndicator.h"
-
-class AnalyticalDiffIndicator;
-
-template <>
-InputParameters validParams<AnalyticalDiffIndicator>();
 
 class AnalyticalDiffIndicator : public ElementIntegralIndicator
 {
 public:
   AnalyticalDiffIndicator(const InputParameters & parameters);
+
+  static InputParameters validParams();
+
   virtual ~AnalyticalDiffIndicator(){};
 
 protected:
@@ -29,5 +26,3 @@ protected:
 
   const Function & _func;
 };
-
-#endif /* ANALYTICALDIFFINDICATOR_H */

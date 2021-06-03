@@ -8,29 +8,19 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef EFIELDMAGNITUDESOURCE_H
-#define EFIELDMAGNITUDESOURCE_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class EFieldMagnitudeSource;
-
-template <>
-InputParameters validParams<EFieldMagnitudeSource>();
-
-class EFieldMagnitudeSource : public Kernel
+class EFieldMagnitudeSource : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   EFieldMagnitudeSource(const InputParameters & parameters);
-  virtual ~EFieldMagnitudeSource();
 
 protected:
-  virtual Real computeQpResidual() override;
-  virtual Real computeQpJacobian() override;
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar) override;
+  virtual ADReal computeQpResidual() override;
 
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
+  const ADVariableGradient & _grad_potential;
 };
-
-#endif /* EFIELDMAGNITUDESOURCE_H */

@@ -12,18 +12,12 @@
 
 #include "NodalVariablePostprocessor.h"
 
-// Forward Declarations
-class AverageNodalDifference;
-
-template <>
-InputParameters validParams<AverageNodalDifference>();
-
 class AverageNodalDifference : public NodalVariablePostprocessor
 {
 public:
-  static InputParameters validParams();
-
   AverageNodalDifference(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual void initialize() override;
   virtual void execute() override;

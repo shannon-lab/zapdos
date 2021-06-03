@@ -8,32 +8,29 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef TOTALFLUX_H
-#define TOTALFLUX_H
+#pragma once
 
 #include "AuxKernel.h"
 
-class TotalFlux;
-
-template <>
-InputParameters validParams<TotalFlux>();
-
-class TotalFlux : public AuxKernel
+template <bool is_ad>
+class TotalFluxTempl : public AuxKernel
 {
 public:
-  TotalFlux(const InputParameters & parameters);
+  TotalFluxTempl(const InputParameters & parameters);
 
-  virtual ~TotalFlux() {}
-  virtual Real computeValue();
+  static InputParameters validParams();
+
+  virtual Real computeValue() override;
 
 protected:
   MooseVariable & _density_var;
   const VariableValue & _density_log;
   const VariableGradient & _grad_density_log;
   const VariableGradient & _grad_potential;
-  const MaterialProperty<Real> & _mu;
+  const GenericMaterialProperty<Real, is_ad> & _mu;
   const MaterialProperty<Real> & _sgn;
-  const MaterialProperty<Real> & _diff;
+  const GenericMaterialProperty<Real, is_ad> & _diff;
 };
 
-#endif // TOTALFLUX_H
+typedef TotalFluxTempl<false> TotalFlux;
+typedef TotalFluxTempl<true> ADTotalFlux;

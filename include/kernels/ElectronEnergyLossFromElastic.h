@@ -8,45 +8,30 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef ELECTRONENERGYLOSSFROMELASTIC_H
-#define ELECTRONENERGYLOSSFROMELASTIC_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class ElectronEnergyLossFromElastic;
-
-template <>
-InputParameters validParams<ElectronEnergyLossFromElastic>();
-
-class ElectronEnergyLossFromElastic : public Kernel
+class ElectronEnergyLossFromElastic : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   ElectronEnergyLossFromElastic(const InputParameters & parameters);
-  virtual ~ElectronEnergyLossFromElastic();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
+  const Real _r_units;
 
-  const MaterialProperty<Real> & _diffem;
-  const MaterialProperty<Real> & _muem;
-  const MaterialProperty<Real> & _alpha_iz;
-  const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
-  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
-  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
+  const ADMaterialProperty<Real> & _diffem;
+  const ADMaterialProperty<Real> & _muem;
+  const ADMaterialProperty<Real> & _alpha_iz;
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _massGas;
-  const MaterialProperty<Real> & _alpha_el;
-  const MaterialProperty<Real> & _d_el_d_actual_mean_en;
+  const ADMaterialProperty<Real> & _alpha_el;
 
-  const VariableGradient & _grad_potential;
-  const VariableValue & _em;
-  const VariableGradient & _grad_em;
-  unsigned int _potential_id;
-  unsigned int _em_id;
+  const ADVariableGradient & _grad_potential;
+  const ADVariableValue & _em;
+  const ADVariableGradient & _grad_em;
 };
-
-#endif /* ELECTRONENERGYLOSSFROMELASTIC_H */

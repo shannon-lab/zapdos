@@ -13,32 +13,16 @@
 #include "AddVariableAction.h"
 #include "Action.h"
 
-class AddDriftDiffusionAction;
-
-template <>
-InputParameters validParams<AddDriftDiffusionAction>();
-
 class AddDriftDiffusionAction : public Action
 {
 public:
   AddDriftDiffusionAction(InputParameters params);
 
+  static InputParameters validParams();
+
   virtual void act();
 
 protected:
-  virtual void addElectronKernels(const std::string & em_name,
-                                  const std::string & potential_name,
-                                  const std::string & mean_en_name,
-                                  const bool & Using_offset);
-  virtual void addChargedParticlesKernels(const std::string & ion_name,
-                                          const std::string & potential_name,
-                                          const bool & Using_offset);
-  virtual void addNeutralParticlesKernels(const std::string & neutral_name,
-                                          const bool & Using_offset);
-  virtual void addMeanEnergyKernels(const std::string & em_name,
-                                    const std::string & potential_name,
-                                    const std::string & mean_en_name,
-                                    const bool & Using_offset);
   virtual void addChargeSourceKernels(const std::string & potential_name,
                                       const std::string & charged_particle_name);
   virtual void addADKernels(const std::string & name,
@@ -53,7 +37,4 @@ protected:
   virtual void addEfield(const std::string & Efield_name,
                          const std::string & potential_name,
                          const int & component);
-
-  const bool _use_ad;
-  std::string _ad_prepend;
 };

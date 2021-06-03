@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", TM0CylindricalErAux);
 
-template <>
 InputParameters
-validParams<TM0CylindricalErAux>()
+TM0CylindricalErAux::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar("Hphi", "Magnetic field component Hphi.");
   params.addRequiredParam<Real>("f", "The drive frequency.");
   params.addParam<Real>("eps_r", 1., "The relative permittivity of the medium.");

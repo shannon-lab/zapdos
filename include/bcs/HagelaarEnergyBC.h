@@ -10,41 +10,30 @@
 
 #pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class HagelaarEnergyBC;
-
-template <>
-InputParameters validParams<HagelaarEnergyBC>();
-
-class HagelaarEnergyBC : public IntegratedBC
+class HagelaarEnergyBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   HagelaarEnergyBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
-  Real _r;
+  const Real _r_units;
+  const Real & _r;
 
-  // Coupled variables
-
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
-  const VariableValue & _em;
-  unsigned int _em_id;
+  const ADVariableGradient & _grad_potential;
+  const ADVariableValue & _em;
 
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _e;
-  const MaterialProperty<Real> & _mumean_en;
-  const MaterialProperty<Real> & _d_mumean_en_d_actual_mean_en;
+  const MaterialProperty<Real> & _se_coeff;
+  const MaterialProperty<Real> & _se_energy;
+  const ADMaterialProperty<Real> & _mumean_en;
 
   Real _a;
-  Real _v_thermal;
-  Real _d_v_thermal_d_u;
-  Real _d_v_thermal_d_em;
-  Real _actual_mean_en;
+  ADReal _v_thermal;
 };

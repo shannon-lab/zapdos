@@ -8,45 +8,31 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef INTERFACEADVECTION_H
-#define INTERFACEADVECTION_H
+#pragma once
 
-#include "InterfaceKernel.h"
-
-// Forward Declarations
-class InterfaceAdvection;
-
-template <>
-InputParameters validParams<InterfaceAdvection>();
+#include "ADInterfaceKernel.h"
 
 /**
  * DG kernel for interfacing advection on adjacent blocks
  */
-class InterfaceAdvection : public InterfaceKernel
+class InterfaceAdvection : public ADInterfaceKernel
 {
 public:
+  static InputParameters validParams();
+
   InterfaceAdvection(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual(Moose::DGResidualType type);
-  virtual Real computeQpJacobian(Moose::DGJacobianType type);
-  virtual Real computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar);
+  virtual ADReal computeQpResidual(Moose::DGResidualType type) override;
 
   Real _r_units;
   Real _r_neighbor_units;
 
   MooseVariable & _potential_neighbor_var;
-  const VariableGradient & _grad_potential_neighbor;
-  unsigned int _potential_neighbor_id;
+  const ADVariableGradient & _grad_potential_neighbor;
   MooseVariable & _mean_en_neighbor_var;
-  const VariableValue & _mean_en_neighbor;
-  unsigned int _mean_en_neighbor_id;
+  const ADVariableValue & _mean_en_neighbor;
 
-  const MaterialProperty<Real> & _mu_neighbor;
-  const MaterialProperty<Real> & _d_mu_neighbor_d_actual_mean_en;
+  const ADMaterialProperty<Real> & _mu_neighbor;
   const MaterialProperty<Real> & _sgn_neighbor;
-
-  Real _actual_mean_en;
 };
-
-#endif

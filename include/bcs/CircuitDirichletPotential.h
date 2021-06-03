@@ -8,30 +8,24 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef CIRCUITDIRICHLETPOTENTIAL_H
-#define CIRCUITDIRICHLETPOTENTIAL_H
+#pragma once
 
-#include "NodalBC.h"
-
-class CircuitDirichletPotential;
-class Function;
-
-template <>
-InputParameters validParams<CircuitDirichletPotential>();
+#include "ADNodalBC.h"
 
 /**
  * Boundary condition of a Dirichlet type
  *
  * Sets the value at the node to the value of a Postprocessor
  */
-class CircuitDirichletPotential : public NodalBC
+class CircuitDirichletPotential : public ADNodalBC
 {
 public:
+  static InputParameters validParams();
+
   CircuitDirichletPotential(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 
   /// The value for this BC
   const PostprocessorValue & _current;
@@ -48,5 +42,3 @@ protected:
   Real _current_sign;
   Real _voltage_scaling;
 };
-
-#endif /* CIRCUITDIRICHLETPOTENTIAL_H */

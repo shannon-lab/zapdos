@@ -8,17 +8,9 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef PlasmaFrequencyInverse_H
-#define PlasmaFrequencyInverse_H
+#pragma once
 
 #include "ElementVariablePostprocessor.h"
-
-// Forward Declarations
-class PlasmaFrequencyInverse;
-
-// Input parameters
-template <>
-InputParameters validParams<PlasmaFrequencyInverse>();
 
 /// A postprocessor for collecting the nodal min or max value
 class PlasmaFrequencyInverse : public ElementVariablePostprocessor
@@ -29,6 +21,8 @@ public:
    * @param parameters The input parameters
    */
   PlasmaFrequencyInverse(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual void initialize() override;
   virtual Real getValue() override;
@@ -43,5 +37,3 @@ protected:
   Real _em_density;
   bool _use_moles;
 };
-
-#endif

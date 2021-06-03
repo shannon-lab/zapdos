@@ -8,28 +8,25 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef PROCRATEFORRATECOEFF_H
-#define PROCRATEFORRATECOEFF_H
+#pragma once
 
 #include "AuxKernel.h"
 
-class ProcRateForRateCoeff;
-
-template <>
-InputParameters validParams<ProcRateForRateCoeff>();
-
-class ProcRateForRateCoeff : public AuxKernel
+template <bool is_ad>
+class ProcRateForRateCoeffTempl : public AuxKernel
 {
 public:
-  ProcRateForRateCoeff(const InputParameters & parameters);
+  ProcRateForRateCoeffTempl(const InputParameters & parameters);
 
-  virtual ~ProcRateForRateCoeff() {}
-  virtual Real computeValue();
+  static InputParameters validParams();
+
+  virtual Real computeValue() override;
 
 protected:
   const VariableValue & _v;
   const VariableValue & _w;
-  const MaterialProperty<Real> & _reaction_coeff;
+  const GenericMaterialProperty<Real, is_ad> & _reaction_coeff;
 };
 
-#endif // ProcRateForRateCoeff_H
+typedef ProcRateForRateCoeffTempl<false> ProcRateForRateCoeff;
+typedef ProcRateForRateCoeffTempl<true> ADProcRateForRateCoeff;

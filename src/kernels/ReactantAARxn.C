@@ -10,16 +10,12 @@
 
 #include "ReactantAARxn.h"
 
-// MOOSE includes
-#include "MooseVariable.h"
-
 registerMooseObject("ZapdosApp", ReactantAARxn);
 
-template <>
 InputParameters
-validParams<ReactantAARxn>()
+ReactantAARxn::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = ADKernel::validParams();
   params.addClassDescription("Generic second order reaction sink term for u in which two"
                              "molecules of u are consumed"
                              "(Densities must be in log form)");
@@ -27,21 +23,14 @@ validParams<ReactantAARxn>()
 }
 
 ReactantAARxn::ReactantAARxn(const InputParameters & parameters)
-  : Kernel(parameters),
+  : ADKernel(parameters),
 
-    _reaction_coeff(getMaterialProperty<Real>("k" + _var.name() + _var.name()))
+    _reaction_coeff(getADMaterialProperty<Real>("k" + _var.name() + _var.name()))
 {
 }
 
-Real
+ADReal
 ReactantAARxn::computeQpResidual()
 {
   return -_test[_i][_qp] * (-2.) * _reaction_coeff[_qp] * std::exp(_u[_qp]) * std::exp(_u[_qp]);
-}
-
-Real
-ReactantAARxn::computeQpJacobian()
-{
-  return -_test[_i][_qp] * (-2.) * _reaction_coeff[_qp] * 2. * std::exp(_u[_qp]) *
-         std::exp(_u[_qp]) * _phi[_j][_qp];
 }

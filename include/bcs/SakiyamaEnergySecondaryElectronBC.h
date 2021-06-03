@@ -10,52 +10,36 @@
 
 #pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class SakiyamaEnergySecondaryElectronBC;
-
-template <>
-InputParameters validParams<SakiyamaEnergySecondaryElectronBC>();
-
-class SakiyamaEnergySecondaryElectronBC : public IntegratedBC
+class SakiyamaEnergySecondaryElectronBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   SakiyamaEnergySecondaryElectronBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
   Real _r_units;
   bool Te_dependent;
 
   // Coupled variables
-
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
-
-  const VariableValue & _em;
-  unsigned int _em_id;
-
+  const ADVariableGradient & _grad_potential;
+  const ADVariableValue & _em;
   std::vector<MooseVariable *> _ip_var;
-  std::vector<const VariableValue *> _ip;
-  std::vector<unsigned int> _ip_id;
+  std::vector<const ADVariableValue *> _ip;
 
   std::vector<const MaterialProperty<Real> *> _sgnip;
-  std::vector<const MaterialProperty<Real> *> _muip;
+  std::vector<const ADMaterialProperty<Real> *> _muip;
   Real _se_coeff;
   Real _user_se_energy;
 
   Real _a;
-  Real _se_energy;
-  Real _d_se_energy_d_u;
-  Real _d_se_energy_d_em;
-  RealVectorValue _ion_flux;
-  RealVectorValue _d_ion_flux_d_potential;
-  RealVectorValue _d_ion_flux_d_ip;
+  ADReal _se_energy;
+  ADRealVectorValue _ion_flux;
 
-  std::vector<unsigned int> _ion_id;
   unsigned int _num_ions;
   unsigned int _ip_index;
   std::vector<unsigned int>::iterator _iter;

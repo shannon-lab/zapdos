@@ -10,26 +10,21 @@
 
 #pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class ShootMethodLog;
-
-template <>
-InputParameters validParams<ShootMethodLog>();
-
-class ShootMethodLog : public Kernel
+class ShootMethodLog : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   ShootMethodLog(const InputParameters & parameters);
-  virtual ~ShootMethodLog();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 
-  const VariableValue & _density_at_start_cycle;
-  const VariableValue & _density_at_end_cycle;
-  const VariableValue & _sensitivity;
-  Real _limit;
-  Real _acceleration;
+  const ADVariableValue & _density_at_start_cycle;
+  const ADVariableValue & _density_at_end_cycle;
+  const ADVariableValue & _sensitivity;
+  const Real & _limit;
+  ADReal _acceleration;
 };

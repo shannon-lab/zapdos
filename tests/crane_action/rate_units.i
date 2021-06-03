@@ -56,7 +56,7 @@ dom0Scale=25.4e-3
     [../]
     #Advection term of electron
     [./em_advection]
-      type = EFieldAdvectionElectrons
+      type = EFieldAdvection
       variable = em
       potential = potential
       mean_en = mean_en
@@ -64,9 +64,8 @@ dom0Scale=25.4e-3
     [../]
     #Diffusion term of electrons
     [./em_diffusion]
-      type = CoeffDiffusionElectrons
+      type = CoeffDiffusion
       variable = em
-      mean_en = mean_en
       position_units = ${dom0Scale}
     [../]
 
@@ -130,7 +129,7 @@ dom0Scale=25.4e-3
     [../]
     #Advection term of electron energy
     [./mean_en_advection]
-      type = EFieldAdvectionEnergy
+      type = EFieldAdvection
       variable = mean_en
       potential = potential
       em = em
@@ -138,7 +137,7 @@ dom0Scale=25.4e-3
     [../]
     #Diffusion term of electrons energy
     [./mean_en_diffusion]
-      type = CoeffDiffusionEnergy
+      type = CoeffDiffusion
       variable = mean_en
       em = em
       position_units = ${dom0Scale}
@@ -155,15 +154,6 @@ dom0Scale=25.4e-3
 
 
 [AuxVariables]
-  [./emDeBug]
-  [../]
-  [./Ar+_DeBug]
-  [../]
-  [./Ar*_DeBug]
-  [../]
-  [./mean_enDeBug]
-  [../]
-
   [./Te]
     order = CONSTANT
     family = MONOMIAL
@@ -218,31 +208,6 @@ dom0Scale=25.4e-3
 []
 
 [AuxKernels]
-  [./emDeBug]
-    type = DebugResidualAux
-    variable = emDeBug
-    debug_variable = em
-    #execute_on = 'LINEAR NONLINEAR TIMESTEP_BEGIN'
-  [../]
-  [./Ar+_DeBug]
-    type = DebugResidualAux
-    variable = Ar+_DeBug
-    debug_variable = Ar+
-    #execute_on = 'LINEAR NONLINEAR TIMESTEP_BEGIN'
-  [../]
-  [./mean_enDeBug]
-    type = DebugResidualAux
-    variable = mean_enDeBug
-    debug_variable = mean_en
-    #execute_on = 'LINEAR NONLINEAR TIMESTEP_BEGIN'
-  [../]
-  [./Ar*_DeBug]
-    type = DebugResidualAux
-    variable = Ar*_DeBug
-    debug_variable = Ar*
-    #execute_on = 'LINEAR NONLINEAR TIMESTEP_BEGIN'
-  [../]
-
   [./Te]
     type = ElectronTemperature
     variable = Te
@@ -263,19 +228,16 @@ dom0Scale=25.4e-3
 
   [./em_lin]
     type = DensityMoles
-    convert_moles = true
     variable = em_lin
     density_log = em
   [../]
   [./Ar+_lin]
     type = DensityMoles
-    convert_moles = true
     variable = Ar+_lin
     density_log = Ar+
   [../]
   [./Ar*_lin]
     type = DensityMoles
-    convert_moles = true
     variable = Ar*_lin
     density_log = Ar*
   [../]
@@ -296,7 +258,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   [../]
   [./Current_em]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = em
     variable = Current_em
@@ -305,7 +267,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   [../]
   [./Current_Ar]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = Ar+
     variable = Current_Ar
@@ -473,7 +435,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   [../]
   [./gas_species_0]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
@@ -481,14 +443,14 @@ dom0Scale=25.4e-3
     diffusivity = 6.428571e-3
   [../]
   [./gas_species_1]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar*
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
     diffusivity = 7.515528e-3
   [../]
   [./gas_species_2]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0

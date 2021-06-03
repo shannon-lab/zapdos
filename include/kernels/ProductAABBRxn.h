@@ -8,32 +8,23 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef PRODUCTAABBRXN_H
-#define PRODUCTAABBRXN_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-// Forward Declaration
-class ProductAABBRxn;
-
-template <>
-InputParameters validParams<ProductAABBRxn>();
-
-class ProductAABBRxn : public Kernel
+class ProductAABBRxn : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   ProductAABBRxn(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
   MooseVariable & _coupled_var;
-  const VariableValue & _v;
-  unsigned int _v_id;
+  const ADVariableValue & _v;
 
-  // The reaction coefficient
-  const MaterialProperty<Real> & _reaction_coeff;
+  /// The reaction coefficient
+  const ADMaterialProperty<Real> & _reaction_coeff;
 };
-#endif // PRODUCTAABBRXN_H

@@ -8,16 +8,9 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef EFIELD_H
-#define EFIELD_H
+#pragma once
 
 #include "AuxKernel.h"
-
-// Forward Declarations
-class Efield;
-
-template <>
-InputParameters validParams<Efield>();
 
 /**
  * Constant auxiliary value
@@ -27,6 +20,8 @@ class Efield : public AuxKernel
 public:
   Efield(const InputParameters & parameters);
 
+  static InputParameters validParams();
+
   virtual ~Efield() {}
 
 protected:
@@ -35,7 +30,7 @@ protected:
    * every quadrature point.  For Nodal Auxiliary variables those quadrature
    * points coincide with the nodes.
    */
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
   int _component;
   Real _r_units;
@@ -45,5 +40,3 @@ protected:
   const VariableGradient & _grad_potential;
   Real _voltage_scaling;
 };
-
-#endif // EFIELD_H

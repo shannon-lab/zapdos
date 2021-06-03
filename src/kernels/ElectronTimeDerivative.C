@@ -12,31 +12,22 @@
 
 registerMooseObject("ZapdosApp", ElectronTimeDerivative);
 
-template <>
 InputParameters
-validParams<ElectronTimeDerivative>()
+ElectronTimeDerivative::validParams()
 {
-  InputParameters params = validParams<TimeKernel>();
+  InputParameters params = ADTimeKernel::validParams();
   params.addParam<bool>("lumping", false, "True for mass matrix lumping, false otherwise");
   params.addClassDescription("Generic accumulation term for variables in log form.");
   return params;
 }
 
 ElectronTimeDerivative::ElectronTimeDerivative(const InputParameters & parameters)
-  : TimeKernel(parameters), _lumping(getParam<bool>("lumping"))
-
+  : ADTimeKernel(parameters), _lumping(getParam<bool>("lumping"))
 {
 }
 
-Real
+ADReal
 ElectronTimeDerivative::computeQpResidual()
 {
   return _test[_i][_qp] * std::exp(_u[_qp]) * _u_dot[_qp];
-}
-
-Real
-ElectronTimeDerivative::computeQpJacobian()
-{
-  return _test[_i][_qp] * (std::exp(_u[_qp]) * _phi[_j][_qp] * _u_dot[_qp] +
-                           std::exp(_u[_qp]) * _du_dot_du[_qp] * _phi[_j][_qp]);
 }

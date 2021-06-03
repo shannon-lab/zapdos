@@ -42,14 +42,13 @@ registerMooseAction("ZapdosApp", AddPeriodicRelativeNodalDifference, "add_aux_ke
 registerMooseAction("ZapdosApp", AddPeriodicRelativeNodalDifference, "add_control");
 registerMooseAction("ZapdosApp", AddPeriodicRelativeNodalDifference, "add_postprocessor");
 
-template <>
 InputParameters
-validParams<AddPeriodicRelativeNodalDifference>()
+AddPeriodicRelativeNodalDifference::validParams()
 {
   MooseEnum families(AddVariableAction::getNonlinearVariableFamilies());
   MooseEnum orders(AddVariableAction::getNonlinearVariableOrders());
 
-  InputParameters params = validParams<AddVariableAction>();
+  InputParameters params = AddVariableAction::validParams();
   params.addParam<std::vector<NonlinearVariableName>>(
       "periodic_variable_log", "The periodic variables that are in log form.");
   params.addParam<std::vector<NonlinearVariableName>>("periodic_variable",

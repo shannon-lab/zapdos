@@ -8,17 +8,11 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef PENALTYCIRCUITPOTENTIAL_H
-#define PENALTYCIRCUITPOTENTIAL_H
+#pragma once
 
 #include "NonlocalIntegratedBC.h"
 #include "CurrentDensityShapeSideUserObject.h"
 #include "ProvideMobility.h"
-
-class PenaltyCircuitPotential;
-
-template <>
-InputParameters validParams<PenaltyCircuitPotential>();
 
 /**
  * Boundary condition of a Dirichlet type
@@ -28,14 +22,16 @@ InputParameters validParams<PenaltyCircuitPotential>();
 class PenaltyCircuitPotential : public NonlocalIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   PenaltyCircuitPotential(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  virtual Real computeQpNonlocalJacobian(dof_id_type dof_index);
-  virtual Real computeQpNonlocalOffDiagJacobian(unsigned int jvar, dof_id_type dof_index);
+  virtual Real computeQpResidual() override;
+  virtual Real computeQpJacobian() override;
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar) override;
+  virtual Real computeQpNonlocalJacobian(dof_id_type dof_index) override;
+  virtual Real computeQpNonlocalOffDiagJacobian(unsigned int jvar, dof_id_type dof_index) override;
 
   const CurrentDensityShapeSideUserObject & _current_uo;
   const Real & _current;
@@ -58,5 +54,3 @@ protected:
   bool _use_area;
   Real _voltage_scaling;
 };
-
-#endif /* PENALTYCIRCUITPOTENTIAL_H */

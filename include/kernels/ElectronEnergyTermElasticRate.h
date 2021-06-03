@@ -8,39 +8,27 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef ELECTRONENERGYTERMELASTICRATE_H
-#define ELECTRONENERGYTERMELASTICRATE_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class ElectronEnergyTermElasticRate;
-
-template <>
-InputParameters validParams<ElectronEnergyTermElasticRate>();
-
-class ElectronEnergyTermElasticRate : public Kernel
+class ElectronEnergyTermElasticRate : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   ElectronEnergyTermElasticRate(const InputParameters & parameters);
-  virtual ~ElectronEnergyTermElasticRate();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
+  const Real _r_units;
 
-  const MaterialProperty<Real> & _rate_coefficient;
-  const MaterialProperty<Real> & _d_iz_d_actual_mean_en;
+  const ADMaterialProperty<Real> & _rate_coefficient;
 
-  const VariableValue & _electron;
-  const VariableValue & _target;
-  unsigned int _electron_id;
-  unsigned int _target_id;
+  const ADVariableValue & _electron;
+  const ADVariableValue & _target;
 
-  const MaterialProperty<Real> & _massIncident;
-  const MaterialProperty<Real> & _massTarget;
+  const ADMaterialProperty<Real> & _massIncident;
+  const ADMaterialProperty<Real> & _massTarget;
 };
-
-#endif /* ELECTRONENERGYTERMELASTICRATE_H */

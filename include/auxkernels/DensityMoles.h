@@ -8,20 +8,16 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef DENSITYMOLES_H
-#define DENSITYMOLES_H
+#pragma once
 
 #include "Density.h"
-
-class DensityMoles;
-
-template <>
-InputParameters validParams<DensityMoles>();
 
 class DensityMoles : public Density
 {
 public:
   DensityMoles(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   virtual ~DensityMoles() {}
 
@@ -31,5 +27,3 @@ protected:
   bool _convert_moles;
   const MaterialProperty<Real> & _N_A;
 };
-
-#endif // DENSITYMOLES_H

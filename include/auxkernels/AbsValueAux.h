@@ -8,26 +8,20 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef ABSVALUEAUX_H
-#define ABSVALUEAUX_H
+#pragma once
 
 #include "AuxKernel.h"
-
-class AbsValueAux;
-
-template <>
-InputParameters validParams<AbsValueAux>();
 
 class AbsValueAux : public AuxKernel
 {
 public:
   AbsValueAux(const InputParameters & parameters);
 
+  static InputParameters validParams();
+
 protected:
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
 private:
   const VariableValue & _u;
 };
-
-#endif // ABSVALUEAUX_H

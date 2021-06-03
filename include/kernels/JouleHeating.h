@@ -8,51 +8,31 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef JOULEHEATING_H
-#define JOULEHEATING_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class JouleHeating;
-
-template <>
-InputParameters validParams<JouleHeating>();
-
-class JouleHeating : public Kernel
+class JouleHeating : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   JouleHeating(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
+  virtual ADReal computeQpResidual() override;
 
-  virtual Real computeQpJacobian();
+private:
+  /// Position units
+  const Real _r_units;
+  const std::string & _potential_units;
 
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-
-  // Input file scalars
-  Real _r_units;
-
-  // Material properties
-
-  const MaterialProperty<Real> & _muem;
-  const MaterialProperty<Real> & _d_muem_d_actual_mean_en;
-  const MaterialProperty<Real> & _diffem;
-  const MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
-
-  std::string _potential_units;
-
-  // Coupled variables
-
-  unsigned int _potential_id;
-  const VariableGradient & _grad_potential;
-  const VariableValue & _em;
-  const VariableGradient & _grad_em;
-  unsigned int _em_id;
-
-  // Unique variables
+  /// The diffusion coefficient (either constant or mixture-averaged)
+  const ADMaterialProperty<Real> & _diff;
+  const ADMaterialProperty<Real> & _mu;
+  const ADVariableGradient & _grad_potential;
+  const ADVariableValue & _em;
+  const ADVariableGradient & _grad_em;
 
   Real _voltage_scaling;
 };
-
-#endif // JOULEHEATING_H
