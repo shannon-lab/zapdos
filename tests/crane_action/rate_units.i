@@ -154,15 +154,6 @@ dom0Scale=25.4e-3
 
 
 [AuxVariables]
-  [./emDeBug]
-  [../]
-  [./Ar+_DeBug]
-  [../]
-  [./Ar*_DeBug]
-  [../]
-  [./mean_enDeBug]
-  [../]
-
   [./Te]
     order = CONSTANT
     family = MONOMIAL
@@ -217,31 +208,6 @@ dom0Scale=25.4e-3
 []
 
 [AuxKernels]
-  [./emDeBug]
-    type = DebugResidualAux
-    variable = emDeBug
-    debug_variable = em
-    #execute_on = 'LINEAR NONLINEAR TIMESTEP_BEGIN'
-  [../]
-  [./Ar+_DeBug]
-    type = DebugResidualAux
-    variable = Ar+_DeBug
-    debug_variable = Ar+
-    #execute_on = 'LINEAR NONLINEAR TIMESTEP_BEGIN'
-  [../]
-  [./mean_enDeBug]
-    type = DebugResidualAux
-    variable = mean_enDeBug
-    debug_variable = mean_en
-    #execute_on = 'LINEAR NONLINEAR TIMESTEP_BEGIN'
-  [../]
-  [./Ar*_DeBug]
-    type = DebugResidualAux
-    variable = Ar*_DeBug
-    debug_variable = Ar*
-    #execute_on = 'LINEAR NONLINEAR TIMESTEP_BEGIN'
-  [../]
-
   [./Te]
     type = ElectronTemperature
     variable = Te
