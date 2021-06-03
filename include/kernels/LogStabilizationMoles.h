@@ -8,27 +8,19 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef LOGSTABILIZATIONMOLES_H
-#define LOGSTABILIZATIONMOLES_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class LogStabilizationMoles;
-
-template <>
-InputParameters validParams<LogStabilizationMoles>();
-
-class LogStabilizationMoles : public Kernel
+class LogStabilizationMoles : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   LogStabilizationMoles(const InputParameters & parameters);
-  virtual ~LogStabilizationMoles();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 
-  Real _offset;
+  const Real & _offset;
 };
-
-#endif /* LOGSTABILIZATIONMOLES_H */

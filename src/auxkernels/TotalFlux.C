@@ -10,13 +10,18 @@
 
 #include "TotalFlux.h"
 
-registerMooseObject("ZapdosApp", TotalFlux);
+#include "metaphysicl/raw_type.h"
 
-template <>
+using MetaPhysicL::raw_value;
+
+registerMooseObject("ZapdosApp", TotalFlux);
+registerMooseObject("ZapdosApp", ADTotalFlux);
+
+template <bool is_ad>
 InputParameters
-validParams<TotalFlux>()
+TotalFluxTempl<is_ad>::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
 
   params.addRequiredCoupledVar("density_log", "The electron density");
   params.addRequiredCoupledVar("potential", "The potential");
@@ -25,22 +30,27 @@ validParams<TotalFlux>()
   return params;
 }
 
-TotalFlux::TotalFlux(const InputParameters & parameters)
+template <bool is_ad>
+TotalFluxTempl<is_ad>::TotalFluxTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
 
     _density_var(*getVar("density_log", 0)),
     _density_log(coupledValue("density_log")),
     _grad_density_log(coupledGradient("density_log")),
     _grad_potential(coupledGradient("potential")),
-    _mu(getMaterialProperty<Real>("mu" + _density_var.name())),
+    _mu(getGenericMaterialProperty<Real, is_ad>("mu" + _density_var.name())),
     _sgn(getMaterialProperty<Real>("sgn" + _density_var.name())),
-    _diff(getMaterialProperty<Real>("diff" + _density_var.name()))
+    _diff(getGenericMaterialProperty<Real, is_ad>("diff" + _density_var.name()))
 {
 }
 
+template <bool is_ad>
 Real
-TotalFlux::computeValue()
+TotalFluxTempl<is_ad>::computeValue()
 {
-  return _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp](0) * std::exp(_density_log[_qp]) -
-         _diff[_qp] * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0);
+  return _sgn[_qp] * raw_value(_mu[_qp]) * -_grad_potential[_qp](0) * std::exp(_density_log[_qp]) -
+         raw_value(_diff[_qp]) * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0);
 }
+
+template class TotalFluxTempl<false>;
+template class TotalFluxTempl<true>;

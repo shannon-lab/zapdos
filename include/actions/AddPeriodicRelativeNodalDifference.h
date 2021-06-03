@@ -13,15 +13,12 @@
 #include "AddVariableAction.h"
 #include "Action.h"
 
-class AddPeriodicRelativeNodalDifference;
-
-template <>
-InputParameters validParams<AddPeriodicRelativeNodalDifference>();
-
 class AddPeriodicRelativeNodalDifference : public Action
 {
 public:
   AddPeriodicRelativeNodalDifference(InputParameters params);
+
+  static InputParameters validParams();
 
   virtual void act();
 

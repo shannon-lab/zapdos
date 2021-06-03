@@ -10,15 +10,12 @@
 
 #include "EconomouDielectricBC.h"
 
-#include "MooseVariable.h"
-
 registerMooseObject("ZapdosApp", EconomouDielectricBC);
 
-template <>
 InputParameters
-validParams<EconomouDielectricBC>()
+EconomouDielectricBC::validParams()
 {
-  InputParameters params = validParams<IntegratedBC>();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("dielectric_constant", "The dielectric constant of the material.");
   params.addRequiredParam<Real>("thickness", "The thickness of the material.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
@@ -35,16 +32,13 @@ validParams<EconomouDielectricBC>()
 }
 
 EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
-  : IntegratedBC(parameters),
+  : ADIntegratedBC(parameters),
     _r_units(1. / getParam<Real>("position_units")),
 
-    _mean_en(coupledValue("mean_en")),
-    _mean_en_id(coupled("mean_en")),
-    _em(coupledValue("em")),
-    _em_id(coupled("em")),
-    _grad_u_dot(_var.gradSlnDot()),
-    _u_dot(_var.uDot()),
-    _du_dot_du(_var.duDotDu()),
+    _mean_en(adCoupledValue("mean_en")),
+    _em(adCoupledValue("em")),
+    _grad_u_dot(_var.gradSlnDot()), // TODO: make an AD version of this in MOOSE
+    _u_dot(_var.adUDot()),
 
     _e(getMaterialProperty<Real>("e")),
     _massem(getMaterialProperty<Real>("massem")),
@@ -56,16 +50,6 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
     _ion_flux(0, 0, 0),
     _v_thermal(0),
     _em_flux(0, 0, 0),
-    _d_ion_flux_du(0, 0, 0),
-    _d_em_flux_du(0, 0, 0),
-    _d_v_thermal_d_mean_en(0),
-    _d_em_flux_d_mean_en(0, 0, 0),
-    _d_v_thermal_d_em(0),
-    _d_em_flux_d_em(0, 0, 0),
-    _d_ion_flux_d_ip(0, 0, 0),
-    _d_em_flux_d_ip(0, 0, 0),
-    _d_ion_flux_d_potential_ion(0, 0, 0),
-    _d_em_flux_d_potential_ion(0, 0, 0),
     _potential_units(getParam<std::string>("potential_units"))
 
 {
@@ -80,9 +64,7 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
   _ip_var.resize(_num_ions);
   _muip.resize(_num_ions);
   _sgnip.resize(_num_ions);
-  _ion_id.resize(_num_ions);
   _potential_ion.resize(_num_ions);
-  _potential_ion_id.resize(_num_ions);
   _grad_potential_ion.resize(_num_ions);
 
   bool fill_potential_vector = false;
@@ -113,27 +95,24 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
     _ip_var[i] = getVar("ip", i);
-    _ip[i] = &coupledValue("ip", i);
-    _muip[i] = &getMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
-    _ion_id[i] = _ip_var[i]->number();
+    _ip[i] = &adCoupledValue("ip", i);
+    _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
 
     if (fill_potential_vector)
     {
-      _potential_ion[i] = &coupledValue("potential_ion", 0);
-      _potential_ion_id[i] = getVar("potential_ion", 0)->number();
-      _grad_potential_ion[i] = &coupledGradient("potential_ion", 0);
+      _potential_ion[i] = &adCoupledValue("potential_ion", 0);
+      _grad_potential_ion[i] = &adCoupledGradient("potential_ion", 0);
     }
     else
     {
-      _potential_ion[i] = &coupledValue("potential_ion", i);
-      _potential_ion_id[i] = getVar("potential_ion", i)->number();
-      _grad_potential_ion[i] = &coupledGradient("potential_ion", i);
+      _potential_ion[i] = &adCoupledValue("potential_ion", i);
+      _grad_potential_ion[i] = &adCoupledGradient("potential_ion", i);
     }
   }
 }
 
-Real
+ADReal
 EconomouDielectricBC::computeQpResidual()
 {
   _ion_flux.zero();
@@ -163,119 +142,4 @@ EconomouDielectricBC::computeQpResidual()
               _voltage_scaling +
           (_thickness / _epsilon_d) * 8.8542e-12 * -_grad_u_dot[_qp] * _r_units * _normals[_qp] -
           _u_dot[_qp]);
-}
-
-Real
-EconomouDielectricBC::computeQpJacobian()
-{
-  _d_ion_flux_du.zero();
-
-  // Check if any of the 'potential_ion' variables are the same as _potential.
-  // If any are, add the Jacobian contribution.
-  _iter_potential = std::find(_potential_ion_id.begin(), _potential_ion_id.end(), _var.number());
-  if (_iter_potential != _potential_ion_id.end())
-  {
-    _ip_index = std::distance(_potential_ion_id.begin(), _iter_potential);
-    if (_normals[_qp] * (*_sgnip[_ip_index])[_qp] * -(*_grad_potential_ion[_ip_index])[_qp] > 0.0)
-    {
-      _a = 1.0;
-    }
-    else
-    {
-      _a = 0.0;
-    }
-
-    _d_ion_flux_du += (_a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] *
-                       -_grad_phi[_j][_qp] * _r_units * std::exp((*_ip[_ip_index])[_qp]));
-  }
-
-  return _test[_i][_qp] * _r_units *
-         ((_thickness / _epsilon_d) * _e[_qp] * 6.022e23 * _d_ion_flux_du * _normals[_qp] /
-              _voltage_scaling +
-          (_thickness / _epsilon_d) * 8.854e-12 * _du_dot_du[_qp] * -_grad_phi[_j][_qp] * _r_units *
-              _normals[_qp] -
-          _du_dot_du[_qp] * _phi[_j][_qp]);
-}
-
-Real
-EconomouDielectricBC::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  _iter = std::find(_ion_id.begin(), _ion_id.end(), jvar);
-  _iter_potential = std::find(_potential_ion_id.begin(), _potential_ion_id.end(), jvar);
-  if (jvar == _mean_en_id)
-  {
-    _v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
-                           (M_PI * _massem[_qp]));
-    _d_v_thermal_d_mean_en = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 *
-                             std::exp(_mean_en[_qp] - _em[_qp]) / (M_PI * _massem[_qp]) *
-                             _phi[_j][_qp];
-
-    _d_em_flux_d_mean_en = (0.25 * _d_v_thermal_d_mean_en * std::exp(_em[_qp]) * _normals[_qp]);
-
-    return _test[_i][_qp] * _r_units * (_thickness / _epsilon_d) *
-           (-_e[_qp] * 6.022e23 * _d_em_flux_d_mean_en) * _normals[_qp] / _voltage_scaling;
-  }
-
-  else if (jvar == _em_id)
-  {
-    _v_thermal = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
-                           (M_PI * _massem[_qp]));
-    _d_v_thermal_d_em = 0.5 / _v_thermal * 8 * _e[_qp] * 2.0 / 3 *
-                        std::exp(_mean_en[_qp] - _em[_qp]) / (M_PI * _massem[_qp]) * -_phi[_j][_qp];
-
-    _d_em_flux_d_em = ((0.25 * _d_v_thermal_d_em * std::exp(_em[_qp]) +
-                        0.25 * _v_thermal * std::exp(_em[_qp]) * _phi[_j][_qp]) *
-                       _normals[_qp]);
-
-    return _test[_i][_qp] * _r_units * (_thickness / _epsilon_d) *
-           (-_e[_qp] * 6.022e23 * _d_em_flux_d_em) * _normals[_qp] / _voltage_scaling;
-  }
-
-  else if (_iter != _ion_id.end())
-  {
-    _ip_index = std::distance(_ion_id.begin(), _iter);
-    if (_normals[_qp] * (*_sgnip[_ip_index])[_qp] * -(*_grad_potential_ion[_ip_index])[_qp] > 0.0)
-    {
-      _a = 1.0;
-    }
-    else
-    {
-      _a = 0.0;
-    }
-
-    _d_ion_flux_d_ip = (_a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] *
-                        -(*_grad_potential_ion[_ip_index])[_qp] * _r_units *
-                        std::exp((*_ip[_ip_index])[_qp]) * _phi[_j][_qp]);
-
-    _d_em_flux_d_ip = -_user_se_coeff * _d_ion_flux_d_ip;
-
-    return _test[_i][_qp] * _r_units * (_thickness / _epsilon_d) * _e[_qp] * 6.022e23 *
-           (_d_ion_flux_d_ip - _d_em_flux_d_ip) * _normals[_qp] / _voltage_scaling;
-  }
-
-  else if (_iter_potential != _potential_ion_id.end())
-  {
-    _ip_index = std::distance(_potential_ion_id.begin(), _iter_potential);
-    if (_normals[_qp] * (*_sgnip[_ip_index])[_qp] * -(*_grad_potential_ion[_ip_index])[_qp] > 0.0)
-    {
-      _a = 1.0;
-    }
-    else
-    {
-      _a = 0.0;
-    }
-
-    _d_ion_flux_d_potential_ion =
-        (_a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] * -_grad_phi[_j][_qp] *
-         _r_units * std::exp((*_ip[_ip_index])[_qp]));
-
-    _d_em_flux_d_potential_ion = -_user_se_coeff * _d_ion_flux_d_potential_ion;
-
-    return _test[_i][_qp] * _r_units * (_thickness / _epsilon_d) * _e[_qp] * 6.022e23 *
-           (_d_ion_flux_d_potential_ion - _d_em_flux_d_potential_ion) * _normals[_qp] /
-           _voltage_scaling;
-  }
-
-  else
-    return 0.0;
 }

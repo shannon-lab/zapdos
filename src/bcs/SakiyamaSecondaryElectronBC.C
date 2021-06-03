@@ -10,16 +10,12 @@
 
 #include "SakiyamaSecondaryElectronBC.h"
 
-// MOOSE includes
-#include "MooseVariable.h"
-
 registerMooseObject("ZapdosApp", SakiyamaSecondaryElectronBC);
 
-template <>
 InputParameters
-validParams<SakiyamaSecondaryElectronBC>()
+SakiyamaSecondaryElectronBC::validParams()
 {
-  InputParameters params = validParams<IntegratedBC>();
+  InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("ip", "The ion density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
@@ -31,40 +27,32 @@ validParams<SakiyamaSecondaryElectronBC>()
 }
 
 SakiyamaSecondaryElectronBC::SakiyamaSecondaryElectronBC(const InputParameters & parameters)
-  : IntegratedBC(parameters),
+  : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
 
     // Coupled Variables
-    _grad_potential(coupledGradient("potential")),
-    _potential_id(coupled("potential")),
+    _grad_potential(adCoupledGradient("potential")),
 
     _a(0.5),
     _ion_flux(0, 0, 0),
-    _d_ion_flux_d_potential(0, 0, 0),
-    _d_ion_flux_d_ip(0, 0, 0),
-    _actual_mean_en(0),
     _user_se_coeff(getParam<Real>("users_gamma"))
 {
   _num_ions = coupledComponents("ip");
 
   _ip.resize(_num_ions);
-  _ip_var.resize(_num_ions);
   _muip.resize(_num_ions);
   _sgnip.resize(_num_ions);
-  _ion_id.resize(_num_ions);
 
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _ip_var[i] = getVar("ip", i);
-    _ip[i] = &coupledValue("ip", i);
-    _muip[i] = &getMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
-    _ion_id[i] = _ip_var[i]->number();
+    _ip[i] = &adCoupledValue("ip", i);
+    _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
   }
 }
 
-Real
+ADReal
 SakiyamaSecondaryElectronBC::computeQpResidual()
 {
   _ion_flux.zero();
@@ -84,58 +72,4 @@ SakiyamaSecondaryElectronBC::computeQpResidual()
   }
 
   return -_test[_i][_qp] * _r_units * _a * _user_se_coeff * _ion_flux * _normals[_qp];
-}
-
-Real
-SakiyamaSecondaryElectronBC::computeQpJacobian()
-{
-  return 0.;
-}
-
-Real
-SakiyamaSecondaryElectronBC::computeQpOffDiagJacobian(unsigned int jvar)
-{
-  _iter = std::find(_ion_id.begin(), _ion_id.end(), jvar);
-  if (jvar == _potential_id)
-  {
-    _ion_flux.zero();
-    for (unsigned int i = 0; i < _num_ions; ++i)
-    {
-      if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential[_qp] > 0.0)
-      {
-        _a = 1.0;
-      }
-      else
-      {
-        _a = 0.0;
-      }
-
-      _d_ion_flux_d_potential = _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_phi[_j][_qp] *
-                                _r_units * std::exp((*_ip[i])[_qp]);
-    }
-
-    return -_test[_i][_qp] * _r_units * _user_se_coeff * _d_ion_flux_d_potential * _normals[_qp];
-  }
-
-  else if (_iter != _ion_id.end())
-  {
-    _ip_index = std::distance(_ion_id.begin(), _iter);
-    if (_normals[_qp] * (*_sgnip[_ip_index])[_qp] * -_grad_potential[_qp] > 0.0)
-    {
-      _a = 1.0;
-    }
-    else
-    {
-      _a = 0.0;
-    }
-
-    _d_ion_flux_d_ip = _a * (*_sgnip[_ip_index])[_qp] * (*_muip[_ip_index])[_qp] *
-                       -_grad_potential[_qp] * _r_units * std::exp((*_ip[_ip_index])[_qp]) *
-                       _phi[_j][_qp];
-
-    return -_test[_i][_qp] * _r_units * _user_se_coeff * _d_ion_flux_d_ip * _normals[_qp];
-  }
-
-  else
-    return 0.0;
 }

@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", ElectronTemperature);
 
-template <>
 InputParameters
-validParams<ElectronTemperature>()
+ElectronTemperature::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
 
   params.addRequiredCoupledVar("electron_density", "The electron density");
   params.addRequiredCoupledVar("mean_en", "The logarathmic representation of the mean energy.");

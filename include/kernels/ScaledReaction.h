@@ -10,23 +10,17 @@
 
 #pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-// Forward Declaration
-class ScaledReaction;
-
-template <>
-InputParameters validParams<ScaledReaction>();
-
-class ScaledReaction : public Kernel
+class ScaledReaction : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   ScaledReaction(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual() override;
-  virtual Real computeQpJacobian() override;
+  virtual ADReal computeQpResidual() override;
 
-private:
-  Real _nu;
+  const Real & _nu;
 };

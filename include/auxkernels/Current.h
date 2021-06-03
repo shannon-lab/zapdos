@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef CURRENT_H
-#define CURRENT_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -22,7 +21,7 @@ public:
   static InputParameters validParams();
 
   virtual ~CurrentTempl() {}
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
 protected:
   Real _r_units;
@@ -39,5 +38,3 @@ protected:
 
 typedef CurrentTempl<false> Current;
 typedef CurrentTempl<true> ADCurrent;
-
-#endif // CURRENT_H

@@ -8,25 +8,20 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef GAS_H_
-#define GAS_H_
+#pragma once
 
-#include "Material.h"
+#include "ADMaterial.h"
 #include "LinearInterpolation.h"
 #include "SplineInterpolation.h"
 
-class Gas;
-
-template <>
-InputParameters validParams<Gas>();
-
-class Gas : public Material
+class Gas : public ADMaterial
 {
 public:
+  static InputParameters validParams();
   Gas(const InputParameters & parameters);
 
 protected:
-  virtual void computeQpProperties();
+  virtual void computeQpProperties() override;
 
   SplineInterpolation _alpha_interpolation;
   SplineInterpolation _alphaEx_interpolation;
@@ -58,20 +53,15 @@ protected:
   Real _user_p_gas;
   bool _use_moles;
 
-  MaterialProperty<Real> & _muem;
-  MaterialProperty<Real> & _d_muem_d_actual_mean_en;
-  MaterialProperty<Real> & _diffem;
-  MaterialProperty<Real> & _d_diffem_d_actual_mean_en;
-  MaterialProperty<Real> & _muArp;
-  MaterialProperty<Real> & _diffArp;
-  MaterialProperty<Real> & _rate_coeff_ion;
+  ADMaterialProperty<Real> & _muem;
+  ADMaterialProperty<Real> & _diffem;
+  ADMaterialProperty<Real> & _muArp;
+  ADMaterialProperty<Real> & _diffArp;
   MaterialProperty<Real> & _Eiz;
   MaterialProperty<Real> & _Eex;
   MaterialProperty<Real> & _Ar;
-  MaterialProperty<Real> & _mumean_en;
-  MaterialProperty<Real> & _d_mumean_en_d_actual_mean_en;
-  MaterialProperty<Real> & _diffmean_en;
-  MaterialProperty<Real> & _d_diffmean_en_d_actual_mean_en;
+  ADMaterialProperty<Real> & _mumean_en;
+  ADMaterialProperty<Real> & _diffmean_en;
   MaterialProperty<Real> & _rate_coeff_elastic;
   MaterialProperty<Real> & _massem;
   MaterialProperty<Real> & _massGas;
@@ -82,21 +72,8 @@ protected:
   MaterialProperty<Real> & _Richardson_coefficient;
   MaterialProperty<Real> & _cathode_temperature;
   MaterialProperty<Real> & _se_energy;
-  MaterialProperty<Real> & _ElectronTotalFluxMag;
-  MaterialProperty<Real> & _ElectronTotalFluxMagSizeForm;
-  MaterialProperty<Real> & _ElectronTotalFlux;
-  MaterialProperty<Real> & _ElectronAdvectiveFlux;
-  MaterialProperty<Real> & _ElectronDiffusiveFlux;
-  MaterialProperty<Real> & _IonTotalFlux;
-  MaterialProperty<Real> & _IonAdvectiveFlux;
-  MaterialProperty<Real> & _IonDiffusiveFlux;
-  MaterialProperty<Real> & _EField;
-  MaterialProperty<Real> & _Source_term;
-  MaterialProperty<Real> & _Source_term_coeff;
   MaterialProperty<Real> & _e;
   MaterialProperty<Real> & _eps;
-  MaterialProperty<Real> & _Tem_lfa;
-  MaterialProperty<Real> & _Tip_lfa;
   MaterialProperty<Real> & _k_boltz;
   MaterialProperty<Real> & _Avogadro;
   MaterialProperty<Real> & _vthermal_em;
@@ -111,39 +88,24 @@ protected:
   MaterialProperty<Real> & _el_coeff_energy_a;
   MaterialProperty<Real> & _el_coeff_energy_b;
   MaterialProperty<Real> & _el_coeff_energy_c;
-  MaterialProperty<Real> & _alpha_iz;
-  MaterialProperty<Real> & _d_iz_d_actual_mean_en;
-  MaterialProperty<Real> & _alpha_ex;
-  MaterialProperty<Real> & _d_ex_d_actual_mean_en;
-  MaterialProperty<Real> & _alpha_el;
-  MaterialProperty<Real> & _d_el_d_actual_mean_en;
+  ADMaterialProperty<Real> & _alpha_iz;
+  ADMaterialProperty<Real> & _alpha_ex;
+  ADMaterialProperty<Real> & _alpha_el;
   MaterialProperty<Real> & _sgnem;
   MaterialProperty<Real> & _sgnmean_en;
   MaterialProperty<Real> & _sgnArp;
-  MaterialProperty<Real> & _diffpotential;
-  MaterialProperty<Real> & _actual_mean_energy;
-  MaterialProperty<Real> & _TArp;
-  MaterialProperty<Real> & _Tem;
-  MaterialProperty<Real> & _muu;
-  MaterialProperty<Real> & _diffu;
-  MaterialProperty<Real> & _sgnu;
+  ADMaterialProperty<Real> & _diffpotential;
+  ADMaterialProperty<Real> & _actual_mean_energy;
+  ADMaterialProperty<Real> & _TArp;
+  ADMaterialProperty<Real> & _Tem;
   MaterialProperty<Real> & _T_gas;
   MaterialProperty<Real> & _p_gas;
   MaterialProperty<Real> & _n_gas;
-  MaterialProperty<Real> & _kiz;
-  MaterialProperty<Real> & _kex;
-  MaterialProperty<Real> & _kel;
-  MaterialProperty<Real> & _d_kiz_d_actual_mean_en;
-  MaterialProperty<Real> & _d_kex_d_actual_mean_en;
-  MaterialProperty<Real> & _d_kel_d_actual_mean_en;
-  MaterialProperty<Real> & _TemVolts;
+  ADMaterialProperty<Real> & _kiz;
+  ADMaterialProperty<Real> & _kex;
+  ADMaterialProperty<Real> & _kel;
+  ADMaterialProperty<Real> & _TemVolts;
 
-  const VariableGradient & _grad_potential;
-  const VariableValue & _em;
-  const VariableValue & _ip;
-  const VariableGradient & _grad_em;
-  const VariableGradient & _grad_ip;
-  const VariableValue & _mean_en;
+  const ADVariableValue & _em;
+  const ADVariableValue & _mean_en;
 };
-
-#endif // GAS_H

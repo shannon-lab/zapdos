@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", Position);
 
-template <>
 InputParameters
-validParams<Position>()
+Position::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<int>("component", 0, "The component of position. (0 = x, 1 = y, 2 = z)");
   params.addClassDescription(

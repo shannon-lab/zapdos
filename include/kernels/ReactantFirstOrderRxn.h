@@ -8,27 +8,20 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef REACTANTFIRSTORDERRXN_H
-#define REACTANTFIRSTORDERRXN_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-// Forward Declaration
-class ReactantFirstOrderRxn;
-
-template <>
-InputParameters validParams<ReactantFirstOrderRxn>();
-
-class ReactantFirstOrderRxn : public Kernel
+class ReactantFirstOrderRxn : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   ReactantFirstOrderRxn(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 
-  // The reaction coefficient
-  const MaterialProperty<Real> & _reaction_coeff;
+  /// The reaction coefficient
+  const ADMaterialProperty<Real> & _reaction_coeff;
 };
-#endif // REACTANTFIRSTORDERRXN_H

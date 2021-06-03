@@ -8,35 +8,24 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef MATCHEDVALUELOGBC_H
-#define MATCHEDVALUELOGBC_H
+#pragma once
 
-#include "NodalBC.h"
-
-// Forward Declarations
-class MatchedValueLogBC;
-
-template <>
-InputParameters validParams<MatchedValueLogBC>();
+#include "ADNodalBC.h"
 
 /**
  * Implements a simple coupled boundary condition where u=v on the boundary.
  */
-class MatchedValueLogBC : public NodalBC
+class MatchedValueLogBC : public ADNodalBC
 {
 public:
+  static InputParameters validParams();
+
   MatchedValueLogBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  const VariableValue & _v;
+  const ADVariableValue & _v;
 
-  /// The id of the coupled variable
-  unsigned int _v_num;
   Real _H;
 };
-
-#endif // MATCHEDVALUELOGBC_H

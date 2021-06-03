@@ -128,7 +128,8 @@ dom1Scale=1e-7
     Additional_Outputs = 'ElectronTemperature Current EField'
   [../]
   [./Water]
-    charged_particle = 'emliq OHm'
+    electrons = emliq
+    charged_particle = OHm
     potential = potential
     Is_potential_unique = false
     using_offset = true
@@ -287,7 +288,7 @@ dom1Scale=1e-7
 
 [AuxKernels]
   [./PowerDep_em]
-    type = PowerDep
+    type = ADPowerDep
     density_log = em
     potential = potential
     art_diff = false
@@ -297,7 +298,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./PowerDep_Arp]
-    type = PowerDep
+    type = ADPowerDep
     density_log = Arp
     potential = potential
     art_diff = false
@@ -307,7 +308,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./ProcRate_el]
-    type = ProcRate
+    type = ADProcRate
     em = em
     potential = potential
     proc = el
@@ -316,7 +317,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./ProcRate_ex]
-    type = ProcRate
+    type = ADProcRate
     em = em
     potential = potential
     proc = ex
@@ -325,7 +326,7 @@ dom1Scale=1e-7
     block = 0
   [../]
   [./ProcRate_iz]
-    type = ProcRate
+    type = ADProcRate
     em = em
     potential = potential
     proc = iz
@@ -379,13 +380,13 @@ dom1Scale=1e-7
   [../]
   [./tot_flux_OHm]
     block = 1
-    type = TotalFlux
+    type = ADTotalFlux
     potential = potential
     density_log = OHm
     variable = tot_flux_OHm
   [../]
   [./EFieldAdvAux_em]
-    type = EFieldAdvAux
+    type = ADEFieldAdvAux
     potential = potential
     density_log = em
     variable = EFieldAdvAux_em
@@ -393,14 +394,14 @@ dom1Scale=1e-7
     position_units = ${dom0Scale}
   [../]
   [./DiffusiveFlux_em]
-    type = DiffusiveFlux
+    type = ADDiffusiveFlux
     density_log = em
     variable = DiffusiveFlux_em
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./EFieldAdvAux_emliq]
-    type = EFieldAdvAux
+    type = ADEFieldAdvAux
     potential = potential
     density_log = emliq
     variable = EFieldAdvAux_emliq
@@ -408,7 +409,7 @@ dom1Scale=1e-7
     position_units = ${dom1Scale}
   [../]
   [./DiffusiveFlux_emliq]
-    type = DiffusiveFlux
+    type = ADDiffusiveFlux
     density_log = emliq
     variable = DiffusiveFlux_emliq
     block = 1

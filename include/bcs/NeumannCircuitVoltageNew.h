@@ -8,19 +8,11 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef NEUMANNCIRCUITVOLTAGENEW_H
-#define NEUMANNCIRCUITVOLTAGENEW_H
+#pragma once
 
 #include "NonlocalIntegratedBC.h"
 #include "CurrentDensityShapeSideUserObject.h"
 #include "ProvideMobility.h"
-
-// Forward Declarations
-class NeumannCircuitVoltageNew;
-class Function;
-
-template <>
-InputParameters validParams<NeumannCircuitVoltageNew>();
 
 /**
  * Boundary condition of a Neumann style whose value is computed by a user-defined function
@@ -28,14 +20,16 @@ InputParameters validParams<NeumannCircuitVoltageNew>();
 class NeumannCircuitVoltageNew : public NonlocalIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   NeumannCircuitVoltageNew(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-  virtual Real computeQpNonlocalJacobian(dof_id_type dof_index);
-  virtual Real computeQpNonlocalOffDiagJacobian(unsigned int jvar, dof_id_type dof_index);
+  virtual Real computeQpResidual() override;
+  virtual Real computeQpJacobian() override;
+  virtual Real computeQpOffDiagJacobian(unsigned int jvar) override;
+  virtual Real computeQpNonlocalJacobian(dof_id_type dof_index) override;
+  virtual Real computeQpNonlocalOffDiagJacobian(unsigned int jvar, dof_id_type dof_index) override;
 
   // Current and current density
   const CurrentDensityShapeSideUserObject & _current_uo;
@@ -70,5 +64,3 @@ protected:
   Real _r_units;
   Real _voltage_scaling;
 };
-
-#endif // NEUMANNCIRCUITVOLTAGENEW_H

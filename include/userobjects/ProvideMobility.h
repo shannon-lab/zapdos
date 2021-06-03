@@ -8,21 +8,16 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef PROVIDEMOBILITY_H
-#define PROVIDEMOBILITY_H
+#pragma once
 
 #include "GeneralUserObject.h"
-
-// Forward Declarations
-class ProvideMobility;
-
-template <>
-InputParameters validParams<ProvideMobility>();
 
 class ProvideMobility : public GeneralUserObject
 {
 public:
   ProvideMobility(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
   Real electrode_area() const;
   Real ballast_resist() const;
@@ -39,5 +34,3 @@ protected:
   Real _ballast_resist;
   Real _e;
 };
-
-#endif

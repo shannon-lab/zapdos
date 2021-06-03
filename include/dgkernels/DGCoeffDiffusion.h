@@ -8,16 +8,9 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef DGCOEFFDIFFUSION_H
-#define DGCOEFFDIFFUSION_H
+#pragma once
 
-#include "DGKernel.h"
-
-// Forward Declarations
-class DGCoeffDiffusion;
-
-template <>
-InputParameters validParams<DGCoeffDiffusion>();
+#include "ADDGKernel.h"
 
 /**
  * DG kernel for diffusion
@@ -29,19 +22,18 @@ InputParameters validParams<DGCoeffDiffusion>();
  * \f$ {a} = 0.5 * (a_1 + a_2) \f$
  *
  */
-class DGCoeffDiffusion : public DGKernel
+class DGCoeffDiffusion : public ADDGKernel
 {
 public:
+  static InputParameters validParams();
+
   DGCoeffDiffusion(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual(Moose::DGResidualType type);
-  virtual Real computeQpJacobian(Moose::DGJacobianType type);
+  virtual ADReal computeQpResidual(Moose::DGResidualType type) override;
 
   Real _epsilon;
   Real _sigma;
-  const MaterialProperty<Real> & _diff;
-  const MaterialProperty<Real> & _diff_neighbor;
+  const ADMaterialProperty<Real> & _diff;
+  const ADMaterialProperty<Real> & _diff_neighbor;
 };
-
-#endif

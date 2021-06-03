@@ -10,27 +10,22 @@
 
 #pragma once
 
-#include "Diffusion.h"
-
-class CoeffDiffusionForShootMethod;
-
-template <>
-InputParameters validParams<CoeffDiffusionForShootMethod>();
+#include "ADKernel.h"
 
 // This diffusion kernel should only be used with species whose values are in the logarithmic form.
 
-class CoeffDiffusionForShootMethod : public Diffusion
+class CoeffDiffusionForShootMethod : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   CoeffDiffusionForShootMethod(const InputParameters & parameters);
-  virtual ~CoeffDiffusionForShootMethod();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
+  const Real _r_units;
 
   MooseVariable & _density_var;
-  const MaterialProperty<Real> & _diffusivity;
+  const ADMaterialProperty<Real> & _diffusivity;
 };

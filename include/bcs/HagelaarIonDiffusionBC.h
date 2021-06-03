@@ -8,34 +8,27 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef HAGELAARIONDIFFUSIONBC_H
-#define HAGELAARIONDIFFUSIONBC_H
+#pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class HagelaarIonDiffusionBC;
-
-template <>
-InputParameters validParams<HagelaarIonDiffusionBC>();
-
-class HagelaarIonDiffusionBC : public IntegratedBC
+class HagelaarIonDiffusionBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   HagelaarIonDiffusionBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
-  Real _r;
+  const Real _r_units;
+  const Real & _r;
 
   const MaterialProperty<Real> & _kb;
-  const MaterialProperty<Real> & _T;
+  const ADMaterialProperty<Real> & _T;
   const MaterialProperty<Real> & _mass;
 
-  Real _v_thermal;
-  Real _user_velocity;
+  ADReal _v_thermal;
+  const Real & _user_velocity;
 };
-
-#endif // HAGELAARIONDIFFUSIONBC_H

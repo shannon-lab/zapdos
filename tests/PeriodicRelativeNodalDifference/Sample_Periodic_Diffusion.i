@@ -32,7 +32,7 @@
     variable = y
   [../]
   [./Diff]
-    type = MatDiffusion
+    type = ADMatDiffusion
     variable = y
     diffusivity = 'diffy'
   [../]
@@ -72,7 +72,7 @@
 
 [Materials]
   [./gas_species_0]
-    type = GenericConstantMaterial
+    type = ADGenericConstantMaterial
     prop_names = 'diffy'
     prop_values = 0.001
   [../]

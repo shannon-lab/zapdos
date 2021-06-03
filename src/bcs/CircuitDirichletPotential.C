@@ -13,36 +13,35 @@
 
 registerMooseObject("ZapdosApp", CircuitDirichletPotential);
 
-template <>
 InputParameters
-validParams<CircuitDirichletPotential>()
+CircuitDirichletPotential::validParams()
 {
-  InputParameters p = validParams<NodalBC>();
-  p.addRequiredParam<PostprocessorName>(
+  InputParameters params = ADNodalBC::validParams();
+  params.addRequiredParam<PostprocessorName>(
       "current",
       "The postprocessor response for calculating the current passing through the needle surface.");
-  p.addRequiredParam<FunctionName>(
+  params.addRequiredParam<FunctionName>(
       "surface_potential",
       "The electrical potential applied to the surface if no current was flowing in the circuit.");
-  p.addRequiredParam<std::string>("surface",
-                                  "Whether you are specifying the potential on the "
-                                  "anode or the cathode with the requirement that the "
-                                  "other metal surface be grounded.");
-  p.addRequiredParam<Real>("resist", "The ballast resistance in Ohms");
-  p.addRequiredParam<Real>("position_units", "Units of position");
-  p.addRequiredParam<std::string>("potential_units", "The potential units.");
-  p.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to #.");
-  p.addParam<Real>("A",
-                   1.,
-                   "For 1D calculations, an area has to be passed. This area also must "
-                   "match the units convention of position_units.");
-  p.addClassDescription("Dirichlet circuit boundary condition for potential"
-                        "(The current is given through an UserObject)");
-  return p;
+  params.addRequiredParam<std::string>("surface",
+                                       "Whether you are specifying the potential on the "
+                                       "anode or the cathode with the requirement that the "
+                                       "other metal surface be grounded.");
+  params.addRequiredParam<Real>("resist", "The ballast resistance in Ohms");
+  params.addRequiredParam<Real>("position_units", "Units of position");
+  params.addRequiredParam<std::string>("potential_units", "The potential units.");
+  params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to #.");
+  params.addParam<Real>("A",
+                        1.,
+                        "For 1D calculations, an area has to be passed. This area also must "
+                        "match the units convention of position_units.");
+  params.addClassDescription("Dirichlet circuit boundary condition for potential"
+                             "(The current is given through an UserObject)");
+  return params;
 }
 
 CircuitDirichletPotential::CircuitDirichletPotential(const InputParameters & parameters)
-  : NodalBC(parameters),
+  : ADNodalBC(parameters),
     _current(getPostprocessorValue("current")),
     _surface_potential(getFunction("surface_potential")),
     _surface(getParam<std::string>("surface")),
@@ -64,21 +63,15 @@ CircuitDirichletPotential::CircuitDirichletPotential(const InputParameters & par
     _voltage_scaling = 1000;
 }
 
-Real
+ADReal
 CircuitDirichletPotential::computeQpResidual()
 {
   if (_convert_moles)
-    return _surface_potential.value(_t, *_current_node) - _u[_qp] +
+    return _surface_potential.value(_t, *_current_node) - _u +
            _current_sign * _current / std::pow(_r_units, 2.) * _resist / _voltage_scaling *
                _coulomb_charge * _A * _N_A;
   else
-    return _surface_potential.value(_t, *_current_node) - _u[_qp] +
+    return _surface_potential.value(_t, *_current_node) - _u +
            _current_sign * _current / std::pow(_r_units, 2.) * _resist / _voltage_scaling *
                _coulomb_charge * _A;
-}
-
-Real
-CircuitDirichletPotential::computeQpJacobian()
-{
-  return -1.;
 }

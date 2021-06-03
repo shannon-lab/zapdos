@@ -8,8 +8,7 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef POWERDEP_H
-#define POWERDEP_H
+#pragma once
 
 #include "AuxKernel.h"
 
@@ -22,7 +21,7 @@ public:
   static InputParameters validParams();
 
   virtual ~PowerDepTempl() {}
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
 protected:
   Real _r_units;
@@ -42,4 +41,3 @@ protected:
 
 typedef PowerDepTempl<false> PowerDep;
 typedef PowerDepTempl<true> ADPowerDep;
-#endif // POWERDEP_H

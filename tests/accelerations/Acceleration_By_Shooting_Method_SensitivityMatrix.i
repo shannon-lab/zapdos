@@ -57,7 +57,7 @@ dom0Scale=25.4e-3
     [../]
     #Advection term of electron
     [./em_advection]
-      type = EFieldAdvectionElectrons
+      type = EFieldAdvection
       variable = em
       potential = potential
       mean_en = mean_en
@@ -65,14 +65,14 @@ dom0Scale=25.4e-3
     [../]
     #Diffusion term of electrons
     [./em_diffusion]
-      type = CoeffDiffusionElectrons
+      type = CoeffDiffusion
       variable = em
       mean_en = mean_en
       position_units = ${dom0Scale}
     [../]
     #Net electron production from ionization
     [./em_ionization]
-      type = EEDFReactionLog
+      type = ADEEDFReactionLog
       variable = em
       electrons = em
       mean_energy = mean_en
@@ -82,7 +82,7 @@ dom0Scale=25.4e-3
     [../]
     #Net electron production from step-wise ionization
     [./em_stepwise_ionization]
-      type = EEDFReactionLog
+      type = ADEEDFReactionLog
       variable = em
       electrons = em
       mean_energy = mean_en
@@ -92,7 +92,7 @@ dom0Scale=25.4e-3
     [../]
     #Net electron production from metastable pooling
     [./em_pooling]
-      type = ReactionSecondOrderLog
+      type = ADReactionSecondOrderLog
       variable = em
       v = Ar*
       w = Ar*
@@ -120,7 +120,7 @@ dom0Scale=25.4e-3
     [../]
     #Net ion production from ionization
     [./Ar+_ionization]
-      type = EEDFReactionLog
+      type = ADEEDFReactionLog
       variable = Ar+
       electrons = em
       mean_energy = mean_en
@@ -130,7 +130,7 @@ dom0Scale=25.4e-3
     [../]
     #Net ion production from step-wise ionization
     [./Ar+_stepwise_ionization]
-      type = EEDFReactionLog
+      type = ADEEDFReactionLog
       variable = Ar+
       electrons = em
       mean_energy = mean_en
@@ -140,7 +140,7 @@ dom0Scale=25.4e-3
     [../]
     #Net ion production from metastable pooling
     [./Ar+_pooling]
-      type = ReactionSecondOrderLog
+      type = ADReactionSecondOrderLog
       variable = Ar+
       v = Ar*
       w = Ar*
@@ -162,7 +162,7 @@ dom0Scale=25.4e-3
       [../]
       #Net excited Argon production from excitation
       [./Ar*_excitation]
-        type = EEDFReactionLog
+        type = ADEEDFReactionLog
         variable = Ar*
         electrons = em
         target = Ar
@@ -172,7 +172,7 @@ dom0Scale=25.4e-3
       [../]
       #Net excited Argon loss from step-wise ionization
       [./Ar*_stepwise_ionization]
-        type = EEDFReactionLog
+        type = ADEEDFReactionLog
         variable = Ar*
         electrons = em
         target = Ar*
@@ -182,7 +182,7 @@ dom0Scale=25.4e-3
       [../]
       #Net excited Argon loss from superelastic collisions
       [./Ar*_collisions]
-        type = EEDFReactionLog
+        type = ADEEDFReactionLog
         variable = Ar*
         electrons = em
         target = Ar*
@@ -192,7 +192,7 @@ dom0Scale=25.4e-3
       [../]
       #Net excited Argon loss from quenching to resonant
       [./Ar*_quenching]
-        type = EEDFReactionLog
+        type = ADEEDFReactionLog
         variable = Ar*
         electrons = em
         target = Ar*
@@ -202,7 +202,7 @@ dom0Scale=25.4e-3
       [../]
       #Net excited Argon loss from  metastable pooling
       [./Ar*_pooling]
-        type = ReactionSecondOrderLog
+        type = ADReactionSecondOrderLog
         variable = Ar*
         v = Ar*
         w = Ar*
@@ -213,7 +213,7 @@ dom0Scale=25.4e-3
       [../]
       #Net excited Argon loss from two-body quenching
       [./Ar*_2B_quenching]
-        type = ReactionSecondOrderLog
+        type = ADReactionSecondOrderLog
         variable = Ar*
         v = Ar*
         w = Ar
@@ -223,7 +223,7 @@ dom0Scale=25.4e-3
       [../]
       #Net excited Argon loss from three-body quenching
       [./Ar*_3B_quenching]
-        type = ReactionThirdOrderLog
+        type = ADReactionThirdOrderLog
         variable = Ar*
         v = Ar*
         w = Ar
@@ -263,7 +263,7 @@ dom0Scale=25.4e-3
     [../]
     #Advection term of electron energy
     [./mean_en_advection]
-      type = EFieldAdvectionEnergy
+      type = EFieldAdvection
       variable = mean_en
       potential = potential
       em = em
@@ -271,7 +271,7 @@ dom0Scale=25.4e-3
     [../]
     #Diffusion term of electrons energy
     [./mean_en_diffusion]
-      type = CoeffDiffusionEnergy
+      type = CoeffDiffusion
       variable = mean_en
       em = em
       position_units = ${dom0Scale}
@@ -286,7 +286,7 @@ dom0Scale=25.4e-3
     [../]
     #Energy loss from ionization
     [./Ionization_Loss]
-      type = EEDFEnergyLog
+      type = ADEEDFEnergyLog
       variable = mean_en
       electrons = em
       target = Ar
@@ -295,7 +295,7 @@ dom0Scale=25.4e-3
     [../]
     #Energy loss from excitation
     [./Excitation_Loss]
-      type = EEDFEnergyLog
+      type = ADEEDFEnergyLog
       variable = mean_en
       electrons = em
       target = Ar
@@ -304,7 +304,7 @@ dom0Scale=25.4e-3
     [../]
     #Energy loss from step-wise ionization
     [./Stepwise_Ionization_Loss]
-      type = EEDFEnergyLog
+      type = ADEEDFEnergyLog
       variable = mean_en
       electrons = em
       target = Ar*
@@ -313,7 +313,7 @@ dom0Scale=25.4e-3
     [../]
     #Energy gain from superelastic collisions
     [./Collisions_Loss]
-      type = EEDFEnergyLog
+      type = ADEEDFEnergyLog
       variable = mean_en
       electrons = em
       target = Ar*
@@ -524,56 +524,56 @@ dom0Scale=25.4e-3
   [../]
 
   [./emRate]
-    type = ProcRateForRateCoeff
+    type = ADProcRateForRateCoeff
     variable = emRate
     v = em
     w = Ar
     reaction = 'em + Ar -> em + em + Ar+'
   [../]
   [./exRate]
-    type = ProcRateForRateCoeff
+    type = ADProcRateForRateCoeff
     variable = exRate
     v = em
     w = Ar*
     reaction = 'em + Ar -> em + Ar*'
   [../]
   [./swRate]
-    type = ProcRateForRateCoeff
+    type = ADProcRateForRateCoeff
     variable = swRate
     v = em
     w = Ar*
     reaction = 'em + Ar* -> em + em + Ar+'
   [../]
   [./deexRate]
-    type = ProcRateForRateCoeff
+    type = ADProcRateForRateCoeff
     variable = deexRate
     v = em
     w = Ar*
     reaction = 'em + Ar* -> em + Ar'
   [../]
   [./quRate]
-    type = ProcRateForRateCoeff
+    type = ADProcRateForRateCoeff
     variable = quRate
     v = em
     w = Ar*
     reaction = 'em + Ar* -> em + Ar_r'
   [../]
   [./poolRate]
-    type = ProcRateForRateCoeff
+    type = ADProcRateForRateCoeff
     variable = poolRate
     v = Ar*
     w = Ar*
     reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
   [../]
   [./TwoBRate]
-    type = ProcRateForRateCoeff
+    type = ADProcRateForRateCoeff
     variable = TwoBRate
     v = Ar*
     w = Ar
     reaction = 'Ar* + Ar -> Ar + Ar'
   [../]
   [./ThreeBRate]
-    type = ProcRateForRateCoeffThreeBody
+    type = ADProcRateForRateCoeffThreeBody
     variable = ThreeBRate
     v = Ar*
     w = Ar
@@ -633,7 +633,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   [../]
   [./Current_em]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = em
     variable = Current_em
@@ -642,7 +642,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   [../]
   [./Current_Ar]
-    type = Current
+    type = ADCurrent
     potential = potential
     density_log = Ar+
     variable = Current_Ar
@@ -768,7 +768,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   [../]
   [./gas_species_0]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
@@ -776,20 +776,20 @@ dom0Scale=25.4e-3
     diffusivity = 6.428571e-3
   [../]
   [./gas_species_1]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar*
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
     diffusivity = 7.515528e-3
   [../]
   [./gas_species_2]
-    type = HeavySpeciesMaterial
+    type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
   [../]
   [./reaction_0]
-    type = ZapdosEEDFRateConstant
+    type = ADZapdosEEDFRateConstant
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + Ar*.txt'
     reaction = 'em + Ar -> em + Ar*'
@@ -798,7 +798,7 @@ dom0Scale=25.4e-3
     electrons = em
   [../]
   [./reaction_1]
-    type = ZapdosEEDFRateConstant
+    type = ADZapdosEEDFRateConstant
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + em + Ar+.txt'
     reaction = 'em + Ar -> em + em + Ar+'
@@ -807,7 +807,7 @@ dom0Scale=25.4e-3
     electrons = em
   [../]
   [./reaction_2]
-    type = ZapdosEEDFRateConstant
+    type = ADZapdosEEDFRateConstant
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + Ar.txt'
     reaction = 'em + Ar* -> em + Ar'
@@ -816,7 +816,7 @@ dom0Scale=25.4e-3
     electrons = em
   [../]
   [./reaction_3]
-    type = ZapdosEEDFRateConstant
+    type = ADZapdosEEDFRateConstant
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + em + Ar+.txt'
     reaction = 'em + Ar* -> em + em + Ar+'
@@ -825,25 +825,25 @@ dom0Scale=25.4e-3
     electrons = em
   [../]
   [./reaction_4]
-    type = GenericRateConstant
+    type = ADGenericRateConstant
     reaction = 'em + Ar* -> em + Ar_r'
     #reaction_rate_value = 2e-13
     reaction_rate_value = 1.2044e11
   [../]
   [./reaction_5]
-    type = GenericRateConstant
+    type = ADGenericRateConstant
     reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
     #reaction_rate_value = 6.2e-16
     reaction_rate_value = 373364000
   [../]
   [./reaction_6]
-    type = GenericRateConstant
+    type = ADGenericRateConstant
     reaction = 'Ar* + Ar -> Ar + Ar'
     #reaction_rate_value = 3e-21
     reaction_rate_value = 1806.6
   [../]
   [./reaction_7]
-    type = GenericRateConstant
+    type = ADGenericRateConstant
     reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
     #reaction_rate_value = 1.1e-43
     reaction_rate_value = 39890.9324

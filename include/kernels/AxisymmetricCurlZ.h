@@ -8,25 +8,17 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef AXISYMMETRICCURLZ_H
-#define AXISYMMETRICCURLZ_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class AxisymmetricCurlZ;
-
-template <>
-InputParameters validParams<AxisymmetricCurlZ>();
-
-class AxisymmetricCurlZ : public Kernel
+class AxisymmetricCurlZ : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   AxisymmetricCurlZ(const InputParameters & parameters);
-  virtual ~AxisymmetricCurlZ();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 };
-
-#endif /* AXISYMMETRICCURLZ_H */

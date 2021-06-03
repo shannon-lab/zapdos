@@ -8,16 +8,9 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef POSITION_H
-#define POSITION_H
+#pragma once
 
 #include "AuxKernel.h"
-
-// Forward Declarations
-class Position;
-
-template <>
-InputParameters validParams<Position>();
 
 /**
  * Function auxiliary value
@@ -31,13 +24,13 @@ public:
    */
   Position(const InputParameters & parameters);
 
+  static InputParameters validParams();
+
   virtual ~Position() {}
 
 protected:
   int _component;
   Real _r_units;
 
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 };
-
-#endif // POSITION_H

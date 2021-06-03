@@ -8,17 +8,10 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef SIDETOTFLUXINTEGRAL_H
-#define SIDETOTFLUXINTEGRAL_H
+#pragma once
 
 // MOOSE includes
 #include "SideIntegralVariablePostprocessor.h"
-
-// Forward Declarations
-class SideTotFluxIntegral;
-
-template <>
-InputParameters validParams<SideTotFluxIntegral>();
 
 /**
  * This postprocessor computes a side integral of the mass flux.
@@ -27,6 +20,8 @@ class SideTotFluxIntegral : public SideIntegralVariablePostprocessor
 {
 public:
   SideTotFluxIntegral(const InputParameters & parameters);
+
+  static InputParameters validParams();
 
 protected:
   virtual Real computeQpIntegral();
@@ -49,5 +44,3 @@ protected:
 
   const VariableGradient & _grad_potential;
 };
-
-#endif // SIDETOTFLUXINTEGRAL_H

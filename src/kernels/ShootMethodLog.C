@@ -10,9 +10,6 @@
 
 #include "ShootMethodLog.h"
 
-// MOOSE includes
-#include "MooseVariable.h"
-
 registerMooseObject("ZapdosApp", ShootMethodLog);
 /*
 This acceleration scheme is used in paper
@@ -32,11 +29,10 @@ representative of the sensitivity of the problem. This
 sensitivity is calculated in a sub app.
 */
 
-template <>
 InputParameters
-validParams<ShootMethodLog>()
+ShootMethodLog::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("density_at_start_cycle",
                                "The accelerated density at the start of the cycle in log form");
   params.addRequiredCoupledVar("density_at_end_cycle",
@@ -53,22 +49,20 @@ validParams<ShootMethodLog>()
 }
 
 ShootMethodLog::ShootMethodLog(const InputParameters & parameters)
-  : Kernel(parameters),
-    _density_at_start_cycle(coupledValue("density_at_start_cycle")),
-    _density_at_end_cycle(coupledValue("density_at_end_cycle")),
-    _sensitivity(coupledValue("sensitivity_variable")),
+  : ADKernel(parameters),
+    _density_at_start_cycle(adCoupledValue("density_at_start_cycle")),
+    _density_at_end_cycle(adCoupledValue("density_at_end_cycle")),
+    _sensitivity(adCoupledValue("sensitivity_variable")),
     _limit(getParam<Real>("growth_limit")),
     _acceleration(0.0)
 {
 }
 
-ShootMethodLog::~ShootMethodLog() {}
-
-Real
+ADReal
 ShootMethodLog::computeQpResidual()
 {
 
-  Real _acceleration_growth = std::pow((1. - _sensitivity[_qp]), -1.);
+  ADReal _acceleration_growth = std::pow((1. - _sensitivity[_qp]), -1.);
 
   if (_limit == 0.0)
   {
@@ -91,10 +85,4 @@ ShootMethodLog::computeQpResidual()
 
   return _test[_i][_qp] *
          (std::exp(_u[_qp]) - std::exp(_density_at_start_cycle[_qp]) + _acceleration);
-}
-
-Real
-ShootMethodLog::computeQpJacobian()
-{
-  return _test[_i][_qp] * std::exp(_u[_qp]) * _phi[_j][_qp];
 }

@@ -13,11 +13,10 @@
 
 registerMooseObject("ZapdosApp", Sigma);
 
-template <>
 InputParameters
-validParams<Sigma>()
+Sigma::validParams()
 {
-  InputParameters params = validParams<AuxKernel>();
+  InputParameters params = AuxKernel::validParams();
 
   params.addRequiredCoupledVar("n", "The density of the ions.");
   params.addRequiredCoupledVar("potential", "The potential");

@@ -8,30 +8,19 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef ELECTRONTIMEDERIVATIVE_H
-#define ELECTRONTIMEDERIVATIVE_H
+#pragma once
 
-#include "TimeKernel.h"
+#include "ADTimeKernel.h"
 
-// Forward Declaration
-class ElectronTimeDerivative;
-
-template <>
-InputParameters validParams<ElectronTimeDerivative>();
-
-class ElectronTimeDerivative : public TimeKernel
+class ElectronTimeDerivative : public ADTimeKernel
 {
 public:
+  static InputParameters validParams();
+
   ElectronTimeDerivative(const InputParameters & parameters);
 
-  /* virtual void computeJacobian(); */
-
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  /* virtual Real computeQpOffDiagJacobian(unsigned int jvar); */
+  virtual ADReal computeQpResidual() override;
 
-  bool _lumping;
+  const bool & _lumping;
 };
-
-#endif // ELECTRONTIMEDERIVATIVE_H

@@ -8,23 +8,19 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef TM0CYLINDRICALEZAUX_H
-#define TM0CYLINDRICALEZAUX_H
+#pragma once
 
 #include "AuxKernel.h"
-
-class TM0CylindricalEzAux;
-
-template <>
-InputParameters validParams<TM0CylindricalEzAux>();
 
 class TM0CylindricalEzAux : public AuxKernel
 {
 public:
   TM0CylindricalEzAux(const InputParameters & parameters);
 
+  static InputParameters validParams();
+
 protected:
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
 private:
   const VariableGradient & _grad_Hphi;
@@ -34,5 +30,3 @@ private:
   Real _eps_r;
   Real _eps0;
 };
-
-#endif // TM0CYLINDRICALEZAUX_H

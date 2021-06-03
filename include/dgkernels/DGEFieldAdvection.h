@@ -8,41 +8,24 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef DGEFIELDADVECTION_H
-#define DGEFIELDADVECTION_H
+#include "ADDGKernel.h"
 
-#include "DGKernel.h"
-#include <cmath>
-
-// Forward Declarations
-class DGEFieldAdvection;
-
-template <>
-InputParameters validParams<DGEFieldAdvection>();
-
-class DGEFieldAdvection : public DGKernel
+class DGEFieldAdvection : public ADDGKernel
 {
 public:
+  static InputParameters validParams();
+
   DGEFieldAdvection(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual(Moose::DGResidualType type);
-  virtual Real computeQpJacobian(Moose::DGJacobianType type);
-  virtual Real computeQpOffDiagJacobian(Moose::DGJacobianType type, unsigned int jvar);
+  virtual ADReal computeQpResidual(Moose::DGResidualType type) override;
 
-  const MaterialProperty<Real> & _mu;
+  const ADMaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sgn;
-  const MaterialProperty<Real> & _mu_neighbor;
+  const ADMaterialProperty<Real> & _mu_neighbor;
   const MaterialProperty<Real> & _sgn_neighbor;
 
   MooseVariable & _potential_var;
-  unsigned int _potential_id;
-  const VariableGradient & _grad_potential;
-  const VariableGradient & _grad_potential_neighbor;
-  const VariablePhiGradient & _grad_phi_pot;
-  const VariablePhiGradient & _grad_phi_neighbor_pot;
-
-private:
+  const ADVariableGradient & _grad_potential;
+  const ADVariableGradient & _grad_potential_neighbor;
 };
-
-#endif // DGEFIELDADVECTION_H

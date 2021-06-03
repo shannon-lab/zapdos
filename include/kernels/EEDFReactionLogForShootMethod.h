@@ -10,32 +10,22 @@
 
 #pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-// Forward Declaration
-class EEDFReactionLogForShootMethod;
-
-template <>
-InputParameters validParams<EEDFReactionLogForShootMethod>();
-
-class EEDFReactionLogForShootMethod : public Kernel
+class EEDFReactionLogForShootMethod : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   EEDFReactionLogForShootMethod(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  const VariableValue & _electron;
-  const VariableValue & _density;
-  const VariableValue & _energy;
-  unsigned int _electron_id;
-  unsigned int _density_id;
-  unsigned int _energy_id;
+  const ADVariableValue & _electron;
+  const ADVariableValue & _density;
+  const ADVariableValue & _energy;
 
-  const MaterialProperty<Real> & _reaction_coeff;
-  const MaterialProperty<Real> & _d_k_d_en;
-  Real _stoichiometric_coeff;
+  const ADMaterialProperty<Real> & _reaction_coeff;
+  const Real & _stoichiometric_coeff;
 };

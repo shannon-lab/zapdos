@@ -8,24 +8,17 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef TM0PECVERTBC_H
-#define TM0PECVERTBC_H
+#pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class TM0PECVertBC;
-
-template <>
-InputParameters validParams<TM0PECVertBC>();
-
-class TM0PECVertBC : public IntegratedBC
+class TM0PECVertBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   TM0PECVertBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 };
-
-#endif // TM0PECVERTBC_H

@@ -10,32 +10,25 @@
 
 #pragma once
 
-#include "IntegratedBC.h"
+#include "ADIntegratedBC.h"
 
-class SakiyamaIonAdvectionBC;
-
-template <>
-InputParameters validParams<SakiyamaIonAdvectionBC>();
-
-class SakiyamaIonAdvectionBC : public IntegratedBC
+class SakiyamaIonAdvectionBC : public ADIntegratedBC
 {
 public:
+  static InputParameters validParams();
+
   SakiyamaIonAdvectionBC(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
   Real _r_units;
 
   // Coupled variables
 
-  const VariableGradient & _grad_potential;
-  unsigned int _potential_id;
+  const ADVariableGradient & _grad_potential;
 
-  const MaterialProperty<Real> & _mu;
-  const MaterialProperty<Real> & _e;
+  const ADMaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sgn;
 
   Real _a;

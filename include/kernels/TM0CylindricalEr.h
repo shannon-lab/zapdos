@@ -8,35 +8,24 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef TM0CYLINDRICALER_H
-#define TM0CYLINDRICALER_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-class TM0CylindricalEr;
-
-template <>
-InputParameters validParams<TM0CylindricalEr>();
-
-class TM0CylindricalEr : public Kernel
+class TM0CylindricalEr : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   TM0CylindricalEr(const InputParameters & parameters);
-  virtual ~TM0CylindricalEr();
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
-  virtual Real computeQpOffDiagJacobian(unsigned int jvar);
+  virtual ADReal computeQpResidual() override;
 
-  /* Real _r_units; */
-  Real _omega;
-  const MaterialProperty<Real> & _eps_r;
-  Real _mu0;
-  Real _eps0;
-  const VariableValue & _Hphi;
-  const VariableGradient & _grad_Hphi;
-  unsigned int _Hphi_id;
+  const Real _omega;
+  const ADMaterialProperty<Real> & _eps_r;
+  const Real _mu0;
+  const Real _eps0;
+  const ADVariableValue & _Hphi;
+  const ADVariableGradient & _grad_Hphi;
 };
-
-#endif /* TM0CYLINDRICALER_H */

@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", LogStabilizationMoles);
 
-template <>
 InputParameters
-validParams<LogStabilizationMoles>()
+LogStabilizationMoles::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("offset",
                                 "The offset parameter that goes into the exponential function");
   params.addClassDescription(
@@ -26,20 +25,12 @@ validParams<LogStabilizationMoles>()
 }
 
 LogStabilizationMoles::LogStabilizationMoles(const InputParameters & parameters)
-  : Kernel(parameters), _offset(getParam<Real>("offset"))
+  : ADKernel(parameters), _offset(getParam<Real>("offset"))
 {
 }
 
-LogStabilizationMoles::~LogStabilizationMoles() {}
-
-Real
+ADReal
 LogStabilizationMoles::computeQpResidual()
 {
   return -_test[_i][_qp] * std::exp(-(_offset + _u[_qp]));
-}
-
-Real
-LogStabilizationMoles::computeQpJacobian()
-{
-  return -_test[_i][_qp] * std::exp(-(_offset + _u[_qp])) * -_phi[_j][_qp];
 }

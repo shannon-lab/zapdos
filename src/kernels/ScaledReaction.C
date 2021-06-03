@@ -12,11 +12,10 @@
 
 registerMooseObject("ZapdosApp", ScaledReaction);
 
-template <>
 InputParameters
-validParams<ScaledReaction>()
+ScaledReaction::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("collision_freq", "The ion-neutral collision frequency.");
   params.addClassDescription(
       "The multiple of a given variable"
@@ -25,21 +24,15 @@ validParams<ScaledReaction>()
 }
 
 ScaledReaction::ScaledReaction(const InputParameters & parameters)
-  : Kernel(parameters),
+  : ADKernel(parameters),
 
     _nu(getParam<Real>("collision_freq"))
 
 {
 }
 
-Real
+ADReal
 ScaledReaction::computeQpResidual()
 {
   return _test[_i][_qp] * _nu * _u[_qp];
-}
-
-Real
-ScaledReaction::computeQpJacobian()
-{
-  return _test[_i][_qp] * _nu * _phi[_j][_qp];
 }

@@ -8,17 +8,10 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef ARBITRARILYTIEDVALUECONSTRAINT_H
-#define ARBITRARILYTIEDVALUECONSTRAINT_H
+#pragma once
 
 // MOOSE includes
 #include "NodeFaceConstraint.h"
-
-// Forward Declarations
-class ArbitrarilyTiedValueConstraint;
-
-template <>
-InputParameters validParams<ArbitrarilyTiedValueConstraint>();
 
 /**
  * A ArbitrarilyTiedValueConstraint forces the value of a variable to be the same on both sides of
@@ -28,6 +21,9 @@ class ArbitrarilyTiedValueConstraint : public NodeFaceConstraint
 {
 public:
   ArbitrarilyTiedValueConstraint(const InputParameters & parameters);
+
+  static InputParameters validParams();
+
   virtual ~ArbitrarilyTiedValueConstraint() {}
 
   virtual Real computeQpSecondaryValue();
@@ -41,5 +37,3 @@ protected:
   const Real _H;
   NumericVector<Number> & _residual_copy;
 };
-
-#endif

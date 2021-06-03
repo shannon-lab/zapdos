@@ -8,27 +8,20 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef REACTANTAARXN_H
-#define REACTANTAARXN_H
+#pragma once
 
-#include "Kernel.h"
+#include "ADKernel.h"
 
-// Forward Declaration
-class ReactantAARxn;
-
-template <>
-InputParameters validParams<ReactantAARxn>();
-
-class ReactantAARxn : public Kernel
+class ReactantAARxn : public ADKernel
 {
 public:
+  static InputParameters validParams();
+
   ReactantAARxn(const InputParameters & parameters);
 
 protected:
-  virtual Real computeQpResidual();
-  virtual Real computeQpJacobian();
+  virtual ADReal computeQpResidual() override;
 
-  // The reaction coefficient
-  const MaterialProperty<Real> & _reaction_coeff;
+  /// The reaction coefficient
+  const ADMaterialProperty<Real> & _reaction_coeff;
 };
-#endif // REACTANTAARXN_H

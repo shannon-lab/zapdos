@@ -8,23 +8,19 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#ifndef DRIFTDIFFUSIONFLUXAUX_H_
-#define DRIFTDIFFUSIONFLUXAUX_H_
+#pragma once
 
 #include "AuxKernel.h"
-
-class DriftDiffusionFluxAux;
-
-template <>
-InputParameters validParams<DriftDiffusionFluxAux>();
 
 class DriftDiffusionFluxAux : public AuxKernel
 {
 public:
   DriftDiffusionFluxAux(const InputParameters & parameters);
 
+  static InputParameters validParams();
+
 protected:
-  virtual Real computeValue();
+  virtual Real computeValue() override;
 
 private:
   const Real _sgn;
@@ -33,5 +29,3 @@ private:
   const VariableGradient & _grad_u;
   const int _component;
 };
-
-#endif // DRIFTDIFFUSIONFLUXAUX_H

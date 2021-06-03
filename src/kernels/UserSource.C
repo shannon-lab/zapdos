@@ -12,31 +12,22 @@
 
 registerMooseObject("ZapdosApp", UserSource);
 
-template <>
 InputParameters
-validParams<UserSource>()
+UserSource::validParams()
 {
-  InputParameters params = validParams<Kernel>();
+  InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("source_magnitude", "The numerical value of the source magnitude.");
   params.addClassDescription("User defined source term");
   return params;
 }
 
 UserSource::UserSource(const InputParameters & parameters)
-  : Kernel(parameters), _source(getParam<Real>("source_magnitude"))
+  : ADKernel(parameters), _source(getParam<Real>("source_magnitude"))
 {
 }
 
-UserSource::~UserSource() {}
-
-Real
+ADReal
 UserSource::computeQpResidual()
 {
   return -_test[_i][_qp] * _source;
-}
-
-Real
-UserSource::computeQpJacobian()
-{
-  return 0.;
 }
