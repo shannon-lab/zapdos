@@ -113,7 +113,7 @@ Returning to the [main Zapdos repo page](https://github.com/shannon-lab/zapdos),
 you can create a [pull request](https://guides.github.com/activities/forking/#making-a-pull-request)
 to submit your modifications to the Zapdos code base.
 
-## Reach out to a member of the Zapdos development upstream
+## Reach out to a member of the Zapdos development team
 
 !style halign=left
 Usually, a member of the Zapdos development team will reach out to review or
