@@ -2,6 +2,7 @@
 
 ## Application
 
+!style halign=left
 If you use Zapdos for your publication, please cite the following:
 
 ```
@@ -19,4 +20,6 @@ If you use Zapdos for your publication, please cite the following:
 
 ## MOOSE Framework
 
-Please see [Citing MOOSE](https://mooseframework.inl.gov/citing.html) on the main MOOSE Framework website for the most current citations.
+!style halign=left
+Please see [Citing MOOSE](https://mooseframework.inl.gov/citing.html) on the
+main MOOSE Framework website for the most current citations.

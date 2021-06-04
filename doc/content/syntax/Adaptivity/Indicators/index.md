@@ -1,1 +1,0 @@
-# Adaptivity Indicators System

@@ -1,36 +1,54 @@
 Content:
-    Zapdos:
-        root_dir: ${ROOT_DIR}/doc/content
-    moose:
-        root_dir: ${MOOSE_DIR}/framework/doc/content
-        content:
-            - js/*
-            - css/*
-            - contrib/**
-            - media/**
-            - templates/stubs/*
-
+    - ${ROOT_DIR}/doc/content
+    - ${MOOSE_DIR}/framework/doc/content
 Renderer:
     type: MooseDocs.base.MaterializeRenderer
-    name: Zapdos
-    home: https://shannon-lab.github.io/zapdos
-    repo: https://github.com/shannon-lab/zapdos
     extra-css:
-            - css/zapdos.css
-
+        - css/zapdos.css
 Extensions:
     MooseDocs.extensions.navigation:
-        name: 'Zapdos'
+        name: Zapdos
         home: https://shannon-lab.github.io/zapdos
         repo: https://github.com/shannon-lab/zapdos
         menu:
-            Getting Started: getting_started/index.md
-            Documentation: documentation.menu.md
-            Help: help.menu.md
+            Getting Started:
+                Installation: getting_started/installation.md
+                Using Zapdos: getting_started/using_zapdos.md
+                Generating Meshes: getting_started/zapdos_meshing.md
+            Documentation:
+                Complete Code Syntax: syntax/index.md
+                #Zapdos Doxygen: doxygen/zapdos/classes.html TODO: generate this!
+                MOOSE Doxygen: https://mooseframework.inl.gov/docs/doxygen/moose/classes.html
+                libMesh Doxygen: https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html
+                Zapdos A to Z Index: a-to-z.md
+                Contributing Guidelines: development/contributing.md
+                Code Standards: development/code_standards.md
+                List of Publications: publications.md
+            Help:
+                Zapdos Discussions Forum: https://github.com/shannon-lab/zapdos/discussions
+                MOOSE Discussions Forum: https://github.com/idaholab/moose/discussions
+                MOOSE Homepage: https://mooseframework.inl.gov/
+                MOOSE Developer Information: development/moose_developer_info.md
             Citing: citing.md
     MooseDocs.extensions.template:
-        active: True
+        active: true
     MooseDocs.extensions.appsyntax:
         executable: ${ROOT_DIR}
         includes:
             - include
+        remove:
+            framework: !include ${MOOSE_DIR}/framework/doc/remove.yml
+    MooseDocs.extensions.common:
+        shortcuts:
+            framework: !include ${MOOSE_DIR}/framework/doc/globals.yml
+            zapdos: !include ${ROOT_DIR}/doc/zapdos_shortcuts.yml
+    MooseDocs.extensions.acronym:
+        acronyms: !include ${MOOSE_DIR}/framework/doc/acronyms.yml
+    MooseDocs.extensions.sqa:
+        active: true
+        categories:
+            framework: !include ${MOOSE_DIR}/framework/doc/sqa_framework.yml
+            zapdos: !include ${ROOT_DIR}/doc/sqa_zapdos.yml
+        repos:
+            default: https://github.com/shannon-lab/zapdos
+        reports: !include ${ROOT_DIR}/doc/sqa_reports.yml
