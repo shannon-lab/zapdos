@@ -35,6 +35,6 @@ CoeffDiffusionForShootMethod::CoeffDiffusionForShootMethod(const InputParameters
 ADReal
 CoeffDiffusionForShootMethod::computeQpResidual()
 {
-  return -_diffusivity[_qp] * (_grad_test[_i][_qp] * _r_units) * -_grad_test[_i][_qp] * _r_units *
-         _u[_qp];
+  return _grad_test[_i][_qp] * _r_units * _diffusivity[_qp] *
+         _grad_u[_qp] * _r_units;
 }

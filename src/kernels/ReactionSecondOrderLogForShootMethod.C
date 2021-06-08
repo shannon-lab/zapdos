@@ -36,7 +36,9 @@ ReactionSecondOrderLogForShootMethod::validParams()
 ReactionSecondOrderLogForShootMethod::ReactionSecondOrderLogForShootMethod(
     const InputParameters & parameters)
   : ADKernel(parameters),
-    _reaction_coeff(getADMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
+    //_reaction_coeff(getADMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
+    //                                            getParam<std::string>("reaction"))),
+    _reaction_coeff(getMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
                                                 getParam<std::string>("reaction"))),
 
     _density(adCoupledValue("density")),
@@ -51,14 +53,12 @@ ReactionSecondOrderLogForShootMethod::ReactionSecondOrderLogForShootMethod(
 ADReal
 ReactionSecondOrderLogForShootMethod::computeQpResidual()
 {
+  Real power;
+
+  power = 1.;
   if (_v_id == _density_id)
-  {
-    return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 2.0 *
-           std::exp(_v[_qp]) * _u[_qp];
-  }
-  else
-  {
-    return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
-           std::exp(_v[_qp]) * _u[_qp];
-  }
+    power += 1.;
+
+  return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * power *
+          std::exp(_v[_qp]) * _u[_qp];
 }
