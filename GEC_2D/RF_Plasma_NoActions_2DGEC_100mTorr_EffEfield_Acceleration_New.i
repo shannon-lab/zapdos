@@ -776,6 +776,10 @@ dom0Scale=25.4e-3
 
 #Material properties of species and background gas
 [Materials]
+  [./field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  [../]
   [./GasBasics]
     #If elecron mobility and diffusion are NOT constant, set
     #"interp_elastic_coeff = true". This lets the mobility and
@@ -1009,7 +1013,8 @@ dom0Scale=25.4e-3
 
 [Executioner]
   type = Transient
-  end_time = 5e-4
+  end_time = 3.7e-5 #500 RF cycles
+  #end_time = 5e-4
   #end_time = 1e-7
 
   automatic_scaling = true
