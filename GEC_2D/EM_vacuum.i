@@ -4,6 +4,12 @@
   file = thesis_mesh.msh
 []
 
+[Problem]
+  type = FEProblem
+  coord_type = RZ
+  rz_coord_axis = Y
+[]
+
 [Variables]
   [./E_real]
     order = FIRST
@@ -114,24 +120,24 @@
     boundary = Top_Electrode
     variable = E_real
     penalty = 1e5
-    x_exact_sln = '(50/0.0254)*cos(2*pi*1e9*t)'
+    x_exact_sln = '(50/0.0254)*cos(2*pi*40e6*t)'
   [../]
   [./electrode_imag]
     type = VectorPenaltyDirichletBC
     boundary = Top_Electrode
     variable = E_imag
     penalty = 1e5
-    x_exact_sln = '(50/0.0254)*sin(2*pi*1e9*t)'
+    x_exact_sln = '(50/0.0254)*sin(2*pi*40e6*t)'
   [../]
   [./walls_real]
     type = VectorPenaltyDirichletBC
-    boundary = Walls
+    boundary = 'penalty_walls'
     variable = E_real
     penalty = 1e5
   [../]
   [./walls_imag]
     type = VectorPenaltyDirichletBC
-    boundary = Walls
+    boundary = 'penalty_walls'
     variable = E_imag
     penalty = 1e5
   [../]
@@ -185,7 +191,7 @@
   petsc_options_value = 'lu NONZERO 1.e-10'
   # petsc_options_iname = '-pc_type -pc_hypre_type -pc_factor_shift_type -pc_factor_shift_amount'
   # petsc_options_value = 'hypre boomeramg NONZERO 1.e-10'
-  num_steps = 500
+  num_steps = 700
   scheme = newmark-beta
   dt = 4e-10
   automatic_scaling = true

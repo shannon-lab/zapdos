@@ -165,7 +165,14 @@ Physical Line("Top_Insulator") = {102};
 Physical Line("Bottom_Insulator") = {111};
 
 // Physical Walls
-Physical Line("Walls") = {103,104,105,106,107,108,109,110};
+//Physical Line("Walls") = {103,104,105,106,107,108,109,110};
+
+// Physical penalty walls
+Physical Line("penalty_walls") = {103,110};
+
+// Physical Walls
+Physical Line("Walls") = {104, 105, 106, 107, 108, 109};
+
 
 // Physical axis of symmetry
 Physical Line("axis") = {113,114};
