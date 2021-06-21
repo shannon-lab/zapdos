@@ -1,11 +1,7 @@
 [Mesh]
-  [./generate]
-    type = GeneratedMeshGenerator
-    dim = 2
-    nx = 10
-    ny = 10
-  [../]
-  second_order = true
+  type = FileMesh
+  #file = thesis_mesh_coaxial.msh
+  file = thesis_mesh.msh
 []
 
 [Variables]
@@ -19,60 +15,55 @@
   [../]
 []
 
-[AuxVariables]
-  [./em]
-    initial_condition = -24.8
-  [../]
-[]
+# [AuxVariables]
+#   [./em]
+#     initial_condition = -24.8
+#   [../]
+# []
 
 [Kernels]
   [./curl_curl_real]
     type = CurlCurlField
     variable = E_real
   [../]
-  [./time_derivative_real]
+  # [./coeff_real]
+  #   type = VectorCoeffField
+  #   variable = E_real
+  #   func = '-(2*pi*40e6/3e8)*(2*pi*40e6/3e8)'  # -(wave number)^2
+  # [../]
+  # [./time_derivative_real_coax]
+  #   type = VectorSecondTimeDerivative
+  #   variable = E_real
+  #   coefficient = '2.53/(3e8 * 3e8)' # 1/c^2 = mu_0 * eps_0, eps_r is Rexolite
+  #   block = coax
+  # [../]
+  [./time_derivative_real_plasma]
     type = VectorSecondTimeDerivative
     variable = E_real
     coefficient = '1/(3e8 * 3e8)' # 1/c^2 = mu_0 * eps_0
+    block = plasma
   [../]
-  # [./time_derivative_real]
-  #   type = PlasmaDielectricConstantSecondTimeDerivative
-  #   variable = E_real
-  #   component = real
-  #   real_field = E_real
-  #   imaginary_field = E_imag
-  # [../]
-  # [./time_derivative_real]
-  #   type = VectorSecondTimeDerivative
-  #   variable = E_real
-  #   coefficient = 1
-  # [../]
   [./curl_curl_imag]
     type = CurlCurlField
     variable = E_imag
   [../]
-  # [./time_derivative_imag]
-  #   type = PlasmaDielectricConstantSecondTimeDerivative
+  # [./time_derivative_imag_coax]
+  #   type = VectorSecondTimeDerivative
   #   variable = E_imag
-  #   component = imaginary
-  #   real_field = E_real
-  #   imaginary_field = E_imag
+  #   coefficient = '2.53/(3e8 * 3e8)' # 1/c^2 = mu_0 * eps_0, eps_r is Rexolite
+  #   block = coax
   # [../]
-  [./time_derivative_imag]
+  [./time_derivative_imag_plasma]
     type = VectorSecondTimeDerivative
     variable = E_imag
     coefficient = '1/(3e8 * 3e8)' # 1/c^2 = mu_0 * eps_0
+    block = plasma
   [../]
-  [./source]
-    type = VectorBodyForce
-    variable = E_real
-    value = 1
-  [../]
-  [./source_imag]
-    type = VectorBodyForce
-    variable = E_imag
-    value = 1
-  [../]
+  # [./coeff_imag]
+  #   type = VectorCoeffField
+  #   variable = E_imag
+  #   func = '-(2*pi*40e6/3e8)*(2*pi*40e6/3e8)'  # -(wave number)^2
+  # [../]
 []
 
 [BCs]
@@ -84,9 +75,9 @@
   #   beta = '2*pi*40e6/3e8'
   #   coupled_field = E_imag
   #   real_incoming = inc_real_top
-  #   imag_incoming = inc_imag_top
+  #   #imag_incoming = inc_imag_top
   #   mode = port
-  #   boundary = 'Top_Insulator'
+  #   boundary = 'source'
   # [../]
   # [./port_imag]
   #   type = VectorEMRobinBC
@@ -95,9 +86,9 @@
   #   beta = '2*pi*40e6/3e8'
   #   coupled_field = E_real
   #   real_incoming = inc_real_top
-  #   imag_incoming = inc_imag_top
+  #   #imag_incoming = inc_imag_top
   #   mode = port
-  #   boundary = 'Top_Insulator'
+  #   boundary = 'source'
   # [../]
   # ## An exit for the waves in the domain is through the bottom insulator
   # [./absorbing_real]
@@ -106,10 +97,8 @@
   #   component = real
   #   beta = '2*pi*40e6/3e8'
   #   coupled_field = E_imag
-  #   real_incoming = inc_real_bottom
-  #   imag_incoming = inc_imag_bottom
-  #   mode = port
-  #   boundary = 'Bottom_Insulator'
+  #   mode = absorbing
+  #   boundary = 'Walls'
   # [../]
   # [./absorbing_imag]
   #   type = VectorEMRobinBC
@@ -117,46 +106,56 @@
   #   component = imaginary
   #   beta = '2*pi*40e6/3e8'
   #   coupled_field = E_real
-  #   real_incoming = inc_real_bottom
-  #   imag_incoming = inc_imag_bottom
-  #   mode = port
-  #   boundary = 'Bottom_Insulator'
+  #   mode = absorbing
+  #   boundary = 'Walls'
   # [../]
-  # [./pen_real]
-  #   type = VectorPenaltyDirichletBC
-  #   variable = E_real
-  #   boundary = left
-  #   penalty = 1e10
-  #   x_exact_sln = 10
-  # [../]
-  # [./pen_imag]
-  #   type = VectorPenaltyDirichletBC
-  #   variable = E_imag
-  #   boundary = left
-  #   penalty = 1e10
-  #   x_exact_sln = 10
-  # [../]
+  [./electrode_real]
+    type = VectorPenaltyDirichletBC
+    boundary = Top_Electrode
+    variable = E_real
+    penalty = 1e5
+    x_exact_sln = '(50/0.0254)*cos(2*pi*1e9*t)'
+  [../]
+  [./electrode_imag]
+    type = VectorPenaltyDirichletBC
+    boundary = Top_Electrode
+    variable = E_imag
+    penalty = 1e5
+    x_exact_sln = '(50/0.0254)*sin(2*pi*1e9*t)'
+  [../]
+  [./walls_real]
+    type = VectorPenaltyDirichletBC
+    boundary = Walls
+    variable = E_real
+    penalty = 1e5
+  [../]
+  [./walls_imag]
+    type = VectorPenaltyDirichletBC
+    boundary = Walls
+    variable = E_imag
+    penalty = 1e5
+  [../]
 []
 
 
-# [Functions]
-#   [./inc_real_top]
-#     type = ParsedVectorFunction
-#     value_x = '50*cos(2*pi*40e6*t)'
-#   [../]
-#   [./inc_imag_top]
-#     type = ParsedVectorFunction
-#     value_x = '50*sin(2*pi*40e6*t)'
-#   [../]
-#   [./inc_real_bottom]
-#     type = ParsedVectorFunction
-#     value_x = '-50*cos(2*pi*40e6*t)'
-#   [../]
-#   [./inc_imag_bottom]
-#     type = ParsedVectorFunction
-#     value_x = '-50*sin(2*pi*40e6*t)'
-#   [../]
-# []
+[Functions]
+  [./inc_real_top]
+    type = ParsedVectorFunction
+    value_y = 'cos(2*pi*40e6*t)'
+  [../]
+  [./inc_imag_top]
+    type = ParsedVectorFunction
+    value_y = '(50/0.0015)*sin(2*pi*40e6*t)'
+  [../]
+  [./inc_real_bottom]
+    type = ParsedVectorFunction
+    value_x = '-50*cos(2*pi*40e6*t)'
+  [../]
+  [./inc_imag_bottom]
+    type = ParsedVectorFunction
+    value_x = '-50*sin(2*pi*40e6*t)'
+  [../]
+[]
 
 # [Materials]
 #   [./plasma_dielectric]
@@ -180,13 +179,13 @@
 
 [Executioner]
   type = Transient
-  solve_type = PJFNK
-  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -snes_test_jacobian'
+  solve_type = NEWTON
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor' # -snes_test_jacobian'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
   petsc_options_value = 'lu NONZERO 1.e-10'
   # petsc_options_iname = '-pc_type -pc_hypre_type -pc_factor_shift_type -pc_factor_shift_amount'
   # petsc_options_value = 'hypre boomeramg NONZERO 1.e-10'
-  num_steps = 20
+  num_steps = 500
   scheme = newmark-beta
   dt = 4e-10
   automatic_scaling = true
