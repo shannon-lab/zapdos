@@ -17,8 +17,10 @@ PlasmaDielectricConstant::validParams()
 PlasmaDielectricConstant::PlasmaDielectricConstant(const InputParameters & parameters)
   : ADMaterial(parameters),
     _eps_r_real(declareADProperty<Real>("plasma_dielectric_constant_real")),
+    _eps_r_real_dot(declareADProperty<Real>("plasma_dielectric_constant_real_dot")),
     _eps_r_real_dot_dot(declareADProperty<Real>("plasma_dielectric_constant_real_dot_dot")),
     _eps_r_imag(declareADProperty<Real>("plasma_dielectric_constant_imag")),
+    _eps_r_imag_dot(declareADProperty<Real>("plasma_dielectric_constant_imag_dot")),
     _eps_r_imag_dot_dot(declareADProperty<Real>("plasma_dielectric_constant_imag_dot_dot")),
     _elementary_charge(1.6022e-19),
     _electron_mass(9.1095e-31),
@@ -45,6 +47,17 @@ PlasmaDielectricConstant::computeQpProperties()
       1.0 - (std::pow(omega_pe, 2) / (std::pow(2 * _pi * _frequency, 2) + std::pow(_nu, 2)));
   _eps_r_imag[_qp] = (-1.0 * std::pow(omega_pe, 2) * _nu) /
                      (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(_nu, 2));
+
+  // Calculate the first time derivative of the linear electron density
+  ADReal lin_dot = _em_dot[_qp] * std::exp(_em[_qp]);
+
+  // Calculate the first time derivative of the plasma dielectric constant
+  _eps_r_real_dot[_qp] = -1.0 * std::pow(omega_pe_const, 2) * lin_dot /
+                         (std::pow(2 * _pi * _frequency, 2) + std::pow(_nu, 2));
+
+  _eps_r_imag_dot[_qp] =
+      -1.0 * std::pow(omega_pe_const, 2) * _nu * lin_dot /
+      (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(_nu, 2));
 
   // Calculate the second time derivative of the linear electron density
   ADReal lin_dot_dot =

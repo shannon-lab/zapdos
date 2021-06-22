@@ -1,19 +1,22 @@
 #pragma once
 
-#include "ADTimeKernel.h"
+#include "ADVectorKernel.h"
 
 /**
  *
  */
-class PlasmaDielectricConstantSecondTimeDerivative : public ADVectorTimeKernel
+class PlasmaDielectricConstantCoeffField : public ADVectorKernel
 {
 public:
   static InputParameters validParams();
 
-  PlasmaDielectricConstantSecondTimeDerivative(const InputParameters & parameters);
+  PlasmaDielectricConstantCoeffField(const InputParameters & parameters);
 
 protected:
   virtual ADReal computeQpResidual() override;
+
+  /// System driving frequency (in Hz)
+  const Real _frequency;
 
   /// Real field variable
   VectorMooseVariable * _real_var;
@@ -23,14 +26,6 @@ protected:
   const ADVectorVariableValue & _real_value;
   /// Imaginary field variable value
   const ADVectorVariableValue & _imag_value;
-  /// Real field time derivative
-  const ADVectorVariableValue & _real_dot;
-  /// Imaginary field time derivative
-  const ADVectorVariableValue & _imag_dot;
-  /// Real field second time derivative
-  const ADVectorVariableValue & _real_dot_dot;
-  /// Imaginary field second time derivative
-  const ADVectorVariableValue & _imag_dot_dot;
 
   /// Field component (real or imaginary)
   MooseEnum _component;

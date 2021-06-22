@@ -17,10 +17,14 @@ protected:
 
   // Value of dielectric constant, real component
   ADMaterialProperty<Real> & _eps_r_real;
+  // First time derivative of dielectric constant, real component
+  ADMaterialProperty<Real> & _eps_r_real_dot;
   // Second time derivative of dielectric constant, real component
   ADMaterialProperty<Real> & _eps_r_real_dot_dot;
   // Value of dielectric constant, imaginary component
   ADMaterialProperty<Real> & _eps_r_imag;
+  // First time derivative of dielectric constant, imaginary component
+  ADMaterialProperty<Real> & _eps_r_imag_dot;
   // Second time derivative of dielectric constant, imaginary component
   ADMaterialProperty<Real> & _eps_r_imag_dot_dot;
 
