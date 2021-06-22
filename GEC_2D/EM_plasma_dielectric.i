@@ -20,26 +20,34 @@
   [../]
 []
 
+[AuxVariables]
+  [./em]
+    initial_condition = -24.8
+  [../]
+[]
+
 [Kernels]
   [./curl_curl_real]
     type = CurlCurlField
     variable = E_real
   [../]
-  [./time_derivative_real_plasma]
-    type = VectorSecondTimeDerivative
+  [./time_derivative_real_dielectric]
+    type = PlasmaDielectricConstantSecondTimeDerivative
     variable = E_real
-    coefficient = '1/(3e8 * 3e8)' # 1/c^2 = mu_0 * eps_0
-    block = plasma
+    component = real
+    real_field = E_real
+    imaginary_field = E_imag
   [../]
   [./curl_curl_imag]
     type = CurlCurlField
     variable = E_imag
   [../]
-  [./time_derivative_imag_plasma]
-    type = VectorSecondTimeDerivative
+  [./time_derivative_imag_dielectric]
+    type = PlasmaDielectricConstantSecondTimeDerivative
     variable = E_imag
-    coefficient = '1/(3e8 * 3e8)' # 1/c^2 = mu_0 * eps_0
-    block = plasma
+    component = imaginary
+    real_field = E_real
+    imaginary_field = E_imag
   [../]
 []
 
@@ -73,6 +81,16 @@
   [../]
 []
 
+[Materials]
+  [./plasma_dielectric]
+    type = PlasmaDielectricConstant
+    drive_frequency = 40e6
+    electron_neutral_collision_frequency = 0.5e9
+    em = em
+    output_properties = 'plasma_dielectric_constant_real plasma_dielectric_constant_imag'
+  [../]
+[]
+
 [Preconditioning]
   [./SMP]
     type = SMP
@@ -83,9 +101,11 @@
 [Executioner]
   type = Transient
   solve_type = NEWTON
-  petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor' # -snes_test_jacobian'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
   petsc_options_value = 'lu NONZERO 1.e-10'
+  # petsc_options_iname = '-pc_type -pc_hypre_type -pc_factor_shift_type -pc_factor_shift_amount'
+  # petsc_options_value = 'hypre boomeramg NONZERO 1.e-10'
   num_steps = 700
   scheme = newmark-beta
   dt = 4e-10
@@ -94,6 +114,9 @@
 []
 
 [Outputs]
-  exodus = true
+  [./out]
+    type = Exodus
+    output_material_properties = true
+  [../]
   perf_graph = true
 []
