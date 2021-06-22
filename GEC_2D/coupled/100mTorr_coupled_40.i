@@ -57,7 +57,6 @@ dom0Scale=25.4e-3
   [./em_advection]
     type = EFieldAdvection
     variable = em
-    potential = potential
     position_units = ${dom0Scale}
   [../]
   #Diffusion term of electrons
@@ -102,9 +101,8 @@ dom0Scale=25.4e-3
   [../]
   #Advection term of ions
   #[./Ar+_advection]
-  #  type = ADEFieldAdvection
+  #  type = EFieldAdvection
   #  variable = Ar+
-  #  potential = potential
   #  position_units = ${dom0Scale}
   #[../]
   [./Ar+_advection]
@@ -227,7 +225,6 @@ dom0Scale=25.4e-3
     reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
     coefficient = -1
     _v_eq_u = true
-    v_NonLog = true
   [../]
 
 #Voltage Equations
@@ -257,7 +254,6 @@ dom0Scale=25.4e-3
   [./EffEfield_X_ForceBody]
     type = EffectiveEField
     variable = Ex
-    potential = potential
     #nu = 12833708.75
     nu = 1668609.922
     component = 0
@@ -270,7 +266,6 @@ dom0Scale=25.4e-3
   [./EffEfield_Y_ForceBody]
     type = EffectiveEField
     variable = Ey
-    potential = potential
     #nu = 12833708.75
     nu = 1668609.922
     component = 1
@@ -288,7 +283,6 @@ dom0Scale=25.4e-3
   [./mean_en_advection]
     type = EFieldAdvection
     variable = mean_en
-    potential = potential
     position_units = ${dom0Scale}
   [../]
   #Diffusion term of electrons energy
@@ -308,7 +302,6 @@ dom0Scale=25.4e-3
   [./mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    potential = potential
     em = em
     position_units = ${dom0Scale}
   [../]
@@ -478,15 +471,6 @@ dom0Scale=25.4e-3
     order = CONSTANT
     family = MONOMIAL
   [../]
-
-  [./Efield_X]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./Efield_Y]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
 []
 
 #Kernels that define the scaled nodes and background gas
@@ -547,21 +531,6 @@ dom0Scale=25.4e-3
     type = DensityMoles
     variable = Ar*_lin
     density_log = Ar*
-  [../]
-
-  [./Efield_X_calc]
-    type = Efield
-    component = 0
-    potential = potential
-    variable = Efield_X
-    position_units = ${dom0Scale}
-  [../]
-  [./Efield_Y_calc]
-    type = Efield
-    component = 1
-    potential = potential
-    variable = Efield_Y
-    position_units = ${dom0Scale}
   [../]
 []
 
@@ -633,7 +602,6 @@ dom0Scale=25.4e-3
   [./em_Ar+_second_emissions]
     type = SakiyamaSecondaryElectronWithEffEfieldBC
     variable = em
-    mean_en = mean_en
     Ex = Ex
     Ey = Ey
     ip = Ar+
@@ -676,7 +644,6 @@ dom0Scale=25.4e-3
     ip = Ar+
     Ex = Ex
     Ey = Ey
-    potential = potential
     Tse_equal_Te = false
     user_se_energy = 0.75
     se_coeff = 0.01
@@ -1026,10 +993,10 @@ dom0Scale=25.4e-3
 
   solve_type = NEWTON
   line_search = none
-  petsc_options = '-snes_converged_reason -snes_linesearch_monitor -ksp_view'
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor' # -ksp_view'
   #petsc_options = '-snes_monitor -snes_converged_reason -snes_linesearch_monitor -ksp_monitor_true_residual -ksp_converged_reason'
-  petsc_options_iname = '-pc_type -pc_factor_mat_solver_type -pc_factor_shift_type -pc_factor_shift_amount'
-  petsc_options_value = 'lu superlu_dist NONZERO 1.e-10'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
+  petsc_options_value = 'lu NONZERO 1.e-10'
 
   nl_rel_tol = 1e-10
   nl_abs_tol = 1e-11
