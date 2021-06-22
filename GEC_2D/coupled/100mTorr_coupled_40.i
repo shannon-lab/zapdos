@@ -1,7 +1,7 @@
 dom0Scale=25.4e-3
 
 [GlobalParams]
-  potential_units = kV
+  potential_units = V
   use_moles = true
 []
 
@@ -31,8 +31,17 @@ dom0Scale=25.4e-3
   [./mean_en]
   [../]
 
-  [./potential]
+  # [./potential]
+  # [../]
+  [./E_real]
+    order = FIRST
+    family = NEDELEC_ONE
   [../]
+  [./E_imag]
+    order = FIRST
+    family = NEDELEC_ONE
+  [../]
+
 
   [./Ex]
     initial_condition = 0.01
@@ -229,22 +238,44 @@ dom0Scale=25.4e-3
 
 #Voltage Equations
   #Voltage term in Poissons Eqaution
-  [./potential_diffusion_dom0]
-    type = CoeffDiffusionLin
-    variable = potential
-    position_units = ${dom0Scale}
+  # [./potential_diffusion_dom0]
+  #   type = CoeffDiffusionLin
+  #   variable = potential
+  #   position_units = ${dom0Scale}
+  # [../]
+  # #Ion term in Poissons Equation
+  #   [./Ar+_charge_source]
+  #   type = ChargeSourceMoles_KV
+  #   variable = potential
+  #   charged = Ar+
+  # [../]
+  # #Electron term in Poissons Equation
+  # [./em_charge_source]
+  #   type = ChargeSourceMoles_KV
+  #   variable = potential
+  #   charged = em
+  # [../]
+  [./curl_curl_real]
+    type = CurlCurlField
+    variable = E_real
   [../]
-  #Ion term in Poissons Equation
-    [./Ar+_charge_source]
-    type = ChargeSourceMoles_KV
-    variable = potential
-    charged = Ar+
+  [./time_derivative_real_dielectric]
+    type = PlasmaDielectricConstantSecondTimeDerivative
+    variable = E_real
+    component = real
+    real_field = E_real
+    imaginary_field = E_imag
   [../]
-  #Electron term in Poissons Equation
-  [./em_charge_source]
-    type = ChargeSourceMoles_KV
-    variable = potential
-    charged = em
+  [./curl_curl_imag]
+    type = CurlCurlField
+    variable = E_imag
+  [../]
+  [./time_derivative_imag_dielectric]
+    type = PlasmaDielectricConstantSecondTimeDerivative
+    variable = E_imag
+    component = imaginary
+    real_field = E_real
+    imaginary_field = E_imag
   [../]
 
   [./EffEfield_X_time_deriv]
@@ -535,61 +566,66 @@ dom0Scale=25.4e-3
 []
 
 [BCs]
+  ## The natural condition is the perfect electric conductor condition for all other surfaces
+  [./electrode_real]
+    type = VectorPenaltyDirichletBC
+    boundary = Top_Electrode
+    variable = E_real
+    penalty = 1e5
+    x_exact_sln = '(50/0.0254)*cos(2*pi*40e6*t)'
+  [../]
+  [./electrode_imag]
+    type = VectorPenaltyDirichletBC
+    boundary = Top_Electrode
+    variable = E_imag
+    penalty = 1e5
+    x_exact_sln = '(50/0.0254)*sin(2*pi*40e6*t)'
+  [../]
+  [./walls_real]
+    type = VectorPenaltyDirichletBC
+    boundary = 'penalty_walls'
+    variable = E_real
+    penalty = 1e5
+  [../]
+  [./walls_imag]
+    type = VectorPenaltyDirichletBC
+    boundary = 'penalty_walls'
+    variable = E_imag
+    penalty = 1e5
+  [../]
   #Voltage Boundary Condition, same as in paper
-    [./potential_top_plate]
-      type = FunctionDirichletBC
-      variable = potential
-      boundary = 'Top_Electrode'
-      function = potential_top_bc_func
-    [../]
-    [./potential_bottom_plate]
-      type = FunctionDirichletBC
-      variable = potential
-      boundary = 'Bottom_Electrode'
-      function = potential_bottom_bc_func
-    [../]
-    [./potential_dirichlet_bottom_plate]
-      type = DirichletBC
-      variable = potential
-      boundary = 'Walls penalty_walls'
-      value = 0
-    [../]
-    #[./potential_Dielectric]
-    #  type = EconomouDielectricWithEffEfieldBC
-    #  variable = potential
-    #  boundary = 'Top_Insulator Bottom_Insulator'
-    #  em = em
-    #  ip = Ar+
-    #  Ex = Ex
-    #  Ey = Ey
-    #  mean_en = mean_en
-    #  dielectric_constant = 1.859382e-11
-    #  thickness = 0.0127
-    #  users_gamma = 0.01
-    #  position_units = ${dom0Scale}
-    #[../]
-    #[./potential_Dielectric]
-    #  type = ADDielectricBC
-    #  variable = potential
-    #  boundary = 'Top_Insulator Bottom_Insulator'
-    #  dielectric_constant = 1.859382e-11
-    #  thickness = 0.0127
-    #  position_units = ${dom0Scale}
-    #[../]
-    [./potential_Dielectric]
-      type = DielectricBCWithEffEfield
-      variable = potential
-      em = em
-      mean_en = mean_en
-      ip = Ar+
-      Ex = Ex
-      Ey = Ey
-      dielectric_constant = 1.859382e-11
-      thickness = 0.0127
-      users_gamma = 0.01
-      position_units = ${dom0Scale}
-      boundary = 'Top_Insulator Bottom_Insulator'
-    [../]
+    # [./potential_top_plate]
+    #   type = FunctionDirichletBC
+    #   variable = potential
+    #   boundary = 'Top_Electrode'
+    #   function = potential_top_bc_func
+    # [../]
+    # [./potential_bottom_plate]
+    #   type = FunctionDirichletBC
+    #   variable = potential
+    #   boundary = 'Bottom_Electrode'
+    #   function = potential_bottom_bc_func
+    # [../]
+    # [./potential_dirichlet_bottom_plate]
+    #   type = DirichletBC
+    #   variable = potential
+    #   boundary = 'Walls penalty_walls'
+    #   value = 0
+    # [../]
+    # [./potential_Dielectric]
+    #   type = DielectricBCWithEffEfield
+    #   variable = potential
+    #   em = em
+    #   mean_en = mean_en
+    #   ip = Ar+
+    #   Ex = Ex
+    #   Ey = Ey
+    #   dielectric_constant = 1.859382e-11
+    #   thickness = 0.0127
+    #   users_gamma = 0.01
+    #   position_units = ${dom0Scale}
+    #   boundary = 'Top_Insulator Bottom_Insulator'
+    # [../]
 
 #New Boundary conditions for electons, same as in paper
   [./em_physical_diffusion]
@@ -749,7 +785,15 @@ dom0Scale=25.4e-3
 [Materials]
   [./field_solver]
     type = FieldSolverMaterial
-    potential = potential
+    electric_field = E_real
+    solver = electromagnetic
+  [../]
+  [./plasma_dielectric]
+    type = PlasmaDielectricConstant
+    drive_frequency = 40e6
+    electron_neutral_collision_frequency = 0.5e9
+    em = em
+    output_properties = 'plasma_dielectric_constant_real plasma_dielectric_constant_imag'
   [../]
   [./GasBasics]
     #If elecron mobility and diffusion are NOT constant, set
@@ -1003,7 +1047,7 @@ dom0Scale=25.4e-3
 
   scheme = newmark-beta
   dt = 4e-10
-  dtmin = 1e-14
+  dtmin = 1e-17
 []
 
 [Outputs]
