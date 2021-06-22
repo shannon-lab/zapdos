@@ -1,10 +1,5 @@
 dom0Scale=25.4e-3
 
-[GlobalParams]
-  potential_units = kV
-  use_moles = true
-[]
-
 [Mesh]
   [./geo]
     type = FileMeshGenerator
@@ -107,8 +102,6 @@ dom0Scale=25.4e-3
   line_search = none
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
   petsc_options_value = 'lu NONZERO 1.e-10'
-
-  abort_on_solve_fail = true
 []
 
 [Outputs]
