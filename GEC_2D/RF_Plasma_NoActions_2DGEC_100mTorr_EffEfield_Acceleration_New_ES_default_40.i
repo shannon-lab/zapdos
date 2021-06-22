@@ -1027,6 +1027,7 @@ dom0Scale=25.4e-3
   solve_type = NEWTON
   line_search = none
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
+  #petsc_options = '-snes_monitor -snes_converged_reason -snes_linesearch_monitor -ksp_monitor_true_residual -ksp_converged_reason'
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
   petsc_options_value = 'lu NONZERO 1.e-10'
 
