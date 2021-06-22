@@ -30,5 +30,5 @@ private:
   const Real _r_units;
   const Real _nu;
   unsigned _component;
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };
