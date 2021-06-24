@@ -8,7 +8,7 @@ dom0Scale=25.4e-3
 [Mesh]
   [./geo]
     type = FileMeshGenerator
-    file = 'thesis_mesh_penalty.msh'
+    file = 'thesis_mesh.msh'
   [../]
 []
 
@@ -567,31 +567,38 @@ dom0Scale=25.4e-3
 
 [BCs]
   ## The natural condition is the perfect electric conductor condition for all other surfaces
-  [./electrode_real]
-    type = VectorPenaltyDirichletBC
-    boundary = Top_Electrode
+  # [./electrode_real]
+  #   type = VectorPenaltyDirichletBC
+  #   boundary = Top_Electrode
+  #   variable = E_real
+  #   penalty = 1e5
+  #   x_exact_sln = '(50/0.0254)*cos(2*pi*40e6*t)'
+  # [../]
+  # [./electrode_imag]
+  #   type = VectorPenaltyDirichletBC
+  #   boundary = Top_Electrode
+  #   variable = E_imag
+  #   penalty = 1e5
+  #   x_exact_sln = '(50/0.0254)*sin(2*pi*40e6*t)'
+  # [../]
+  # [./walls_real]
+  #   type = VectorPenaltyDirichletBC
+  #   boundary = 'penalty_walls'
+  #   variable = E_real
+  #   penalty = 1e5
+  # [../]
+  # [./walls_imag]
+  #   type = VectorPenaltyDirichletBC
+  #   boundary = 'penalty_walls'
+  #   variable = E_imag
+  #   penalty = 1e5
+  # [../]
+  [./h_phi_current] # Magnetic field time derivative (based on applied RF current) into the page that excites the wave
+    type = FaradayCurrentBC
     variable = E_real
-    penalty = 1e5
-    x_exact_sln = '(50/0.0254)*cos(2*pi*40e6*t)'
-  [../]
-  [./electrode_imag]
-    type = VectorPenaltyDirichletBC
-    boundary = Top_Electrode
-    variable = E_imag
-    penalty = 1e5
-    x_exact_sln = '(50/0.0254)*sin(2*pi*40e6*t)'
-  [../]
-  [./walls_real]
-    type = VectorPenaltyDirichletBC
-    boundary = 'penalty_walls'
-    variable = E_real
-    penalty = 1e5
-  [../]
-  [./walls_imag]
-    type = VectorPenaltyDirichletBC
-    boundary = 'penalty_walls'
-    variable = E_imag
-    penalty = 1e5
+    driving_frequency = 40e6
+    applied_current_dot = current_dot
+    boundary = Walls
   [../]
   #Voltage Boundary Condition, same as in paper
     # [./potential_top_plate]
@@ -632,7 +639,7 @@ dom0Scale=25.4e-3
     type = SakiyamaElectronDiffusionBC
     variable = em
     mean_en = mean_en
-    boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls penalty_walls'
+    boundary = 'Top_Electrode Bottom_Electrode Walls'
     position_units = ${dom0Scale}
   [../]
   [./em_Ar+_second_emissions]
@@ -642,7 +649,7 @@ dom0Scale=25.4e-3
     Ey = Ey
     ip = Ar+
     users_gamma = 0.01
-    boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls penalty_walls'
+    boundary = 'Top_Electrode Bottom_Electrode Walls'
     position_units = ${dom0Scale}
   [../]
 
@@ -652,7 +659,7 @@ dom0Scale=25.4e-3
     variable = Ar+
     Ex = Ex
     Ey = Ey
-    boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls penalty_walls'
+    boundary = 'Top_Electrode Bottom_Electrode Walls'
     position_units = ${dom0Scale}
   [../]
 
@@ -661,7 +668,7 @@ dom0Scale=25.4e-3
   [./Ar*_physical_diffusion]
     type = ADDirichletBC
     variable = Ar*
-    boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls penalty_walls'
+    boundary = 'Top_Electrode Bottom_Electrode Walls'
     value = -50.0
   [../]
 
@@ -670,7 +677,7 @@ dom0Scale=25.4e-3
     type = SakiyamaEnergyDiffusionBC
     variable = mean_en
     em = em
-    boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls penalty_walls'
+    boundary = 'Top_Electrode Bottom_Electrode Walls'
     position_units = ${dom0Scale}
   [../]
   [./mean_en_Ar+_second_emissions]
@@ -683,7 +690,7 @@ dom0Scale=25.4e-3
     Tse_equal_Te = false
     user_se_energy = 0.75
     se_coeff = 0.01
-    boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls penalty_walls'
+    boundary = 'Top_Electrode Bottom_Electrode Walls'
     position_units = ${dom0Scale}
   [../]
 []
@@ -755,6 +762,10 @@ dom0Scale=25.4e-3
 
 #Functions for IC and Potential BC
 [Functions]
+  [./current_dot]
+    type = ParsedVectorFunction
+    value_z = '-1*sin(2*pi*40e6*t)'
+  [../]
   [./potential_top_bc_func]
     type = ParsedFunction
     value = '0.050*sin(2*pi*40e6*t)'
