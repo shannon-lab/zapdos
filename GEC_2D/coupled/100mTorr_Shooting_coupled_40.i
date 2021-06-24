@@ -3,7 +3,7 @@ dom0Scale=25.4e-3
 [Mesh]
   [./geo]
     type = FileMeshGenerator
-    file = 'thesis_mesh_penalty.msh'
+    file = 'thesis_mesh.msh'
   [../]
 []
 
@@ -76,7 +76,7 @@ dom0Scale=25.4e-3
   [./Ar*_physical_diffusion]
     type = ADDirichletBC
     variable = Ar*
-    boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls penalty_walls'
+    boundary = 'Top_Electrode Bottom_Electrode Walls'
     value = -50.0
   [../]
 []
