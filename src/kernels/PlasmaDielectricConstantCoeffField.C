@@ -24,8 +24,6 @@ PlasmaDielectricConstantCoeffField::PlasmaDielectricConstantCoeffField(
     const InputParameters & parameters)
   : ADVectorKernel(parameters),
     _frequency(getParam<Real>("driving_frequency")),
-    _real_var(getVectorVar("real_field", 0)),
-    _imag_var(getVectorVar("imaginary_field", 0)),
     _real_value(adCoupledVectorValue("real_field")),
     _imag_value(adCoupledVectorValue("imaginary_field")),
     _component(getParam<MooseEnum>("component")),

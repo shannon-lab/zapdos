@@ -43,7 +43,6 @@ ADReal
 PlasmaDielectricConstantSecondTimeDerivative::computeQpResidual()
 {
   ADRealVectorValue term = 0.0;
-  // TODO: add missing middle component term (2 * dot(eps) * dot(E))
   if (_component == REAL)
   {
     term =
