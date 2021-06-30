@@ -18,10 +18,6 @@ protected:
   /// System driving frequency (in Hz)
   const Real _frequency;
 
-  /// Real field variable
-  VectorMooseVariable * _real_var;
-  /// Imaginary field variable
-  VectorMooseVariable * _imag_var;
   /// Real field variable value
   const ADVectorVariableValue & _real_value;
   /// Imaginary field variable value
