@@ -3,16 +3,16 @@
 #include "ADKernel.h"
 
 /**
- * ADKernel implementation of $\\nabla \\times (\\frac{1}{\\eps_r} \\nabla \\times H)$
+ * ADKernel implementation of $\\nabla \\times (\\frac{1}{\\eps_r} \\nabla \\times H) + k_0^2 H = 0$
  * for a TM mode in 2D cylindrical coordinates, where $H = H_{\\phi}$ (a scalar
  * component into the page) and $\\eps_r$ is determined by a plasma dielectric
  * constant.
  */
-class HPhiCylindricalPlasmaCurlCurl : public ADKernel
+class HPhiCylindricalPlasmaWaveEquation : public ADKernel
 {
 public:
   static InputParameters validParams();
-  HPhiCylindricalPlasmaCurlCurl(const InputParameters & parameters);
+  HPhiCylindricalPlasmaWaveEquation(const InputParameters & parameters);
 
 protected:
   virtual ADReal computeQpResidual() override;
@@ -40,6 +40,9 @@ protected:
   const ADMaterialProperty<Real> & _eps_r_imag;
   /// Plasma dielectric constant gradient, imaginary component
   const ADMaterialProperty<RealVectorValue> & _eps_r_imag_grad;
+
+  /// Speed of light (in this object, used to represent 1 / sqrt(mu_0 * eps_0))
+  const int _c;
 
 private:
   /**
