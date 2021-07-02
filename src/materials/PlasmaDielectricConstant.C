@@ -9,7 +9,7 @@ PlasmaDielectricConstant::validParams()
   params.addClassDescription("");
   params.addRequiredParam<Real>("electron_neutral_collision_frequency",
                                 "The electron-neutral collision frequency (in Hz).");
-  params.addRequiredParam<Real>("drive_frequency", "Driving frequency of plasma (in Hz).");
+  params.addRequiredParam<Real>("driving_frequency", "Driving frequency of plasma (in Hz).");
   params.addRequiredCoupledVar("em", "Electron density coupled variable.");
   return params;
 }
@@ -29,7 +29,7 @@ PlasmaDielectricConstant::PlasmaDielectricConstant(const InputParameters & param
     _eps_vacuum(8.8542e-12),
     _pi(libMesh::pi),
     _nu(getParam<Real>("electron_neutral_collision_frequency")),
-    _frequency(getParam<Real>("drive_frequency")),
+    _frequency(getParam<Real>("driving_frequency")),
     _em(adCoupledValue("em")),
     _em_grad(adCoupledGradient("em")),
     _em_var(getVar("em", 0)),
