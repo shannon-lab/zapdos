@@ -15,17 +15,21 @@ public:
 protected:
   virtual void computeQpProperties() override;
 
-  // Value of dielectric constant, real component
+  /// Value of dielectric constant, real component
   ADMaterialProperty<Real> & _eps_r_real;
-  // First time derivative of dielectric constant, real component
+  /// Gradient of dielectric constant, real component
+  ADMaterialProperty<RealVectorValue> & _eps_r_real_grad;
+  /// First time derivative of dielectric constant, real component
   ADMaterialProperty<Real> & _eps_r_real_dot;
-  // Second time derivative of dielectric constant, real component
+  /// Second time derivative of dielectric constant, real component
   ADMaterialProperty<Real> & _eps_r_real_dot_dot;
-  // Value of dielectric constant, imaginary component
+  /// Value of dielectric constant, imaginary component
   ADMaterialProperty<Real> & _eps_r_imag;
-  // First time derivative of dielectric constant, imaginary component
+  /// Gradient of dielectric constant, imaginary component
+  ADMaterialProperty<RealVectorValue> & _eps_r_imag_grad;
+  /// First time derivative of dielectric constant, imaginary component
   ADMaterialProperty<Real> & _eps_r_imag_dot;
-  // Second time derivative of dielectric constant, imaginary component
+  /// Second time derivative of dielectric constant, imaginary component
   ADMaterialProperty<Real> & _eps_r_imag_dot_dot;
 
   /// Electron charge
@@ -43,8 +47,11 @@ protected:
   /// Operating frequency (Hz)
   const Real & _frequency;
 
-  /// Electron density coupled variable
+  /// Electron density coupled variable value
   const ADVariableValue & _em;
+
+  /// Electron density coupled variable gradient
+  const ADVariableGradient & _em_grad;
 
   /// Electron density variable
   MooseVariable * _em_var;

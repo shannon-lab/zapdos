@@ -17,9 +17,11 @@ PlasmaDielectricConstant::validParams()
 PlasmaDielectricConstant::PlasmaDielectricConstant(const InputParameters & parameters)
   : ADMaterial(parameters),
     _eps_r_real(declareADProperty<Real>("plasma_dielectric_constant_real")),
+    _eps_r_real_grad(declareADProperty<RealVectorValue>("plasma_dielectric_constant_real_grad")),
     _eps_r_real_dot(declareADProperty<Real>("plasma_dielectric_constant_real_dot")),
     _eps_r_real_dot_dot(declareADProperty<Real>("plasma_dielectric_constant_real_dot_dot")),
     _eps_r_imag(declareADProperty<Real>("plasma_dielectric_constant_imag")),
+    _eps_r_imag_grad(declareADProperty<RealVectorValue>("plasma_dielectric_constant_imag_grad")),
     _eps_r_imag_dot(declareADProperty<Real>("plasma_dielectric_constant_imag_dot")),
     _eps_r_imag_dot_dot(declareADProperty<Real>("plasma_dielectric_constant_imag_dot_dot")),
     _elementary_charge(1.6022e-19),
@@ -29,6 +31,7 @@ PlasmaDielectricConstant::PlasmaDielectricConstant(const InputParameters & param
     _nu(getParam<Real>("electron_neutral_collision_frequency")),
     _frequency(getParam<Real>("drive_frequency")),
     _em(adCoupledValue("em")),
+    _em_grad(adCoupledGradient("em")),
     _em_var(getVar("em", 0)),
     _em_dot(_em_var->adUDot()),
     _em_dot_dot(_em_var->adUDotDot())
@@ -47,6 +50,11 @@ PlasmaDielectricConstant::computeQpProperties()
       1.0 - (std::pow(omega_pe, 2) / (std::pow(2 * _pi * _frequency, 2) + std::pow(_nu, 2)));
   _eps_r_imag[_qp] = (-1.0 * std::pow(omega_pe, 2) * _nu) /
                      (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(_nu, 2));
+
+  // Calculate the gradient of the plasma dielectric constant
+  ADReal grad_const = -std::pow(omega_pe, 2) / (std::pow(2 * _pi * _frequency, 2) + std::pow(_nu, 2));
+  _eps_r_real_grad[_qp] = grad_const * _em_grad[_qp];
+  _eps_r_imag_grad[_qp] = (grad_const * _nu / (2 * _pi * _frequency)) * _em_grad[_qp];
 
   // Calculate the first time derivative of the linear electron density
   ADReal lin_dot = _em_dot[_qp] * std::exp(_em[_qp]);
