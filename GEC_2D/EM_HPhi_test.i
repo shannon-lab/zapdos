@@ -16,12 +16,32 @@
   rz_coord_axis = Y
 []
 
+[GlobalParams]
+  driving_frequency = 40e6
+[]
+
 [Variables]
   [./HPhi_real]
     family = LAGRANGE
     order = SECOND
   [../]
   [./HPhi_imag]
+    family = LAGRANGE
+    order = SECOND
+  [../]
+  [./Er_real]
+    family = LAGRANGE
+    order = SECOND
+  [../]
+  [./Er_imag]
+    family = LAGRANGE
+    order = SECOND
+  [../]
+  [./Ez_real]
+    family = LAGRANGE
+    order = SECOND
+  [../]
+  [./Ez_imag]
     family = LAGRANGE
     order = SECOND
   [../]
@@ -38,7 +58,6 @@
     type = HPhiCylindricalPlasmaWaveEquation
     variable = HPhi_real
     component = real
-    driving_frequency = 40e6
     real_field = HPhi_real
     imaginary_field = HPhi_imag
   [../]
@@ -46,9 +65,44 @@
     type = HPhiCylindricalPlasmaWaveEquation
     variable = HPhi_imag
     component = imaginary
-    driving_frequency = 40e6
     real_field = HPhi_real
     imaginary_field = HPhi_imag
+  [../]
+  [./Er_eqn_real]
+    type = HPhiCylindricalPlasmaEr
+    variable = Er_real
+    component = real
+    real_field = Er_real
+    imaginary_field = Er_imag
+    real_Hphi = HPhi_real
+    imaginary_HPhi = HPhi_imag
+  [../]
+  [./Er_eqn_imag]
+    type = HPhiCylindricalPlasmaEr
+    variable = Er_imag
+    component = imaginary
+    real_field = Er_real
+    imaginary_field = Er_imag
+    real_Hphi = HPhi_real
+    imaginary_HPhi = HPhi_imag
+  [../]
+  [./Ez_eqn_real]
+    type = HPhiCylindricalPlasmaEz
+    variable = Ez_real
+    component = real
+    real_field = Ez_real
+    imaginary_field = Ez_imag
+    real_Hphi = HPhi_real
+    imaginary_HPhi = HPhi_imag
+  [../]
+  [./Ez_eqn_imag]
+    type = HPhiCylindricalPlasmaEz
+    variable = Ez_imag
+    component = imaginary
+    real_field = Ez_real
+    imaginary_field = Ez_imag
+    real_Hphi = HPhi_real
+    imaginary_HPhi = HPhi_imag
   [../]
 []
 
@@ -59,17 +113,11 @@
     function = HPhi0
     boundary = right
   [../]
-  [./h_phi_imag_left_right]
+  [./h_phi_imag_right]
     type = ADDirichletBC
     variable = HPhi_imag
     value = 0
-    boundary = 'right left'
-  [../]
-  [./h_phi_real_left]
-    type = ADDirichletBC
-    variable = HPhi_real
-    value = 0
-    boundary = left
+    boundary = right
   [../]
 []
 
@@ -83,7 +131,6 @@
 [Materials]
   [./plasma_dielectric]
     type = PlasmaDielectricConstant
-    drive_frequency = 40e6
     electron_neutral_collision_frequency = 0.5e9
     em = em
     output_properties = 'plasma_dielectric_constant_real plasma_dielectric_constant_imag'
