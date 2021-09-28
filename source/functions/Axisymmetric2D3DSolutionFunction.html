@@ -1,0 +1,195 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Axisymmetric 2 D 3 DSolutionFunction | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://shannon-lab.github.io/zapdos" class="left moose-logo hide-on-med-and-down">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="ded022f0-5cd9-468d-9b64-10ca9f582183" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="420bf925-26c9-4af6-aaf0-902a5c9827c8" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="3af8a0e8-5924-40a3-9a32-44e70d26fbac" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="d4eb806f-7108-4293-9770-4d25ce5c2ffc"><i class="material-icons">menu</i></a><ul class="sidenav" id="d4eb806f-7108-4293-9770-4d25ce5c2ffc"><li><a href="#!" class="dropdown-trigger" data-target="5696e469-b041-4ca5-9fcd-21b6503f77cf" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="0424fa69-7b95-4dd9-989f-85c4ab0dd53b" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="080c59d7-ed53-4af2-ba3b-86cebc832d44" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="ded022f0-5cd9-468d-9b64-10ca9f582183"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li></ul><ul class="dropdown-content" id="420bf925-26c9-4af6-aaf0-902a5c9827c8"><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="3af8a0e8-5924-40a3-9a32-44e70d26fbac"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="5696e469-b041-4ca5-9fcd-21b6503f77cf"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li></ul><ul class="dropdown-content" id="0424fa69-7b95-4dd9-989f-85c4ab0dd53b"><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="080c59d7-ed53-4af2-ba3b-86cebc832d44"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://shannon-lab.github.io/zapdos" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">functions</span><a href="#" class="breadcrumb">Axisymmetric2D3DSolutionFunction</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="07935096-2f86-40e8-b16e-74b9c4260c72" data-section-level="1" data-section-text="Axisymmetric 2 D 3 DSolutionFunction"><h1 id="axisymmetric-2-d-3-dsolutionfunction">Axisymmetric2D3DSolutionFunction</h1><p>Function for reading a 2D axisymmetric solution from file and mapping it to a 3D Cartesian model</p><p>The 2D solution is likely to be the output of a 2D-RZ calculation, which we want to compare to a full 3D model. This is useful for assessing the validity of the 2D-RZ geometric approximation.</p><p>The axis of symmetry for the original 2D axisymmetric calculation and for mapping this 2D axisymmetric calculation into the 3D space can both be specified.</p><section class="scrollspy" id="7d927286-2ff8-496f-969c-c572bbd6f72e" data-section-level="2" data-section-text="Example input syntax"><h2 id="example-input-syntax">Example input syntax</h2><p>In this example, three <code>Axisymmetric2D3DSolutionFunction</code> are used to load results for a 2D axisymmetric simulation in a 3D mechanics simulation. These results are then used in the <code>BCs</code> block to impose a displacement on a boundary, and in a temperature variable using a <a href="../auxkernels/FunctionAux.html">FunctionAux</a>.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Functions]
+  [./soln_func_temp]
+    type = Axisymmetric2D3DSolutionFunction
+    solution = soln
+    from_variables = &#x27;temp&#x27;
+  [../]
+  [./soln_func_disp_x]
+    type = Axisymmetric2D3DSolutionFunction
+    solution = soln
+    from_variables = &#x27;disp_x disp_y&#x27;
+    component = 0
+  [../]
+  [./soln_func_disp_y]
+    type = Axisymmetric2D3DSolutionFunction
+    solution = soln
+    from_variables = &#x27;disp_x disp_y&#x27;
+    component = 1
+  [../]
+  [./soln_func_disp_z]
+    type = Axisymmetric2D3DSolutionFunction
+    solution = soln
+    from_variables = &#x27;disp_x disp_y&#x27;
+    component = 2
+  [../]
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#9b561ce8-854a-4251-9311-ac1b710e5421">(moose/modules/combined/test/tests/axisymmetric_2d3d_solution_function/3dy.i)</a></section><section class="scrollspy" id="174c71f8-8303-4f3f-b58c-8370a6becfbb" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="070996fd-b021-41cd-9e8e-be856ac27244" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">solution</span><span class="moose-parameter-header-description">The SolutionUserObject to extract data from.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>UserObjectName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The SolutionUserObject to extract data from.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="9f94d116-69e7-4270-b9c3-4375f375745e" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">2d_axis_point1</span><span class="moose-parameter-header-default">0 0 0</span><span class="moose-parameter-header-description">Start point for axis of symmetry for the 2d model</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0 0 0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>libMesh::VectorValue&lt;double&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Start point for axis of symmetry for the 2d model</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">2d_axis_point2</span><span class="moose-parameter-header-default">0 1 0</span><span class="moose-parameter-header-description">End point for axis of symmetry for the 2d model</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0 1 0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>libMesh::VectorValue&lt;double&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>End point for axis of symmetry for the 2d model</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">3d_axis_point1</span><span class="moose-parameter-header-default">0 0 0</span><span class="moose-parameter-header-description">Start point for axis of symmetry for the 3d model</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0 0 0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>libMesh::VectorValue&lt;double&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Start point for axis of symmetry for the 3d model</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">3d_axis_point2</span><span class="moose-parameter-header-default">0 1 0</span><span class="moose-parameter-header-description">End point for axis of symmetry for the 3d model</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0 1 0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>libMesh::VectorValue&lt;double&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>End point for axis of symmetry for the 3d model</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">add_factor</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">Add this value (b) to the solution (x): ax+b, where a is the 'scale_factor'</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Add this value (b) to the solution (x): ax+b, where a is the 'scale_factor'</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">axial_dimension_ratio</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">Ratio of the axial dimension in the 3d model to that in the 2d model. Optionally permits the 3d model to be larger than the 2d model in that dimension, and scales vector solutions in that direction by this factor.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Ratio of the axial dimension in the 3d model to that in the 2d model. Optionally permits the 3d model to be larger than the 2d model in that dimension, and scales vector solutions in that direction by this factor.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">component</span><span class="moose-parameter-header-description">Component of the variable to be computed if it is a vector</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Component of the variable to be computed if it is a vector</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">from_variables</span><span class="moose-parameter-header-description">The names of the variables in the file that are to be extracted, in x, y order if they are vector components</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The names of the variables in the file that are to be extracted, in x, y order if they are vector components</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">scale_factor</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">Scale factor (a) to be applied to the solution (x): ax+b, where b is the 'add_factor'</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Scale factor (a) to be applied to the solution (x): ax+b, where b is the 'add_factor'</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="6148a25d-1ae5-4ed6-96fb-d185bae8d7f4" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="9b561ce8-854a-4251-9311-ac1b710e5421"><div class="modal-content"><h4>(moose/modules/combined/test/tests/axisymmetric_2d3d_solution_function/3dy.i)</h4><pre class="moose-pre"><code class="language-text">[GlobalParams]
+  order = FIRST
+  family = LAGRANGE
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+[]
+
+[Mesh]
+  file = 3dy.e
+[]
+
+[Variables]
+  [./disp_x]
+  [../]
+  [./disp_y]
+  [../]
+  [./disp_z]
+  [../]
+[]
+
+[AuxVariables]
+  [./temp]
+  [../]
+  [./hoop_stress]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
+[]
+
+[UserObjects]
+  [./soln]
+    type = SolutionUserObject
+    mesh = 2d_out.e
+    system_variables = &#x27;disp_x disp_y temp&#x27;
+  [../]
+[]
+
+[Functions]
+  [./soln_func_temp]
+    type = Axisymmetric2D3DSolutionFunction
+    solution = soln
+    from_variables = &#x27;temp&#x27;
+  [../]
+  [./soln_func_disp_x]
+    type = Axisymmetric2D3DSolutionFunction
+    solution = soln
+    from_variables = &#x27;disp_x disp_y&#x27;
+    component = 0
+  [../]
+  [./soln_func_disp_y]
+    type = Axisymmetric2D3DSolutionFunction
+    solution = soln
+    from_variables = &#x27;disp_x disp_y&#x27;
+    component = 1
+  [../]
+  [./soln_func_disp_z]
+    type = Axisymmetric2D3DSolutionFunction
+    solution = soln
+    from_variables = &#x27;disp_x disp_y&#x27;
+    component = 2
+  [../]
+[]
+
+[Modules/TensorMechanics/Master]
+  [./all]
+    volumetric_locking_correction = true
+    add_variables  = true
+    incremental = true
+    strain = FINITE
+    eigenstrain_names = thermal_expansion
+    generate_output = &#x27;stress_xx stress_yy stress_zz vonmises_stress hydrostatic_stress&#x27;
+  [../]
+[]
+
+[AuxKernels]
+  [./t_soln_aux]
+    type = FunctionAux
+    variable = temp
+    block = &#x27;1 2&#x27;
+    function = soln_func_temp
+  [../]
+  [./hoop_stress]
+    type = RankTwoScalarAux
+    rank_two_tensor = stress
+    variable = hoop_stress
+    scalar_type = HoopStress
+    execute_on = timestep_end
+  [../]
+[]
+
+[BCs]
+  [./x_soln_bc]
+    type = FunctionDirichletBC
+    variable = disp_x
+    preset = false
+    boundary = &#x27;1 2&#x27;
+    function = soln_func_disp_x
+  [../]
+  [./y_soln_bc]
+    type = FunctionDirichletBC
+    variable = disp_y
+    preset = false
+    boundary = &#x27;1 2&#x27;
+    function = soln_func_disp_y
+  [../]
+  [./z_soln_bc]
+    type = FunctionDirichletBC
+    variable = disp_z
+    preset = false
+    boundary = &#x27;1 2&#x27;
+    function = soln_func_disp_z
+  [../]
+[]
+
+[Materials]
+  [./elasticity_tensor]
+    type = ComputeIsotropicElasticityTensor
+    block = &#x27;1 2&#x27;
+    youngs_modulus = 193.05e9
+    poissons_ratio = 0.3
+  [../]
+
+  [./stress]
+    type = ComputeFiniteStrainElasticStress
+    block = &#x27;1 2&#x27;
+  [../]
+
+  [./thermal_expansion]
+    type = ComputeThermalExpansionEigenstrain
+    block = &#x27;1 2&#x27;
+    thermal_expansion_coeff = 13e-6
+    stress_free_temperature = 295.00
+    temperature = temp
+    eigenstrain_name = thermal_expansion
+  [../]
+
+  [./density]
+    type = Density
+    block = &#x27;1&#x27;
+    density = 8000.0
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  solve_type = &#x27;PJFNK&#x27;
+
+  petsc_options = &#x27;-ksp_snes_ew&#x27;
+  petsc_options_iname = &#x27;-ksp_gmres_restart -pc_type -pc_hypre_type -pc_hypre_boomeramg_max_iter&#x27;
+  petsc_options_value = &#x27; 201                hypre    boomeramg      4&#x27;
+  line_search = &#x27;none&#x27;
+  l_max_its = 25
+  nl_max_its = 20
+  nl_rel_tol = 1e-10
+  l_tol = 1e-2
+
+  start_time = 0.0
+  dt = 1
+  end_time = 1
+  dtmin = 1
+[]
+
+[Outputs]
+  file_base = 3dy_out
+  exodus = true
+  [./console]
+    type = Console
+    max_rows = 25
+  [../]
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#7d927286-2ff8-496f-969c-c572bbd6f72e" class="tooltipped" data-position="left" data-tooltip="Example input syntax">Example input syntax</a></li><li><a href="#174c71f8-8303-4f3f-b58c-8370a6becfbb" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
