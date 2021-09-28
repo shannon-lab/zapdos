@@ -10,27 +10,30 @@
 !col! small=12 medium=4 large=4 icon=flash_on
 ### Rapid Development class=center style=font-weight:200;
 
-Zapdos, through the [MOOSE Framework](https://mooseframework.inl.gov), provides a plug-in
-infrastructure that simplifies definitions of physics, material properties,
-and postprocessing.
+!style halign=center
+Zapdos, through the [MOOSE Framework](https://mooseframework.inl.gov), provides
+a plug-in infrastructure that simplifies definitions of physics, material
+properties, and postprocessing.
 !col-end!
 
 !col! small=12 medium=4 large=4 icon=group
-### User Focused class=center style=font-weight:200;
+### Multi-scale class=center style=font-weight:200;
 
-Zapdos supports multi-scale models, enabling collaboration across applications, time-scales, and
-spatial domains.
+!style halign=center
+Zapdos supports multi-scale models, enabling collaboration across applications,
+time-scales, and spatial domains.
 !col-end!
 
 !col! small=12 medium=4 large=4 icon=settings
-### Getting Started class=center style=font-weight:200;
+### Multi-platform class=center style=font-weight:200;
 
-Zapdos works on Mac OS, Linux, and Windows and is easy to get started with. Begin by exploring
-[our getting started page](getting_started/index.md).
+!style halign=center
+Zapdos runs on Mac OS, Linux, and Windows 10 and is easy to get started with.
+Begin by exploring [our installation page](getting_started/installation.md).
 !col-end!
 !row-end!
 
-!media media/ncsu-logo.png style=width:30%;display:block;margin-top:3em;margin-left:auto;margin-right:auto;
+!media media/ncsu-logo.png style=width:25%;display:block;margin-top:3em;margin-left:auto;margin-right:auto;
 
 !row! class=center
 [Department of Nuclear Engineering](https://www.ne.ncsu.edu/)
@@ -38,57 +41,32 @@ Zapdos works on Mac OS, Linux, and Windows and is easy to get started with. Begi
 [4-STAR Research Group](https://www.ne.ncsu.edu/people/scshanno)
 !row-end!
 
-# Collaborators class=center style=font-weight:200;font-size:200%
+# Collaborators (current and former) class=center style=font-weight:200;font-size:200%
 
-!row!
-!col! small=12 medium=4 large=4 class=center
-!media media/illinois.png style=width:100%;margin-top:1em;margin-left:auto;margin-right:auto;
-
-[Laboratory of Computational Plasma Physics](https://curreli.npre.illinois.edu/)
-!col-end!
-
-!col! small=12 medium=4 large=4 class=center
-!media media/notre_dame.jpg style=width:100%;margin-left:auto;margin-right:auto;
-
-[Go Research Group](https://gogroup.nd.edu/)
-!col-end!
-
-!col! small=12 medium=4 large=4 class=center
-!media media/berkeley.png style=width:100%;margin-left:auto;margin-left:2.5em;
-
-[Graves Lab](http://www.graveslab.org/)
-!col-end!
-!row-end!
-
-!row!
-!col! small=12 medium=12 large=12 class=center
-!media media/ornl.png style=width:30%;display:block;margin-top:auto;margin-left:auto;margin-right:auto;
-
-[Fusion Energy Division](https://www.ornl.gov/division/fed)
-!col-end!
-!row-end!
+- [Laboratory of Computational Plasma Physics (University of Illinois Urbana-Champaign)](https://curreli.npre.illinois.edu/)
+- [Go Research Group (University of Notre Dame)](https://gogroup.nd.edu/)
+- [Graves Lab (University of California, Berkeley)](http://www.graveslab.org/)
+- [Oak Ridge National Laboratory, Fusion Energy Division](https://www.ornl.gov/division/fed)
 
 # Funding Acknowledgements class=center style=font-weight:200;font-size:200%
 
-!row!
-!col! small=12 medium=6 large=6
-!media media/doe.png style=width:80%;margin-top:1em;margin-left:auto;margin-right:auto;
+- This material is based upon work supported by the U.S. Department of Energy (DOE),
+  Office of Science, Office of Workforce Development for Teachers and Scientists,
+  [Office of Science Graduate Student Research (SCGSR)](https://science.osti.gov/wdts/scgsr)
+  program. The SCGSR program is administered by the Oak Ridge Institute for
+  Science and Education for the DOE under contract number DE‐SC0014664.
 
-[Office of Science Graduate Student Research Program](https://neup.inl.gov/SitePages/Home.aspx)
-[Nuclear Energy University Program](https://science.osti.gov/wdts/scgsr)
-!col-end!
+- This material is based upon work supported by the National Science Foundation
+  program in Software Infrastructure for Sustained Innovation under
+  [Grant No. 1740300](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1740300).
 
-!col! small=12 medium=6 large=6 class=center
-!media media/nsf.png style=width:30%;margin-left:auto;margin-right:auto;
+- This research is being performed using funding received from the DOE Office of
+  Nuclear Energy's [Nuclear Energy University Programs](https://neup.inl.gov/SitePages/Home.aspx).
 
-[SI2-SSE Award #1740300](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1740300)
-!col-end!
-!row-end!
+- This research made use of [Idaho National Laboratory computing resources](https://hpc.inl.gov/)
+  which are supported by the Office of Nuclear Energy of the U.S. Department of
+  Energy and the Nuclear Science User Facilities under Contract No. DE-AC07-05ID14517.
 
-!row!
-!col! small=12 medium=12 large=12 class=center
-!media media/inl.png style=width:20%;display:block;margin-top:auto;margin-left:auto;margin-right:auto;
-
-[INL Graduate Fellowship Program](https://inl.gov/inl-initiatives/education/graduate-fellowship-program/)
-!col-end!
-!row-end!
+- This research was supported by the [Idaho National Laboratory Graduate Fellowship Program](https://inl.gov/inl-initiatives/education/graduate-fellowship-program/)
+  which is supported by the U.S. Department of Energy under Contract No.
+  DE-AC07-05ID14517.

@@ -34,8 +34,6 @@ registerKnownLabel("ZapdosApp");
 ZapdosApp::ZapdosApp(InputParameters parameters) : MooseApp(parameters)
 {
   ZapdosApp::registerAll(_factory, _action_factory, _syntax);
-  SquirrelApp::registerAll(_factory, _action_factory, _syntax);
-  CraneApp::registerAll(_factory, _action_factory, _syntax);
 }
 
 ZapdosApp::~ZapdosApp() {}
@@ -46,6 +44,10 @@ ZapdosApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)
   ModulesApp::registerAll(f, af, s);
   Registry::registerObjectsTo(f, {"ZapdosApp"});
   Registry::registerActionsTo(af, {"ZapdosApp"});
+
+  /* register objects from dependent applications */
+  SquirrelApp::registerAll(f, af, s);
+  CraneApp::registerAll(f, af, s);
 
   /* register custom execute flags, action syntax, etc. here */
   s.registerActionSyntax("AddPeriodicControllers", "PeriodicControllers/*");
