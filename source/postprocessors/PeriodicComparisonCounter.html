@@ -1,0 +1,867 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>PeriodicComparisonCounter | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://shannon-lab.github.io/zapdos" class="left moose-logo hide-on-med-and-down">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="dd17f5fa-e4d2-40b8-8a4b-c26021af9e73" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="707875c9-f6c9-462e-bb49-7e378678a36f" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="1e53b201-8857-43c4-a610-69a95a8125e7" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="6ba93fdc-5bef-43aa-a3e6-37edb3fb3eaa"><i class="material-icons">menu</i></a><ul class="sidenav" id="6ba93fdc-5bef-43aa-a3e6-37edb3fb3eaa"><li><a href="#!" class="dropdown-trigger" data-target="e7540fb6-3e96-4feb-a845-a24d45d97d31" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="81855e52-dac3-4dd8-861a-da648d57e791" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="5a3d69d5-5958-4d2e-9434-3233858ed830" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="dd17f5fa-e4d2-40b8-8a4b-c26021af9e73"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li></ul><ul class="dropdown-content" id="707875c9-f6c9-462e-bb49-7e378678a36f"><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="1e53b201-8857-43c4-a610-69a95a8125e7"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="e7540fb6-3e96-4feb-a845-a24d45d97d31"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li></ul><ul class="dropdown-content" id="81855e52-dac3-4dd8-861a-da648d57e791"><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="5a3d69d5-5958-4d2e-9434-3233858ed830"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://shannon-lab.github.io/zapdos" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">postprocessors</span><a href="#" class="breadcrumb">PeriodicComparisonCounter</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="22f37bf5-2440-43b1-9081-d3e87a8a055b" data-section-level="1" data-section-text="PeriodicComparisonCounter"><h1 id="periodiccomparisoncounter">PeriodicComparisonCounter</h1><div class="card moose-alert moose-alert-construction"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">build</i><span class="moose-alert-title-brand">construction:</span>Undocumented Class</div><div class="card-content"><div class="moose-alert-content"><p><p>The PeriodicComparisonCounter has not been documented. The content listed below should be used as a starting point for documenting the class, which includes the typical automatic documentation associated with a MooseObject; however, what is contained is ultimately determined by what is necessary to make the documentation clear for users.</p></p></div></div></div><p>Compares two Postprocessors or values and keeps countof how many cycles in a row that comparision is true.</p><section class="scrollspy" id="c88eb6f4-ff60-48d6-a55d-94c41a20b9ab" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p></p></section><section class="scrollspy" id="a090f317-a4c1-4256-a928-15452bafb109" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><p></p></section><section class="scrollspy" id="2e96aa0d-2952-4a75-bef0-180e2c014f78" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="281f8131-b97e-4980-bdc4-ca975addcffe" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">comparison_type</span><span class="moose-parameter-header-description">The type of comparison to perform. Options are: equals greater_than_equals less_than_equals greater_than less_than</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>equals, greater_than_equals, less_than_equals, greater_than, less_than</p><p class="moose-parameter-description"><span>Description:</span>The type of comparison to perform. Options are: equals greater_than_equals less_than_equals greater_than less_than</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">frequency</span><span class="moose-parameter-header-description">The frequency of the periodic cycle in Hz</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The frequency of the periodic cycle in Hz</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">value1</span><span class="moose-parameter-header-description">First post-processor or value</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>PostprocessorName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>First post-processor or value</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">value2</span><span class="moose-parameter-header-description">Second post-processor or value</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>PostprocessorName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Second post-processor or value</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="a85c06a8-d04c-43ce-9d96-363b1f9f93b1" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">TIMESTEP_END</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>TIMESTEP_END</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, TRANSFER</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="f6748f1a-8e4c-495f-9359-4437e1eea25d" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">allow_duplicate_execution_on_initial</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_postaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in POSTAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in POSTAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preic</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREIC during initial setup</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREIC during initial setup</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-description">Vector of output names were you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Vector of output names were you would like to restrict the output of variables(s) associated with this object</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section><section class="scrollspy" id="ff5f5d39-08fe-4bd6-8691-b7bfd0dea716" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#36f7ce0c-dad4-4510-ad04-df7c961a90bc">(test/tests/PeriodicRelativeNodalDifference/Sample_Periodic_Diffusion_Log.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#73701241-f58c-49a7-8a32-bb1120baa1c0">(problems/RF_Plasma_acceleration.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#9b242fad-568f-4416-838c-d72f7590e95c">(test/tests/PeriodicRelativeNodalDifference/Sample_Periodic_Diffusion.i)</a></li></ul></section></section><div class="moose-modal modal" id="36f7ce0c-dad4-4510-ad04-df7c961a90bc"><div class="modal-content"><h4>(test/tests/PeriodicRelativeNodalDifference/Sample_Periodic_Diffusion_Log.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [./file]
+    type = FileMeshGenerator
+    file = &#x27;Sample_Periodic_Diffusion.msh&#x27;
+  [../]
+  [./left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = file
+  [../]
+  [./right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  [../]
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [./y]
+    initial_condition = -23
+  [../]
+[]
+
+[Kernels]
+  [./Time_Deriv]
+    type = TimeDerivativeLog
+    variable = y
+  [../]
+  [./Diff]
+    type = CoeffDiffusion
+    variable = y
+    position_units = 1.0
+  [../]
+  [./First_Term]
+    type = BodyForce
+    variable = y
+    function = &#x27;0.25 * sin(2.0*pi * t) * sin(2.0*pi * t)&#x27;
+  [../]
+  [./Second_Term]
+    type = ReactionFirstOrderLog
+    variable = y
+    v = y
+    coefficient = -1
+    reaction = &#x27;firstorder&#x27;
+    _v_eq_u = true
+  [../]
+  [./Thrid_Term]
+    type = ReactionSecondOrderLog
+    variable = y
+    v = y
+    w = y
+    coefficient = -1
+    reaction = &#x27;secondorder&#x27;
+    _v_eq_u = true
+    _w_eq_u = true
+  [../]
+[]
+
+[BCs]
+  [./Walls]
+    type = DirichletBC
+    variable = y
+    value = -23.0
+    boundary = &#x27;left right&#x27;
+  [../]
+[]
+
+[Materials]
+  [./gas_species_0]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;diffy&#x27;
+    prop_values = 0.001
+  [../]
+  [./firstorder_coefficient]
+    type = GenericRateConstant
+    reaction = &#x27;firstorder&#x27;
+    reaction_rate_value = 0.05
+  [../]
+  [./secondorder_coefficient]
+    type = GenericRateConstant
+    reaction = &#x27;secondorder&#x27;
+    reaction_rate_value = 0.015
+  [../]
+[]
+
+[AuxVariables]
+  [./yLog]
+  [../]
+[]
+
+[AuxKernels]
+  [./Log_Func]
+    type = DensityLogConvert
+    variable = yLog
+    density_log = y
+    use_moles = false
+  [../]
+[]
+
+[PeriodicRelativeNodalDifference]
+  [./test]
+    periodic_variable_log = y
+    cycle_frequency = 1.0
+    num_cycles = 75
+    starting_cycle = 25
+  [../]
+[]
+
+[Postprocessors]
+  [./diff_counter]
+    type = PeriodicComparisonCounter
+    value1 = y_periodic_difference
+    value2 = 1e-5
+    frequency = 1
+    comparison_type = less_than
+  [../]
+[]
+
+[UserObjects]
+  [./End]
+    type = Terminator
+    expression = &#x27;(if(diff_counter&gt;=10,1,0)) = 1&#x27;
+  [../]
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [./smp]
+    type = SMP
+    full = true
+  [../]
+  [./fdp]
+    type = FDP
+    full = true
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 100
+
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -ksp_type&#x27;
+  petsc_options_value = &#x27;lu gmres&#x27;
+
+  dtmin = 1e-14
+  scheme = bdf2
+  dt = 0.01
+
+[]
+
+[Outputs]
+  perf_graph = true
+  [./out]
+    type = Exodus
+  [../]
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="73701241-f58c-49a7-8a32-bb1120baa1c0"><div class="modal-content"><h4>(problems/RF_Plasma_acceleration.i)</h4><pre class="moose-pre"><code class="language-text">#This file of a CCP RF agron plasma.
+#The metastables are accelerated by an average rate of change
+#scheme if the first 100 cycles and then accelerated by a
+#Shooting Method scheme for the rest of the simulation.
+#The simulation is terminated when a periodic relative difference
+#is meet or at time=2e-4s
+
+dom0Scale=25.4e-3
+
+[GlobalParams]
+  potential_units = kV
+  use_moles = true
+[]
+
+[Mesh]
+  [./geo]
+    type = FileMeshGenerator
+    file = &#x27;Lymberopoulos_paper.msh&#x27;
+  [../]
+  [./left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = geo
+  [../]
+  [./right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  [../]
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+#Action that sets the Drift Diffusion Equations and Potential Eqautions
+[DriftDiffusionAction]
+  [./Plasma]
+    electrons = em
+    charged_particle = Ar+
+    Neutrals = Ar*
+    potential = potential
+    Is_potential_unique = true
+    mean_energy = mean_en
+    position_units = ${dom0Scale}
+    Additional_Outputs = &#x27;ElectronTemperature Current EField&#x27;
+  [../]
+[]
+
+#Action that sets the Sources Terms of the species
+[Reactions]
+  [./Argon]
+    species = &#x27;Ar* em Ar+&#x27;
+    aux_species = &#x27;Ar&#x27;
+    reaction_coefficient_format = &#x27;rate&#x27;
+    gas_species = &#x27;Ar&#x27;
+    electron_energy = &#x27;mean_en&#x27;
+    electron_density = &#x27;em&#x27;
+    include_electrons = true
+    file_location = &#x27;rate_coefficients&#x27;
+    potential = &#x27;potential&#x27;
+    use_log = true
+    position_units = ${dom0Scale}
+    block = 0
+    reactions = &#x27;em + Ar -&gt; em + Ar*        : EEDF [-11.56] (reaction1)
+                 em + Ar -&gt; em + em + Ar+   : EEDF [-15.7] (reaction2)
+                 em + Ar* -&gt; em + Ar        : EEDF [11.56] (reaction3)
+                 em + Ar* -&gt; em + em + Ar+  : EEDF [-4.14] (reaction4)
+                 em + Ar* -&gt; em + Ar_r      : 1.2044e11
+                 Ar* + Ar* -&gt; Ar+ + Ar + em : 373364000
+                 Ar* + Ar -&gt; Ar + Ar        : 1806.6
+                 Ar* + Ar + Ar -&gt; Ar_2 + Ar : 39890.9324&#x27;
+  [../]
+[]
+
+#Variables for scaled nodes and background gas
+[AuxVariables]
+  [./x_node]
+  [../]
+
+  [./Ar]
+  [../]
+[]
+
+#Kernels that define the scaled nodes and background gas
+[AuxKernels]
+  [./x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
+  [../]
+
+  [./Ar_val]
+    type = ConstantAux
+    variable = Ar
+    # value = 3.22e22
+    value = -2.928623
+    execute_on = INITIAL
+  [../]
+[]
+
+[BCs]
+#Voltage Boundary Condition
+  [./potential_left]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;left&#x27;
+    function = potential_bc_func
+  [../]
+  [./potential_dirichlet_right]
+    type = DirichletBC
+    variable = potential
+    boundary = &#x27;right&#x27;
+    value = 0
+  [../]
+
+#Boundary conditions for electons
+  [./em_physical_right]
+    type = LymberopoulosElectronBC
+    variable = em
+    boundary = &#x27;right&#x27;
+    gamma = 0.01
+    ks = 1.19e5
+    ion = Ar+
+    potential = potential
+    position_units = ${dom0Scale}
+  [../]
+  [./em_physical_left]
+    type = LymberopoulosElectronBC
+    variable = em
+    boundary = &#x27;left&#x27;
+    gamma = 0.01
+    ks = 1.19e5
+    ion = Ar+
+    potential = potential
+    position_units = ${dom0Scale}
+  [../]
+
+#Boundary conditions for ions
+  [./Ar+_physical_right_advection]
+    type = LymberopoulosIonBC
+    variable = Ar+
+    potential = potential
+    boundary = &#x27;right&#x27;
+    position_units = ${dom0Scale}
+  [../]
+  [./Ar+_physical_left_advection]
+    type = LymberopoulosIonBC
+    variable = Ar+
+    potential = potential
+    boundary = &#x27;left&#x27;
+    position_units = ${dom0Scale}
+  [../]
+
+#Boundary conditions for metastables
+  [./Ar*_physical_right_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;right&#x27;
+    value = 1e-5
+  [../]
+  [./Ar*_physical_left_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;left&#x27;
+    value = 1e-5
+  [../]
+
+#Boundary conditions for mean energy
+  [./mean_en_physical_right]
+    type = ElectronTemperatureDirichletBC
+    variable = mean_en
+    em = em
+    value = 0.5
+    boundary = &#x27;right&#x27;
+  [../]
+  [./mean_en_physical_left]
+    type = ElectronTemperatureDirichletBC
+    variable = mean_en
+    em = em
+    value = 0.5
+    boundary = &#x27;left&#x27;
+  [../]
+[]
+
+#Initial Conditions
+[ICs]
+  [./em_ic]
+    type = FunctionIC
+    variable = em
+    function = density_ic_func
+  [../]
+  [./Ar+_ic]
+    type = FunctionIC
+    variable = Ar+
+    function = density_ic_func
+  [../]
+  [./Ar*_ic]
+    type = FunctionIC
+    variable = Ar*
+    function = density_ic_func
+  [../]
+  [./mean_en_ic]
+    type = FunctionIC
+    variable = mean_en
+    function = energy_density_ic_func
+  [../]
+[]
+
+#Functions for IC and Potential BC
+[Functions]
+  [./potential_bc_func]
+    type = ParsedFunction
+    value = &#x27;0.100*sin(2*3.1415926*13.56e6*t)&#x27;
+  [../]
+  [./density_ic_func]
+    type = ParsedFunction
+    value = &#x27;log((1e12)/6.022e23)&#x27;
+  [../]
+  [./energy_density_ic_func]
+    type = ParsedFunction
+    value = &#x27;log(3./2.) + log((1e12)/6.022e23)&#x27;
+  [../]
+[]
+
+#Material properties of species and background gas
+[Materials]
+  [./GasBasics]
+    #If elecron mobility and diffusion are NOT constant, set
+    #&quot;interp_elastic_coeff = true&quot;. This lets the mobility and
+    #diffusivity to be energy dependent, as dictated by the txt file
+    type = GasElectronMoments
+    em = em
+    potential = potential
+    mean_en = mean_en
+    user_p_gas = 133.322
+    user_electron_mobility = 30.0
+    user_electron_diffusion_coeff = 119.8757763975
+    property_tables_file = rate_coefficients/electron_moments.txt
+    interp_trans_coeffs = false
+    ramp_trans_coeffs = false
+    interp_elastic_coeff = false
+  [../]
+  [./gas_species_0]
+    type = HeavySpeciesMaterial
+    heavy_species_name = Ar+
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    mobility = 0.144409938
+    diffusivity = 6.428571e-3
+  [../]
+  [./gas_species_1]
+    type = HeavySpeciesMaterial
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    diffusivity = 7.515528e-3
+  [../]
+  [./gas_species_2]
+    type = HeavySpeciesMaterial
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+  [../]
+[]
+
+#Acceleration Schemes are dictated by MultiApps, Transfers,
+#and PeriodicControllers
+[MultiApps]
+  #MultiApp of Acceleration by Shooting Method
+  [./Shooting]
+    type = FullSolveMultiApp
+    input_files = &#x27;RF_Plasma_acceleration_Shooting.i&#x27;
+    execute_on = &#x27;TIMESTEP_END&#x27;
+    enable = false
+  [../]
+
+  #MultiApp of Acceleration by Averaging
+  [./Averaging_Acceleration]
+    type = FullSolveMultiApp
+    input_files = &#x27;RF_Plasma_acceleration_averaging.i&#x27;
+    execute_on = &#x27;TIMESTEP_END&#x27;
+    enable = false
+  [../]
+[]
+
+[Transfers]
+  #MultiApp Transfers for Acceleration by Shooting Method
+  [./em_to_Shooting]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Shooting
+    source_variable = em
+    variable = em
+    enable = false
+  [../]
+  [./Ar+_to_Shooting]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Shooting
+    source_variable = Ar+
+    variable = Ar+
+    enable = false
+  [../]
+  [./mean_en_to_Shooting]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Shooting
+    source_variable = mean_en
+    variable = mean_en
+    enable = false
+  [../]
+  [./potential_to_Shooting]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Shooting
+    source_variable = potential
+    variable = potential
+    enable = false
+  [../]
+  [./Ar*_to_Shooting]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Shooting
+    source_variable = Ar*
+    variable = Ar*
+    enable = false
+  [../]
+  [./Ar*S_to_Shooting]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Shooting
+    source_variable = Ar*
+    variable = Ar*S
+    enable = false
+  [../]
+
+  [./Ar*New_from_Shooting]
+    type = MultiAppCopyTransfer
+    direction = from_multiapp
+    multi_app = Shooting
+    source_variable = Ar*
+    variable = Ar*
+    enable = false
+  [../]
+
+  [./Ar*Relative_Diff]
+    type = MultiAppPostprocessorTransfer
+    direction = from_multiapp
+    multi_app = Shooting
+    from_postprocessor = Meta_Relative_Diff
+    to_postprocessor = Meta_Relative_Diff
+    reduction_type = minimum
+    enable = false
+  [../]
+
+  #MultiApp Transfers for Acceleration by Averaging
+  [./em_to_Averaging]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Averaging_Acceleration
+    source_variable = em
+    variable = em
+    enable = false
+  [../]
+  [./Ar+_to_Averaging]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Averaging_Acceleration
+    source_variable = Ar+
+    variable = Ar+
+    enable = false
+  [../]
+  [./mean_en_to_Averaging]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Averaging_Acceleration
+    source_variable = mean_en
+    variable = mean_en
+    enable = false
+  [../]
+  [./potential_to_Averaging]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Averaging_Acceleration
+    source_variable = potential
+    variable = potential
+    enable = false
+  [../]
+  [./Ar*_to_Averaging]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Averaging_Acceleration
+    source_variable = Ar*
+    variable = Ar*
+    enable = false
+  [../]
+  [./Ar*S_to_Averaging]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Averaging_Acceleration
+    source_variable = Ar*
+    variable = Ar*S
+    enable = false
+  [../]
+
+
+  [./Ar*New_from_Averaging]
+    type = MultiAppCopyTransfer
+    direction = from_multiapp
+    multi_app = Averaging_Acceleration
+    source_variable = Ar*
+    variable = Ar*
+    enable = false
+  [../]
+[]
+
+#The Action the add the TimePeriod Controls to turn off and on the MultiApps
+[PeriodicControllers]
+  [./Shooting]
+    Enable_at_cycle_start = &#x27;MultiApps::Shooting
+                              Transfers::em_to_Shooting *::Ar+_to_Shooting *::mean_en_to_Shooting
+                              *::potential_to_Shooting *::Ar*_to_Shooting *::Ar*S_to_Shooting
+                              Transfers::Ar*New_from_Shooting *::Ar*Relative_Diff&#x27;
+    starting_cycle = 155
+    cycle_frequency = 13.56e6
+    cycles_between_controls = 55
+    num_controller_set = 2000
+    name = Shooting
+  [../]
+
+  [./Averaging_Acceleration]
+    Enable_at_cycle_start = &#x27;MultiApps::Averaging_Acceleration
+                              Transfers::em_to_Averaging *::Ar+_to_Averaging *::mean_en_to_Averaging
+                              *::potential_to_Averaging *::Ar*_to_Averaging *::Ar*S_to_Averaging
+                              Transfers::Ar*New_from_Averaging&#x27;
+    starting_cycle = 10
+    cycle_frequency = 13.56e6
+    cycles_between_controls = 10
+    num_controller_set = 10
+    name = Averaging_Acceleration
+  [../]
+[]
+
+#The Action that calculate periodic relative difference
+#Outputs as postprocessors named: &#x27;var&#x27;_periodic_difference
+[PeriodicRelativeNodalDifference]
+  [./Plasma]
+    periodic_variable_log = &#x27;em Ar+ mean_en&#x27;
+    periodic_variable = &#x27;potential&#x27;
+    starting_cycle = 0
+    cycle_frequency = 13.56e6
+    num_cycles = 2000
+  [../]
+[]
+
+[Postprocessors]
+  #Calculates Max plasma frequency
+  [./InversePlasmaFreq]
+    type = PlasmaFrequencyInverse
+    variable = em
+    use_moles = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  [../]
+
+  #Counter how many cycles in a row the periodic relative difference
+  #is below 1e-5
+  [./em_counter]
+    type = PeriodicComparisonCounter
+    value1 = em_periodic_difference
+    value2 = 1e-5
+    frequency = 13.56e6
+    comparison_type = less_than
+  [../]
+  [./ArIon_counter]
+    type = PeriodicComparisonCounter
+    value1 = Ar+_periodic_difference
+    value2 = 1e-5
+    frequency = 13.56e6
+    comparison_type = less_than
+  [../]
+  [./mean_en_counter]
+    type = PeriodicComparisonCounter
+    value1 = mean_en_periodic_difference
+    value2 = 1e-5
+    frequency = 13.56e6
+    comparison_type = less_than
+  [../]
+  [./potential_counter]
+    type = PeriodicComparisonCounter
+    value1 = potential_periodic_difference
+    value2 = 1e-5
+    frequency = 13.56e6
+    comparison_type = less_than
+  [../]
+
+  #Hold the metastable relative difference during the
+  #Shooting Method acceleration
+  [./Meta_Relative_Diff]
+    type = Receiver
+  [../]
+[]
+
+#This terminates the simulation when electons, ions, mean energy,
+#and potential&#x27;s periodic differences is less than 1e-5 for
+#10 cycles in a row and when the relative accelerated metastables
+#density is less then 0.1%
+[UserObjects]
+  [./End]
+    type = Terminator
+    expression = &#x27;(if(em_counter&gt;=10,1,0) +
+                   if(ArIon_counter&gt;=10,1,0) +
+                   if(mean_en_counter&gt;=10,1,0) +
+                   if(potential_counter&gt;=10,1,0) +
+                   if(Meta_Relative_Diff&lt;0.001,1,0)) = 5&#x27;
+  [../]
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [./smp]
+    type = SMP
+    full = true
+  [../]
+
+  [./fdp]
+    type = FDP
+    full = true
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 2e-4
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 fgmres 1e-3&#x27;
+  l_max_its = 20
+
+  scheme = bdf2
+  dt = 1e-9
+  dtmin = 1e-14
+[]
+
+[Outputs]
+  perf_graph = true
+  [./out]
+    type = Exodus
+  [../]
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="9b242fad-568f-4416-838c-d72f7590e95c"><div class="modal-content"><h4>(test/tests/PeriodicRelativeNodalDifference/Sample_Periodic_Diffusion.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [./file]
+    type = FileMeshGenerator
+    file = &#x27;Sample_Periodic_Diffusion.msh&#x27;
+  [../]
+  [./left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = file
+  [../]
+  [./right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  [../]
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [./y]
+  [../]
+[]
+
+[Kernels]
+  [./Time_Deriv]
+    type = TimeDerivative
+    variable = y
+  [../]
+  [./Diff]
+    type = ADMatDiffusion
+    variable = y
+    diffusivity = &#x27;diffy&#x27;
+  [../]
+  [./First_Term]
+    type = BodyForce
+    variable = y
+    function = &#x27;0.25 * sin(2.0*pi * t) * sin(2.0*pi * t)&#x27;
+  [../]
+  [./Second_Term]
+    type = ReactionFirstOrder
+    variable = y
+    v = y
+    coefficient = -1
+    reaction = &#x27;firstorder&#x27;
+    _v_eq_u = true
+  [../]
+  [./Thrid_Term]
+    type = ReactionSecondOrder
+    variable = y
+    v = y
+    w = y
+    coefficient = -1
+    reaction = &#x27;secondorder&#x27;
+    _v_eq_u = true
+    _w_eq_u = true
+  [../]
+[]
+
+[BCs]
+  [./Walls]
+    type = DirichletBC
+    variable = y
+    value = 0
+    boundary = &#x27;left right&#x27;
+  [../]
+[]
+
+[Materials]
+  [./gas_species_0]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;diffy&#x27;
+    prop_values = 0.001
+  [../]
+  [./firstorder_coefficient]
+    type = GenericRateConstant
+    reaction = &#x27;firstorder&#x27;
+    reaction_rate_value = 0.05
+  [../]
+  [./secondorder_coefficient]
+    type = GenericRateConstant
+    reaction = &#x27;secondorder&#x27;
+    reaction_rate_value = 0.015
+  [../]
+[]
+
+[PeriodicRelativeNodalDifference]
+  [./Periodic_Y_Diff]
+    periodic_variable = y
+    cycle_frequency = 1.0
+    num_cycles = 75
+    starting_cycle = 25
+  [../]
+[]
+
+[Postprocessors]
+  [./diff_counter]
+    type = PeriodicComparisonCounter
+    value1 = y_periodic_difference
+    value2 = 1e-5
+    frequency = 1
+    comparison_type = less_than
+  [../]
+[]
+
+[UserObjects]
+  [./End]
+    type = Terminator
+    expression = &#x27;(if(diff_counter&gt;=10,1,0)) = 1&#x27;
+  [../]
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [./smp]
+    type = SMP
+    full = true
+  [../]
+  [./fdp]
+    type = FDP
+    full = true
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 100
+
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -ksp_type&#x27;
+  petsc_options_value = &#x27;lu gmres&#x27;
+
+  dtmin = 1e-14
+  scheme = bdf2
+  dt = 0.01
+
+[]
+
+[Outputs]
+  perf_graph = true
+  [./out]
+    type = Exodus
+  [../]
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#c88eb6f4-ff60-48d6-a55d-94c41a20b9ab" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#a090f317-a4c1-4256-a928-15452bafb109" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#2e96aa0d-2952-4a75-bef0-180e2c014f78" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#ff5f5d39-08fe-4bd6-8691-b7bfd0dea716" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

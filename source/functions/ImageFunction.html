@@ -1,0 +1,356 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>ImageFunction | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://shannon-lab.github.io/zapdos" class="left moose-logo hide-on-med-and-down">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="b7b14131-2c2d-415b-a0af-923af31b3a9c" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="8d2d52d2-03fa-4954-a92b-7398061d0c9b" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="2f1883e6-f593-4ea2-becf-8fa3889ccb0a" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="86f2c29e-6aeb-4a73-9558-9169dbea99c3"><i class="material-icons">menu</i></a><ul class="sidenav" id="86f2c29e-6aeb-4a73-9558-9169dbea99c3"><li><a href="#!" class="dropdown-trigger" data-target="35b4342e-bdc0-4486-906d-adf5231a425c" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="729e7705-c4cb-415b-83d9-057be6105be7" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="b36ee30c-63a0-4807-bb6b-046dbf3cc703" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="b7b14131-2c2d-415b-a0af-923af31b3a9c"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li></ul><ul class="dropdown-content" id="8d2d52d2-03fa-4954-a92b-7398061d0c9b"><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="2f1883e6-f593-4ea2-becf-8fa3889ccb0a"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="35b4342e-bdc0-4486-906d-adf5231a425c"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li></ul><ul class="dropdown-content" id="729e7705-c4cb-415b-83d9-057be6105be7"><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="b36ee30c-63a0-4807-bb6b-046dbf3cc703"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://shannon-lab.github.io/zapdos" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">functions</span><a href="#" class="breadcrumb">ImageFunction</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="d9c49945-d26a-4556-9edc-aea608d5b01b" data-section-level="1" data-section-text="ImageFunction"><h1 id="imagefunction">ImageFunction</h1><p>Function with values sampled from an image or image stack.</p><section class="scrollspy" id="10f8742b-a7cb-49fa-828c-d10d2a9f405a" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p>Simulations often require the phase to be initialized or compared to existing micro-structure data, such as CT or SEM scans as shown in the figure. MOOSE includes a flexible, <a href="../../syntax/Functions/index.html">Function</a> based method for accessing this type of data for use in initial conditions or other calculations. For example, <a href="#fig:large_adapt">Figure 1</a> is a reconstructed image of snow captured using cryospheric micro-CT scanner at the <a href="http://www.montana.edu/subzero">MSU Subzero Research Laboratory</a>.</p><div class="card moose-float" id="fig:large_adapt"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/framework/image_function/large_adapt.png"></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 1: </span><span class="moose-caption-text">Mesh of 3D micro-CT data using <code>ImageFunction</code>.</span></p></div></div></section><section class="scrollspy" id="afd14acc-3b5c-49a8-b777-fb4e3c180660" data-section-level="2" data-section-text="Setup"><h2 id="setup">Setup</h2><p>To utilize the image reading portion of the phase-field module VTK must be enabled when building libMesh. Please see MOOSE FAQ for more information.</p></section><section class="scrollspy" id="3017ba59-a4ee-4566-86de-187d00cd498e" data-section-level="2" data-section-text="Examples"><h2 id="examples">Examples</h2><section id="b738bf2a-bfdc-460b-95cf-33136cdd0a65" data-section-level="3" data-section-text="Single Image"><h3 id="single-image">Single Image</h3><p>Consider the simple image in <a href="#fig:small_raw">Figure 2</a>, reading this image is accomplished by including a <code>ImageFunction</code> in your input file.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Functions]
+  [image_func]
+    type = ImageFunction
+    file = stack/test_00.png
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#9d2a3a99-c5be-4b63-98f2-b71b0a32603f">(moose/test/tests/functions/image_function/image.i)</a><div class="card moose-float" style="width:50%;margin-right:auto;margin-left:auto;" id="fig:small_raw"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/framework/image_function/small_raw.png"></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 2: </span><span class="moose-caption-text">Example image input (stack/test_00.png).</span></p></div></div><p>This function may then be used just like any other function within MOOSE, for example, it may be utilized as an initial condition for a variable.  The following input file syntax would use the function above as an initial condition for the <code>u</code> variable and create an initial mesh as shown in <a href="#fig:small_uniform">Figure 3</a>.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[ICs]
+  [u_ic]
+    type = FunctionIC
+    function = image_func
+    variable = u
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#f74b78e0-c9ec-40bd-ac54-787b12c032e9">(moose/test/tests/functions/image_function/image.i)</a><div class="card moose-float" style="width:50%;margin-right:auto;margin-left:auto;" id="fig:small_uniform"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/framework/image_function/small_uniform.png"></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 3: </span><span class="moose-caption-text">Mesh showing initial condition extracted from image in <a href="#fig:small_raw">Figure 2</a>.</span></p></div></div><p>The example image shown is 20 by 20 pixels as is the mesh (20 by 20 elements) to which the initial condition is applied. The meshed version looks slightly different than the original image because the initial condition is applied by sampling the image at each node within the mesh, which in this case matches with the pixel boundaries, so the value can sampled can easily vary due to floating point precision limitations.</p><p>Matching the mesh to the pixel dimensions <strong>is not</strong> a requirement, and not recommend. The main reason for building the <code>ImageFunction</code> object was to enable an arbitrary mesh geometry to be able to sample the image and adapt accordingly.</p><p>Beginning with a 2 by 2 element mesh and adding the following an adaptivity block to the input file results in the mesh shown <a href="#fig:small_adapt">Figure 4</a>.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Adaptivity]
+  max_h_level = 5
+  initial_steps = 5
+  initial_marker = marker
+  [Indicators]
+    [indicator]
+      type = GradientJumpIndicator
+      variable = u
+    []
+  []
+  [Markers]
+    [marker]
+      type = ErrorFractionMarker
+      indicator = indicator
+      refine = 0.9
+    []
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#e8d69894-f880-4dc2-af5a-3baedddd087e">(moose/test/tests/functions/image_function/threshold_adapt.i)</a><div class="card moose-float" style="width:50%;margin-right:auto;margin-left:auto;" id="fig:small_adapt"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/framework/image_function/small_adapt.png"></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 4: </span><span class="moose-caption-text">Mesh showing initial condition with initial adaptivity extracted from image in                <a href="#fig:small_raw">Figure 2</a>.</span></p></div></div></section><section id="969d4b62-d998-4a43-82a7-64783399945b" data-section-level="3" data-section-text="Image Stacks"><h3 id="image-stacks">Image Stacks</h3><p>Image stacks or 3D images are also supported (see <a href="ImageFunction.html#file-types">Supported File Types</a>). For example, consider as set of images named test_00.png, test_01.png, ..., and test_19.png within a directory &quot;stacked&quot;. To read these images the syntax below is used in the <code>ImageFunction</code> block.  Again, using this data as an initial condition and using initial adaptivity, as shown above, results in the mesh shown in <a href="#fig:small_3d">Figure 5</a>.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Functions]
+  [image_func]
+    type = ImageFunction
+    file_base = stack/test
+    file_suffix = png
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#1cd0f5fa-a6c4-4942-b4b5-5232bef309b6">(moose/test/tests/functions/image_function/image_3d.i)</a><div class="card moose-float" style="width:50%;margin-right:auto;margin-left:auto;" id="fig:small_3d"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/framework/image_function/small_3d.png"></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 5: </span><span class="moose-caption-text">3D Mesh showing initial condition with initial adaptivity extracted from a stack of                images similar to the image in <a href="#fig:small_raw">Figure 2</a>. The mesh is cropped in the vertical                direction to show the internal structure.</span></p></div></div><p>It is also possible to limit the reader to a set of images using the <a href="#696b73cd-c044-47f0-ab6c-5d35c5398905" class="moose-modal-link modal-trigger">&quot;file_range&quot;</a> parameter, which may be set to a single value to read a single image or a range to read a subset of the images.</p></section></section><section class="scrollspy" id="fe67f43f-2c0b-4634-85fa-bb24fa226459" data-section-level="2" data-section-text="Image Processing"><h2 id="image-processing">Image Processing</h2><p>The <a href="http://www.vtk.org/">VTK</a> library includes a range of image filters and processing tools, some basic processing tools are included. However, a derivative class could easily be developed to expand upon these capabilities.</p><section id="9e2a2bc2-4614-42cd-bb27-a2cc769071e3" data-section-level="3" data-section-text="Component"><h3 id="component">Component</h3><p>By default, the RGB pixel data is converted into a single greyscale value representing the magnitude. This is accomplished using the <a href="http://www.vtk.org/doc/nightly/html/classvtkImageMagnitude.html">vtkImageMagnitude</a> class.</p><p>It is possible to select a single component rather than using the magnitude by setting the <a href="#0e903211-2fa0-4005-92b2-bd05522c1039" class="moose-modal-link modal-trigger">&quot;component&quot;</a> parameter in the input file to a valid component number, which will be 0, 1 or 2 for RGB images.</p></section><section id="37cc60b5-d66d-47ef-a8ae-9117551b264c" data-section-level="3" data-section-text="Thresholding"><h3 id="thresholding">Thresholding</h3><p>Basic thresholding is accomplished using the <a href="http://www.vtk.org/doc/nightly/html/classvtkImageThreshold.html">vtkImageThreshold</a> class. Thresholding requires three parameters be set in the input file:</p><ul class="browser-default"><li><p><a href="#9bfa73e8-4dda-4c5b-8d3e-1f02c75a827d" class="moose-modal-link modal-trigger">&quot;threshold&quot;</a>: The threshold value to consider. </p></li><li><p><a href="#6240d729-55b1-403b-b19d-af1fab390153" class="moose-modal-link modal-trigger">&quot;upper_value&quot;</a>: Image data above the threshold are replaced with this value. </p></li><li><p><a href="#84b4b909-24cb-4472-ad1d-587bef9a94da" class="moose-modal-link modal-trigger">&quot;lower_value&quot;</a>: Image data below the threshold are replaced with this value.</p></li></ul></section><section id="d06307a3-0269-467f-b21a-fb7646fa34c9" data-section-level="3" data-section-text="Shift and Scale"><h3 id="shift-and-scale">Shift and Scale</h3><p>It is possible to shift and scale the image data, this is accomplished using the <a href="http://www.vtk.org/doc/nightly/html/classvtkImageShiftScale.html">vtkImageShiftScale</a> object. The <a href="#16ae95b7-bd40-4cf4-b646-70c570a13031" class="moose-modal-link modal-trigger">&quot;shift&quot;</a> parameter adds the given value to the image data and <a href="#eb6858db-6afa-459f-a1a6-a185be6a2977" class="moose-modal-link modal-trigger">&quot;scale&quot;</a> parameter multiplies the image data by the supplied value.</p><p>The order of application of the shift and scale are dictated by the VTK object, the documentation states: &quot;Pixels are shifted (a constant value added) and then scaled (multiplied by a scalar).&quot;</p></section><section id="713131bc-5da1-4a20-8194-bb2d38eba93e" data-section-level="3" data-section-text="Image Flipping"><h3 id="image-flipping">Image Flipping</h3><p>Flipping an image along the major axis directions x, y, or z is performed using <a href="http://www.vtk.org/doc/nightly/html/classvtkImageFlip.html">vtkImageFlip</a> object. Three flags exists&mdash;<a href="#5fdc7fd3-ef87-44a2-a57f-d7185e9e22a4" class="moose-modal-link modal-trigger">&quot;flip_x&quot;</a>, <a href="#5df519d6-a08a-4cfe-8024-070e4e5ca82d" class="moose-modal-link modal-trigger">&quot;flip_y&quot;</a>, and <a href="#d533b728-e8fa-4f8e-b394-d0feeb53595f" class="moose-modal-link modal-trigger">&quot;flip_z&quot;</a>&mdash;which may be set in any combination.</p></section></section><section class="scrollspy" id="9c28c371-0901-43f1-938b-14956beb8087" data-section-level="2" data-section-text="Image Dimensions"><h2 id="image-dimensions">Image Dimensions</h2><p>By default, the image actual physical dimensions are set to the dimensions of the mesh. However, it is possible to set the dimensions of the image independently from using the <code>origin</code> and <code>dimensions</code> input parameters.</p><p>This allows for flexibility to how the <code>ImageFunction</code> is utilized. For example, a mesh could be defined to domain that is smaller than the actual image. Thus, if the <code>ImageFunction</code> dimensions are set to the larger domain, the mesh would only sample some portion of the image. Effectively, this feature can work on a cropped image, without needing to create a separate cropped image.</p></section><section class="scrollspy" id="a1ed5816-e96c-4b2b-8fe6-a5d76681b367" data-section-level="2" data-section-text="Supported File Types"><h2 id="file-types">Supported File Types</h2><p>Currently, two types of files are supported *.tif and *.png. However, *.tif files often do not read correctly with VTK, depending on the format of the file. So, if you experience problems reading *.tif files it may require changing the format to *.png. This can easily be done with any number of tools with <a href="http://www.imagemagick.org">ImageMagick</a> being one of the most powerful.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Functions]
+  [image_func]
+    type = ImageFunction
+    file_base = stack/test
+    file_suffix = png
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#9f06103e-ebf9-48d4-b715-425f75208f5d">(moose/test/tests/functions/image_function/image_3d.i)</a></section><section class="scrollspy" id="43b2e079-541c-407d-bac2-06814a936a5f" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="11605ed6-0ac5-47ab-8c41-59b83bf606b2" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">component</span><span class="moose-parameter-header-description">The image RGB-component to return, leaving this blank will result in a greyscale value for the image to be created. The component number is zero based, i.e. 0 returns the first (RED) component of the image.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The image RGB-component to return, leaving this blank will result in a greyscale value for the image to be created. The component number is zero based, i.e. 0 returns the first (RED) component of the image.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">dimensions</span><span class="moose-parameter-header-description">x,y,z dimensions of the image (defaults to mesh dimensions)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>libMesh::Point</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>x,y,z dimensions of the image (defaults to mesh dimensions)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">file</span><span class="moose-parameter-header-description">Name of single image file to extract mesh parameters from.  If provided, a 2D mesh is created.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>FileName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Name of single image file to extract mesh parameters from.  If provided, a 2D mesh is created.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">file_base</span><span class="moose-parameter-header-description">Image file base to open, use this option when a stack of images must be read (ignored if 'file' is given)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>FileNameNoExtension</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Image file base to open, use this option when a stack of images must be read (ignored if 'file' is given)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">file_range</span><span class="moose-parameter-header-description">Range of images to analyze, used with 'file_base' (ignored if 'file' is given)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;unsigned int&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Range of images to analyze, used with 'file_base' (ignored if 'file' is given)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">file_suffix</span><span class="moose-parameter-header-description">Suffix of the file to open, e.g. 'png'</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Suffix of the file to open, e.g. 'png'</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">origin</span><span class="moose-parameter-header-description">Origin of the image (defaults to mesh origin)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>libMesh::Point</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Origin of the image (defaults to mesh origin)</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="a9f6c90a-7013-423f-873b-b019c7ea7fa1" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="2dd49b84-3cbc-4f2e-871c-68ad6ce29112" data-section-level="3" data-section-text="Flip Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">flip_x</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Flip the image along the x-axis</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Flip the image along the x-axis</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">flip_y</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Flip the image along the y-axis</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Flip the image along the y-axis</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">flip_z</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Flip the image along the z-axis</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Flip the image along the z-axis</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Flip Parameters</h3></summary></details></section><section id="3fc9016e-3bca-4870-a28e-54513b02482e" data-section-level="3" data-section-text="Threshold Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">lower_value</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The value to set for data less than the threshold value</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The value to set for data less than the threshold value</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">threshold</span><span class="moose-parameter-header-description">The threshold value</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The threshold value</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">upper_value</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">The value to set for data greater than the threshold value</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The value to set for data greater than the threshold value</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Threshold Parameters</h3></summary></details></section><section id="23197934-92ae-4d51-877e-5bddfe74e731" data-section-level="3" data-section-text="Rescale Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">scale</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">Multiplier to apply to all pixel values; occurs after shifting</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Multiplier to apply to all pixel values; occurs after shifting</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">shift</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">Value to add to all pixels; occurs prior to scaling</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Value to add to all pixels; occurs prior to scaling</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Rescale Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="9d2a3a99-c5be-4b63-98f2-b71b0a32603f"><div class="modal-content"><h4>(moose/test/tests/functions/image_function/image.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 3
+  nx = 10
+  ny = 10
+  nz = 10
+[]
+
+[Adaptivity]
+  max_h_level = 5
+  initial_steps = 5
+  initial_marker = marker
+  [Indicators]
+    [indicator]
+      type = GradientJumpIndicator
+      variable = u
+    []
+  []
+  [Markers]
+    [marker]
+      type = ErrorFractionMarker
+      indicator = indicator
+      refine = 0.9
+    []
+  []
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Functions]
+  [image_func]
+    type = ImageFunction
+    file = stack/test_00.png
+  []
+[]
+
+[BCs]
+  [left]
+    type = DirichletBC
+    variable = u
+    boundary = left
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = u
+    boundary = right
+    value = 1
+  []
+[]
+
+[ICs]
+  [u_ic]
+    type = FunctionIC
+    function = image_func
+    variable = u
+  []
+[]
+
+[Problem]
+  type = FEProblem
+  solve = false
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+  dt = 0.1
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="f74b78e0-c9ec-40bd-ac54-787b12c032e9"><div class="modal-content"><h4>(moose/test/tests/functions/image_function/image.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 3
+  nx = 10
+  ny = 10
+  nz = 10
+[]
+
+[Adaptivity]
+  max_h_level = 5
+  initial_steps = 5
+  initial_marker = marker
+  [Indicators]
+    [indicator]
+      type = GradientJumpIndicator
+      variable = u
+    []
+  []
+  [Markers]
+    [marker]
+      type = ErrorFractionMarker
+      indicator = indicator
+      refine = 0.9
+    []
+  []
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Functions]
+  [image_func]
+    type = ImageFunction
+    file = stack/test_00.png
+  []
+[]
+
+[BCs]
+  [left]
+    type = DirichletBC
+    variable = u
+    boundary = left
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = u
+    boundary = right
+    value = 1
+  []
+[]
+
+[ICs]
+  [u_ic]
+    type = FunctionIC
+    function = image_func
+    variable = u
+  []
+[]
+
+[Problem]
+  type = FEProblem
+  solve = false
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+  dt = 0.1
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="e8d69894-f880-4dc2-af5a-3baedddd087e"><div class="modal-content"><h4>(moose/test/tests/functions/image_function/threshold_adapt.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  nx = 2
+  ny = 2
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Functions]
+  [image_func]
+    type = ImageFunction
+    file_base = stack/test
+    file_suffix = png
+    file_range = &#x27;0&#x27; # file_range is a vector input, a single entry means &quot;read only 1 file&quot;
+    threshold = 2.7e4
+    upper_value = 1
+    lower_value = -1
+  []
+[]
+
+[ICs]
+  [u_ic]
+    type = FunctionIC
+    function = image_func
+    variable = u
+  []
+[]
+
+[Problem]
+  type = FEProblem
+  solve = false
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+  dt = 0.1
+[]
+
+[Adaptivity]
+  max_h_level = 5
+  initial_steps = 5
+  initial_marker = marker
+  [Indicators]
+    [indicator]
+      type = GradientJumpIndicator
+      variable = u
+    []
+  []
+  [Markers]
+    [marker]
+      type = ErrorFractionMarker
+      indicator = indicator
+      refine = 0.9
+    []
+  []
+[]
+
+[Outputs]
+  exodus = true
+[]
+
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="1cd0f5fa-a6c4-4942-b4b5-5232bef309b6"><div class="modal-content"><h4>(moose/test/tests/functions/image_function/image_3d.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 3
+  nx = 20
+  ny = 20
+  nz = 20
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Functions]
+  [image_func]
+    type = ImageFunction
+    file_base = stack/test
+    file_suffix = png
+  []
+[]
+
+[ICs]
+  [u_ic]
+    type = FunctionIC
+    function = image_func
+    variable = u
+  []
+[]
+
+[Problem]
+  type = FEProblem
+  solve = false
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+  dt = 0.1
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="696b73cd-c044-47f0-ab6c-5d35c5398905"><div class="modal-content"><h4>file_range</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;unsigned int&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Range of images to analyze, used with 'file_base' (ignored if 'file' is given)</p></div></div><div class="moose-modal modal" id="0e903211-2fa0-4005-92b2-bd05522c1039"><div class="modal-content"><h4>component</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The image RGB-component to return, leaving this blank will result in a greyscale value for the image to be created. The component number is zero based, i.e. 0 returns the first (RED) component of the image.</p></div></div><div class="moose-modal modal" id="9bfa73e8-4dda-4c5b-8d3e-1f02c75a827d"><div class="modal-content"><h4>threshold</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The threshold value</p></div></div><div class="moose-modal modal" id="6240d729-55b1-403b-b19d-af1fab390153"><div class="modal-content"><h4>upper_value</h4><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The value to set for data greater than the threshold value</p></div></div><div class="moose-modal modal" id="84b4b909-24cb-4472-ad1d-587bef9a94da"><div class="modal-content"><h4>lower_value</h4><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The value to set for data less than the threshold value</p></div></div><div class="moose-modal modal" id="16ae95b7-bd40-4cf4-b646-70c570a13031"><div class="modal-content"><h4>shift</h4><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Value to add to all pixels; occurs prior to scaling</p></div></div><div class="moose-modal modal" id="eb6858db-6afa-459f-a1a6-a185be6a2977"><div class="modal-content"><h4>scale</h4><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Multiplier to apply to all pixel values; occurs after shifting</p></div></div><div class="moose-modal modal" id="5fdc7fd3-ef87-44a2-a57f-d7185e9e22a4"><div class="modal-content"><h4>flip_x</h4><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Flip the image along the x-axis</p></div></div><div class="moose-modal modal" id="5df519d6-a08a-4cfe-8024-070e4e5ca82d"><div class="modal-content"><h4>flip_y</h4><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Flip the image along the y-axis</p></div></div><div class="moose-modal modal" id="d533b728-e8fa-4f8e-b394-d0feeb53595f"><div class="modal-content"><h4>flip_z</h4><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Flip the image along the z-axis</p></div></div><div class="moose-modal modal" id="9f06103e-ebf9-48d4-b715-425f75208f5d"><div class="modal-content"><h4>(moose/test/tests/functions/image_function/image_3d.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 3
+  nx = 20
+  ny = 20
+  nz = 20
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Functions]
+  [image_func]
+    type = ImageFunction
+    file_base = stack/test
+    file_suffix = png
+  []
+[]
+
+[ICs]
+  [u_ic]
+    type = FunctionIC
+    function = image_func
+    variable = u
+  []
+[]
+
+[Problem]
+  type = FEProblem
+  solve = false
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+  dt = 0.1
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#10f8742b-a7cb-49fa-828c-d10d2a9f405a" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#afd14acc-3b5c-49a8-b777-fb4e3c180660" class="tooltipped" data-position="left" data-tooltip="Setup">Setup</a></li><li><a href="#3017ba59-a4ee-4566-86de-187d00cd498e" class="tooltipped" data-position="left" data-tooltip="Examples">Examples</a></li><li><a href="#fe67f43f-2c0b-4634-85fa-bb24fa226459" class="tooltipped" data-position="left" data-tooltip="Image Processing">Image Processing</a></li><li><a href="#9c28c371-0901-43f1-938b-14956beb8087" class="tooltipped" data-position="left" data-tooltip="Image Dimensions">Image Dimensions</a></li><li><a href="#a1ed5816-e96c-4b2b-8fe6-a5d76681b367" class="tooltipped" data-position="left" data-tooltip="Supported File Types">Supported File Types</a></li><li><a href="#43b2e079-541c-407d-bac2-06814a936a5f" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

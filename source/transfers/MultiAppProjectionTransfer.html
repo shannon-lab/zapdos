@@ -1,0 +1,284 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>MultiAppProjectionTransfer | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://shannon-lab.github.io/zapdos" class="left moose-logo hide-on-med-and-down">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="c885885d-d270-4cc6-b18f-786b1ead8d72" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="e253ad30-ad67-4966-9ef4-3731106a5f72" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c6037255-f690-4ff0-9eec-8b2512b86cf2" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="b0dba39c-ea54-4366-a518-7fe6c0cabca5"><i class="material-icons">menu</i></a><ul class="sidenav" id="b0dba39c-ea54-4366-a518-7fe6c0cabca5"><li><a href="#!" class="dropdown-trigger" data-target="e12bcbd3-a2f0-4519-b912-f3fc4b34cf2b" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="f2f50acb-5973-455a-8e5f-342a56c7b271" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="0774f791-a8f1-49f5-aedf-bd402fdb6d17" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="c885885d-d270-4cc6-b18f-786b1ead8d72"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li></ul><ul class="dropdown-content" id="e253ad30-ad67-4966-9ef4-3731106a5f72"><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="c6037255-f690-4ff0-9eec-8b2512b86cf2"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="e12bcbd3-a2f0-4519-b912-f3fc4b34cf2b"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li></ul><ul class="dropdown-content" id="f2f50acb-5973-455a-8e5f-342a56c7b271"><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="0774f791-a8f1-49f5-aedf-bd402fdb6d17"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://shannon-lab.github.io/zapdos" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">transfers</span><a href="#" class="breadcrumb">MultiAppProjectionTransfer</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="4a29b181-d0a7-437a-9563-a24cfc808941" data-section-level="1" data-section-text="MultiAppProjectionTransfer"><h1 id="multiappprojectiontransfer">MultiAppProjectionTransfer</h1><p>Perform a projection between a master and sub-application mesh of a field variable.</p><section class="scrollspy" id="28867c86-563d-48cd-a59e-8d6ab2ef6497" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><p>The following examples demonstrate the use the MultiAppProjectionTransfer for transferring data to (<a href="#tosub">Listing 1</a>) and from (<a href="#fromsub">Listing 2</a>) sub-applications.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-heading">Listing 1: </span><span class="moose-caption-text">Example use of MultiAppProjectionTransfer for transferring data <strong>to</strong> sub-applications.</span></p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Transfers]
+  [tosub]
+    type = MultiAppProjectionTransfer
+    direction = to_multiapp
+    multi_app = sub
+    source_variable = u
+    variable = u_nodal
+  []
+  [elemental_tosub]
+    type = MultiAppProjectionTransfer
+    direction = to_multiapp
+    multi_app = sub
+    source_variable = u
+    variable = u_elemental
+  []
+  [elemental_to_sub_elemental]
+    type = MultiAppProjectionTransfer
+    direction = to_multiapp
+    multi_app = sub
+    source_variable = x
+    variable = x_elemental
+  []
+  [elemental_to_sub_nodal]
+    type = MultiAppProjectionTransfer
+    direction = to_multiapp
+    multi_app = sub
+    source_variable = x
+    variable = x_nodal
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#e4af3f39-4ad0-4625-a4c8-a49120693dde">(moose/test/tests/transfers/multiapp_projection_transfer/tosub_master.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-heading">Listing 2: </span><span class="moose-caption-text">Example use of MultiAppProjectionTransfer for transferring data <strong>from</strong> sub-applications.</span></p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Transfers]
+  [v_nodal_tr]
+    type = MultiAppProjectionTransfer
+    direction = from_multiapp
+    multi_app = sub
+    source_variable = v
+    variable = v_nodal
+  []
+  [v_elemental_tr]
+    type = MultiAppProjectionTransfer
+    direction = from_multiapp
+    multi_app = sub
+    source_variable = v
+    variable = v_elemental
+  []
+  [x_elemental_tr]
+    type = MultiAppProjectionTransfer
+    direction = from_multiapp
+    multi_app = sub
+    source_variable = x
+    variable = x_elemental
+  []
+  [x_nodal_tr]
+    type = MultiAppProjectionTransfer
+    direction = from_multiapp
+    multi_app = sub
+    source_variable = x
+    variable = x_nodal
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#a9410ad8-5924-4810-9f83-e95ef9c706ac">(moose/test/tests/transfers/multiapp_projection_transfer/fromsub_master.i)</a></div></div></section><section class="scrollspy" id="4b22aba8-fe9f-407d-9faa-6d71769bafba" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="ba9fa7a4-8947-48ef-9a45-1fe9c527eb0d" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">direction</span><span class="moose-parameter-header-description">Whether this Transfer will be 'to' or 'from' a MultiApp, or bidirectional, by providing both FROM_MULTIAPP and TO_MULTIAPP.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>to_multiapp, from_multiapp</p><p class="moose-parameter-description"><span>Description:</span>Whether this Transfer will be 'to' or 'from' a MultiApp, or bidirectional, by providing both FROM_MULTIAPP and TO_MULTIAPP.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">multi_app</span><span class="moose-parameter-header-description">The name of the MultiApp to use.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiAppName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the MultiApp to use.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">source_variable</span><span class="moose-parameter-header-description">The variable to transfer from.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The variable to transfer from.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The auxiliary variable to store the transferred values in.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The auxiliary variable to store the transferred values in.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="4c932007-8081-46f9-b7ec-8fedfbe4e7d4" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">allow_skipped_adjustment</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">If set to true, the transfer skips adjustment when from or to postprocessor values are either zero or have different signs. If set to false, an error is thrown when encountering these conditions.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>If set to true, the transfer skips adjustment when from or to postprocessor values are either zero or have different signs. If set to false, an error is thrown when encountering these conditions.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">check_multiapp_execute_on</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">When false the check between the multiapp and transfer execute on flags is not preformed.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>When false the check between the multiapp and transfer execute on flags is not preformed.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">displaced_source_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to use the displaced mesh for the source mesh.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not to use the displaced mesh for the source mesh.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">displaced_target_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to use the displaced mesh for the target mesh.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not to use the displaced mesh for the target mesh.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">SAME_AS_MULTIAPP</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, SAME_AS_MULTIAPP.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>SAME_AS_MULTIAPP</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, SAME_AS_MULTIAPP</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, SAME_AS_MULTIAPP.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">fixed_meshes</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Set to true when the meshes are not changing (ie, no movement or adaptivity).  This will cache some information to speed up the transfer.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set to true when the meshes are not changing (ie, no movement or adaptivity).  This will cache some information to speed up the transfer.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">from_postprocessors_to_be_preserved</span><span class="moose-parameter-header-description">The name of the Postprocessor in the from-app to evaluate an adjusting factor.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;PostprocessorName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the Postprocessor in the from-app to evaluate an adjusting factor.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">from_solution_tag</span><span class="moose-parameter-header-description">The tag of the solution vector to be transferred (default to the solution)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>TagName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The tag of the solution vector to be transferred (default to the solution)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">proj_type</span><span class="moose-parameter-header-default">l2</span><span class="moose-parameter-header-description">The type of the projection.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>l2</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>l2</p><p class="moose-parameter-description"><span>Description:</span>The type of the projection.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">to_postprocessors_to_be_preserved</span><span class="moose-parameter-header-description">The name of the Postprocessor in the to-app to evaluate an adjusting factor.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;PostprocessorName&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the Postprocessor in the to-app to evaluate an adjusting factor.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">to_solution_tag</span><span class="moose-parameter-header-description">The tag of the solution vector to be transferred to (default to the solution)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>TagName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The tag of the solution vector to be transferred to (default to the solution)</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="c818d34c-4a95-4155-b07e-95a2bdc4be18" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="e4af3f39-4ad0-4625-a4c8-a49120693dde"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_projection_transfer/tosub_master.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  xmin = 0
+  xmax = 9
+  ymin = 0
+  ymax = 9
+  nx = 9
+  ny = 9
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[AuxVariables]
+  [x]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+[]
+
+[Functions]
+  [x_func]
+    type = ParsedFunction
+    value = x
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = Diffusion
+    variable = u
+  []
+[]
+
+[AuxKernels]
+  [x_func_aux]
+    type = FunctionAux
+    variable = x
+    function = x_func
+    execute_on = initial
+  []
+[]
+
+[BCs]
+  [left]
+    type = DirichletBC
+    variable = u
+    boundary = left
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = u
+    boundary = right
+    value = 1
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+  dt = 1
+
+  solve_type = &#x27;NEWTON&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+
+[Debug]
+#  show_actions = true
+[]
+
+[MultiApps]
+  [sub]
+    type = TransientMultiApp
+    app_type = MooseTestApp
+    execute_on = timestep_end
+    positions = &#x27;1 1 0 5 5 0&#x27;
+    input_files = tosub_sub.i
+  []
+[]
+
+[Transfers]
+  [tosub]
+    type = MultiAppProjectionTransfer
+    direction = to_multiapp
+    multi_app = sub
+    source_variable = u
+    variable = u_nodal
+  []
+  [elemental_tosub]
+    type = MultiAppProjectionTransfer
+    direction = to_multiapp
+    multi_app = sub
+    source_variable = u
+    variable = u_elemental
+  []
+  [elemental_to_sub_elemental]
+    type = MultiAppProjectionTransfer
+    direction = to_multiapp
+    multi_app = sub
+    source_variable = x
+    variable = x_elemental
+  []
+  [elemental_to_sub_nodal]
+    type = MultiAppProjectionTransfer
+    direction = to_multiapp
+    multi_app = sub
+    source_variable = x
+    variable = x_nodal
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="a9410ad8-5924-4810-9f83-e95ef9c706ac"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_projection_transfer/fromsub_master.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  xmin = 0
+  ymin = 0
+  xmax = 9
+  ymax = 9
+  nx = 9
+  ny = 9
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[AuxVariables]
+  [v_nodal]
+  []
+  [v_elemental]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [x_nodal]
+  []
+  [x_elemental]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = Diffusion
+    variable = u
+  []
+[]
+
+[BCs]
+  [left]
+    type = DirichletBC
+    variable = u
+    boundary = left
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = u
+    boundary = right
+    value = 1
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+  dt = 1
+  solve_type = &#x27;NEWTON&#x27;
+[]
+
+[Outputs]
+  [out]
+    type = Exodus
+    elemental_as_nodal = true
+  []
+[]
+
+[MultiApps]
+  [sub]
+    type = TransientMultiApp
+    app_type = MooseTestApp
+    positions = &#x27;1 1 0 5 5 0&#x27;
+    input_files = fromsub_sub.i
+  []
+[]
+
+[Transfers]
+  [v_nodal_tr]
+    type = MultiAppProjectionTransfer
+    direction = from_multiapp
+    multi_app = sub
+    source_variable = v
+    variable = v_nodal
+  []
+  [v_elemental_tr]
+    type = MultiAppProjectionTransfer
+    direction = from_multiapp
+    multi_app = sub
+    source_variable = v
+    variable = v_elemental
+  []
+  [x_elemental_tr]
+    type = MultiAppProjectionTransfer
+    direction = from_multiapp
+    multi_app = sub
+    source_variable = x
+    variable = x_elemental
+  []
+  [x_nodal_tr]
+    type = MultiAppProjectionTransfer
+    direction = from_multiapp
+    multi_app = sub
+    source_variable = x
+    variable = x_nodal
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#28867c86-563d-48cd-a59e-8d6ab2ef6497" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#4b22aba8-fe9f-407d-9faa-6d71769bafba" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
