@@ -33,8 +33,8 @@ PlasmaDielectricConstant::PlasmaDielectricConstant(const InputParameters & param
     _em(adCoupledValue("em")),
     _em_grad(adCoupledGradient("em")),
     _em_var(getVar("em", 0)),
-    _em_dot(_em_var->adUDot()),
-    _em_dot_dot(_em_var->adUDotDot())
+    _em_dot(_fe_problem.isTransient() ? _em_var->adUDot() : _ad_zero),
+    _em_dot_dot(_fe_problem.isTransient() ? _em_var->adUDotDot() : _ad_zero)
 {
 }
 
@@ -47,34 +47,38 @@ PlasmaDielectricConstant::computeQpProperties()
 
   // Calculate the value of the plasma dielectric constant
   _eps_r_real[_qp] =
-      1.0 - (std::pow(omega_pe, 2) / (std::pow(2 * _pi * _frequency, 2) + std::pow(_nu, 2)));
-  _eps_r_imag[_qp] = (-1.0 * std::pow(omega_pe, 2) * _nu) /
-                     (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(_nu, 2));
+      1.0 - (std::pow(omega_pe, 2) / (std::pow(2 * _pi * _frequency, 2) + std::pow(2 * _pi * _nu, 2)));
+  _eps_r_imag[_qp] = (-1.0 * std::pow(omega_pe, 2) * 2 * _pi * _nu) /
+                     (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(2 * _pi * _nu, 2));
 
   // Calculate the gradient of the plasma dielectric constant
-  ADReal grad_const = -std::pow(omega_pe, 2) / (std::pow(2 * _pi * _frequency, 2) + std::pow(_nu, 2));
+  ADReal grad_const =
+      -std::pow(omega_pe, 2) / (std::pow(2 * _pi * _frequency, 2) + std::pow(2 * _pi * _nu, 2));
   _eps_r_real_grad[_qp] = grad_const * _em_grad[_qp];
-  _eps_r_imag_grad[_qp] = (grad_const * _nu / (2 * _pi * _frequency)) * _em_grad[_qp];
+  _eps_r_imag_grad[_qp] = (grad_const * 2 * _pi * _nu / (2 * _pi * _frequency)) * _em_grad[_qp];
 
-  // Calculate the first time derivative of the linear electron density
-  ADReal lin_dot = _em_dot[_qp] * std::exp(_em[_qp]);
+  if (_fe_problem.isTransient())
+  {
+    // Calculate the first time derivative of the linear electron density
+    ADReal lin_dot = _em_dot[_qp] * std::exp(_em[_qp]);
 
-  // Calculate the first time derivative of the plasma dielectric constant
-  _eps_r_real_dot[_qp] = -1.0 * std::pow(omega_pe_const, 2) * lin_dot /
-                         (std::pow(2 * _pi * _frequency, 2) + std::pow(_nu, 2));
+    // Calculate the first time derivative of the plasma dielectric constant
+    _eps_r_real_dot[_qp] = -1.0 * std::pow(omega_pe_const, 2) * lin_dot /
+                           (std::pow(2 * _pi * _frequency, 2) + std::pow(2 * _pi * _nu, 2));
 
-  _eps_r_imag_dot[_qp] =
-      -1.0 * std::pow(omega_pe_const, 2) * _nu * lin_dot /
-      (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(_nu, 2));
+    _eps_r_imag_dot[_qp] =
+        -1.0 * std::pow(omega_pe_const, 2) * 2 * _pi * _nu * lin_dot /
+        (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(2 * _pi * _nu, 2));
 
-  // Calculate the second time derivative of the linear electron density
-  ADReal lin_dot_dot =
-      _em_dot_dot[_qp] * std::exp(_em[_qp]) + std::pow(_em_dot[_qp], 2) * std::exp(_em[_qp]);
+    // Calculate the second time derivative of the linear electron density
+    ADReal lin_dot_dot =
+        _em_dot_dot[_qp] * std::exp(_em[_qp]) + std::pow(_em_dot[_qp], 2) * std::exp(_em[_qp]);
 
-  // Calculate the second time derivative of the plasma dielectric constant
-  _eps_r_real_dot_dot[_qp] = -1.0 * std::pow(omega_pe_const, 2) * lin_dot_dot /
-                             (std::pow(2 * _pi * _frequency, 2) + std::pow(_nu, 2));
-  _eps_r_imag_dot_dot[_qp] =
-      -1.0 * std::pow(omega_pe_const, 2) * _nu * lin_dot_dot /
-      (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(_nu, 2));
+    // Calculate the second time derivative of the plasma dielectric constant
+    _eps_r_real_dot_dot[_qp] = -1.0 * std::pow(omega_pe_const, 2) * lin_dot_dot /
+                               (std::pow(2 * _pi * _frequency, 2) + std::pow(2 * _pi * _nu, 2));
+    _eps_r_imag_dot_dot[_qp] =
+        -1.0 * std::pow(omega_pe_const, 2) * 2 * _pi * _nu * lin_dot_dot /
+        (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(2 * _pi * _nu, 2));
+  }
 }
