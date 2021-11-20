@@ -13,8 +13,6 @@
 
 registerMooseObject("ZapdosApp", RelativeElementL2Difference);
 
-defineLegacyParams(RelativeElementL2Difference);
-
 InputParameters
 RelativeElementL2Difference::validParams()
 {

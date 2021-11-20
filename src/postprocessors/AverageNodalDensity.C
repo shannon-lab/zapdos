@@ -14,8 +14,6 @@
 
 registerMooseObject("ZapdosApp", AverageNodalDensity);
 
-defineLegacyParams(AverageNodalDensity);
-
 InputParameters
 AverageNodalDensity::validParams()
 {

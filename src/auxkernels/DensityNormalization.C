@@ -12,8 +12,6 @@
 
 registerMooseObject("ZapdosApp", DensityNormalization);
 
-defineLegacyParams(DensityNormalization);
-
 InputParameters
 DensityNormalization::validParams()
 {
