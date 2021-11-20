@@ -13,8 +13,6 @@
 
 registerMooseObject("ZapdosApp", AverageNodalDifference);
 
-defineLegacyParams(AverageNodalDifference);
-
 InputParameters
 AverageNodalDifference::validParams()
 {

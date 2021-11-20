@@ -13,8 +13,6 @@
 
 registerMooseObject("ZapdosApp", PeriodicComparisonCounter);
 
-defineLegacyParams(PeriodicComparisonCounter);
-
 InputParameters
 PeriodicComparisonCounter::validParams()
 {
