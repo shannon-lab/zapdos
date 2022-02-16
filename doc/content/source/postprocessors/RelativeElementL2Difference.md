@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /UserObjects/RelativeElementL2Difference
+!syntax description /Postprocessors/RelativeElementL2Difference
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the RelativeElementL2Difference object.
 
-!syntax parameters /UserObjects/RelativeElementL2Difference
+!syntax parameters /Postprocessors/RelativeElementL2Difference
 
-!syntax inputs /UserObjects/RelativeElementL2Difference
+!syntax inputs /Postprocessors/RelativeElementL2Difference
 
-!syntax children /UserObjects/RelativeElementL2Difference
+!syntax children /Postprocessors/RelativeElementL2Difference

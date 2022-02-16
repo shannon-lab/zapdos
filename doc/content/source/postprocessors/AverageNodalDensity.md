@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /UserObjects/AverageNodalDensity
+!syntax description /Postprocessors/AverageNodalDensity
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the AverageNodalDensity object.
 
-!syntax parameters /UserObjects/AverageNodalDensity
+!syntax parameters /Postprocessors/AverageNodalDensity
 
-!syntax inputs /UserObjects/AverageNodalDensity
+!syntax inputs /Postprocessors/AverageNodalDensity
 
-!syntax children /UserObjects/AverageNodalDensity
+!syntax children /Postprocessors/AverageNodalDensity

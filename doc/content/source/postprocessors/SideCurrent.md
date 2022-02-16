@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /UserObjects/SideCurrent
+!syntax description /Postprocessors/SideCurrent
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the SideCurrent object.
 
-!syntax parameters /UserObjects/SideCurrent
+!syntax parameters /Postprocessors/SideCurrent
 
-!syntax inputs /UserObjects/SideCurrent
+!syntax inputs /Postprocessors/SideCurrent
 
-!syntax children /UserObjects/SideCurrent
+!syntax children /Postprocessors/SideCurrent
