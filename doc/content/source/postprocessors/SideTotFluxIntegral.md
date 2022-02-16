@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /UserObjects/SideTotFluxIntegral
+!syntax description /Postprocessors/SideTotFluxIntegral
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the SideTotFluxIntegral object.
 
-!syntax parameters /UserObjects/SideTotFluxIntegral
+!syntax parameters /Postprocessors/SideTotFluxIntegral
 
-!syntax inputs /UserObjects/SideTotFluxIntegral
+!syntax inputs /Postprocessors/SideTotFluxIntegral
 
-!syntax children /UserObjects/SideTotFluxIntegral
+!syntax children /Postprocessors/SideTotFluxIntegral
