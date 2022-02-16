@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /UserObjects/PeriodicComparisonCounter
+!syntax description /Postprocessors/PeriodicComparisonCounter
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the PeriodicComparisonCounter object.
 
-!syntax parameters /UserObjects/PeriodicComparisonCounter
+!syntax parameters /Postprocessors/PeriodicComparisonCounter
 
-!syntax inputs /UserObjects/PeriodicComparisonCounter
+!syntax inputs /Postprocessors/PeriodicComparisonCounter
 
-!syntax children /UserObjects/PeriodicComparisonCounter
+!syntax children /Postprocessors/PeriodicComparisonCounter

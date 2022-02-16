@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /UserObjects/AverageNodalDifference
+!syntax description /Postprocessors/AverageNodalDifference
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the AverageNodalDifference object.
 
-!syntax parameters /UserObjects/AverageNodalDifference
+!syntax parameters /Postprocessors/AverageNodalDifference
 
-!syntax inputs /UserObjects/AverageNodalDifference
+!syntax inputs /Postprocessors/AverageNodalDifference
 
-!syntax children /UserObjects/AverageNodalDifference
+!syntax children /Postprocessors/AverageNodalDifference

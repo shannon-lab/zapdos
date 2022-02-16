@@ -6,7 +6,7 @@ documenting the class, which includes the typical automatic documentation associ
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /UserObjects/BlockAverageValue
+!syntax description /Postprocessors/BlockAverageValue
 
 ## Overview
 
@@ -16,8 +16,8 @@ documentation clear for users.
 
 !! Describe and include an example of how to use the BlockAverageValue object.
 
-!syntax parameters /UserObjects/BlockAverageValue
+!syntax parameters /Postprocessors/BlockAverageValue
 
-!syntax inputs /UserObjects/BlockAverageValue
+!syntax inputs /Postprocessors/BlockAverageValue
 
-!syntax children /UserObjects/BlockAverageValue
+!syntax children /Postprocessors/BlockAverageValue
