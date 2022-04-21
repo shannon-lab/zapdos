@@ -101,58 +101,50 @@ dom0Scale=25.4e-3
 [Transfers]
   [./em_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = SensitivityMatrix
+    to_multi_app = SensitivityMatrix
     source_variable = em
     variable = em
   [../]
   [./Ar+_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = SensitivityMatrix
+    to_multi_app = SensitivityMatrix
     source_variable = Ar+
     variable = Ar+
   [../]
   [./mean_en_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = SensitivityMatrix
+    to_multi_app = SensitivityMatrix
     source_variable = mean_en
     variable = mean_en
   [../]
   [./potential_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = SensitivityMatrix
+    to_multi_app = SensitivityMatrix
     source_variable = potential
     variable = potential
   [../]
   [./Ar*_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = SensitivityMatrix
+    to_multi_app = SensitivityMatrix
     source_variable = Ar*
     variable = Ar*
   [../]
   [./Deriv_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = SensitivityMatrix
+    to_multi_app = SensitivityMatrix
     source_variable = SMDerivReset
     variable = SMDeriv
   [../]
 
   [./Ar*T_from_sub]
     type = MultiAppCopyTransfer
-    direction = from_multiapp
-    multi_app = SensitivityMatrix
+    from_multi_app = SensitivityMatrix
     source_variable = Ar*
     variable = Ar*T
   [../]
   [./Deriv_from_sub]
     type = MultiAppCopyTransfer
-    direction = from_multiapp
-    multi_app = SensitivityMatrix
+    from_multi_app = SensitivityMatrix
     source_variable = SMDeriv
     variable = SMDeriv
   [../]

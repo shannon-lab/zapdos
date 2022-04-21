@@ -290,48 +290,42 @@ dom0Scale=25.4e-3
   #MultiApp Transfers for Acceleration by Shooting Method
   [./em_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = em
     variable = em
     enable = false
   [../]
   [./Ar+_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = Ar+
     variable = Ar+
     enable = false
   [../]
   [./mean_en_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = mean_en
     variable = mean_en
     enable = false
   [../]
   [./potential_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = potential
     variable = potential
     enable = false
   [../]
   [./Ar*_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = Ar*
     variable = Ar*
     enable = false
   [../]
   [./Ar*S_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = Ar*
     variable = Ar*S
     enable = false
@@ -339,8 +333,7 @@ dom0Scale=25.4e-3
 
   [./Ar*New_from_Shooting]
     type = MultiAppCopyTransfer
-    direction = from_multiapp
-    multi_app = Shooting
+    from_multi_app = Shooting
     source_variable = Ar*
     variable = Ar*
     enable = false
@@ -348,8 +341,7 @@ dom0Scale=25.4e-3
 
   [./Ar*Relative_Diff]
     type = MultiAppPostprocessorTransfer
-    direction = from_multiapp
-    multi_app = Shooting
+    from_multi_app = Shooting
     from_postprocessor = Meta_Relative_Diff
     to_postprocessor = Meta_Relative_Diff
     reduction_type = minimum
@@ -359,48 +351,42 @@ dom0Scale=25.4e-3
   #MultiApp Transfers for Acceleration by Averaging
   [./em_to_Averaging]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Averaging_Acceleration
+    to_multi_app = Averaging_Acceleration
     source_variable = em
     variable = em
     enable = false
   [../]
   [./Ar+_to_Averaging]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Averaging_Acceleration
+    to_multi_app = Averaging_Acceleration
     source_variable = Ar+
     variable = Ar+
     enable = false
   [../]
   [./mean_en_to_Averaging]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Averaging_Acceleration
+    to_multi_app = Averaging_Acceleration
     source_variable = mean_en
     variable = mean_en
     enable = false
   [../]
   [./potential_to_Averaging]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Averaging_Acceleration
+    to_multi_app = Averaging_Acceleration
     source_variable = potential
     variable = potential
     enable = false
   [../]
   [./Ar*_to_Averaging]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Averaging_Acceleration
+    to_multi_app = Averaging_Acceleration
     source_variable = Ar*
     variable = Ar*
     enable = false
   [../]
   [./Ar*S_to_Averaging]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Averaging_Acceleration
+    to_multi_app = Averaging_Acceleration
     source_variable = Ar*
     variable = Ar*S
     enable = false
@@ -409,8 +395,7 @@ dom0Scale=25.4e-3
 
   [./Ar*New_from_Averaging]
     type = MultiAppCopyTransfer
-    direction = from_multiapp
-    multi_app = Averaging_Acceleration
+    from_multi_app = Averaging_Acceleration
     source_variable = Ar*
     variable = Ar*
     enable = false
