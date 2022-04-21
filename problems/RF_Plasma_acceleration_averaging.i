@@ -93,44 +93,38 @@ dom0Scale=25.4e-3
 [Transfers]
   [./em_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Sub
+    to_multi_app = Sub
     source_variable = em
     variable = em
   [../]
   [./Ar+_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Sub
+    to_multi_app = Sub
     source_variable = Ar+
     variable = Ar+
   [../]
   [./mean_en_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Sub
+    to_multi_app = Sub
     source_variable = mean_en
     variable = mean_en
   [../]
   [./potential_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Sub
+    to_multi_app = Sub
     source_variable = potential
     variable = potential
   [../]
   [./Ar*_to_sub]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Sub
+    to_multi_app = Sub
     source_variable = Ar*
     variable = Ar*
   [../]
 
   [./Ar*T_from_sub]
     type = MultiAppCopyTransfer
-    direction = from_multiapp
-    multi_app = Sub
+    from_multi_app = Sub
     source_variable = Ar*
     variable = Ar*T
   [../]
