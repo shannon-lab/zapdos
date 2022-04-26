@@ -93,7 +93,7 @@ AddPeriodicRelativeNodalDifference::act()
 
   // The variable type for the aux variables
   auto fe_type = AddVariableAction::feType(_pars);
-  auto type = AddVariableAction::determineType(fe_type, 1);
+  auto type = AddVariableAction::variableType(fe_type);
   auto var_params = _factory.getValidParams(type);
   var_params.set<MooseEnum>("order") = "FIRST";
   var_params.set<MooseEnum>("family") = "LAGRANGE";
