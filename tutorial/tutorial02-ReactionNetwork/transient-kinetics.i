@@ -1,5 +1,5 @@
 #This tutorial is a sample reaction case based on
-#Lieberman’s Figure 9.1, page 291. 
+#Lieberman’s Figure 9.1, page 291.
 
 [Mesh]
   #Sets up a 0D mesh with 1 element

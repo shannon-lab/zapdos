@@ -2,7 +2,7 @@
 #Zapdos’s Drift-Diffusion Action and CRANE’s Reactions Action.
 #The simulation is a simple electron and ion only argon plasma,
 #where “reaction1” is the metastable excitation reaction
-#and “reaction2” is ionization.  The reaction coefficients are in “rate” form. 
+#and “reaction2” is ionization.  The reaction coefficients are in “rate” form.
 
 #A uniform scaling factor of the mesh.
 #E.g if set to 1.0, there is not scaling
