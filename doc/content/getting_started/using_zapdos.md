@@ -5,7 +5,7 @@
 !style halign=left
 After Zapdos is installed and tested, you should now be able to run input files
 using the `zapdos-opt` executable located at `~/projects/zapdos`. Input files
-demonstrating the capabilities of Zapdos can be found in `~/projects/zapdos/examples`
+demonstrating the capabilities of Zapdos can be found in `~/projects/zapdos/tutorial`
 and `~/projects/zapdos/tests`. Any input file (say, one called `example_input.i`)
 can be run with the following basic syntax:
 
@@ -25,15 +25,22 @@ console output can be sent to a text file:
 The `--color off` option is to de-clutter the log file from extraneous
 mark-up resulting from the displayed console text colors.
 
+For parallelism, users can use the Message Passing Interface protocol (MPI).
+A parallel simulation using 4 processors can be run with the following basic syntax:
+
+```bash
+mpiexec -n 4 ~/projects/zapdos/zapdos-opt -i example_input.i
+```
+
 Many test input files also create an output file with the name format
 `example_input_out.e` that contains all the simulation results that have been
 selected for output. These results are best viewed using a visualization tool
 like [Paraview](http://www.paraview.org/download/).
 
-## Zapdos Examples and Tests
+## Zapdos Tutorial and Tests
 
 !style halign=left
-In general the `examples` directory is meant to be a showcase of "production"
+In general the `tutorial` directory is meant to be a showcase of "production"
 Zapdos capability. Users are encouraged to start there when learning Zapdos and
 setting up new simulations. The `test/tests` directory, on the other hand, holds
 *all* Zapdos regression, verification, and validation tests for both complete and
