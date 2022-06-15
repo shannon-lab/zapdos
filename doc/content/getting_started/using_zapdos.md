@@ -25,8 +25,10 @@ console output can be sent to a text file:
 The `--color off` option is to de-clutter the log file from extraneous
 mark-up resulting from the displayed console text colors.
 
-For parallelism, users can use the Message Passing Interface protocol (MPI).
-A parallel simulation using 4 processors can be run with the following basic syntax:
+For parallelism, users can use the Message Passing Interface protocol (MPI). The 
+[MPICH](https://www.mpich.org/) implementation of MPI is provided with the MOOSE 
+environment packages. A parallel simulation using 4 processors can be run with the 
+following basic syntax:
 
 ```bash
 mpiexec -n 4 ~/projects/zapdos/zapdos-opt -i example_input.i
