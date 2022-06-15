@@ -1,7 +1,8 @@
 #This tutorial is of an argon CCP discharge running at
 #different pressures. In this case, the electron and ion coefficient are
 #linearly proportional. For the following pressures,
-#change the following lines (138, 239, and 251-252).
+#(0.1, 1, 10, 100, 1000 Torr)
+#change the following lines (144, 245, and 257-258).
 
 #A uniform scaling factor of the mesh.
 #E.g if set to 1.0, there is not scaling
