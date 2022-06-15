@@ -1,4 +1,3 @@
-//dom0Mult = 1/25.4e-3;
 dom0Mult = 1;
 
 Point(1) = {0.000000e+00 * dom0Mult, 0, 0};
