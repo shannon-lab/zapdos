@@ -1,10 +1,3 @@
-dom0Scale=25.4e-3
-
-[GlobalParams]
-  potential_units = kV
-  use_moles = true
-[]
-
 [Mesh]
   [./file]
     type = FileMeshGenerator

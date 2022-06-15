@@ -151,7 +151,6 @@ dom0Scale=1.0
     user_p_gas = 133.3322
     user_electron_diffusion_coeff = 1.0
     property_tables_file = rate_coefficients/electron_moments.txt
-    position_units = ${dom0Scale}
   [../]
   #The material properties of the ion
   [./gas_species_0]

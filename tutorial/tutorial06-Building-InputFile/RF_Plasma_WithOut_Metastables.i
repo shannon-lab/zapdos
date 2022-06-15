@@ -215,7 +215,6 @@ dom0Scale=25.4e-3
     user_electron_mobility = 30.0
     user_electron_diffusion_coeff = 119.8757763975
     property_tables_file = rate_coefficients/electron_moments.txt
-    position_units = ${dom0Scale}
   [../]
   [./gas_species_0]
     type = ADHeavySpecies

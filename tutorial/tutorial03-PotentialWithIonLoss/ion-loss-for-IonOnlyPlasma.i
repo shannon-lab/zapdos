@@ -132,7 +132,6 @@ dom0Scale=1.0
     #user_p_gas = 1.33322
     potential = potential
     property_tables_file = rate_coefficients/electron_moments.txt
-    position_units = ${dom0Scale}
   [../]
   #The material properties of the ion
   [./gas_species_0]

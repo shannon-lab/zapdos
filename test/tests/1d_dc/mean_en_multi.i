@@ -109,14 +109,12 @@ dom1Scale=1e-7
     type = EFieldAdvection
     variable = em
     potential = potential
-    mean_en = mean_en
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./em_diffusion]
     type = CoeffDiffusion
     variable = em
-    mean_en = mean_en
     block = 0
     position_units = ${dom0Scale}
   [../]
@@ -345,14 +343,12 @@ dom1Scale=1e-7
     type = EFieldAdvection
     variable = mean_en
     potential = potential
-    em = em
     block = 0
     position_units = ${dom0Scale}
   [../]
   [./mean_en_diffusion]
     type = CoeffDiffusion
     variable = mean_en
-    em = em
     block = 0
     position_units = ${dom0Scale}
   [../]
@@ -682,42 +678,36 @@ dom1Scale=1e-7
   [../]
   [./em_lin]
     type = DensityMoles
-    convert_moles = true
     variable = em_lin
     density_log = em
     block = 0
   [../]
   [./emliq_lin]
     type = DensityMoles
-    convert_moles = true
     variable = emliq_lin
     density_log = emliq
     block = 1
   [../]
   [./Arp_lin]
     type = DensityMoles
-    convert_moles = true
     variable = Arp_lin
     density_log = Arp
     block = 0
   [../]
   [./ArEx_lin]
     type = DensityMoles
-    convert_moles = true
     variable = ArEx_lin
     density_log = ArEx
     block = 0
   [../]
   [./ArTest_lin]
     type = DensityMoles
-    convert_moles = true
     variable = ArTest_lin
     density_log = ArTest
     block = 0
   [../]
   [./OHm_lin]
     type = DensityMoles
-    convert_moles = true
     variable = OHm_lin
     density_log = OHm
     block = 1
@@ -859,7 +849,6 @@ dom1Scale=1e-7
     variable = em
     boundary = 'master0_interface'
     potential = potential
-    ip = Arp
     mean_en = mean_en
     r = 0.99
     position_units = ${dom0Scale}
@@ -885,7 +874,6 @@ dom1Scale=1e-7
     boundary = 'master0_interface'
     potential = potential
     em = em
-    ip = Arp
     r = 0.99
     position_units = ${dom0Scale}
   [../]
@@ -894,7 +882,6 @@ dom1Scale=1e-7
     variable = em
     boundary = 'left'
     potential = potential
-    ip = Arp
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
@@ -958,7 +945,6 @@ dom1Scale=1e-7
     boundary = 'left'
     potential = potential
     em = em
-    ip = Arp
     r = 0
     position_units = ${dom0Scale}
   [../]
