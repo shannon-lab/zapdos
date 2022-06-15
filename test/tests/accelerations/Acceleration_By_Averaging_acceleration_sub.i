@@ -57,14 +57,12 @@ dom0Scale = 25.4e-3
     type = EFieldAdvection
     variable = em
     potential = potential
-    mean_en = mean_en
     position_units = ${dom0Scale}
   [../]
 #Diffusion term of electrons
   [./em_diffusion]
     type = CoeffDiffusion
     variable = em
-    mean_en = mean_en
     position_units = ${dom0Scale}
   [../]
 #Net electron production from ionization
@@ -260,14 +258,12 @@ dom0Scale = 25.4e-3
     type = EFieldAdvection
     variable = mean_en
     potential = potential
-    em = em
     position_units = ${dom0Scale}
   [../]
 #Diffusion term of electrons energy
   [./mean_en_diffusion]
     type = CoeffDiffusion
     variable = mean_en
-    em = em
     position_units = ${dom0Scale}
   [../]
 #Joule Heating term
@@ -441,7 +437,6 @@ dom0Scale = 25.4e-3
     user_electron_mobility = 30.0
     user_electron_diffusion_coeff = 119.8757763975
     property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
-    position_units = ${dom0Scale}
   [../]
   [./gas_species_0]
     type = ADHeavySpecies
@@ -469,7 +464,6 @@ dom0Scale = 25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + Ar*.txt'
     reaction = 'em + Ar -> em + Ar*'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
@@ -478,7 +472,6 @@ dom0Scale = 25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + em + Ar+.txt'
     reaction = 'em + Ar -> em + em + Ar+'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
@@ -487,7 +480,6 @@ dom0Scale = 25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + Ar.txt'
     reaction = 'em + Ar* -> em + Ar'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
@@ -496,7 +488,6 @@ dom0Scale = 25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + em + Ar+.txt'
     reaction = 'em + Ar* -> em + em + Ar+'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
