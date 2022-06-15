@@ -1,6 +1,6 @@
 #This tutorial is of an argon DC discharge over water at
 #different reflection coefficients. Reflection coefficients
-#for electron and mean energy at the water are on lines 293 and 311.
+#for electron and mean energy at the water are on lines 297 and 315.
 
 #Scaling for block 0 (Plasma)
 dom0Scale=1e-3
