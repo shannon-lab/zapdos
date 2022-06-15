@@ -59,7 +59,6 @@ dom0Scale=25.4e-3
       type = EFieldAdvection
       variable = em
       potential = potential
-      mean_en = mean_en
       position_units = ${dom0Scale}
     [../]
     #Diffusion term of electrons
@@ -132,14 +131,12 @@ dom0Scale=25.4e-3
       type = EFieldAdvection
       variable = mean_en
       potential = potential
-      em = em
       position_units = ${dom0Scale}
     [../]
     #Diffusion term of electrons energy
     [./mean_en_diffusion]
       type = CoeffDiffusion
       variable = mean_en
-      em = em
       position_units = ${dom0Scale}
     [../]
     #Joule Heating term
@@ -432,7 +429,6 @@ dom0Scale=25.4e-3
     user_electron_mobility = 30.0
     user_electron_diffusion_coeff = 119.8757763975
     property_tables_file = rate_coefficients/electron_moments.txt
-    position_units = ${dom0Scale}
   [../]
   [./gas_species_0]
     type = ADHeavySpecies

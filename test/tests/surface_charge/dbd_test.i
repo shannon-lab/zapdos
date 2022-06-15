@@ -22,7 +22,7 @@ dom0Scale=1e-4
 dom1Scale=1e-4
 
 [GlobalParams]
-  offset = 40
+  #offset = 40
   potential_units = kV
   use_moles = true
 []
@@ -144,7 +144,6 @@ dom1Scale=1e-4
 [AuxKernels]
   [neg_calc]
     type = DensityMoles
-    convert_moles = true
     variable = neg_density
     density_log = neg
     execute_on = 'initial timestep_end'
@@ -152,7 +151,6 @@ dom1Scale=1e-4
   []
   [pos_calc]
     type = DensityMoles
-    convert_moles = true
     variable = pos_density
     density_log = pos
     execute_on = 'initial timestep_end'
@@ -160,7 +158,6 @@ dom1Scale=1e-4
   []
   #[Arp_calc]
   #  type = DensityMoles
-  #  convert_moles = true
   #  variable = Arp_density
   #  density_log = Arp
   #  execute_on = 'initial timestep_end'

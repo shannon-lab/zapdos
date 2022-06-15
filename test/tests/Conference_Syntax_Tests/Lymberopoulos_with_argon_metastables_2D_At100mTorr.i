@@ -48,7 +48,6 @@ dom0Scale=25.4e-3
       type = EFieldAdvection
       variable = em
       potential = potential
-      mean_en = mean_en
       position_units = ${dom0Scale}
     [../]
     #Diffusion term of electrons
@@ -253,14 +252,12 @@ dom0Scale=25.4e-3
       type = EFieldAdvection
       variable = mean_en
       potential = potential
-      em = em
       position_units = ${dom0Scale}
     [../]
     #Diffusion term of electrons energy
     [./mean_en_diffusion]
       type = CoeffDiffusion
       variable = mean_en
-      em = em
       position_units = ${dom0Scale}
     [../]
     #Joule Heating term

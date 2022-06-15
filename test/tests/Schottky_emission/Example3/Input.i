@@ -129,7 +129,6 @@ threeTimesRelaxTime = 150E-6 #s
                 type = EFieldAdvection
                 variable = em
                 potential = potential
-                mean_en = mean_en
                 block = 0
                 position_units = ${dom0Scale}
         [../]
@@ -207,14 +206,12 @@ threeTimesRelaxTime = 150E-6 #s
                 type = EFieldAdvection
                 variable = mean_en
                 potential = potential
-                em = em
                 block = 0
                 position_units = ${dom0Scale}
         [../]
         [./mean_en_diffusion]
                 type = CoeffDiffusion
                 variable = mean_en
-                em = em
                 block = 0
                 position_units = ${dom0Scale}
         [../]

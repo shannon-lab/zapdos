@@ -1,10 +1,3 @@
-dom0Scale=25.4e-3
-
-[GlobalParams]
-  potential_units = kV
-  use_moles = true
-[]
-
 [Mesh]
   [./file]
     type = FileMeshGenerator
@@ -65,14 +58,12 @@ dom0Scale=25.4e-3
     variable = Ar*
     boundary = 'right'
     value = 1e-5
-    preset = false
   [../]
   [./Ar*_physical_left_diffusion]
     type = LogDensityDirichletBC
     variable = Ar*
     boundary = 'left'
     value = 1e-5
-    preset = false
   [../]
 []
 

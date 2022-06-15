@@ -446,7 +446,6 @@ dom1Scale=1e-7
     boundary = 'master0_interface'
     potential = potential
     em = em
-    ip = Arp
     r = 0.99
     position_units = ${dom0Scale}
   [../]
@@ -456,7 +455,6 @@ dom1Scale=1e-7
     boundary = 'left'
     potential = potential
     em = em
-    ip = Arp
     r = 0
     position_units = ${dom0Scale}
   [../]

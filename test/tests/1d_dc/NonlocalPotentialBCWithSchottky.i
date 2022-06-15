@@ -137,7 +137,6 @@ area = 5.02e-7 # Formerly 3.14e-6
                 type = EFieldAdvection
                 variable = em
                 potential = potential
-                mean_en = mean_en
                 block = 0
                 position_units = ${dom0Scale}
         [../]
@@ -215,14 +214,12 @@ area = 5.02e-7 # Formerly 3.14e-6
                 type = EFieldAdvection
                 variable = mean_en
                 potential = potential
-                em = em
                 block = 0
                 position_units = ${dom0Scale}
         [../]
         [./mean_en_diffusion]
                 type = CoeffDiffusion
                 variable = mean_en
-                em = em
                 block = 0
                 position_units = ${dom0Scale}
         [../]

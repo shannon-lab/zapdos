@@ -60,14 +60,12 @@ dom0Scale=25.4e-3
       type = EFieldAdvection
       variable = em
       potential = potential
-      mean_en = mean_en
       position_units = ${dom0Scale}
     [../]
     #Diffusion term of electrons
     [./em_diffusion]
       type = CoeffDiffusion
       variable = em
-      mean_en = mean_en
       position_units = ${dom0Scale}
     [../]
     #Net electron production from ionization
@@ -75,7 +73,6 @@ dom0Scale=25.4e-3
       type = ADEEDFReactionLog
       variable = em
       electrons = em
-      mean_energy = mean_en
       target = Ar
       reaction = 'em + Ar -> em + em + Ar+'
       coefficient = 1
@@ -85,7 +82,6 @@ dom0Scale=25.4e-3
       type = ADEEDFReactionLog
       variable = em
       electrons = em
-      mean_energy = mean_en
       target = Ar*
       reaction = 'em + Ar* -> em + em + Ar+'
       coefficient = 1
@@ -123,7 +119,6 @@ dom0Scale=25.4e-3
       type = ADEEDFReactionLog
       variable = Ar+
       electrons = em
-      mean_energy = mean_en
       target = Ar
       reaction = 'em + Ar -> em + em + Ar+'
       coefficient = 1
@@ -133,7 +128,6 @@ dom0Scale=25.4e-3
       type = ADEEDFReactionLog
       variable = Ar+
       electrons = em
-      mean_energy = mean_en
       target = Ar*
       reaction = 'em + Ar* -> em + em + Ar+'
       coefficient = 1
@@ -166,7 +160,6 @@ dom0Scale=25.4e-3
         variable = Ar*
         electrons = em
         target = Ar
-        mean_energy = mean_en
         reaction = 'em + Ar -> em + Ar*'
         coefficient = 1
       [../]
@@ -176,7 +169,6 @@ dom0Scale=25.4e-3
         variable = Ar*
         electrons = em
         target = Ar*
-        mean_energy = mean_en
         reaction = 'em + Ar* -> em + em + Ar+'
         coefficient = -1
       [../]
@@ -186,7 +178,6 @@ dom0Scale=25.4e-3
         variable = Ar*
         electrons = em
         target = Ar*
-        mean_energy = mean_en
         reaction = 'em + Ar* -> em + Ar'
         coefficient = -1
       [../]
@@ -196,7 +187,6 @@ dom0Scale=25.4e-3
         variable = Ar*
         electrons = em
         target = Ar*
-        mean_energy = mean_en
         reaction = 'em + Ar* -> em + Ar_r'
         coefficient = -1
       [../]
@@ -266,14 +256,12 @@ dom0Scale=25.4e-3
       type = EFieldAdvection
       variable = mean_en
       potential = potential
-      em = em
       position_units = ${dom0Scale}
     [../]
     #Diffusion term of electrons energy
     [./mean_en_diffusion]
       type = CoeffDiffusion
       variable = mean_en
-      em = em
       position_units = ${dom0Scale}
     [../]
     #Joule Heating term
@@ -600,19 +588,16 @@ dom0Scale=25.4e-3
 
   [./em_lin]
     type = DensityMoles
-    convert_moles = true
     variable = em_lin
     density_log = em
   [../]
   [./Ar+_lin]
     type = DensityMoles
-    convert_moles = true
     variable = Ar+_lin
     density_log = Ar+
   [../]
   [./Ar*_lin]
     type = DensityMoles
-    convert_moles = true
     variable = Ar*_lin
     density_log = Ar*
   [../]
@@ -765,7 +750,6 @@ dom0Scale=25.4e-3
     user_electron_mobility = 30.0
     user_electron_diffusion_coeff = 119.8757763975
     property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
-    position_units = ${dom0Scale}
   [../]
   [./gas_species_0]
     type = ADHeavySpecies
@@ -793,7 +777,6 @@ dom0Scale=25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + Ar*.txt'
     reaction = 'em + Ar -> em + Ar*'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
@@ -802,7 +785,6 @@ dom0Scale=25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + em + Ar+.txt'
     reaction = 'em + Ar -> em + em + Ar+'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
@@ -811,7 +793,6 @@ dom0Scale=25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + Ar.txt'
     reaction = 'em + Ar* -> em + Ar'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
@@ -820,7 +801,6 @@ dom0Scale=25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + em + Ar+.txt'
     reaction = 'em + Ar* -> em + em + Ar+'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]

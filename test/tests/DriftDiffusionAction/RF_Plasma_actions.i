@@ -125,7 +125,6 @@ dom0Scale=25.4e-3
         mean_energy = mean_en
         reaction = 'em + Ar* -> em + em + Ar+'
         coefficient = -1
-        _target_eq_u = true
       [../]
       #Net excited Argon loss from superelastic collisions
       [./Ar*_collisions]
@@ -136,7 +135,6 @@ dom0Scale=25.4e-3
         mean_energy = mean_en
         reaction = 'em + Ar* -> em + Ar'
         coefficient = -1
-        _target_eq_u = true
       [../]
       #Net excited Argon loss from quenching to resonant
       [./Ar*_quenching]
@@ -147,7 +145,6 @@ dom0Scale=25.4e-3
         mean_energy = mean_en
         reaction = 'em + Ar* -> em + Ar_r'
         coefficient = -1
-        _target_eq_u = true
       [../]
       #Net excited Argon loss from  metastable pooling
       [./Ar*_pooling]
@@ -189,9 +186,7 @@ dom0Scale=25.4e-3
       electrons = em
       target = Ar
       reaction = 'em + Ar -> em + em + Ar+'
-      coefficient = 1
       threshold_energy = -15.7
-      position_units = ${dom0Scale}
     [../]
     #Energy loss from excitation
     [./Excitation_Loss]
@@ -199,10 +194,8 @@ dom0Scale=25.4e-3
       variable = mean_en
       electrons = em
       target = Ar
-      coefficient = 1
       reaction = 'em + Ar -> em + Ar*'
       threshold_energy = -11.56
-      position_units = ${dom0Scale}
     [../]
     #Energy loss from step-wise ionization
     [./Stepwise_Ionization_Loss]
@@ -210,10 +203,8 @@ dom0Scale=25.4e-3
       variable = mean_en
       electrons = em
       target = Ar*
-      coefficient = 1
       reaction = 'em + Ar* -> em + em + Ar+'
       threshold_energy = -4.14
-      position_units = ${dom0Scale}
     [../]
     #Energy gain from superelastic collisions
     [./Collisions_Loss]
@@ -221,10 +212,8 @@ dom0Scale=25.4e-3
       variable = mean_en
       electrons = em
       target = Ar*
-      coefficient = 1
       reaction = 'em + Ar* -> em + Ar'
       threshold_energy = 11.56
-      position_units = ${dom0Scale}
     [../]
   []
 
@@ -504,7 +493,6 @@ dom0Scale=25.4e-3
     user_electron_mobility = 30.0
     user_electron_diffusion_coeff = 119.8757763975
     property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
-    position_units = ${dom0Scale}
   [../]
   [./gas_species_0]
     type = ADHeavySpecies
@@ -530,40 +518,32 @@ dom0Scale=25.4e-3
   [./reaction_0]
     type = ZapdosEEDFRateConstant
     mean_energy = mean_en
-    sampling_format = electron_energy
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_excitation.txt'
     reaction = 'em + Ar -> em + Ar*'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
   [./reaction_1]
     type = ZapdosEEDFRateConstant
     mean_energy = mean_en
-    sampling_format = electron_energy
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_ionization.txt'
     reaction = 'em + Ar -> em + em + Ar+'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
   [./reaction_2]
     type = ZapdosEEDFRateConstant
     mean_energy = mean_en
-    sampling_format = electron_energy
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt'
     reaction = 'em + Ar* -> em + Ar'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
   [./reaction_3]
     type = ZapdosEEDFRateConstant
     mean_energy = mean_en
-    sampling_format = electron_energy
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt'
     reaction = 'em + Ar* -> em + em + Ar+'
-    position_units = ${dom0Scale}
     file_location = ''
     electrons = em
   [../]
