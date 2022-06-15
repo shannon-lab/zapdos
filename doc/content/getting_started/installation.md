@@ -67,6 +67,18 @@ make -j8
 If Zapdos is working correctly, all active tests will pass. This indicates that
 Zapdos is ready to be used and further developed.
 
+## Updating Zapdos
+
+!style halign=left
+To update Zapdos, it is recommended to use fetch and rebase:
+
+```bash
+cd ~/projects/zapdos
+git fetch origin
+git rebase origin/master
+```
+
+
 ## Troubleshooting
 
 !style halign=left
