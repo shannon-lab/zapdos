@@ -16,7 +16,7 @@
 class AddPeriodicRelativeNodalDifference : public Action
 {
 public:
-  AddPeriodicRelativeNodalDifference(InputParameters params);
+  AddPeriodicRelativeNodalDifference(const InputParameters & params);
 
   static InputParameters validParams();
 

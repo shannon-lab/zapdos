@@ -68,7 +68,7 @@ AddPeriodicRelativeNodalDifference::validParams()
   return params;
 }
 
-AddPeriodicRelativeNodalDifference::AddPeriodicRelativeNodalDifference(InputParameters params)
+AddPeriodicRelativeNodalDifference::AddPeriodicRelativeNodalDifference(const InputParameters & params)
   : Action(params),
 
     _start_time((1. / getParam<Real>("cycle_frequency")) * getParam<Real>("starting_cycle")),
