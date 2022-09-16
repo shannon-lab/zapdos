@@ -88,7 +88,7 @@ AddPeriodicControllers::validParams()
   return params;
 }
 
-AddPeriodicControllers::AddPeriodicControllers(InputParameters params)
+AddPeriodicControllers::AddPeriodicControllers(const InputParameters & params)
   : Action(params),
     _enable_start(getParam<std::vector<std::string>>("Enable_at_cycle_start")),
     _enable_during(getParam<std::vector<std::string>>("Enable_during_cycle")),

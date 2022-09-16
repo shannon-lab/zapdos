@@ -16,7 +16,7 @@
 class AddPeriodicControllers : public Action
 {
 public:
-  AddPeriodicControllers(InputParameters params);
+  AddPeriodicControllers(const InputParameters & params);
 
   static InputParameters validParams();
 

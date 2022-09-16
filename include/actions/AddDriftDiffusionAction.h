@@ -16,7 +16,7 @@
 class AddDriftDiffusionAction : public Action
 {
 public:
-  AddDriftDiffusionAction(InputParameters params);
+  AddDriftDiffusionAction(const InputParameters & params);
 
   static InputParameters validParams();
 
