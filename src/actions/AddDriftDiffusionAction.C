@@ -89,7 +89,7 @@ AddDriftDiffusionAction::validParams()
   return params;
 }
 
-AddDriftDiffusionAction::AddDriftDiffusionAction(InputParameters params) : Action(params) {}
+AddDriftDiffusionAction::AddDriftDiffusionAction(const InputParameters & params) : Action(params) {}
 
 void
 AddDriftDiffusionAction::act()
