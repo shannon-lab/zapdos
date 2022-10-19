@@ -9,10 +9,6 @@ dom0Scale=25.4e-3
 [Mesh]
   type = FileMesh
   file = 'GEC_mesh.msh'
-[]
-
-[Problem]
-  type = FEProblem
   coord_type = RZ
   rz_coord_axis = Y
 []

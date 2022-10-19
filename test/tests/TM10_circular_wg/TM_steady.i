@@ -5,12 +5,12 @@
 [Mesh]
   type = FileMesh
   file = 'TM.msh'
+  coord_type = RZ
 []
 
 
 [Problem]
   type = FEProblem
-  coord_type = RZ
   # kernel_coverage_check = false
 []
 
