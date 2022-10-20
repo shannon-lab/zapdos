@@ -15,10 +15,6 @@
     new_boundary = 'interface_dielectric'
     input = file
   [../]
-[]
-
-[Problem]
-  type = FEProblem
   coord_type = RZ
 []
 
