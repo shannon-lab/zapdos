@@ -84,8 +84,14 @@ git rebase origin/master
 Zapdos is also available as a container hosted on Docker Hub in the repository [shannonlab/zapdos](https://hub.docker.com/r/shannonlab/zapdos)
 for Ubuntu 20.04. The tag "latest" is kept current with the master branch of the Zapdos repository,
 and the other tags are commit hashes in line with git commit hashes for prior Zapdos updates. The
-Docker image contains a prebuilt copy of Zapdos, installable with one command (once Docker is installed
+Docker image contains a prebuilt copy of Zapdos, installable with two commands (once Docker is installed
 on the host machine):
+
+```bash
+docker pull shannonlab/zapdos:latest
+```
+
+then
 
 ```bash
 docker run -ti shannonlab/zapdos:latest
