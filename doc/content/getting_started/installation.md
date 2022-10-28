@@ -80,18 +80,23 @@ git rebase origin/master
 
 ## Alternate Installation: Docker
 
-Zapdos is also available a container hosted on Docker Hub in the repository [shannonlab/zapdos](https://hub.docker.com/r/shannonlab/zapdos) for Ubuntu 20.04. The tag "latest" is kept current with the master branch of the Zapdos repository, and the other tags are commit hashes in line with git commit hashes for prior Zapdos updates. The Docker image contains a prebuilt copy of Zapdos, installable with one command (once Docker is installed on the host machine):
+!style halign=left
+Zapdos is also available as a container hosted on Docker Hub in the repository [shannonlab/zapdos](https://hub.docker.com/r/shannonlab/zapdos)
+for Ubuntu 20.04. The tag "latest" is kept current with the master branch of the Zapdos repository,
+and the other tags are commit hashes in line with git commit hashes for prior Zapdos updates. The
+Docker image contains a prebuilt copy of Zapdos, installable with one command (once Docker is installed
+on the host machine):
 
 ```bash
 docker run -ti shannonlab/zapdos:latest
 ```
 
-### Zapdos Docker Container Minimum System Requirements
+#### Zapdos Docker Container Minimum System Requirements
 
 - Some flavor of Linux, MacOS, or Windows with [Docker](https://www.docker.com) installed
-- Memory: 16GBs (debug builds)
+- Memory: 16 GBs (debug builds)
 - Processor: 64-bit x86 or ARM64 (Apple Silicon)
-- Disk: 6GB (image size)
+- Disk: 6 GB (image size)
 
 ## Troubleshooting
 
