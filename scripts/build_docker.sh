@@ -19,8 +19,7 @@ if [ -z "$PUSH" ]; then
   PUSH=0
 fi
 
-
-# Check for and set ZAPDOS_DIR
+# Check for ZAPDOS_DIR and if it exists; throw errors if either is false
 if [ -z "$ZAPDOS_DIR" ]; then
     echo "ERROR: ZAPDOS_DIR is not set for build_docker"
     exit 1
@@ -30,18 +29,18 @@ if [ ! -d "$ZAPDOS_DIR" ]; then
   exit 1
 fi
 
-# Enter Zapdos and get latest master branch git commit hash
+# Enter Zapdos source location, checkout master branch, and save latest git commit hash
 cd $ZAPDOS_DIR
 git checkout master
 MASTER_HASH=$(git rev-parse master)
 
-# Build docker container
+# Build docker container and tag it with master git hash
 docker build -t shannonlab/zapdos:"$MASTER_HASH" . || exit $?
 
 # Retag newly built container with "latest"
 docker tag shannonlab/zapdos:"$MASTER_HASH" shannonlab/zapdos:latest
 
-# Push all containers to Docker Hub, if enabled
+# Push all containers to Docker Hub, if enabled. If not, display a notice to the screen with more info
 if [[ $PUSH == 1 ]]; then
   docker push shannonlab/zapdos:$MASTER_HASH
   docker push shannonlab/zapdos:latest
