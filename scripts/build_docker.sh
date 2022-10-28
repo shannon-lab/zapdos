@@ -32,17 +32,32 @@ fi
 # Enter Zapdos source location, checkout master branch, and save latest git commit hash
 cd $ZAPDOS_DIR
 git checkout master
-MASTER_HASH=$(git rev-parse master)
+DOCKERFILE_HASH=$(cat Dockerfile | grep "FROM idaholab/moose:" | cut -d: -f2)
+ZAPDOS_MASTER_HASH=$(git rev-parse master)
+
+# Get MOOSE submodule hash and compare to Dockerfile to make sure it has been updated
+git submodule update --init moose
+cd moose
+MOOSE_HASH=$(git rev-parse HEAD)
+
+if [[ ! $DOCKERFILE_HASH == $MOOSE_HASH ]]; then
+  echo ""
+  echo "ERROR: Dockerfile has not been updated to be consistent with the MOOSE submodule!"
+  echo "       Aborting docker build!"
+  exit 1
+fi
+
+cd $ZAPDOS_DIR
 
 # Build docker container and tag it with master git hash
-docker build -t shannonlab/zapdos:"$MASTER_HASH" . || exit $?
+docker build -t shannonlab/zapdos:"$ZAPDOS_MASTER_HASH" . || exit $?
 
-# Retag newly built container with "latest"
-docker tag shannonlab/zapdos:"$MASTER_HASH" shannonlab/zapdos:latest
+# Retag newly built container to make a second one with the tag "latest"
+docker tag shannonlab/zapdos:"$ZAPDOS_MASTER_HASH" shannonlab/zapdos:latest
 
-# Push all containers to Docker Hub, if enabled. If not, display a notice to the screen with more info
+# Push both containers to Docker Hub, if enabled. If not, display a notice to the screen with more info
 if [[ $PUSH == 1 ]]; then
-  docker push shannonlab/zapdos:$MASTER_HASH
+  docker push shannonlab/zapdos:$ZAPDOS_MASTER_HASH
   docker push shannonlab/zapdos:latest
 else
   echo ""
@@ -50,6 +65,6 @@ else
   echo "      with PUSH=1 in your environment. To push now, run the following two"
   echo "      commands:"
   echo ""
-  echo "      docker push shannonlab/zapdos:$MASTER_HASH"
+  echo "      docker push shannonlab/zapdos:$ZAPDOS_MASTER_HASH"
   echo "      docker push shannonlab/zapdos:latest"
 fi
