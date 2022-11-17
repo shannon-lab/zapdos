@@ -1,5 +1,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.801834.svg)](https://doi.org/10.5281/zenodo.801834)
 
+[![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/shannonlab/zapdos/latest?color=green&label=docker%20latest&logo=docker&logoColor=white)](https://hub.docker.com/r/shannonlab/zapdos)
+
 # Zapdos
 
 Free (in all senses of the word) and open source software for modeling plasmas using finite elements. This application is built on top of [the MOOSE Framework](https://mooseframework.inl.gov).
