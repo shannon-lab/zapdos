@@ -10,7 +10,8 @@
 import os, string, re, shutil
 from optparse import OptionParser
 
-global_ignores = ['contrib', '.svn', '.git', 'crane', 'moose', 'squirrel']
+global_dir_ignores = ['contrib', '.svn', '.git', 'crane', 'moose', 'squirrel']
+global_file_ignores = ['moosedocs.py']
 
 unified_header = """\
 //* This file is part of Zapdos, an open-source
@@ -40,12 +41,15 @@ def fixupHeader():
     for dirpath, dirnames, filenames in os.walk(os.getcwd() + ""):
 
         # Don't traverse into ignored directories
-        for ignore in global_ignores:
+        for ignore in global_dir_ignores:
             if ignore in dirnames:
                 dirnames.remove(ignore)
 
-        #print dirpath
-        #print dirnames
+        # Don't check ignored files
+        for ignore in global_file_ignores:
+            if ignore in filenames:
+                filenames.remove(ignore)
+
         for file in filenames:
             suffix = os.path.splitext(file)
             if (suffix[-1] == '.C' or suffix[-1] == '.h') and not global_options.python_only:
