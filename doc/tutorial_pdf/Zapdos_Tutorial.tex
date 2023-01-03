@@ -430,25 +430,25 @@
   \begin{verbatim}
   [Kernels] #Begining/Name of Object Block (This example is the Kernel Block)
     #Time Derivative of electrons
-    [./em_time_deriv] #Begining/Custom Name of kernel (User Defined)
+    [em_time_deriv] #Begining/Custom Name of kernel (User Defined)
         type = ElectronTimeDerivative #Type of kernel
         variable = em #Variable effected by kernel
-    [../] #End of first kernel
+    [] #End of first kernel
     #Advection term of electron
-    [./em_advection]
+    [em_advection]
         type = EFieldAdvectionElectrons
         variable = em
         potential = potential #Coupled variable
         mean_en = mean_en #Coupled variable
         position_units = ${dom0Scale} #Scaling Option
-    [../]
+    []
     #Diffusion term of electrons
-    [./em_diffusion]
+    [em_diffusion]
         type = CoeffDiffusionElectrons
         variable = em
         mean_en = mean_en
         position_units = ${dom0Scale}
-    [../]
+    []
   [] #End of Object Block
   \end{verbatim}
 
@@ -486,7 +486,7 @@
 
   \begin{verbatim}
 [DriftDiffusionAction]
-  [./Plasma]
+  [Plasma]
     electrons = em
     charged_particle = Ar+
     Neutrals = Ar*
@@ -495,11 +495,11 @@
     mean_energy = mean_en
     position_units = ${dom0Scale}
     Additional_Outputs = 'ElectronTemperature Current EField'
-  [../]
+  []
 []
 
 [Reactions]
-  [./Argon]
+  [Argon]
     species = 'Ar* em Ar+'
     aux_species = 'Ar'
     reaction_coefficient_format = 'rate'
@@ -520,7 +520,7 @@
                  Ar* + Ar* -> Ar+ + Ar + em : 373364000
                  Ar* + Ar -> Ar + Ar        : 1806.6
                  Ar* + Ar + Ar -> Ar_2 + Ar : 39890.9324'
-  [../]
+  []
 []
   \end{verbatim}
 
@@ -530,19 +530,19 @@
   \begin{verbatim}
   [MeshModifiers]
     #Setting the path from plasma to water
-    [./interface]
+    [interface]
         type = SideSetsBetweenSubdomains
         master_block = '0' #plasma
         paired_block = '1' #water
         new_boundary = 'master0_interface'
-    [../]
+    []
   []
   \end{verbatim}
 
   \begin{verbatim}
   [InterfaceKernels]
     #Defining election advection to the water
-    [./em_advection]
+    [em_advection]
         type = InterfaceAdvection
         mean_en_neighbor = mean_en
         potential_neighbor = potential
@@ -551,9 +551,9 @@
         boundary = master1_interface
         position_units = ${dom1Scale}
         neighbor_position_units = ${dom0Scale}
-    [../]
+    []
     #Defining election diffusion to the water
-    [./em_diffusion]
+    [em_diffusion]
         type = InterfaceLogDiffusionElectrons
         mean_en_neighbor = mean_en
         neighbor_var = em
@@ -561,7 +561,7 @@
         boundary = master1_interface
         position_units = ${dom1Scale}
         neighbor_position_units = ${dom0Scale}
-    [../]
+    []
 []
   \end{verbatim}
 

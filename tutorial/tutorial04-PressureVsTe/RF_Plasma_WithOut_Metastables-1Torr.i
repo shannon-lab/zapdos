@@ -18,25 +18,25 @@ dom0Scale=1.0
 
 [Mesh]
   #Mesh is define by a previous output file
-  [./geo]
+  [geo]
     type = FileMeshGenerator
     file = 'RF_Plasma_WithOut_Metastables_IC.e'
     use_for_exodus_restart = true
-  [../]
+  []
   #Renames all sides with the specified normal
   #For 1D, this is used to rename the end points of the mesh
-  [./left]
+  [left]
     type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
     input = geo
-  [../]
-  [./right]
+  []
+  [right]
     type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
     input = left
-  [../]
+  []
 []
 
 #Defines the problem type, such as FE, eigen value problem, etc.
@@ -47,23 +47,23 @@ dom0Scale=1.0
 #Defining IC from previous output file
 # (The ICs block is not used in this case)
 [Variables]
-  [./em]
+  [em]
     initial_from_file_var = em
-  [../]
-  [./potential]
+  []
+  [potential]
     initial_from_file_var = potential
-  [../]
-  [./Ar+]
+  []
+  [Ar+]
     initial_from_file_var = Ar+
-  [../]
-  [./mean_en]
+  []
+  [mean_en]
     initial_from_file_var = mean_en
-  [../]
+  []
 []
 
 
 [DriftDiffusionAction]
-  [./Plasma]
+  [Plasma]
     #User define name for electrons (usually 'em')
     electrons = em
     #User define name for ions
@@ -78,11 +78,11 @@ dom0Scale=1.0
     position_units = ${dom0Scale}
     #Additional outputs, such as ElectronTemperature, Current, and EField.
     Additional_Outputs = 'ElectronTemperature Current EField'
-  [../]
+  []
 []
 
 [Reactions]
-  [./Argon]
+  [Argon]
     #Name of reactant species that are variables
     species = 'em Ar+'
     #Name of reactant species that are auxvariables
@@ -114,44 +114,44 @@ dom0Scale=1.0
     #     em + Ar -> em + Ar*        : EEDF [-11.56] (reaction1)
     reactions = 'em + Ar -> em + Ar*        : EEDF [-11.56] (reaction1)
                  em + Ar -> em + em + Ar+   : EEDF [-15.7] (reaction2)'
-  [../]
+  []
 []
 
 [AuxVariables]
   #Add a scaled position units used for plotting other element AuxVariables
-  [./x]
+  [x]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
   #Background gas (e.g Ar)
-  [./Ar]
-  [../]
+  [Ar]
+  []
 []
 
 [AuxKernels]
   #Add at scaled position units used for plotting other element AuxVariables
-  [./x_ng]
+  [x_ng]
     type = Position
     variable = x
     position_units = ${dom0Scale}
-  [../]
+  []
 
   #Background gas number density (e.g. for 1Torr)
-  [./Ar_val]
+  [Ar_val]
     type = FunctionAux
     variable = Ar
     function = 'log(3.22e22/6.022e23)'
     execute_on = INITIAL
-  [../]
+  []
 []
 
 #Define function used throughout the input file (e.g. BCs)
 [Functions]
-  [./potential_bc_func]
+  [potential_bc_func]
     type = ParsedFunction
     value = '0.100*sin(2*3.1415926*13.56e6*t)'
-  [../]
+  []
 []
 
 #Currently there is no Action for BC (but one is currently in development)
@@ -159,30 +159,30 @@ dom0Scale=1.0
 #(For other BC example, please look at Tutorial 05 and Tutorial 06)
 [BCs]
 #Voltage Boundary Condition
-  [./potential_left]
+  [potential_left]
     type = FunctionDirichletBC
     variable = potential
     boundary = 'left'
     function = potential_bc_func
     preset = false
-  [../]
-  [./potential_dirichlet_right]
+  []
+  [potential_dirichlet_right]
     type = DirichletBC
     variable = potential
     boundary = 'right'
     value = 0
     preset = false
-  [../]
+  []
 
 #Boundary conditions for electons
-[./em_physical_diffusion]
+[em_physical_diffusion]
   type = SakiyamaElectronDiffusionBC
   variable = em
   mean_en = mean_en
   boundary = 'left right'
   position_units = ${dom0Scale}
-[../]
-[./em_Ar+_second_emissions]
+[]
+[em_Ar+_second_emissions]
   type = SakiyamaSecondaryElectronBC
   variable = em
   potential = potential
@@ -190,27 +190,27 @@ dom0Scale=1.0
   users_gamma = 0.01
   boundary = 'left right'
   position_units = ${dom0Scale}
-[../]
+[]
 
 #Boundary conditions for ions
-  [./Ar+_physical_advection]
+  [Ar+_physical_advection]
     type = SakiyamaIonAdvectionBC
     variable = Ar+
     potential = potential
     boundary = 'left right'
     position_units = ${dom0Scale}
-  [../]
+  []
 
 
 #New Boundary conditions for mean energy, should be the same as in paper
-  [./mean_en_physical_diffusion]
+  [mean_en_physical_diffusion]
     type = SakiyamaEnergyDiffusionBC
     variable = mean_en
     em = em
     boundary = 'left right'
     position_units = ${dom0Scale}
-  [../]
-  [./mean_en_Ar+_second_emissions]
+  []
+  [mean_en_Ar+_second_emissions]
     type = SakiyamaEnergySecondaryElectronBC
     variable = mean_en
     em = em
@@ -221,13 +221,13 @@ dom0Scale=1.0
     se_coeff = 0.01
     boundary = 'left right'
     position_units = ${dom0Scale}
-  [../]
+  []
 []
 
 [Materials]
   #The material properties for electrons.
   #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
-  [./GasBasics]
+  [GasBasics]
     type = GasElectronMoments
     #True means variable electron coeff, defined by user
     interp_trans_coeffs = true
@@ -249,43 +249,43 @@ dom0Scale=1.0
     property_tables_file = rate_coefficients/electron_moments.txt
   []
   #The material properties of the ion
-  [./gas_species_0]
+  [gas_species_0]
     type = ADHeavySpecies
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
     mobility = 0.144409938
     diffusivity = 6.428571e-3
-  [../]
+  []
   #The material properties of the background gas
-  [./gas_species_2]
+  [gas_species_2]
     type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
-  [../]
+  []
 []
 
 [Postprocessors]
-  [./ElectronTemp_Average]
+  [ElectronTemp_Average]
     type = ElementAverageValue
     variable = e_temp
-  [../]
+  []
 []
 
 #Preconditioning options
 #Learn more at: https://mooseframework.inl.gov/syntax/Preconditioning/index.html
 [Preconditioning]
   active = 'smp'
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 
-  [./fdp]
+  [fdp]
     type = FDP
     full = true
-  [../]
+  []
 []
 
 #How to execute the problem.
@@ -311,7 +311,7 @@ dom0Scale=1.0
 #Defines the output type of the file (multiple output files can be define per run)
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
-  [../]
+  []
 []

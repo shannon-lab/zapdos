@@ -17,27 +17,27 @@ dom0Scale=1.0
 
 [Mesh]
   #Sets up a 1D mesh from 0 to 0.5m with 1000 element
-  [./geo]
+  [geo]
     type = GeneratedMeshGenerator
     xmin = 0
     xmax = 0.5
     nx = 1000
     dim = 1
-  [../]
+  []
   #Renames all sides with the specified normal
   #For 1D, this is used to rename the end points of the mesh
-  [./left]
+  [left]
     type = SideSetsFromNormalsGenerator
     normals = '-1 0 0' #Outward facing normal
     new_boundary = 'left'
     input = geo
-  [../]
-  [./right]
+  []
+  [right]
     type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right' #Outward facing normal
     input = left
-  [../]
+  []
 []
 
 #Defines the problem type, such as FE, eigen value problem, etc.
@@ -50,20 +50,20 @@ dom0Scale=1.0
 # such as family of shape function and variable order
 # (the default family/order is Lagrange/First)
 [Variables]
-  [./Ar+]
-  [../]
+  [Ar+]
+  []
 []
 
 [Kernels]
   #Adds the diffusion for the variable
-  [./Ar+_diffusion]
+  [Ar+_diffusion]
     type = CoeffDiffusion
     variable = Ar+
     position_units = ${dom0Scale}
-  [../]
+  []
   #Adds the source term for the variable.
   #In this case, adds a first order reaction of k*Ar+
-  [./Ar+_source]
+  [Ar+_source]
     type = ReactionFirstOrderLog
     variable = Ar+
     # v is a constant density of 1e16 #/m^3 in mole-log form
@@ -72,78 +72,78 @@ dom0Scale=1.0
     _v_eq_u = false
     coefficient = 1
     reaction = FirstOrder
-  [../]
+  []
 []
 
 #User defined name for the auxvariables.
 #Other variable properties are defined here,
 # such as family of shape function and variable order
 [AuxVariables]
-  [./x]
+  [x]
     #Monomial is a family set for elemental variables
     #(variable that are solve for the elements vs the nodes)
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
   #The auxvariable used to converts the mole-log form of the density to #/m^3
-  [./Ar+_density]
+  [Ar+_density]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
   #The auxvariable for the known solution for this diffusion problem
-  [./Solution]
-  [../]
+  [Solution]
+  []
 []
 
 [AuxKernels]
   #Add a scaled position units used for plotting other element AuxVariables
-  [./x_ng]
+  [x_ng]
     type = Position
     variable = x
     position_units = ${dom0Scale}
-  [../]
+  []
   #Converts the mole-log form of the density to #/m^3
-  [./Ar+_density]
+  [Ar+_density]
     type = DensityMoles
     variable = Ar+_density
     density_log = Ar+
     execute_on = 'LINEAR TIMESTEP_END'
-  [../]
+  []
   #The know solution for this diffusion problem
-  [./Solution]
+  [Solution]
     type = FunctionAux
     variable = Solution
     function = '1e16 * 9.8696 / 8. * (1 - (2*x)^2.)'
-  [../]
+  []
 []
 
 #Initial conditions for variables.
 #If left undefine, the IC is zero
 [ICs]
-  [./Ar+_ic]
+  [Ar+_ic]
     type = FunctionIC
     variable = Ar+
     function = 'log(1e16/6.022e23)'
-  [../]
+  []
 []
 
 [BCs]
 #Dirichlet boundary conditions for mole-log density
 #Value is in #/m^3
-  [./Ar+_physical_right_diffusion]
+  [Ar+_physical_right_diffusion]
     type = LogDensityDirichletBC
     variable = Ar+
     boundary = 'right'
     value = 100
-  [../]
+  []
 []
 
 [Materials]
   #The material properties for electrons.
   #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
-  [./GasBasics]
+  [GasBasics]
     type = GasElectronMoments
     interp_trans_coeffs = false
     interp_elastic_coeff = false
@@ -151,38 +151,38 @@ dom0Scale=1.0
     user_p_gas = 133.3322
     user_electron_diffusion_coeff = 1.0
     property_tables_file = rate_coefficients/electron_moments.txt
-  [../]
+  []
   #The material properties of the ion
-  [./gas_species_0]
+  [gas_species_0]
     type = ADHeavySpecies
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
     diffusivity = 1
     #diffusivity = 2
-  [../]
+  []
   #The rate constant for the first order reaction of the source term
-  [./FirstOrder_Reaction]
+  [FirstOrder_Reaction]
     type = GenericRateConstant
     reaction = FirstOrder
     reaction_rate_value = 9.8696
     #reaction_rate_value = 4.9348
-  [../]
+  []
 []
 
 #Preconditioning options
 #Learn more at: https://mooseframework.inl.gov/syntax/Preconditioning/index.html
 [Preconditioning]
   active = 'smp'
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 
-  [./fdp]
+  [fdp]
     type = FDP
     full = true
-  [../]
+  []
 []
 
 #How to execute the problem.
@@ -203,7 +203,7 @@ dom0Scale=1.0
 #Defines the output type of the file (multiple output files can be define per run)
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
-  [../]
+  []
 []

@@ -15,11 +15,11 @@
 []
 
 [Preconditioning]
-  [./smp]
+  [smp]
     type = SMP
     full = true
     ksp_norm = none
-  [../]
+  []
 []
 
 [Executioner]
@@ -37,78 +37,78 @@
 [Outputs]
   perf_graph = true
   print_linear_residuals = false
-  [./out]
+  [out]
     type = Exodus
-  [../]
+  []
 []
 
 [Kernels]
-  [./TM]
+  [TM]
     type = TM0Cylindrical
     variable = Hphi
-  [../]
+  []
 []
 
 [Variables]
-  [./Hphi]
-  [../]
+  [Hphi]
+  []
 []
 
 [BCs]
-  [./launcher]
+  [launcher]
     type = TM0AntennaVertBC
     boundary = Antenna
     variable = Hphi
-  [../]
-  [./vert_wall]
+  []
+  [vert_wall]
     type = TM0PECVertBC
     variable = Hphi
     boundary = vert_pec
-  [../]
-  [./axis]
+  []
+  [axis]
     type = DirichletBC
     variable = Hphi
     boundary = Axis
     value = 0
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./Hphi_mag]
-  [../]
-  [./Er]
+  [Hphi_mag]
+  []
+  [Er]
     order = FIRST
     family = MONOMIAL
-  [../]
-  [./Electric_z]
+  []
+  [Electric_z]
     order = FIRST
     family = MONOMIAL
-  [../]
+  []
 []
 
 [AuxKernels]
-  [./Hphi_mag]
+  [Hphi_mag]
     type = AbsValueAux
     u = Hphi
     variable = Hphi_mag
-  [../]
-  [./Er]
+  []
+  [Er]
     type = TM0CylindricalErAux
     Hphi = Hphi
     variable = Er
-  [../]
-  [./Electric_z]
+  []
+  [Electric_z]
     type = TM0CylindricalEzAux
     Hphi = Hphi
     variable = Electric_z
-  [../]
+  []
 []
 
 [Materials]
-   [./vacuum]
+   [vacuum]
      type = ADGenericConstantMaterial
      prop_names = 'eps_r'
      prop_values = '1'
      block = vacuum
-   [../]
+   []
 []

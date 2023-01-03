@@ -16,27 +16,27 @@ dom0Scale=1.0
 
 [Mesh]
   #Sets up a 1D mesh from 0 to 10cm with 100 points
-  [./geo]
+  [geo]
     type = GeneratedMeshGenerator
     xmin = 0
     xmax = 0.10
     nx = 100
     dim = 1
-  [../]
+  []
   #Renames all sides with the specified normal
   #For 1D, this is used to rename the end points of the mesh
-  [./left]
+  [left]
     type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
     input = geo
-  [../]
-  [./right]
+  []
+  [right]
     type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
     input = left
-  [../]
+  []
 []
 
 #Defines the problem type, such as FE, eigen value problem, etc.
@@ -47,7 +47,7 @@ dom0Scale=1.0
 #Zapdos's Drift-Diffusion Action that inputs the continuity equations for
 # species and electon mean energy, and poisson's equation for potential
 [DriftDiffusionAction]
-  [./Plasma]
+  [Plasma]
     #User define name for ions
     charged_particle = Ar+
     #User define name for potential (usually 'potential')
@@ -56,74 +56,74 @@ dom0Scale=1.0
     Is_potential_unique = true
     #The position scaling for the mesh, define at top of input file
     position_units = ${dom0Scale}
-  [../]
+  []
 []
 
 [AuxVariables]
   #Add a scaled position units used for plotting other Variables
-  [./x_node]
-  [../]
+  [x_node]
+  []
 []
 
 [AuxKernels]
   #Add at scaled position units used for plotting other Variables
-  [./x_ng]
+  [x_ng]
     type = Position
     variable = x_node
     position_units = ${dom0Scale}
-  [../]
+  []
 []
 
 
 [BCs]
 #Voltage Boundary Condition
-  [./potential_left]
+  [potential_left]
     type = DirichletBC
     variable = potential
     boundary = 'left right'
     value = 0
     preset = false
-  [../]
+  []
 
   #Boundary conditions for ions
-  [./Arp_physical_left_diffusion]
+  [Arp_physical_left_diffusion]
     type = HagelaarIonDiffusionBC
     variable = Ar+
     boundary = 'right left'
     r = 0
     position_units = ${dom0Scale}
-  [../]
-  [./Arp_physical_left_advection]
+  []
+  [Arp_physical_left_advection]
     type = HagelaarIonAdvectionBC
     variable = Ar+
     boundary = 'right left'
     potential = potential
     r = 0
     position_units = ${dom0Scale}
-  [../]
+  []
 []
 
 
 #Initial conditions for variables.
 #If left undefine, the IC is zero
 [ICs]
-  [./Ar+_ic]
+  [Ar+_ic]
     type = FunctionIC
     variable = Ar+
     function = 'log(1e16/6.022e23)'
-  [../]
+  []
 
-  [./potential_ic]
+  [potential_ic]
     type = FunctionIC
     variable = potential
     function = '0.5 * (1e16 * 1.6e-19) / 8.85e-12 * ((0.10/2)^2. - (x-0.10/2)^2.)'
-  [../]
+  []
 []
 
 [Materials]
   #The material properties for electrons.
   #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
-  [./GasBasics]
+  [GasBasics]
     type = GasElectronMoments
     interp_trans_coeffs = false
     interp_elastic_coeff = false
@@ -132,29 +132,29 @@ dom0Scale=1.0
     #user_p_gas = 1.33322
     potential = potential
     property_tables_file = rate_coefficients/electron_moments.txt
-  [../]
+  []
   #The material properties of the ion
-  [./gas_species_0]
+  [gas_species_0]
     type = ADHeavySpecies
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
-  [../]
+  []
 []
 
 #Preconditioning options
 #Learn more at: https://mooseframework.inl.gov/syntax/Preconditioning/index.html
 [Preconditioning]
   active = 'smp'
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 
-  [./fdp]
+  [fdp]
     type = FDP
     full = true
-  [../]
+  []
 []
 
 #How to execute the problem.
@@ -175,7 +175,7 @@ dom0Scale=1.0
 #Defines the output type of the file (multiple output files can be define per run)
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
-  [../]
+  []
 []
