@@ -8,22 +8,22 @@ dom0Scale=25.4e-3
 []
 
 [Mesh]
-  [./geo]
+  [geo]
     type = FileMeshGenerator
     file = 'rate_units.msh'
-  [../]
-  [./left]
+  []
+  [left]
     type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
     input = geo
-  [../]
-  [./right]
+  []
+  [right]
     type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
     input = left
-  [../]
+  []
 []
 
 [Problem]
@@ -31,230 +31,230 @@ dom0Scale=25.4e-3
 []
 
 [Variables]
-  [./em]
-  [../]
+  [em]
+  []
 
-  [./Ar+]
-  [../]
+  [Ar+]
+  []
 
-  [./Ar*]
-  [../]
+  [Ar*]
+  []
 
-  [./mean_en]
-  [../]
+  [mean_en]
+  []
 
-  [./potential]
-  [../]
+  [potential]
+  []
 []
 
 [Kernels]
   #Electron Equations (Same as in paper)
     #Time Derivative term of electron
-    [./em_time_deriv]
+    [em_time_deriv]
       type = ElectronTimeDerivative
       variable = em
-    [../]
+    []
     #Advection term of electron
-    [./em_advection]
+    [em_advection]
       type = EFieldAdvection
       variable = em
       potential = potential
       position_units = ${dom0Scale}
-    [../]
+    []
     #Diffusion term of electrons
-    [./em_diffusion]
+    [em_diffusion]
       type = CoeffDiffusion
       variable = em
       position_units = ${dom0Scale}
-    [../]
+    []
 
   #Argon Ion Equations (Same as in paper)
     #Time Derivative term of the ions
-    [./Ar+_time_deriv]
+    [Ar+_time_deriv]
       type = ElectronTimeDerivative
       variable = Ar+
-    [../]
+    []
     #Advection term of ions
-    [./Ar+_advection]
+    [Ar+_advection]
       type = EFieldAdvection
       variable = Ar+
       potential = potential
       position_units = ${dom0Scale}
-    [../]
-    [./Ar+_diffusion]
+    []
+    [Ar+_diffusion]
       type = CoeffDiffusion
       variable = Ar+
       position_units = ${dom0Scale}
-    [../]
+    []
       #Time Derivative term of excited Argon
-      [./Ar*_time_deriv]
+      [Ar*_time_deriv]
         type = ElectronTimeDerivative
         variable = Ar*
-      [../]
+      []
       #Diffusion term of excited Argon
-      [./Ar*_diffusion]
+      [Ar*_diffusion]
         type = CoeffDiffusion
         variable = Ar*
         position_units = ${dom0Scale}
-      [../]
+      []
 
   #Voltage Equations (Same as in paper)
     #Voltage term in Poissons Eqaution
-    [./potential_diffusion_dom0]
+    [potential_diffusion_dom0]
       type = CoeffDiffusionLin
       variable = potential
       position_units = ${dom0Scale}
-    [../]
+    []
     #Ion term in Poissons Equation
-    [./Ar+_charge_source]
+    [Ar+_charge_source]
       type = ChargeSourceMoles_KV
       variable = potential
       charged = Ar+
-    [../]
+    []
     #Electron term in Poissons Equation
-    [./em_charge_source]
+    [em_charge_source]
       type = ChargeSourceMoles_KV
       variable = potential
       charged = em
-    [../]
+    []
 
 
   #Since the paper uses electron temperature as a variable, the energy equation is in
   #a different form but should be the same physics
     #Time Derivative term of electron energy
-    [./mean_en_time_deriv]
+    [mean_en_time_deriv]
       type = ElectronTimeDerivative
       variable = mean_en
-    [../]
+    []
     #Advection term of electron energy
-    [./mean_en_advection]
+    [mean_en_advection]
       type = EFieldAdvection
       variable = mean_en
       potential = potential
       position_units = ${dom0Scale}
-    [../]
+    []
     #Diffusion term of electrons energy
-    [./mean_en_diffusion]
+    [mean_en_diffusion]
       type = CoeffDiffusion
       variable = mean_en
       position_units = ${dom0Scale}
-    [../]
+    []
     #Joule Heating term
-    [./mean_en_joule_heating]
+    [mean_en_joule_heating]
       type = JouleHeating
       variable = mean_en
       potential = potential
       em = em
       position_units = ${dom0Scale}
-    [../]
+    []
   []
 
 
 [AuxVariables]
-  [./Te]
+  [Te]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
-  [./x]
+  [x]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
-  [./x_node]
-  [../]
+  [x_node]
+  []
 
-  [./rho]
+  [rho]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
-  [./em_lin]
+  [em_lin]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
-  [./Ar+_lin]
+  [Ar+_lin]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
-  [./Ar*_lin]
+  [Ar*_lin]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
-  [./Ar]
-  [../]
+  [Ar]
+  []
 
-  [./Efield]
+  [Efield]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
-  [./Current_em]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  [../]
-  [./Current_Ar]
+  [Current_em]
     order = CONSTANT
     family = MONOMIAL
     block = 0
-  [../]
+  []
+  [Current_Ar]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
 []
 
 [AuxKernels]
-  [./Te]
+  [Te]
     type = ElectronTemperature
     variable = Te
     electron_density = em
     mean_en = mean_en
-  [../]
-  [./x_g]
+  []
+  [x_g]
     type = Position
     variable = x
     position_units = ${dom0Scale}
-  [../]
+  []
 
-  [./x_ng]
+  [x_ng]
     type = Position
     variable = x_node
     position_units = ${dom0Scale}
-  [../]
+  []
 
-  [./em_lin]
+  [em_lin]
     type = DensityMoles
     variable = em_lin
     density_log = em
-  [../]
-  [./Ar+_lin]
+  []
+  [Ar+_lin]
     type = DensityMoles
     variable = Ar+_lin
     density_log = Ar+
-  [../]
-  [./Ar*_lin]
+  []
+  [Ar*_lin]
     type = DensityMoles
     variable = Ar*_lin
     density_log = Ar*
-  [../]
+  []
 
-  [./Ar_val]
+  [Ar_val]
     type = ConstantAux
     variable = Ar
     # value = 3.22e22
     value = -2.928623
     execute_on = INITIAL
-  [../]
+  []
 
-  [./Efield_calc]
+  [Efield_calc]
     type = Efield
     component = 0
     potential = potential
     variable = Efield
     position_units = ${dom0Scale}
-  [../]
-  [./Current_em]
+  []
+  [Current_em]
     type = ADCurrent
     potential = potential
     density_log = em
@@ -262,8 +262,8 @@ dom0Scale=25.4e-3
     art_diff = false
     block = 0
     position_units = ${dom0Scale}
-  [../]
-  [./Current_Ar]
+  []
+  [Current_Ar]
     type = ADCurrent
     potential = potential
     density_log = Ar+
@@ -271,29 +271,29 @@ dom0Scale=25.4e-3
     art_diff = false
     block = 0
     position_units = ${dom0Scale}
-  [../]
+  []
 []
 
 
 [BCs]
 #Voltage Boundary Condition, same as in paper
-  [./potential_left]
+  [potential_left]
     type = FunctionDirichletBC
     variable = potential
     boundary = 'left'
     function = potential_bc_func
     preset = false
-  [../]
-  [./potential_dirichlet_right]
+  []
+  [potential_dirichlet_right]
     type = DirichletBC
     variable = potential
     boundary = 'right'
     value = 0
     preset = false
-  [../]
+  []
 
 #New Boundary conditions for electons, same as in paper
-  [./em_physical_right]
+  [em_physical_right]
     type = LymberopoulosElectronBC
     variable = em
     boundary = 'right'
@@ -304,8 +304,8 @@ dom0Scale=25.4e-3
     ion = Ar+
     potential = potential
     position_units = ${dom0Scale}
-  [../]
-  [./em_physical_left]
+  []
+  [em_physical_left]
     type = LymberopoulosElectronBC
     variable = em
     boundary = 'left'
@@ -316,108 +316,108 @@ dom0Scale=25.4e-3
     ion = Ar+
     potential = potential
     position_units = ${dom0Scale}
-  [../]
+  []
 
 #New Boundary conditions for ions, should be the same as in paper
-  [./Ar+_physical_right_advection]
+  [Ar+_physical_right_advection]
     type = LymberopoulosIonBC
     variable = Ar+
     potential = potential
     boundary = 'right'
     position_units = ${dom0Scale}
-  [../]
-  [./Ar+_physical_left_advection]
+  []
+  [Ar+_physical_left_advection]
     type = LymberopoulosIonBC
     variable = Ar+
     potential = potential
     boundary = 'left'
     position_units = ${dom0Scale}
-  [../]
+  []
 
 #New Boundary conditions for ions, should be the same as in paper
 #(except the metastables are not set to zero, since Zapdos uses log form)
-  [./Ar*_physical_right_diffusion]
+  [Ar*_physical_right_diffusion]
     type = LogDensityDirichletBC
     variable = Ar*
     boundary = 'right'
     value = 100
-  [../]
-  [./Ar*_physical_left_diffusion]
+  []
+  [Ar*_physical_left_diffusion]
     type = LogDensityDirichletBC
     variable = Ar*
     boundary = 'left'
     value = 100
-  [../]
+  []
 
 #New Boundary conditions for mean energy, should be the same as in paper
-  [./mean_en_physical_right]
+  [mean_en_physical_right]
     type = ElectronTemperatureDirichletBC
     variable = mean_en
     em = em
     value = 0.5
     boundary = 'right'
-  [../]
-  [./mean_en_physical_left]
+  []
+  [mean_en_physical_left]
     type = ElectronTemperatureDirichletBC
     variable = mean_en
     em = em
     value = 0.5
     boundary = 'left'
-  [../]
+  []
 
 []
 
 
 [ICs]
-  [./em_ic]
+  [em_ic]
     type = FunctionIC
     variable = em
     function = density_ic_func
-  [../]
-  [./Ar+_ic]
+  []
+  [Ar+_ic]
     type = FunctionIC
     variable = Ar+
     function = density_ic_func
-  [../]
-  [./Ar*_ic]
+  []
+  [Ar*_ic]
     type = FunctionIC
     variable = Ar*
     function = density_ic_func
-  [../]
-  [./mean_en_ic]
+  []
+  [mean_en_ic]
     type = FunctionIC
     variable = mean_en
     function = energy_density_ic_func
-  [../]
+  []
 
-  [./potential_ic]
+  [potential_ic]
     type = FunctionIC
     variable = potential
     function = potential_ic_func
-  [../]
+  []
 []
 
 [Functions]
-  [./potential_bc_func]
+  [potential_bc_func]
     type = ParsedFunction
     value = '0.100*sin(2*3.1415926*13.56e6*t)'
-  [../]
-  [./potential_ic_func]
+  []
+  [potential_ic_func]
     type = ParsedFunction
     value = '0.100 * (25.4e-3 - x)'
-  [../]
-  [./density_ic_func]
+  []
+  [density_ic_func]
     type = ParsedFunction
     value = 'log((1e13 + 1e15 * (1-x/1)^2 * (x/1)^2)/6.022e23)'
-  [../]
-  [./energy_density_ic_func]
+  []
+  [energy_density_ic_func]
     type = ParsedFunction
     value = 'log(3./2.) + log((1e13 + 1e15 * (1-x/1)^2 * (x/1)^2)/6.022e23)'
-  [../]
+  []
 []
 
 [Materials]
-  [./GasBasics]
+  [GasBasics]
     type = GasElectronMoments
     interp_trans_coeffs = false
     interp_elastic_coeff = false
@@ -429,52 +429,52 @@ dom0Scale=25.4e-3
     user_electron_mobility = 30.0
     user_electron_diffusion_coeff = 119.8757763975
     property_tables_file = rate_coefficients/electron_moments.txt
-  [../]
-  [./gas_species_0]
+  []
+  [gas_species_0]
     type = ADHeavySpecies
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
     mobility = 0.144409938
     diffusivity = 6.428571e-3
-  [../]
-  [./gas_species_1]
+  []
+  [gas_species_1]
     type = ADHeavySpecies
     heavy_species_name = Ar*
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
     diffusivity = 7.515528e-3
-  [../]
-  [./gas_species_2]
+  []
+  [gas_species_2]
     type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
-  [../]
+  []
 []
 
 #New postprocessor that calculates the inverse of the plasma frequency
 [Postprocessors]
-  [./InversePlasmaFreq]
+  [InversePlasmaFreq]
     type = PlasmaFrequencyInverse
     variable = em
     use_moles = true
     execute_on = 'INITIAL TIMESTEP_BEGIN'
-  [../]
+  []
 []
 
 
 [Preconditioning]
   active = 'smp'
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 
-  [./fdp]
+  [fdp]
     type = FDP
     full = true
-  [../]
+  []
 []
 
 
@@ -492,22 +492,22 @@ dom0Scale=25.4e-3
   l_max_its = 20
 
   #Time steps based on the inverse of the plasma frequency
-  [./TimeStepper]
+  [TimeStepper]
     type = PostprocessorDT
     postprocessor = InversePlasmaFreq
-  [../]
+  []
 []
 
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
     execute_on = 'final'
-  [../]
+  []
 []
 
 [Reactions]
-  [./Argon]
+  [Argon]
     species = 'Ar* em Ar+'
     aux_species = 'Ar'
     reaction_coefficient_format = 'rate'
@@ -528,5 +528,5 @@ dom0Scale=25.4e-3
                  Ar* + Ar* -> Ar+ + Ar + em : 373364000
                  Ar* + Ar -> Ar + Ar        : 1806.6
                  Ar* + Ar + Ar -> Ar_2 + Ar : 398909.324'
-  [../]
+  []
 []

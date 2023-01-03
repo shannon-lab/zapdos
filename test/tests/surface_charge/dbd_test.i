@@ -35,38 +35,38 @@ dom1Scale=1e-4
   #
   # Block 0 = plasma region
   # Block 1 = dielectric
-  [./file]
+  [file]
     type = FileMeshGenerator
     file = 'dbd_mesh.msh'
-  [../]
-  [./plasma_right]
+  []
+  [plasma_right]
     # plasma master
     type = SideSetsBetweenSubdomainsGenerator
     primary_block = '0'
     paired_block = '1'
     new_boundary = 'plasma_right'
     input = file
-  [../]
-  [./dielectric_left]
+  []
+  [dielectric_left]
     # left dielectric master
     type = SideSetsBetweenSubdomainsGenerator
     primary_block = '1'
     paired_block = '0'
     new_boundary = 'dielectric_left'
     input = plasma_right
-  [../]
-  [./left]
+  []
+  [left]
     type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
     input = dielectric_left
-  [../]
-  [./right]
+  []
+  [right]
     type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
     input = left
-  [../]
+  []
 []
 
 [Problem]
@@ -74,10 +74,10 @@ dom1Scale=1e-4
 []
 
 [Preconditioning]
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 []
 
 [Executioner]
@@ -100,22 +100,22 @@ dom1Scale=1e-4
   dtmin = 1e-22
   dtmax = 1e-6
   #dt = 1e-8
-  [./TimeStepper]
+  [TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
     dt = 1e-9
     growth_factor = 1.2
    optimal_iterations = 30
-  [../]
+  []
 []
 
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
     output_material_properties = true
     show_material_properties = 'surface_charge'
-  [../]
+  []
 []
 
 [AuxVariables]
@@ -177,31 +177,31 @@ dom1Scale=1e-4
     execute_on = 'initial timestep_end'
     block = 1
   []
-  [./Efield_g]
+  [Efield_g]
     type = Efield
     component = 0
     potential = potential_dom0
     variable = Efield
     position_units = ${dom0Scale}
     block = 0
-  [../]
-  [./Efield_l]
+  []
+  [Efield_l]
     type = Efield
     component = 0
     potential = potential_dom1
     variable = Efield
     position_units = ${dom1Scale}
     block = 1
-  [../]
+  []
 []
 
 [Variables]
-  [./potential_dom0]
+  [potential_dom0]
     block = 0
-  [../]
-  [./potential_dom1]
+  []
+  [potential_dom1]
     block = 1
-  [../]
+  []
 
   [neg]
     block = 0
@@ -218,128 +218,128 @@ dom1Scale=1e-4
 []
 
 [Kernels]
-  [./potential_diffusion_dom0]
+  [potential_diffusion_dom0]
     type = CoeffDiffusionLin
     variable = potential_dom0
     block = 0
     position_units = ${dom0Scale}
-  [../]
-  [./potential_diffusion_dom1]
+  []
+  [potential_diffusion_dom1]
     type = CoeffDiffusionLin
     variable = potential_dom1
     block = 1
     position_units = ${dom1Scale}
-  [../]
+  []
 
   # Potential source terms
-  #[./em_source]
+  #[em_source]
   #  type = ChargeSourceMoles_KV
   #  variable = potential_dom0
   #  charged = em
   #  block = 0
-  #[../]
-  #[./Arp_source]
+  #[]
+  #[Arp_source]
   #  type = ChargeSourceMoles_KV
   #  variable = potential_dom0
   #  charged = Arp
   #  block = 0
-  #[../]
+  #[]
   #
   # Electrons
-  #[./d_em_dt]
+  #[d_em_dt]
   #  type = TimeDerivativeLog
   #  variable = em
   #  block = 0
-  #[../]
-  [./neg_advection]
+  #[]
+  [neg_advection]
     type = EFieldAdvection
     variable = neg
     potential = potential_dom0
     position_units = ${dom0Scale}
     block = 0
-  [../]
-  [./neg_diffusion]
+  []
+  [neg_diffusion]
     type = CoeffDiffusion
     variable = neg
     position_units = ${dom0Scale}
     block = 0
-  [../]
+  []
 
-  [./pos_advection]
+  [pos_advection]
     type = EFieldAdvection
     variable = pos
     potential = potential_dom0
     position_units = ${dom0Scale}
     block = 0
-  [../]
-  [./pos_diffusion]
+  []
+  [pos_diffusion]
     type = CoeffDiffusion
     variable = pos
     position_units = ${dom0Scale}
     block = 0
-  [../]
-  #[./em_offset]
+  []
+  #[em_offset]
   #  type = LogStabilizationMoles
   #  variable = em
   #  block = 0
-  #[../]
+  #[]
   #
-  #[./d_mean_en_dt]
+  #[d_mean_en_dt]
   #  type = TimeDerivativeLog
   #  variable = mean_en
   #  block = 0
-  #[../]
-  #[./mean_en_advection]
+  #[]
+  #[mean_en_advection]
   #  type = ADEFieldAdvection
   #  em = em
   #  variable = mean_en
   #  potential = potential_dom0
   #  position_units = ${dom0Scale}
   #  block = 0
-  #[../]
-  #[./mean_en_diffusion]
+  #[]
+  #[mean_en_diffusion]
   #  type = ADCoeffDiffusion
   #  variable = mean_en
   #  position_units = ${dom0Scale}
   #  block = 0
-  #[../]
-  #[./mean_en_joule_heating]
+  #[]
+  #[mean_en_joule_heating]
   #  type = ADJouleHeating
   #  variable = mean_en
   #  em = em
   #  potential = potential_dom0
   #  position_units = ${dom0Scale}
   #  block = 0
-  #[../]
-  #[./mean_en_offset]
+  #[]
+  #[mean_en_offset]
   #  type = LogStabilizationMoles
   #  variable = mean_en
   #  block = 0
-  #[../]
+  #[]
   #
-  #[./d_Arp_dt]
+  #[d_Arp_dt]
   #  type = TimeDerivativeLog
   #  variable = Arp
   #  block = 0
-  #[../]
-  #[./Arp_advection]
+  #[]
+  #[Arp_advection]
   #  type = ADEFieldAdvection
   #  variable = Arp
   #  potential = potential_dom0
   #  position_units = ${dom0Scale}
   #  block = 0
-  #[../]
-  #[./Arp_diffusion]
+  #[]
+  #[Arp_diffusion]
   #  type = ADCoeffDiffusion
   #  variable = Arp
   #  position_units = ${dom0Scale}
   #  block = 0
-  #[../]
-  #[./Arp_offset]
+  #[]
+  #[Arp_offset]
   #  type = LogStabilizationMoles
   #  variable = Arp
   #  block = 0
-  #[../]
+  #[]
 []
 
 [InterfaceKernels]
@@ -365,29 +365,29 @@ dom1Scale=1e-4
 
 [BCs]
   # Interface BCs:
-  [./match_potential]
+  [match_potential]
     type = MatchedValueBC
     variable = potential_dom1
     v = potential_dom0
     boundary = 'dielectric_left'
-  [../]
+  []
 
   # Electrode and ground BCs:
   # Electrode is at x = 0, named 'left'
-  [./potential_left]
+  [potential_left]
     type = FunctionDirichletBC
     variable = potential_dom0
     function = potential_input
     boundary = 'left'
-  [../]
+  []
 
   # Ground is at x = 0.3 mm, named 'right'
-  [./potential_dirichlet_right]
+  [potential_dirichlet_right]
     type = DirichletBC
     variable = potential_dom1
     boundary = right
     value = 0
-  [../]
+  []
 
   # Both charged species will have a specified dirichlet BC on the driven electrode
   # and a diffusion BC on the right side.
@@ -424,29 +424,29 @@ dom1Scale=1e-4
 []
 
 [ICs]
-  [./potential_dom0_ic]
+  [potential_dom0_ic]
     type = FunctionIC
     variable = potential_dom0
     function = potential_ic_func
-  [../]
-  [./potential_dom1_ic]
+  []
+  [potential_dom1_ic]
     type = FunctionIC
     variable = potential_dom1
     function = potential_ic_func
-  [../]
+  []
 
-  [./neg_ic]
+  [neg_ic]
     type = ConstantIC
     variable = neg
     value = -10
     block = 0
-  [../]
-  [./pos_ic]
+  []
+  [pos_ic]
     type = ConstantIC
     variable = pos
     value = -10
     block = 0
-  [../]
+  []
 []
 
 [Functions]
@@ -455,20 +455,20 @@ dom1Scale=1e-4
   # (Note that here the amplitude is set to 0.2. Potential units are
   # typically included as kV, not V. This option is set in the
   # GlobalParams block.)
-  [./potential_input]
+  [potential_input]
     type = ParsedFunction
     vars = 'f0'
     vals = '50e3'
     value = '-0.2*sin(2*3.1415926*f0*t)'
-  [../]
+  []
 
   # Set the initial condition to a line from -10 V on the left and
   # 0 on the right.
   # (Poisson solver tends to struggle with a uniformly zero potential IC.)
-  [./potential_ic_func]
+  [potential_ic_func]
     type = ParsedFunction
     value = '-0.001 * (2.000e-4 - x)'
-  [../]
+  []
 []
 
 [Materials]
@@ -486,26 +486,26 @@ dom1Scale=1e-4
   []
 
   # This just defines some constants that Zapdos needs to run.
-  [./gas_constants]
+  [gas_constants]
     type = GenericConstantMaterial
     block = 0
     prop_names = ' e       N_A      k_boltz  eps         se_energy T_gas  massem   p_gas'
     prop_values = '1.6e-19 6.022e23 1.38e-23 8.854e-12   1.        400    9.11e-31 1.01e5'
-  [../]
+  []
 
   #
-  [./dielectric_left_side]
+  [dielectric_left_side]
     type = ADGenericConstantMaterial
     prop_names = 'diffpotential_dom0'
     prop_values = '8.85e-12'
     block = 0
-  [../]
-  [./gas_phase]
+  []
+  [gas_phase]
     type = ADGenericConstantMaterial
     prop_names = 'diffpotential_dom1'
     prop_values = '8.85e-12'
     block = 1
-  [../]
+  []
 
   ######
   # HeavySpeciesMaterial defines charge, mass, transport coefficients, and
@@ -516,20 +516,20 @@ dom1Scale=1e-4
   # implementations may include mixture-averaged diffusion coefficients and
   # effective ion temperatures with nonlinear dependence on other variables.
   ######
-  [./gas_species_0]
+  [gas_species_0]
     type = ADHeavySpecies
     heavy_species_name = neg
     heavy_species_mass = 6.64e-26
     heavy_species_charge = -1.0
     diffusivity = 1.6897e-5
     block = 0
-  [../]
-  [./gas_species_2]
+  []
+  [gas_species_2]
     type = ADHeavySpecies
     heavy_species_name = pos
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
     diffusivity = 1.6897e-5
     block = 0
-  [../]
+  []
 []

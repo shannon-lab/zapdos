@@ -15,10 +15,10 @@
 []
 
 [Preconditioning]
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 []
 
 [Executioner]
@@ -32,38 +32,38 @@
 
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
-  [../]
+  []
 []
 
 [Variables]
-  [./coffee_creamer]
-  [../]
+  [coffee_creamer]
+  []
 []
 
 [Kernels]
-  [./time]
+  [time]
     type = TimeDerivative
     variable = coffee_creamer
-  [../]
-  [./diffusion]
+  []
+  [diffusion]
     type = Diffusion
     variable = coffee_creamer
-  [../]
+  []
 []
 
 [ICs]
-  [./func_ic]
+  [func_ic]
     type = FunctionIC
     variable = coffee_creamer
     function = gauss
-  [../]
+  []
 []
 
 [Functions]
-  [./gauss]
+  [gauss]
     type = ParsedFunction
     value = 'exp(-x^2 / 0.2^2) * exp(-y^2 / 0.2^2)'
-  [../]
+  []
 []

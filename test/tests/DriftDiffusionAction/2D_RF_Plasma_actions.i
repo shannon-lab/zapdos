@@ -16,14 +16,14 @@ dom0Scale=25.4e-3
 #DriftDiffusionAction, but charged particles effective by
 #this potential can by defined by the action.
 [Variables]
-  [./potential_ion]
-  [../]
+  [potential_ion]
+  []
 []
 
 #Action the supplies the drift-diffusion equations
 #This action also adds JouleHeating and the ChargeSourceMoles_KV Kernels
 [DriftDiffusionAction]
-  [./Plasma]
+  [Plasma]
     electrons = em
     secondary_charged_particles = Ar+
     Neutrals = Ar*
@@ -34,13 +34,13 @@ dom0Scale=25.4e-3
     using_offset = false
     position_units = ${dom0Scale}
     Additional_Outputs = 'ElectronTemperature Current EField'
-  [../]
+  []
 []
 
 #The Kernels supply the sources terms
 [Kernels]
     #Net electron production from ionization
-    [./em_ionization]
+    [em_ionization]
       type = EEDFReactionLog
       variable = em
       electrons = em
@@ -48,9 +48,9 @@ dom0Scale=25.4e-3
       mean_energy = mean_en
       reaction = 'em + Ar -> em + em + Ar+'
       coefficient = 1
-    [../]
+    []
     #Net electron production from step-wise ionization
-    [./em_stepwise_ionization]
+    [em_stepwise_ionization]
       type = EEDFReactionLog
       variable = em
       electrons = em
@@ -58,19 +58,19 @@ dom0Scale=25.4e-3
       mean_energy = mean_en
       reaction = 'em + Ar* -> em + em + Ar+'
       coefficient = 1
-    [../]
+    []
     #Net electron production from metastable pooling
-    [./em_pooling]
+    [em_pooling]
       type = ReactionSecondOrderLog
       variable = em
       v = Ar*
       w = Ar*
       reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
       coefficient = 1
-    [../]
+    []
 
     #Net ion production from ionization
-    [./Ar+_ionization]
+    [Ar+_ionization]
       type = EEDFReactionLog
       variable = Ar+
       electrons = em
@@ -78,9 +78,9 @@ dom0Scale=25.4e-3
       mean_energy = mean_en
       reaction = 'em + Ar -> em + em + Ar+'
       coefficient = 1
-    [../]
+    []
     #Net ion production from step-wise ionization
-    [./Ar+_stepwise_ionization]
+    [Ar+_stepwise_ionization]
       type = EEDFReactionLog
       variable = Ar+
       electrons = em
@@ -88,19 +88,19 @@ dom0Scale=25.4e-3
       mean_energy = mean_en
       reaction = 'em + Ar* -> em + em + Ar+'
       coefficient = 1
-    [../]
+    []
     #Net ion production from metastable pooling
-    [./Ar+_pooling]
+    [Ar+_pooling]
       type = ReactionSecondOrderLog
       variable = Ar+
       v = Ar*
       w = Ar*
       reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
       coefficient = 1
-    [../]
+    []
 
       #Net excited Argon production from excitation
-      [./Ar*_excitation]
+      [Ar*_excitation]
         type = EEDFReactionLog
         variable = Ar*
         electrons = em
@@ -108,9 +108,9 @@ dom0Scale=25.4e-3
         mean_energy = mean_en
         reaction = 'em + Ar -> em + Ar*'
         coefficient = 1
-      [../]
+      []
       #Net excited Argon loss from step-wise ionization
-      [./Ar*_stepwise_ionization]
+      [Ar*_stepwise_ionization]
         type = EEDFReactionLog
         variable = Ar*
         electrons = em
@@ -118,9 +118,9 @@ dom0Scale=25.4e-3
         mean_energy = mean_en
         reaction = 'em + Ar* -> em + em + Ar+'
         coefficient = -1
-      [../]
+      []
       #Net excited Argon loss from superelastic collisions
-      [./Ar*_collisions]
+      [Ar*_collisions]
         type = EEDFReactionLog
         variable = Ar*
         electrons = em
@@ -128,9 +128,9 @@ dom0Scale=25.4e-3
         mean_energy = mean_en
         reaction = 'em + Ar* -> em + Ar'
         coefficient = -1
-      [../]
+      []
       #Net excited Argon loss from quenching to resonant
-      [./Ar*_quenching]
+      [Ar*_quenching]
         type = EEDFReactionLog
         variable = Ar*
         electrons = em
@@ -138,9 +138,9 @@ dom0Scale=25.4e-3
         mean_energy = mean_en
         reaction = 'em + Ar* -> em + Ar_r'
         coefficient = -1
-      [../]
+      []
       #Net excited Argon loss from  metastable pooling
-      [./Ar*_pooling]
+      [Ar*_pooling]
         type = ReactionSecondOrderLog
         variable = Ar*
         v = Ar*
@@ -149,9 +149,9 @@ dom0Scale=25.4e-3
         coefficient = -2
         _v_eq_u = true
         _w_eq_u = true
-      [../]
+      []
       #Net excited Argon loss from two-body quenching
-      [./Ar*_2B_quenching]
+      [Ar*_2B_quenching]
         type = ReactionSecondOrderLog
         variable = Ar*
         v = Ar*
@@ -159,9 +159,9 @@ dom0Scale=25.4e-3
         reaction = 'Ar* + Ar -> Ar + Ar'
         coefficient = -1
         _v_eq_u = true
-      [../]
+      []
       #Net excited Argon loss from three-body quenching
-      [./Ar*_3B_quenching]
+      [Ar*_3B_quenching]
         type = ReactionThirdOrderLog
         variable = Ar*
         v = Ar*
@@ -170,237 +170,237 @@ dom0Scale=25.4e-3
         reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
         coefficient = -1
         _v_eq_u = true
-      [../]
+      []
 
     #Energy loss from ionization
-    [./Ionization_Loss]
+    [Ionization_Loss]
       type = EEDFEnergyLog
       variable = mean_en
       electrons = em
       target = Ar
       reaction = 'em + Ar -> em + em + Ar+'
       threshold_energy = -15.7
-    [../]
+    []
     #Energy loss from excitation
-    [./Excitation_Loss]
+    [Excitation_Loss]
       type = EEDFEnergyLog
       variable = mean_en
       electrons = em
       target = Ar
       reaction = 'em + Ar -> em + Ar*'
       threshold_energy = -11.56
-    [../]
+    []
     #Energy loss from step-wise ionization
-    [./Stepwise_Ionization_Loss]
+    [Stepwise_Ionization_Loss]
       type = EEDFEnergyLog
       variable = mean_en
       electrons = em
       target = Ar*
       reaction = 'em + Ar* -> em + em + Ar+'
       threshold_energy = -4.14
-    [../]
+    []
     #Energy gain from superelastic collisions
-    [./Collisions_Loss]
+    [Collisions_Loss]
       type = EEDFEnergyLog
       variable = mean_en
       electrons = em
       target = Ar*
       reaction = 'em + Ar* -> em + Ar'
       threshold_energy = 11.56
-    [../]
+    []
     # Energy loss from elastic collisions
-    [./Elastic_loss]
+    [Elastic_loss]
       type = EEDFElasticLog
       variable = mean_en
       electrons = em
       target = Ar
       reaction = 'em + Ar -> em + Ar'
-    [../]
+    []
 
     #Effective potential for the Ions
-    [./Ion_potential_time_deriv]
+    [Ion_potential_time_deriv]
       type = TimeDerivative
       variable = potential_ion
-    [../]
-    [./Ion_potential_reaction]
+    []
+    [Ion_potential_reaction]
       type = ScaledReaction
       variable = potential_ion
       collision_freq = 1283370.875
-    [../]
-    [./Ion_potential_coupled_force]
+    []
+    [Ion_potential_coupled_force]
       type = CoupledForce
       variable = potential_ion
       v = potential
       coef = 1283370.875
-    [../]
+    []
   []
 
 
 [AuxVariables]
-  [./x_node]
-  [../]
+  [x_node]
+  []
 
-  [./y_node]
-  [../]
+  [y_node]
+  []
 
-  [./rho]
+  [rho]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 
-  [./Ar]
-  [../]
+  [Ar]
+  []
 
-  [./emRate]
+  [emRate]
     order = CONSTANT
     family = MONOMIAL
     block = 'plasma'
-  [../]
-  [./exRate]
+  []
+  [exRate]
     order = CONSTANT
     family = MONOMIAL
     block = 'plasma'
-  [../]
-  [./swRate]
+  []
+  [swRate]
     order = CONSTANT
     family = MONOMIAL
     block = 'plasma'
-  [../]
-  [./deexRate]
+  []
+  [deexRate]
     order = CONSTANT
     family = MONOMIAL
     block = 'plasma'
-  [../]
-  [./quRate]
+  []
+  [quRate]
     order = CONSTANT
     family = MONOMIAL
     block = 'plasma'
-  [../]
-  [./poolRate]
+  []
+  [poolRate]
     order = CONSTANT
     family = MONOMIAL
     block = 'plasma'
-  [../]
-  [./TwoBRate]
+  []
+  [TwoBRate]
     order = CONSTANT
     family = MONOMIAL
     block = 'plasma'
-  [../]
-  [./ThreeBRate]
+  []
+  [ThreeBRate]
     order = CONSTANT
     family = MONOMIAL
     block = 'plasma'
-  [../]
+  []
 
 []
 
 [AuxKernels]
-  [./emRate]
+  [emRate]
     type = ProcRateForRateCoeff
     variable = emRate
     v = em
     w = Ar
     reaction = 'em + Ar -> em + em + Ar+'
-  [../]
-  [./exRate]
+  []
+  [exRate]
     type = ProcRateForRateCoeff
     variable = exRate
     v = em
     w = Ar*
     reaction = 'em + Ar -> em + Ar*'
-  [../]
-  [./swRate]
+  []
+  [swRate]
     type = ProcRateForRateCoeff
     variable = swRate
     v = em
     w = Ar*
     reaction = 'em + Ar* -> em + em + Ar+'
-  [../]
-  [./deexRate]
+  []
+  [deexRate]
     type = ProcRateForRateCoeff
     variable = deexRate
     v = em
     w = Ar*
     reaction = 'em + Ar* -> em + Ar'
-  [../]
-  [./quRate]
+  []
+  [quRate]
     type = ProcRateForRateCoeff
     variable = quRate
     v = em
     w = Ar*
     reaction = 'em + Ar* -> em + Ar_r'
-  [../]
-  [./poolRate]
+  []
+  [poolRate]
     type = ProcRateForRateCoeff
     variable = poolRate
     v = Ar*
     w = Ar*
     reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
-  [../]
-  [./TwoBRate]
+  []
+  [TwoBRate]
     type = ProcRateForRateCoeff
     variable = TwoBRate
     v = Ar*
     w = Ar
     reaction = 'Ar* + Ar -> Ar + Ar'
-  [../]
-  [./ThreeBRate]
+  []
+  [ThreeBRate]
     type = ProcRateForRateCoeffThreeBody
     variable = ThreeBRate
     v = Ar*
     w = Ar
     vv = Ar
     reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
-  [../]
+  []
 
-  [./x_ng]
+  [x_ng]
     type = Position
     variable = x_node
     component = 0
     position_units = ${dom0Scale}
-  [../]
+  []
 
-  [./y_ng]
+  [y_ng]
     type = Position
     variable = y_node
     component = 1
     position_units = ${dom0Scale}
-  [../]
+  []
 
-  [./Ar_val]
+  [Ar_val]
     type = ConstantAux
     variable = Ar
     # value = 3.22e2
     value = -5.231208
     execute_on = INITIAL
-  [../]
+  []
 []
 
 
 [BCs]
 #Voltage Boundary Condition, same as in paper
-  [./potential_top_plate]
+  [potential_top_plate]
     type = FunctionDirichletBC
     variable = potential
     boundary = 'Top_Electrode'
     function = potential_top_bc_func
     preset = false
-  [../]
-  [./potential_bottom_plate]
+  []
+  [potential_bottom_plate]
     type = FunctionDirichletBC
     variable = potential
     boundary = 'Bottom_Electrode'
     function = potential_bottom_bc_func
     preset = false
-  [../]
-  [./potential_dirichlet_bottom_plate]
+  []
+  [potential_dirichlet_bottom_plate]
     type = DirichletBC
     variable = potential
     boundary = 'Walls'
     value = 0
     preset = false
-  [../]
-  [./potential_Dielectric]
+  []
+  [potential_Dielectric]
     type = EconomouDielectricBC
     variable = potential
     boundary = 'Top_Insulator Bottom_Insulator'
@@ -412,18 +412,18 @@ dom0Scale=25.4e-3
     thickness = 0.0127
     users_gamma = 0.01
     position_units = ${dom0Scale}
-  [../]
+  []
 
 
 #New Boundary conditions for electons, same as in paper
-  [./em_physical_diffusion]
+  [em_physical_diffusion]
     type = SakiyamaElectronDiffusionBC
     variable = em
     mean_en = mean_en
     boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls'
     position_units = ${dom0Scale}
-  [../]
-  [./em_Ar+_second_emissions]
+  []
+  [em_Ar+_second_emissions]
     type = SakiyamaSecondaryElectronBC
     variable = em
     potential = potential_ion
@@ -431,35 +431,35 @@ dom0Scale=25.4e-3
     users_gamma = 0.01
     boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls'
     position_units = ${dom0Scale}
-  [../]
+  []
 
 #New Boundary conditions for ions, should be the same as in paper
-  [./Ar+_physical_advection]
+  [Ar+_physical_advection]
     type = SakiyamaIonAdvectionBC
     variable = Ar+
     potential = potential_ion
     boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls'
     position_units = ${dom0Scale}
-  [../]
+  []
 
 #New Boundary conditions for ions, should be the same as in paper
 #(except the metastables are not set to zero, since Zapdos uses log form)
-  [./Ar*_physical_diffusion]
+  [Ar*_physical_diffusion]
     type = LogDensityDirichletBC
     variable = Ar*
     boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls'
     value = 100
-  [../]
+  []
 
 #New Boundary conditions for mean energy, should be the same as in paper
-[./mean_en_physical_diffusion]
+[mean_en_physical_diffusion]
   type = SakiyamaEnergyDiffusionBC
   variable = mean_en
   em = em
   boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls'
   position_units = ${dom0Scale}
-[../]
-[./mean_en_Ar+_second_emissions]
+[]
+[mean_en_Ar+_second_emissions]
   type = SakiyamaEnergySecondaryElectronBC
   variable = mean_en
   em = em
@@ -469,69 +469,69 @@ dom0Scale=25.4e-3
   se_coeff = 0.01
   boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls'
   position_units = ${dom0Scale}
-[../]
+[]
 
 []
 
 
 [ICs]
-  [./em_ic]
+  [em_ic]
     type = FunctionIC
     variable = em
     function = density_ic_func
-  [../]
-  [./Ar+_ic]
+  []
+  [Ar+_ic]
     type = FunctionIC
     variable = Ar+
     function = density_ic_func
-  [../]
-  [./Ar*_ic]
+  []
+  [Ar*_ic]
     type = FunctionIC
     variable = Ar*
     function = meta_density_ic_func
-  [../]
-  [./mean_en_ic]
+  []
+  [mean_en_ic]
     type = FunctionIC
     variable = mean_en
     function = energy_density_ic_func
-  [../]
+  []
 
-  [./potential_ic]
+  [potential_ic]
     type = FunctionIC
     variable = potential
     function = potential_ic_func
-  [../]
+  []
 []
 
 [Functions]
-  [./potential_top_bc_func]
+  [potential_top_bc_func]
     type = ParsedFunction
     value = '50*sin(2*3.1415926*13.56e6*t)'
-  [../]
-  [./potential_bottom_bc_func]
+  []
+  [potential_bottom_bc_func]
     type = ParsedFunction
     value = '-50*sin(2*3.1415926*13.56e6*t)'
-  [../]
-  [./potential_ic_func]
+  []
+  [potential_ic_func]
     type = ParsedFunction
     value = 0
-  [../]
-  [./density_ic_func]
+  []
+  [density_ic_func]
     type = ParsedFunction
     value = 'log((1e14)/6.022e23)'
-  [../]
-  [./meta_density_ic_func]
+  []
+  [meta_density_ic_func]
     type = ParsedFunction
     value = 'log((1e16)/6.022e23)'
-  [../]
-  [./energy_density_ic_func]
+  []
+  [energy_density_ic_func]
     type = ParsedFunction
     value = 'log((3./2.) * 4) + log((1e14)/6.022e23)'
-  [../]
+  []
 []
 
 [Materials]
-  [./GasBasics]
+  [GasBasics]
     type = GasElectronMoments
     interp_trans_coeffs = true
     interp_elastic_coeff = false
@@ -542,116 +542,116 @@ dom0Scale=25.4e-3
     mean_en = mean_en
     user_se_coeff = 0.00
     property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
-  [../]
-  [./gas_species_0]
+  []
+  [gas_species_0]
     type = ADHeavySpecies
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
     mobility = 1.44409938
     diffusivity = 6.428571e-2
-  [../]
-  [./gas_species_1]
+  []
+  [gas_species_1]
     type = ADHeavySpecies
     heavy_species_name = Ar*
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
     diffusivity = 7.515528e-2
-  [../]
-  [./gas_species_2]
+  []
+  [gas_species_2]
     type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
-  [../]
-  [./reaction_00]
+  []
+  [reaction_00]
     type = ZapdosEEDFRateConstant
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_elastic.txt'
     reaction = 'em + Ar -> em + Ar'
     file_location = ''
     electrons = em
-  [../]
-  [./reaction_0]
+  []
+  [reaction_0]
     type = ZapdosEEDFRateConstant
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_excitation.txt'
     reaction = 'em + Ar -> em + Ar*'
     file_location = ''
     mean_energy = mean_en
     electrons = em
-  [../]
-  [./reaction_1]
+  []
+  [reaction_1]
     type = ZapdosEEDFRateConstant
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_ionization.txt'
     reaction = 'em + Ar -> em + em + Ar+'
     file_location = ''
     mean_energy = mean_en
     electrons = em
-  [../]
-  [./reaction_2]
+  []
+  [reaction_2]
     type = ZapdosEEDFRateConstant
     reaction = 'em + Ar* -> em + Ar'
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt'
     file_location = ''
     mean_energy = mean_en
     electrons = em
-  [../]
-  [./reaction_3]
+  []
+  [reaction_3]
     type = ZapdosEEDFRateConstant
     reaction = 'em + Ar* -> em + em + Ar+'
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt'
     file_location = ''
     mean_energy = mean_en
     electrons = em
-  [../]
-  [./reaction_4]
+  []
+  [reaction_4]
     type = GenericRateConstant
     reaction = 'em + Ar* -> em + Ar_r'
     #reaction_rate_value = 2e-13
     reaction_rate_value = 1.2044e11
-  [../]
-  [./reaction_5]
+  []
+  [reaction_5]
     type = GenericRateConstant
     reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
     #reaction_rate_value = 6.2e-16
     reaction_rate_value = 373364000
-  [../]
-  [./reaction_6]
+  []
+  [reaction_6]
     type = GenericRateConstant
     reaction = 'Ar* + Ar -> Ar + Ar'
     #reaction_rate_value = 3e-21
     reaction_rate_value = 1806.6
-  [../]
-  [./reaction_7]
+  []
+  [reaction_7]
     type = GenericRateConstant
     reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
     #reaction_rate_value = 1.1e-42
     reaction_rate_value = 398909.324
-  [../]
+  []
 []
 
 #New postprocessor that calculates the inverse of the plasma frequency
 [Postprocessors]
-  [./InversePlasmaFreq]
+  [InversePlasmaFreq]
     type = PlasmaFrequencyInverse
     variable = em
     use_moles = true
     execute_on = 'INITIAL TIMESTEP_BEGIN'
-  [../]
+  []
 []
 
 
 [Preconditioning]
   active = 'smp'
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 
-  [./fdp]
+  [fdp]
     type = FDP
     full = true
-  [../]
+  []
 []
 
 
@@ -670,17 +670,17 @@ dom0Scale=25.4e-3
   l_max_its = 20
 
   #Time steps based on the inverse of the plasma frequency
-  #[./TimeStepper]
+  #[TimeStepper]
   #  type = PostprocessorDT
   #  postprocessor = InversePlasmaFreq
   #  scale = 0.1
-  #[../]
+  #[]
 []
 
 [Outputs]
   file_base = '2D_RF_out'
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
-  [../]
+  []
 []

@@ -1,20 +1,20 @@
 [Mesh]
-  [./file]
+  [file]
     type = FileMeshGenerator
     file = 'Sample_Periodic_Diffusion.msh'
-  [../]
-  [./left]
+  []
+  [left]
     type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
     input = file
-  [../]
-  [./right]
+  []
+  [right]
     type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
     input = left
-  [../]
+  []
 []
 
 [Problem]
@@ -22,35 +22,35 @@
 []
 
 [Variables]
-  [./y]
+  [y]
     initial_condition = -23
-  [../]
+  []
 []
 
 [Kernels]
-  [./Time_Deriv]
+  [Time_Deriv]
     type = TimeDerivativeLog
     variable = y
-  [../]
-  [./Diff]
+  []
+  [Diff]
     type = CoeffDiffusion
     variable = y
     position_units = 1.0
-  [../]
-  [./First_Term]
+  []
+  [First_Term]
     type = BodyForce
     variable = y
     function = '0.25 * sin(2.0*pi * t) * sin(2.0*pi * t)'
-  [../]
-  [./Second_Term]
+  []
+  [Second_Term]
     type = ReactionFirstOrderLog
     variable = y
     v = y
     coefficient = -1
     reaction = 'firstorder'
     _v_eq_u = true
-  [../]
-  [./Thrid_Term]
+  []
+  [Thrid_Term]
     type = ReactionSecondOrderLog
     variable = y
     v = y
@@ -59,86 +59,86 @@
     reaction = 'secondorder'
     _v_eq_u = true
     _w_eq_u = true
-  [../]
+  []
 []
 
 [BCs]
-  [./Walls]
+  [Walls]
     type = DirichletBC
     variable = y
     value = -23.0
     boundary = 'left right'
-  [../]
+  []
 []
 
 [Materials]
-  [./gas_species_0]
+  [gas_species_0]
     type = ADGenericConstantMaterial
     prop_names = 'diffy'
     prop_values = 0.001
-  [../]
-  [./firstorder_coefficient]
+  []
+  [firstorder_coefficient]
     type = GenericRateConstant
     reaction = 'firstorder'
     reaction_rate_value = 0.05
-  [../]
-  [./secondorder_coefficient]
+  []
+  [secondorder_coefficient]
     type = GenericRateConstant
     reaction = 'secondorder'
     reaction_rate_value = 0.015
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./yLog]
-  [../]
+  [yLog]
+  []
 []
 
 [AuxKernels]
-  [./Log_Func]
+  [Log_Func]
     type = DensityLogConvert
     variable = yLog
     density_log = y
     use_moles = false
-  [../]
+  []
 []
 
 [PeriodicRelativeNodalDifference]
-  [./test]
+  [test]
     periodic_variable_log = y
     cycle_frequency = 1.0
     num_cycles = 75
     starting_cycle = 25
-  [../]
+  []
 []
 
 [Postprocessors]
-  [./diff_counter]
+  [diff_counter]
     type = PeriodicComparisonCounter
     value1 = y_periodic_difference
     value2 = 1e-5
     frequency = 1
     comparison_type = less_than
-  [../]
+  []
 []
 
 [UserObjects]
-  [./End]
+  [End]
     type = Terminator
     expression = '(if(diff_counter>=10,1,0)) = 1'
-  [../]
+  []
 []
 
 [Preconditioning]
   active = 'smp'
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
-  [./fdp]
+  []
+  [fdp]
     type = FDP
     full = true
-  [../]
+  []
 []
 
 [Executioner]
@@ -158,7 +158,7 @@
 
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
-  [../]
+  []
 []
