@@ -18,12 +18,12 @@ dom1Scale=1e-7
 
 [Mesh]
   #Mesh is define by a Gmsh file
-  [./file]
+  [file]
     type = FileMeshGenerator
     file = 'plasmaliquid.msh'
-  [../]
+  []
 
-  [./interface]
+  [interface]
     # interface allows for one directional fluxes
     # interface going from air to water
     type = SideSetsBetweenSubdomainsGenerator
@@ -31,29 +31,29 @@ dom1Scale=1e-7
     paired_block = '1' # block where the flux is going to
     new_boundary = 'master0_interface'
     input = file # first input is where the msh is coming and it is then named air_to_water
-  [../]
-  [./interface_again]
+  []
+  [interface_again]
     # interface going from water to air
     type = SideSetsBetweenSubdomainsGenerator
     primary_block = '1' # block where the flux is coming from
     paired_block = '0' # block where the flux is going to
     new_boundary = 'master1_interface'
     input = interface
-  [../]
+  []
   #Renames all sides with the specified normal
   #For 1D, this is used to rename the end points of the mesh
-  [./left]
+  [left]
     type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
     input = interface_again
-  [../]
-  [./right]
+  []
+  [right]
     type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
     input = left
-  [../]
+  []
 []
 
 #Defines the problem type, such as FE, eigen value problem, etc.
@@ -65,12 +65,12 @@ dom1Scale=1e-7
 #since it is present in both Blocks
 #Declare any variable that is present in mulitple blocks in the variables section
 [Variables]
-    [./potential]
-    [../]
+    [potential]
+    []
 []
 
 [DriftDiffusionAction]
-    [./Plasma]
+    [Plasma]
       #User define name for electrons (usually 'em')
       electrons = em
       #User define name for ions
@@ -89,9 +89,9 @@ dom1Scale=1e-7
       block = 0
       #Additional outputs, such as ElectronTemperature, Current, and EField.
       Additional_Outputs = 'ElectronTemperature Current EField'
-    [../]
+    []
     # treats water as a dense plasma
-    [./Water]
+    [Water]
       charged_particle = 'emliq OHm'
       potential = potential
       Is_potential_unique = false
@@ -100,11 +100,11 @@ dom1Scale=1e-7
       #Name of material block for water
       block = 1
       Additional_Outputs = 'Current EField'
-    [../]
+    []
 []
 
 [Reactions]
-  [./Argon]
+  [Argon]
     #Name of reactant species that are variables
     species = 'em Arp'
     #Name of reactant species that are auxvariables
@@ -137,9 +137,9 @@ dom1Scale=1e-7
     reactions = 'em + Ar -> em + Ar               : EEDF [elastic] (reaction1)
                  em + Ar -> em + Ar*              : EEDF [-11.5] (reaction2)
                  em + Ar -> em + em + Arp         : EEDF [-15.76] (reaction3)'
-  [../]
+  []
 
-  [./Water]
+  [Water]
     species = 'emliq OHm'
     reaction_coefficient_format = 'rate'
     use_log = true
@@ -148,31 +148,31 @@ dom1Scale=1e-7
     block = 1
     reactions = 'emliq -> H + OHm : 1064
                  emliq + emliq -> H2 + OHm + OHm : 3.136e8'
-  [../]
+  []
 []
 
 [AuxVariables]
   #Background fluid in water
-  [./H2O]
+  [H2O]
     order = CONSTANT
     family = MONOMIAL
     initial_condition = 10.92252
     block = 1
-  [../]
+  []
   #Background gas in plasma
-  [./Ar]
+  [Ar]
     block = 0
     order = CONSTANT
     family = MONOMIAL
     initial_condition = 3.70109
-  [../]
+  []
 []
 
 [InterfaceKernels]
   # interface conditions allow one this to go another
   # These account for electrons going into the water
   # if you want to account for electrons going out of the water into the air then you would need there to be interface conditions for master interface 0
-  [./em_advection]
+  [em_advection]
     type = InterfaceAdvection
     mean_en_neighbor = mean_en
     potential_neighbor = potential
@@ -184,8 +184,8 @@ dom1Scale=1e-7
     boundary = master1_interface
     position_units = ${dom1Scale}
     neighbor_position_units = ${dom0Scale}
-  [../]
-  [./em_diffusion]
+  []
+  [em_diffusion]
     type = InterfaceLogDiffusionElectrons
     mean_en_neighbor = mean_en
     neighbor_var = em
@@ -193,22 +193,22 @@ dom1Scale=1e-7
     boundary = master1_interface
     position_units = ${dom1Scale}
     neighbor_position_units = ${dom0Scale}
-  [../]
+  []
 []
 
 #Electrode data needed for 1D BC of 'NeumannCircuitVoltageMoles_KV'
 [UserObjects]
-  [./data_provider]
+  [data_provider]
     type = ProvideMobility
     electrode_area = 5.02e-7 # Formerly 3.14e-6
     ballast_resist = 1e6
     e = 1.6e-19
-  [../]
+  []
 []
 
 [BCs]
   #DC BC on the air electrode
-  [./potential_left]
+  [potential_left]
     type = NeumannCircuitVoltageMoles_KV
     variable = potential
     boundary = left
@@ -219,17 +219,17 @@ dom1Scale=1e-7
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
-  [../]
+  []
   #Ground electrode under the water
-  [./potential_dirichlet_right]
+  [potential_dirichlet_right]
     type = DirichletBC
     variable = potential
     boundary = right
     value = 0
-  [../]
+  []
 
   #Electrons on the powered electrode
-  [./em_physical_left]
+  [em_physical_left]
     type = HagelaarElectronBC
     variable = em
     boundary = 'left'
@@ -237,8 +237,8 @@ dom1Scale=1e-7
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
-  [../]
-  [./sec_electrons_left]
+  []
+  [sec_electrons_left]
     type = SecondaryElectronBC
     variable = em
     boundary = 'left'
@@ -247,10 +247,10 @@ dom1Scale=1e-7
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
-  [../]
+  []
 
   #Mean electron energy on the powered electrode
-  [./mean_en_physical_left]
+  [mean_en_physical_left]
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'left'
@@ -258,8 +258,8 @@ dom1Scale=1e-7
     em = em
     r = 0
     position_units = ${dom0Scale}
-  [../]
-  [./secondary_energy_left]
+  []
+  [secondary_energy_left]
     type = SecondaryElectronEnergyBC
     variable = mean_en
     boundary = 'left'
@@ -268,27 +268,27 @@ dom1Scale=1e-7
     ip = 'Arp'
     r = 0
     position_units = ${dom0Scale}
-  [../]
+  []
 
   #Argon ions on the powered electrode
-  [./Arp_physical_left_diffusion]
+  [Arp_physical_left_diffusion]
     type = HagelaarIonDiffusionBC
     variable = Arp
     boundary = 'left'
     r = 0
     position_units = ${dom0Scale}
-  [../]
-  [./Arp_physical_left_advection]
+  []
+  [Arp_physical_left_advection]
     type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'left'
     potential = potential
     r = 0
     position_units = ${dom0Scale}
-  [../]
+  []
 
   #Electrons on the plasma-liquid interface
-  [./em_physical_right]
+  [em_physical_right]
     type = HagelaarElectronBC
     variable = em
     boundary = 'master0_interface'
@@ -296,17 +296,17 @@ dom1Scale=1e-7
     mean_en = mean_en
     r = 0.00
     position_units = ${dom0Scale}
-  [../]
-  [./Arp_physical_right_diffusion]
+  []
+  [Arp_physical_right_diffusion]
     type = HagelaarIonDiffusionBC
     variable = Arp
     boundary = 'master0_interface'
     r = 0
     position_units = ${dom0Scale}
-  [../]
+  []
 
   #Mean electron energy on the plasma-liquid interface
-  [./mean_en_physical_right]
+  [mean_en_physical_right]
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'master0_interface'
@@ -314,100 +314,100 @@ dom1Scale=1e-7
     em = em
     r = 0.00
     position_units = ${dom0Scale}
-  [../]
+  []
 
   #Argon ions on the plasma-liquid interface
-  [./Arp_physical_right_advection]
+  [Arp_physical_right_advection]
     type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'master0_interface'
     potential = potential
     r = 0
     position_units = ${dom0Scale}
-  [../]
+  []
 
   #Electrons on the electrode
-  [./emliq_right]
+  [emliq_right]
     type = DCIonBC
     variable = emliq
     boundary = 'right'
     potential = potential
     position_units = ${dom1Scale}
-  [../]
+  []
   #OH- on the ground electrode
-  [./OHm_physical]
+  [OHm_physical]
     type = DCIonBC
     variable = OHm
     boundary = 'right'
     potential = potential
     position_units = ${dom1Scale}
-  [../]
+  []
 []
 
 #Initial conditions for variables.
 #If left undefine, the IC is zero
 [ICs]
-  [./em_ic]
+  [em_ic]
     type = ConstantIC
     variable = em
     value = -21
     block = 0
-  [../]
-  [./emliq_ic]
+  []
+  [emliq_ic]
     type = ConstantIC
     variable = emliq
     value = -21
     block = 1
-  [../]
-  [./Arp_ic]
+  []
+  [Arp_ic]
     type = ConstantIC
     variable = Arp
     value = -21
     block = 0
-  [../]
-  [./mean_en_ic]
+  []
+  [mean_en_ic]
     type = ConstantIC
     variable = mean_en
     value = -20
     block = 0
-  [../]
-  [./OHm_ic]
+  []
+  [OHm_ic]
     type = ConstantIC
     variable = OHm
     value = -15.6
     block = 1
-  [../]
-  [./potential_ic]
+  []
+  [potential_ic]
     type = FunctionIC
     variable = potential
     function = potential_ic_func
-  [../]
+  []
 []
 
 #Define function used throughout the input file (e.g. BCs and ICs)
 [Functions]
-  [./potential_bc_func]
+  [potential_bc_func]
     type = ParsedFunction
     # value = '1.25*tanh(1e6*t)'
     value = -1.25
-  [../]
-  [./potential_ic_func]
+  []
+  [potential_ic_func]
     type = ParsedFunction
     value = '-1.25 * (1.0001e-3 - x)'
-  [../]
+  []
 []
 
 [Materials]
  #The material properties for electrons and ions in water
- [./water_block]
+ [water_block]
    type = Water
    block = 1
    potential = potential
- [../]
+ []
 
  #The material properties for electrons in plasma
  #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
- [./electrons_in_plasma]
+ [electrons_in_plasma]
    type = GasElectronMoments
    interp_trans_coeffs = true
    interp_elastic_coeff = true
@@ -419,42 +419,42 @@ dom1Scale=1e-7
    mean_en = mean_en
    block = 0
    property_tables_file = 'townsend_coefficients/moments.txt'
- [../]
+ []
 
  #Sets the pressure and temperature in the water
- [./water_block1]
+ [water_block1]
    type = GenericConstantMaterial
    block = 1
    prop_names = 'T_gas p_gas'
    prop_values = '300 1.01e5'
- [../]
+ []
 
  #The material properties of the argon ion
- [./gas_species_0]
+ [gas_species_0]
    type = ADHeavySpecies
    heavy_species_name = Arp
    heavy_species_mass = 6.64e-26
    heavy_species_charge = 1.0
    block = 0
- [../]
+ []
 
  #The material properties of the background argon gas
- [./gas_species_2]
+ [gas_species_2]
    type = ADHeavySpecies
    heavy_species_name = Ar
    heavy_species_mass = 6.64e-26
    heavy_species_charge = 0.0
    block = 0
- [../]
+ []
 []
 
 #Preconditioning options
 #Learn more at: https://mooseframework.inl.gov/syntax/Preconditioning/index.html
 [Preconditioning]
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 []
 
 #How to execute the problem.
@@ -471,20 +471,20 @@ dom1Scale=1e-7
   nl_abs_tol = 7.6e-5
   dtmin = 1e-15
   l_max_its = 20
-  [./TimeStepper]
+  [TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
     dt = 1e-11
     growth_factor = 1.2
     optimal_iterations = 30
-  [../]
+  []
 []
 
 #Defines the output type of the file (multiple output files can be define per run)
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
     execute_on = 'final'
-  [../]
+  []
 []

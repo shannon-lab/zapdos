@@ -1,20 +1,20 @@
 [Mesh]
-  [./file]
+  [file]
     type = FileMeshGenerator
     file = 'Lymberopoulos_paper.msh'
-  [../]
-  [./left]
+  []
+  [left]
     type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
     input = file
-  [../]
-  [./right]
+  []
+  [right]
     type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
     input = left
-  [../]
+  []
 []
 
 [Problem]
@@ -22,111 +22,111 @@
 []
 
 [Variables]
-  [./Ar*]
-  [../]
+  [Ar*]
+  []
 []
 
 [AuxVariables]
-  [./em]
-  [../]
-  [./Ar+]
-  [../]
-  [./mean_en]
-  [../]
-  [./potential]
-  [../]
-  [./Ar*S]
-  [../]
-  [./Ar*T]
-  [../]
+  [em]
+  []
+  [Ar+]
+  []
+  [mean_en]
+  []
+  [potential]
+  []
+  [Ar*S]
+  []
+  [Ar*T]
+  []
 []
 
 [Kernels]
-  [./Ar*_AcclerationByAveraging]
+  [Ar*_AcclerationByAveraging]
     type = AccelerationByAveraging
     variable = Ar*
     density_at_start_cycle = Ar*S
     density_at_end_cycle = Ar*T
     time_of_averaging = 73.74631268e-9
     time_of_acceleration = 2e-6
-  [../]
+  []
 []
 
 [BCs]
-  [./Ar*_physical_right_diffusion]
+  [Ar*_physical_right_diffusion]
     type = LogDensityDirichletBC
     variable = Ar*
     boundary = 'right'
     value = 1e-5
-  [../]
-  [./Ar*_physical_left_diffusion]
+  []
+  [Ar*_physical_left_diffusion]
     type = LogDensityDirichletBC
     variable = Ar*
     boundary = 'left'
     value = 1e-5
-  [../]
+  []
 []
 
 #MultiApp used to calculate the non-accelerated density for 1RF cycle.
 #This is used to get A*T (density at end of cycle)
 [MultiApps]
-  [./Sub]
+  [Sub]
     type = FullSolveMultiApp
     input_files = 'Acceleration_By_Averaging_acceleration_sub.i'
-  [../]
+  []
 []
 
 [Transfers]
-  [./em_to_sub]
+  [em_to_sub]
     type = MultiAppCopyTransfer
     to_multi_app = Sub
     source_variable = em
     variable = em
-  [../]
-  [./Ar+_to_sub]
+  []
+  [Ar+_to_sub]
     type = MultiAppCopyTransfer
     to_multi_app = Sub
     source_variable = Ar+
     variable = Ar+
-  [../]
-  [./mean_en_to_sub]
+  []
+  [mean_en_to_sub]
     type = MultiAppCopyTransfer
     to_multi_app = Sub
     source_variable = mean_en
     variable = mean_en
-  [../]
-  [./potential_to_sub]
+  []
+  [potential_to_sub]
     type = MultiAppCopyTransfer
     to_multi_app = Sub
     source_variable = potential
     variable = potential
-  [../]
-  [./Ar*_to_sub]
+  []
+  [Ar*_to_sub]
     type = MultiAppCopyTransfer
     to_multi_app = Sub
     source_variable = Ar*
     variable = Ar*
-  [../]
+  []
 
-  [./Ar*T_from_sub]
+  [Ar*T_from_sub]
     type = MultiAppCopyTransfer
     from_multi_app = Sub
     source_variable = Ar*
     variable = Ar*T
-  [../]
+  []
 []
 
 [Preconditioning]
   active = 'smp'
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 
-  [./fdp]
+  [fdp]
     type = FDP
     full = true
-  [../]
+  []
 []
 
 [Executioner]
@@ -139,7 +139,7 @@
 
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
-  [../]
+  []
 []

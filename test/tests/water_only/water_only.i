@@ -17,10 +17,10 @@ dom1Scale=1e-7
 []
 
 [Preconditioning]
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 []
 
 [Executioner]
@@ -35,20 +35,20 @@ dom1Scale=1e-7
   dtmin = 1e-12
   l_max_its = 20
   nl_max_its = 20
-  [./TimeStepper]
+  [TimeStepper]
     type = IterationAdaptiveDT
     cutback_factor = 0.4
     dt = 1e-11
     growth_factor = 1.2
     optimal_iterations = 15
-  [../]
+  []
 []
 
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
-  [../]
+  []
 []
 
 [Debug]
@@ -56,259 +56,259 @@ dom1Scale=1e-7
 []
 
 [UserObjects]
-  [./data_provider]
+  [data_provider]
     type = ProvideMobility
     electrode_area = 5.02e-7 # Formerly 3.14e-6
     ballast_resist = 1e6
     e = 1.6e-19
-  [../]
+  []
 []
 
 [Kernels]
-  [./emliq_time_deriv]
+  [emliq_time_deriv]
     type = ElectronTimeDerivative
     variable = emliq
-  [../]
-  [./emliq_advection]
+  []
+  [emliq_advection]
     type = EFieldAdvection
     variable = emliq
     potential = potential
     position_units = ${dom1Scale}
-  [../]
-  [./emliq_diffusion]
+  []
+  [emliq_diffusion]
     type = CoeffDiffusion
     variable = emliq
     position_units = ${dom1Scale}
-  [../]
-  [./emliq_reactant_first_order_rxn]
+  []
+  [emliq_reactant_first_order_rxn]
     type = ReactantFirstOrderRxn
     variable = emliq
-  [../]
-  [./emliq_water_bi_sink]
+  []
+  [emliq_water_bi_sink]
     type = ReactantAARxn
     variable = emliq
-  [../]
+  []
 
-  [./potential_diffusion]
+  [potential_diffusion]
     type = CoeffDiffusionLin
     variable = potential
     position_units = ${dom1Scale}
-  [../]
-  # [./emliq_charge_source]
+  []
+  # [emliq_charge_source]
   #   type = ChargeSourceMoles_KV
   #   variable = potential
   #   charged = emliq
-  # [../]
-  # [./OHm_charge_source]
+  # []
+  # [OHm_charge_source]
   #   type = ChargeSourceMoles_KV
   #   variable = potential
   #   charged = OHm
-  # [../]
+  # []
 
-  [./OHm_time_deriv]
+  [OHm_time_deriv]
     type = ElectronTimeDerivative
     variable = OHm
-  [../]
-  [./OHm_advection]
+  []
+  [OHm_advection]
     type = EFieldAdvection
     variable = OHm
     potential = potential
     position_units = ${dom1Scale}
-  [../]
-  [./OHm_diffusion]
+  []
+  [OHm_diffusion]
     type = CoeffDiffusion
     variable = OHm
     position_units = ${dom1Scale}
-  [../]
-  [./OHm_product_first_order_rxn]
+  []
+  [OHm_product_first_order_rxn]
     type = ProductFirstOrderRxn
     variable = OHm
     v = emliq
-  [../]
-  [./OHm_product_aabb_rxn]
+  []
+  [OHm_product_aabb_rxn]
     type = ProductAABBRxn
     variable = OHm
     v = emliq
-  [../]
+  []
 []
 
 [Variables]
-  [./potential]
-  [../]
-  [./emliq]
-  [../]
-  [./OHm]
-  [../]
+  [potential]
+  []
+  [emliq]
+  []
+  [OHm]
+  []
 []
 
 [AuxVariables]
-  [./x]
+  [x]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./x_node]
-  [../]
-  [./emliq_lin]
+  []
+  [x_node]
+  []
+  [emliq_lin]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./OHm_lin]
+  []
+  [OHm_lin]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./Efield]
+  []
+  [Efield]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./Current_emliq]
+  []
+  [Current_emliq]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./Current_OHm]
+  []
+  [Current_OHm]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./tot_liq_current]
+  []
+  [tot_liq_current]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./tot_flux_OHm]
+  []
+  [tot_flux_OHm]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./EFieldAdvAux_emliq]
+  []
+  [EFieldAdvAux_emliq]
     order = CONSTANT
     family = MONOMIAL
-  [../]
-  [./DiffusiveFlux_emliq]
+  []
+  [DiffusiveFlux_emliq]
     order = CONSTANT
     family = MONOMIAL
-  [../]
+  []
 []
 
 [AuxKernels]
-  [./x_l]
+  [x_l]
     type = Position
     variable = x
     position_units = ${dom1Scale}
-  [../]
-  [./x_nl]
+  []
+  [x_nl]
     type = Position
     variable = x_node
     position_units = ${dom1Scale}
-  [../]
-  [./tot_liq_current]
+  []
+  [tot_liq_current]
     type = ParsedAux
     variable = tot_liq_current
     args = 'Current_emliq Current_OHm'
     function = 'Current_emliq + Current_OHm'
     execute_on = 'timestep_end'
-  [../]
-  [./emliq_lin]
+  []
+  [emliq_lin]
     type = DensityMoles
     variable = emliq_lin
     density_log = emliq
-  [../]
-  [./OHm_lin]
+  []
+  [OHm_lin]
     type = DensityMoles
     variable = OHm_lin
     density_log = OHm
-  [../]
-  [./Efield_l]
+  []
+  [Efield_l]
     type = Efield
     component = 0
     potential = potential
     variable = Efield
     position_units = ${dom1Scale}
-  [../]
-  [./Current_emliq]
+  []
+  [Current_emliq]
     type = ADCurrent
     potential = potential
     density_log = emliq
     variable = Current_emliq
     art_diff = false
     position_units = ${dom1Scale}
-  [../]
-  [./Current_OHm]
+  []
+  [Current_OHm]
     type = ADCurrent
     potential = potential
     density_log = OHm
     variable = Current_OHm
     art_diff = false
     position_units = ${dom1Scale}
-  [../]
-  [./tot_flux_OHm]
+  []
+  [tot_flux_OHm]
     type = ADTotalFlux
     potential = potential
     density_log = OHm
     variable = tot_flux_OHm
-  [../]
-  [./EFieldAdvAux_emliq]
+  []
+  [EFieldAdvAux_emliq]
     type = ADEFieldAdvAux
     potential = potential
     density_log = emliq
     variable = EFieldAdvAux_emliq
     position_units = ${dom1Scale}
-  [../]
-  [./DiffusiveFlux_emliq]
+  []
+  [DiffusiveFlux_emliq]
     type = ADDiffusiveFlux
     density_log = emliq
     variable = DiffusiveFlux_emliq
     position_units = ${dom1Scale}
-  [../]
+  []
 []
 
 [BCs]
-  [./potential_left]
+  [potential_left]
     type = DirichletBC
     value = -6.5e-5
     variable = potential
     boundary = left
-  [../]
-  [./potential_dirichlet_right]
+  []
+  [potential_dirichlet_right]
     type = DirichletBC
     variable = potential
     boundary = right
     value = 0
-  [../]
-  [./emliq_left]
+  []
+  [emliq_left]
     type = NeumannBC
     value = 300
     variable = emliq
     boundary = left
-  [../]
-  [./emliq_right]
+  []
+  [emliq_right]
     type = DCIonBC
     variable = emliq
     boundary = right
     potential = potential
     position_units = ${dom1Scale}
-  [../]
-  [./OHm_physical]
+  []
+  [OHm_physical]
     type = DCIonBC
     variable = OHm
     boundary = 'right'
     potential = potential
     position_units = ${dom1Scale}
-  [../]
+  []
 []
 
 [ICs]
-  [./emliq_ic]
+  [emliq_ic]
     type = ConstantIC
     variable = emliq
     value = -21
-  [../]
-  [./OHm_ic]
+  []
+  [OHm_ic]
     type = ConstantIC
     variable = OHm
     value = -15.6
-  [../]
+  []
 []
 
 [Materials]
- [./water_block]
+ [water_block]
    type = Water
    potential = potential
- [../]
+ []
 []

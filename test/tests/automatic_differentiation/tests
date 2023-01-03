@@ -1,11 +1,11 @@
 [Tests]
-  [./ad_test]
+  [ad_test]
     type = 'Exodiff'
     input = 'ad_argon.i'
     exodiff = 'ad_argon_out.e'
     group = 'automatic_differentiation'
-  [../]
-  [./jacobian_testing]
+  []
+  [jacobian_testing]
     type = 'PetscJacobianTester'
     input = 'ad_argon.i'
     cli_args = 'Outputs/exodus=false Executioner/num_steps=1'
@@ -13,5 +13,5 @@
     ratio_tol = 5e-6
     difference_tol = 1e-1
     group = 'automatic_differentiation'
-  [../]
+  []
 []
