@@ -30,6 +30,16 @@ jobs:
       run: |
         conda activate zapdos
         make -j2
+    - name: Build Zapdos Doxygen
+      uses: mattnotmitt/doxygen-action@v1.9.5
+      with:
+        doxyfile-path: 'doc/doxygen/Doxyfile'
+    # Generated Doxygen files are owned by the root user (the GitHub default user for docker-based actions).
+    # However, we need it to be owned by the runner user. GitHub allows passwordless sudo, so let's do a sudo chown.
+    # See: https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions#user
+    # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#administrative-privileges
+    - name: Set Doxygen files ownership
+      run: sudo chown -R $(id --user):$(id --group) doc/doxygen/doxygen
     # GITHUB_WORKSPACE contains the location of the repository when using the checkout action
     # See: https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
     - name: Build Zapdos documentation
