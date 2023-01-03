@@ -1,5 +1,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.801834.svg)](https://doi.org/10.5281/zenodo.801834)
 
+[![Website Status](https://github.com/shannon-lab/zapdos/actions/workflows/generate_website.yml/badge.svg)](https://github.com/shannon-lab/zapdos/actions/workflows/generate_website.yml)
+
 [![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/shannonlab/zapdos/latest?color=green&label=docker%20latest&logo=docker&logoColor=white)](https://hub.docker.com/r/shannonlab/zapdos)
 
 # Zapdos
