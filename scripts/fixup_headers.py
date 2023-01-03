@@ -82,9 +82,20 @@ def checkAndUpdateCPlusPlus(filename):
             # Now cleanup extra blank lines
             text = re.sub(r'\A(^\s*\n)', '', text)
 
+            # Remove ifdefs in favor of pragmas
+            suffix = os.path.splitext(filename)
+            if suffix[-1] == '.h':
+                text = re.sub(r'^#ifndef\s*\S+_H_?\s*\n#define.*\n', '', text, flags=re.M)
+                text = re.sub(r'^#endif.*\n[\s]*\Z', '', text, flags=re.M)
+
             # Update
             f = open(filename + '~tmp', 'w')
             f.write(header + '\n\n')
+
+            # Insert pragma once if not already present
+            if suffix[-1] == '.h':
+                if not re.search(r'#pragma once', text):
+                    f.write("#pragma once\n")
 
             f.write(text)
             f.close()
