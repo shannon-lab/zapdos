@@ -25,10 +25,9 @@ console output can be sent to a text file:
 The `--color off` option is to de-clutter the log file from extraneous
 mark-up resulting from the displayed console text colors.
 
-For parallelism, users can use the Message Passing Interface protocol (MPI). The 
-[MPICH](https://www.mpich.org/) implementation of MPI is provided with the MOOSE 
-environment packages. A parallel simulation using 4 processors can be run with the 
-following basic syntax:
+For parallelism, users can use the [!ac](MPI) protocol. The [MPICH] implementation of [!ac](MPI) is
+provided with the [!ac](MOOSE) environment packages. A parallel simulation using 4 processors can be
+run with the following basic syntax:
 
 ```bash
 mpiexec -n 4 ~/projects/zapdos/zapdos-opt -i example_input.i
@@ -37,7 +36,15 @@ mpiexec -n 4 ~/projects/zapdos/zapdos-opt -i example_input.i
 Many test input files also create an output file with the name format
 `example_input_out.e` that contains all the simulation results that have been
 selected for output. These results are best viewed using a visualization tool
-like [Paraview](http://www.paraview.org/download/).
+like [ParaView].
+
+## Using Zapdos with Peacock, the MOOSE Graphical User Interface (GUI)
+
+!style halign=left
+While using Zapdos on the command line is the standard and recommended method for using the code and
+visualizing the results, a GUI is available for use through the [!ac](MOOSE) framework. Peacock is a
+general front end for [!ac](MOOSE) input file syntax, simulation, and visualiztion. General directions
+compatible with all [!ac](MOOSE)-based applications can be found [at this link](application_usage/peacock.md).
 
 ## Zapdos Tutorial and Tests
 
