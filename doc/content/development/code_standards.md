@@ -1,20 +1,29 @@
 # Zapdos Code Standards
 
+The Zapdos software coding standards are based on that of the [!ac](MOOSE) framework. As such, the
+following document contains content almost entirely from that standard guide. The original guide can
+be found [here](sqa/framework_scs.md).
+
+## Clang Format
+
 !style halign=left
-Like MOOSE, Zapdos uses `clang-format` with a customized
-[config file](https://github.com/shannon-lab/zapdos/blob/master/.clang-format)
-for code formatting. If you have clang installed, you can run
+!include sqa/framework_scs.md start=[!ac](MOOSE) end=General
 
-```
-git clang-format [<branch>]
-```
+!alert note title=Clang Format in Zapdos
+Like [!ac](MOOSE), Zapdos uses a customized [.clang-format](https://github.com/shannon-lab/zapdos/blob/master/.clang-format)
+file for code formatting.
 
-to automatically format code changed between your currently checked-out branch
-and `<branch>` (if left out, it defaults to the `HEAD` commit). If you don't do
-this before submitting your code, don't worry! The continuous integration
-testing system that runs when you submit a pull request will check your code
-and provide information on the changes needed to conform to the code style (if any).
+## C++ Style Guidelines
 
-For extended information on file guidelines, naming conventions, example code,
-doxygen documentation, and other tips, please see
-[the MOOSE Code Standards page](https://mooseframework.inl.gov/framework_development/code_standards.html).
+!style halign=left
+!include sqa/framework_scs.md start=General end=Python
+
+## Python Style Guidelines
+
+!style halign=left
+!include sqa/framework_scs.md start=Python end=Code Commandments include-start=false
+
+## Code Commandments
+
+!style halign=left
+!include sqa/framework_scs.md start=Commandments include-start=False
