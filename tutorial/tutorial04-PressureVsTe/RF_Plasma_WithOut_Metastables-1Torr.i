@@ -7,7 +7,7 @@
 #A uniform scaling factor of the mesh.
 #E.g if set to 1.0, there is not scaling
 # and if set to 0.010, there mesh is scaled by a cm
-dom0Scale=1.0
+dom0Scale = 1.0
 
 [GlobalParams]
   #Scales the potential by V or kV
@@ -60,7 +60,6 @@ dom0Scale=1.0
     initial_from_file_var = mean_en
   []
 []
-
 
 [DriftDiffusionAction]
   [Plasma]
@@ -158,7 +157,7 @@ dom0Scale=1.0
 #Below is the Sakiyama family of BC
 #(For other BC example, please look at Tutorial 05 and Tutorial 06)
 [BCs]
-#Voltage Boundary Condition
+  #Voltage Boundary Condition
   [potential_left]
     type = FunctionDirichletBC
     variable = potential
@@ -174,25 +173,25 @@ dom0Scale=1.0
     preset = false
   []
 
-#Boundary conditions for electons
-[em_physical_diffusion]
-  type = SakiyamaElectronDiffusionBC
-  variable = em
-  mean_en = mean_en
-  boundary = 'left right'
-  position_units = ${dom0Scale}
-[]
-[em_Ar+_second_emissions]
-  type = SakiyamaSecondaryElectronBC
-  variable = em
-  potential = potential
-  ip = Ar+
-  users_gamma = 0.01
-  boundary = 'left right'
-  position_units = ${dom0Scale}
-[]
+  #Boundary conditions for electons
+  [em_physical_diffusion]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    mean_en = mean_en
+    boundary = 'left right'
+    position_units = ${dom0Scale}
+  []
+  [em_Ar+_second_emissions]
+    type = SakiyamaSecondaryElectronBC
+    variable = em
+    potential = potential
+    ip = Ar+
+    users_gamma = 0.01
+    boundary = 'left right'
+    position_units = ${dom0Scale}
+  []
 
-#Boundary conditions for ions
+  #Boundary conditions for ions
   [Ar+_physical_advection]
     type = SakiyamaIonAdvectionBC
     variable = Ar+
@@ -201,8 +200,7 @@ dom0Scale=1.0
     position_units = ${dom0Scale}
   []
 
-
-#New Boundary conditions for mean energy, should be the same as in paper
+  #New Boundary conditions for mean energy, should be the same as in paper
   [mean_en_physical_diffusion]
     type = SakiyamaEnergyDiffusionBC
     variable = mean_en

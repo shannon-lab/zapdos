@@ -1,4 +1,4 @@
-dom0Scale=25.4e-3
+dom0Scale = 25.4e-3
 
 [GlobalParams]
   potential_units = kV
@@ -83,9 +83,8 @@ dom0Scale=25.4e-3
   []
 []
 
-
 [BCs]
-#Voltage Boundary Condition
+  #Voltage Boundary Condition
   [potential_left]
     type = FunctionDirichletBC
     variable = potential
@@ -101,7 +100,7 @@ dom0Scale=25.4e-3
     preset = false
   []
 
-#Boundary conditions for electons
+  #Boundary conditions for electons
   [em_physical_right]
     type = LymberopoulosElectronBC
     variable = em
@@ -123,7 +122,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   []
 
-#Boundary conditions for ions
+  #Boundary conditions for ions
   [Ar+_physical_right_advection]
     type = LymberopoulosIonBC
     variable = Ar+
@@ -139,7 +138,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   []
 
-#Boundary conditions for mean energy
+  #Boundary conditions for mean energy
   [mean_en_physical_right]
     type = ElectronTemperatureDirichletBC
     variable = mean_en
@@ -156,7 +155,6 @@ dom0Scale=25.4e-3
   []
 
 []
-
 
 [ICs]
   [em_ic]
@@ -244,7 +242,6 @@ dom0Scale=25.4e-3
     full = true
   []
 []
-
 
 [Executioner]
   type = Transient
