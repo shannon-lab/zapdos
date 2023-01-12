@@ -18,8 +18,8 @@
 # Surface charge shields the electric field in the gas region,
 # preventing strong field buildup.
 
-dom0Scale=1e-4
-dom1Scale=1e-4
+dom0Scale = 1e-4
+dom1Scale = 1e-4
 
 [GlobalParams]
   #offset = 40
@@ -105,7 +105,7 @@ dom1Scale=1e-4
     cutback_factor = 0.4
     dt = 1e-9
     growth_factor = 1.2
-   optimal_iterations = 30
+    optimal_iterations = 30
   []
 []
 

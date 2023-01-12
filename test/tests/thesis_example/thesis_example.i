@@ -9,7 +9,6 @@
   dim = 2
 []
 
-
 [Problem]
   type = FEProblem
 []

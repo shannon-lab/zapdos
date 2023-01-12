@@ -2,8 +2,8 @@
 #It is the same as the input file in tests/1d_dc/mean_en.i,
 #execpt some of the Aux Variables are renamed for the Action test
 
-dom0Scale=1e-3
-dom1Scale=1e-7
+dom0Scale = 1e-3
+dom1Scale = 1e-7
 
 [GlobalParams]
   offset = 20
@@ -71,8 +71,8 @@ dom1Scale=1e-7
   # petsc_options_value = 'asm lu'
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
- nl_rel_tol = 1e-4
- nl_abs_tol = 7.6e-5
+  nl_rel_tol = 1e-4
+  nl_abs_tol = 7.6e-5
   dtmin = 1e-12
   l_max_its = 20
   [TimeStepper]
@@ -81,7 +81,7 @@ dom1Scale=1e-7
     dt = 1e-11
     # dt = 1.1
     growth_factor = 1.2
-   optimal_iterations = 15
+    optimal_iterations = 15
   []
 []
 
@@ -404,10 +404,10 @@ dom1Scale=1e-7
     order = CONSTANT
     family = MONOMIAL
   []
-    #[x]
-    #  order = CONSTANT
-    #  family = MONOMIAL
-    #[]
+  #[x]
+  #  order = CONSTANT
+  #  family = MONOMIAL
+  #[]
   [position0]
     order = CONSTANT
     family = MONOMIAL
@@ -430,50 +430,50 @@ dom1Scale=1e-7
     order = CONSTANT
     family = MONOMIAL
   []
-    #[em_lin]
-    #  order = CONSTANT
-    #  family = MONOMIAL
-    #  block = 0
-    #[]
+  #[em_lin]
+  #  order = CONSTANT
+  #  family = MONOMIAL
+  #  block = 0
+  #[]
   [em_density]
     order = CONSTANT
     family = MONOMIAL
     block = 0
   []
-    #[emliq_lin]
-    #  order = CONSTANT
-    #  family = MONOMIAL
-    #  block = 1
-    #[]
+  #[emliq_lin]
+  #  order = CONSTANT
+  #  family = MONOMIAL
+  #  block = 1
+  #[]
   [emliq_density]
     order = CONSTANT
     family = MONOMIAL
     block = 1
   []
-    #[Arp_lin]
-    #  order = CONSTANT
-    #  family = MONOMIAL
-    #  block = 0
-    #[]
+  #[Arp_lin]
+  #  order = CONSTANT
+  #  family = MONOMIAL
+  #  block = 0
+  #[]
   [Arp_density]
     order = CONSTANT
     family = MONOMIAL
     block = 0
   []
-    #[OHm_lin]
-    #  block = 1
-    #  order = CONSTANT
-    #  family = MONOMIAL
-    #[]
+  #[OHm_lin]
+  #  block = 1
+  #  order = CONSTANT
+  #  family = MONOMIAL
+  #[]
   [OHm_density]
     block = 1
     order = CONSTANT
     family = MONOMIAL
   []
-    #[Efield]
-    #  order = CONSTANT
-    #  family = MONOMIAL
-    #[]
+  #[Efield]
+  #  order = CONSTANT
+  #  family = MONOMIAL
+  #[]
   [EFieldx0]
     order = CONSTANT
     family = MONOMIAL
@@ -540,29 +540,29 @@ dom1Scale=1e-7
     block = 1
   []
   [PowerDep_em]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [PowerDep_Arp]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [ProcRate_el]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [ProcRate_ex]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [ProcRate_iz]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
 []
 
@@ -1001,10 +1001,10 @@ dom1Scale=1e-7
     user_se_coeff = 0.05
     block = 0
     property_tables_file = td_argon_mean_en.txt
- []
- [water_block]
-   type = Water
-   block = 1
-   potential = potential
- []
+  []
+  [water_block]
+    type = Water
+    block = 1
+    potential = potential
+  []
 []

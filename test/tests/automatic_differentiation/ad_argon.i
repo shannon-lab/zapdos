@@ -1,4 +1,4 @@
-dom0Scale=1e-3
+dom0Scale = 1e-3
 
 [GlobalParams]
   offset = 30
@@ -94,7 +94,6 @@ dom0Scale=1e-3
     block = 0
     #offset = 25
   []
-
 
   [em_time_deriv]
     type = TimeDerivativeLog
@@ -339,14 +338,14 @@ dom0Scale=1e-3
     block = 0
   []
   [PowerDep_em]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [PowerDep_Arp]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
 []
 

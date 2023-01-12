@@ -1,4 +1,4 @@
-dom0Scale=25.4e-3
+dom0Scale = 25.4e-3
 
 [GlobalParams]
   potential_units = kV
@@ -47,274 +47,272 @@ dom0Scale=25.4e-3
 
 [Kernels]
   #Electron Equations (Same as in paper)
-    #Time Derivative term of electron
-    [em_time_deriv]
-      type = ElectronTimeDerivative
-      variable = em
-    []
-    #Advection term of electron
-    [em_advection]
-      type = EFieldAdvection
-      variable = em
-      potential = potential
-      position_units = ${dom0Scale}
-    []
-    #Diffusion term of electrons
-    [em_diffusion]
-      type = CoeffDiffusion
-      variable = em
-      position_units = ${dom0Scale}
-    []
-    #Net electron production from ionization
-    [em_ionization]
-      type = EEDFReactionLog
-      variable = em
-      electrons = em
-      target = Ar
-      mean_energy = mean_en
-      reaction = 'em + Ar -> em + em + Ar+'
-      coefficient = 1
-    []
-    #Net electron production from step-wise ionization
-    [em_stepwise_ionization]
-      type = EEDFReactionLog
-      variable = em
-      electrons = em
-      target = Ar*
-      mean_energy = mean_en
-      reaction = 'em + Ar* -> em + em + Ar+'
-      coefficient = 1
-    []
-    #Net electron production from metastable pooling
-    [em_pooling]
-      type = ReactionSecondOrderLog
-      variable = em
-      v = Ar*
-      w = Ar*
-      reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
-      coefficient = 1
-    []
+  #Time Derivative term of electron
+  [em_time_deriv]
+    type = ElectronTimeDerivative
+    variable = em
+  []
+  #Advection term of electron
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    potential = potential
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Net electron production from ionization
+  [em_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = 'em + Ar -> em + em + Ar+'
+    coefficient = 1
+  []
+  #Net electron production from step-wise ionization
+  [em_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = 'em + Ar* -> em + em + Ar+'
+    coefficient = 1
+  []
+  #Net electron production from metastable pooling
+  [em_pooling]
+    type = ReactionSecondOrderLog
+    variable = em
+    v = Ar*
+    w = Ar*
+    reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
+    coefficient = 1
+  []
 
   #Argon Ion Equations (Same as in paper)
-    #Time Derivative term of the ions
-    [Ar+_time_deriv]
-      type = ElectronTimeDerivative
-      variable = Ar+
-    []
-    #Advection term of ions
-    [Ar+_advection]
-      type = EFieldAdvection
-      variable = Ar+
-      potential = potential
-      position_units = ${dom0Scale}
-    []
-    [Ar+_diffusion]
-      type = CoeffDiffusion
-      variable = Ar+
-      position_units = ${dom0Scale}
-    []
-    #Net ion production from ionization
-    [Ar+_ionization]
-      type = EEDFReactionLog
-      variable = Ar+
-      electrons = em
-      target = Ar
-      mean_energy = mean_en
-      reaction = 'em + Ar -> em + em + Ar+'
-      coefficient = 1
-    []
-    #Net ion production from step-wise ionization
-    [Ar+_stepwise_ionization]
-      type = EEDFReactionLog
-      variable = Ar+
-      electrons = em
-      target = Ar*
-      mean_energy = mean_en
-      reaction = 'em + Ar* -> em + em + Ar+'
-      coefficient = 1
-    []
-    #Net ion production from metastable pooling
-    [Ar+_pooling]
-      type = ReactionSecondOrderLog
-      variable = Ar+
-      v = Ar*
-      w = Ar*
-      reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
-      coefficient = 1
-    []
+  #Time Derivative term of the ions
+  [Ar+_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar+
+  []
+  #Advection term of ions
+  [Ar+_advection]
+    type = EFieldAdvection
+    variable = Ar+
+    potential = potential
+    position_units = ${dom0Scale}
+  []
+  [Ar+_diffusion]
+    type = CoeffDiffusion
+    variable = Ar+
+    position_units = ${dom0Scale}
+  []
+  #Net ion production from ionization
+  [Ar+_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = 'em + Ar -> em + em + Ar+'
+    coefficient = 1
+  []
+  #Net ion production from step-wise ionization
+  [Ar+_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = 'em + Ar* -> em + em + Ar+'
+    coefficient = 1
+  []
+  #Net ion production from metastable pooling
+  [Ar+_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar+
+    v = Ar*
+    w = Ar*
+    reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
+    coefficient = 1
+  []
 
-    #Argon Excited Equations (Same as in paper)
-      #Time Derivative term of excited Argon
-      [Ar*_time_deriv]
-        type = ElectronTimeDerivative
-        variable = Ar*
-      []
-      #Diffusion term of excited Argon
-      [Ar*_diffusion]
-        type = CoeffDiffusion
-        variable = Ar*
-        position_units = ${dom0Scale}
-      []
-      #Net excited Argon production from excitation
-      [Ar*_excitation]
-        type = EEDFReactionLog
-        variable = Ar*
-        electrons = em
-        target = Ar
-        mean_energy = mean_en
-        reaction = 'em + Ar -> em + Ar*'
-        coefficient = 1
-      []
-      #Net excited Argon loss from step-wise ionization
-      [Ar*_stepwise_ionization]
-        type = EEDFReactionLog
-        variable = Ar*
-        electrons = em
-        target = Ar*
-        mean_energy = mean_en
-        reaction = 'em + Ar* -> em + em + Ar+'
-        coefficient = -1
-      []
-      #Net excited Argon loss from superelastic collisions
-      [Ar*_collisions]
-        type = EEDFReactionLog
-        variable = Ar*
-        electrons = em
-        target = Ar*
-        mean_energy = mean_en
-        reaction = 'em + Ar* -> em + Ar'
-        coefficient = -1
-      []
-      #Net excited Argon loss from quenching to resonant
-      [Ar*_quenching]
-        type = EEDFReactionLog
-        variable = Ar*
-        electrons = em
-        target = Ar*
-        mean_energy = mean_en
-        reaction = 'em + Ar* -> em + Ar_r'
-        coefficient = -1
-      []
-      #Net excited Argon loss from  metastable pooling
-      [Ar*_pooling]
-        type = ReactionSecondOrderLog
-        variable = Ar*
-        v = Ar*
-        w = Ar*
-        reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
-        coefficient = -2
-        _v_eq_u = true
-        _w_eq_u = true
-      []
-      #Net excited Argon loss from two-body quenching
-      [Ar*_2B_quenching]
-        type = ReactionSecondOrderLog
-        variable = Ar*
-        v = Ar*
-        w = Ar
-        reaction = 'Ar* + Ar -> Ar + Ar'
-        coefficient = -1
-        _v_eq_u = true
-      []
-      #Net excited Argon loss from three-body quenching
-      [Ar*_3B_quenching]
-        type = ReactionThirdOrderLog
-        variable = Ar*
-        v = Ar*
-        w = Ar
-        x = Ar
-        reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
-        coefficient = -1
-        _v_eq_u = true
-      []
+  #Argon Excited Equations (Same as in paper)
+  #Time Derivative term of excited Argon
+  [Ar*_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar*
+  []
+  #Diffusion term of excited Argon
+  [Ar*_diffusion]
+    type = CoeffDiffusion
+    variable = Ar*
+    position_units = ${dom0Scale}
+  []
+  #Net excited Argon production from excitation
+  [Ar*_excitation]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = 'em + Ar -> em + Ar*'
+    coefficient = 1
+  []
+  #Net excited Argon loss from step-wise ionization
+  [Ar*_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = 'em + Ar* -> em + em + Ar+'
+    coefficient = -1
+  []
+  #Net excited Argon loss from superelastic collisions
+  [Ar*_collisions]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = 'em + Ar* -> em + Ar'
+    coefficient = -1
+  []
+  #Net excited Argon loss from quenching to resonant
+  [Ar*_quenching]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = 'em + Ar* -> em + Ar_r'
+    coefficient = -1
+  []
+  #Net excited Argon loss from  metastable pooling
+  [Ar*_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar*
+    reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
+    coefficient = -2
+    _v_eq_u = true
+    _w_eq_u = true
+  []
+  #Net excited Argon loss from two-body quenching
+  [Ar*_2B_quenching]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    reaction = 'Ar* + Ar -> Ar + Ar'
+    coefficient = -1
+    _v_eq_u = true
+  []
+  #Net excited Argon loss from three-body quenching
+  [Ar*_3B_quenching]
+    type = ReactionThirdOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
+    coefficient = -1
+    _v_eq_u = true
+  []
 
   #Voltage Equations (Same as in paper)
-    #Voltage term in Poissons Eqaution
-    [potential_diffusion_dom0]
-      type = CoeffDiffusionLin
-      variable = potential
-      position_units = ${dom0Scale}
-    []
-    #Ion term in Poissons Equation
-    [Ar+_charge_source]
-      type = ChargeSourceMoles_KV
-      variable = potential
-      charged = Ar+
-    []
-    #Electron term in Poissons Equation
-    [em_charge_source]
-      type = ChargeSourceMoles_KV
-      variable = potential
-      charged = em
-    []
-
+  #Voltage term in Poissons Eqaution
+  [potential_diffusion_dom0]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = ${dom0Scale}
+  []
+  #Ion term in Poissons Equation
+  [Ar+_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = Ar+
+  []
+  #Electron term in Poissons Equation
+  [em_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = em
+  []
 
   #Since the paper uses electron temperature as a variable, the energy equation is in
   #a different form but should be the same physics
-    #Time Derivative term of electron energy
-    [mean_en_time_deriv]
-      type = ElectronTimeDerivative
-      variable = mean_en
-    []
-    #Advection term of electron energy
-    [mean_en_advection]
-      type = EFieldAdvection
-      variable = mean_en
-      potential = potential
-      position_units = ${dom0Scale}
-    []
-    #Diffusion term of electrons energy
-    [mean_en_diffusion]
-      type = CoeffDiffusion
-      variable = mean_en
-      position_units = ${dom0Scale}
-    []
-    #Joule Heating term
-    [mean_en_joule_heating]
-      type = JouleHeating
-      variable = mean_en
-      potential = potential
-      em = em
-      position_units = ${dom0Scale}
-    []
-    #Energy loss from ionization
-    [Ionization_Loss]
-      type = EEDFEnergyLog
-      variable = mean_en
-      electrons = em
-      target = Ar
-      reaction = 'em + Ar -> em + em + Ar+'
-      threshold_energy = -15.7
-    []
-    #Energy loss from excitation
-    [Excitation_Loss]
-      type = EEDFEnergyLog
-      variable = mean_en
-      electrons = em
-      target = Ar
-      reaction = 'em + Ar -> em + Ar*'
-      threshold_energy = -11.56
-    []
-    #Energy loss from step-wise ionization
-    [Stepwise_Ionization_Loss]
-      type = EEDFEnergyLog
-      variable = mean_en
-      electrons = em
-      target = Ar*
-      reaction = 'em + Ar* -> em + em + Ar+'
-      threshold_energy = -4.14
-    []
-    #Energy gain from superelastic collisions
-    [Collisions_Loss]
-      type = EEDFEnergyLog
-      variable = mean_en
-      electrons = em
-      target = Ar*
-      reaction = 'em + Ar* -> em + Ar'
-      threshold_energy = 11.56
-    []
+  #Time Derivative term of electron energy
+  [mean_en_time_deriv]
+    type = ElectronTimeDerivative
+    variable = mean_en
   []
-
+  #Advection term of electron energy
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    potential = potential
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons energy
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Joule Heating term
+  [mean_en_joule_heating]
+    type = JouleHeating
+    variable = mean_en
+    potential = potential
+    em = em
+    position_units = ${dom0Scale}
+  []
+  #Energy loss from ionization
+  [Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = 'em + Ar -> em + em + Ar+'
+    threshold_energy = -15.7
+  []
+  #Energy loss from excitation
+  [Excitation_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = 'em + Ar -> em + Ar*'
+    threshold_energy = -11.56
+  []
+  #Energy loss from step-wise ionization
+  [Stepwise_Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = 'em + Ar* -> em + em + Ar+'
+    threshold_energy = -4.14
+  []
+  #Energy gain from superelastic collisions
+  [Collisions_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = 'em + Ar* -> em + Ar'
+    threshold_energy = 11.56
+  []
+[]
 
 [AuxVariables]
   #[emDeBug]
@@ -571,9 +569,8 @@ dom0Scale=25.4e-3
   []
 []
 
-
 [BCs]
-#Voltage Boundary Condition, same as in paper
+  #Voltage Boundary Condition, same as in paper
   [potential_left]
     type = FunctionDirichletBC
     variable = potential
@@ -589,7 +586,7 @@ dom0Scale=25.4e-3
     preset = false
   []
 
-#New Boundary conditions for electons, same as in paper
+  #New Boundary conditions for electons, same as in paper
   [em_physical_right]
     type = LymberopoulosElectronBC
     variable = em
@@ -615,7 +612,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   []
 
-#New Boundary conditions for ions, should be the same as in paper
+  #New Boundary conditions for ions, should be the same as in paper
   [Ar+_physical_right_advection]
     type = LymberopoulosIonBC
     variable = Ar+
@@ -631,8 +628,8 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   []
 
-#New Boundary conditions for ions, should be the same as in paper
-#(except the metastables are not set to zero, since Zapdos uses log form)
+  #New Boundary conditions for ions, should be the same as in paper
+  #(except the metastables are not set to zero, since Zapdos uses log form)
   [Ar*_physical_right_diffusion]
     type = LogDensityDirichletBC
     variable = Ar*
@@ -646,7 +643,7 @@ dom0Scale=25.4e-3
     value = 100
   []
 
-#New Boundary conditions for mean energy, should be the same as in paper
+  #New Boundary conditions for mean energy, should be the same as in paper
   [mean_en_physical_right]
     type = ElectronTemperatureDirichletBC
     variable = mean_en
@@ -663,7 +660,6 @@ dom0Scale=25.4e-3
   []
 
 []
-
 
 [ICs]
   [em_ic]
@@ -816,7 +812,6 @@ dom0Scale=25.4e-3
   []
 []
 
-
 [Preconditioning]
   active = 'smp'
   [smp]
@@ -829,7 +824,6 @@ dom0Scale=25.4e-3
     full = true
   []
 []
-
 
 [Executioner]
   type = Transient

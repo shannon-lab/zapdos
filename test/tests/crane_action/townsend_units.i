@@ -1,7 +1,7 @@
 # THIS INPUT FILE IS BASED ON mean_en.i (1d_dc test)
 
-dom0Scale=1e-3
-dom1Scale=1e-7
+dom0Scale = 1e-3
+dom1Scale = 1e-7
 
 [GlobalParams]
   offset = 20
@@ -407,14 +407,14 @@ dom1Scale=1e-7
     block = 1
   []
   [PowerDep_em]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [PowerDep_Arp]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   #[ProcRate_el]
   # order = CONSTANT
@@ -858,32 +858,32 @@ dom1Scale=1e-7
 []
 
 [Materials]
- [water_block]
-   type = Water
-   block = 1
-   potential = potential
- []
+  [water_block]
+    type = Water
+    block = 1
+    potential = potential
+  []
 
- [test]
-   type = GasElectronMoments
-   interp_trans_coeffs = true
-   interp_elastic_coeff = true
-   ramp_trans_coeffs = false
-   user_p_gas = 101325
-   user_se_coeff = 0.05
-   em = em
-   potential = potential
-   mean_en = mean_en
-   block = 0
-   property_tables_file = 'townsend_coefficients/moments.txt'
- []
+  [test]
+    type = GasElectronMoments
+    interp_trans_coeffs = true
+    interp_elastic_coeff = true
+    ramp_trans_coeffs = false
+    user_p_gas = 101325
+    user_se_coeff = 0.05
+    em = em
+    potential = potential
+    mean_en = mean_en
+    block = 0
+    property_tables_file = 'townsend_coefficients/moments.txt'
+  []
 
- [test_block1]
-   type = GenericConstantMaterial
-   block = 1
-   prop_names = 'T_gas p_gas'
-   prop_values = '300 1.01e5'
- []
+  [test_block1]
+    type = GenericConstantMaterial
+    block = 1
+    prop_names = 'T_gas p_gas'
+    prop_values = '300 1.01e5'
+  []
 
   [gas_species_0]
     type = ADHeavySpecies

@@ -1,6 +1,6 @@
 # THIS FILE IS BASED ON Lymberopoulos_with_argon_metastables.i
 
-dom0Scale=25.4e-3
+dom0Scale = 25.4e-3
 
 [GlobalParams]
   potential_units = kV
@@ -49,106 +49,104 @@ dom0Scale=25.4e-3
 
 [Kernels]
   #Electron Equations (Same as in paper)
-    #Time Derivative term of electron
-    [em_time_deriv]
-      type = ElectronTimeDerivative
-      variable = em
-    []
-    #Advection term of electron
-    [em_advection]
-      type = EFieldAdvection
-      variable = em
-      potential = potential
-      position_units = ${dom0Scale}
-    []
-    #Diffusion term of electrons
-    [em_diffusion]
-      type = CoeffDiffusion
-      variable = em
-      position_units = ${dom0Scale}
-    []
+  #Time Derivative term of electron
+  [em_time_deriv]
+    type = ElectronTimeDerivative
+    variable = em
+  []
+  #Advection term of electron
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    potential = potential
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = ${dom0Scale}
+  []
 
   #Argon Ion Equations (Same as in paper)
-    #Time Derivative term of the ions
-    [Ar+_time_deriv]
-      type = ElectronTimeDerivative
-      variable = Ar+
-    []
-    #Advection term of ions
-    [Ar+_advection]
-      type = EFieldAdvection
-      variable = Ar+
-      potential = potential
-      position_units = ${dom0Scale}
-    []
-    [Ar+_diffusion]
-      type = CoeffDiffusion
-      variable = Ar+
-      position_units = ${dom0Scale}
-    []
-      #Time Derivative term of excited Argon
-      [Ar*_time_deriv]
-        type = ElectronTimeDerivative
-        variable = Ar*
-      []
-      #Diffusion term of excited Argon
-      [Ar*_diffusion]
-        type = CoeffDiffusion
-        variable = Ar*
-        position_units = ${dom0Scale}
-      []
+  #Time Derivative term of the ions
+  [Ar+_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar+
+  []
+  #Advection term of ions
+  [Ar+_advection]
+    type = EFieldAdvection
+    variable = Ar+
+    potential = potential
+    position_units = ${dom0Scale}
+  []
+  [Ar+_diffusion]
+    type = CoeffDiffusion
+    variable = Ar+
+    position_units = ${dom0Scale}
+  []
+  #Time Derivative term of excited Argon
+  [Ar*_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar*
+  []
+  #Diffusion term of excited Argon
+  [Ar*_diffusion]
+    type = CoeffDiffusion
+    variable = Ar*
+    position_units = ${dom0Scale}
+  []
 
   #Voltage Equations (Same as in paper)
-    #Voltage term in Poissons Eqaution
-    [potential_diffusion_dom0]
-      type = CoeffDiffusionLin
-      variable = potential
-      position_units = ${dom0Scale}
-    []
-    #Ion term in Poissons Equation
-    [Ar+_charge_source]
-      type = ChargeSourceMoles_KV
-      variable = potential
-      charged = Ar+
-    []
-    #Electron term in Poissons Equation
-    [em_charge_source]
-      type = ChargeSourceMoles_KV
-      variable = potential
-      charged = em
-    []
-
+  #Voltage term in Poissons Eqaution
+  [potential_diffusion_dom0]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = ${dom0Scale}
+  []
+  #Ion term in Poissons Equation
+  [Ar+_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = Ar+
+  []
+  #Electron term in Poissons Equation
+  [em_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = em
+  []
 
   #Since the paper uses electron temperature as a variable, the energy equation is in
   #a different form but should be the same physics
-    #Time Derivative term of electron energy
-    [mean_en_time_deriv]
-      type = ElectronTimeDerivative
-      variable = mean_en
-    []
-    #Advection term of electron energy
-    [mean_en_advection]
-      type = EFieldAdvection
-      variable = mean_en
-      potential = potential
-      position_units = ${dom0Scale}
-    []
-    #Diffusion term of electrons energy
-    [mean_en_diffusion]
-      type = CoeffDiffusion
-      variable = mean_en
-      position_units = ${dom0Scale}
-    []
-    #Joule Heating term
-    [mean_en_joule_heating]
-      type = JouleHeating
-      variable = mean_en
-      potential = potential
-      em = em
-      position_units = ${dom0Scale}
-    []
+  #Time Derivative term of electron energy
+  [mean_en_time_deriv]
+    type = ElectronTimeDerivative
+    variable = mean_en
   []
-
+  #Advection term of electron energy
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    potential = potential
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons energy
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Joule Heating term
+  [mean_en_joule_heating]
+    type = JouleHeating
+    variable = mean_en
+    potential = potential
+    em = em
+    position_units = ${dom0Scale}
+  []
+[]
 
 [AuxVariables]
   [Te]
@@ -274,9 +272,8 @@ dom0Scale=25.4e-3
   []
 []
 
-
 [BCs]
-#Voltage Boundary Condition, same as in paper
+  #Voltage Boundary Condition, same as in paper
   [potential_left]
     type = FunctionDirichletBC
     variable = potential
@@ -292,7 +289,7 @@ dom0Scale=25.4e-3
     preset = false
   []
 
-#New Boundary conditions for electons, same as in paper
+  #New Boundary conditions for electons, same as in paper
   [em_physical_right]
     type = LymberopoulosElectronBC
     variable = em
@@ -318,7 +315,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   []
 
-#New Boundary conditions for ions, should be the same as in paper
+  #New Boundary conditions for ions, should be the same as in paper
   [Ar+_physical_right_advection]
     type = LymberopoulosIonBC
     variable = Ar+
@@ -334,8 +331,8 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   []
 
-#New Boundary conditions for ions, should be the same as in paper
-#(except the metastables are not set to zero, since Zapdos uses log form)
+  #New Boundary conditions for ions, should be the same as in paper
+  #(except the metastables are not set to zero, since Zapdos uses log form)
   [Ar*_physical_right_diffusion]
     type = LogDensityDirichletBC
     variable = Ar*
@@ -349,7 +346,7 @@ dom0Scale=25.4e-3
     value = 100
   []
 
-#New Boundary conditions for mean energy, should be the same as in paper
+  #New Boundary conditions for mean energy, should be the same as in paper
   [mean_en_physical_right]
     type = ElectronTemperatureDirichletBC
     variable = mean_en
@@ -366,7 +363,6 @@ dom0Scale=25.4e-3
   []
 
 []
-
 
 [ICs]
   [em_ic]
@@ -463,7 +459,6 @@ dom0Scale=25.4e-3
   []
 []
 
-
 [Preconditioning]
   active = 'smp'
   [smp]
@@ -476,7 +471,6 @@ dom0Scale=25.4e-3
     full = true
   []
 []
-
 
 [Executioner]
   type = Transient

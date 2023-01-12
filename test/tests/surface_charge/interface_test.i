@@ -5,8 +5,8 @@
 # A MatchedValueBC is also needed to ensure the potential is
 # continuous across the two regions.
 
-dom0Scale=1e-4
-dom1Scale=1e-4
+dom0Scale = 1e-4
+dom1Scale = 1e-4
 
 [Mesh]
   # The mesh file generates the appropriate 1D mesh, but the interfaces
@@ -199,7 +199,6 @@ dom1Scale=1e-4
     prop_names = ' e       N_A      k_boltz  eps         se_energy T_gas  massem   p_gas'
     prop_values = '1.6e-19 6.022e23 1.38e-23 8.854e-12   1.        400    9.11e-31 1.01e5'
   []
-
 
   # Create a constant surface charge on the boundary named 'plasma_side'
   [sc_test]

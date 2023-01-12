@@ -1,5 +1,5 @@
-dom0Scale=1e-3
-dom1Scale=1e-7
+dom0Scale = 1e-3
+dom1Scale = 1e-7
 
 [GlobalParams]
   offset = 20
@@ -70,7 +70,7 @@ dom1Scale=1e-7
     cutback_factor = 0.4
     dt = 1e-11
     growth_factor = 1.2
-   optimal_iterations = 15
+    optimal_iterations = 15
   []
 []
 
@@ -539,29 +539,29 @@ dom1Scale=1e-7
     block = 1
   []
   [PowerDep_em]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [PowerDep_Arp]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [ProcRate_el]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [ProcRate_ex]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [ProcRate_iz]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
 []
 
@@ -1052,31 +1052,31 @@ dom1Scale=1e-7
     block = 0
     property_tables_file = td_argon_mean_en.txt
     position_units = ${dom0Scale}
- []
- [gas_species_0]
-   type = ADHeavySpecies
-   heavy_species_name = Arp
-   heavy_species_mass = 6.64e-26
-   heavy_species_charge = 1.0
-   block = 0
- []
- [gas_species_1]
-   type = ADHeavySpecies
-   heavy_species_name = ArEx
-   heavy_species_mass = 6.64e-26
-   heavy_species_charge = 1.0
-   block = 0
- []
- [gas_species_2]
-   type = ADHeavySpecies
-   heavy_species_name = ArTest
-   heavy_species_mass = 6.64e-26
-   heavy_species_charge = 1.0
-   block = 0
- []
- [water_block]
-   type = Water
-   block = 1
-   potential = potential
- []
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Arp
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    block = 0
+  []
+  [gas_species_1]
+    type = ADHeavySpecies
+    heavy_species_name = ArEx
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    block = 0
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = ArTest
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    block = 0
+  []
+  [water_block]
+    type = Water
+    block = 1
+    potential = potential
+  []
 []
