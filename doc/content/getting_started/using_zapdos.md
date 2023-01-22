@@ -44,7 +44,7 @@ like [ParaView].
 While using Zapdos on the command line is the standard and recommended method for using the code and
 visualizing the results, a GUI is available for use through the [!ac](MOOSE) framework. Peacock is a
 general front end for [!ac](MOOSE) input file syntax, simulation, and visualiztion. General directions
-compatible with all [!ac](MOOSE)-based applications can be found [at this link](application_usage/peacock.md).
+compatible with all [!ac](MOOSE)-based applications can be found [at this link](python/peacock.md).
 
 ## Zapdos Tutorial and Tests
 
