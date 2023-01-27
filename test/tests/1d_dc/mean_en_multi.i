@@ -1029,12 +1029,12 @@ dom1Scale = 1e-7
 [Functions]
   [potential_bc_func]
     type = ParsedFunction
-    # value = '1.25*tanh(1e6*t)'
-    value = -1.25
+    # expression = '1.25*tanh(1e6*t)'
+    expression = -1.25
   []
   [potential_ic_func]
     type = ParsedFunction
-    value = '-1.25 * (1.0001e-3 - x)'
+    expression = '-1.25 * (1.0001e-3 - x)'
   []
 []
 

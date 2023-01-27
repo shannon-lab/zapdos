@@ -691,19 +691,19 @@ dom0Scale = 25.4e-3
 [Functions]
   [potential_bc_func]
     type = ParsedFunction
-    value = '0.100*sin(2*3.1415926*13.56e6*t)'
+    expression = '0.100*sin(2*3.1415926*13.56e6*t)'
   []
   [potential_ic_func]
     type = ParsedFunction
-    value = '0.100 * (25.4e-3 - x)'
+    expression = '0.100 * (25.4e-3 - x)'
   []
   [density_ic_func]
     type = ParsedFunction
-    value = 'log((1e13 + 1e15 * (1-x/1)^2 * (x/1)^2)/6.022e23)'
+    expression = 'log((1e13 + 1e15 * (1-x/1)^2 * (x/1)^2)/6.022e23)'
   []
   [energy_density_ic_func]
     type = ParsedFunction
-    value = 'log(3./2.) + log((1e13 + 1e15 * (1-x/1)^2 * (x/1)^2)/6.022e23)'
+    expression = 'log(3./2.) + log((1e13 + 1e15 * (1-x/1)^2 * (x/1)^2)/6.022e23)'
   []
 []
 

@@ -63,6 +63,6 @@
 [Functions]
   [gauss]
     type = ParsedFunction
-    value = 'exp(-x^2 / 0.2^2) * exp(-y^2 / 0.2^2)'
+    expression = 'exp(-x^2 / 0.2^2) * exp(-y^2 / 0.2^2)'
   []
 []

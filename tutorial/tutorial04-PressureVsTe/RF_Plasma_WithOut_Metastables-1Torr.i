@@ -149,7 +149,7 @@ dom0Scale = 1.0
 [Functions]
   [potential_bc_func]
     type = ParsedFunction
-    value = '0.100*sin(2*3.1415926*13.56e6*t)'
+    expression = '0.100*sin(2*3.1415926*13.56e6*t)'
   []
 []
 

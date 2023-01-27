@@ -166,10 +166,10 @@ dom1Scale = 1e-4
   # GlobalParams block.)
   [potential_input]
     type = ParsedFunction
-    vars = 'f0'
-    vals = '50e3'
-    #value = '-0.75*sin(2*3.1415926*f0*t)'
-    value = '-0.75'
+    symbol_names = 'f0'
+    symbol_values = '50e3'
+    #expression = '-0.75*sin(2*3.1415926*f0*t)'
+    expression = '-0.75'
   []
 
   # Set the initial condition to a line from -10 V on the left and
@@ -177,7 +177,7 @@ dom1Scale = 1e-4
   # (Poisson solver tends to struggle with a uniformly zero potential IC.)
   [potential_ic_func]
     type = ParsedFunction
-    value = '-0.75 * (2.0001e-4 - x)'
+    expression = '-0.75 * (2.0001e-4 - x)'
   []
 []
 

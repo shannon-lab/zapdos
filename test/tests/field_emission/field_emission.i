@@ -646,9 +646,9 @@ vhigh = -0.15 #kV
 [Functions]
   [potential_bc_func]
     type = ParsedFunction
-    vars = 'period dutyCycle riseTime VHigh VLow'
-    vals = '3E-6 0.1 5E-7 ${vhigh} -0.001'
-    value = 'if((t % period) < dutyCycle*period           , VHigh                                                                  ,
+    symbol_names = 'period dutyCycle riseTime VHigh VLow'
+    symbol_values = '3E-6 0.1 5E-7 ${vhigh} -0.001'
+    expression = 'if((t % period) < dutyCycle*period           , VHigh                                                                  ,
                                  if((t % period) < dutyCycle*period + riseTime, ((VLow - VHigh)/riseTime) * ((t % period) - period * dutyCycle) + VHigh,
                                  if((t % period) < period - riseTime          , VLow                                                                                                                               ,
                                  if((t % period) < period                                         , ((VHigh - VLow)/riseTime) * ((t % period) - period) + VHigh            ,
@@ -656,11 +656,11 @@ vhigh = -0.15 #kV
   []
   [potential_ic_func]
     type = ParsedFunction
-    value = '-${vhigh} * (${dom0Size} - x) / ${dom0Size}'
+    expression = '-${vhigh} * (${dom0Size} - x) / ${dom0Size}'
   []
   [cathode_temperature]
     type = ParsedFunction
-    value = 1500
+    expression = 1500
   []
 []
 

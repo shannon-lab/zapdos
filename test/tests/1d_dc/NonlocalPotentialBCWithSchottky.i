@@ -672,13 +672,13 @@ area = 5.02e-7 # Formerly 3.14e-6
 [Functions]
   [potential_bc_func]
     type = ParsedFunction
-    vars = 'VHigh'
-    vals = '${vhigh}'
-    value = 'VHigh'
+    symbol_names = 'VHigh'
+    symbol_values = '${vhigh}'
+    expression = 'VHigh'
   []
   [potential_ic_func]
     type = ParsedFunction
-    value = '-${vhigh} * (${dom0Size} - x) / ${dom0Size}'
+    expression = '-${vhigh} * (${dom0Size} - x) / ${dom0Size}'
   []
 []
 
