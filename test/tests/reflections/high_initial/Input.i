@@ -406,16 +406,16 @@ vhigh = -175E-3 #kV
   [rho]
     type = ParsedAux
     variable = rho
-    args = 'em_lin Arp_lin'
-    function = 'Arp_lin - em_lin'
+    coupled_variables = 'em_lin Arp_lin'
+    expression = 'Arp_lin - em_lin'
     execute_on = 'timestep_end'
     block = 0
   []
   [tot_gas_current]
     type = ParsedAux
     variable = tot_gas_current
-    args = 'Current_em Current_Arp'
-    function = 'Current_em + Current_Arp'
+    coupled_variables = 'Current_em Current_Arp'
+    expression = 'Current_em + Current_Arp'
     execute_on = 'timestep_end'
     block = 0
   []

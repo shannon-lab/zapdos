@@ -575,32 +575,32 @@ dom1Scale = 1e-7
   [rho]
     type = ParsedAux
     variable = rho
-    args = 'em_lin Arp_lin'
-    function = 'Arp_lin - em_lin'
+    coupled_variables = 'em_lin Arp_lin'
+    expression = 'Arp_lin - em_lin'
     execute_on = 'timestep_end'
     block = 0
   []
   [rholiq]
     type = ParsedAux
     variable = rholiq
-    args = 'emliq_lin OHm_lin' # H3Op_lin OHm_lin'
-    function = '-emliq_lin - OHm_lin' # 'H3Op_lin - em_lin - OHm_lin'
+    coupled_variables = 'emliq_lin OHm_lin' # H3Op_lin OHm_lin'
+    expression = '-emliq_lin - OHm_lin' # 'H3Op_lin - em_lin - OHm_lin'
     execute_on = 'timestep_end'
     block = 1
   []
   [tot_gas_current]
     type = ParsedAux
     variable = tot_gas_current
-    args = 'Current_em Current_Arp'
-    function = 'Current_em + Current_Arp'
+    coupled_variables = 'Current_em Current_Arp'
+    expression = 'Current_em + Current_Arp'
     execute_on = 'timestep_end'
     block = 0
   []
   [tot_liq_current]
     type = ParsedAux
     variable = tot_liq_current
-    args = 'Current_emliq Current_OHm' # Current_H3Op Current_OHm'
-    function = 'Current_emliq + Current_OHm' # + Current_H3Op + Current_OHm'
+    coupled_variables = 'Current_emliq Current_OHm' # Current_H3Op Current_OHm'
+    expression = 'Current_emliq + Current_OHm' # + Current_H3Op + Current_OHm'
     execute_on = 'timestep_end'
     block = 1
   []

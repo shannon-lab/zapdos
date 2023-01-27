@@ -404,16 +404,16 @@ dom0Scale = 1e-3
   [rho]
     type = ParsedAux
     variable = rho
-    args = 'em_lin Arp_lin Ar2p_lin'
-    function = 'Arp_lin + Ar2p_lin - em_lin'
+    coupled_variables = 'em_lin Arp_lin Ar2p_lin'
+    expression = 'Arp_lin + Ar2p_lin - em_lin'
     execute_on = 'timestep_end'
     block = 0
   []
   [tot_gas_current]
     type = ParsedAux
     variable = tot_gas_current
-    args = 'Current_em Current_Arp Current_Ar2p'
-    function = 'Current_em + Current_Arp + Current_Ar2p'
+    coupled_variables = 'Current_em Current_Arp Current_Ar2p'
+    expression = 'Current_em + Current_Arp + Current_Ar2p'
     execute_on = 'timestep_end'
     block = 0
   []
