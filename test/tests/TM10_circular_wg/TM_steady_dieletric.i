@@ -148,22 +148,20 @@
   []
 []
 
-
 [Materials]
-   [dielectric]
-     type = ADGenericConstantMaterial
-     prop_names = 'eps_r'
-     prop_values = '3.8'
-     block = 1
-   []
-   [vacuum]
-     type = ADGenericConstantMaterial
-     prop_names = 'eps_r'
-     prop_values = '1'
-     block = 0
-   []
+  [dielectric]
+    type = ADGenericConstantMaterial
+    prop_names = 'eps_r'
+    prop_values = '3.8'
+    block = 1
+  []
+  [vacuum]
+    type = ADGenericConstantMaterial
+    prop_names = 'eps_r'
+    prop_values = '1'
+    block = 0
+  []
 []
-
 
 # [AuxVariables]
 #   [Hphi_mag]

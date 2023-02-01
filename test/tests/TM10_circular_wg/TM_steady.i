@@ -8,7 +8,6 @@
   coord_type = RZ
 []
 
-
 [Problem]
   type = FEProblem
   # kernel_coverage_check = false
@@ -31,7 +30,7 @@
   # petsc_options = '-snes_test_display'
   # petsc_options_iname = '-snes_type'
   # petsc_options_value = 'test'
- # nl_rel_tol = 1e-4
+  # nl_rel_tol = 1e-4
 []
 
 [Outputs]
@@ -105,10 +104,10 @@
 []
 
 [Materials]
-   [vacuum]
-     type = ADGenericConstantMaterial
-     prop_names = 'eps_r'
-     prop_values = '1'
-     block = vacuum
-   []
+  [vacuum]
+    type = ADGenericConstantMaterial
+    prop_names = 'eps_r'
+    prop_values = '1'
+    block = vacuum
+  []
 []

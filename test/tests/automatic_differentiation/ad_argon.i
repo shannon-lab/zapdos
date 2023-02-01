@@ -1,4 +1,4 @@
-dom0Scale=1e-3
+dom0Scale = 1e-3
 
 [GlobalParams]
   offset = 30
@@ -94,7 +94,6 @@ dom0Scale=1e-3
     block = 0
     #offset = 25
   []
-
 
   [em_time_deriv]
     type = TimeDerivativeLog
@@ -339,14 +338,14 @@ dom0Scale=1e-3
     block = 0
   []
   [PowerDep_em]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [PowerDep_Arp]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
 []
 
@@ -405,16 +404,16 @@ dom0Scale=1e-3
   [rho]
     type = ParsedAux
     variable = rho
-    args = 'em_lin Arp_lin Ar2p_lin'
-    function = 'Arp_lin + Ar2p_lin - em_lin'
+    coupled_variables = 'em_lin Arp_lin Ar2p_lin'
+    expression = 'Arp_lin + Ar2p_lin - em_lin'
     execute_on = 'timestep_end'
     block = 0
   []
   [tot_gas_current]
     type = ParsedAux
     variable = tot_gas_current
-    args = 'Current_em Current_Arp Current_Ar2p'
-    function = 'Current_em + Current_Arp + Current_Ar2p'
+    coupled_variables = 'Current_em Current_Arp Current_Ar2p'
+    expression = 'Current_em + Current_Arp + Current_Ar2p'
     execute_on = 'timestep_end'
     block = 0
   []
@@ -633,11 +632,11 @@ dom0Scale=1e-3
 [Functions]
   [potential_bc_func]
     type = ParsedFunction
-    value = -0.8
+    expression = -0.8
   []
   [potential_ic_func]
     type = ParsedFunction
-    value = '-0.8 * (1 - x)'
+    expression = '-0.8 * (1 - x)'
   []
 []
 

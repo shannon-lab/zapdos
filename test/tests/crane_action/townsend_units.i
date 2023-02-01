@@ -1,7 +1,7 @@
 # THIS INPUT FILE IS BASED ON mean_en.i (1d_dc test)
 
-dom0Scale=1e-3
-dom1Scale=1e-7
+dom0Scale = 1e-3
+dom1Scale = 1e-7
 
 [GlobalParams]
   offset = 20
@@ -407,14 +407,14 @@ dom1Scale=1e-7
     block = 1
   []
   [PowerDep_em]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   [PowerDep_Arp]
-   order = CONSTANT
-   family = MONOMIAL
-   block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
   []
   #[ProcRate_el]
   # order = CONSTANT
@@ -515,32 +515,32 @@ dom1Scale=1e-7
   [rho]
     type = ParsedAux
     variable = rho
-    args = 'em_lin Arp_lin'
-    function = 'Arp_lin - em_lin'
+    coupled_variables = 'em_lin Arp_lin'
+    expression = 'Arp_lin - em_lin'
     execute_on = 'timestep_end'
     block = 0
   []
   [rholiq]
     type = ParsedAux
     variable = rholiq
-    args = 'emliq_lin OHm_lin' # H3Op_lin OHm_lin'
-    function = '-emliq_lin - OHm_lin' # 'H3Op_lin - em_lin - OHm_lin'
+    coupled_variables = 'emliq_lin OHm_lin' # H3Op_lin OHm_lin'
+    expression = '-emliq_lin - OHm_lin' # 'H3Op_lin - em_lin - OHm_lin'
     execute_on = 'timestep_end'
     block = 1
   []
   [tot_gas_current]
     type = ParsedAux
     variable = tot_gas_current
-    args = 'Current_em Current_Arp'
-    function = 'Current_em + Current_Arp'
+    coupled_variables = 'Current_em Current_Arp'
+    expression = 'Current_em + Current_Arp'
     execute_on = 'timestep_end'
     block = 0
   []
   [tot_liq_current]
     type = ParsedAux
     variable = tot_liq_current
-    args = 'Current_emliq Current_OHm' # Current_H3Op Current_OHm'
-    function = 'Current_emliq + Current_OHm' # + Current_H3Op + Current_OHm'
+    coupled_variables = 'Current_emliq Current_OHm' # Current_H3Op Current_OHm'
+    expression = 'Current_emliq + Current_OHm' # + Current_H3Op + Current_OHm'
     execute_on = 'timestep_end'
     block = 1
   []
@@ -848,42 +848,42 @@ dom1Scale=1e-7
 [Functions]
   [potential_bc_func]
     type = ParsedFunction
-    # value = '1.25*tanh(1e6*t)'
-    value = -1.25
+    # expression = '1.25*tanh(1e6*t)'
+    expression = -1.25
   []
   [potential_ic_func]
     type = ParsedFunction
-    value = '-1.25 * (1.0001e-3 - x)'
+    expression = '-1.25 * (1.0001e-3 - x)'
   []
 []
 
 [Materials]
- [water_block]
-   type = Water
-   block = 1
-   potential = potential
- []
+  [water_block]
+    type = Water
+    block = 1
+    potential = potential
+  []
 
- [test]
-   type = GasElectronMoments
-   interp_trans_coeffs = true
-   interp_elastic_coeff = true
-   ramp_trans_coeffs = false
-   user_p_gas = 101325
-   user_se_coeff = 0.05
-   em = em
-   potential = potential
-   mean_en = mean_en
-   block = 0
-   property_tables_file = 'townsend_coefficients/moments.txt'
- []
+  [test]
+    type = GasElectronMoments
+    interp_trans_coeffs = true
+    interp_elastic_coeff = true
+    ramp_trans_coeffs = false
+    user_p_gas = 101325
+    user_se_coeff = 0.05
+    em = em
+    potential = potential
+    mean_en = mean_en
+    block = 0
+    property_tables_file = 'townsend_coefficients/moments.txt'
+  []
 
- [test_block1]
-   type = GenericConstantMaterial
-   block = 1
-   prop_names = 'T_gas p_gas'
-   prop_values = '300 1.01e5'
- []
+  [test_block1]
+    type = GenericConstantMaterial
+    block = 1
+    prop_names = 'T_gas p_gas'
+    prop_values = '300 1.01e5'
+  []
 
   [gas_species_0]
     type = ADHeavySpecies

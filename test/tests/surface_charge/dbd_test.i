@@ -18,8 +18,8 @@
 # Surface charge shields the electric field in the gas region,
 # preventing strong field buildup.
 
-dom0Scale=1e-4
-dom1Scale=1e-4
+dom0Scale = 1e-4
+dom1Scale = 1e-4
 
 [GlobalParams]
   #offset = 40
@@ -105,7 +105,7 @@ dom1Scale=1e-4
     cutback_factor = 0.4
     dt = 1e-9
     growth_factor = 1.2
-   optimal_iterations = 30
+    optimal_iterations = 30
   []
 []
 
@@ -457,9 +457,9 @@ dom1Scale=1e-4
   # GlobalParams block.)
   [potential_input]
     type = ParsedFunction
-    vars = 'f0'
-    vals = '50e3'
-    value = '-0.2*sin(2*3.1415926*f0*t)'
+    symbol_names = 'f0'
+    symbol_values = '50e3'
+    expression = '-0.2*sin(2*3.1415926*f0*t)'
   []
 
   # Set the initial condition to a line from -10 V on the left and
@@ -467,7 +467,7 @@ dom1Scale=1e-4
   # (Poisson solver tends to struggle with a uniformly zero potential IC.)
   [potential_ic_func]
     type = ParsedFunction
-    value = '-0.001 * (2.000e-4 - x)'
+    expression = '-0.001 * (2.000e-4 - x)'
   []
 []
 
