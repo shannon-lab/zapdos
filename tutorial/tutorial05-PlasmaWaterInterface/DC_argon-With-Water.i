@@ -3,9 +3,9 @@
 #for electron and mean energy at the water are on lines 297 and 315.
 
 #Scaling for block 0 (Plasma)
-dom0Scale=1e-3
+dom0Scale = 1e-3
 #caling for block 1 (Water)
-dom1Scale=1e-7
+dom1Scale = 1e-7
 
 [GlobalParams]
   # off set for log stabilization, prevents log(0)
@@ -65,42 +65,42 @@ dom1Scale=1e-7
 #since it is present in both Blocks
 #Declare any variable that is present in mulitple blocks in the variables section
 [Variables]
-    [potential]
-    []
+  [potential]
+  []
 []
 
 [DriftDiffusionAction]
-    [Plasma]
-      #User define name for electrons (usually 'em')
-      electrons = em
-      #User define name for ions
-      charged_particle = Arp
-      #User define name for potential (usually 'potential')
-      potential = potential
-      #Set False becuase both areas use the same potential
-      Is_potential_unique = false
-      #User define name for the electron mean energy density (usually 'mean_en')
-      mean_energy = mean_en
-      #Helps prevent the log(0)
-      using_offset = true #helps prevent the log(0)
-      #The position scaling for the mesh, define at top of input file
-      position_units = ${dom0Scale}
-      #Name of material block for plasma
-      block = 0
-      #Additional outputs, such as ElectronTemperature, Current, and EField.
-      Additional_Outputs = 'ElectronTemperature Current EField'
-    []
-    # treats water as a dense plasma
-    [Water]
-      charged_particle = 'emliq OHm'
-      potential = potential
-      Is_potential_unique = false
-      using_offset = true
-      position_units = ${dom1Scale}
-      #Name of material block for water
-      block = 1
-      Additional_Outputs = 'Current EField'
-    []
+  [Plasma]
+    #User define name for electrons (usually 'em')
+    electrons = em
+    #User define name for ions
+    charged_particle = Arp
+    #User define name for potential (usually 'potential')
+    potential = potential
+    #Set False becuase both areas use the same potential
+    Is_potential_unique = false
+    #User define name for the electron mean energy density (usually 'mean_en')
+    mean_energy = mean_en
+    #Helps prevent the log(0)
+    using_offset = true #helps prevent the log(0)
+    #The position scaling for the mesh, define at top of input file
+    position_units = ${dom0Scale}
+    #Name of material block for plasma
+    block = 0
+    #Additional outputs, such as ElectronTemperature, Current, and EField.
+    Additional_Outputs = 'ElectronTemperature Current EField'
+  []
+  # treats water as a dense plasma
+  [Water]
+    charged_particle = 'emliq OHm'
+    potential = potential
+    Is_potential_unique = false
+    using_offset = true
+    position_units = ${dom1Scale}
+    #Name of material block for water
+    block = 1
+    Additional_Outputs = 'Current EField'
+  []
 []
 
 [Reactions]
@@ -388,64 +388,64 @@ dom1Scale=1e-7
 [Functions]
   [potential_bc_func]
     type = ParsedFunction
-    # value = '1.25*tanh(1e6*t)'
-    value = -1.25
+    # expression = '1.25*tanh(1e6*t)'
+    expression = -1.25
   []
   [potential_ic_func]
     type = ParsedFunction
-    value = '-1.25 * (1.0001e-3 - x)'
+    expression = '-1.25 * (1.0001e-3 - x)'
   []
 []
 
 [Materials]
- #The material properties for electrons and ions in water
- [water_block]
-   type = Water
-   block = 1
-   potential = potential
- []
+  #The material properties for electrons and ions in water
+  [water_block]
+    type = Water
+    block = 1
+    potential = potential
+  []
 
- #The material properties for electrons in plasma
- #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
- [electrons_in_plasma]
-   type = GasElectronMoments
-   interp_trans_coeffs = true
-   interp_elastic_coeff = true
-   ramp_trans_coeffs = false
-   user_p_gas = 101325
-   user_se_coeff = 0.05
-   em = em
-   potential = potential
-   mean_en = mean_en
-   block = 0
-   property_tables_file = 'townsend_coefficients/moments.txt'
- []
+  #The material properties for electrons in plasma
+  #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
+  [electrons_in_plasma]
+    type = GasElectronMoments
+    interp_trans_coeffs = true
+    interp_elastic_coeff = true
+    ramp_trans_coeffs = false
+    user_p_gas = 101325
+    user_se_coeff = 0.05
+    em = em
+    potential = potential
+    mean_en = mean_en
+    block = 0
+    property_tables_file = 'townsend_coefficients/moments.txt'
+  []
 
- #Sets the pressure and temperature in the water
- [water_block1]
-   type = GenericConstantMaterial
-   block = 1
-   prop_names = 'T_gas p_gas'
-   prop_values = '300 1.01e5'
- []
+  #Sets the pressure and temperature in the water
+  [water_block1]
+    type = GenericConstantMaterial
+    block = 1
+    prop_names = 'T_gas p_gas'
+    prop_values = '300 1.01e5'
+  []
 
- #The material properties of the argon ion
- [gas_species_0]
-   type = ADHeavySpecies
-   heavy_species_name = Arp
-   heavy_species_mass = 6.64e-26
-   heavy_species_charge = 1.0
-   block = 0
- []
+  #The material properties of the argon ion
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Arp
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    block = 0
+  []
 
- #The material properties of the background argon gas
- [gas_species_2]
-   type = ADHeavySpecies
-   heavy_species_name = Ar
-   heavy_species_mass = 6.64e-26
-   heavy_species_charge = 0.0
-   block = 0
- []
+  #The material properties of the background argon gas
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    block = 0
+  []
 []
 
 #Preconditioning options

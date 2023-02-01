@@ -5,7 +5,7 @@
 #A uniform scaling factor of the mesh.
 #E.g if set to 1.0, there is not scaling
 # and if set to 0.010, there mesh is scaled by a cm
-dom0Scale=1.0
+dom0Scale = 1.0
 
 [GlobalParams]
   #Scales the potential by V or kV
@@ -74,9 +74,8 @@ dom0Scale=1.0
   []
 []
 
-
 [BCs]
-#Voltage Boundary Condition
+  #Voltage Boundary Condition
   [potential_left]
     type = DirichletBC
     variable = potential
@@ -102,7 +101,6 @@ dom0Scale=1.0
     position_units = ${dom0Scale}
   []
 []
-
 
 #Initial conditions for variables.
 #If left undefine, the IC is zero

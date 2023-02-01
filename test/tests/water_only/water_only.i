@@ -1,4 +1,4 @@
-dom1Scale=1e-7
+dom1Scale = 1e-7
 
 [GlobalParams]
   potential_units = kV
@@ -200,8 +200,8 @@ dom1Scale=1e-7
   [tot_liq_current]
     type = ParsedAux
     variable = tot_liq_current
-    args = 'Current_emliq Current_OHm'
-    function = 'Current_emliq + Current_OHm'
+    coupled_variables = 'Current_emliq Current_OHm'
+    expression = 'Current_emliq + Current_OHm'
     execute_on = 'timestep_end'
   []
   [emliq_lin]
@@ -307,8 +307,8 @@ dom1Scale=1e-7
 []
 
 [Materials]
- [water_block]
-   type = Water
-   potential = potential
- []
+  [water_block]
+    type = Water
+    potential = potential
+  []
 []

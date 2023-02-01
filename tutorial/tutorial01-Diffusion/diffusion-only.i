@@ -5,7 +5,7 @@
 #A uniform scaling factor of the mesh.
 #E.g if set to 1.0, there is not scaling
 # and if set to 0.010, there mesh is scaled by a cm
-dom0Scale=1.0
+dom0Scale = 1.0
 
 [GlobalParams]
   #Scales the potential by V or kV
@@ -13,7 +13,6 @@ dom0Scale=1.0
   #Converts density from #/m^3 to moles/m^3
   use_moles = true
 []
-
 
 [Mesh]
   #Sets up a 1D mesh from 0 to 0.5m with 1000 element
@@ -130,8 +129,8 @@ dom0Scale=1.0
 []
 
 [BCs]
-#Dirichlet boundary conditions for mole-log density
-#Value is in #/m^3
+  #Dirichlet boundary conditions for mole-log density
+  #Value is in #/m^3
   [Ar+_physical_right_diffusion]
     type = LogDensityDirichletBC
     variable = Ar+
