@@ -8,7 +8,8 @@ on:
 jobs:
   build-website:
     runs-on: ubuntu-latest
-    # https://github.com/marketplace/actions/setup-miniconda#use-a-default-shell
+    # Set up a default shell for all steps
+    # See: https://github.com/marketplace/actions/setup-miniconda#use-a-default-shell
     defaults:
       run:
         shell: bash -el {0}
@@ -24,46 +25,26 @@ jobs:
         use-mamba: true
         activate-environment: zapdos
         environment-file: scripts/conda_environment.yml
-    # Note for build step: GitHub-hosted runners are currently limited to 2 cores
+    # GitHub-hosted runners are currently limited to 2 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build Zapdos
       run: |
         conda activate zapdos
         make -j2
-    - name: Build Zapdos Doxygen
+    - name: Build Doxygen
       uses: mattnotmitt/doxygen-action@v1.9.5
       with:
         doxyfile-path: 'doc/Doxyfile'
-    # Generated Doxygen files are owned by the root user (the GitHub default user for docker-based actions).
-    # However, we need it to be owned by the runner user. GitHub allows passwordless sudo, so let's do a sudo chown.
-    # See: https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions#user
-    # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#administrative-privileges
-    - name: Set Doxygen files ownership
-      run: sudo chown -R $(id --user):$(id --group) doc/doxygen/doxygen
-    # GITHUB_WORKSPACE contains the location of the repository when using the checkout action
-    # See: https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
-    - name: Build Zapdos documentation
+    - name: Build MooseDocs
       run: |
         cd doc
-        ./moosedocs.py build --destination=$GITHUB_WORKSPACE/../zapdos-site
-    - name: Clean-up Zapdos
-      run: |
-        git submodule deinit -f moose crane squirrel
-        git clean -xfd
-        git reset --hard HEAD
-    # GITHUB_SHA contains the commit SHA that triggered the workflow (the head commit of the master branch)
-    - name: Checkout gh-pages and push new website
-      run: |
-        git fetch origin gh-pages
-        git checkout gh-pages
-        rm -rf *
-        cd $GITHUB_WORKSPACE/../zapdos-site
-        rm test.html
-        mv * $GITHUB_WORKSPACE
-        cd $GITHUB_WORKSPACE
-        git status
-        git config user.name github-actions
-        git config user.email actions@github.com
-        git add .
-        git commit -m "Update zapdos website based on $GITHUB_SHA"
-        git push origin gh-pages
+        ./moosedocs.py build --destination site
+    - name: Update gh-pages branch
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./doc/site
+        user_name: github-actions
+        user_email: actions@github.com
+        commit_message: "Update zapdos website based on"
+        # The commit SHA that triggered the action is added to the end of the above message.
