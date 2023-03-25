@@ -1,5 +1,5 @@
 # DON'T FORGET: Modify this hash to be consistent with the MOOSE submodule!
-FROM idaholab/moose:a96cca0a04c585a7d0719c129ff9d295f9be444a
+FROM idaholab/moose:71ed48bb8f47be13cdbc3d1deedba07e7d0b396e
 
 WORKDIR /opt
 
