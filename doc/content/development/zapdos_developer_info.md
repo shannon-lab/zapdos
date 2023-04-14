@@ -7,13 +7,10 @@ is desired, please refer to the [moose_developer_info.md] page.
 ## Update and Build a New Docker Container
 
 !style halign=left
-The Zapdos docker container image should be updated whenever Zapdos source code or submodules (CRANE,
-Squirrel, or MOOSE) are updated and those changes are merged into the master branch. Whenever the
-MOOSE submodule is updated, in particular, the submodule git commit hash must be copied and entered
-into the `Dockerfile` so that the proper MOOSE docker image can be used with the Zapdos image.
-
-To build a new docker container, first fetch the most up-to-date version of the Zapdos master branch.
-Assuming that Zapdos is stored in `~/projects/` and that your `upstream` remote is referencing
+The Zapdos docker container image should be updated whenever Zapdos source code or that of submodules
+(CRANE, Squirrel, or MOOSE) are updated and those changes are merged into the master branch. To build
+a new docker container, first fetch the most up-to-date version of the Zapdos master branch. Assuming
+that Zapdos is stored in `~/projects/` and that your `upstream` remote is referencing
 [shannon-lab/zapdos](https://github.com/shannon-lab/zapdos.git):
 
 ```bash
@@ -68,7 +65,3 @@ INFO: Push to Docker Hub disabled. If desired in the future, run this script
       docker push shannonlab/zapdos:2c4a214d4d55106ac6c8c9058e3b224a46ba416d
       docker push shannonlab/zapdos:latest
 ```
-
-
-
-

@@ -1,5 +1,5 @@
-# DON'T FORGET: Modify this hash to be consistent with the MOOSE submodule!
-FROM idaholab/moose:5e60aeb38c948f5db9e98b2080724b87188f5ee2
+# Template variable is replaced with hash when build_docker.sh is run!
+FROM idaholab/moose:{{MOOSE_HASH}}
 
 WORKDIR /opt
 
