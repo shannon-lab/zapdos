@@ -535,12 +535,14 @@ dom0Scale = 25.4e-3
     variable = potential
     boundary = 'left'
     function = potential_bc_func
+    preset = false
   []
   [potential_dirichlet_right]
     type = DirichletBC
     variable = potential
     boundary = 'right'
     value = 0
+    preset = false
   []
 
   #New Boundary conditions for electons, same as in paper
@@ -667,6 +669,10 @@ dom0Scale = 25.4e-3
 []
 
 [Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
   [GasBasics]
     type = GasElectronMoments
     interp_trans_coeffs = false

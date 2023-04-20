@@ -39,8 +39,9 @@ protected:
    *  @param potential_name The name of the electrostatic potential
    *  @param charged_particle_name The name of the charge particle density
    */
-  virtual void addChargeSourceKernels(const std::string & potential_name,
-                                      const std::string & charged_particle_name);
+  virtual void addChargeSourceKernels(const std::string & field_name,
+                                      const std::string & charged_particle_name,
+                                      const MooseEnum & field_solver);
 
   /**
    *  Helper function that supplies the Kernels for drift-diffusion for the electrons,
@@ -53,7 +54,7 @@ protected:
    *  @param energy True if the density is a mean energy density variable
    */
   virtual void addADKernels(const std::string & name,
-                            const std::string & potential_name,
+                            const std::string & field_name,
                             const bool & Using_offset,
                             const bool & charged,
                             const bool & energy);
@@ -78,7 +79,7 @@ protected:
    *  @param particle_name The name of the charge density variable
    *  @param potential_name The name of the electrostatic potential
    */
-  virtual void addCurrent(const std::string & particle_name, const std::string & potential_name);
+  virtual void addCurrent(const std::string & particle_name, const std::string & field_property_name);
 
   /**
    *  Helper function that supplies the Aux kernels for the electric field
@@ -88,6 +89,7 @@ protected:
    *  @param component The spatial component defined as x=0, y=1, and z=2
    */
   virtual void addEfield(const std::string & Efield_name,
-                         const std::string & potential_name,
+                         const std::string & field_property_name,
                          const int & component);
+  virtual void addFieldSolverMaterial(const std::string & field_name, const std::string & field_property_name, const MooseEnum & field_solver, const bool & effective_field);
 };

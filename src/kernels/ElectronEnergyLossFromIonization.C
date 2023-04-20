@@ -16,7 +16,6 @@ InputParameters
 ElectronEnergyLossFromIonization::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("potential", "The potential.");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<std::string>("field_property_name",
