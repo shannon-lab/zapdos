@@ -108,7 +108,6 @@ dom0Scale = 25.4e-3
     emission_coeffs = 0.01
     ks = 1.19e5
     ions = Ar+
-    potential = potential
     position_units = ${dom0Scale}
   []
   [em_physical_left]
@@ -118,7 +117,6 @@ dom0Scale = 25.4e-3
     emission_coeffs = 0.01
     ks = 1.19e5
     ions = Ar+
-    potential = potential
     position_units = ${dom0Scale}
   []
 
@@ -126,14 +124,12 @@ dom0Scale = 25.4e-3
   [Ar+_physical_right_advection]
     type = LymberopoulosIonBC
     variable = Ar+
-    potential = potential
     boundary = 'right'
     position_units = ${dom0Scale}
   []
   [Ar+_physical_left_advection]
     type = LymberopoulosIonBC
     variable = Ar+
-    potential = potential
     boundary = 'left'
     position_units = ${dom0Scale}
   []
@@ -208,7 +204,6 @@ dom0Scale = 25.4e-3
     ramp_trans_coeffs = false
     user_p_gas = 133.322
     em = em
-    potential = potential
     mean_en = mean_en
     user_electron_mobility = 30.0
     user_electron_diffusion_coeff = 119.8757763975

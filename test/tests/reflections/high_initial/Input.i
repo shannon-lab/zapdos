@@ -98,7 +98,6 @@ vhigh = -175E-3 #kV
   [em_advection]
     type = EFieldAdvection
     variable = em
-    potential = potential
     block = 0
     position_units = ${dom0Scale}
   []
@@ -112,7 +111,6 @@ vhigh = -175E-3 #kV
     type = ElectronsFromIonization
     em = em
     variable = em
-    potential = potential
     mean_en = mean_en
     block = 0
     position_units = ${dom0Scale}
@@ -151,7 +149,6 @@ vhigh = -175E-3 #kV
   [Arp_advection]
     type = EFieldAdvection
     variable = Arp
-    potential = potential
     position_units = ${dom0Scale}
     block = 0
   []
@@ -164,7 +161,6 @@ vhigh = -175E-3 #kV
   [Arp_ionization]
     type = IonsFromIonization
     variable = Arp
-    potential = potential
     em = em
     mean_en = mean_en
     block = 0
@@ -184,7 +180,6 @@ vhigh = -175E-3 #kV
   [mean_en_advection]
     type = EFieldAdvection
     variable = mean_en
-    potential = potential
     block = 0
     position_units = ${dom0Scale}
   []
@@ -197,7 +192,6 @@ vhigh = -175E-3 #kV
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    potential = potential
     em = em
     block = 0
     position_units = ${dom0Scale}
@@ -205,7 +199,6 @@ vhigh = -175E-3 #kV
   [mean_en_ionization]
     type = ElectronEnergyLossFromIonization
     variable = mean_en
-    potential = potential
     em = em
     block = 0
     position_units = ${dom0Scale}
@@ -213,7 +206,6 @@ vhigh = -175E-3 #kV
   [mean_en_elastic]
     type = ElectronEnergyLossFromElastic
     variable = mean_en
-    potential = potential
     em = em
     block = 0
     position_units = ${dom0Scale}
@@ -221,7 +213,6 @@ vhigh = -175E-3 #kV
   [mean_en_excitation]
     type = ElectronEnergyLossFromExcitation
     variable = mean_en
-    potential = potential
     em = em
     block = 0
     position_units = ${dom0Scale}
@@ -235,7 +226,6 @@ vhigh = -175E-3 #kV
   #       [mean_en_advection_stabilization]
   #               type = EFieldArtDiff
   #               variable = mean_en
-  #               potential = potential
   #               block = 0
   #       []
 []
@@ -342,7 +332,6 @@ vhigh = -175E-3 #kV
   [PowerDep_em]
     type = ADPowerDep
     density_log = em
-    potential = potential
     art_diff = false
     potential_units = kV
     variable = PowerDep_em
@@ -352,7 +341,6 @@ vhigh = -175E-3 #kV
   [PowerDep_Arp]
     type = ADPowerDep
     density_log = Arp
-    potential = potential
     art_diff = false
     potential_units = kV
     variable = PowerDep_Arp
@@ -362,7 +350,6 @@ vhigh = -175E-3 #kV
   [ProcRate_el]
     type = ADProcRate
     em = em
-    potential = potential
     proc = el
     variable = ProcRate_el
     position_units = ${dom0Scale}
@@ -371,7 +358,6 @@ vhigh = -175E-3 #kV
   [ProcRate_ex]
     type = ADProcRate
     em = em
-    potential = potential
     proc = ex
     variable = ProcRate_ex
     position_units = ${dom0Scale}
@@ -380,7 +366,6 @@ vhigh = -175E-3 #kV
   [ProcRate_iz]
     type = ADProcRate
     em = em
-    potential = potential
     proc = iz
     variable = ProcRate_iz
     position_units = ${dom0Scale}
@@ -438,14 +423,12 @@ vhigh = -175E-3 #kV
   [Efield_g]
     type = Efield
     component = 0
-    potential = potential
     variable = Efield
     position_units = ${dom0Scale}
     block = 0
   []
   [Current_em]
     type = ADCurrent
-    potential = potential
     density_log = em
     variable = Current_em
     art_diff = false
@@ -454,7 +437,6 @@ vhigh = -175E-3 #kV
   []
   [Current_Arp]
     type = ADCurrent
-    potential = potential
     density_log = Arp
     variable = Current_Arp
     art_diff = false
@@ -463,7 +445,6 @@ vhigh = -175E-3 #kV
   []
   [EFieldAdvAux_em]
     type = ADEFieldAdvAux
-    potential = potential
     density_log = em
     variable = EFieldAdvAux_em
     block = 0
@@ -506,7 +487,6 @@ vhigh = -175E-3 #kV
     type = SecondaryElectronBC
     variable = em
     boundary = 'left'
-    potential = potential
     ions = Arp
     electron_energy = mean_en
     r = 1
@@ -518,7 +498,6 @@ vhigh = -175E-3 #kV
     type = HagelaarElectronBC
     variable = em
     boundary = 'left'
-    potential = potential
     electron_energy = mean_en
     r = 0
     position_units = ${dom0Scale}
@@ -528,7 +507,6 @@ vhigh = -175E-3 #kV
     type = HagelaarElectronBC
     variable = em
     boundary = right
-    potential = potential
     electron_energy = mean_en
     r = 0
     position_units = ${dom0Scale}
@@ -546,7 +524,6 @@ vhigh = -175E-3 #kV
     type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'left'
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
@@ -562,7 +539,6 @@ vhigh = -175E-3 #kV
     type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = right
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
@@ -572,7 +548,6 @@ vhigh = -175E-3 #kV
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'left'
-    potential = potential
     electrons = em
     r = 0
     position_units = ${dom0Scale}
@@ -582,7 +557,6 @@ vhigh = -175E-3 #kV
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = right
-    potential = potential
     electrons = em
     r = 0
     position_units = ${dom0Scale}
@@ -642,7 +616,6 @@ vhigh = -175E-3 #kV
     interp_elastic_coeff = true
     ramp_trans_coeffs = false
     em = em
-    potential = potential
     ip = Arp
     mean_en = mean_en
     user_se_coeff = 0.01

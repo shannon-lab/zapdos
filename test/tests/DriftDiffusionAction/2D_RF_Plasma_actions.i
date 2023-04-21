@@ -535,7 +535,6 @@ dom0Scale = 25.4e-3
     ramp_trans_coeffs = false
     user_p_gas = 133.322
     em = em
-    potential = potential
     mean_en = mean_en
     user_se_coeff = 0.00
     property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt

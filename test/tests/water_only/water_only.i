@@ -74,7 +74,6 @@ dom1Scale = 1e-7
   [emliq_advection]
     type = EFieldAdvection
     variable = emliq
-    potential = potential
     position_units = ${dom1Scale}
   []
   [emliq_diffusion]
@@ -114,7 +113,6 @@ dom1Scale = 1e-7
   [OHm_advection]
     type = EFieldAdvection
     variable = OHm
-    potential = potential
     position_units = ${dom1Scale}
   []
   [OHm_diffusion]
@@ -219,13 +217,11 @@ dom1Scale = 1e-7
   [Efield_l]
     type = Efield
     component = 0
-    potential = potential
     variable = Efield
     position_units = ${dom1Scale}
   []
   [Current_emliq]
     type = ADCurrent
-    potential = potential
     density_log = emliq
     variable = Current_emliq
     art_diff = false
@@ -233,7 +229,6 @@ dom1Scale = 1e-7
   []
   [Current_OHm]
     type = ADCurrent
-    potential = potential
     density_log = OHm
     variable = Current_OHm
     art_diff = false
@@ -241,13 +236,11 @@ dom1Scale = 1e-7
   []
   [tot_flux_OHm]
     type = ADTotalFlux
-    potential = potential
     density_log = OHm
     variable = tot_flux_OHm
   []
   [EFieldAdvAux_emliq]
     type = ADEFieldAdvAux
-    potential = potential
     density_log = emliq
     variable = EFieldAdvAux_emliq
     position_units = ${dom1Scale}
@@ -283,14 +276,12 @@ dom1Scale = 1e-7
     type = DCIonBC
     variable = emliq
     boundary = right
-    potential = potential
     position_units = ${dom1Scale}
   []
   [OHm_physical]
     type = DCIonBC
     variable = OHm
     boundary = 'right'
-    potential = potential
     position_units = ${dom1Scale}
   []
 []
@@ -311,7 +302,6 @@ dom1Scale = 1e-7
 [Materials]
  [water_block]
    type = Water
-   potential = potential
  []
  [field_solver]
    type = FieldSolverMaterial

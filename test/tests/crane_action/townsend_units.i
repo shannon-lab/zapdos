@@ -108,7 +108,6 @@ dom1Scale = 1e-7
   [em_advection]
     type = EFieldAdvection
     variable = em
-    potential = potential
     block = 0
     position_units = ${dom0Scale}
   []
@@ -133,7 +132,6 @@ dom1Scale = 1e-7
   [emliq_advection]
     type = EFieldAdvection
     variable = emliq
-    potential = potential
     block = 1
     position_units = ${dom1Scale}
   []
@@ -195,7 +193,6 @@ dom1Scale = 1e-7
   [Arp_advection]
     type = EFieldAdvection
     variable = Arp
-    potential = potential
     position_units = ${dom0Scale}
     block = 0
   []
@@ -220,7 +217,6 @@ dom1Scale = 1e-7
   [OHm_advection]
     type = EFieldAdvection
     variable = OHm
-    potential = potential
     block = 1
     position_units = ${dom1Scale}
   []
@@ -244,7 +240,6 @@ dom1Scale = 1e-7
   [mean_en_advection]
     type = EFieldAdvection
     variable = mean_en
-    potential = potential
     block = 0
     position_units = ${dom0Scale}
   []
@@ -257,7 +252,6 @@ dom1Scale = 1e-7
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    potential = potential
     em = em
     block = 0
     position_units = ${dom0Scale}
@@ -439,7 +433,6 @@ dom1Scale = 1e-7
   [PowerDep_em]
     type = ADPowerDep
     density_log = em
-    potential = potential
     art_diff = false
     potential_units = kV
     variable = PowerDep_em
@@ -449,7 +442,6 @@ dom1Scale = 1e-7
   [PowerDep_Arp]
     type = ADPowerDep
     density_log = Arp
-    potential = potential
     art_diff = false
     potential_units = kV
     variable = PowerDep_Arp
@@ -459,7 +451,6 @@ dom1Scale = 1e-7
   #[ProcRate_el]
   #  type = ProcRate
   #  em = em
-  #  potential = potential
   #  proc = el
   #  variable = ProcRate_el
   #  position_units = ${dom0Scale}
@@ -468,7 +459,6 @@ dom1Scale = 1e-7
   #[ProcRate_ex]
   #  type = ProcRate
   #  em = em
-  #  potential = potential
   #  proc = ex
   #  variable = ProcRate_ex
   #  position_units = ${dom0Scale}
@@ -477,7 +467,6 @@ dom1Scale = 1e-7
   #[ProcRate_iz]
   #  type = ProcRate
   #  em = em
-  #  potential = potential
   #  proc = iz
   #  variable = ProcRate_iz
   #  position_units = ${dom0Scale}
@@ -573,7 +562,6 @@ dom1Scale = 1e-7
   [Efield_g]
     type = Efield
     component = 0
-    potential = potential
     variable = Efield
     position_units = ${dom0Scale}
     block = 0
@@ -581,14 +569,12 @@ dom1Scale = 1e-7
   [Efield_l]
     type = Efield
     component = 0
-    potential = potential
     variable = Efield
     position_units = ${dom1Scale}
     block = 1
   []
   [Current_em]
     type = ADCurrent
-    potential = potential
     density_log = em
     variable = Current_em
     art_diff = false
@@ -597,7 +583,6 @@ dom1Scale = 1e-7
   []
   [Current_emliq]
     type = ADCurrent
-    potential = potential
     density_log = emliq
     variable = Current_emliq
     art_diff = false
@@ -606,7 +591,6 @@ dom1Scale = 1e-7
   []
   [Current_Arp]
     type = ADCurrent
-    potential = potential
     density_log = Arp
     variable = Current_Arp
     art_diff = false
@@ -616,7 +600,6 @@ dom1Scale = 1e-7
   [Current_OHm]
     block = 1
     type = ADCurrent
-    potential = potential
     density_log = OHm
     variable = Current_OHm
     art_diff = false
@@ -625,13 +608,11 @@ dom1Scale = 1e-7
   [tot_flux_OHm]
     block = 1
     type = ADTotalFlux
-    potential = potential
     density_log = OHm
     variable = tot_flux_OHm
   []
   [EFieldAdvAux_em]
     type = ADEFieldAdvAux
-    potential = potential
     density_log = em
     variable = EFieldAdvAux_em
     block = 0
@@ -646,7 +627,6 @@ dom1Scale = 1e-7
   []
   [EFieldAdvAux_emliq]
     type = ADEFieldAdvAux
-    potential = potential
     density_log = emliq
     variable = EFieldAdvAux_emliq
     block = 1
@@ -664,7 +644,6 @@ dom1Scale = 1e-7
 [InterfaceKernels]
   [em_advection]
     type = InterfaceAdvection
-    potential_neighbor = potential
     neighbor_var = em
     variable = emliq
     boundary = master1_interface
@@ -686,7 +665,6 @@ dom1Scale = 1e-7
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'master0_interface'
-    potential = potential
     electrons = em
     r = 0.99
     #r = 0.0
@@ -696,7 +674,6 @@ dom1Scale = 1e-7
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'left'
-    potential = potential
     electrons = em
     r = 0
     position_units = ${dom0Scale}
@@ -705,7 +682,6 @@ dom1Scale = 1e-7
     type = SecondaryElectronEnergyBC
     variable = mean_en
     boundary = 'left'
-    potential = potential
     electrons = em
     ions = 'Arp'
     r = 0
@@ -737,7 +713,6 @@ dom1Scale = 1e-7
     type = HagelaarElectronBC
     variable = em
     boundary = 'master0_interface'
-    potential = potential
     electron_energy = mean_en
     r = 0.99
     #r = 0.0
@@ -754,7 +729,6 @@ dom1Scale = 1e-7
     type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'master0_interface'
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
@@ -763,7 +737,6 @@ dom1Scale = 1e-7
     type = HagelaarElectronBC
     variable = em
     boundary = 'left'
-    potential = potential
     electron_energy = mean_en
     r = 0
     position_units = ${dom0Scale}
@@ -772,7 +745,6 @@ dom1Scale = 1e-7
     type = SecondaryElectronBC
     variable = em
     boundary = 'left'
-    potential = potential
     ions = Arp
     electron_energy = mean_en
     r = 0
@@ -790,7 +762,6 @@ dom1Scale = 1e-7
     type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'left'
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
@@ -799,14 +770,12 @@ dom1Scale = 1e-7
     type = DCIonBC
     variable = emliq
     boundary = right
-    potential = potential
     position_units = ${dom1Scale}
   []
   [OHm_physical]
     type = DCIonBC
     variable = OHm
     boundary = 'right'
-    potential = potential
     position_units = ${dom1Scale}
   []
 []
@@ -870,7 +839,6 @@ dom1Scale = 1e-7
   [water_block]
     type = Water
     block = 1
-    potential = potential
   []
 
   [test]
@@ -881,7 +849,6 @@ dom1Scale = 1e-7
     user_p_gas = 101325
     user_se_coeff = 0.05
     em = em
-    potential = potential
     mean_en = mean_en
     block = 0
     property_tables_file = 'townsend_coefficients/moments.txt'

@@ -61,7 +61,6 @@ dom0Scale = 25.4e-3
   [em_advection]
     type = EFieldAdvection
     variable = em
-    potential = potential
     position_units = ${dom0Scale}
   []
   #Diffusion term of electrons
@@ -110,7 +109,6 @@ dom0Scale = 25.4e-3
   [Ar+_advection]
     type = EFieldAdvection
     variable = Ar+
-    potential = potential
     position_units = ${dom0Scale}
   []
   [Ar+_diffusion]
@@ -264,7 +262,6 @@ dom0Scale = 25.4e-3
   [mean_en_advection]
     type = EFieldAdvection
     variable = mean_en
-    potential = potential
     position_units = ${dom0Scale}
   []
   #Diffusion term of electrons energy
@@ -277,7 +274,6 @@ dom0Scale = 25.4e-3
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    potential = potential
     em = em
     position_units = ${dom0Scale}
   []
@@ -506,13 +502,11 @@ dom0Scale = 25.4e-3
   [Efield_calc]
     type = Efield
     component = 0
-    potential = potential
     variable = EFieldx
     position_units = ${dom0Scale}
   []
   [Current_em]
     type = ADCurrent
-    potential = potential
     density_log = em
     variable = Current_em
     art_diff = false
@@ -520,7 +514,6 @@ dom0Scale = 25.4e-3
   []
   [Current_Ar+]
     type = ADCurrent
-    potential = potential
     density_log = Ar+
     variable = Current_Ar+
     art_diff = false
@@ -555,7 +548,6 @@ dom0Scale = 25.4e-3
     ks = 1.19e5
     #ks = 0.0
     ions = Ar+
-    potential = potential
     position_units = ${dom0Scale}
   []
   [em_physical_left]
@@ -567,7 +559,6 @@ dom0Scale = 25.4e-3
     ks = 1.19e5
     #ks = 0.0
     ions = Ar+
-    potential = potential
     position_units = ${dom0Scale}
   []
 
@@ -575,14 +566,12 @@ dom0Scale = 25.4e-3
   [Ar+_physical_right_advection]
     type = LymberopoulosIonBC
     variable = Ar+
-    potential = potential
     boundary = 'right'
     position_units = ${dom0Scale}
   []
   [Ar+_physical_left_advection]
     type = LymberopoulosIonBC
     variable = Ar+
-    potential = potential
     boundary = 'left'
     position_units = ${dom0Scale}
   []
@@ -680,7 +669,6 @@ dom0Scale = 25.4e-3
     ramp_trans_coeffs = false
     user_p_gas = 133.322
     em = em
-    potential = potential
     mean_en = mean_en
     user_electron_mobility = 30.0
     user_electron_diffusion_coeff = 119.8757763975

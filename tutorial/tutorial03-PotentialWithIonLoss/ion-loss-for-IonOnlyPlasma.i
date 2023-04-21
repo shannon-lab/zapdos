@@ -96,7 +96,6 @@ dom0Scale = 1.0
     type = HagelaarIonAdvectionBC
     variable = Ar+
     boundary = 'right left'
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
@@ -128,7 +127,6 @@ dom0Scale = 1.0
     ramp_trans_coeffs = false
     user_p_gas = 13.3322
     #user_p_gas = 1.33322
-    potential = potential
     property_tables_file = rate_coefficients/electron_moments.txt
   []
   #The material properties of the ion

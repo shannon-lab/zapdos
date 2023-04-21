@@ -174,7 +174,6 @@ dom1Scale = 1e-7
   # if you want to account for electrons going out of the water into the air then you would need there to be interface conditions for master interface 0
   [em_advection]
     type = InterfaceAdvection
-    potential_neighbor = potential
     neighbor_var = em
 
     #the main variable being affected. The em is going into the water so em -> emliq
@@ -232,7 +231,6 @@ dom1Scale = 1e-7
     type = HagelaarElectronBC
     variable = em
     boundary = 'left'
-    potential = potential
     electron_energy = mean_en
     r = 0
     position_units = ${dom0Scale}
@@ -241,7 +239,6 @@ dom1Scale = 1e-7
     type = SecondaryElectronBC
     variable = em
     boundary = 'left'
-    potential = potential
     ions = Arp
     electron_energy = mean_en
     r = 0
@@ -254,7 +251,6 @@ dom1Scale = 1e-7
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'left'
-    potential = potential
     electrons = em
     r = 0
     position_units = ${dom0Scale}
@@ -263,7 +259,6 @@ dom1Scale = 1e-7
     type = SecondaryElectronEnergyBC
     variable = mean_en
     boundary = 'left'
-    potential = potential
     electrons = em
     ions = 'Arp'
     r = 0
@@ -284,7 +279,6 @@ dom1Scale = 1e-7
     type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'left'
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
@@ -294,7 +288,6 @@ dom1Scale = 1e-7
     type = HagelaarElectronBC
     variable = em
     boundary = 'master0_interface'
-    potential = potential
     electron_energy = mean_en
     r = 0.00
     position_units = ${dom0Scale}
@@ -311,7 +304,6 @@ dom1Scale = 1e-7
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'master0_interface'
-    potential = potential
     electrons = em
     r = 0.00
     position_units = ${dom0Scale}
@@ -322,7 +314,6 @@ dom1Scale = 1e-7
     type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'master0_interface'
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
@@ -332,7 +323,6 @@ dom1Scale = 1e-7
     type = DCIonBC
     variable = emliq
     boundary = 'right'
-    potential = potential
     position_units = ${dom1Scale}
   []
   #OH- on the ground electrode
@@ -340,7 +330,6 @@ dom1Scale = 1e-7
     type = DCIonBC
     variable = OHm
     boundary = 'right'
-    potential = potential
     position_units = ${dom1Scale}
   []
 []
@@ -403,7 +392,6 @@ dom1Scale = 1e-7
   [water_block]
     type = Water
     block = 1
-    potential = potential
   []
 
   #The material properties for electrons in plasma
@@ -416,7 +404,6 @@ dom1Scale = 1e-7
     user_p_gas = 101325
     user_se_coeff = 0.05
     em = em
-    potential = potential
     mean_en = mean_en
     block = 0
     property_tables_file = 'townsend_coefficients/moments.txt'

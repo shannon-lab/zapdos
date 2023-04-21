@@ -182,7 +182,6 @@ dom1Scale = 1e-4
   [Efield_g]
     type = Efield
     component = 0
-    potential = potential_dom0
     variable = Efield
     position_units = ${dom0Scale}
     block = 0
@@ -190,7 +189,6 @@ dom1Scale = 1e-4
   [Efield_l]
     type = Efield
     component = 0
-    potential = potential_dom1
     variable = Efield
     position_units = ${dom1Scale}
     block = 1
@@ -256,7 +254,6 @@ dom1Scale = 1e-4
   [neg_advection]
     type = EFieldAdvection
     variable = neg
-    potential = potential_dom0
     position_units = ${dom0Scale}
     block = 0
   []
@@ -270,7 +267,6 @@ dom1Scale = 1e-4
   [pos_advection]
     type = EFieldAdvection
     variable = pos
-    potential = potential_dom0
     position_units = ${dom0Scale}
     block = 0
   []
@@ -481,7 +477,6 @@ dom1Scale = 1e-4
   # (negatively charged).
   [surface_charge_material]
     type = ADSurfaceCharge
-    potential = potential_dom0
     species = 'neg pos'
     position_units = ${dom0Scale}
     boundary = 'plasma_right'

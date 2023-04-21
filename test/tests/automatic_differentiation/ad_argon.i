@@ -105,7 +105,6 @@ dom0Scale = 1e-3
   [em_advection]
     type = EFieldAdvection
     variable = em
-    potential = potential
     block = 0
     position_units = ${dom0Scale}
   []
@@ -155,7 +154,6 @@ dom0Scale = 1e-3
   [Arp_advection]
     type = EFieldAdvection
     variable = Arp
-    potential = potential
     position_units = ${dom0Scale}
     block = 0
   []
@@ -181,7 +179,6 @@ dom0Scale = 1e-3
   [Ar2p_advection]
     type = EFieldAdvection
     variable = Ar2p
-    potential = potential
     position_units = ${dom0Scale}
     block = 0
   []
@@ -206,7 +203,6 @@ dom0Scale = 1e-3
   [mean_en_advection]
     type = EFieldAdvection
     variable = mean_en
-    potential = potential
     block = 0
     position_units = ${dom0Scale}
   []
@@ -219,7 +215,6 @@ dom0Scale = 1e-3
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    potential = potential
     em = em
     block = 0
     position_units = ${dom0Scale}
@@ -367,7 +362,6 @@ dom0Scale = 1e-3
   [PowerDep_em]
     type = ADPowerDep
     density_log = em
-    potential = potential
     art_diff = false
     potential_units = kV
     variable = PowerDep_em
@@ -377,7 +371,6 @@ dom0Scale = 1e-3
   [PowerDep_Arp]
     type = ADPowerDep
     density_log = Arp
-    potential = potential
     art_diff = false
     potential_units = kV
     variable = PowerDep_Arp
@@ -434,14 +427,12 @@ dom0Scale = 1e-3
   [Efield_g]
     type = Efield
     component = 0
-    potential = potential
     variable = Efield
     position_units = ${dom0Scale}
     block = 0
   []
   [Current_em]
     type = ADCurrent
-    potential = potential
     density_log = em
     variable = Current_em
     art_diff = false
@@ -450,7 +441,6 @@ dom0Scale = 1e-3
   []
   [Current_Arp]
     type = ADCurrent
-    potential = potential
     density_log = Arp
     variable = Current_Arp
     art_diff = false
@@ -459,7 +449,6 @@ dom0Scale = 1e-3
   []
   [Current_Ar2p]
     type = ADCurrent
-    potential = potential
     density_log = Ar2p
     variable = Current_Ar2p
     art_diff = false
@@ -468,7 +457,6 @@ dom0Scale = 1e-3
   []
   [EFieldAdvAux_em]
     type = ADEFieldAdvAux
-    potential = potential
     density_log = em
     variable = EFieldAdvAux_em
     block = 0
@@ -488,7 +476,6 @@ dom0Scale = 1e-3
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'right'
-    potential = potential
     electrons = em
     r = 0.0
     position_units = ${dom0Scale}
@@ -497,7 +484,6 @@ dom0Scale = 1e-3
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'left'
-    potential = potential
     electrons = em
     r = 0
     position_units = ${dom0Scale}
@@ -506,7 +492,6 @@ dom0Scale = 1e-3
     type = SecondaryElectronEnergyBC
     variable = mean_en
     boundary = 'left'
-    potential = potential
     electrons = em
     ions = 'Arp Ar2p'
     r = 0
@@ -539,7 +524,6 @@ dom0Scale = 1e-3
     type = HagelaarElectronBC
     variable = em
     boundary = 'right'
-    potential = potential
     electron_energy = mean_en
     r = 0.0
     position_units = ${dom0Scale}
@@ -555,7 +539,6 @@ dom0Scale = 1e-3
     type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'right'
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
@@ -570,7 +553,6 @@ dom0Scale = 1e-3
     type = HagelaarIonAdvectionBC
     variable = Ar2p
     boundary = 'right'
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
@@ -579,7 +561,6 @@ dom0Scale = 1e-3
     type = HagelaarElectronBC
     variable = em
     boundary = 'left'
-    potential = potential
     electron_energy = mean_en
     r = 0
     position_units = ${dom0Scale}
@@ -588,7 +569,6 @@ dom0Scale = 1e-3
     type = SecondaryElectronBC
     variable = em
     boundary = 'left'
-    potential = potential
     ions = Arp
     electron_energy = mean_en
     r = 0
@@ -606,7 +586,6 @@ dom0Scale = 1e-3
     type = HagelaarIonAdvectionBC
     variable = Arp
     boundary = 'left'
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
@@ -621,7 +600,6 @@ dom0Scale = 1e-3
     type = HagelaarIonAdvectionBC
     variable = Ar2p
     boundary = 'left'
-    potential = potential
     r = 0
     position_units = ${dom0Scale}
   []
