@@ -68,9 +68,9 @@ dom0Scale = 1.0
     #User define name for ions
     charged_particle = Ar+
     #User define name for potential (usually 'potential')
-    potential = potential
+    field = potential
     #Defines if this potential exist in only one block/material (set 'true' for single gases)
-    Is_potential_unique = true
+    Is_field_unique = true
     #User define name for the electron mean energy density (usually 'mean_en')
     mean_energy = mean_en
     #The position scaling for the mesh, define at top of input file

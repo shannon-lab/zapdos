@@ -76,9 +76,9 @@ dom1Scale = 1e-7
     #User define name for ions
     charged_particle = Arp
     #User define name for potential (usually 'potential')
-    potential = potential
+    field = potential
     #Set False becuase both areas use the same potential
-    Is_potential_unique = false
+    Is_field_unique = false
     #User define name for the electron mean energy density (usually 'mean_en')
     mean_energy = mean_en
     #Helps prevent the log(0)
@@ -93,8 +93,8 @@ dom1Scale = 1e-7
   # treats water as a dense plasma
   [Water]
     charged_particle = 'emliq OHm'
-    potential = potential
-    Is_potential_unique = false
+    field = potential
+    Is_field_unique = false
     using_offset = true
     position_units = ${dom1Scale}
     #Name of material block for water

@@ -32,8 +32,8 @@ dom0Scale = 25.4e-3
   [Plasma]
     electrons = em
     charged_particle = Ar+
-    potential = potential
-    Is_potential_unique = true
+    field = potential
+    Is_field_unique = true
     mean_energy = mean_en
     position_units = ${dom0Scale}
     Additional_Outputs = 'ElectronTemperature Current EField'
