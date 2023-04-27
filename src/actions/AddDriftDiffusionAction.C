@@ -136,7 +136,8 @@ AddDriftDiffusionAction::act()
     mean_en_name = getParam<NonlinearVariableName>("mean_energy");
   if (field_present)
     field_name = getParam<std::string>("field");
-    std::string field_property_name = getParam<std::string>("field_property_name");
+
+  std::string field_property_name = getParam<std::string>("field_property_name");
 
   std::vector<NonlinearVariableName> Ions =
       getParam<std::vector<NonlinearVariableName>>("charged_particle");
