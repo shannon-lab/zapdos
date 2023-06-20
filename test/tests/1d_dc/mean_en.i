@@ -72,13 +72,15 @@ dom1Scale = 1e-7
   nl_abs_tol = 7.6e-5
   dtmin = 1e-12
   l_max_its = 20
-  [TimeStepper]
-    type = IterationAdaptiveDT
-    cutback_factor = 0.4
-    dt = 1e-11
-    # dt = 1.1
-    growth_factor = 1.2
-    optimal_iterations = 15
+  [TimeSteppers]
+    [Adaptive]
+      type = IterationAdaptiveDT
+      cutback_factor = 0.4
+      dt = 1e-11
+      # dt = 1.1
+      growth_factor = 1.2
+      optimal_iterations = 15
+    []
   []
 []
 

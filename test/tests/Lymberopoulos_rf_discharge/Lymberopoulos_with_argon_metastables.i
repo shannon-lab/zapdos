@@ -839,9 +839,11 @@ dom0Scale = 25.4e-3
   l_max_its = 20
 
   #Time steps based on the inverse of the plasma frequency
-  [TimeStepper]
-    type = PostprocessorDT
-    postprocessor = InversePlasmaFreq
+  [TimeSteppers]
+    [Postprocessor]
+      type = PostprocessorDT
+      postprocessor = InversePlasmaFreq
+    []
   []
 []
 

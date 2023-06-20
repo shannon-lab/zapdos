@@ -54,12 +54,14 @@ vhigh = -175E-3 #kV
   steady_state_start_time = 1E-6
   dtmin = 1e-18
   dtmax = 0.1E-7
-  [TimeStepper]
-    type = IterationAdaptiveDT
-    cutback_factor = 0.9
-    dt = 1e-13
-    growth_factor = 1.2
-    optimal_iterations = 100
+  [TimeSteppers]
+    [Adaptive]
+      type = IterationAdaptiveDT
+      cutback_factor = 0.9
+      dt = 1e-13
+      growth_factor = 1.2
+      optimal_iterations = 100
+    []
   []
 []
 

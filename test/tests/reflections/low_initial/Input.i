@@ -56,12 +56,14 @@ vhigh = -175E-3 #kV
   dtmin = 1e-18
   dtmax = 0.1E-7
   nl_max_its = 200
-  [TimeStepper]
-    type = IterationAdaptiveDT
-    cutback_factor = 0.9
-    dt = 1e-13
-    growth_factor = 1.2
-    optimal_iterations = 100
+  [TimeSteppers]
+    [Adaptive]
+      type = IterationAdaptiveDT
+      cutback_factor = 0.9
+      dt = 1e-13
+      growth_factor = 1.2
+      optimal_iterations = 100
+    []
   []
 []
 
