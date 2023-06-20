@@ -61,12 +61,14 @@ area = 5.02e-7 # Formerly 3.14e-6
   dtmin = 1e-15
   # dtmax = 1E-6
   nl_max_its = 50
-  [TimeStepper]
-    type = IterationAdaptiveDT
-    cutback_factor = 0.4
-    dt = 1e-13
-    growth_factor = 1.2
-    optimal_iterations = 20
+  [TimeSteppers]
+    [Adaptive]
+      type = IterationAdaptiveDT
+      cutback_factor = 0.4
+      dt = 1e-13
+      growth_factor = 1.2
+      optimal_iterations = 20
+    []
   []
 []
 

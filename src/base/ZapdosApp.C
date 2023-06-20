@@ -39,7 +39,7 @@ ZapdosApp::~ZapdosApp() {}
 void
 ZapdosApp::registerAll(Factory & f, ActionFactory & af, Syntax & s)
 {
-  ModulesApp::registerAll(f, af, s);
+  ModulesApp::registerAllObjects<ZapdosApp>(f, af, s);
   Registry::registerObjectsTo(f, {"ZapdosApp"});
   Registry::registerActionsTo(af, {"ZapdosApp"});
 
