@@ -21,11 +21,14 @@ public:
 
   virtual void initialize() override;
   virtual void execute() override;
-  virtual Real getValue() override;
+  using Postprocessor::getValue;
+  virtual PostprocessorValue getValue() const override;
+  virtual void finalize() override;
   virtual void threadJoin(const UserObject & y) override;
 
 protected:
   const VariableValue & _other_var;
   Real _sum_of_squared_diff;
   Real _n;
+  Real _value;
 };

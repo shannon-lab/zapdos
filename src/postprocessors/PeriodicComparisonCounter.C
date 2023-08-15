@@ -58,7 +58,13 @@ PeriodicComparisonCounter::execute()
 }
 
 PostprocessorValue
-PeriodicComparisonCounter::getValue()
+PeriodicComparisonCounter::getValue() const
+{
+  return _counter;
+}
+
+void
+PeriodicComparisonCounter::finalize()
 {
   Real remainder = std::remainder(_feproblem.time(), _period);
   Real max = std::numeric_limits<double>::epsilon();
@@ -75,42 +81,33 @@ PeriodicComparisonCounter::getValue()
           _counter++;
         else
           _counter = 0.0;
-        return _counter;
         break;
       case ComparisonType::GREATER_THAN_EQUALS:
         if (_value1 >= _value2)
           _counter++;
         else
           _counter = 0.0;
-        return _counter;
         break;
       case ComparisonType::LESS_THAN_EQUALS:
         if (_value1 <= _value2)
           _counter++;
         else
           _counter = 0.0;
-        return _counter;
         break;
       case ComparisonType::GREATER_THAN:
         if (_value1 > _value2)
           _counter++;
         else
           _counter = 0.0;
-        return _counter;
         break;
       case ComparisonType::LESS_THAN:
         if (_value1 < _value2)
           _counter++;
         else
           _counter = 0.0;
-        return _counter;
         break;
       default:
         mooseError("Invalid comparison type.");
     }
-  }
-  else
-  {
-    return _counter;
   }
 }

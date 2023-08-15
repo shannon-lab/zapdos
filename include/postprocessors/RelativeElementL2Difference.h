@@ -22,7 +22,8 @@ public:
 
   static InputParameters validParams();
 
-  virtual Real getValue() override;
+  using Postprocessor::getValue;
+  virtual PostprocessorValue getValue() const override;
 
 protected:
   virtual Real computeQpIntegral() override;

@@ -32,28 +32,32 @@ PlasmaFrequencyInverse::PlasmaFrequencyInverse(const InputParameters & parameter
   : ElementVariablePostprocessor(parameters),
     _value(-std::numeric_limits<Real>::max()),
     _em_density(0),
-    _use_moles(getParam<bool>("use_moles"))
+    _use_moles(getParam<bool>("use_moles")),
+    _inverse(0)
 {
 }
 
 void
 PlasmaFrequencyInverse::initialize()
 {
-
   _value = -std::numeric_limits<Real>::max(); // start w/ the min
 }
 
 void
 PlasmaFrequencyInverse::computeQpValue()
 {
-
   _value = std::max(_value, _u[_qp]);
 }
 
-Real
-PlasmaFrequencyInverse::getValue()
+PostprocessorValue
+PlasmaFrequencyInverse::getValue() const
 {
+  return _inverse;
+}
 
+void
+PlasmaFrequencyInverse::finalize()
+{
   gatherMax(_value);
 
   if (_use_moles)
@@ -67,7 +71,7 @@ PlasmaFrequencyInverse::getValue()
 
   Real _plasma_freq = std::sqrt(std::pow(1.6022e-19, 2) * _em_density / (8.8542e-12 * 9.1094e-31));
 
-  return 1. / _plasma_freq;
+  _inverse = 1. / _plasma_freq;
 }
 
 void

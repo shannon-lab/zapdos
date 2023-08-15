@@ -29,8 +29,8 @@ RelativeElementL2Difference::RelativeElementL2Difference(const InputParameters &
 {
 }
 
-Real
-RelativeElementL2Difference::getValue()
+PostprocessorValue
+RelativeElementL2Difference::getValue() const
 {
   return std::sqrt(ElementIntegralPostprocessor::getValue());
 }
