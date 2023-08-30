@@ -27,7 +27,8 @@ AverageNodalDifference::AverageNodalDifference(const InputParameters & parameter
   : NodalVariablePostprocessor(parameters),
     _other_var(coupledValue("other_variable")),
     _sum_of_squared_diff(0.0),
-    _n(0)
+    _n(0),
+    _value(0)
 {
 }
 
@@ -48,13 +49,19 @@ AverageNodalDifference::execute()
   _n++;
 }
 
-Real
-AverageNodalDifference::getValue()
+PostprocessorValue
+AverageNodalDifference::getValue() const
+{
+  return _value;
+}
+
+void
+AverageNodalDifference::finalize()
 {
   gatherSum(_sum_of_squared_diff);
   gatherSum(_n);
 
-  return std::sqrt(_sum_of_squared_diff / (_n * _n));
+  _value = std::sqrt(_sum_of_squared_diff / (_n * _n));
 }
 
 void

@@ -25,7 +25,9 @@ public:
   static InputParameters validParams();
 
   virtual void initialize() override;
-  virtual Real getValue() override;
+  using Postprocessor::getValue;
+  virtual PostprocessorValue getValue() const override;
+  virtual void finalize() override;
   virtual void threadJoin(const UserObject & y) override;
 
 protected:
@@ -36,4 +38,5 @@ protected:
   Real _value;
   Real _em_density;
   bool _use_moles;
+  Real _inverse;
 };
