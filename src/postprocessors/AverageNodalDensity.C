@@ -43,8 +43,8 @@ AverageNodalDensity::execute()
   _n++;
 }
 
-Real
-AverageNodalDensity::getValue()
+PostprocessorValue
+AverageNodalDensity::getValue() const
 {
   return _sum / _n;
 }
