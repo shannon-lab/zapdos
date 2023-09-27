@@ -40,14 +40,15 @@ registerMooseAction("ZapdosApp", AddDriftDiffusionAction, "add_kernel");
 registerMooseAction("ZapdosApp", AddDriftDiffusionAction, "add_aux_kernel");
 registerMooseAction("ZapdosApp", AddDriftDiffusionAction, "add_material");
 
-namespace DriftDiffusionActionEnums {
-  // Setup comparison enum (less overhead than string comparison, when necessary)
-  enum ComparisonEnum
-  {
-    ELECTROSTATIC,
-    ELECTROMAGNETIC
-  };
-}
+namespace DriftDiffusionActionEnums
+{
+// Setup comparison enum (less overhead than string comparison, when necessary)
+enum ComparisonEnum
+{
+  ELECTROSTATIC,
+  ELECTROMAGNETIC
+};
+} // namespace DriftDiffusionActionEnums
 
 InputParameters
 AddDriftDiffusionAction::validParams()
@@ -74,15 +75,19 @@ AddDriftDiffusionAction::validParams()
   params.addParam<std::string>("field", "The gives the field a variable name");
   MooseEnum field_solver("electrostatic electromagnetic", "electrostatic");
   params.addParam<MooseEnum>(
-      "field_solver", field_solver, "Electrostatic or electromagnetic field solver (default = electrostatic).");
-  params.addParam<std::string>("field_property_name", "field_solver_interface_property",
+      "field_solver",
+      field_solver,
+      "Electrostatic or electromagnetic field solver (default = electrostatic).");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
                                "Name of the solver interface material property.");
-  params.addParam<std::vector<std::string>>("eff_fields_property_names", "Name of the solver interface material property for the effective fields.");
-  params.addParam<bool>(
-      "Is_field_unique",
-      false,
-      "Is the field unique to this block?"
-      "If not, then the field variable should be defined in the Variable Block.");
+  params.addParam<std::vector<std::string>>(
+      "eff_fields_property_names",
+      "Name of the solver interface material property for the effective fields.");
+  params.addParam<bool>("Is_field_unique",
+                        false,
+                        "Is the field unique to this block?"
+                        "If not, then the field variable should be defined in the Variable Block.");
   params.addParam<bool>("First_DriftDiffusionAction_in_block",
                         true,
                         "Is this the first DriftDiffusionAction for this block?"
@@ -148,21 +153,22 @@ AddDriftDiffusionAction::act()
   unsigned int number_neutrals = Neutrals.size();
 
   if (!field_present && (em_present || (number_ions > 0)))
-    mooseError("There are electrons or charged_particles that are missing their electric field! Please "
-               "check your input.");
+    mooseError(
+        "There are electrons or charged_particles that are missing their electric field! Please "
+        "check your input.");
 
   std::vector<NonlinearVariableName> sec_particle =
       getParam<std::vector<NonlinearVariableName>>("secondary_charged_particles");
   std::vector<NonlinearVariableName> eff_fields =
       getParam<std::vector<NonlinearVariableName>>("eff_fields");
 
-  std::vector<std::string> eff_fields_property_names = getParam<std::vector<std::string>>("eff_fields_property_names");
-
+  std::vector<std::string> eff_fields_property_names =
+      getParam<std::vector<std::string>>("eff_fields_property_names");
 
   unsigned int number_sec_particle = sec_particle.size();
   unsigned int number_eff_fields = eff_fields.size();
 
-// TODO: add another != for this for the property names list
+  // TODO: add another != for this for the property names list
   if (number_sec_particle != number_eff_fields)
     mooseError("There are secondary_charged_particles that are missing their corresponding "
                "effective fields (eff_fields)! Please check your input.");
@@ -372,7 +378,8 @@ AddDriftDiffusionAction::act()
     }
     if (field_present && First_Action && field_solver == DriftDiffusionActionEnums::ELECTROMAGNETIC)
     {
-      mooseWarning("Setting up EM field equations has not yet been setup in DriftDiffusionAction, and must be set up manually!");
+      mooseWarning("Setting up EM field equations has not yet been setup in DriftDiffusionAction, "
+                   "and must be set up manually!");
     }
 
     // Adding Kernels for the neutrals
@@ -520,7 +527,8 @@ AddDriftDiffusionAction::act()
 // Adding potentials charge sources
 void
 AddDriftDiffusionAction::addChargeSourceKernels(const std::string & field_name,
-                                                const std::string & charged_particle_name, const MooseEnum & field_solver)
+                                                const std::string & charged_particle_name,
+                                                const MooseEnum & field_solver)
 {
   // Add charge source contribution to electrostatic problem only
   if (field_solver == DriftDiffusionActionEnums::ELECTROSTATIC)
@@ -665,7 +673,10 @@ AddDriftDiffusionAction::addEfield(const std::string & Efield_name,
 
 // Adding the material interface for FieldSolverMaterial
 void
-AddDriftDiffusionAction::addFieldSolverMaterial(const std::string & field_name, const std::string & field_property_name, const MooseEnum & field_solver, const bool & effective_field)
+AddDriftDiffusionAction::addFieldSolverMaterial(const std::string & field_name,
+                                                const std::string & field_property_name,
+                                                const MooseEnum & field_solver,
+                                                const bool & effective_field)
 {
   InputParameters params = _factory.getValidParams("FieldSolverMaterial");
   params.set<MooseEnum>("solver") = {field_solver};
