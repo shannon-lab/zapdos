@@ -85,7 +85,8 @@ AddDriftDiffusionAction::validParams()
   params.addRequiredParam<std::string>("potential_units", "Units of potential");
   params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to #.");
   params.addParam<std::vector<std::string>>(
-      "Additional_Outputs", {},
+      "Additional_Outputs",
+      {},
       "Current list of available ouputs options in this action: Current, ElectronTemperature,"
       " EField");
   return params;
