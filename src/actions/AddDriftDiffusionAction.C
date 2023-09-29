@@ -48,13 +48,15 @@ AddDriftDiffusionAction::validParams()
   InputParameters params = AddVariableAction::validParams();
 
   params.addParam<std::vector<NonlinearVariableName>>(
-      "charged_particle", "User given variable name for energy independent charged particle");
+      "charged_particle", {}, "User given variable name for energy independent charged particle");
   params.addParam<std::vector<NonlinearVariableName>>(
       "secondary_charged_particles",
+      {},
       "These are charged particles whose advection term in determined by"
       " an effective potential.");
   params.addParam<std::vector<NonlinearVariableName>>(
       "eff_potentials",
+      {},
       "The effective potentials that only affect their respective secondary"
       " charged particle.");
   params.addParam<NonlinearVariableName>("electrons",
@@ -73,9 +75,9 @@ AddDriftDiffusionAction::validParams()
   params.addParam<NonlinearVariableName>("mean_energy",
                                          "The gives the mean energy a variable name");
   params.addParam<std::vector<NonlinearVariableName>>(
-      "Neutrals", "The names of the neutrals that should be added");
-  params.addParam<std::vector<SubdomainName>>("block",
-                                              "The subdomain that this action applies to.");
+      "Neutrals", {}, "The names of the neutrals that should be added");
+  params.addParam<std::vector<SubdomainName>>(
+      "block", {}, "The subdomain that this action applies to.");
   params.addRequiredParam<Real>("position_units", "Units of position");
   params.addParam<bool>("using_offset", false, "Is the LogStabilizationMoles Kernel being used");
   params.addParam<Real>(
@@ -84,6 +86,7 @@ AddDriftDiffusionAction::validParams()
   params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to #.");
   params.addParam<std::vector<std::string>>(
       "Additional_Outputs",
+      {},
       "Current list of available ouputs options in this action: Current, ElectronTemperature,"
       " EField");
   return params;
