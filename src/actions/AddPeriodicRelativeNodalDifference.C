@@ -50,16 +50,16 @@ AddPeriodicRelativeNodalDifference::validParams()
 
   InputParameters params = AddVariableAction::validParams();
   params.addParam<std::vector<NonlinearVariableName>>(
-      "periodic_variable_log", "The periodic variables that are in log form.");
-  params.addParam<std::vector<NonlinearVariableName>>("periodic_variable",
-                                                      "The periodic variables (Not in log form).");
+      "periodic_variable_log", {}, "The periodic variables that are in log form.");
+  params.addParam<std::vector<NonlinearVariableName>>(
+      "periodic_variable", {}, "The periodic variables (Not in log form).");
   params.addParam<Real>(
       "starting_cycle", 0.0, "The number of the cycles before starting the difference calculation");
   params.addRequiredParam<Real>("cycle_frequency", "The cycle's frequency in Hz");
   params.addParam<Real>(
       "num_cycles", 2000.0, "The number of cycles to calculation the difference for.");
-  params.addParam<std::vector<SubdomainName>>("block",
-                                              "The subdomain that this action applies to.");
+  params.addParam<std::vector<SubdomainName>>(
+      "block", {}, "The subdomain that this action applies to.");
   params.addClassDescription(
       "This Action automatically adds the necessary objects to calculate the relative"
       " periodic difference. Relative Difference will be outputted as an Postprocessor named: "
