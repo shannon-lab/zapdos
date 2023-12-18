@@ -24,6 +24,7 @@ DiffusiveFluxTempl<is_ad>::validParams()
   InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<int>("component", 0, "The component of position. (0 = x, 1 = y, 2 = z)");
   params.addClassDescription("Returns the diffusive flux of defined species");
   return params;
 }
@@ -31,6 +32,7 @@ DiffusiveFluxTempl<is_ad>::validParams()
 template <bool is_ad>
 DiffusiveFluxTempl<is_ad>::DiffusiveFluxTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
+    _component(getParam<int>("component")),
     _r_units(1. / getParam<Real>("position_units")),
 
     // Coupled variables
@@ -49,7 +51,7 @@ template <bool is_ad>
 Real
 DiffusiveFluxTempl<is_ad>::computeValue()
 {
-  return -raw_value(_diff[_qp]) * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0) *
+  return -raw_value(_diff[_qp]) * std::exp(_density_log[_qp]) * _grad_density_log[_qp](_component) *
          _r_units * 6.02e23;
 }
 

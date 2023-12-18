@@ -24,6 +24,7 @@ public:
   virtual Real computeValue() override;
 
 protected:
+  int _component;
   Real _r_units;
 
   MooseVariable & _density_var;

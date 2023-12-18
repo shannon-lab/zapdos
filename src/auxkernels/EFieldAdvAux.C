@@ -26,6 +26,7 @@ EFieldAdvAuxTempl<is_ad>::validParams()
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<int>("component", 0, "The component of position. (0 = x, 1 = y, 2 = z)");
   params.addClassDescription("Returns the electric field driven advective flux of defined species");
   return params;
 }
@@ -33,6 +34,7 @@ EFieldAdvAuxTempl<is_ad>::validParams()
 template <bool is_ad>
 EFieldAdvAuxTempl<is_ad>::EFieldAdvAuxTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
+    _component(getParam<int>("component")),
     _r_units(1. / getParam<Real>("position_units")),
 
     // Coupled variables
@@ -52,8 +54,8 @@ template <bool is_ad>
 Real
 EFieldAdvAuxTempl<is_ad>::computeValue()
 {
-  return _sgn[_qp] * raw_value(_mu[_qp]) * std::exp(_density_log[_qp]) * -_grad_potential[_qp](0) *
-         _r_units * 6.02e23;
+  return _sgn[_qp] * raw_value(_mu[_qp]) * std::exp(_density_log[_qp]) *
+         -_grad_potential[_qp](_component) * _r_units * 6.02e23;
 }
 
 template class EFieldAdvAuxTempl<false>;
