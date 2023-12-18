@@ -1,20 +1,34 @@
 # EFieldAdvAux
 
-!alert construction title=Undocumented Class
-The EFieldAdvAux has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /AuxKernels/EFieldAdvAux
 
 ## Overview
 
-!! Replace these lines with information regarding the EFieldAdvAux object.
+`EFieldAdvAux` returns electric field driven advective flux of defined species in logarithmic form. `EFieldAdvAux`
+assumes the electrostatic approximation for the electric field.
+
+The advective flux is defined as
+
+\begin{equation}
+\Gamma_{Advection}  = \text{sign}_{j} \mu_{j} \ \text{-} \nabla (V) n_{j}
+\end{equation}
+
+Where $\Gamma$ is the advective flux, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $\mu_{j}$ is the mobility coefficient, $V$ is the potential, and $n_{j}$ is the density. When converting the density to logarithmic form and applying a scaling factor of the mesh,
+`EFieldAdvAux` is defined as
+
+\begin{equation}
+\Gamma_{Advection}  = N_{A} \text{sign}_{j} \mu_{j} \frac{\text{-} \nabla (V)}{l_{c}} \exp(N_{j})
+\end{equation}
+
+Where $N_{j}$ is the molar density of the specie in logarithmic form, $N_{A}$ is Avogadro's
+number, $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the EFieldAdvAux object.
+An example of how to use `EFieldAdvAux` can be found in the
+test file `mean_en.i`.
+
+!listing test/tests/1d_dc/mean_en.i block=AuxKernels/EFieldAdvAux_em
 
 !syntax parameters /AuxKernels/EFieldAdvAux
 

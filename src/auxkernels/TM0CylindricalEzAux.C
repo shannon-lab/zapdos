@@ -19,6 +19,8 @@ TM0CylindricalEzAux::validParams()
   params.addRequiredCoupledVar("Hphi", "Magnetic field component Hphi.");
   params.addRequiredParam<Real>("f", "The drive frequency.");
   params.addParam<Real>("eps_r", 1., "The relative permittivity of the medium.");
+  params.addClassDescription("Calculates the axial E-field for a axisymmetric "
+                             "TM$_{0}$ wave.");
   return params;
 }
 

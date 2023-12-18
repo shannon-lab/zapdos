@@ -1,20 +1,23 @@
 # DensityMoles
 
-!alert construction title=Undocumented Class
-The DensityMoles has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /AuxKernels/DensityMoles
 
 ## Overview
 
-!! Replace these lines with information regarding the DensityMoles object.
+`DensityMoles` converts the density value of a coupled species from a logarithmic molar density into units of $\frac{\#}{m^{3}}$, such that:
+
+\begin{equation}
+n_{j} = N_{A} exp(N_{j})
+\end{equation}
+
+Where $n_{j}$ is the density, $N_{j}$ is the molar density of the specie in logarithmic form, and $N_{A}$ is Avogadro's number. This is often needed due to Zapdos solving densities using a logarithmic molar formulation to help avoid negative densities and ill-conditioned matrices.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the DensityMoles object.
+An example of how to use `DensityMoles` can be found in the
+test file `Lymberopoulos_with_argon_metastables.i`.
+
+!listing test/tests/Lymberopoulos_rf_discharge/Lymberopoulos_with_argon_metastables.i block=AuxKernels/em_lin
 
 !syntax parameters /AuxKernels/DensityMoles
 

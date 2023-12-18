@@ -10,7 +10,13 @@ documentation clear for users.
 
 ## Overview
 
-!! Replace these lines with information regarding the DensityNormalization object.
+`DensityNormalization` is similar to [`NormalizationAux`](/auxkernels/NormalizationAux.md), except it normalizes a variable in logarithmic form based on a Postprocessor value.
+
+The formulation of `DensityNormalization` is defined as
+
+\begin{equation}
+\frac{\exp(\text{variable})*\text{normal factor}}{\text{normalization}} - \text{shift}
+\end{equation}
 
 ## Example Input File Syntax
 

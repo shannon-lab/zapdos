@@ -1,20 +1,26 @@
 # Efield
 
-!alert construction title=Undocumented Class
-The Efield has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /AuxKernels/Efield
 
 ## Overview
 
-!! Replace these lines with information regarding the Efield object.
+`Efield` returns a component of the electrostatic electric field.
+
+The formulation of `Efield` is defined as
+
+\begin{equation}
+E_{comp.} = \frac{\text{-} \nabla_{comp.} (V) \ V_{c}}{l_{c}}
+\end{equation}
+
+Where $E_{comp.}$ is a component of the electric field, $V$ is the potential, $V_{c}$ is the
+scaling factor of the potential , and $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the Efield object.
+An example of how to use `Efield` can be found in the
+test file `Lymberopoulos_with_argon_metastables.i`.
+
+!listing test/tests/Lymberopoulos_rf_discharge/Lymberopoulos_with_argon_metastables.i block=AuxKernels/Efield_calc
 
 !syntax parameters /AuxKernels/Efield
 
