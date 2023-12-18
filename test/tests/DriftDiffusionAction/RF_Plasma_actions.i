@@ -318,7 +318,7 @@ dom0Scale = 25.4e-3
     variable = ThreeBRate
     v = Ar*
     w = Ar
-    vv = Ar
+    x = Ar
     reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
   []
 

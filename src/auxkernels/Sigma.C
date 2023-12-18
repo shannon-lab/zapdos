@@ -20,6 +20,9 @@ Sigma::validParams()
 
   params.addRequiredCoupledVar("n", "The density of the ions.");
   params.addRequiredCoupledVar("potential", "The potential");
+  params.addClassDescription(
+      "Calculates the surface charge due to a simplified version of the ion flux "
+      "to a boundary.");
   return params;
 }
 

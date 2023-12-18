@@ -1,20 +1,17 @@
 # AbsValueAux
 
-!alert construction title=Undocumented Class
-The AbsValueAux has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /AuxKernels/AbsValueAux
 
 ## Overview
 
-!! Replace these lines with information regarding the AbsValueAux object.
+`AbsValueAux` returns the absolute value a coupled variable.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the AbsValueAux object.
+An example of how to use `AbsValueAux` can be found in the
+test file `TM_steady.i`.
+
+!listing test/tests/TM10_circular_wg/TM_steady.i block=AuxKernels/Hphi_mag
 
 !syntax parameters /AuxKernels/AbsValueAux
 

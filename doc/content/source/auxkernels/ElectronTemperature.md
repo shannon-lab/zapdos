@@ -1,20 +1,35 @@
 # ElectronTemperature
 
-!alert construction title=Undocumented Class
-The ElectronTemperature has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /AuxKernels/ElectronTemperature
 
 ## Overview
 
-!! Replace these lines with information regarding the ElectronTemperature object.
+`ElectronTemperature` returns the electron temperature.
+
+The electron temperature is defined as
+
+\begin{equation}
+T_{e} = \frac{2}{3} \frac{n_{\varepsilon}}{n_{e}}
+\end{equation}
+
+Where $T_{e}$ is the electron temperature, $n_{\varepsilon}$ is the mean energy density
+of the electrons, and $n_{e}$ is the electron density.
+When converting the density to logarithmic form,
+`ElectronTemperature` is defined as
+
+\begin{equation}
+T_{e} = \frac{2}{3} \exp(N_{\varepsilon} - N_{e})
+\end{equation}
+
+Where $N_{\varepsilon}$ is the electron mean energy density in logarithmic form
+and $N_{e}$ is the electron density in logarithmic form.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the ElectronTemperature object.
+An example of how to use `ElectronTemperature` can be found in the
+test file `Lymberopoulos_with_argon_metastables.i`.
+
+!listing test/tests/Lymberopoulos_rf_discharge/Lymberopoulos_with_argon_metastables.i block=AuxKernels/Te
 
 !syntax parameters /AuxKernels/ElectronTemperature
 
