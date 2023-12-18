@@ -23,10 +23,10 @@ ProcRateForRateCoeffThreeBodyTempl<is_ad>::validParams()
 
   params.addCoupledVar("v", "The first variable that is reacting to create u.");
   params.addCoupledVar("w", "The second variable that is reacting to create u.");
-  params.addCoupledVar("vv", "The second variable that is reacting to create u.");
+  params.addCoupledVar("x", "The second variable that is reacting to create u.");
   params.addRequiredParam<std::string>("reaction", "The full reaction equation.");
   params.addClassDescription(
-      "Reaction rate for three body collisions in units of #/m^3s. User can pass"
+      "Reaction rate for three body collisions in units of #/m^3s. User can pass "
       "choice of elastic, excitation, or ionization reaction rate coefficients");
 
   return params;
@@ -39,7 +39,7 @@ ProcRateForRateCoeffThreeBodyTempl<is_ad>::ProcRateForRateCoeffThreeBodyTempl(
 
     _v(coupledValue("v")),
     _w(coupledValue("w")),
-    _vv(coupledValue("vv")),
+    _x(coupledValue("x")),
     _reaction_coeff(
         getGenericMaterialProperty<Real, is_ad>("k_" + getParam<std::string>("reaction")))
 {
@@ -51,7 +51,7 @@ ProcRateForRateCoeffThreeBodyTempl<is_ad>::computeValue()
 {
 
   return 6.02e23 * raw_value(_reaction_coeff[_qp]) * std::exp(_v[_qp]) * std::exp(_w[_qp]) *
-         std::exp(_vv[_qp]);
+         std::exp(_x[_qp]);
 }
 
 typedef ProcRateForRateCoeffThreeBodyTempl<false> ProcRateForRateCoeffThreeBody;
