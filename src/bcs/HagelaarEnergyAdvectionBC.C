@@ -80,7 +80,7 @@ HagelaarEnergyAdvectionBC::computeQpResidual()
     _a = 0.0;
   }
 
-  for (auto i = 0; i < _num_ions; ++i)
+  for (unsigned int i = 0; i < _num_ions; ++i)
   {
     _ion_flux = (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
                     std::exp((*_ip[i])[_qp]) -
