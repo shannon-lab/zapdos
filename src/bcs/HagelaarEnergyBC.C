@@ -37,10 +37,7 @@ HagelaarEnergyBC::HagelaarEnergyBC(const InputParameters & parameters)
 
     _massem(getMaterialProperty<Real>("massem")),
     _e(getMaterialProperty<Real>("e")),
-    _se_coeff(getMaterialProperty<Real>("se_coeff")),
-    _se_energy(getMaterialProperty<Real>("se_energy")),
     _mumean_en(getADMaterialProperty<Real>("mumean_en")),
-
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
