@@ -18,7 +18,6 @@ ElectronAdvectionDoNothingBC::validParams()
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredCoupledVar(
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
-  params.addRequiredCoupledVar("mean_en", "The log of the mean energy.");
   params.addRequiredParam<Real>("position_units", "The units of position.");
   params.addClassDescription("Boundary condition where the election advection flux at the boundary "
                              "is equal to the bulk election advection equation");
@@ -34,8 +33,7 @@ ElectronAdvectionDoNothingBC::ElectronAdvectionDoNothingBC(const InputParameters
     _sign(getMaterialProperty<Real>("sgnem")),
 
     // Coupled variables
-    _grad_potential(adCoupledGradient("potential")),
-    _mean_en(adCoupledValue("mean_en"))
+    _grad_potential(adCoupledGradient("potential"))
 {
 }
 

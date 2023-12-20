@@ -17,9 +17,15 @@ LymberopoulosElectronBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("ks", "The recombination coefficient");
-  params.addRequiredParam<Real>("gamma", "The secondary electron coefficient");
+  params.addRequiredParam<std::vector<Real>>("gamma", "The secondary electron coefficient");
+  params.deprecateParam("gamma", "emission_coeffs", "06/01/2024");
+  params.addRequiredParam<std::vector<Real>>(
+      "emission_coeffs", "The species dependent secondary electron emmision coefficients");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("ion", "The ion density.");
+  params.deprecateCoupledVar("ion", "ions", "06/01/2024");
+  params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
+
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Simpified kinetic electron boundary condition"
                              "(Based on DOI: https://doi.org/10.1063/1.352926)");
@@ -31,15 +37,11 @@ LymberopoulosElectronBC::LymberopoulosElectronBC(const InputParameters & paramet
 
     _r_units(1. / getParam<Real>("position_units")),
     _ks(getParam<Real>("ks")),
-    _gamma(getParam<Real>("gamma")),
-
+    _gamma(getParam<std::vector<Real>>("emission_coeffs")),
+    _num_ions(coupledComponents("ions")),
     // Coupled Variables
-    _grad_potential(adCoupledGradient("potential")),
-
-    _sign(1)
+    _grad_potential(adCoupledGradient("potential"))
 {
-  _num_ions = coupledComponents("ion");
-
   // Resize the vectors to store _num_ions values:
   _ion.resize(_num_ions);
   _ion_var.resize(_num_ions);
@@ -66,11 +68,10 @@ LymberopoulosElectronBC::computeQpResidual()
   _ion_flux.zero();
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _ion_flux += (*_sgnion[i])[_qp] * (*_muion[i])[_qp] * -_grad_potential[_qp] * _r_units *
-                 std::exp((*_ion[i])[_qp]);
+    _ion_flux += _gamma[i] * (*_sgnion[i])[_qp] * (*_muion[i])[_qp] * -_grad_potential[_qp] *
+                 _r_units * std::exp((*_ion[i])[_qp]);
   }
 
   return _test[_i][_qp] * _r_units *
-         (_sign * _ks * std::exp(_u[_qp]) * _normals[_qp] * _normals[_qp] -
-          _gamma * _ion_flux * _normals[_qp]);
+         (_ks * std::exp(_u[_qp]) * _normals[_qp] * _normals[_qp] - _ion_flux * _normals[_qp]);
 }

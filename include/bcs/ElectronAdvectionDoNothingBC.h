@@ -32,5 +32,4 @@ protected:
 private:
   // Coupled variables
   const ADVariableGradient & _grad_potential;
-  const ADVariableValue & _mean_en;
 };

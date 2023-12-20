@@ -26,7 +26,8 @@ protected:
   const Real & _r;
   const Real & _r_ion;
   const MaterialProperty<Real> & _kb;
-
+  const unsigned int _num_ions;
+  const std::vector<Real> _se_coeff;
   // Coupled variables
 
   const ADVariableGradient & _grad_potential;
@@ -41,13 +42,10 @@ protected:
   std::vector<const ADMaterialProperty<Real> *> _muip;
   std::vector<const ADMaterialProperty<Real> *> _Tip;
   std::vector<const MaterialProperty<Real> *> _massip;
-  const MaterialProperty<Real> & _se_coeff;
 
   Real _a;
   Real _b;
   ADReal _v_thermal;
   ADReal _ion_flux;
   ADReal _n_gamma;
-
-  unsigned int _num_ions;
 };

@@ -37,12 +37,13 @@ protected:
   std::vector<const MaterialProperty<Real> *> _sgnip;
   std::vector<const ADMaterialProperty<Real> *> _muip;
   const MaterialProperty<Real> & _massem;
-  Real _user_se_coeff;
+  std::vector<Real> _user_se_coeff;
 
   const Real & _epsilon_d;
   const Real & _thickness;
   Real _a;
   ADRealVectorValue _ion_flux;
+  ADRealVectorValue _temp_flux;
   ADReal _v_thermal;
   ADRealVectorValue _em_flux;
   std::string _potential_units;

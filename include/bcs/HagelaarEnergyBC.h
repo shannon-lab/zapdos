@@ -30,8 +30,6 @@ protected:
 
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _e;
-  const MaterialProperty<Real> & _se_coeff;
-  const MaterialProperty<Real> & _se_energy;
   const ADMaterialProperty<Real> & _mumean_en;
 
   Real _a;

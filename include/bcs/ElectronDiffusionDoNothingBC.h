@@ -27,5 +27,4 @@ protected:
   Real _r_units;
 
   const ADMaterialProperty<Real> & _diffem;
-  const ADVariableValue & _mean_en;
 };

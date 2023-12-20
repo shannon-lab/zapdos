@@ -34,7 +34,7 @@ protected:
   const ADVariableValue & _mean_en;
   const ADVariableValue & _em;
 
-  const MaterialProperty<Real> & _se_coeff;
+  const std::vector<Real> & _se_coeff;
   std::vector<const ADMaterialProperty<Real> *> _muip;
   const MaterialProperty<Real> & _eps;
   const MaterialProperty<Real> & _N_A;
