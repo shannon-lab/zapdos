@@ -4,20 +4,20 @@
 
 ## Overview
 
-`ProcRateForRateCoeffThreeBody` returns the production rate for a three body reactions determined by rate coefficients in units of $\frac{\#}{m^{3}s}$.
+`ProcRateForRateCoeffThreeBody` returns the production rate for a three body reactions determined by rate coefficients in units of #/m$^{3}$s.
 
 The production rate is defined as
 
 \begin{equation}
-S_{Rate} =  k n_{i} n_{j} n_{k}
+S_{\text{Rate}} =  k n_{i} n_{j} n_{k}
 \end{equation}
 
-Where $S_{Rate}$ is the production rate determined by rate coefficients, $k$ is the rate coefficient for the reaction, $n_{j}$ is the density for the first species, $n_{j}$ is the density for the second species, and $n_{k}$ is the density for the third species.
+Where $S_{\text{Rate}}$ is the production rate determined by rate coefficients, $k$ is the rate coefficient for the reaction, $n_{j}$ is the density for the first species, $n_{j}$ is the density for the second species, and $n_{k}$ is the density for the third species.
 When converting the density to logarithmic form,
 `ProcRateForRateCoeffThreeBody` is defined as
 
 \begin{equation}
-S_{Rate} = k N_{A}  \exp(N_{i}) \exp(N_{j}) \exp(N_{k})
+S_{\text{Rate}} = k N_{A}  \exp(N_{i}) \exp(N_{j}) \exp(N_{k})
 \end{equation}
 
 Where $N_{k}$, $N_{j}$ and $N_{k}$ is the molar density of the species in logarithmic form, and $N_{A}$ is Avogadro's

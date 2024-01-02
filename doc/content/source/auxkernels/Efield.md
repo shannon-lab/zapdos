@@ -9,10 +9,10 @@
 The formulation of `Efield` is defined as
 
 \begin{equation}
-E_{comp.} = \frac{\text{-} \nabla_{comp.} (V) \ V_{c}}{l_{c}}
+E_{\text{comp.}} = \frac{\text{-} \nabla_{\text{comp.}} (V) \ V_{c}}{l_{c}}
 \end{equation}
 
-Where $E_{comp.}$ is a component of the electric field, $V$ is the potential, $V_{c}$ is the
+Where $E_{\text{comp.}}$ is a component of the electric field, $V$ is the potential, $V_{c}$ is the
 scaling factor of the potential , and $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax

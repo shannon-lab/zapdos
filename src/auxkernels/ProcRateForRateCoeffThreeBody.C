@@ -26,7 +26,7 @@ ProcRateForRateCoeffThreeBodyTempl<is_ad>::validParams()
   params.addCoupledVar("x", "The second variable that is reacting to create u.");
   params.addRequiredParam<std::string>("reaction", "The full reaction equation.");
   params.addClassDescription(
-      "Reaction rate for three body collisions in units of #/m^3s. User can pass "
+      "Reaction rate for three body collisions in units of #/m$^{3}$s. User can pass "
       "choice of elastic, excitation, or ionization reaction rate coefficients");
 
   return params;

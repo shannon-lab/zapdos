@@ -24,7 +24,7 @@ DriftDiffusionFluxAux::validParams()
                         "negative.");
   params.addRequiredCoupledVar("u", "The drift-diffusing species.");
   params.addParam<int>("component", 0, "The flux component you want to see.");
-  params.addClassDescription("Returns the drift-diffusion flux of defined species");
+  params.addClassDescription("Returns the drift-diffusion flux of the specified species");
   return params;
 }
 

@@ -24,7 +24,7 @@ Where $\sigma$ is the surface charge, $\Gamma_{i}$ is the advective flux of the 
 Using the midpoint method for integration, the surface charge calculation becomes
 
 \begin{equation}
-\sigma_{t} = \sigma_{t-1} + \text{-} \nabla (V) n_{i}  \cdot \textbf{n} \ \text{d}t
+\sigma_{t} = \sigma_{t-1} - \nabla (V) n_{i}  \cdot \textbf{n} \ \text{d}t
 \end{equation}
 
 Where $\sigma_{t}$ is the surface charge of the current time step, $\sigma_{t-1}$ is the surface of the previous time step, and $\text{d}t$ is the difference between time steps.

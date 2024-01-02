@@ -26,8 +26,9 @@ EFieldAdvAuxTempl<is_ad>::validParams()
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addParam<int>("component", 0, "The component of position. (0 = x, 1 = y, 2 = z)");
-  params.addClassDescription("Returns the electric field driven advective flux of defined species");
+  params.addParam<int>("component", 0, "The component the EField Vector. (0 = x, 1 = y, 2 = z)");
+  params.addClassDescription(
+      "Returns the electric field driven advective flux of the specified species");
   return params;
 }
 

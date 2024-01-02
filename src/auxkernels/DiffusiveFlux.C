@@ -25,7 +25,7 @@ DiffusiveFluxTempl<is_ad>::validParams()
   params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<int>("component", 0, "The component of position. (0 = x, 1 = y, 2 = z)");
-  params.addClassDescription("Returns the diffusive flux of defined species");
+  params.addClassDescription("Returns the diffusive flux of the specified species");
   return params;
 }
 

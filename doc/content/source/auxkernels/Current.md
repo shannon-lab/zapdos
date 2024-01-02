@@ -10,7 +10,7 @@ assumes the electrostatic approximation for the electric field.
 The electrostatic current density is defined as
 
 \begin{equation}
-J_{j} = q_{j} (\text{sign}_{j} \mu_{j} \ \text{-} \nabla (V) n_{j} - D_{j} \nabla (n_{j}))
+J_{j} = q_{j} (\text{sign}_{j} \mu_{j} \left( \text{-} \nabla V\right) n_{j} - D_{j} \nabla (n_{j}))
 \end{equation}
 
 Where $J_{j}$ is the current density, $q_{j}$ is the charge of the species, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $\mu_{j}$ is the mobility coefficient, $V$ is the potential, $n_{j}$ is the density, and $D_{j}$ is the diffusion coefficient. When converting the density to logarithmic form and applying a scaling factor of the mesh, `Current` is defined as

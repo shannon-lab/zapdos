@@ -16,7 +16,7 @@ assumes a mobility and diffusion coefficient of unity, the electrostatic approxi
 The electrostatic flux is defined as
 
 \begin{equation}
-\Gamma_{j} = \text{sign}_{j} \ \text{-} \nabla (V) n_{j} - \nabla (n_{j})
+\Gamma_{j} =  \text{sign}_{j}  \left( \text{-}\nabla V\right) n_{j} - \nabla (n_{j})
 \end{equation}
 
 Where $\Gamma_{j}$ is the flux assuming drift-diffusion formulation, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species),
