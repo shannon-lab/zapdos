@@ -4,7 +4,7 @@
 
 ## Overview
 
-`DensityMoles` converts the density value of a coupled species from a logarithmic molar density into units of #$/m^{3}$, such that:
+`DensityMoles` converts the density value of a coupled species from a logarithmic molar density into units of #/m$^{3}$, such that:
 
 \begin{equation}
 n_{j} = N_{A} \exp(N_{j})
