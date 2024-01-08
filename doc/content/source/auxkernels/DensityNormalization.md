@@ -12,7 +12,7 @@ The formulation of `DensityNormalization` is defined as
 \frac{\exp(\text{variable})*\text{normal factor}}{\text{normalization}} - \text{shift}
 \end{equation}
 
-!alert warning title=Undocumented Test
+!alert warning title=Untested Class
 The DensityNormalization does not have a formulized test, yet. For this reason,
 users should be aware of unforseen debugs when using DensityNormalization. To
 report debug or discuss future contributions to Zapdos, please refer to the
