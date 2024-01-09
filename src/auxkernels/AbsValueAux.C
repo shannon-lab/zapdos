@@ -17,7 +17,7 @@ AbsValueAux::validParams()
 {
   InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar("u", "Variable we want absolute value of.");
-  params.addClassDescription("Returns the absolute value of variable");
+  params.addClassDescription("Returns the absolute value of the specified variable");
   return params;
 }
 

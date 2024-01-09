@@ -19,9 +19,9 @@ Position::validParams()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<int>("component", 0, "The component of position. (0 = x, 1 = y, 2 = z)");
   params.addClassDescription(
-      "Produces an elemental auxiliary variable useful for plotting against other"
-      "elemental auxiliary variables. Mesh points automatically output by Zapdos only work"
-      "for plotting nodal variables. Since almost all auxiliary variables are elemental, this"
+      "Produces an elemental auxiliary variable useful for plotting against other "
+      "elemental auxiliary variables. Mesh points automatically output by Zapdos only work "
+      "for plotting nodal variables. Since almost all auxiliary variables are elemental, this "
       "AuxKernel is very important");
   return params;
 }

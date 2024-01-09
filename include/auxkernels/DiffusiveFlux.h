@@ -23,7 +23,8 @@ public:
 protected:
   virtual Real computeValue() override;
 
-  Real _r_units;
+  const int _component;
+  const Real _r_units;
 
   // Coupled variables
 
