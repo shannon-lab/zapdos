@@ -20,11 +20,11 @@ $V$ is the potential, and $n_{j}$ is the density.
 When calculating the drift-diffusion flux for scaled densities and non-unity coefficients, please refer to [`TotalFlux`](/auxkernels/TotalFlux.md).
 
 !alert warning title=Undocumented Test
-The DriftDiffusionFluxAux does not have a formulized test, yet. For this reason,
-users should be aware of unforseen debugs when using DriftDiffusionFluxAux. To
-report debug or discuss future contributions to Zapdos, please refer to the
+The DriftDiffusionFluxAux does not have a formalized test, yet. For this reason,
+users should be aware of unforeseen bugs when using DriftDiffusionFluxAux. To
+report bugs or discuss future contributions to Zapdos, please refer to the
 [Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions).
-For standards of have to contribute to Zapdos and the MOOSE framework,
+For standards of how to contribute to Zapdos and the MOOSE framework,
 please refer to the [MOOSE Contributing page](framework/contributing.md).
 
 ## Example Input File Syntax

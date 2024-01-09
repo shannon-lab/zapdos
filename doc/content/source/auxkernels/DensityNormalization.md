@@ -13,11 +13,11 @@ The formulation of `DensityNormalization` is defined as
 \end{equation}
 
 !alert warning title=Untested Class
-The DensityNormalization does not have a formulized test, yet. For this reason,
-users should be aware of unforseen debugs when using DensityNormalization. To
-report debug or discuss future contributions to Zapdos, please refer to the
+The DensityNormalization does not have a formalized test, yet. For this reason,
+users should be aware of unforeseen bugs when using DensityNormalization. To
+report a bug or discuss future contributions to Zapdos, please refer to the
 [Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions).
-For standards of have to contribute to Zapdos and the MOOSE framework,
+For standards of how to contribute to Zapdos and the MOOSE framework,
 please refer to the [MOOSE Contributing page](framework/contributing.md).
 
 ## Example Input File Syntax
