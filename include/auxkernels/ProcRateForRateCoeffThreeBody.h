@@ -25,7 +25,7 @@ public:
 protected:
   const VariableValue & _v;
   const VariableValue & _w;
-  const VariableValue & _vv;
+  const VariableValue & _x;
   const GenericMaterialProperty<Real, is_ad> & _reaction_coeff;
 };
 

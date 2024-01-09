@@ -23,7 +23,8 @@ public:
   virtual Real computeValue() override;
 
 protected:
-  MooseVariable & _density_var;
+  const int _component;
+  const MooseVariable & _density_var;
   const VariableValue & _density_log;
   const VariableGradient & _grad_density_log;
   const VariableGradient & _grad_potential;

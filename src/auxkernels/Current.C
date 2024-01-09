@@ -23,13 +23,15 @@ CurrentTempl<is_ad>::validParams()
 {
   InputParameters params = AuxKernel::validParams();
 
-  params.addRequiredCoupledVar("density_log", "The electron density");
+  params.addRequiredCoupledVar("density_log", "The log of the species density");
   params.addRequiredCoupledVar("potential", "The potential");
+  params.addParam<int>(
+      "component", 0, "The component of the Current vector. (0 = x, 1 = y, 2 = z)");
   params.addParam<bool>(
       "art_diff", false, "Whether there is a current contribution from artificial diffusion.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
-      "Returns the electric current associated with the flux of defined species");
+      "Returns the electric current associated with the flux of the specified species");
   return params;
 }
 
@@ -37,6 +39,7 @@ template <bool is_ad>
 CurrentTempl<is_ad>::CurrentTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
 
+    _component(getParam<int>("component")),
     _r_units(1. / getParam<Real>("position_units")),
 
     _density_var(*getVar("density_log", 0)),
@@ -54,18 +57,18 @@ template <bool is_ad>
 Real
 CurrentTempl<is_ad>::computeValue()
 {
-  Real r =
-      _sgn[_qp] * 1.6e-19 * 6.02e23 *
-      (_sgn[_qp] * raw_value(_mu[_qp]) * -_grad_potential[_qp](0) * _r_units *
-           std::exp(_density_log[_qp]) -
-       raw_value(_diff[_qp]) * std::exp(_density_log[_qp]) * _grad_density_log[_qp](0) * _r_units);
+  Real r = _sgn[_qp] * 1.6e-19 * 6.02e23 *
+           (_sgn[_qp] * raw_value(_mu[_qp]) * -_grad_potential[_qp](_component) * _r_units *
+                std::exp(_density_log[_qp]) -
+            raw_value(_diff[_qp]) * std::exp(_density_log[_qp]) *
+                _grad_density_log[_qp](_component) * _r_units);
 
   if (_art_diff)
   {
     Real vd_mag = raw_value(_mu[_qp]) * _grad_potential[_qp].norm() * _r_units;
     Real delta = vd_mag * _current_elem->hmax() / 2.;
     r += _sgn[_qp] * 1.6e-19 * 6.02e23 * -delta * std::exp(_density_log[_qp]) *
-         _grad_density_log[_qp](0) * _r_units;
+         _grad_density_log[_qp](_component) * _r_units;
   }
 
   return r;
