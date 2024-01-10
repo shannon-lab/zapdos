@@ -20,9 +20,9 @@ JouleHeating::validParams()
   params.addRequiredCoupledVar("potential", "The electron density.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-      "Joule heating term for electrons (densities must be in logarithmic form), where the Jacobian is "
-      "computed using forward automatic differentiation.");
+  params.addClassDescription("Joule heating term for electrons (densities must be in logarithmic "
+                             "form), where the Jacobian is "
+                             "computed using forward automatic differentiation.");
   return params;
 }
 
