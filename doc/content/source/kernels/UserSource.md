@@ -1,20 +1,18 @@
 # UserSource
 
-!alert construction title=Undocumented Class
-The UserSource has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Kernels/UserSource
 
 ## Overview
 
-!! Replace these lines with information regarding the UserSource object.
+`UserSource` supplies a user specifed scalar source term.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the UserSource object.
+An example of how to use `UserSource` can be found in the test file `current_carrying_wire.i`.
+
+!listing test/tests/current_carrying_wire/current_carrying_wire.i block=Kernels/source
+
+!syntax parameters /Kernels/ScaledReaction
 
 !syntax parameters /Kernels/UserSource
 

@@ -18,7 +18,7 @@ ScaledReaction::validParams()
   InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("collision_freq", "The ion-neutral collision frequency.");
   params.addClassDescription(
-      "The multiple of a given variable"
+      "The multiple of a given variable "
       "(Used for calculating the effective ion potential for a given collision frequency)");
   return params;
 }

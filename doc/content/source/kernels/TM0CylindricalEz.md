@@ -1,20 +1,30 @@
 # TM0CylindricalEz
 
-!alert construction title=Undocumented Class
-The TM0CylindricalEz has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Kernels/TM0CylindricalEz
 
 ## Overview
 
-!! Replace these lines with information regarding the TM0CylindricalEz object.
+`TM0CylindricalEz` is the wave equation for the axial component of the electric field, E-field. `TM0CylindricalEz` assumes an axisymmetric transverse magnetic (TM) wave and negligible current density compared to the displacement current.
+
+The wave equation for the E-field is defined as
+
+\begin{equation}
+  \nabla \times \textbf{H} = \epsilon \omega \textbf{E}
+\end{equation}
+
+Where $\textbf{H}$ is the magnetizing field, $\epsilon$ is the material permittivity, $\textbf{E}$ is the electric field, and $\omega$ is the frequency. By assuming an axisymmetric cylindrical geometry, the wave equation simplifies to
+
+\begin{equation}
+  \frac{\partial H_{\phi}}{\partial r} -\frac{H_{\phi}}{r}  = \epsilon \omega \text{E}_{z}
+\end{equation}
+
+Where $H_{\phi}$ is the azimuthal component of the magnetizing field, $\text{E}_{z}$ is the axial component of the electric field field, and $r$ is the radial distance from the axial centerline.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the TM0CylindricalEz object.
+An example of how to use `TM0CylindricalEz` can be found in the test file `TM_steady_dieletric.i`.
+
+!listing test/tests/TM10_circular_wg/TM_steady_dieletric.i block=Kernels/Ez_vacuum_kern
 
 !syntax parameters /Kernels/TM0CylindricalEz
 

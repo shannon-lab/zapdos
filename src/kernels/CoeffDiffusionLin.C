@@ -18,7 +18,7 @@ CoeffDiffusionLin::validParams()
   InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
-      "Generic linear diffusion term (Values are NOT in log form), where the "
+      "Generic linear diffusion term (Values are NOT in logarithmic form), where the "
       "Jacobian is computed using forward automatic differentiation.");
   return params;
 }

@@ -1,20 +1,18 @@
 # CoeffDiffusionForShootMethod
 
-!alert construction title=Undocumented Class
-The CoeffDiffusionForShootMethod has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Kernels/CoeffDiffusionForShootMethod
 
 ## Overview
 
-!! Replace these lines with information regarding the CoeffDiffusionForShootMethod object.
+`CoeffDiffusionForShootMethod` is the derivative of the generic diffusion term used to calculate
+the sensitivity value for the shoothing method. For more information on the implementation of the shoothing method within Zapdos, please reference to [ShootMethodLog.md].
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the CoeffDiffusionForShootMethod object.
+An example of how to use `CoeffDiffusionForShootMethod` can be found in the
+test file `Acceleration_By_Shooting_Method_SensitivityMatrix.i`.
+
+!listing test/tests/accelerations/Acceleration_By_Shooting_Method_SensitivityMatrix.i block=Kernels/SM_Ar*_diffusion
 
 !syntax parameters /Kernels/CoeffDiffusionForShootMethod
 

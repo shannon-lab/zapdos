@@ -1,20 +1,33 @@
 # CoeffDiffusion
 
-!alert construction title=Undocumented Class
-The CoeffDiffusion has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Kernels/CoeffDiffusion
 
 ## Overview
 
-!! Replace these lines with information regarding the CoeffDiffusion object.
+`CoeffDiffusion` is the diffusion term used for variables in logarithmic form.
+
+The strong form for a diffusion term is usually defined as
+
+\begin{equation}
+\nabla \cdot \Gamma_{\text{\text{diff}}} = \nabla \cdot \left[ -D_{j} \nabla (n_{j}) \right]
+\end{equation}
+
+Where $\Gamma_{\text{\text{diff}}}$ is the diffusion component of a species' flux, $D_{j}$ is the diffusion coefficient and $n_{j}$ is the density. When
+converting the density to logarithmic form and applying a scaling factor of the mesh, the strong form for `CoeffDiffusion` is defined as
+
+\begin{equation}
+\nabla \cdot \Gamma_{\text{\text{diff}}} =  \nabla \cdot \left[ -D_{j} \exp(N_{j}) \nabla (N_{j} / l_{c}) \right]
+\end{equation}
+
+Where $N_{j}$ is the molar density of the specie in logarithmic form and
+$l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the CoeffDiffusion object.
+An example of how to use `CoeffDiffusion` can be found in the
+test file `Lymberopoulos_with_argon_metastables.i`.
+
+!listing test/tests/Lymberopoulos_rf_discharge/Lymberopoulos_with_argon_metastables.i block=Kernels/em_diffusion
 
 !syntax parameters /Kernels/CoeffDiffusion
 

@@ -1,20 +1,16 @@
 # ScaledReaction
 
-!alert construction title=Undocumented Class
-The ScaledReaction has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Kernels/ScaledReaction
 
 ## Overview
 
-!! Replace these lines with information regarding the ScaledReaction object.
+`ScaledReaction` supplies a term that is a scalar multiple of a variable.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the ScaledReaction object.
+An example of how to use `ScaledReaction` can be found in the test file `2D_RF_Plasma_actions.i`.
+
+!listing test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i block=Kernels/Ion_potential_reaction
 
 !syntax parameters /Kernels/ScaledReaction
 

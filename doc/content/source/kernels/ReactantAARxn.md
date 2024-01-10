@@ -1,20 +1,35 @@
 # ReactantAARxn
 
-!alert construction title=Undocumented Class
-The ReactantAARxn has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Kernels/ReactantAARxn
 
 ## Overview
 
-!! Replace these lines with information regarding the ReactantAARxn object.
+`ReactantAARxn` is a generic second reaction source term for the reactant of a reaction in the form of $2A \rightarrow 2B$.
+
+The source term of this reaction for the products can be described as
+
+\begin{equation}
+S_{Loss} = \text{-} 2 k n_{A} n_{A}
+\end{equation}
+
+Where $S_{Loss}$ is the source term for the reactions, $k$ is the reaction rate coefficient, $n_{A}$ is the reactant specie.When converting
+the density to logarithmic form, the strong form for `ReactantAARxn` is defined as
+
+\begin{equation}
+S_{Loss} = \text{-} 2 k \exp(N_{A} + N_{A})
+\end{equation}
+
+Where $N_{j}$ is the molar density of the specie in logarithmic form.
+
+!alert note
+When coupling Zapdos with CRANE, `ReactantAARxn` serves the same function as CRANE's [`ReactionSecondOrderLog`](/kernels/ReactionSecondOrderLog.md).
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the ReactantAARxn object.
+An example of how to use `ReactantAARxn` can be found in the
+test file `mean_en.i`.
+
+!listing test/tests/1d_dc/mean_en.i block=Kernels/emliq_water_bi_sink
 
 !syntax parameters /Kernels/ReactantAARxn
 

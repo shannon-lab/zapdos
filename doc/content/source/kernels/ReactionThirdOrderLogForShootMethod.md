@@ -1,20 +1,17 @@
 # ReactionThirdOrderLogForShootMethod
 
-!alert construction title=Undocumented Class
-The ReactionThirdOrderLogForShootMethod has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Kernels/ReactionThirdOrderLogForShootMethod
 
 ## Overview
 
-!! Replace these lines with information regarding the ReactionThirdOrderLogForShootMethod object.
+`ReactionThirdOrderLogForShootMethod` is the derivative of an third order reaction term used to calculate the sensitivity variable for the shoothing method. For more information on the implementation of the shoothing method within Zapdos, please reference to [ShootMethodLog.md].
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the ReactionThirdOrderLogForShootMethod object.
+An example of how to use `ReactionThirdOrderLogForShootMethod` can be found in the
+test file `Acceleration_By_Shooting_Method_SensitivityMatrix.i`.
+
+!listing test/tests/accelerations/Acceleration_By_Shooting_Method_SensitivityMatrix.i block=Kernels/SM_Ar*_3B_quenching
 
 !syntax parameters /Kernels/ReactionThirdOrderLogForShootMethod
 

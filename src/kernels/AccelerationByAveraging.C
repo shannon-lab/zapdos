@@ -30,13 +30,13 @@ AccelerationByAveraging::validParams()
 {
   InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("density_at_start_cycle",
-                               "The accelerated density at the start of the cycle in log form");
+                               "The accelerated density at the start of the cycle in logarithmic form");
   params.addRequiredCoupledVar("density_at_end_cycle",
-                               "The accelerated density at the end of the cycle in log form");
+                               "The accelerated density at the end of the cycle in logarithmic form");
   params.addRequiredParam<Real>("time_of_averaging", "The time difference of the averaging");
   params.addRequiredParam<Real>("time_of_acceleration", "The time of acceleration");
   params.addClassDescription(
-      "An acceleration scheme based averaging a density over a periodic cycle");
+      "An acceleration scheme based on averaging a density over a periodic cycle");
   return params;
 }
 

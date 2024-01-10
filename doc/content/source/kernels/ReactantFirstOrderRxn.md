@@ -1,20 +1,35 @@
 # ReactantFirstOrderRxn
 
-!alert construction title=Undocumented Class
-The ReactantFirstOrderRxn has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Kernels/ReactantFirstOrderRxn
 
 ## Overview
 
-!! Replace these lines with information regarding the ReactantFirstOrderRxn object.
+`ReactantFirstOrderRxn` is a generic first reaction source term for the reactants of a reaction in the form of $A \rightarrow B$.
+
+The source term of this reaction for the products can be described as
+
+\begin{equation}
+S_{Gain} = \text{-} k n_{A}
+\end{equation}
+
+Where $S_{Gain}$ is the source term for the reactant, $k$ is the reaction rate coefficient, $n_{A}$ is the reactant specie.When converting
+the density to logarithmic form, the strong form for `ReactantFirstOrderRxn` is defined as
+
+\begin{equation}
+S_{Gain} = \text{-} k \exp(N_{A})
+\end{equation}
+
+Where $N_{j}$ is the molar density of the specie in logarithmic form.
+
+!alert note
+When coupling Zapdos with CRANE, `ReactantFirstOrderRxn` serves the same function as CRANE's [`ReactionFirstOrderLog`](/kernels/ReactionFirstOrderLog.md).
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the ReactantFirstOrderRxn object.
+An example of how to use `ReactantFirstOrderRxn` can be found in the
+test file `mean_en.i`.
+
+!listing test/tests/1d_dc/mean_en.i block=Kernels/emliq_reactant_first_order_rxn
 
 !syntax parameters /Kernels/ReactantFirstOrderRxn
 

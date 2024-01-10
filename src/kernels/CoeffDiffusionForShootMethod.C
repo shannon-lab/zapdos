@@ -16,11 +16,11 @@ InputParameters
 CoeffDiffusionForShootMethod::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("density", "The log of the accelerated density.");
+  params.addRequiredCoupledVar("density", "The logarithmic of the accelerated density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("The derivative of the generic diffusion term used to calculate the "
                              "sensitivity value for the shoothing method."
-                             "(Densities must be in log form)");
+                             "(Densities must be in logarithmic form)");
   return params;
 }
 

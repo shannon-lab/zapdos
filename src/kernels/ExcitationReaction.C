@@ -23,7 +23,7 @@ ExcitationReaction::validParams()
   params.addRequiredParam<bool>("reactant", "Checks if the variable is the reactant.");
   params.addClassDescription(
       "Rate of production of metastables from excitation using Townsend coefficient"
-      "(Densities must be in log form)");
+      "(Densities must be in logarithmic form)");
   return params;
 }
 

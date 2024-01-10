@@ -25,7 +25,7 @@ ElectronEnergyTermRate::validParams()
   params.addClassDescription(
       "Electron energy loss term for inelastic collisions"
       "using reaction rate coefficient; Threshold energy is the energy lost in Volts in a single"
-      "collision (Densities must be in log form)");
+      "collision (Densities must be in logarithmic form)");
   return params;
 }
 

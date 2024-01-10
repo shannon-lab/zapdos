@@ -1,20 +1,53 @@
 # ElectronEnergyTermRate
 
-!alert construction title=Undocumented Class
-The ElectronEnergyTermRate has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Kernels/ElectronEnergyTermRate
 
 ## Overview
 
-!! Replace these lines with information regarding the ElectronEnergyTermRate object.
+`ElectronEnergyTermRate` is calculates the electron energy loss from elastic collisions using reaction rate coefficients for electrons in logarithmic form.
+
+Electron energy loss from elastic collisions can be described as
+
+\begin{equation}
+S_{Loss} =  k \epsilon n_{e} n_{j}
+\end{equation}
+
+Where $S_{Loss}$ is the loss term of the electron mean energy density, $k$ is the reaction rate coefficient, $n_{e}$ is the electron density, $n_{j}$ is the colliding specie density, and $\epsilon$ the electron energy lost in the collision. When converting the density to logarithmic form and applying a scaling factor of the mesh, the strong form for `ElectronEnergyTermRate` is defined as
+
+\begin{equation}
+S_{Loss} =  k \epsilon \exp(N_{e}) \exp(N_{j})
+\end{equation}
+
+Where $N_{j}$ is the molar density of the specie in logarithmic form and $l_{c}$ is the scaling factor of the mesh.
+
+!alert note
+When coupling Zapdos with CRANE, `ElectronEnergyTermRate` serves the same function as CRANE's [`ADEEDFEnergyLog`](/kernels/ADEEDFEnergyLog.md).
+
+!alert warning title=Untested Class
+The ElectronEnergyTermRate does not have a formalized test, yet. For this reason,
+users should be aware of unforeseen bugs when using ElectronEnergyTermRate. To
+report a bug or discuss future contributions to Zapdos, please refer to the
+[Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions).
+For standards of how to contribute to Zapdos and the MOOSE framework,
+please refer to the [MOOSE Contributing page](framework/contributing.md).
 
 ## Example Input File Syntax
 
 !! Describe and include an example of how to use the ElectronEnergyTermRate object.
+
+```text
+[Kernels]
+  [mean_en_ionization]
+    type = ElectronEnergyTermRate
+    variable = mean_en
+    em = electrons
+    v = Ar
+    reaction = ionization
+    threshold_energy = -15.7
+    position_units = 1
+  []
+[]
+```
 
 !syntax parameters /Kernels/ElectronEnergyTermRate
 
