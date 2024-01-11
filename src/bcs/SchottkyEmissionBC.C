@@ -25,8 +25,8 @@ SchottkyEmissionBC::validParams()
   params.deprecateCoupledVar("ip", "ions", "06/01/2024");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<std::vector<Real>>("emission_coeffs",
-                                             "A list of species dependent secondary electron "
-                                             "emmision coefficients for each species in `ions`");
+                                             "A list of species-dependent secondary electron "
+                                             "emission coefficients for each species in `ions`");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addParam<Real>("tau", 1e-9, "The time constant for ramping the boundary condition.");
@@ -60,7 +60,7 @@ SchottkyEmissionBC::SchottkyEmissionBC(const InputParameters & parameters)
 
 {
   if (_se_coeff.size() != _num_ions)
-    mooseError("SchottkyEmissionBC: The lengths of `ions` and `emission_coeffs` must be the same");
+    mooseError("SchottkyEmissionBC with name ", name(), ": The lengths of `ions` and `emission_coeffs` must be the same");
 
   if (_potential_units.compare("V") == 0)
   {

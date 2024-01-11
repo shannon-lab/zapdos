@@ -39,7 +39,7 @@ NeumannCircuitVoltageMoles_KV::validParams()
 
   params.addRequiredParam<std::vector<Real>>(
       "emission_coeffs",
-      "The seconday electron emmision coefficient for each ion provided in `ions`");
+      "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("r",
                                 "The reflection coefficient applied to both electrons and ions");
@@ -85,7 +85,7 @@ NeumannCircuitVoltageMoles_KV::NeumannCircuitVoltageMoles_KV(const InputParamete
   _num_ions = coupledComponents("ions");
 
   if (_se_coeff.size() != _num_ions)
-    mooseError("NeumannCircuitVoltageMoles_KV: The lengths of `ions` and `emission_coeffs` must be "
+    mooseError("NeumannCircuitVoltageMoles_KV with name ", name(), ": The lengths of `ions` and `emission_coeffs` must be "
                "the same");
   // Resize the vectors to store _num_ions values:
   _ip.resize(_num_ions);

@@ -23,7 +23,7 @@ HagelaarEnergyAdvectionBC::validParams()
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<std::vector<Real>>(
       "emission_coeffs",
-      "The species dependent secondary electron emmision coefficients for this boundary");
+      "The species-dependent secondary electron emission coefficients for this boundary");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<Real>("secondary_electron_energy", "The secondary electron energy in eV");
   params.addClassDescription("Kinetic advective electron energy boundary condition"

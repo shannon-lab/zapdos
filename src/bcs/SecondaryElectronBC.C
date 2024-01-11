@@ -27,7 +27,7 @@ SecondaryElectronBC::validParams()
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<std::vector<Real>>(
-      "emission_coeffs", "A list of species dependent secondary electron emmision coefficients");
+      "emission_coeffs", "A list of species-dependent secondary electron emission coefficients");
   return params;
 }
 
@@ -55,7 +55,7 @@ SecondaryElectronBC::SecondaryElectronBC(const InputParameters & parameters)
   _n_gamma = 0.0;
 
   if (_se_coeff.size() != _num_ions)
-    mooseError("SecondaryElectronBC: The lengths of `ions` and `emission_coeffs` must be the same");
+    mooseError("SecondaryElectronBC with name ", name(), ": The lengths of `ions` and `emission_coeffs` must be the same");
   // Resize the vectors to store _num_ions values:
   _ip.resize(_num_ions);
   _grad_ip.resize(_num_ions);

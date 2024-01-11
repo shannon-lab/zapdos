@@ -23,7 +23,7 @@ FieldEmissionBC::validParams()
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<std::vector<Real>>(
       "emission_coeffs",
-      "The species dependent secondary electron emmision coefficients for this boundary");
+      "The species dependent secondary electron emission coefficients for this boundary");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addParam<Real>("tau", 1e-9, "The time constant for ramping the boundary condition.");
@@ -54,7 +54,7 @@ FieldEmissionBC::FieldEmissionBC(const InputParameters & parameters)
 {
 
   if (_se_coeff.size() != _num_ions)
-    mooseError("FieldEmissionBC: The lengths of `ions` and `emission_coeffs` must be the same");
+    mooseError("FieldEmissionBC with name ", name(), ": The lengths of `ions` and `emission_coeffs` must be the same");
 
   if (_potential_units.compare("V") == 0)
   {

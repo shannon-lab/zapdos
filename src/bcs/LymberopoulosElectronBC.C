@@ -20,7 +20,7 @@ LymberopoulosElectronBC::validParams()
   params.addRequiredParam<std::vector<Real>>("gamma", "The secondary electron coefficient");
   params.deprecateParam("gamma", "emission_coeffs", "06/01/2024");
   params.addRequiredParam<std::vector<Real>>(
-      "emission_coeffs", "The species dependent secondary electron emmision coefficients");
+      "emission_coeffs", "The species-dependent secondary electron emission coefficients");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("ion", "The ion density.");
   params.deprecateCoupledVar("ion", "ions", "06/01/2024");

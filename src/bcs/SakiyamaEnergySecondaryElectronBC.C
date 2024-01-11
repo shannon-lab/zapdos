@@ -20,7 +20,7 @@ SakiyamaEnergySecondaryElectronBC::validParams()
   params.deprecateParam("se_coeff", "emission_coeffs", "06/01/2024");
   params.addRequiredParam<std::vector<Real>>(
       "emission_coeffs",
-      "The seconday electron emmision coefficient for each ion provided in `ions`");
+      "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<bool>(
       "Tse_equal_Te", "The secondary electron temperature equal the electron temperature in eV");
   params.addParam<Real>(
@@ -30,7 +30,7 @@ SakiyamaEnergySecondaryElectronBC::validParams()
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.deprecateCoupledVar("em", "electrons", "06/01/2024");
-  params.addRequiredCoupledVar("electrons", "The elctron density in log form");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredCoupledVar("ip", "The ion density.");
   params.deprecateCoupledVar("ip", "ions", "06/01/2024");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
@@ -62,7 +62,7 @@ SakiyamaEnergySecondaryElectronBC::SakiyamaEnergySecondaryElectronBC(
 {
 
   if (_se_coeff.size() != _num_ions)
-    mooseError("SakiyamaEnergySecondaryElectronBC: The lengths of `ions` and `emission_coeffs` "
+    mooseError("SakiyamaEnergySecondaryElectronBC with name ", name(), ": The lengths of `ions` and `emission_coeffs` "
                "must be the same");
   _ip.resize(_num_ions);
   _ip_var.resize(_num_ions);

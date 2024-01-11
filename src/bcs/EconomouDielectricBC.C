@@ -39,7 +39,7 @@ EconomouDielectricBC::validParams()
                                "The effective potential for each ion provided in 'ions'");
   params.addParam<std::vector<Real>>(
       "emission_coeffs",
-      "The seconday electron emmision coefficient for each ion provided in `ions`");
+      "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
 
   params.addClassDescription("Dielectric boundary condition"
@@ -102,7 +102,7 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
     else
     {
       mooseError(
-          "EconomouDielectricBC: `ion` and `ion_potentials` vectors are not same length. There are "
+          "EconomouDielectricBC with name ", name(), ": `ion` and `ion_potentials` vectors are not same length. There are "
           "two "
           "possible options: \n 1) Ions respond to an effective potential. If so, make sure each "
           "ion has an associated effective potential. \n 2) Ions and electrons respond to the same "
@@ -111,7 +111,7 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
 
     if (_user_se_coeff.size() != _num_ions)
       mooseError(
-          "EconomouDielectricBC: The lengths of `ions` and `emission_coeffs` must be the same");
+          "EconomouDielectricBC with name ", name(), ": The lengths of `ions` and `emission_coeffs` must be the same");
   }
 
   for (unsigned int i = 0; i < _num_ions; ++i)
