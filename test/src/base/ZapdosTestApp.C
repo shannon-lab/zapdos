@@ -44,7 +44,7 @@ ZapdosTestApp::registerAll(Factory & f, ActionFactory & af, Syntax & s, bool use
 void
 ZapdosTestApp::registerApps()
 {
-  registerApp(ZapdosApp);
+  ZapdosApp::registerApps();
   registerApp(ZapdosTestApp);
 }
 

@@ -57,6 +57,7 @@ void
 ZapdosApp::registerApps()
 {
   registerApp(ZapdosApp);
+  ModulesApp::registerApps();
 }
 
 /***************************************************************************************************
