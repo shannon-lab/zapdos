@@ -25,12 +25,12 @@ jobs:
         use-mamba: true
         activate-environment: zapdos
         environment-file: scripts/conda_environment.yml
-    # GitHub-hosted runners are currently limited to 2 cores
+    # GitHub-hosted runners are currently limited to 4 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build Zapdos
       run: |
         conda activate zapdos
-        make -j2
+        make -j4
     - name: Build Doxygen
       uses: mattnotmitt/doxygen-action@v1.9.5
       with:
@@ -38,7 +38,7 @@ jobs:
     - name: Build MooseDocs
       run: |
         cd doc
-        ./moosedocs.py build --destination site
+        ./moosedocs.py build --num-threads 4 --destination site
     - name: Update gh-pages branch
       uses: peaceiris/actions-gh-pages@v3
       with:
