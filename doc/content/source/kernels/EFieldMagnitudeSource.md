@@ -4,12 +4,12 @@
 
 ## Overview
 
-`EFieldMagnitudeSource` adds a the magnitude of the electric field as a source term. `EFieldMagnitudeSource` assumes the electrostatic approximation for the electric field.
+`EFieldMagnitudeSource` adds the magnitude of the electric field squared as a source term. `EFieldMagnitudeSource` assumes the electrostatic approximation for the electric field.
 
-The magnitude of the electrostatic electric field is
+The magnitude of the electrostatic electric field squared is
 
 \begin{equation}
-S_{\lvert E \rvert} = \nabla(V)^2
+S_{\lvert E \rvert} = \nabla V \cdot \nabla V
 \end{equation}
 
 Where $S_{\lvert E \rvert}$ is the source term and $V$ is the potential.

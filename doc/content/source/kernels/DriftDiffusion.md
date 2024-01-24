@@ -20,7 +20,7 @@ the potential. When converting the density to logarithmic form and applying a sc
 \nabla \cdot \Gamma = \nabla \cdot \left[ \text{sign}_{j} \mu_{j} \exp(N_{j}) \ \text{-} \nabla (V / l_{c}) - D_{j} \exp(N_{j}) \nabla (N_{j} / l_{c}) \right]
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form and $l_{c}$ is the scaling factor of the mesh.
+Where $N_{j}$ is the molar density of the species in logarithmic form and $l_{c}$ is the scaling factor of the mesh.
 
 !alert warning title=Untested Class
 The DriftDiffusion does not have a formalized test, yet. For this reason,

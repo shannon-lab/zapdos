@@ -4,22 +4,22 @@
 
 ## Overview
 
-`ReactantFirstOrderRxn` is a generic first reaction source term for the reactants of a reaction in the form of $A \rightarrow B$.
+`ReactantFirstOrderRxn` is a generic first order reaction source term for the reactants of a reaction in the form of $A \rightarrow B$.
 
 The source term of this reaction for the products can be described as
 
 \begin{equation}
-S_{Gain} = \text{-} k n_{A}
+S_\text{Gain} = \text{-} k n_{A}
 \end{equation}
 
-Where $S_{Gain}$ is the source term for the reactant, $k$ is the reaction rate coefficient, $n_{A}$ is the reactant specie.When converting
+Where $S_\text{Gain}$ is the source term for the reactant, $k$ is the reaction rate coefficient, $n_{A}$ is the reactant specie.When converting
 the density to logarithmic form, the strong form for `ReactantFirstOrderRxn` is defined as
 
 \begin{equation}
-S_{Gain} = \text{-} k \exp(N_{A})
+S_\text{Gain} = \text{-} k \exp(N_{A})
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form.
+Where $N_{j}$ is the molar density of the species in logarithmic form.
 
 !alert note
 When coupling Zapdos with CRANE, `ReactantFirstOrderRxn` serves the same function as CRANE's [`ReactionFirstOrderLog`](/kernels/ReactionFirstOrderLog.md).

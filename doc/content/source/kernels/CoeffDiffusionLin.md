@@ -14,7 +14,7 @@ The strong form for `CoeffDiffusionLin` is defined as
 
 Where $\Gamma_{\text{diff}}$ is the diffusion component of a species' flux, $D_{j}$ is the diffusion coefficient, $n_{j}$ is the density, and
 $l_{c}$ is the scaling factor of the mesh. In the case for the electrostatic approximation,
-$n_{j}$ is replace with the potential and $D_{j}$ is replace with the permittivity of free space.
+$n_{j}$ is replaced with the potential and $D_{j}$ is replaced with the permittivity of free space.
 
 ## Example Input File Syntax
 

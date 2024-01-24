@@ -17,7 +17,7 @@ ProductFirstOrderRxn::validParams()
 {
   InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("v", "The variable that is reacting to create u.");
-  params.addClassDescription("Generic first order reaction source term for u (v is the reactant"
+  params.addClassDescription("Generic first order reaction source term for u (v is the reactant "
                              "and densities must be in logarithmic form)");
   return params;
 }

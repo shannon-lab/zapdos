@@ -18,7 +18,7 @@ TM0Cylindrical::validParams()
   InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("f", "The drive frequency.");
   params.addClassDescription(
-      "The axisymmetric wave equation for the azimuth component of the magnetizing field.");
+      "The axisymmetric wave equation for the azimuthal component of the magnetizing field.");
   return params;
 }
 

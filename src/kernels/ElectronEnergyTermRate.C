@@ -23,8 +23,8 @@ ElectronEnergyTermRate::validParams()
   params.addParam<Real>("threshold_energy", 0.0, "Energy required for reaction to take place.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
-      "Electron energy loss term for inelastic collisions"
-      "using reaction rate coefficient; Threshold energy is the energy lost in Volts in a single"
+      "Electron energy loss term for inelastic collisions "
+      "using reaction rate coefficients. Threshold energy is the energy lost in Volts in a single "
       "collision (Densities must be in logarithmic form)");
   return params;
 }

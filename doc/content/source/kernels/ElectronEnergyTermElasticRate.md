@@ -4,21 +4,21 @@
 
 ## Overview
 
-`ElectronEnergyTermElasticRate` is calculates the electron energy loss from elastic collisions using reaction rate coefficients for electrons in logarithmic form.
+`ElectronEnergyTermElasticRate` calculates the electron energy loss from elastic collisions using reaction rate coefficients for electrons in logarithmic form.
 
 Electron energy loss from elastic collisions can be described as
 
 \begin{equation}
-S_{Loss} =  -3 \frac{m_{e}}{m_{g}} \frac{2n_{\epsilon}}{3n_{e}} k_{el} n_{e} n_{g}
+S_\text{Loss} =  -3 \frac{m_{e}}{m_{g}} \frac{2n_{\epsilon}}{3n_{e}} k_{el} n_{e} n_{g}
 \end{equation}
 
-Where $S_{Loss}$ is the loss term of the electron mean energy density, $k_{el}$ is the reaction rate coefficient for elastic electron-neutral collisions, $m_{e}$ is the mass of the electrons, $m_{g}$ is the mass of the neutral specie, $n_{e}$ is the electron density, $n_{g}$ is the neutral specie density, and $n_{\epsilon}$ is the electron mean energy density. When converting the density to logarithmic form and applying a scaling factor of the mesh, the strong form for `ElectronEnergyTermElasticRate` is defined as
+Where $S_\text{Loss}$ is the loss term of the electron mean energy density, $k_{el}$ is the reaction rate coefficient for elastic electron-neutral collisions, $m_{e}$ is the mass of the electrons, $m_{g}$ is the mass of the neutral specie, $n_{e}$ is the electron density, $n_{g}$ is the neutral species density, and $n_{\epsilon}$ is the electron mean energy density. When converting the density to logarithmic form and applying a scaling factor of the mesh, the strong form for `ElectronEnergyTermElasticRate` is defined as
 
 \begin{equation}
-S_{Loss} =  -3 \frac{m_{e}}{m_{g}} \frac{2}{3} \exp(N_{\varepsilon} - N_{e}) k_{el} \exp(N_{e}) \exp(N_{g})
+S_\text{Loss} =  -3 \frac{m_{e}}{m_{g}} \frac{2}{3} \exp(N_{\varepsilon} - N_{e}) k_{el} \exp(N_{e}) \exp(N_{g})
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form and $l_{c}$ is the scaling factor of the mesh.
+Where $N_{j}$ is the molar density of the species in logarithmic form and $l_{c}$ is the scaling factor of the mesh.
 
 !alert note
 When coupling Zapdos with CRANE, `ElectronEnergyTermElasticRate` serves the same function as CRANE's [`ADEEDFElasticLog`](/kernels/ADEEDFElasticLog.md).

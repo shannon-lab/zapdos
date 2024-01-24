@@ -4,7 +4,7 @@
 
 ## Overview
 
-`AccelerationByAveraging` is an acceleration method that make a growth prediction of a species based on the average rate of change for a given time period.
+`AccelerationByAveraging` is an acceleration method that makes a growth prediction for a species based on the average rate of change for a given time period.
 
 The growth of a species for a constant rate of change for a given time period is:
 
@@ -20,15 +20,15 @@ If the rate of change is assumed to linear, then $\frac{\text{d}n}{\text{d}t}$ a
 \frac{\text{d}n}{\text{d}t} = \frac{n_{Ts} - n_{0s}}{t_{s}}
 \end{equation}
 
-where $t_{s}$ is some simple time less then $T$, and $0s$ and $Ts$ denote the beginning and end of the simple time, respectively. When converting the density to logarithmic form,
+where $t_{s}$ is some simple time less then $T$. The subscripts $0s$ and $Ts$ denote the beginning and end of the simple time, respectively. When converting the density to logarithmic form,
 `AccelerationByAveraging` is defined as
 
 \begin{equation}
-\exp(N_{T}) - \exp(N_{0}) = \frac{\text{d}n}{\text{d}t} \ T  \\[10pt]
-\frac{\text{d}n}{\text{d}t} = \frac{\exp(N_{Ts}) - \exp(N_{0s})}{t_{s}}
+\exp(N_{j, T}) - \exp(N_{j, 0}) = \frac{\text{d}n}{\text{d}t} \ T  \\[10pt]
+\frac{\text{d}n}{\text{d}t} = \frac{\exp(N_{j, Ts}) - \exp(N_{j, 0s})}{t_{s}}
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form.
+Where $N_{j}$ is the molar density of the species in logarithmic form.
 
 ## Example Input File Syntax
 

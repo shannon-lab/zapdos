@@ -4,7 +4,7 @@
 
 ## Overview
 
-`JouleHeating` is the accounts for the heating of electrons through Joule heating
+`JouleHeating` accounts for the heating of electrons through Joule heating
 for electrons and electron mean energy densities in logarithmic form. `JouleHeating` assumes
 the electrostatic approximation for the electric field.
 
@@ -12,11 +12,11 @@ The strong form for Joule heating effects for energies in units of eV are
 usually defined as
 
 \begin{equation}
-p_{\text{Joule}} = \text{-} \nabla (V) \cdot [\text{-} \mu_{e} \ \text{-} \nabla (V) n_{e} -
-                           D_{e} \nabla (n_{e})]
+p_{\text{Joule}} = \text{-} \nabla (V) \cdot \left[\text{-} \mu_{e} \ \text{-} \nabla (V) n_{e} -
+                           D_{e} \nabla (n_{e})\right]
 \end{equation}
 
-Where $p_{\text{Joule}}$ is Joule heating in units of $\frac{eV}{m^{3}s}$, $V$ is the potential, $\mu_{e}$ is the mobility of the electrons, $n_{e}$ is
+Where $p_{\text{Joule}}$ is Joule heating in units of eV/m$^{3}$s, $V$ is the potential, $\mu_{e}$ is the mobility of the electrons, $n_{e}$ is
 the electron density, and $D_{e}$ is the diffusion coefficient. When converting
 the density to logarithmic form and applying scaling factor to the mesh and voltage,
 the strong form for `JouleHeating` is defined as

@@ -4,21 +4,21 @@
 
 ## Overview
 
-`ElectronEnergyTermRate` is calculates the electron energy loss from elastic collisions using reaction rate coefficients for electrons in logarithmic form.
+`ElectronEnergyTermRate` calculates the electron energy loss from elastic collisions using reaction rate coefficients for electrons in logarithmic form.
 
 Electron energy loss from elastic collisions can be described as
 
 \begin{equation}
-S_{Loss} =  k \epsilon n_{e} n_{j}
+S_\text{Loss} =  k \epsilon n_{e} n_{j}
 \end{equation}
 
-Where $S_{Loss}$ is the loss term of the electron mean energy density, $k$ is the reaction rate coefficient, $n_{e}$ is the electron density, $n_{j}$ is the colliding specie density, and $\epsilon$ the electron energy lost in the collision. When converting the density to logarithmic form and applying a scaling factor of the mesh, the strong form for `ElectronEnergyTermRate` is defined as
+Where $S_\text{Loss}$ is the loss term of the electron mean energy density, $k$ is the reaction rate coefficient, $n_{e}$ is the electron density, $n_{j}$ is the colliding species density, and $\epsilon$ the electron energy lost in the collision. When converting the density to logarithmic form and applying a scaling factor of the mesh, the strong form for `ElectronEnergyTermRate` is defined as
 
 \begin{equation}
-S_{Loss} =  k \epsilon \exp(N_{e}) \exp(N_{j})
+S_\text{Loss} =  k \epsilon \exp(N_{e}) \exp(N_{j})
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form and $l_{c}$ is the scaling factor of the mesh.
+Where $N_{j}$ is the molar density of the species in logarithmic form and $l_{c}$ is the scaling factor of the mesh.
 
 !alert note
 When coupling Zapdos with CRANE, `ElectronEnergyTermRate` serves the same function as CRANE's [`ADEEDFEnergyLog`](/kernels/ADEEDFEnergyLog.md).

@@ -22,7 +22,7 @@ factor of the mesh, the strong form for `EFieldAdvection` is defined as
 \nabla \cdot \Gamma_{\text{adv}} = \nabla \cdot \left[ \text{sign}_{j} \mu_{j} \exp(N_{j}) \ \text{-} \nabla (V / l_{c}) \right]
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form and
+Where $N_{j}$ is the molar density of the species in logarithmic form and
 $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax

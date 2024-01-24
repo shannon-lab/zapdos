@@ -28,7 +28,7 @@ ElectronsFromIonization::validParams()
   params.addParam<Real>("diffem", "The diffusivity.");
   params.addParam<Real>("alpha_iz", "The Townsend ionization coefficient.");
   params.addClassDescription(
-      "Rate of production of electrons from ionization using Townsend coefficient "
+      "Rate of production of electrons from ionization using Townsend coefficients "
       "(Electron density must be in logarithmic form)");
   return params;
 }

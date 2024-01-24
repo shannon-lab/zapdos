@@ -21,7 +21,7 @@ strong form for `ElectronTimeDerivative` is defined as
 \frac{\partial N_{j}}{\partial t} \exp(N_{j})
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form.
+Where $N_{j}$ is the molar density of the species in logarithmic form.
 
 ## Example Input File Syntax
 

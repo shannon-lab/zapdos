@@ -9,17 +9,17 @@
 The source term of this reaction for the products can be described as
 
 \begin{equation}
-S_{Gain} = 2 k n_{A} n_{A}
+S_\text{Gain} = 2 k n_{A} n_{A}
 \end{equation}
 
-Where $S_{Gain}$ is the source term for the products, $k$ is the reaction rate coefficient, $n_{A}$ is the reactant specie. When converting
+Where $S_\text{Gain}$ is the source term for the products, $k$ is the reaction rate coefficient, $n_{A}$ is the reactant specie. When converting
 the density to logarithmic form, the strong form for `ProductAABBRxn` is defined as
 
 \begin{equation}
-S_{Gain} = 2 k \exp(N_{A} + N_{A})
+S_\text{Gain} = 2 k \exp(N_{A} + N_{A})
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form.
+Where $N_{j}$ is the molar density of the species in logarithmic form.
 
 !alert note
 When coupling Zapdos with CRANE, `ProductAABBRxn` serves the same function as CRANE's [`ReactionSecondOrderLog`](/kernels/ReactionSecondOrderLog.md).

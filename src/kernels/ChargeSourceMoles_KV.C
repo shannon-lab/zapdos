@@ -20,7 +20,7 @@ ChargeSourceMoles_KV::validParams()
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addClassDescription(
       "Used for adding charged sources to Poisson’s equation. This kernel "
-      "assumes that densities are measured in units of mol/m$^{3}$ as opposed to #/$^{3}$");
+      "assumes that densities are measured in units of mol/m$^{3}$ as opposed to #/m$^{3}$");
   return params;
 }
 

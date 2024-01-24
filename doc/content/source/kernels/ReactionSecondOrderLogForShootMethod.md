@@ -4,7 +4,7 @@
 
 ## Overview
 
-`ReactionSecondOrderLogForShootMethod` is the derivative of an second order reaction term used to calculate the sensitivity variable for the shoothing method. For more information on the implementation of the shoothing method within Zapdos, please reference to [ShootMethodLog.md].
+`ReactionSecondOrderLogForShootMethod` is the derivative of a second order reaction term used to calculate the sensitivity variable for the shoothing method. For more information on the implementation of the shoothing method within Zapdos, please reference to [ShootMethodLog.md].
 
 ## Example Input File Syntax
 

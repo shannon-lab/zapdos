@@ -20,7 +20,7 @@ IonsFromIonization::validParams()
   params.addRequiredCoupledVar("potential", "The potential.");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription("Rate of production of ions from ionization using Townsend coefficient"
+  params.addClassDescription("Rate of production of ions from ionization using Townsend coefficients "
                              "(Ion density must be in logarithmic form)");
   return params;
 }

@@ -27,7 +27,7 @@ ReactionSecondOrderLogForShootMethod::validParams()
       "reaction has multiple different rate coefficients (frequently the case when multiple "
       "species are lumped together to simplify a reaction network), this will prevent the same "
       "material property from being declared multiple times.");
-  params.addClassDescription("The derivative of an second order reaction term used to calculate "
+  params.addClassDescription("The derivative of a second order reaction term used to calculate "
                              "the sensitivity variable for the shoothing method. "
                              "(Densities must be in logarithmic form)");
   return params;
