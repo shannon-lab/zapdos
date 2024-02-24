@@ -21,7 +21,7 @@ HagelaarEnergyAdvectionBC::validParams()
   params.addRequiredCoupledVar("ip", "The ion density.");
   params.deprecateCoupledVar("ip", "ions", "06/01/2024");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
-  params.addRequiredParam<std::vector<Real>>(
+  params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs",
       "The species-dependent secondary electron emission coefficients for this boundary");
   params.addRequiredParam<Real>("position_units", "Units of position.");
@@ -39,7 +39,7 @@ HagelaarEnergyAdvectionBC::HagelaarEnergyAdvectionBC(const InputParameters & par
     _num_ions(coupledComponents("ions")),
     // Coupled Variables
     _grad_potential(adCoupledGradient("potential")),
-    _se_coeff(getParam<std::vector<Real>>("emission_coeffs")),
+    _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     _se_energy(getParam<Real>("secondary_electron_energy")),
     _mumean_en(getADMaterialProperty<Real>("mumean_en")),
     _a(0.5),
@@ -54,6 +54,7 @@ HagelaarEnergyAdvectionBC::HagelaarEnergyAdvectionBC(const InputParameters & par
   _sgnip.resize(_num_ions);
   _muip.resize(_num_ions);
   _Dip.resize(_num_ions);
+  _se_coeff.resize(_num_ions);
 
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
@@ -63,6 +64,7 @@ HagelaarEnergyAdvectionBC::HagelaarEnergyAdvectionBC(const InputParameters & par
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ions", i)).name());
     _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ions", i)).name());
     _Dip[i] = &getADMaterialProperty<Real>("diff" + (*getVar("ions", i)).name());
+    _se_coeff[i] = &getADMaterialProperty<Real>(_se_coeff_names[i]);
   }
 }
 
@@ -85,7 +87,8 @@ HagelaarEnergyAdvectionBC::computeQpResidual()
     _ion_flux = (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
                     std::exp((*_ip[i])[_qp]) -
                 (*_Dip[i])[_qp] * std::exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units;
-    _bc_val += 10. * _ion_flux * _normals[_qp] * _se_energy * _se_coeff[i] * (_a - 1.) * (_r + 1.);
+    _bc_val +=
+        10. * _ion_flux * _normals[_qp] * _se_energy * (*_se_coeff[i])[_qp] * (_a - 1.) * (_r + 1.);
   }
 
   return _test[_i][_qp] * _r_units / (6. * (_r + 1.)) *

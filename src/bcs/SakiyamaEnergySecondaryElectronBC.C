@@ -16,9 +16,10 @@ InputParameters
 SakiyamaEnergySecondaryElectronBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredParam<std::vector<Real>>("se_coeff", "The secondary electron coefficient");
+  params.addRequiredParam<std::vector<std::string>>("se_coeff",
+                                                    "The secondary electron coefficient");
   params.deprecateParam("se_coeff", "emission_coeffs", "06/01/2024");
-  params.addRequiredParam<std::vector<Real>>(
+  params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs",
       "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<bool>(
@@ -49,7 +50,7 @@ SakiyamaEnergySecondaryElectronBC::SakiyamaEnergySecondaryElectronBC(
     _r_units(1. / getParam<Real>("position_units")),
     Te_dependent(getParam<bool>("Tse_equal_Te")),
     _num_ions(coupledComponents("ions")),
-    _se_coeff(getParam<std::vector<Real>>("emission_coeffs")),
+    _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     // Coupled Variables
     _grad_potential(adCoupledGradient("potential")),
 
@@ -61,13 +62,16 @@ SakiyamaEnergySecondaryElectronBC::SakiyamaEnergySecondaryElectronBC(
     _ion_flux(0, 0, 0)
 {
 
-  if (_se_coeff.size() != _num_ions)
-    mooseError("SakiyamaEnergySecondaryElectronBC with name ", name(), ": The lengths of `ions` and `emission_coeffs` "
+  if (_se_coeff_names.size() != _num_ions)
+    mooseError("SakiyamaEnergySecondaryElectronBC with name ",
+               name(),
+               ": The lengths of `ions` and `emission_coeffs` "
                "must be the same");
   _ip.resize(_num_ions);
   _ip_var.resize(_num_ions);
   _muip.resize(_num_ions);
   _sgnip.resize(_num_ions);
+  _se_coeff.resize(_num_ions);
 
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
@@ -75,6 +79,7 @@ SakiyamaEnergySecondaryElectronBC::SakiyamaEnergySecondaryElectronBC(
     _ip[i] = &adCoupledValue("ions", i);
     _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ions", i)).name());
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ions", i)).name());
+    _se_coeff[i] = &getADMaterialProperty<Real>(_se_coeff_names[i]);
   }
 }
 
@@ -93,8 +98,8 @@ SakiyamaEnergySecondaryElectronBC::computeQpResidual()
       _a = 0.0;
     }
 
-    _ion_flux += _se_coeff[i] * _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] *
-                 _r_units * std::exp((*_ip[i])[_qp]);
+    _ion_flux += (*_se_coeff[i])[_qp] * _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] *
+                 -_grad_potential[_qp] * _r_units * std::exp((*_ip[i])[_qp]);
   }
 
   if (Te_dependent)

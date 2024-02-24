@@ -33,8 +33,8 @@ protected:
   std::vector<unsigned int> _ip_id;
   const ADVariableValue & _mean_en;
   const ADVariableValue & _em;
-
-  const std::vector<Real> & _se_coeff;
+  const std::vector<std::string> _se_coeff_names;
+  std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   std::vector<const ADMaterialProperty<Real> *> _muip;
   const MaterialProperty<Real> & _eps;
   const MaterialProperty<Real> & _N_A;
@@ -64,5 +64,5 @@ protected:
 
   ADReal _ion_drift;
   ADReal _secondary_ion;
-  unsigned int _num_ions;
+  const unsigned int _num_ions;
 };

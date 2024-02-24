@@ -28,8 +28,8 @@ EconomouDielectricBC::validParams()
   params.deprecateCoupledVar("ip", "ions", "06/01/2024");
   params.addRequiredCoupledVar("potential_ion", "The ion potential");
   params.deprecateCoupledVar("potential_ion", "ion_potentials", "06/01/2024");
-  params.addParam<std::vector<Real>>("users_gamma",
-                                     "A secondary electron emission coeff. only used for this BC.");
+  params.addParam<std::vector<std::string>>(
+      "users_gamma", "A secondary electron emission coeff. only used for this BC.");
   params.deprecateParam("users_gamma", "emission_coeffs", "06/01/2024");
 
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density. In log form");
@@ -37,7 +37,7 @@ EconomouDielectricBC::validParams()
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredCoupledVar("ion_potentials",
                                "The effective potential for each ion provided in 'ions'");
-  params.addParam<std::vector<Real>>(
+  params.addParam<std::vector<std::string>>(
       "emission_coeffs",
       "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
@@ -58,7 +58,7 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
 
     _e(getMaterialProperty<Real>("e")),
     _massem(getMaterialProperty<Real>("massem")),
-    _user_se_coeff(getParam<std::vector<Real>>("emission_coeffs")),
+    _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
 
     _epsilon_d(getParam<Real>("dielectric_constant")),
     _thickness(getParam<Real>("thickness")),
@@ -67,7 +67,8 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
     _temp_flux(0, 0, 0),
     _v_thermal(0),
     _em_flux(0, 0, 0),
-    _potential_units(getParam<std::string>("potential_units"))
+    _potential_units(getParam<std::string>("potential_units")),
+    _num_ions(coupledComponents("ions"))
 
 {
   if (_potential_units.compare("V") == 0)
@@ -75,14 +76,13 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
   else if (_potential_units.compare("kV") == 0)
     _voltage_scaling = 1000;
 
-  _num_ions = coupledComponents("ions");
-
   _ip.resize(_num_ions);
   _ip_var.resize(_num_ions);
   _muip.resize(_num_ions);
   _sgnip.resize(_num_ions);
   _potential_ion.resize(_num_ions);
   _grad_potential_ion.resize(_num_ions);
+  _user_se_coeff.resize(_num_ions);
 
   bool fill_potential_vector = false;
   // There are two checks in the next loop:
@@ -102,16 +102,19 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
     else
     {
       mooseError(
-          "EconomouDielectricBC with name ", name(), ": `ion` and `ion_potentials` vectors are not same length. There are "
+          "EconomouDielectricBC with name ",
+          name(),
+          ": `ion` and `ion_potentials` vectors are not same length. There are "
           "two "
           "possible options: \n 1) Ions respond to an effective potential. If so, make sure each "
           "ion has an associated effective potential. \n 2) Ions and electrons respond to the same "
           "potential. If so, set potential_ion equal to this potential.\n");
     }
 
-    if (_user_se_coeff.size() != _num_ions)
-      mooseError(
-          "EconomouDielectricBC with name ", name(), ": The lengths of `ions` and `emission_coeffs` must be the same");
+    if (_se_coeff_names.size() != _num_ions)
+      mooseError("EconomouDielectricBC with name ",
+                 name(),
+                 ": The lengths of `ions` and `emission_coeffs` must be the same");
   }
 
   for (unsigned int i = 0; i < _num_ions; ++i)
@@ -120,6 +123,7 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
     _ip[i] = &adCoupledValue("ions", i);
     _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ions", i)).name());
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ions", i)).name());
+    _user_se_coeff[i] = &getADMaterialProperty<Real>(_se_coeff_names[i]);
 
     if (fill_potential_vector)
     {
@@ -151,7 +155,7 @@ EconomouDielectricBC::computeQpResidual()
     _temp_flux = _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -(*_grad_potential_ion[i])[_qp] *
                  _r_units * std::exp((*_ip[i])[_qp]);
     _ion_flux += _temp_flux;
-    _em_flux -= _user_se_coeff[i] * _temp_flux;
+    _em_flux -= (*_user_se_coeff[i])[_qp] * _temp_flux;
   }
 
   _v_thermal =

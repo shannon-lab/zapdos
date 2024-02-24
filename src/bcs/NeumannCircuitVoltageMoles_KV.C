@@ -37,7 +37,7 @@ NeumannCircuitVoltageMoles_KV::validParams()
   params.deprecateCoupledVar("mean_en", "electron_energy", "06/01/2024");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
 
-  params.addRequiredParam<std::vector<Real>>(
+  params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs",
       "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
@@ -55,7 +55,7 @@ NeumannCircuitVoltageMoles_KV::NeumannCircuitVoltageMoles_KV(const InputParamete
     _data(getUserObject<ProvideMobility>("data_provider")),
     _mean_en(adCoupledValue("electron_energy")),
     _em(adCoupledValue("electrons")),
-    _se_coeff(getParam<std::vector<Real>>("emission_coeffs")),
+    _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     _eps(getMaterialProperty<Real>("eps")),
     _N_A(getMaterialProperty<Real>("N_A")),
     _muem(getADMaterialProperty<Real>("muem")),
@@ -64,7 +64,8 @@ NeumannCircuitVoltageMoles_KV::NeumannCircuitVoltageMoles_KV(const InputParamete
     _kb(getMaterialProperty<Real>("k_boltz")),
 
     _potential_units(getParam<std::string>("potential_units")),
-    _r(getParam<Real>("r"))
+    _r(getParam<Real>("r")),
+    _num_ions(coupledComponents("ions"))
 {
   _ion_flux.zero();
   _n_gamma = 0.0;
@@ -82,10 +83,11 @@ NeumannCircuitVoltageMoles_KV::NeumannCircuitVoltageMoles_KV(const InputParamete
 
   // First we need to initialize all of the ion densities and material properties.
   // Find the number of ions coupled into this BC:
-  _num_ions = coupledComponents("ions");
 
-  if (_se_coeff.size() != _num_ions)
-    mooseError("NeumannCircuitVoltageMoles_KV with name ", name(), ": The lengths of `ions` and `emission_coeffs` must be "
+  if (_se_coeff_names.size() != _num_ions)
+    mooseError("NeumannCircuitVoltageMoles_KV with name ",
+               name(),
+               ": The lengths of `ions` and `emission_coeffs` must be "
                "the same");
   // Resize the vectors to store _num_ions values:
   _ip.resize(_num_ions);
@@ -95,6 +97,7 @@ NeumannCircuitVoltageMoles_KV::NeumannCircuitVoltageMoles_KV(const InputParamete
   _Dip.resize(_num_ions);
   _sgnip.resize(_num_ions);
   _mass.resize(_num_ions);
+  _se_coeff.resize(_num_ions);
 
   // Retrieve the values for each ion and store in the relevant vectors.
   // Note that these need to be dereferenced to get the values inside the
@@ -110,6 +113,7 @@ NeumannCircuitVoltageMoles_KV::NeumannCircuitVoltageMoles_KV(const InputParamete
     _Dip[i] = &getADMaterialProperty<Real>("diff" + (*getVar("ions", i)).name());
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ions", i)).name());
     _mass[i] = &getMaterialProperty<Real>("mass" + (*getVar("ions", i)).name());
+    _se_coeff[i] = &getADMaterialProperty<Real>(_se_coeff_names[i]);
   }
 }
 
@@ -133,15 +137,15 @@ NeumannCircuitVoltageMoles_KV::computeQpResidual()
   _ion_drift = 0;
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _ion_flux += _se_coeff[i] *
+    _ion_flux += (*_se_coeff[i])[_qp] *
                  ((*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_u[_qp] * _r_units *
                       std::exp((*_ip[i])[_qp]) -
                   (*_Dip[i])[_qp] * std::exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units);
 
     _secondary_ion +=
-        (-1. + (-1. + _a) * _se_coeff[i]) * std::exp((*_ip[i])[_qp]) * (*_muip[i])[_qp];
+        (-1. + (-1. + _a) * (*_se_coeff[i])[_qp]) * std::exp((*_ip[i])[_qp]) * (*_muip[i])[_qp];
 
-    _ion_drift += (-1. + (-1. + _a) * _se_coeff[i]) *
+    _ion_drift += (-1. + (-1. + _a) * (*_se_coeff[i])[_qp]) *
                   std::sqrt(8 * _kb[_qp] * (*_T_heavy[i])[_qp] / (M_PI * (*_mass[i])[_qp])) *
                   std::exp((*_ip[i])[_qp]);
   }

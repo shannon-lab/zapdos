@@ -22,8 +22,8 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
-  Real _r;
+  const Real _r_units;
+  const Real _r;
   const unsigned int _num_ions;
   // Coupled variables
 
@@ -35,7 +35,8 @@ protected:
   std::vector<const MaterialProperty<Real> *> _sgnip;
   std::vector<const ADMaterialProperty<Real> *> _muip;
   std::vector<const ADMaterialProperty<Real> *> _Dip;
-  const std::vector<Real> _se_coeff;
+  const std::vector<std::string> _se_coeff_names;
+  std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   const Real _se_energy;
   const ADMaterialProperty<Real> & _mumean_en;
 

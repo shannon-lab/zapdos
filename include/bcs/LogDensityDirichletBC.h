@@ -25,5 +25,5 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _value;
+  const Real _value;
 };

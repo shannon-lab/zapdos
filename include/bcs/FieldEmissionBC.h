@@ -39,15 +39,16 @@ protected:
   std::vector<const MaterialProperty<Real> *> _sgnip;
   std::vector<const ADMaterialProperty<Real> *> _muip;
   std::vector<const ADMaterialProperty<Real> *> _Dip;
-  const std::vector<Real> _se_coeff;
+  const std::vector<std::string> _se_coeff_names;
+  std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   const MaterialProperty<Real> & _work_function;
   const MaterialProperty<Real> & _field_enhancement;
 
   Real _a;
   ADRealVectorValue _ion_flux;
-  Real _tau;
+  const Real _tau;
   bool _relax;
-  std::string _potential_units;
+  const std::string _potential_units;
 
   // Unique variables
 
@@ -55,4 +56,11 @@ protected:
   Real FE_a;
   Real FE_b;
   Real FE_c;
+
+  ADReal v;
+  ADReal f;
+  ADReal jFE;
+  ADReal jSE;
+  ADReal F;
+  Real _relaxation_Expr;
 };

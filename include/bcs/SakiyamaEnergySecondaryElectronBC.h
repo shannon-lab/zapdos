@@ -25,7 +25,8 @@ protected:
   const Real _r_units;
   const bool Te_dependent;
   const unsigned int _num_ions;
-  const std::vector<Real> _se_coeff;
+  const std::vector<std::string> _se_coeff_names;
+  std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   // Coupled variables
   const ADVariableGradient & _grad_potential;
   const ADVariableValue & _em;
@@ -35,7 +36,7 @@ protected:
   std::vector<const MaterialProperty<Real> *> _sgnip;
   std::vector<const ADMaterialProperty<Real> *> _muip;
 
-  Real _user_se_energy;
+  const Real _user_se_energy;
 
   Real _a;
   ADReal _se_energy;

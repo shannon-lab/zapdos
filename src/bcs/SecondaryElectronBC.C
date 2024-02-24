@@ -26,7 +26,7 @@ SecondaryElectronBC::validParams()
   params.deprecateCoupledVar("ip", "ions", "06/01/2024");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addRequiredParam<std::vector<Real>>(
+  params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs", "A list of species-dependent secondary electron emission coefficients");
   return params;
 }
@@ -38,7 +38,7 @@ SecondaryElectronBC::SecondaryElectronBC(const InputParameters & parameters)
     _r_ion(getParam<Real>("r_ion")),
     _kb(getMaterialProperty<Real>("k_boltz")),
     _num_ions(coupledComponents("ions")),
-    _se_coeff(getParam<std::vector<Real>>("emission_coeffs")),
+    _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     // Coupled Variables
     _grad_potential(adCoupledGradient("potential")),
     _mean_en(adCoupledValue("electron_energy")),
@@ -54,8 +54,10 @@ SecondaryElectronBC::SecondaryElectronBC(const InputParameters & parameters)
   _v_thermal = 0.0;
   _n_gamma = 0.0;
 
-  if (_se_coeff.size() != _num_ions)
-    mooseError("SecondaryElectronBC with name ", name(), ": The lengths of `ions` and `emission_coeffs` must be the same");
+  if (_se_coeff_names.size() != _num_ions)
+    mooseError("SecondaryElectronBC with name ",
+               name(),
+               ": The lengths of `ions` and `emission_coeffs` must be the same");
   // Resize the vectors to store _num_ions values:
   _ip.resize(_num_ions);
   _grad_ip.resize(_num_ions);
@@ -63,6 +65,7 @@ SecondaryElectronBC::SecondaryElectronBC(const InputParameters & parameters)
   _Tip.resize(_num_ions);
   _massip.resize(_num_ions);
   _sgnip.resize(_num_ions);
+  _se_coeff.resize(_num_ions);
 
   // Retrieve the values for each ion and store in the relevant vectors.
   // Note that these need to be dereferenced to get the values inside the
@@ -77,6 +80,7 @@ SecondaryElectronBC::SecondaryElectronBC(const InputParameters & parameters)
     _Tip[i] = &getADMaterialProperty<Real>("T" + (*getVar("ions", i)).name());
     _massip[i] = &getMaterialProperty<Real>("mass" + (*getVar("ions", i)).name());
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ions", i)).name());
+    _se_coeff[i] = &getADMaterialProperty<Real>(_se_coeff_names[i]);
   }
 }
 
@@ -99,7 +103,7 @@ SecondaryElectronBC::computeQpResidual()
       _b = 1.0;
     else
       _b = 0.0;
-    _ion_flux += _se_coeff[i] * std::exp((*_ip[i])[_qp]) *
+    _ion_flux += (*_se_coeff[i])[_qp] * std::exp((*_ip[i])[_qp]) *
                  (0.5 * std::sqrt(8 * _kb[_qp] * (*_Tip[i])[_qp] / (M_PI * (*_massip[i])[_qp])) +
                   (2 * _b - 1) * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] *
                       _r_units * _normals[_qp]);

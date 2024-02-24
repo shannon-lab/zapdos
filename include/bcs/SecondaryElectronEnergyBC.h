@@ -27,7 +27,8 @@ protected:
   const Real & _r_ion;
   const MaterialProperty<Real> & _kb;
   const unsigned int _num_ions;
-  const std::vector<Real> & _se_coeff;
+  const std::vector<std::string> _se_coeff_names;
+  std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   // Coupled variables
 
   const ADVariableGradient & _grad_potential;

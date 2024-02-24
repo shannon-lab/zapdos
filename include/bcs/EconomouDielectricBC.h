@@ -22,7 +22,7 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
+  const Real _r_units;
 
   const ADVariableValue & _mean_en;
   const ADVariableValue & _em;
@@ -37,7 +37,8 @@ protected:
   std::vector<const MaterialProperty<Real> *> _sgnip;
   std::vector<const ADMaterialProperty<Real> *> _muip;
   const MaterialProperty<Real> & _massem;
-  std::vector<Real> _user_se_coeff;
+  const std::vector<std::string> _se_coeff_names;
+  std::vector<const ADMaterialProperty<Real> *> _user_se_coeff;
 
   const Real & _epsilon_d;
   const Real & _thickness;
@@ -50,8 +51,5 @@ protected:
 
   Real _voltage_scaling;
 
-  unsigned int _num_ions;
-  unsigned int _ip_index;
-  std::vector<unsigned int>::iterator _iter;
-  std::vector<unsigned int>::iterator _iter_potential;
+  const unsigned int _num_ions;
 };

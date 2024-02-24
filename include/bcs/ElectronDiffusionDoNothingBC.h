@@ -24,7 +24,7 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
+  const Real _r_units;
 
   const ADMaterialProperty<Real> & _diffem;
 };

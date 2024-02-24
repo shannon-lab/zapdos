@@ -30,14 +30,14 @@ protected:
   /// The value for this BC
   const PostprocessorValue & _current;
   const Function & _surface_potential;
-  std::string _surface;
-  Real _resist;
-  Real _coulomb_charge;
-  Real _N_A;
-  std::string _potential_units;
-  Real _r_units;
-  bool _convert_moles;
-  Real _A;
+  const std::string _surface;
+  const Real _resist;
+  const Real _coulomb_charge;
+  const Real _N_A;
+  const std::string _potential_units;
+  const Real _r_units;
+  const bool _convert_moles;
+  const Real _A;
 
   Real _current_sign;
   Real _voltage_scaling;

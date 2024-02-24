@@ -22,7 +22,7 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _position_units;
+  const Real _position_units;
 
   // Material properties
 

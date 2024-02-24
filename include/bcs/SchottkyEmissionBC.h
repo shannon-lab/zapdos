@@ -25,7 +25,8 @@ protected:
   const Real _r_units;
   const Real _r;
   const unsigned int _num_ions;
-  const std::vector<Real> _se_coeff;
+  const std::vector<std::string> _se_coeff_names;
+  std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   // Coupled variables
 
   const ADVariableGradient & _grad_potential;
@@ -49,7 +50,7 @@ protected:
   Real _a;
   ADReal _v_thermal;
   ADRealVectorValue _ion_flux;
-  Real _tau;
+  const Real _tau;
   bool _relax;
   std::string _potential_units;
 
@@ -57,4 +58,10 @@ protected:
 
   Real _voltage_scaling;
   Real _dPhi_over_F;
+  ADReal dPhi;
+  Real kB;
+  ADReal jRD;
+  ADReal jSE;
+  ADReal F;
+  Real _relaxation_Expr;
 };
