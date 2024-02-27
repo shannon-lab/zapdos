@@ -36,10 +36,10 @@ protected:
   const CurrentDensityShapeSideUserObject & _current_uo;
   const Real & _current;
   const std::vector<Real> & _current_jac;
-  Real _surface_potential;
-  std::string _surface;
+  const Real _surface_potential;
+  const std::string _surface;
   Real _current_sign;
-  Real _p;
+  const Real _p;
   const ProvideMobility & _data;
   const std::vector<dof_id_type> & _var_dofs;
   unsigned int _em_id;
@@ -53,4 +53,10 @@ protected:
   Real _area;
   bool _use_area;
   Real _voltage_scaling;
+  Real curr_times_resist;
+  Real d_curr_times_resist_d_potential;
+  Real d_curr_times_resist_d_em;
+  Real d_curr_times_resist_d_ip;
+  Real d_curr_times_resist_d_mean_en;
+  Real d_curr_times_resist_d_coupled_var;
 };

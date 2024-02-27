@@ -22,7 +22,7 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
+  const Real _r_units;
 
   // Coupled variables
   const ADVariableValue & _em;

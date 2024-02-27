@@ -27,5 +27,5 @@ protected:
 
   const ADVariableValue & _v;
 
-  Real _H;
+  const Real _H;
 };

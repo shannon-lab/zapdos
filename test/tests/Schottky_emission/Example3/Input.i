@@ -501,6 +501,7 @@ threeTimesRelaxTime = 150E-6 #s
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
+    emission_coeffs = 0.02
   []
 
   [potential_dirichlet_right]
@@ -523,6 +524,7 @@ threeTimesRelaxTime = 150E-6 #s
     position_units = ${dom0Scale}
     # tau = ${relaxTime}
     relax = true
+    emission_coeffs = 0.02
   []
 
   # [em_physical_left]

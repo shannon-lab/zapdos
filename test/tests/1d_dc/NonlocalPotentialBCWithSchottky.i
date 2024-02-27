@@ -566,6 +566,7 @@ area = 5.02e-7 # Formerly 3.14e-6
     position_units = ${dom0Scale}
     tau = ${relaxTime}
     relax = true
+    emission_coeffs = 0.02
   []
 
   # [em_physical_left]

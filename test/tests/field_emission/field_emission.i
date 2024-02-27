@@ -501,6 +501,7 @@ vhigh = -0.15 #kV
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
+    emission_coeffs = 0.05
   []
   [potential_dirichlet_right]
     type = DirichletBC

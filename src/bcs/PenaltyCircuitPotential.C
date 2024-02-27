@@ -88,7 +88,7 @@ PenaltyCircuitPotential::PenaltyCircuitPotential(const InputParameters & paramet
 Real
 PenaltyCircuitPotential::computeQpResidual()
 {
-  Real curr_times_resist = _current_sign * _current * _resistance / _voltage_scaling;
+  curr_times_resist = _current_sign * _current * _resistance / _voltage_scaling;
   if (_use_area)
     curr_times_resist *= _area;
 
@@ -98,7 +98,7 @@ PenaltyCircuitPotential::computeQpResidual()
 Real
 PenaltyCircuitPotential::computeQpJacobian()
 {
-  Real d_curr_times_resist_d_potential =
+  d_curr_times_resist_d_potential =
       _current_sign * _current_jac[_var_dofs[_j]] * _resistance / _voltage_scaling;
   if (_use_area)
     d_curr_times_resist_d_potential *= _area;
@@ -111,7 +111,7 @@ PenaltyCircuitPotential::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _em_id)
   {
-    Real d_curr_times_resist_d_em =
+    d_curr_times_resist_d_em =
         _current_sign * _current_jac[_em_dofs[_j]] * _resistance / _voltage_scaling;
     if (_use_area)
       d_curr_times_resist_d_em *= _area;
@@ -121,7 +121,7 @@ PenaltyCircuitPotential::computeQpOffDiagJacobian(unsigned int jvar)
 
   else if (jvar == _ip_id)
   {
-    Real d_curr_times_resist_d_ip =
+    d_curr_times_resist_d_ip =
         _current_sign * _current_jac[_ip_dofs[_j]] * _resistance / _voltage_scaling;
     if (_use_area)
       d_curr_times_resist_d_ip *= _area;
@@ -131,7 +131,7 @@ PenaltyCircuitPotential::computeQpOffDiagJacobian(unsigned int jvar)
 
   else if (jvar == _mean_en_id)
   {
-    Real d_curr_times_resist_d_mean_en =
+    d_curr_times_resist_d_mean_en =
         _current_sign * _current_jac[_mean_en_dofs[_j]] * _resistance / _voltage_scaling;
     if (_use_area)
       d_curr_times_resist_d_mean_en *= _area;
@@ -146,7 +146,7 @@ PenaltyCircuitPotential::computeQpOffDiagJacobian(unsigned int jvar)
 Real
 PenaltyCircuitPotential::computeQpNonlocalJacobian(dof_id_type dof_index)
 {
-  Real d_curr_times_resist_d_potential =
+  d_curr_times_resist_d_potential =
       _current_sign * _current_jac[dof_index] * _resistance / _voltage_scaling;
   if (_use_area)
     d_curr_times_resist_d_potential *= _area;
@@ -159,7 +159,7 @@ PenaltyCircuitPotential::computeQpNonlocalOffDiagJacobian(unsigned int jvar, dof
 {
   if (jvar == _em_id || jvar == _ip_id || jvar == _mean_en_id)
   {
-    Real d_curr_times_resist_d_coupled_var =
+    d_curr_times_resist_d_coupled_var =
         _current_sign * _current_jac[dof_index] * _resistance / _voltage_scaling;
     if (_use_area)
       d_curr_times_resist_d_coupled_var *= _area;

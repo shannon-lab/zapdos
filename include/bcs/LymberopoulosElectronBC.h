@@ -22,23 +22,18 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
-  Real _ks;
-  Real _gamma;
+  const Real _r_units;
+  const Real _ks;
+  const std::vector<Real> _gamma;
+  const unsigned int _num_ions;
 
   // Coupled variables
   const ADVariableGradient & _grad_potential;
   std::vector<MooseVariable *> _ion_var;
   std::vector<const ADVariableValue *> _ion;
 
-  Real _sign;
-
   std::vector<const MaterialProperty<Real> *> _sgnion;
   std::vector<const ADMaterialProperty<Real> *> _muion;
-
-  unsigned int _num_ions;
-  unsigned int _ip_index;
-  std::vector<unsigned int>::iterator _iter;
 
   ADRealVectorValue _ion_flux;
 };

@@ -24,7 +24,6 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  int _charge_sign;
-  unsigned int _potential_id;
+  const int _charge_sign;
   const ADVariableGradient & _grad_potential;
 };
