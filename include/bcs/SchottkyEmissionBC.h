@@ -22,24 +22,26 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
-  Real _r;
-
+  const Real _r_units;
+  const Real _r;
+  const unsigned int _num_ions;
+  const std::vector<std::string> _se_coeff_names;
+  std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   // Coupled variables
 
   const ADVariableGradient & _grad_potential;
   const ADVariableValue & _mean_en;
 
-  MooseVariable & _ip_var;
-  const ADVariableValue & _ip;
-  const ADVariableGradient & _grad_ip;
+  std::vector<MooseVariable *> _ip_var;
+  std::vector<const ADVariableValue *> _ip;
+  std::vector<const ADVariableGradient *> _grad_ip;
+
+  std::vector<const MaterialProperty<Real> *> _sgnip;
+  std::vector<const ADMaterialProperty<Real> *> _muip;
+  std::vector<const ADMaterialProperty<Real> *> _Dip;
 
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _e;
-  const MaterialProperty<Real> & _sgnip;
-  const ADMaterialProperty<Real> & _muip;
-  const ADMaterialProperty<Real> & _Dip;
-  const MaterialProperty<Real> & _se_coeff;
   const MaterialProperty<Real> & _work_function;
   const MaterialProperty<Real> & _field_enhancement;
   const MaterialProperty<Real> & _Richardson_coefficient;
@@ -48,7 +50,7 @@ protected:
   Real _a;
   ADReal _v_thermal;
   ADRealVectorValue _ion_flux;
-  Real _tau;
+  const Real _tau;
   bool _relax;
   std::string _potential_units;
 
@@ -56,4 +58,10 @@ protected:
 
   Real _voltage_scaling;
   Real _dPhi_over_F;
+  ADReal dPhi;
+  Real kB;
+  ADReal jRD;
+  ADReal jSE;
+  ADReal F;
+  Real _relaxation_Expr;
 };

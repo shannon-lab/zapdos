@@ -35,7 +35,7 @@ protected:
   const CurrentDensityShapeSideUserObject & _current_uo;
   const Real & _current;
   const std::vector<Real> & _current_jac;
-  std::string _surface;
+  const std::string _surface;
   Real _current_sign;
 
   // Data
@@ -55,12 +55,12 @@ protected:
 
   // System properties
   const Function & _V_source;
-  Real _resistance;
+  const Real _resistance;
   Real _area;
   bool _use_area;
 
   // Units
   std::string _potential_units;
-  Real _r_units;
+  const Real _r_units;
   Real _voltage_scaling;
 };

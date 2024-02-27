@@ -22,7 +22,7 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _position_units;
+  const Real _position_units;
 
   // Material properties
 
@@ -32,5 +32,4 @@ protected:
 private:
   // Coupled variables
   const ADVariableGradient & _grad_potential;
-  const ADVariableValue & _mean_en;
 };

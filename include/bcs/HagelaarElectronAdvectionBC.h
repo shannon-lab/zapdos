@@ -22,8 +22,8 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _r_units;
-  Real _r;
+  const Real _r_units;
+  const Real _r;
 
   // Coupled variables
   const ADVariableGradient & _grad_potential;

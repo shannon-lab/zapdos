@@ -16,14 +16,26 @@ InputParameters
 SakiyamaEnergySecondaryElectronBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredParam<Real>("se_coeff", "The secondary electron coefficient");
+  params.addRequiredParam<std::vector<std::string>>("se_coeff",
+                                                    "The secondary electron coefficient");
+  params.deprecateParam("se_coeff", "emission_coeffs", "06/01/2024");
+  params.addRequiredParam<std::vector<std::string>>(
+      "emission_coeffs",
+      "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<bool>(
       "Tse_equal_Te", "The secondary electron temperature equal the electron temperature in eV");
   params.addParam<Real>(
       "user_se_energy", 1.0, "The user's value of the secondary electron temperature in eV");
+  params.deprecateParam("user_se_energy", "secondary_electron_energy", "06/01/2024");
+  params.addParam<Real>("secondary_electron_energy", "The secondary electron temperature in eV");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("em", "The electron density.");
+  params.deprecateCoupledVar("em", "electrons", "06/01/2024");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredCoupledVar("ip", "The ion density.");
+  params.deprecateCoupledVar("ip", "ions", "06/01/2024");
+  params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
+
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
       "Kinetic secondary electron for mean electron energy boundary condition"
@@ -37,31 +49,37 @@ SakiyamaEnergySecondaryElectronBC::SakiyamaEnergySecondaryElectronBC(
 
     _r_units(1. / getParam<Real>("position_units")),
     Te_dependent(getParam<bool>("Tse_equal_Te")),
-
+    _num_ions(coupledComponents("ions")),
+    _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     // Coupled Variables
     _grad_potential(adCoupledGradient("potential")),
 
     _em(adCoupledValue("em")),
 
-    _se_coeff(getParam<Real>("se_coeff")),
-    _user_se_energy(getParam<Real>("user_se_energy")),
+    _user_se_energy(getParam<Real>("secondary_electron_energy")),
     _a(0.5),
     _se_energy(0),
     _ion_flux(0, 0, 0)
 {
-  _num_ions = coupledComponents("ip");
 
+  if (_se_coeff_names.size() != _num_ions)
+    mooseError("SakiyamaEnergySecondaryElectronBC with name ",
+               name(),
+               ": The lengths of `ions` and `emission_coeffs` "
+               "must be the same");
   _ip.resize(_num_ions);
   _ip_var.resize(_num_ions);
   _muip.resize(_num_ions);
   _sgnip.resize(_num_ions);
+  _se_coeff.resize(_num_ions);
 
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _ip_var[i] = getVar("ip", i);
-    _ip[i] = &adCoupledValue("ip", i);
-    _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
-    _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
+    _ip_var[i] = getVar("ions", i);
+    _ip[i] = &adCoupledValue("ions", i);
+    _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ions", i)).name());
+    _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ions", i)).name());
+    _se_coeff[i] = &getADMaterialProperty<Real>(_se_coeff_names[i]);
   }
 }
 
@@ -80,8 +98,8 @@ SakiyamaEnergySecondaryElectronBC::computeQpResidual()
       _a = 0.0;
     }
 
-    _ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
-                 std::exp((*_ip[i])[_qp]);
+    _ion_flux += (*_se_coeff[i])[_qp] * _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] *
+                 -_grad_potential[_qp] * _r_units * std::exp((*_ip[i])[_qp]);
   }
 
   if (Te_dependent)
@@ -93,6 +111,5 @@ SakiyamaEnergySecondaryElectronBC::computeQpResidual()
     _se_energy = _user_se_energy;
   }
 
-  return -_test[_i][_qp] * _r_units * _se_coeff * (5.0 / 3.0) * _se_energy * _ion_flux *
-         _normals[_qp];
+  return -_test[_i][_qp] * _r_units * (5.0 / 3.0) * _se_energy * _ion_flux * _normals[_qp];
 }

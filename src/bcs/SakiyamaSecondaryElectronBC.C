@@ -18,9 +18,14 @@ SakiyamaSecondaryElectronBC::validParams()
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("ip", "The ion density.");
+  params.deprecateCoupledVar("ip", "ions", "06/01/2024");
+  params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addParam<Real>("users_gamma",
-                        "A secondary electron emission coeff. only used for this BC.");
+  params.addRequiredParam<std::vector<std::string>>(
+      "users_gamma", "A secondary electron emission coeff. only used for this BC.");
+  params.deprecateParam("users_gamma", "emission_coeffs", "06/01/2024");
+  params.addRequiredParam<std::vector<std::string>>(
+      "emission_coeffs", "A list of species-dependent secondary electron emission coefficients");
   params.addClassDescription("Kinetic secondary electron boundary condition"
                              "(Based on DOI: https://doi.org/10.1116/1.579300)");
   return params;
@@ -30,25 +35,30 @@ SakiyamaSecondaryElectronBC::SakiyamaSecondaryElectronBC(const InputParameters &
   : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
-
+    _num_ions(coupledComponents("ions")),
+    _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     // Coupled Variables
     _grad_potential(adCoupledGradient("potential")),
 
     _a(0.5),
-    _ion_flux(0, 0, 0),
-    _user_se_coeff(getParam<Real>("users_gamma"))
+    _ion_flux(0, 0, 0)
 {
-  _num_ions = coupledComponents("ip");
-
+  if (_se_coeff_names.size() != _num_ions)
+    mooseError("SakiyamaSecondaryElectronBC with name ",
+               name(),
+               ": The lengths of `ions` and `emission_coeffs` must be "
+               "the same");
   _ip.resize(_num_ions);
   _muip.resize(_num_ions);
   _sgnip.resize(_num_ions);
+  _se_coeff.resize(_num_ions);
 
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _ip[i] = &adCoupledValue("ip", i);
-    _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
-    _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
+    _ip[i] = &adCoupledValue("ions", i);
+    _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ions", i)).name());
+    _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ions", i)).name());
+    _se_coeff[i] = &getADMaterialProperty<Real>(_se_coeff_names[i]);
   }
 }
 
@@ -67,9 +77,9 @@ SakiyamaSecondaryElectronBC::computeQpResidual()
       _a = 0.0;
     }
 
-    _ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
-                 std::exp((*_ip[i])[_qp]);
+    _ion_flux += (*_se_coeff[i])[_qp] * _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] *
+                 -_grad_potential[_qp] * _r_units * std::exp((*_ip[i])[_qp]);
   }
 
-  return -_test[_i][_qp] * _r_units * _a * _user_se_coeff * _ion_flux * _normals[_qp];
+  return -_test[_i][_qp] * _r_units * _a * _ion_flux * _normals[_qp];
 }

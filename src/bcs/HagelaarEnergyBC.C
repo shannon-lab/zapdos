@@ -19,6 +19,8 @@ HagelaarEnergyBC::validParams()
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("em", "The electron density.");
+  params.deprecateCoupledVar("em", "electrons", "06/01/2024");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   return params;
 }
@@ -34,8 +36,6 @@ HagelaarEnergyBC::HagelaarEnergyBC(const InputParameters & parameters)
 
     _massem(getMaterialProperty<Real>("massem")),
     _e(getMaterialProperty<Real>("e")),
-    _se_coeff(getMaterialProperty<Real>("se_coeff")),
-    _se_energy(getMaterialProperty<Real>("se_energy")),
     _mumean_en(getADMaterialProperty<Real>("mumean_en"))
 {
   _a = 0.5;

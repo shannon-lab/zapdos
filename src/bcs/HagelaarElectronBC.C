@@ -19,6 +19,9 @@ HagelaarElectronBC::validParams()
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("mean_en", "The mean energy.");
+  params.deprecateCoupledVar("mean_en", "electron_energy", "06/01/2024");
+  params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
+
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Kinetic electron boundary condition"
                              "(Based on DOI:https://doi.org/10.1103/PhysRevE.62.1452)");
@@ -32,7 +35,7 @@ HagelaarElectronBC::HagelaarElectronBC(const InputParameters & parameters)
 
     // Coupled Variables
     _grad_potential(adCoupledGradient("potential")),
-    _mean_en(adCoupledValue("mean_en")),
+    _mean_en(adCoupledValue("electron_energy")),
 
     _muem(getADMaterialProperty<Real>("muem")),
     _massem(getMaterialProperty<Real>("massem")),

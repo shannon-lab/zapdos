@@ -22,8 +22,8 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  Real _omega;
-  Real _eps_r;
-  Real _eps0;
-  bool _time_dependent;
+  const Real _omega;
+  const Real _eps_r;
+  const Real _eps0;
+  const bool _time_dependent;
 };

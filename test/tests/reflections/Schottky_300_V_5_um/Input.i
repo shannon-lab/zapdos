@@ -497,6 +497,7 @@ vhigh = -400E-3 #kV
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
+    emission_coeffs = 0.02
   []
 
   [potential_dirichlet_right]
@@ -519,6 +520,7 @@ vhigh = -400E-3 #kV
     position_units = ${dom0Scale}
     tau = 100E-9
     relax = true
+    emission_coeffs = 0.02
   []
 
   # [em_physical_left]
@@ -582,6 +584,8 @@ vhigh = -400E-3 #kV
     ip = Arp
     r = 0
     position_units = ${dom0Scale}
+    secondary_electron_energy = 3
+    emission_coeffs = 0.02
   []
 
   [mean_en_physical_right]
@@ -656,3 +660,4 @@ vhigh = -400E-3 #kV
     block = 0
   []
 []
+

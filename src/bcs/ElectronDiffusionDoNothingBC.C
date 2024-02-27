@@ -16,8 +16,6 @@ InputParameters
 ElectronDiffusionDoNothingBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredCoupledVar("mean_en",
-                               "The log of the product of mean energy times electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position");
   params.addClassDescription("Boundary condition where the election diffusion flux at the boundary "
                              "is equal to the bulk election diffusion equation");
@@ -31,9 +29,7 @@ ElectronDiffusionDoNothingBC::ElectronDiffusionDoNothingBC(const InputParameters
 
     _r_units(1. / getParam<Real>("position_units")),
 
-    _diffem(getADMaterialProperty<Real>("diffem")),
-
-    _mean_en(adCoupledValue("mean_en"))
+    _diffem(getADMaterialProperty<Real>("diffem"))
 {
 }
 

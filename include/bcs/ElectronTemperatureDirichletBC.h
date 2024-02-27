@@ -26,6 +26,6 @@ protected:
   virtual ADReal computeQpResidual() override;
 
   const ADVariableValue & _em;
-  Real _value;
-  Real _penalty_value;
+  const Real _value;
+  const Real _penalty_value;
 };

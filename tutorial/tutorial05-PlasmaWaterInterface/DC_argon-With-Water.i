@@ -219,6 +219,7 @@ dom1Scale = 1e-7
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
+    emission_coeffs = 0.05
   []
   #Ground electrode under the water
   [potential_dirichlet_right]
@@ -247,6 +248,7 @@ dom1Scale = 1e-7
     mean_en = mean_en
     r = 0
     position_units = ${dom0Scale}
+    emission_coeffs = 0.05
   []
 
   #Mean electron energy on the powered electrode
@@ -268,6 +270,8 @@ dom1Scale = 1e-7
     ip = 'Arp'
     r = 0
     position_units = ${dom0Scale}
+    emission_coeffs = 0.05
+    secondary_electron_energy = 3
   []
 
   #Argon ions on the powered electrode
