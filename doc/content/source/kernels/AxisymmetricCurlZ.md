@@ -12,7 +12,7 @@ The Z-component of an axisymmetric curl is defined as:
 \left( \nabla \times \bf{A} \right)_z = \frac{\text{A}_\phi}{r} + \frac{\partial \text{A}_\phi}{\partial r}
 \end{equation}
 
-where $\left( \nabla \times \bf{A} \right)_z$ is the Z-component of the curl of vector $\bf{A}$, $\text{A}_\phi$ is the azimuth component of vector $\bf{A}$, and $r$ is the radial coordinate.
+where $\left( \nabla \times \bf{A} \right)_z$ is the Z-component of the curl of vector $\bf{A}$, $\text{A}_\phi$ is the azimuth component of vector $\bf{A}$, and $r$ is the radial position.
 
 ## Example Input File Syntax
 
