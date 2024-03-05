@@ -20,7 +20,7 @@ If the rate of change is assumed to linear, then $\frac{\text{d}n}{\text{d}t}$ a
 \frac{\text{d}n}{\text{d}t} = \frac{n_{Ts} - n_{0s}}{t_{s}}
 \end{equation}
 
-where $t_{s}$ is some simple period of time less than $T$. The subscripts $0s$ and $Ts$ denote the beginning and end of the simple period of time, $t_{s}$ , respectively. When converting the density to logarithmic form,
+where $t_{s}$ is some sample period of time less than $T$. The subscripts $0s$ and $Ts$ denote the beginning and end of the sample period of time, $t_{s}$ , respectively. When converting the density to logarithmic form,
 `AccelerationByAveraging` is defined as
 
 \begin{equation}
