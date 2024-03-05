@@ -17,9 +17,9 @@ ProductAABBRxn::validParams()
 {
   InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("v", "The variable that is reacting to create u.");
-  params.addClassDescription("Generic second order reaction source term in which two molecules of"
-                             "v are produced from two molecules of u"
-                             "(Densities must be in log form)");
+  params.addClassDescription("Generic second order reaction source term in which two molecules of "
+                             "v are produced from two molecules of u "
+                             "(Densities must be in logarithmic form)");
   return params;
 }
 

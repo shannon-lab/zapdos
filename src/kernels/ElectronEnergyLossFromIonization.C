@@ -19,10 +19,9 @@ ElectronEnergyLossFromIonization::validParams()
   params.addRequiredCoupledVar("potential", "The potential.");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-      "Electron energy loss term for inelastic ionization collisions"
-      "using Townsend coefficient; Eiz is the energy lost in Volts in a single"
-      "ionization collision (Densities must be in log form)");
+  params.addClassDescription("Electron energy loss term for inelastic ionization collisions "
+                             "using Townsend coefficients, the energy lost in Volts in a single "
+                             "ionization collision (Densities must be in logarithmic form)");
   return params;
 }
 

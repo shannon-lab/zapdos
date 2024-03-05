@@ -26,9 +26,9 @@ DriftDiffusion::validParams()
   params.addParam<Real>("diff", "The user-defined diffusivity.");
   params.addParam<Real>("sign", "The user-defined sign of the charged particle.");
   params.addParam<bool>("use_material_props", true, "Whether to use a material for properties.");
-  params.addClassDescription("Generic drift-diffusion equation that contains both"
-                             "electric field driven advection and diffusion term"
-                             "(Densities must be in log form)");
+  params.addClassDescription("Generic drift-diffusion equation that contains both "
+                             "an electric field driven advection term and a diffusion term "
+                             "(Densities must be in logarithmic form)");
   return params;
 }
 

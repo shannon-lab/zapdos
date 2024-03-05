@@ -13,7 +13,7 @@
 registerMooseObject("ZapdosApp", ShootMethodLog);
 /*
 This acceleration scheme is used in paper
-DOI: https://doi.org/10.1116/1.587101, with a more
+DOI: https://doi.org/10.1063/1.352926, with a more
 detailed description in papr DOI:
 https://doi.org/10.1016/0009-2509(92)85133-V.
 
@@ -33,10 +33,12 @@ InputParameters
 ShootMethodLog::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("density_at_start_cycle",
-                               "The accelerated density at the start of the cycle in log form");
-  params.addRequiredCoupledVar("density_at_end_cycle",
-                               "The accelerated density at the end of the cycle in log form");
+  params.addRequiredCoupledVar(
+      "density_at_start_cycle",
+      "The accelerated density at the start of the cycle in logarithmic form");
+  params.addRequiredCoupledVar(
+      "density_at_end_cycle",
+      "The accelerated density at the end of the cycle in logarithmic form");
   params.addParam<Real>("growth_limit",
                         0.0,
                         "A limit of the growth factor"

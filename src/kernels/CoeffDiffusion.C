@@ -17,8 +17,9 @@ CoeffDiffusion::validParams()
 {
   InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription("Generic diffusion term (densities must be in log form), where the "
-                             "Jacobian is computed using forward automatic differentiation.");
+  params.addClassDescription(
+      "Generic diffusion term (densities must be in logarithmic form), where the "
+      "Jacobian is computed using forward automatic differentiation.");
   return params;
 }
 
