@@ -12,7 +12,7 @@ The source term of this reaction for the products can be described as
 S_{Gain} = k n_{A}
 \end{equation}
 
-Where $S_{Gain}$ is the source term for the products, $k$ is the reaction rate coefficient, $n_{A}$ is the reactant specie.When converting
+Where $S_{Gain}$ is the source term for the products, $k$ is the reaction rate coefficient, $n_{A}$ is the reactant specie. When converting
 the density to logarithmic form, the strong form for `ProductFirstOrderRxn` is defined as
 
 \begin{equation}

@@ -4,19 +4,19 @@
 
 ## Overview
 
-`ChargeSourceMoles_KV` add the charge contribution to the Poisson equation of the
-electrostatic approximation of the potential.
+`ChargeSourceMoles_KV` adds the charge contribution of a single species to Poisson's equation, describing the
+relationship between total charge density and electrostatic potential.
 
 The strong form for `ChargeSourceMoles_KV` is defined as right side of
 
 \begin{equation}
--\varepsilon_{0} \nabla^{2} V = \Sigma \left[ q_{j} n_{j} \right]
+-\varepsilon_{0} \nabla^{2} V = \sum_{j} \left[ q_{j} n_{j} \right]
 \end{equation}
 
 where $V$ is the electrostatic potential, $q_{j}$ is the charge of the species, $n_{j}$ is the density of the charged species, and $\varepsilon_{0}$ is the permittivity of free space. When converting the density to logarithmic form and applying a scaling factor of the mesh and voltage, the strong form for `NeumannCircuitVoltageMoles_KV` is defined as
 
 \begin{equation}
--\varepsilon_{0}\nabla^{2} V = \frac{\Sigma \left[ q_{j} \exp(N_{j}) N_{A} \right]}{V_{c}}
+-\varepsilon_{0}\nabla^{2} V = \frac{\sum_{j} \left[ q_{j} \exp(N_{j}) N_{A} \right]}{V_{c}}
 \end{equation}
 
 

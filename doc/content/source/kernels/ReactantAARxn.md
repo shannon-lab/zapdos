@@ -4,7 +4,7 @@
 
 ## Overview
 
-`ReactantAARxn` is a generic second reaction source term for the reactant of a reaction in the form of $2A \rightarrow 2B$.
+`ReactantAARxn` is a generic second-order reaction source term for the reactant of a reaction in the form of $2A \rightarrow 2B$.
 
 The source term of this reaction for the products can be described as
 
@@ -12,7 +12,7 @@ The source term of this reaction for the products can be described as
 S_{Loss} = \text{-} 2 k n_{A} n_{A}
 \end{equation}
 
-Where $S_{Loss}$ is the source term for the reactions, $k$ is the reaction rate coefficient, $n_{A}$ is the reactant specie.When converting
+Where $S_{Loss}$ is the source term for the reactions, $k$ is the reaction rate coefficient, $n_{A}$ is the reactant specie. When converting
 the density to logarithmic form, the strong form for `ReactantAARxn` is defined as
 
 \begin{equation}

@@ -4,9 +4,9 @@
 
 ## Overview
 
-`TM0CylindricalEr` is the wave equation for the radial component of the electric field, E-field. `TM0CylindricalEr` assumes an axisymmetric transverse magnetic (TM) wave and negligible current density compared to the displacement current.
+`TM0CylindricalEr` is the wave equation for the radial component of the electric field. `TM0CylindricalEr` assumes an axisymmetric transverse magnetic (TM) wave and negligible current density compared to the displacement current.
 
-The wave equation for the E-field is defined as
+The wave equation for the electric field is defined as
 
 \begin{equation}
   \nabla \times \textbf{H} = \epsilon \omega \textbf{E}
@@ -18,7 +18,7 @@ Where $\textbf{H}$ is the magnetizing field, $\epsilon$ is the material permitti
   \text{-} \frac{\partial H_{\phi}}{\partial z} = \epsilon \omega \text{E}_{r}
 \end{equation}
 
-Where $H_{\phi}$ is the azimuthal component of the magnetizing field and $\text{E}_{r}$ is the radial component of the electric field field.
+Where $H_{\phi}$ is the azimuthal component of the magnetizing field and $\text{E}_{r}$ is the radial component of the electric field.
 
 ## Example Input File Syntax
 

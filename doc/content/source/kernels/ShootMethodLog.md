@@ -4,7 +4,7 @@
 
 ## Overview
 
-To reduce the run time of simulations of RF discharges involving neutral particles (such as metastable), acceleration by shooting method can be implemented. Zapdos' version of the shooting method scheme is based on work presented by [Lymberopoulos and Economou](https://doi.org/10.1063/1.352926), but a more general description of the method can be found by [Gogolides, Sawin and Brown](https://www.sciencedirect.com/science/article/abs/pii/000925099285133V?via%3Dihub). This scheme takes advantage of the fact that a RF discharge will eventually have a periodic steady-state, in the form of:
+To reduce the run time of simulations of radio frequency discharges involving neutral particles (such as metastable species), acceleration by shooting method can be implemented. Zapdos' version of the shooting method scheme is based on work presented by [Lymberopoulos and Economou](https://doi.org/10.1063/1.352926), but a more general description of the method can be found by [Gogolides, Sawin and Brown](https://www.sciencedirect.com/science/article/abs/pii/000925099285133V?via%3Dihub). This scheme takes advantage of the fact that a RF discharge will eventually have a periodic steady-state, in the form of:
 
 \begin{equation}
   N_{j}(0)-N_{j}(T)=0

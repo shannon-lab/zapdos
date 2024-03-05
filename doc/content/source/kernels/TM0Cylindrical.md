@@ -4,7 +4,7 @@
 
 ## Overview
 
-`TM0Cylindrical` is the wave equation for the magnetizing field, H-field. `TM0Cylindrical` assumes an axisymmetric transverse magnetic (TM) wave and negligible current density compared to the displacement current.
+`TM0Cylindrical` is the wave equation for the magnetizing field. `TM0Cylindrical` assumes an axisymmetric transverse magnetic (TM) wave and negligible current density compared to the displacement current.
 
 The wave equation for the H-field is defined as
 

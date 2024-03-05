@@ -5,7 +5,7 @@
 ## Overview
 
 `CoeffDiffusionForShootMethod` is the derivative of the generic diffusion term [CoeffDiffusion.md] used to calculate
-the sensitivity value for the shoothing method. For more information on the implementation of the shoothing method within Zapdos, please reference to [ShootMethodLog.md].
+the sensitivity value for the shoothing method. For more information on the implementation of the shoothing method within Zapdos, please reference [ShootMethodLog.md].
 
 ## Example Input File Syntax
 

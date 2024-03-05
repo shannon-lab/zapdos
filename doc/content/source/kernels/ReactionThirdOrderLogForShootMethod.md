@@ -4,7 +4,7 @@
 
 ## Overview
 
-`ReactionThirdOrderLogForShootMethod` is the derivative of an third order reaction term used to calculate the sensitivity variable for the shoothing method. For more information on the implementation of the shoothing method within Zapdos, please reference to [ShootMethodLog.md].
+`ReactionThirdOrderLogForShootMethod` is the derivative of a third-order reaction term used to calculate the sensitivity variable for the shooting method. For more information on the implementation of the shooting method within Zapdos, please reference [ShootMethodLog.md].
 
 ## Example Input File Syntax
 

@@ -10,15 +10,15 @@
 The strong form for the artificial diffusion flux is usually defined as
 
 \begin{equation}
-\nabla \cdot \Gamma_{\text{art}} = \nabla \cdot \left[ \mu_{j} \text{-} \nabla (V) \frac{h_\text{max}}{2} \nabla (n_{j})  \text{Scale} \right]
+\nabla \cdot \Gamma_{\text{art}} = \nabla \cdot \left[ \mu_{j} \text{-} \nabla (V) \frac{h_\text{max}}{2} \nabla (n_{j})  F_s \right]
 \end{equation}
 
-Where $\Gamma_{\text{art}}$ is the advection component of a species' flux, $\mu_{j}$ is the mobility coefficient, $V$ is the potential, $n_{j}$ is the density, $h_\text{max}$ is the max length of the current element, and Scale is a user defined scaling factor.
+Where $\Gamma_{\text{art}}$ is the advection component of a species' flux, $\mu_{j}$ is the mobility coefficient, $V$ is the potential, $n_{j}$ is the density, $h_\text{max}$ is the max length of the current element, and F_s is a user defined scaling factor.
 When converting the density to logarithmic form and applying a scaling factor of the mesh,
 `EFieldArtDiff` is defined as
 
 \begin{equation}
-\nabla \cdot \Gamma_{\text{art}} = \nabla \cdot \left[ \mu_{j} \frac{\text{-}\lVert \nabla (V) \rVert_{2}}{l_{c}} \frac{h_{max} l_{c}}{2} \exp(N_{j}) \frac{\nabla (N_{j})}{l_{c}}  * Scale \right]
+\nabla \cdot \Gamma_{\text{art}} = \nabla \cdot \left[ \mu_{j} \frac{\text{-}\lVert \nabla (V) \rVert_{2}}{l_{c}} \frac{h_{max} l_{c}}{2} \exp(N_{j}) \frac{\nabla (N_{j})}{l_{c}}  * F_s \right]
 \end{equation}
 
 Where $N_{j}$ is the molar density of the species in logarithmic form, $N_{A}$ is Avogadro's

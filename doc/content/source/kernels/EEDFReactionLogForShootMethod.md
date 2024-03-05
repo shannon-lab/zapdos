@@ -4,8 +4,8 @@
 
 ## Overview
 
-`EEDFReactionLogForShootMethod` is the derivative of an EEDF reaction term used to calculate the
- sensitivity variable for the shoothing method. For more information on the implementation of the shoothing method within Zapdos, please reference to [ShootMethodLog.md].
+`EEDFReactionLogForShootMethod` is the derivative of an Electron Energy Distribution Function (EEDF) reaction term used to calculate the
+ sensitivity variable for the shoothing method. For more information on the implementation of the shoothing method within Zapdos, please reference [ShootMethodLog.md].
 
 ## Example Input File Syntax
 

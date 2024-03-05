@@ -12,8 +12,6 @@ An example of how to use `UserSource` can be found in the test file `current_car
 
 !listing test/tests/current_carrying_wire/current_carrying_wire.i block=Kernels/source
 
-!syntax parameters /Kernels/ScaledReaction
-
 !syntax parameters /Kernels/UserSource
 
 !syntax inputs /Kernels/UserSource

@@ -5,7 +5,7 @@
 ## Overview
 
 `JouleHeating` accounts for the heating of electrons through Joule heating
-for electrons and electron mean energy densities in logarithmic form. `JouleHeating` assumes
+and electron mean energy densities in logarithmic form. `JouleHeating` assumes
 the electrostatic approximation for the electric field.
 
 The strong form for Joule heating effects for energies in units of eV are

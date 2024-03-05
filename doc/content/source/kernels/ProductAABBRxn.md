@@ -4,7 +4,7 @@
 
 ## Overview
 
-`ProductAABBRxn` is a generic second reaction source term for the products of a reaction in the form of $2A \rightarrow 2B$.
+`ProductAABBRxn` is a generic second-order reaction source term for the products of a reaction in the form of $2A \rightarrow 2B$.
 
 The source term of this reaction for the products can be described as
 

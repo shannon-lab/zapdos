@@ -4,7 +4,7 @@
 
 ## Overview
 
-`AxisymmetricCurlZ` computes that the Z-component of an axisymmetric curl.
+`AxisymmetricCurlZ` computes the Z-component of an axisymmetric curl.
 
 The Z-component of an axisymmetric curl is defined as:
 
