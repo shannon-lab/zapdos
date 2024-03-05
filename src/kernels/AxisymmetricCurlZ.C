@@ -16,6 +16,7 @@ InputParameters
 AxisymmetricCurlZ::validParams()
 {
   InputParameters params = ADKernel::validParams();
+  params.addClassDescription("The Z-component of an axisymmetric curl.");
   return params;
 }
 

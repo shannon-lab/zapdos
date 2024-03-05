@@ -30,7 +30,7 @@ EEDFReactionLogForShootMethod::validParams()
       "material property from being declared multiple times.");
   params.addClassDescription("The derivative of an EEDF reaction term used to calculate the "
                              "sensitivity variable for the shoothing method."
-                             "(Densities must be in log form)");
+                             "(Densities must be in logarithmic form)");
   return params;
 }
 

@@ -18,7 +18,7 @@ ReactantAARxn::validParams()
   InputParameters params = ADKernel::validParams();
   params.addClassDescription("Generic second order reaction sink term for u in which two"
                              "molecules of u are consumed"
-                             "(Densities must be in log form)");
+                             "(Densities must be in logarithmic form)");
   return params;
 }
 

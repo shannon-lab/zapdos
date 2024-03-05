@@ -20,7 +20,7 @@ EFieldAdvection::validParams()
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
-      "Generic electric field driven advection term. (Densities must be in log form.)");
+      "Generic electric field driven advection term. (Densities must be in logarithmic form.)");
   return params;
 }
 

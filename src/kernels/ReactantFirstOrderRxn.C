@@ -17,7 +17,7 @@ ReactantFirstOrderRxn::validParams()
 {
   InputParameters params = ADKernel::validParams();
   params.addClassDescription("Generic first order reaction sink term for u (u is the reactant)"
-                             "(Densities must be in log form)");
+                             "(Densities must be in logarithmic form)");
   return params;
 }
 

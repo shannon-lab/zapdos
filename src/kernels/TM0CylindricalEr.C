@@ -18,6 +18,8 @@ TM0CylindricalEr::validParams()
   InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("f", "The drive frequency.");
   params.addRequiredCoupledVar("Hphi", "The phi component of the magnetic field.");
+  params.addClassDescription(
+      "The axisymmetric wave equation for the radial component of the electric field.");
   return params;
 }
 
