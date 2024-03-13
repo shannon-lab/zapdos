@@ -44,9 +44,9 @@ Begin by exploring [our installation page](getting_started/installation.md).
 # Collaborators (current and former) class=center style=font-weight:200;font-size:200%
 
 - [Laboratory of Computational Plasma Physics (University of Illinois Urbana-Champaign)](https://curreli.npre.illinois.edu/)
-- [Go Research Group (University of Notre Dame)](https://gogroup.nd.edu/)
-- [Graves Lab (University of California, Berkeley)](http://www.graveslab.org/)
 - [Oak Ridge National Laboratory, Fusion Energy Division](https://www.ornl.gov/division/fed)
+- [Go Research Group (University of Notre Dame)](https://gogroup.nd.edu/)
+- Graves Lab (University of California, Berkeley)
 
 # Funding Acknowledgements class=center style=font-weight:200;font-size:200%
 
@@ -63,9 +63,9 @@ Begin by exploring [our installation page](getting_started/installation.md).
 - This research is being performed using funding received from the DOE Office of
   Nuclear Energy's [Nuclear Energy University Programs](https://neup.inl.gov/SitePages/Home.aspx).
 
-- This research made use of [Idaho National Laboratory computing resources](https://hpc.inl.gov/)
-  which are supported by the Office of Nuclear Energy of the U.S. Department of
-  Energy and the Nuclear Science User Facilities under Contract No. DE-AC07-05ID14517.
+- This research made use of [Idaho National Laboratory's High Performance Computing systems](https://hpc.inl.gov/)
+  located at the Collaborative Computing Center and supported by the Office of Nuclear Energy of
+  the U.S. Department of Energy and the Nuclear Science User Facilities under Contract No. DE-AC07-05ID14517.
 
 - This research was supported by the [Idaho National Laboratory Graduate Fellowship Program](https://inl.gov/inl-initiatives/education/graduate-fellowship-program/)
   which is supported by the U.S. Department of Energy under Contract No.
