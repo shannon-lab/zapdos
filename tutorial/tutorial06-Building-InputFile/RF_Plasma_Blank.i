@@ -149,9 +149,9 @@ dom0Scale=25.4e-3
     type = LymberopoulosElectronBC
     variable = em
     boundary = 'right left'
-    gamma = 0.01  #Secondary electron coeff.
+    emission_coeffs = 0.01  #Secondary electron coeff.
     ks = 1.19e5 #Thermal electron velocity
-    ion = Ar+
+    ions = Ar+
     potential = potential
     position_units = ${dom0Scale}
   []
@@ -169,7 +169,7 @@ dom0Scale=25.4e-3
   [mean_en_physical_right]
     type = ElectronTemperatureDirichletBC
     variable = mean_en
-    em = em
+    electrons = em
     value = 0.5 #Electron Temperature in eV
     boundary = 'right left'
   []

@@ -17,7 +17,7 @@ dom0Scale = 1.0
 []
 
 [Mesh]
-  #Mesh is define by a previous output file
+  #Mesh is defined by a previous output file
   [geo]
     type = FileMeshGenerator
     file = 'RF_Plasma_WithOut_Metastables_IC.e'
@@ -177,7 +177,7 @@ dom0Scale = 1.0
   [em_physical_diffusion]
     type = SakiyamaElectronDiffusionBC
     variable = em
-    mean_en = mean_en
+    electron_energy = mean_en
     boundary = 'left right'
     position_units = ${dom0Scale}
   []
@@ -185,8 +185,8 @@ dom0Scale = 1.0
     type = SakiyamaSecondaryElectronBC
     variable = em
     potential = potential
-    ip = Ar+
-    users_gamma = 0.01
+    ions = Ar+
+    emission_coeffs = 0.01
     boundary = 'left right'
     position_units = ${dom0Scale}
   []
@@ -204,19 +204,19 @@ dom0Scale = 1.0
   [mean_en_physical_diffusion]
     type = SakiyamaEnergyDiffusionBC
     variable = mean_en
-    em = em
+    electrons = em
     boundary = 'left right'
     position_units = ${dom0Scale}
   []
   [mean_en_Ar+_second_emissions]
     type = SakiyamaEnergySecondaryElectronBC
     variable = mean_en
-    em = em
-    ip = Ar+
+    electrons = em
+    ions = Ar+
     potential = potential
     Tse_equal_Te = false
-    user_se_energy = 1
-    se_coeff = 0.01
+    secondary_electron_energy = 1
+    emission_coeffs = 0.01
     boundary = 'left right'
     position_units = ${dom0Scale}
   []

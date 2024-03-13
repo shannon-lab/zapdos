@@ -591,11 +591,11 @@ dom0Scale = 25.4e-3
     type = LymberopoulosElectronBC
     variable = em
     boundary = 'right'
-    gamma = 0.01
+    emission_coeffs = 0.01
     #gamma = 1
     ks = 1.19e5
     #ks = 0.0
-    ion = Ar+
+    ions = Ar+
     potential = potential
     position_units = ${dom0Scale}
   []
@@ -603,11 +603,11 @@ dom0Scale = 25.4e-3
     type = LymberopoulosElectronBC
     variable = em
     boundary = 'left'
-    gamma = 0.01
+    emission_coeffs = 0.01
     #gamma = 1
     ks = 1.19e5
     #ks = 0.0
-    ion = Ar+
+    ions = Ar+
     potential = potential
     position_units = ${dom0Scale}
   []
@@ -647,14 +647,14 @@ dom0Scale = 25.4e-3
   [mean_en_physical_right]
     type = ElectronTemperatureDirichletBC
     variable = mean_en
-    em = em
+    electrons = em
     value = 0.5
     boundary = 'right'
   []
   [mean_en_physical_left]
     type = ElectronTemperatureDirichletBC
     variable = mean_en
-    em = em
+    electrons = em
     value = 0.5
     boundary = 'left'
   []
