@@ -17,7 +17,7 @@ dom1Scale = 1e-7
 []
 
 [Mesh]
-  #Mesh is define by a Gmsh file
+  #Mesh is defined by a Gmsh file
   [file]
     type = FileMeshGenerator
     file = 'plasmaliquid.msh'
@@ -213,10 +213,10 @@ dom1Scale = 1e-7
     variable = potential
     boundary = left
     function = potential_bc_func
-    ip = Arp
+    ions = Arp
     data_provider = data_provider
-    em = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     r = 0
     position_units = ${dom0Scale}
     emission_coeffs = 0.05
@@ -235,7 +235,7 @@ dom1Scale = 1e-7
     variable = em
     boundary = 'left'
     potential = potential
-    mean_en = mean_en
+    electron_energy = mean_en
     r = 0
     position_units = ${dom0Scale}
   []
@@ -244,8 +244,8 @@ dom1Scale = 1e-7
     variable = em
     boundary = 'left'
     potential = potential
-    ip = Arp
-    mean_en = mean_en
+    ions = Arp
+    electron_energy = mean_en
     r = 0
     position_units = ${dom0Scale}
     emission_coeffs = 0.05
@@ -257,7 +257,7 @@ dom1Scale = 1e-7
     variable = mean_en
     boundary = 'left'
     potential = potential
-    em = em
+    electrons = em
     r = 0
     position_units = ${dom0Scale}
   []
@@ -266,8 +266,8 @@ dom1Scale = 1e-7
     variable = mean_en
     boundary = 'left'
     potential = potential
-    em = em
-    ip = 'Arp'
+    electrons = em
+    ions = 'Arp'
     r = 0
     position_units = ${dom0Scale}
     emission_coeffs = 0.05
@@ -297,7 +297,7 @@ dom1Scale = 1e-7
     variable = em
     boundary = 'master0_interface'
     potential = potential
-    mean_en = mean_en
+    electron_energy = mean_en
     r = 0.00
     position_units = ${dom0Scale}
   []
@@ -315,7 +315,7 @@ dom1Scale = 1e-7
     variable = mean_en
     boundary = 'master0_interface'
     potential = potential
-    em = em
+    electrons = em
     r = 0.00
     position_units = ${dom0Scale}
   []

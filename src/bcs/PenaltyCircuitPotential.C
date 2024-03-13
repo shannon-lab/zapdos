@@ -31,9 +31,19 @@ PenaltyCircuitPotential::validParams()
   params.addRequiredParam<UserObjectName>(
       "data_provider",
       "The name of the UserObject that can provide some data to materials, bcs, etc.");
+
   params.addRequiredCoupledVar("em", "The electron variable.");
+  params.deprecateCoupledVar("em", "electrons", "06/01/2024");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form.");
+
   params.addRequiredCoupledVar("ip", "The ion variable.");
-  params.addRequiredCoupledVar("mean_en", "The ion variable.");
+  params.deprecateCoupledVar("ip", "ions", "06/01/2024");
+  params.addRequiredCoupledVar("ions", "The ion density in log form.");
+
+  params.addRequiredCoupledVar("mean_en", "The mean electron energy density in log form.");
+  params.deprecateCoupledVar("mean_en", "electron_energy", "06/01/2024");
+  params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form.");
+
   params.addParam<Real>("area", "Must be provided when the number of dimensions equals 1.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
@@ -53,12 +63,12 @@ PenaltyCircuitPotential::PenaltyCircuitPotential(const InputParameters & paramet
     _p(getParam<Real>("penalty")),
     _data(getUserObject<ProvideMobility>("data_provider")),
     _var_dofs(_var.dofIndices()),
-    _em_id(coupled("em")),
-    _em_dofs(getVar("em", 0)->dofIndices()),
-    _ip_id(coupled("ip")),
-    _ip_dofs(getVar("ip", 0)->dofIndices()),
-    _mean_en_id(coupled("mean_en")),
-    _mean_en_dofs(getVar("mean_en", 0)->dofIndices()),
+    _em_id(coupled("electrons")),
+    _em_dofs(getVar("electrons", 0)->dofIndices()),
+    _ip_id(coupled("ions")),
+    _ip_dofs(getVar("ions", 0)->dofIndices()),
+    _mean_en_id(coupled("electron_energy")),
+    _mean_en_dofs(getVar("electron_energy", 0)->dofIndices()),
     _r_units(1. / getParam<Real>("position_units")),
     _resistance(getParam<Real>("resistance"))
 {
