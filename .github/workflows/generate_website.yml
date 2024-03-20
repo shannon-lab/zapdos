@@ -24,17 +24,17 @@ jobs:
         miniforge-variant: Mambaforge
         use-mamba: true
         activate-environment: zapdos
-        environment-file: scripts/conda_environment.yml
+        channels: https://conda.software.inl.gov/public, conda-forge
+    - name: Install dependencies
+      run: |
+        conda install moose-dev
+        conda list
     # GitHub-hosted runners are currently limited to 4 cores
     # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
     - name: Build Zapdos
       run: |
         conda activate zapdos
         make -j4
-    - name: Build Doxygen
-      uses: mattnotmitt/doxygen-action@v1.9.8
-      with:
-        doxyfile-path: 'doc/Doxyfile'
     - name: Build MooseDocs
       run: |
         cd doc
