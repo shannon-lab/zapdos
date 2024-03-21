@@ -804,14 +804,12 @@ dom0Scale = 25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_elastic.txt'
     reaction = 'em + Ar -> em + Ar'
-    file_location = ''
     electrons = em
   []
   [reaction_0]
     type = ZapdosEEDFRateConstant
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_excitation.txt'
     reaction = 'em + Ar -> em + Ar*'
-    file_location = ''
     mean_energy = mean_en
     electrons = em
   []
@@ -819,7 +817,6 @@ dom0Scale = 25.4e-3
     type = ZapdosEEDFRateConstant
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_ionization.txt'
     reaction = 'em + Ar -> em + em + Ar+'
-    file_location = ''
     mean_energy = mean_en
     electrons = em
   []
@@ -827,7 +824,6 @@ dom0Scale = 25.4e-3
     type = ZapdosEEDFRateConstant
     reaction = 'em + Ar* -> em + Ar'
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt'
-    file_location = ''
     mean_energy = mean_en
     electrons = em
   []
@@ -835,7 +831,6 @@ dom0Scale = 25.4e-3
     type = ZapdosEEDFRateConstant
     reaction = 'em + Ar* -> em + em + Ar+'
     property_file = 'Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt'
-    file_location = ''
     mean_energy = mean_en
     electrons = em
   []
