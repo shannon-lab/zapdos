@@ -700,7 +700,6 @@ dom0Scale = 25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + Ar*.txt'
     reaction = 'em + Ar -> em + Ar*'
-    file_location = ''
     electrons = em
   []
   [reaction_1]
@@ -708,7 +707,6 @@ dom0Scale = 25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + em + Ar+.txt'
     reaction = 'em + Ar -> em + em + Ar+'
-    file_location = ''
     electrons = em
   []
   [reaction_2]
@@ -716,7 +714,6 @@ dom0Scale = 25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + Ar.txt'
     reaction = 'em + Ar* -> em + Ar'
-    file_location = ''
     electrons = em
   []
   [reaction_3]
@@ -724,7 +721,6 @@ dom0Scale = 25.4e-3
     mean_energy = mean_en
     property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + em + Ar+.txt'
     reaction = 'em + Ar* -> em + em + Ar+'
-    file_location = ''
     electrons = em
   []
   [reaction_4]
