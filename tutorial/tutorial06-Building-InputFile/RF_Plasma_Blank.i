@@ -78,8 +78,6 @@ dom0Scale=25.4e-3
     electron_density =
     #Defines if electrons are tracked
     include_electrons =
-    #Defines directory holding rate text files
-    file_location =
     #Name of name for potential (usually 'potential')
     potential =
     #Defines if log form is used (true for Zapdos)
