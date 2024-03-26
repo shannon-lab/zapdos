@@ -1,0 +1,217 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>XYDelaunayGenerator | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="66097ee0-4c0f-43ba-b3fd-96243e342dd2" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="edf10e1a-d538-4a7c-b921-b110d6941299" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="e4d7f214-c1a4-47fa-8545-5f74059ea9a3" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="f964388b-f217-40cc-9bef-5fa459045581"><i class="material-icons">menu</i></a><ul class="sidenav" id="f964388b-f217-40cc-9bef-5fa459045581"><li><a href="#!" class="dropdown-trigger" data-target="32b5241d-fd97-4686-b93e-16b093b7582b" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="ab9870ee-3821-45d3-b81e-743ae2b3d926" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="8cc05b0f-73f1-4109-b2bf-a7292a7c84db" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="66097ee0-4c0f-43ba-b3fd-96243e342dd2"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li></ul><ul class="dropdown-content" id="edf10e1a-d538-4a7c-b921-b110d6941299"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="e4d7f214-c1a4-47fa-8545-5f74059ea9a3"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="32b5241d-fd97-4686-b93e-16b093b7582b"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li></ul><ul class="dropdown-content" id="ab9870ee-3821-45d3-b81e-743ae2b3d926"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="8cc05b0f-73f1-4109-b2bf-a7292a7c84db"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">meshgenerators</span><a href="#" class="breadcrumb">XYDelaunayGenerator</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="0e028eff-6c16-486d-8f7e-5d4bbb0e7302" data-section-level="1" data-section-text="XYDelaunayGenerator"><h1 id="xydelaunaygenerator">XYDelaunayGenerator</h1><p>Triangulates meshes within boundaries defined by input meshes.</p><p>An input mesh will be used to define the outer boundary of the generated output mesh, as well as to specify any Steiner points interior to that boundary which must be included in as output mesh vertices.  Additional interior vertices can be automatically generated by specifying a desired triangle area (either as a constant or as a function of triangle center location).  Additional interior boundary &quot;holes&quot; can be generated from inputs from other specified &quot;holes&quot; mesh generators.</p><p>Each input mesh, as specified in the <a href="#15682b01-5dd6-4b19-843d-002d92c615eb" class="moose-modal-link modal-trigger">&quot;boundary&quot;</a> parameter and optionally in the <a href="#601e6f4c-4ec5-42f3-aa77-0695f2e878ea" class="moose-modal-link modal-trigger">&quot;holes&quot;</a> parameter, can define a ring of boundary segments either by including edge elements for each segment or by including face elements whose external edges are to be treated as segments.  For the outer <a href="#0a5967c3-8d2a-46f7-9f06-ec8736966ea8" class="moose-modal-link modal-trigger">&quot;boundary&quot;</a> mesh, a subset of edges or faces can be examined instead of the entire mesh, using the <a href="#a950fca9-67aa-4cf3-b22a-0de28b2a10be" class="moose-modal-link modal-trigger">&quot;input_subdomain_names&quot;</a> parameter to list edge element subdomains or the <a href="#778be2a4-9800-4858-829d-735c743e7e3c" class="moose-modal-link modal-trigger">&quot;input_boundary_names&quot;</a> parameter to list face boundaries.</p><p>If multiple boundary rings exist in a mesh, only the ring enclosing the rest of the mesh is considered to be &quot;the&quot; boundary.  Input meshes which are not simply connected, which therefore have multiple outer boundary rings, are not yet supported.</p><p>If the input boundary mesh has nodes inside the boundary ring, these nodes are treated as required in the output mesh.  This is useful for ensuring that the output mesh has a vertex at a specific point of interest.  For meshes with interior nodes that should not be considered required, a user can first use a <a href="LowerDBlockFromSidesetGenerator.html">LowerDBlockFromSidesetGenerator</a> to generate the desired boundary ring and a <a href="BlockDeletionGenerator.html">BlockDeletionGenerator</a> on that to remove everything except the desired boundary edges.  Setting <a href="#14292798-5ab2-4aa4-9c27-182175b47396" class="moose-modal-link modal-trigger">&quot;delete_exteriors&quot;</a> to false is necessary in this workflow to prevent the new edge elements from being deleted along with their interior-parent elements.</p><p>Using stitching options, meshes used as &quot;holes&quot; can subsequently be stitched into those portions of the output mesh.  For this use case some care may be required: refinement of stitched hole boundaries should be disallowed so that the boundary nodes in the newly triangulated mesh still precisely match the boundary nodes in the hole mesh.</p><p>Interior vertices can be adjusted after mesh generation using the <a href="#20f9cd09-c9fb-4260-a6e1-573bacf3fb42" class="moose-modal-link modal-trigger">&quot;smooth_triangulation&quot;</a> parameter, to produce a more &quot;smooth&quot; mesh, but currently the only mesh smoother option is a simple Laplacian smoother; this can have unwanted side-effects on meshes with concave boundaries or poor nodal valences, and so it is disabled by default for robustness.</p><section class="scrollspy" id="4413fe0d-8baf-425f-b1b2-f91863a89d9a" data-section-level="2" data-section-text="Examples"><h2 id="examples">Examples</h2><p>Using instances of the <a href="PolyLineMeshGenerator.html">PolyLineMeshGenerator</a> to create a boundary and a few holes, followed by a <code>XYDelaunayGenerator</code> object to triangulate the region between them, the <a href="../../syntax/Mesh/index.html">Mesh</a> block shown in the input file snippet below generates the final mesh shown in <a href="XYDelaunayGenerator.html#withholes">Figure 1</a>.</p><p>For this example a specified fixed interpolation of boundary edges is used, but refinement to a desired maximum triangle size allows automatic placement of nodes in the mesh interior.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Mesh]
+  [outer_bdy]
+    type = PolyLineMeshGenerator
+    points = &#x27;-1.0 0.0 0.0
+              0.0 -1.0 0.0
+              1.0 0.0 0.0
+              0.0 2.0 0.0&#x27;
+    loop = true
+  []
+  [hole_1]
+    type = PolyLineMeshGenerator
+    points = &#x27;-0.5 -0.1 0.0
+              -0.3 -0.1 0.0
+              -0.3 0.1 0.0
+              -0.5 0.1 0.0&#x27;
+    loop = true
+  []
+  [hole_2]
+    type = PolyLineMeshGenerator
+    points = &#x27;0.3 -0.1 0.0
+              0.5 -0.1 0.0
+              0.5 0.1 0.0
+              0.3 0.1 0.0&#x27;
+    loop = true
+  []
+  [triang]
+    type = XYDelaunayGenerator
+    boundary = &#x27;outer_bdy&#x27;
+    holes = &#x27;hole_1
+             hole_2&#x27;
+    add_nodes_per_boundary_segment = 3
+    refine_boundary = false
+    desired_area = 0.05
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#70a38ffc-009b-49b6-a573-9e58265815c7">(moose/test/tests/meshgenerators/xy_delaunay_generator/xydelaunay_with_holes.i)</a><div class="card moose-float" style="width:32%;" id="withholes"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/framework/meshgenerators/poly2tri_with_holes.png"></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 1: </span><span class="moose-caption-text" id="withholes">Fig. 1: Resulting triangulated mesh from a polyline boundary and holes.</span></p></div></div><p>In the input file snippet below, hole stitching is done recursively, so that each internal &quot;boundary&quot; polyline (after refinement) remains preserved in the final mesh shown in <a href="XYDelaunayGenerator.html#nested">Figure 2</a>.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Mesh]
+  [inner_square_sbd_0]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 3
+    ny = 3
+    xmin = -0.4
+    xmax = 0.4
+    ymin = -0.4
+    ymax = 0.4
+  []
+  [inner_square]
+    type = SubdomainIDGenerator
+    input = inner_square_sbd_0
+    subdomain_id = 1 # Exodus dislikes quad ids matching tri ids
+  []
+  [layer_2_bdy]
+    type = PolyLineMeshGenerator
+    points = &#x27;-1.0 0.0 0.0
+              0.0 -1.0 0.0
+              1.0 0.0 0.0
+              0.0 1.0 0.0&#x27;
+    loop = true
+  []
+  [layer_3_bdy]
+    type = PolyLineMeshGenerator
+    points = &#x27;-1.5 -1.5 0.0
+              1.5 -1.5 0.0
+              1.5 1.5 0.0
+              -1.5 1.5 0.0&#x27;
+    loop = true
+  []
+  [layer_4_bdy]
+    type = PolyLineMeshGenerator
+    points = &#x27;-4.0 0.0 0.0
+              0.0 -4.0 0.0
+              4.0 0.0 0.0
+              0.0 4.0 0.0&#x27;
+    loop = true
+  []
+  [triang_2]
+    type = XYDelaunayGenerator
+    boundary = &#x27;layer_2_bdy&#x27;
+    holes = &#x27;inner_square&#x27;
+    stitch_holes = &#x27;true&#x27;
+    refine_holes = &#x27;false&#x27;
+    verify_holes = false
+    add_nodes_per_boundary_segment = 2
+    refine_boundary = false
+    desired_area = 0.05
+  []
+  [triang_3]
+    type = XYDelaunayGenerator
+    boundary = &#x27;layer_3_bdy&#x27;
+    holes = &#x27;triang_2&#x27;
+    stitch_holes = &#x27;true&#x27;
+    refine_holes = &#x27;false&#x27;
+    add_nodes_per_boundary_segment = 2
+    refine_boundary = false
+    desired_area = 0.1
+  []
+  [triang_4]
+    type = XYDelaunayGenerator
+    boundary = &#x27;layer_4_bdy&#x27;
+    holes = &#x27;triang_3&#x27;
+    stitch_holes = &#x27;true&#x27;
+    refine_holes = &#x27;false&#x27;
+    verify_holes = false
+    add_nodes_per_boundary_segment = 2
+    refine_boundary = true
+    desired_area = 0.2
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#3cb66b06-3aaa-4cbb-a9be-ef888cd4a1ae">(moose/test/tests/meshgenerators/xy_delaunay_generator/xydelaunay_nested.i)</a><div class="card moose-float" style="width:32%;" id="nested"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/framework/meshgenerators/poly2tri_nested.png"></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 2: </span><span class="moose-caption-text" id="nested">Fig. 2: Resulting triangulated mesh with nested polyline boundaries and an internal grid.</span></p></div></div></section><section class="scrollspy" id="32ef4974-69f5-41d1-926c-70cbc601ba60" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="6d58e849-1b3f-4d62-ab3a-44f0c5419bc6" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The input MeshGenerator defining the output outer boundary and required Steiner points.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MeshGeneratorName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The input MeshGenerator defining the output outer boundary and required Steiner points.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="a8c267f4-21cf-4469-803d-a16ce33d30dd" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">add_nodes_per_boundary_segment</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">How many more nodes to add in each outer boundary segment.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>How many more nodes to add in each outer boundary segment.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">algorithm</span><span class="moose-parameter-header-default">BINARY</span><span class="moose-parameter-header-description">Control the use of binary search for the nodes of the stitched surfaces.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>BINARY</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>BINARY, EXHAUSTIVE</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Control the use of binary search for the nodes of the stitched surfaces.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">desired_area</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">Desired (maximum) triangle area, or 0 to skip uniform refinement</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Desired (maximum) triangle area, or 0 to skip uniform refinement</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">desired_area_func</span><span class="moose-parameter-header-description">Desired area as a function of x,y; omit to skip non-uniform refinement</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Desired area as a function of x,y; omit to skip non-uniform refinement</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">hole_boundaries</span><span class="moose-parameter-header-description">Boundary names to set on holes.  Default IDs are numbered up from 1.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Boundary names to set on holes.  Default IDs are numbered up from 1.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">holes</span><span class="moose-parameter-header-description">The MeshGenerators that define mesh holes.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;MeshGeneratorName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The MeshGenerators that define mesh holes.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">input_boundary_names</span><span class="moose-parameter-header-description">2D-input-mesh boundaries defining the output mesh outer boundary</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>2D-input-mesh boundaries defining the output mesh outer boundary</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">input_subdomain_names</span><span class="moose-parameter-header-description">1D-input-mesh subdomains defining the output mesh outer boundary</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>1D-input-mesh subdomains defining the output mesh outer boundary</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">output_boundary</span><span class="moose-parameter-header-description">Boundary name to set on new outer boundary.  Default ID 0.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>BoundaryName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Boundary name to set on new outer boundary.  Default ID 0.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">output_subdomain_name</span><span class="moose-parameter-header-description">Subdomain name to set on new triangles.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>SubdomainName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Subdomain name to set on new triangles.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">refine_boundary</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Whether to allow automatically refining the outer boundary.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to allow automatically refining the outer boundary.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">refine_holes</span><span class="moose-parameter-header-description">Whether to allow automatically refining each hole boundary.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;bool&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to allow automatically refining each hole boundary.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">smooth_triangulation</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether to do Laplacian mesh smoothing on the generated triangles.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to do Laplacian mesh smoothing on the generated triangles.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">stitch_holes</span><span class="moose-parameter-header-description">Whether to stitch to the mesh defining each hole.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;bool&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to stitch to the mesh defining each hole.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">verbose_stitching</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether mesh stitching should have verbose output.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether mesh stitching should have verbose output.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">verify_holes</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Verify holes do not intersect boundary or each other.  Asymptotically costly.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Verify holes do not intersect boundary or each other.  Asymptotically costly.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="a6fd722a-73b4-4813-93f4-c7e064380738" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_with_name</span><span class="moose-parameter-header-description">Keep the mesh from this mesh generator in memory with the name specified</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Keep the mesh from this mesh generator in memory with the name specified</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="28ed9d40-714d-4d9f-9069-d26eada5c54f" data-section-level="3" data-section-text="Debugging Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">nemesis</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to output the mesh file in the nemesisformat (only if output = true)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not to output the mesh file in the nemesisformat (only if output = true)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">output</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to output the mesh file after generating the mesh</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not to output the mesh file after generating the mesh</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">show_info</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to show mesh info after generating the mesh (bounding box, element types, sidesets, nodesets, subdomains, etc)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not to show mesh info after generating the mesh (bounding box, element types, sidesets, nodesets, subdomains, etc)</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Debugging Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="15682b01-5dd6-4b19-843d-002d92c615eb"><div class="modal-content"><h4>boundary</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MeshGeneratorName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The input MeshGenerator defining the output outer boundary and required Steiner points.</p></div></div><div class="moose-modal modal" id="601e6f4c-4ec5-42f3-aa77-0695f2e878ea"><div class="modal-content"><h4>holes</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;MeshGeneratorName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The MeshGenerators that define mesh holes.</p></div></div><div class="moose-modal modal" id="0a5967c3-8d2a-46f7-9f06-ec8736966ea8"><div class="modal-content"><h4>boundary</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MeshGeneratorName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The input MeshGenerator defining the output outer boundary and required Steiner points.</p></div></div><div class="moose-modal modal" id="a950fca9-67aa-4cf3-b22a-0de28b2a10be"><div class="modal-content"><h4>input_subdomain_names</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>1D-input-mesh subdomains defining the output mesh outer boundary</p></div></div><div class="moose-modal modal" id="778be2a4-9800-4858-829d-735c743e7e3c"><div class="modal-content"><h4>input_boundary_names</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>2D-input-mesh boundaries defining the output mesh outer boundary</p></div></div><div class="moose-modal modal" id="14292798-5ab2-4aa4-9c27-182175b47396"><div class="modal-content"><h4>delete_exteriors</h4><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to delete lower-d elements whose interior parents are deleted</p></div></div><div class="moose-modal modal" id="20f9cd09-c9fb-4260-a6e1-573bacf3fb42"><div class="modal-content"><h4>smooth_triangulation</h4><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to do Laplacian mesh smoothing on the generated triangles.</p></div></div><div class="moose-modal modal" id="70a38ffc-009b-49b6-a573-9e58265815c7"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/xy_delaunay_generator/xydelaunay_with_holes.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [outer_bdy]
+    type = PolyLineMeshGenerator
+    points = &#x27;-1.0 0.0 0.0
+              0.0 -1.0 0.0
+              1.0 0.0 0.0
+              0.0 2.0 0.0&#x27;
+    loop = true
+  []
+  [hole_1]
+    type = PolyLineMeshGenerator
+    points = &#x27;-0.5 -0.1 0.0
+              -0.3 -0.1 0.0
+              -0.3 0.1 0.0
+              -0.5 0.1 0.0&#x27;
+    loop = true
+  []
+  [hole_2]
+    type = PolyLineMeshGenerator
+    points = &#x27;0.3 -0.1 0.0
+              0.5 -0.1 0.0
+              0.5 0.1 0.0
+              0.3 0.1 0.0&#x27;
+    loop = true
+  []
+  [triang]
+    type = XYDelaunayGenerator
+    boundary = &#x27;outer_bdy&#x27;
+    holes = &#x27;hole_1
+             hole_2&#x27;
+    add_nodes_per_boundary_segment = 3
+    refine_boundary = false
+    desired_area = 0.05
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="3cb66b06-3aaa-4cbb-a9be-ef888cd4a1ae"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/xy_delaunay_generator/xydelaunay_nested.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [inner_square_sbd_0]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 3
+    ny = 3
+    xmin = -0.4
+    xmax = 0.4
+    ymin = -0.4
+    ymax = 0.4
+  []
+  [inner_square]
+    type = SubdomainIDGenerator
+    input = inner_square_sbd_0
+    subdomain_id = 1 # Exodus dislikes quad ids matching tri ids
+  []
+  [layer_2_bdy]
+    type = PolyLineMeshGenerator
+    points = &#x27;-1.0 0.0 0.0
+              0.0 -1.0 0.0
+              1.0 0.0 0.0
+              0.0 1.0 0.0&#x27;
+    loop = true
+  []
+  [layer_3_bdy]
+    type = PolyLineMeshGenerator
+    points = &#x27;-1.5 -1.5 0.0
+              1.5 -1.5 0.0
+              1.5 1.5 0.0
+              -1.5 1.5 0.0&#x27;
+    loop = true
+  []
+  [layer_4_bdy]
+    type = PolyLineMeshGenerator
+    points = &#x27;-4.0 0.0 0.0
+              0.0 -4.0 0.0
+              4.0 0.0 0.0
+              0.0 4.0 0.0&#x27;
+    loop = true
+  []
+  [triang_2]
+    type = XYDelaunayGenerator
+    boundary = &#x27;layer_2_bdy&#x27;
+    holes = &#x27;inner_square&#x27;
+    stitch_holes = &#x27;true&#x27;
+    refine_holes = &#x27;false&#x27;
+    verify_holes = false
+    add_nodes_per_boundary_segment = 2
+    refine_boundary = false
+    desired_area = 0.05
+  []
+  [triang_3]
+    type = XYDelaunayGenerator
+    boundary = &#x27;layer_3_bdy&#x27;
+    holes = &#x27;triang_2&#x27;
+    stitch_holes = &#x27;true&#x27;
+    refine_holes = &#x27;false&#x27;
+    add_nodes_per_boundary_segment = 2
+    refine_boundary = false
+    desired_area = 0.1
+  []
+  [triang_4]
+    type = XYDelaunayGenerator
+    boundary = &#x27;layer_4_bdy&#x27;
+    holes = &#x27;triang_3&#x27;
+    stitch_holes = &#x27;true&#x27;
+    refine_holes = &#x27;false&#x27;
+    verify_holes = false
+    add_nodes_per_boundary_segment = 2
+    refine_boundary = true
+    desired_area = 0.2
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#4413fe0d-8baf-425f-b1b2-f91863a89d9a" class="tooltipped" data-position="left" data-tooltip="Examples">Examples</a></li><li><a href="#32ef4974-69f5-41d1-926c-70cbc601ba60" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
