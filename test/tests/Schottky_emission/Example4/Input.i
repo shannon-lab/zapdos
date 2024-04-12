@@ -512,7 +512,7 @@ area = 5.02e-7 # Formerly 3.14e-6
   #               r = 0
   #               position_units = ${dom0Scale}
   #       []
-  
+
   [potential_left]
     boundary = left
     type = PenaltyCircuitPotential
