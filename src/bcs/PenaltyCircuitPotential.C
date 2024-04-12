@@ -65,13 +65,22 @@ PenaltyCircuitPotential::PenaltyCircuitPotential(const InputParameters & paramet
     _var_dofs(_var.dofIndices()),
     _em_id(coupled("electrons")),
     _em_dofs(getVar("electrons", 0)->dofIndices()),
-    _ip_id(coupled("ions")),
-    _ip_dofs(getVar("ions", 0)->dofIndices()),
     _mean_en_id(coupled("electron_energy")),
     _mean_en_dofs(getVar("electron_energy", 0)->dofIndices()),
     _r_units(1. / getParam<Real>("position_units")),
-    _resistance(getParam<Real>("resistance"))
+    _resistance(getParam<Real>("resistance")),
+    _num_ions(coupledComponents("ions"))
 {
+
+  _ip_ids.resize(_num_ions);
+  _ip_dofs.resize(_num_ions);
+
+  for (unsigned int i = 0; i < _num_ions; ++i)
+  {
+    _ip_ids[i] = coupled("ions", i);
+    _ip_dofs[i] = &getVar("ions", i)->dofIndices();
+  }
+
   if (_surface.compare("anode") == 0)
     _current_sign = -1.;
   else if (_surface.compare("cathode") == 0)
@@ -128,17 +137,6 @@ PenaltyCircuitPotential::computeQpOffDiagJacobian(unsigned int jvar)
 
     return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_em;
   }
-
-  else if (jvar == _ip_id)
-  {
-    d_curr_times_resist_d_ip =
-        _current_sign * _current_jac[_ip_dofs[_j]] * _resistance / _voltage_scaling;
-    if (_use_area)
-      d_curr_times_resist_d_ip *= _area;
-
-    return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_ip;
-  }
-
   else if (jvar == _mean_en_id)
   {
     d_curr_times_resist_d_mean_en =
@@ -148,9 +146,23 @@ PenaltyCircuitPotential::computeQpOffDiagJacobian(unsigned int jvar)
 
     return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_mean_en;
   }
-
   else
-    return 0;
+  {
+    for (unsigned int i = 0; i < _num_ions; ++i)
+    {
+      if (jvar == _ip_ids[i])
+      {
+        d_curr_times_resist_d_ip =
+            _current_sign * _current_jac[(*_ip_dofs[i])[_j]] * _resistance / _voltage_scaling;
+        if (_use_area)
+          d_curr_times_resist_d_ip *= _area;
+
+        return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_ip;
+      }
+    }
+  }
+
+  return 0;
 }
 
 Real
@@ -167,7 +179,7 @@ PenaltyCircuitPotential::computeQpNonlocalJacobian(dof_id_type dof_index)
 Real
 PenaltyCircuitPotential::computeQpNonlocalOffDiagJacobian(unsigned int jvar, dof_id_type dof_index)
 {
-  if (jvar == _em_id || jvar == _ip_id || jvar == _mean_en_id)
+  if (jvar == _em_id || jvar == _mean_en_id)
   {
     d_curr_times_resist_d_coupled_var =
         _current_sign * _current_jac[dof_index] * _resistance / _voltage_scaling;
@@ -176,6 +188,20 @@ PenaltyCircuitPotential::computeQpNonlocalOffDiagJacobian(unsigned int jvar, dof
 
     return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_coupled_var;
   }
+  else
+  {
+    for (unsigned int i = 0; i < _num_ions; ++i)
+    {
+      if (jvar == _ip_ids[i])
+      {
+        d_curr_times_resist_d_coupled_var =
+            _current_sign * _current_jac[dof_index] * _resistance / _voltage_scaling;
+        if (_use_area)
+          d_curr_times_resist_d_coupled_var *= _area;
 
+        return _test[_i][_qp] * _r_units * _p * d_curr_times_resist_d_coupled_var;
+      }
+    }
+  }
   return 0;
 }
