@@ -509,23 +509,6 @@ area = 5.02e-7 # Formerly 3.14e-6
   #               position_units = ${dom0Scale}
   #       []
 
-  # [potential_left]
-  #       boundary = left
-  #       type = NeumannCircuitVoltageNew
-  #       variable = potential
-
-  #       function = potential_bc_func
-  #       current_density = current_density_user_object
-
-  #       ions = Arp
-  #       electrons = em
-  #       electron_energy = mean_en
-
-  #       data_provider = data_provider
-
-  #       position_units = ${dom0Scale}
-  # []
-
   [potential_left]
     boundary = left
     type = PenaltyCircuitPotential
