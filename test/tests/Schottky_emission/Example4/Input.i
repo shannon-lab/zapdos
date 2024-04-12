@@ -500,6 +500,19 @@ area = 5.02e-7 # Formerly 3.14e-6
 
 [BCs]
   ## Potential boundary conditions ##
+  #       [potential_left]
+  #               type = NeumannCircuitVoltageMoles_KV
+  #               variable = potential
+  #               boundary = left
+  #               function = potential_bc_func
+  #               ions = Arp
+  #               data_provider = data_provider
+  #               electrons = em
+  #               electron_energy = mean_en
+  #               r = 0
+  #               position_units = ${dom0Scale}
+  #       []
+  
   [potential_left]
     boundary = left
     type = PenaltyCircuitPotential
