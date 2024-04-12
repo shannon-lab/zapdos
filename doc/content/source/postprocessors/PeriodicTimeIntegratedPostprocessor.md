@@ -35,6 +35,7 @@ Where $f(t)$ is a time dependent function and $\text{T}$ is the period of the cy
 
 
 ## Example Input File Syntax
+
 In this example, the variable `v` is integrated over the spatial domain using [ElementIntegralVariablePostprocessor.md], resulting in the variable `a`, and then periodically integrated over time using `PeriodicTimeIntegratedPostprocessor`.
 
 !listing test/tests/postprocessors/periodic_integration/periodic_integral.i block=Postprocessors

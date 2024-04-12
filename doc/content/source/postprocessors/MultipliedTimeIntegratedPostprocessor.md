@@ -22,6 +22,7 @@ The value returned by `MultipliedTimeIntegratedPostprocessor` will be given by
 Where $C$ is the constant factor to scale the time integration.
 
 ## Example Input File Syntax
+
 In this example, the variable `v` is integrated over the spatial domain using [ElementIntegralVariablePostprocessor.md], resulting in the variable `a`, and then integrated over time by a factor of $2$ using `MultipliedTimeIntegratedPostprocessor`. For reference, `a` was also integrated over time using [TimeIntegratedPostprocessor.md].
 
 !listing test/tests/postprocessors/multiplied_time_integration/multiplied_integral.i block=Postprocessors
