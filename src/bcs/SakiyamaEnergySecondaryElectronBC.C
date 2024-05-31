@@ -16,26 +16,16 @@ InputParameters
 SakiyamaEnergySecondaryElectronBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredParam<std::vector<std::string>>("se_coeff",
-                                                    "The secondary electron coefficient");
-  params.deprecateParam("se_coeff", "emission_coeffs", "06/01/2024");
   params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs",
       "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<bool>(
       "Tse_equal_Te", "The secondary electron temperature equal the electron temperature in eV");
   params.addParam<Real>(
-      "user_se_energy", 1.0, "The user's value of the secondary electron temperature in eV");
-  params.deprecateParam("user_se_energy", "secondary_electron_energy", "06/01/2024");
-  params.addParam<Real>("secondary_electron_energy", "The secondary electron temperature in eV");
+      "secondary_electron_energy", 1.0, "The secondary electron temperature in eV");
   params.addRequiredCoupledVar("potential", "The electric potential");
-  params.addRequiredCoupledVar("em", "The electron density.");
-  params.deprecateCoupledVar("em", "electrons", "06/01/2024");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
-  params.addRequiredCoupledVar("ip", "The ion density.");
-  params.deprecateCoupledVar("ip", "ions", "06/01/2024");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
-
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
       "Kinetic secondary electron for mean electron energy boundary condition"
@@ -54,7 +44,7 @@ SakiyamaEnergySecondaryElectronBC::SakiyamaEnergySecondaryElectronBC(
     // Coupled Variables
     _grad_potential(adCoupledGradient("potential")),
 
-    _em(adCoupledValue("em")),
+    _em(adCoupledValue("electrons")),
 
     _user_se_energy(getParam<Real>("secondary_electron_energy")),
     _a(0.5),

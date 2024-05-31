@@ -19,12 +19,7 @@ SecondaryElectronEnergyBC::validParams()
   params.addRequiredParam<Real>("r", "The reflection coefficient of the electrons.");
   params.addParam<Real>("r_ion", 0, "The reflection coefficient of the ions.");
   params.addRequiredCoupledVar("potential", "The electric potential");
-  params.addRequiredCoupledVar("em", "The electron density.");
-  params.deprecateCoupledVar("em", "electrons", "06/01/2024");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
-
-  params.addRequiredCoupledVar("ip", "The ion density.");
-  params.deprecateCoupledVar("ip", "ions", "06/01/2024");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<std::vector<std::string>>(

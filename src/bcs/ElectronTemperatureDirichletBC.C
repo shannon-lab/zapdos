@@ -17,8 +17,6 @@ ElectronTemperatureDirichletBC::validParams()
 {
   InputParameters params = ADNodalBC::validParams();
   params.addRequiredParam<Real>("value", "Value of the BC");
-  params.addRequiredCoupledVar("em", "The electron density.");
-  params.deprecateCoupledVar("em", "electrons", "06/01/2024");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addParam<Real>("penalty_value", 1.0, "The penalty value for the Dirichlet BC.");
   params.addClassDescription("Electron temperature boundary condition");
