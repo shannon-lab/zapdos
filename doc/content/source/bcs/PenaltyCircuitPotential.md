@@ -10,7 +10,17 @@ documentation clear for users.
 
 ## Overview
 
-!! Replace these lines with information regarding the PenaltyCircuitPotential object.
+`PenaltyCircuitPotential` is a [`PenaltyDirichlBC`](/bcs/ADPenaltyDirichletBC.md) for a potential based on Kirchoff's voltage law.
+
+The formulation of the potential at the wall is:
+
+\begin{equation}
+V_{source} + V_{cathode} = J \ A \ R
+\end{equation}
+
+Where $V_{source}$ is driven the potential, $V_{cathode}$ is the potential at cathode,
+$J$ is the current density, $A$ is the cross-sectional area of the plasma, and
+$R$ is the ballast resistance. The current density is supplied through the [`CurrentDensityShapeSideUserObject`](/userobjects/CurrentDensityShapeSideUserObject.md).
 
 ## Example Input File Syntax
 

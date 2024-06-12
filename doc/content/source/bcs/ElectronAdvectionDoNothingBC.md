@@ -10,7 +10,25 @@ documentation clear for users.
 
 ## Overview
 
-!! Replace these lines with information regarding the ElectronAdvectionDoNothingBC object.
+`ElectronAdvectionDoNothingBC` is an outflow boundary condition where the outflow at the
+boundary is equal to the bulk election advection equation.
+`ElectronAdvectionDoNothingBC` assumes the electrostatic approximation for the electric field.
+
+The outflow is defined as
+
+\begin{equation}
+\Gamma_{e} \cdot \textbf{n} = \text{-} \mu_{e} n_{e} \ \text{-} \nabla (V) \cdot \textbf{n}
+\end{equation}
+
+Where $\Gamma$ is the outflow normal to the boundary, $\textbf{n}$ is the normal of the boundary, $\mu_{e}$ is the mobility coefficient, $n_{e}$ is the electron density, and $V$ is the potential. When converting the density to logarithmic form and applying a scaling
+factor of the mesh, the strong form for `ElectronAdvectionDoNothingBC` is defined as
+
+\begin{equation}
+\Gamma_{e} \cdot \textbf{n} = \text{-} \mu_{e} \exp(N_{e}) \ \text{-} \nabla (V / l_{c}) \cdot \textbf{n}
+\end{equation}
+
+Where $N_{j}$ is the molar density of the specie in logarithmic form and
+$l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 

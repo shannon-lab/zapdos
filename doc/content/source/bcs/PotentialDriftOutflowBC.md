@@ -10,7 +10,21 @@ documentation clear for users.
 
 ## Overview
 
-!! Replace these lines with information regarding the PotentialDriftOutflowBC object.
+`PotentialDriftOutflowBC` is an electric field driven outflow boundary condition.
+`PotentialDriftOutflowBC` assumes a mobility coefficient of unity, the electrostatic approximation for the electric field, and a non-scaled version of the specie's density.
+
+The electrostatic electric field driven outflow is defined as
+
+\begin{equation}
+a =
+\begin{cases}
+1, & \text{sign}_{j} \ \text{-} \nabla (V) \cdot \textbf{n} > 0\\
+0, & \text{sign}_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \leq 0\\
+\end{cases} \\[10pt]
+\Gamma_{j} \cdot \textbf{n} = a \ \text{sign}_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \ n_{j}
+\end{equation}
+
+When calculating with scaled densities and non-unity coefficients, please refer to [`HagelaarIonAdvectionBC`](/bcs/HagelaarIonAdvectionBC.md), [`DCIonBC`](/bcs/DCIonBC.md), or [`SakiyamaIonAdvectionBC`](/bcs/SakiyamaIonAdvectionBC.md).
 
 ## Example Input File Syntax
 

@@ -1,20 +1,38 @@
 # SakiyamaEnergySecondaryElectronBC
 
-!alert construction title=Undocumented Class
-The SakiyamaEnergySecondaryElectronBC has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /BCs/SakiyamaEnergySecondaryElectronBC
 
 ## Overview
 
-!! Replace these lines with information regarding the SakiyamaEnergySecondaryElectronBC object.
+`SakiyamaEnergySecondaryElectronBC` is an electron mean energy density of secondary electrons induced by ion flux outflow boundary condition.
+`SakiyamaEnergySecondaryElectronBC` assumes the electrostatic approximation for the electric field.
+
+The ion induce secondary electron mean energy density outflow is defined as
+
+\begin{equation}
+a =
+\begin{cases}
+1, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} > 0\\
+0, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \leq 0\\
+\end{cases} \\[10pt]
+\Gamma_{\epsilon} \cdot \textbf{n} = \gamma \frac{5}{3} \frac{n_{\epsilon}}{n_{e}} \left[a \ \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \ n_{j} \right]
+\end{equation}
+
+Where $\Gamma$ is the outflow normal to the boundary, $\textbf{n}$ is the normal of the boundary,
+$\mu_{j}$ is the mobility coefficient, $n_{\epsilon}$ is the mean energy density, $n_{j}$ is the ion density, $\gamma$ is the secondary electron coefficient, and $V$ is the potential. $a$ is defined such that the outflow is only defined when the drift velocity is direct towards the wall and zero otherwise. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `SakiyamaEnergySecondaryElectronBC` is defined as
+
+\begin{equation}
+\Gamma_{\epsilon} \cdot \textbf{n} = \gamma \frac{5}{3} \exp(N_{\epsilon}-N_{e}) \left[a \ \mu_{j} \ \text{-} \nabla (V / l_{c}) \cdot \textbf{n} \ \exp(N_{j}) \right]
+\end{equation}
+
+Where $N_{j}$ is the molar density of the specie in log form and $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the SakiyamaEnergySecondaryElectronBC object.
+An example of how to use `SakiyamaEnergySecondaryElectronBC` can be found in the
+test file `2D_RF_Plasma_actions.i`.
+
+!listing test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i block=BCs/mean_en_Ar+_second_emissions
 
 !syntax parameters /BCs/SakiyamaEnergySecondaryElectronBC
 

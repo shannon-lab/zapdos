@@ -10,7 +10,27 @@ documentation clear for users.
 
 ## Overview
 
-!! Replace these lines with information regarding the CircuitDirichletPotential object.
+`CircuitDirichletPotential` is a Dirichlet boundary condition for a potential based on Kirchoff's voltage law.
+
+The formulation of the potential at the wall is:
+
+\begin{equation}
+V_{source} + V_{cathode} = e \Gamma A R
+\end{equation}
+
+Where $V_{source}$ is driven the potential, $V_{cathode}$ is the potential at cathode,
+$\Gamma$ is the charged flux to the boundary, $e$ is the charge elemental, $A$ is the cross-sectional area of the plasma, and
+$R$ is the ballast resistance. When converting the density to log form and applying a scaling factor of the mesh / voltage,
+`CircuitDirichletPotential` is defined as
+
+\begin{equation}
+V_{source} + V_{cathode} = e N_{A} \Gamma \frac{A}{l_{c}^2} \frac{R}{V_{c}}
+\end{equation}
+
+Where $N_{A}$ is Avogadro's number, $l_{c}$ is the scaling factor of the mesh, and $V_{c}$ is the scaling factor of the potential.
+
+
+The charged flux is supplied as a [Postprocessor](syntax/Postprocessors/index.md) (usually the [`SideCurrent`](/postprocessors/SideCurrent.md) Postprocessor).
 
 ## Example Input File Syntax
 
