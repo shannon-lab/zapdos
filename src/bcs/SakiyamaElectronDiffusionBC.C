@@ -16,8 +16,6 @@ InputParameters
 SakiyamaElectronDiffusionBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredCoupledVar("mean_en", "The mean energy.");
-  params.deprecateCoupledVar("mean_en", "electron_energy", "06/01/2024");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Kinetic electron boundary condition"

@@ -24,19 +24,9 @@ NeumannCircuitVoltageMoles_KV::validParams()
       "data_provider",
       "The name of the UserObject that can provide some data to materials, bcs, etc.");
 
-  params.addRequiredCoupledVar("ip", "The ion density.");
-  params.deprecateCoupledVar("ip", "ions", "06/01/2024");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log-molar form");
-
-  params.addRequiredCoupledVar("em", "The log of the electron density.");
-  params.deprecateCoupledVar("em", "electrons", "06/01/2024");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
-
-  params.addRequiredCoupledVar(
-      "mean_en", "The log of the product of the mean energy and the electron density.");
-  params.deprecateCoupledVar("mean_en", "electron_energy", "06/01/2024");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
-
   params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs",
       "The secondary electron emission coefficient for each ion provided in `ions`");
@@ -107,7 +97,7 @@ NeumannCircuitVoltageMoles_KV::NeumannCircuitVoltageMoles_KV(const InputParamete
   for (unsigned int i = 0; i < _ip.size(); ++i)
   {
     _ip[i] = &adCoupledValue("ions", i);
-    _grad_ip[i] = &adCoupledGradient("ip", i);
+    _grad_ip[i] = &adCoupledGradient("ions", i);
     _T_heavy[i] = &getADMaterialProperty<Real>("T" + (*getVar("ions", i)).name());
     _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ions", i)).name());
     _Dip[i] = &getADMaterialProperty<Real>("diff" + (*getVar("ions", i)).name());
