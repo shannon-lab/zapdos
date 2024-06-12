@@ -18,8 +18,6 @@ HagelaarEnergyBC::validParams()
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
-  params.addRequiredCoupledVar("em", "The electron density.");
-  params.deprecateCoupledVar("em", "electrons", "06/01/2024");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   return params;
@@ -32,7 +30,7 @@ HagelaarEnergyBC::HagelaarEnergyBC(const InputParameters & parameters)
 
     // Coupled Variables
     _grad_potential(adCoupledGradient("potential")),
-    _em(adCoupledValue("em")),
+    _em(adCoupledValue("electrons")),
 
     _massem(getMaterialProperty<Real>("massem")),
     _e(getMaterialProperty<Real>("e")),

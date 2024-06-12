@@ -31,19 +31,9 @@ PenaltyCircuitPotential::validParams()
   params.addRequiredParam<UserObjectName>(
       "data_provider",
       "The name of the UserObject that can provide some data to materials, bcs, etc.");
-
-  params.addRequiredCoupledVar("em", "The electron variable.");
-  params.deprecateCoupledVar("em", "electrons", "06/01/2024");
   params.addRequiredCoupledVar("electrons", "The electron density in log form.");
-
-  params.addRequiredCoupledVar("ip", "The ion variable.");
-  params.deprecateCoupledVar("ip", "ions", "06/01/2024");
   params.addRequiredCoupledVar("ions", "The ion density in log form.");
-
-  params.addRequiredCoupledVar("mean_en", "The mean electron energy density in log form.");
-  params.deprecateCoupledVar("mean_en", "electron_energy", "06/01/2024");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form.");
-
   params.addParam<Real>("area", "Must be provided when the number of dimensions equals 1.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("position_units", "Units of position.");

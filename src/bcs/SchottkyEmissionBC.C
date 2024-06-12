@@ -18,11 +18,7 @@ SchottkyEmissionBC::validParams()
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
-  params.addRequiredCoupledVar("mean_en", "The mean energy.");
-  params.deprecateCoupledVar("mean_en", "electron_energy", "06/01/204");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
-  params.addRequiredCoupledVar("ip", "The ion density.");
-  params.deprecateCoupledVar("ip", "ions", "06/01/2024");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs",
