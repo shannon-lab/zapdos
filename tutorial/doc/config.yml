@@ -1,0 +1,61 @@
+Content:
+    zapdos:
+        root_dir: ${ROOT_DIR}/doc/content
+        content:
+            - getting_started/installation.md
+
+    workshop:
+        root_dir: ${ROOT_DIR}/tutorial/doc/content
+    moose:
+        root_dir: ${MOOSE_DIR}/framework/doc/content
+        content:
+            - ../../../tutorials/darcy_thermo_mech/doc/content/workshop/intro/moose_introduction.md
+            - large_media/tutorials/darcy_thermo_mech/*
+            - contrib/**
+            - css/**
+            - js/**
+            - bib/**
+            - syntax/**
+
+    modules:
+        root_dir: ${MOOSE_DIR}/modules/doc/content
+        content:
+            - application_usage/failed_solves.md
+            - getting_started/installation/index.md
+            - help/development/VSCode.md
+Executioner:
+    type: MooseDocs.base.Serial
+
+Renderer:
+    type: MooseDocs.base.RevealRenderer
+    theme: simple
+
+Extensions:
+    disable_defaults: True
+    MooseDocs.extensions.alert: default
+    MooseDocs.extensions.comment: default
+    MooseDocs.extensions.command: default
+    MooseDocs.extensions.core: default
+    MooseDocs.extensions.config: default
+    MooseDocs.extensions.media: default
+    MooseDocs.extensions.floats: default
+    MooseDocs.extensions.include: default
+    MooseDocs.extensions.katex:
+        macros:
+            \vec: "\\bar" # TODO: \vec doesn't render
+            \pf: "\\frac{\\partial #1}{\\partial #2}"
+    MooseDocs.extensions.style: default
+    MooseDocs.extensions.autolink: default
+    MooseDocs.extensions.materialicon: default
+    MooseDocs.extensions.heading: default
+    MooseDocs.extensions.shortcut: default
+    MooseDocs.extensions.table: default
+    MooseDocs.extensions.layout: default
+    MooseDocs.extensions.content: default
+    MooseDocs.extensions.modal: default
+    MooseDocs.extensions.listing:
+        modal-link: False
+    MooseDocs.extensions.reveal:
+        translate: workshop/index.md
+        background_image: ncsu_slide_background.png
+    MooseDocs.extensions.datetime: default
