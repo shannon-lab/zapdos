@@ -25,3 +25,25 @@
 !---
 
 !include intro/multi_fluid.md
+
+!---
+
+!include examples/tutorial1.md
+
+!---
+
+!include examples/tutorial2.md
+
+
+!---
+
+!include examples/tutorial3.md
+
+
+!---
+
+!include examples/tutorial4.md
+
+!---
+
+!include examples/tutorial5.md
