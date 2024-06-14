@@ -24,6 +24,10 @@
 
 !---
 
+!include intro/capability_demo.md
+
+!---
+
 !include intro/multi_fluid.md
 
 !---
@@ -38,6 +42,10 @@
 !---
 
 !include examples/tutorial3.md
+
+!---
+
+!include examples/tutorial3-fenix.md
 
 
 !---
