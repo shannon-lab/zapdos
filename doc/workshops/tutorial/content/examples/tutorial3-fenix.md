@@ -6,26 +6,39 @@
 
 # FENIX Intro
 
+As commercial interested in fusion energy has increased the need for high-fidelity multi-physics simulations of fusion devices has also increased. To address this the Idaho National Laboratory, North Carolina State University, and the University of Illinois Urbana-Champaign are developing the Fusion ENergy Integrated multiphys-X (FENIX) framework for modeling plasma facing components. FENIX is built on the MOOSE framework and couples: MOOSE modules, applications and several existing codes:
+
 # style=margin-top:1em;
 
-In [!cite](lieberman1994principles) this problem is solved with a PIC code. A MOOSE based finite-element PIC code is being developed in collaboration with the Idaho National Laboratory. This capability is going to be a part of the  Fusion ENergy Integrated multiphys-X (FENIX) framework, which will be open-sourced soon.
+- TMAP8 (Tritium migration)
+- Cardinal
 
-# style=margin-top:4.5em;
+  - Monte-Carlo Neutronics vi OpenMC
+  - Computational Fluid Dynamics via NekRS
 
-!bibtex bibliography
+- Electromagnetics Module
+- Ray Tracing Module (Kinetic Plasma Foundation)
 
 !---
 
-# PIC Setup
+# PIC in FENIX
 
-# style=margin-top:2em;
+# style=margin-top:1.5em;
+
+In [!cite](lieberman1994principles) this tutorial problem is solved with a PIC code. A core part of the FENIX framework is the PIC capabilities that are being developed. As a very basic benchmarking problem the PIC example presented in [!cite](lieberman1994principles) has been replicated in FENIX
+
 
 - 100 Macroparticles are placed on a 100 element mesh
-- Leap Frog particle stepping is used
 - Each particle is initially placed exactly in the center of each cell
+- Leap Frog particle stepping is used
 - $\Delta t$ = $1\times 10^{-9} [\text{s}]$
 - Total simulation time of $2.5\times 10^{-8} [\text{s}]$
-- The potential is represented with first order element basis functions
+- The potential is represented with first order nodal basis functions
+
+# style=margin-top:1em;
+
+!bibtex bibliography
+
 
 !---
 
@@ -36,8 +49,8 @@ All figures show FENIX results super imposed on figures 2.2.a, 2.2.b, and 2.2.c 
 !row!
 
 !media media/lieberman-particles.png
-       style=width:95%;display:block;margin-top:0.5em;margin-left:auto;margin-right:auto;
-       caption=Macro Particle Population Evolution
+       style=width:93%;display:block;margin-top:0.5em;margin-left:auto;margin-right:auto;
+       caption=Particle Population Evolution
 
 !media media/lieberman-potential.png
        style=width:100%;display:block;margin-top:0.5em;margin-left:auto;margin-right:auto;
@@ -45,7 +58,32 @@ All figures show FENIX results super imposed on figures 2.2.a, 2.2.b, and 2.2.c 
 
 !media media/lieberman-vdf.png
        style=width:100%;display:block;margin-top:0.5em;margin-left:auto;margin-right:auto;
-       caption=Macro Particle Velocity Distribution Evolution
+       caption=Particle Phase Space Evolution
 !row-end!
 
-TODO ASK ABOUT HOW TO CENTER THIS CAPTION
+!---
+
+# FENIX Current Status
+
+- Leap frog and Boris particle stepping have been implemented and verified.
+- Electrostatic capabilities have been verified for all first order finite elements in libMesh.
+- Uniform random particle initialization for all first order finite elements in libMesh has been verified.
+
+  - Bounding box particle initialization has also been verified.
+
+- Particle based current density source calculations is near completion and will be verified.
+- Particle collision capabilities are the next to be developed.
+
+!---
+
+# FENIX Future Work
+
+- Continued verification efforts by replicating Kinetic instabilities
+
+  - Landau Damping
+  - Two Stream
+  - Dory-Ghast-Haris Instability
+
+- Replicating more complex analytic plasma solutions
+- Benchmarking against other codes
+- Validation by replicating experimental data
