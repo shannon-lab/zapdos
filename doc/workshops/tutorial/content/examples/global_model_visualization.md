@@ -27,10 +27,10 @@ The results shown here are from tutorial 2
 
 !media media/tutorial2_visualization/step4.png
        style=width:100%;display:block;margin-top:1.5em;margin-left:auto;margin-right:auto;
-       caption=To see the time evolution of the system select the "Plot Selection Over Time" button
+       caption=To see the time evolution of the system select the "Plot Selection Over Time" button.
 
 !---
 
 !media media/tutorial2_visualization/step5.png
        style=width:100%;display:block;margin-top:1.5em;margin-left:auto;margin-right:auto;
-       caption=Finally you should be able to see something like this
+       caption=Finally, you should see something that looks like this.
