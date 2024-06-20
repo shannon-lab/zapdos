@@ -69,3 +69,6 @@ The ion mobility and diffusivity $\mu_i$ and $D_i$ are inversly proportional to 
 !---
 
 # Solution Demonstration
+
+!media media/tutorial3.mp4
+       style=width:35%;display:block;margin-top:1.5em;margin-left:auto;margin-right:auto;box-shadow:none;

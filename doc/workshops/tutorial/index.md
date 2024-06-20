@@ -12,10 +12,6 @@
 
 !---
 
-!include intro/getting_started.md
-
-!---
-
 !include workshop/intro/moose_introduction.md
 
 !---
@@ -32,12 +28,24 @@
 
 !---
 
+!include intro/getting_started.md
+
+!---
+
+!include examples/visualization.md
+
+
+!---
+
 !include examples/tutorial1.md
 
 !---
 
 !include examples/tutorial2.md
 
+!---
+
+!include helpful_resources.md
 
 !---
 

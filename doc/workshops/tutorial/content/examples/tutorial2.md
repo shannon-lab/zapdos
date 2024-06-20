@@ -103,6 +103,3 @@ The initial condition for this system is given by
   \right]
 \end{equation}
 
-
-
-

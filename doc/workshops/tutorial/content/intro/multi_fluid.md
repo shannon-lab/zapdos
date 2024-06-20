@@ -106,9 +106,6 @@ When evaluating an electrostatic system Poisson's equation is used to calculate 
 
 Where $e$ is the elementary charge, $\varepsilon_0$ is the permitivity of free space, and $\rho$ is the charge density in the system.
 
-
-In cases where electromagnetic systems are considered MOOSE's [Electromagnetics Module](https://mooseframework.inl.gov/modules/electromagnetics/) is used to perform field calculations
-
 Additionally, Zapdos is capable of calculating an effective electric field using the form
 
 \begin{equation}
@@ -119,6 +116,9 @@ Additionally, Zapdos is capable of calculating an effective electric field using
     \vec{E} - \vec{E}_\text{eff}
   \right)
 \end{equation}
+
+
+In cases where electromagnetic systems are considered MOOSE's [Electromagnetics Module](https://mooseframework.inl.gov/modules/electromagnetics/) is used to perform field calculations
 
 !---
 
