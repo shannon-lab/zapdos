@@ -8,6 +8,29 @@
        style=width:75%;display:block;margin-top:0.5em;margin-left:auto;margin-right:auto;box-shadow:none;
        caption=2D Electron Oscilation in the GEC reference cell
 
+
+!---
+
+# Experimental Validation: Metastable Profiles
+
+### Argon Ground To Plate [!cite](mcmillin1995two) style=margin-top:1em;
+
+# style=margin-top:-1em;
+
+!row!
+!col! small=10 medium=4 large=4 icon=flash_on
+!media media/100mTorr_75pp.png
+       style=width:58%;display:block;margin-top:0.5em;margin-left;auto;margin-bottom:0em;margin-top:3em;
+       caption=$\hspace{2em}$75 \[V\] peak to peak at 100 \[mTorr\]
+!col-end!
+
+!col! small=12 medium=4 large=4 icon=flash_on
+!media media/1Torr_75pp.png
+       style=width:95%;display:block;margin-top:0.5em;margin-left:-15em;margin-bottom:0em;margin-top:3em;
+       caption=$\hspace{2em}$75 \[V\] peak to peak at 100 \[Torr\]
+!col-end!
+!row-end!
+
 !---
 
 # style=margin-top:0.5em;
@@ -20,41 +43,8 @@
 
 !---
 
+# Cost Jet Gas Mixing style=margin-top:1em
 
-
-!row!
-!col! small=10 medium=4 large=4 icon=flash_on
-!media media/100mTorr_75pp.png
-       style=width:58%;display:block;margin-top:0.5em;margin-left;auto;margin-bottom:0em;margin-top:3em;
-       caption=Test
-
-
-<!-- !style halign=center
- -->
-!col-end!
-
-!col! small=12 medium=4 large=4 icon=flash_on
-!media media/1Torr_75pp.png
-       style=width:95%;display:block;margin-top:0.5em;margin-left:-15em;margin-bottom:0em;margin-top:3em;
-       caption=Test
-
-!col-end!
-!row-end!
-
-
-!row!
-!col! small=12 medium=4 large=4 icon=flash_on
-!media media/100mTorr_75pp.png
-       style=width:58%;display:block;margin-left;auto;margin-top:-3em;
-       caption=Test
-
-!col-end!
-
-!col! small=12 medium=4 large=4 icon=flash_on
-!media media/1Torr_75pp.png
-       style=width:95%;display:block;margin-left:-15em;margin-top:-3em;
-       caption=Test
-
-!col-end!
-!row-end!
-
+!media media/cost_helium.mp4
+       style=width:55%;display:block;margin-top:0.5em;margin-left:auto;margin-bottom:0em;margin-right:auto;
+       caption=Helium impinging on a plate in an Oxygen atmosphere

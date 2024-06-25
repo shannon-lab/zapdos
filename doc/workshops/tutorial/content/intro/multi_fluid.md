@@ -24,6 +24,10 @@ Where $n_i$ is the species density, and $N_a$ is avagadros number
 
 !---
 
+# Kernels
+
+!---
+
 # Drift-Diffusion Approximation
 
 # style=margin-top:2em;
@@ -124,7 +128,7 @@ In cases where electromagnetic systems are considered MOOSE's [Electromagnetics 
 
 # Energy Conservation
 
-TODO DEFINE ALLL OF THESE TERMS
+# style=margin-top:2em;
 
 \begin{equation}
   \pf{n_e \varepsilon}{t}
@@ -161,7 +165,13 @@ TODO DEFINE ALLL OF THESE TERMS
 
 !---
 
+# Boundary Conditions (BCs)
+
+!---
+
 # Electrostatic Potential Boundary Conditions
+
+# style=margin-top:2em;
 
 \begin{equation}
   \phi =
@@ -193,7 +203,7 @@ TODO DEFINE ALLL OF THESE TERMS
 
 # Flux Boundary Conditions: Type 1
 
-TODO DEFINE ALLL OF THESE TERMS
+# style=margin-top:2em;
 
 \begin{equation}
   \Gamma_i
@@ -229,7 +239,7 @@ TODO DEFINE ALLL OF THESE TERMS
 
 # Flux Boundary Conditions: Type 2
 
-TODO DEFINE ALLL OF THESE TERMS
+# style=margin-top:2em;
 
 \begin{equation}
   \Gamma_i
@@ -281,7 +291,7 @@ TODO DEFINE ALLL OF THESE TERMS
 
 # Flux Boundary Conditions: Type 3
 
-TODO DEFINE ALLL OF THESE TERMS
+# style=margin-top:2em;
 
 \begin{equation}
   \Gamma_i \cdot \hat{n}
