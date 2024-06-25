@@ -4,7 +4,7 @@
 
 # Problem Statement
 
-Consider an Argon capacitively coupled plasma (CCP). Utilize the MOOSE Postprocessor system to calculate the volume averaged electron temperature.
+Consider an Argon capacitively coupled plasma (CCP). Utilize the [MOOSE Postprocessor system](syntax/Postprocessors/index.md) to calculate the volume-averaged electron temperature.
 
 !---
 
