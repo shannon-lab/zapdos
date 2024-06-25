@@ -6,21 +6,21 @@
 
 # style=margin-top:2em;
 
-In Zapdos the Logarithmic form or the Logarithmic-Molar form is used to calculate the species density. This is done for numerical stability and to prevent negative densities. The logarithmic form is given by
+In Zapdos, the logarithmic form or the logarithmic-molar form is used to calculate the species density. This is done for numerical stability and to prevent the calculation of nonphysical, negative densities by the numerical solver. The logarithmic form is given by
 
 \begin{equation}
-  \ln \left( n_i \right)
+  N_i = \ln \left( n_i \right)
 \end{equation}
 
-and the Logarithmic-Molar form is given by
+and the logarithmic-molar form is given by
 
 \begin{equation}
-  \ln \left(
+ N_i = \ln \left(
     \frac{n_i}{N_a}
 \right)
 \end{equation}
 
-Where $n_i$ is the species density, and $N_a$ is avagadros number
+Where $n_i$ is the traditional species density, $N_i$ is the modified species density, and $N_a$ is Avogadro's number
 
 !---
 
@@ -41,7 +41,7 @@ Where $n_i$ is the species density, and $N_a$ is avagadros number
   S_{j,n}
 \end{equation}
 
-$i$ and $j$ denote some particle species, $n$ denotes the number of bodies in the source term, and $S_{j}$ denotes sources of species $j$ from chemical reactions.
+where $i$ and $j$ denote some particle species, $n$ denotes the number of bodies in the source term, and $S_{j}$ denotes sources of species $j$ from chemical reactions.
 
 \begin{equation}
   \Gamma_{\alpha} =
@@ -53,7 +53,7 @@ $i$ and $j$ denote some particle species, $n$ denotes the number of bodies in th
   \nabla n_\alpha
 \end{equation}
 
-$\mu_\alpha$ and $D_\alpha$ are the mobility and diffusivity of species $\alpha$ respectively, and $\phi$ is the electric potential.
+where $\mu_\alpha$ and $D_\alpha$ are the mobility and diffusivity of species $\alpha$ respectively, and $\phi$ is the electric potential.
 
 \begin{equation}
   \Gamma_\beta =
@@ -62,11 +62,11 @@ $\mu_\alpha$ and $D_\alpha$ are the mobility and diffusivity of species $\alpha$
   \nabla n_\beta
 \end{equation}
 
-$\alpha$ denotes charged particles, beta denotes neutral particles.
+where $\alpha$ denotes charged particles and $\beta$ denotes neutral particles.
 
 !---
 
-# Source Terms (Crane)
+# Source Terms (from [Crane](https://github.com/lcpp-org/crane))
 
 # style=margin-top:1em;
 
@@ -94,21 +94,21 @@ $\alpha$ denotes charged particles, beta denotes neutral particles.
   n_1 n_2 n_3
 \end{equation}
 
-Where $\nu$ is the stoichiometric coefficient of the reaction, $k$ is the reaction rate, and $n_i$ is the density of species $i$
+Where $\nu$ is the stoichiometric coefficient of the reaction, $k$ is the reaction rate, and $n_i$ is the density of species $i$.
 
 !---
 
-# Electro-Magnetic Field Calculations
+# Electromagnetic Field Calculations
 
-When evaluating an electrostatic system Poisson's equation is used to calculate the electric potential.
+When evaluating an electrostatic system, Poisson's equation is used to calculate the electrostatic potential,
 
 \begin{equation}
   - \nabla^2 \phi
   =
-  \frac{\rho}{\varepsilon_0}
+  \frac{\rho}{\varepsilon_0},
 \end{equation}
 
-Where $e$ is the elementary charge, $\varepsilon_0$ is the permitivity of free space, and $\rho$ is the charge density in the system.
+where $e$ is the elementary charge, $\varepsilon_0$ is the permitivity of free space, and $\rho$ is the charge density in the system.
 
 Additionally, Zapdos is capable of calculating an effective electric field using the form
 
@@ -118,11 +118,11 @@ Additionally, Zapdos is capable of calculating an effective electric field using
   \nu_\text{ion}
   \left(
     \vec{E} - \vec{E}_\text{eff}
-  \right)
+  \right).
 \end{equation}
 
 
-In cases where electromagnetic systems are considered MOOSE's [Electromagnetics Module](https://mooseframework.inl.gov/modules/electromagnetics/) is used to perform field calculations
+In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics Module](https://mooseframework.inl.gov/modules/electromagnetics/) is used to perform field calculations.
 
 !---
 

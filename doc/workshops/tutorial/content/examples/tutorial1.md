@@ -19,7 +19,7 @@ Consider a one dimensional single species, $i$, plasma on the domain $x\in\left[
 \end{equation}
 
 
-Where $D$ is a constant diffusion coefficient, $n_i$ is the species density, $k$ is a constant first order constant reaction rate. Additionally, a zero density boundary condition will be imposed
+Where $D$ is a constant diffusion coefficient, $n_i$ is the species density, and $k$ is a constant first order reaction rate. Additionally, a zero-density boundary condition will be imposed
 
 \begin{equation}
   n_i
@@ -34,7 +34,7 @@ Where $D$ is a constant diffusion coefficient, $n_i$ is the species density, $k$
 
 # style=margin-top:1em;
 
-### Explore what happens as the diffusion coefficient is varried.
+### Explore what happens as the diffusion coefficient is varied.
 
 !listing tutorial/tutorial01-Diffusion/diffusion-only.i block=Materials/gas_species_0
 

@@ -1,4 +1,4 @@
-# Tutorial 3 - Kinetic Implementation
+# Tutorial 3 - Kinetic Implementation using FENIX
 
 !media media/FENIX_logo_blue.png
        style=width:50%;display:block;margin-top:1.5em;margin-left:auto;margin-right:auto;box-shadow:none;
@@ -12,7 +12,7 @@
 
 # FENIX Intro
 
-As commercial interest in fusion energy has increased, the need for high-fidelity coupled multi-physics simulations of fusion devices has also increased. To address this the Idaho National Laboratory, North Carolina State University, the University of Illinois Urbana-Champaign, and the United Kingdom Atomic Energy Authority are developing an open source framework, the Fusion ENergy Integrated multiphys-X (FENIX) framework for modeling plasma facing components. FENIX is built on the MOOSE framework and couples: MOOSE modules, applications and several existing codes:
+As commercial interest in fusion energy has increased, the need for high-fidelity, multiphysics simulations of fusion devices has also increased. To address this, Idaho National Laboratory, North Carolina State University, the University of Illinois at Urbana-Champaign, and the United Kingdom Atomic Energy Authority are developing an open source application, the Fusion ENergy Integrated multiphys-X (FENIX) framework, for modeling plasma facing components. FENIX is built on the MOOSE framework and couples MOOSE ecosystem capabilities as well as external codes:
 
 
 - [TMAP8](https://mooseframework.inl.gov/TMAP8/) (Tritium migration)
@@ -25,7 +25,7 @@ As commercial interest in fusion energy has increased, the need for high-fidelit
 - [Ray Tracing Module](https://mooseframework.inl.gov/modules/ray_tracing/) (Kinetic Plasma Foundation)
 - [Heat Transfer](https://mooseframework.inl.gov/modules/heat_transfer/index.html)
 - [Solid Mechanics](https://mooseframework.inl.gov/modules/solid_mechanics/index.html)
-- [Theraml Hydraulics](https://mooseframework.inl.gov/modules/thermal_hydraulics/index.html)
+- [Thermal Hydraulics](https://mooseframework.inl.gov/modules/thermal_hydraulics/index.html)
 
 !---
 
@@ -35,7 +35,7 @@ As commercial interest in fusion energy has increased, the need for high-fidelit
 
 
 
-In [!cite](lieberman1994principles) this tutorial problem is solved with a PIC code. A core part of the FENIX framework is the PIC capabilities that are being developed. As a very basic benchmarking problem the PIC example presented in [!cite](lieberman1994principles) has been replicated in FENIX
+In [!cite](lieberman1994principles), this tutorial problem is solved with a PIC code, a core capability of FENIX still in-development. As a very basic benchmarking problem, the PIC example presented in [!cite](lieberman1994principles) has been replicated in FENIX.
 
 
 - 100 Macroparticles are placed on a 100 element mesh
@@ -47,14 +47,13 @@ In [!cite](lieberman1994principles) this tutorial problem is solved with a PIC c
 
 # style=margin-top:1em;
 
-!bibtex bibliography
 
 
 !---
 
 # Results Comparison
 
-All figures show FENIX results super imposed on figures 2.2.a, 2.2.b, and 2.2.c from [!cite](lieberman1994principles). Results from [!cite](lieberman1994principles) are in black and grey while FENIX results are in color.
+All figures show FENIX results superimposed on figures 2.2.a, 2.2.b, and 2.2.c from [!cite](lieberman1994principles). Results from [!cite](lieberman1994principles) are in black and grey while FENIX results are in color.
 
 !row!
 
@@ -96,4 +95,4 @@ All figures show FENIX results super imposed on figures 2.2.a, 2.2.b, and 2.2.c 
 
 - Replicating more complex analytic plasma solutions
 - Benchmarking against other codes
-- Validation by replicating experimental data
+- Validation by replicating experimental conditions and data

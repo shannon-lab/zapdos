@@ -6,8 +6,8 @@
 
 [Installing Zapdos](https://shannon-lab.github.io/zapdos/getting_started/installation.html)
 
-[Installing a text editor with input file syntax auto-complete](https://mooseframework.inl.gov/help/development/VSCode.html)
+[Installing a text editor with input file syntax auto-complete (VSCode)](https://mooseframework.inl.gov/help/development/VSCode.html)
 
-[Installing visualization software](https://www.paraview.org/download/)
+[Installing visualization software (Paraview)](https://www.paraview.org/download/)
 
 

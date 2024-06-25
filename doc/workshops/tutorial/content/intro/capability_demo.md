@@ -35,11 +35,11 @@
 
 # style=margin-top:0.5em;
 
-# MOOSE Electromangetics
+# MOOSE Electromagnetics
 
 !media media/dipole_antenna.mp4
        style=width:50%;display:block;margin-top:0.5em;margin-left:auto;margin-right:auto;box-shadow:none;
-       caption=The 2D electric field radiation pattern of a dipole antenna, modeled using the [Electromangetics Module](https://mooseframework.inl.gov/modules/electromagnetics/index.html)
+       caption=The 2D electric field radiation pattern of a dipole antenna, modeled using the [Electromagnetics Module](https://mooseframework.inl.gov/modules/electromagnetics/index.html)
 
 !---
 
