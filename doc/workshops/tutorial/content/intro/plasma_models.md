@@ -9,7 +9,6 @@
 
 # Global Models
 
-!style halign=center fontsize=150%
 - Volume Averaged and Simplified Kinetics
 
 - Spatially independent simulations provide:
@@ -22,7 +21,6 @@
 
 # Fuild Models (Zapdos)
 
-!style halign=center fontsize=150%
 - Local Field Approximation (LFA).
 - Local Mean Energy Approximation (LMEA).
 - Monte Carlo Fluids (MCF).
@@ -38,7 +36,6 @@
 # Higher Order and Hybrid Models
 
 
-!style halign=center fontsize=150%
 - Higher order fluid models
 - Hybrid particle-fluid models
 
@@ -50,7 +47,6 @@
 
 # Kinetic Particle Methods
 
-!style halign=center fontsize=150%
 - Direct Kinetic Methods
 - Molecular Dynamics (MD)
 - Particle In Cell (PIC) with Monte Carlo Collisions (MCC)

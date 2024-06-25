@@ -1,7 +1,7 @@
 # Tutorial 3 - Kinetic Implementation using FENIX
 
 !media media/FENIX_logo_blue.png
-       style=width:50%;display:block;margin-top:1.5em;margin-left:auto;margin-right:auto;box-shadow:none;
+       style=width:30%;display:block;margin-top:1.5em;margin-left:auto;margin-right:auto;box-shadow:none;
 
 !style fontsize=130% halign=center
 [https://mooseframework.inl.gov/fenix/](https://mooseframework.inl.gov/fenix/)
@@ -74,14 +74,18 @@ All figures show FENIX results superimposed on figures 2.2.a, 2.2.b, and 2.2.c f
 
 # Current PIC Status
 
-- Leap frog and Boris particle stepping have been implemented and verified.
-- Electrostatic capabilities have been verified for all first order finite elements in libMesh.
-- Uniform random particle initialization for all first order finite elements in libMesh has been verified.
+### Verified Capabilities
 
-  - Bounding box particle initialization has also been verified.
+- Leap frog and Boris particle stepping
+- Electrostatic capabilities using all first order finite elements in libMesh.
+- Uniform random particle initialization for all first order finite elements in libMesh.
 
-- Particle based current density source calculations is near completion and will be verified.
-- Particle collision capabilities are the next to be developed.
+  - Bounding box particle initialization.
+
+### Under Development
+
+- Particle based current density source calculations.
+- Particle collision capabilities.
 
 !---
 

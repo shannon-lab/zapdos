@@ -63,3 +63,7 @@
 !---
 
 !include examples/tutorial5.md
+
+!---
+
+!bibtex bibliography

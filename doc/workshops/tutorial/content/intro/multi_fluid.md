@@ -24,7 +24,7 @@ Where $n_i$ is the traditional species density, $N_i$ is the modified species de
 
 !---
 
-# Kernels
+# Governing Equations
 
 !---
 
@@ -73,25 +73,19 @@ where $\alpha$ denotes charged particles and $\beta$ denotes neutral particles.
 \begin{equation}
   S_{i,1}
   =
-  \nu
-  k
-  n_1
+  \nu k n_1
 \end{equation}
 
 \begin{equation}
   S_{i, 2}
   =
-  \nu
-  k
-  n_1 n_2
+  \nu k n_1 n_2
 \end{equation}
 
 \begin{equation}
   S_{i, 3}
   =
-  \nu
-  k
-  n_1 n_2 n_3
+  \nu k n_1 n_2 n_3
 \end{equation}
 
 Where $\nu$ is the stoichiometric coefficient of the reaction, $k$ is the reaction rate, and $n_i$ is the density of species $i$.
@@ -165,7 +159,14 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
 
 !---
 
+# style=margin-top:4em;
+
 # Boundary Conditions (BCs)
+
+# style=margin-top:4em;
+
+!alert note
+$\partial \Omega$ represents a boundary of the domain
 
 !---
 
@@ -174,7 +175,11 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
 # style=margin-top:2em;
 
 \begin{equation}
-  \phi =
+  \phi
+  \left(
+    \partial \Omega
+  \right)
+   =
   \phi_0
   \sin
   \left(
@@ -184,19 +189,42 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
 \end{equation}
 
 \begin{equation}
-  \phi = 0
+  \phi
+  \left(
+    \partial \Omega
+  \right)
+   = 0
 \end{equation}
 
 \begin{equation}
   e \Gamma_i
+  \left(
+    \partial \Omega
+  \right)
   -
   e \Gamma_e
+  \left(
+    \partial \Omega
+  \right)
   +
   \varepsilon_0
-  \pf{\left(\nabla \phi\right)}{t}
+  \pf{}{t}
+  \left(
+    \nabla \phi
+    \left(
+      \partial \Omega
+    \right)
+  \right)
   =
   \frac{\varepsilon_i}{d_i}
-  \pf{\phi}{t}
+  \pf{
+  }{t}
+  \left(
+    \nabla \phi
+    \left(
+      \partial \Omega
+    \right)
+  \right)
 \end{equation}
 
 !---
@@ -207,31 +235,50 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
 
 \begin{equation}
   \Gamma_i
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
   =
   -\mu_i
   n_i
   \nabla \phi
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
 \end{equation}
 
 \begin{equation}
   \Gamma_e
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
   =
   k_s n_e
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
   -
   \gamma
   \Gamma_i
+  \left(
+    \partial \Omega
+  \right)
 \end{equation}
 
 \begin{equation}
-  T_e = C_0
+  T_e
+  \left(
+    \partial \Omega
+  \right)
+  = C_0
 \end{equation}
 
 
@@ -243,41 +290,62 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
 
 \begin{equation}
   \Gamma_i
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
   =
   -\mu_i
   n_i
   \nabla \phi_\text{eff}
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
 \end{equation}
 
 \begin{equation}
   \Gamma_e
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
   =
   \frac{1}{4}
   \nu_\text{th,e}
   n_e
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
   -
   \gamma
   \Gamma_i
+  \left(
+    \partial \Omega
+  \right)
 \end{equation}
 
 \begin{equation}
   \Gamma_\varepsilon
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
   =
   \frac{1}{4}
   \nu_\text{th,e}
   \frac{5}{3}
-  n_e
   \varepsilon
+  n_e
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
   -
@@ -285,6 +353,9 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
   \varepsilon_{se}
   \gamma
   \Gamma_i
+  \left(
+    \partial \Omega
+  \right)
 \end{equation}
 
 !---
@@ -294,7 +365,11 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
 # style=margin-top:2em;
 
 \begin{equation}
-  \Gamma_i \cdot \hat{n}
+  \Gamma_i
+  \left(
+    \partial \Omega
+  \right)
+  \cdot \hat{n}
   =
   \frac{
     1 - r_i
@@ -307,18 +382,31 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
     \right)
     \mu_i
     n_i
+    \left(
+    \partial \Omega
+    \right)
     \nabla \phi
+    \left(
+      \partial \Omega
+    \right)
     \cdot
     \hat{n}
     +
     \frac{1}{2}
     \nu_\text{th, i}
     n_i
+    \left(
+      \partial \Omega
+    \right)
   \right]
 \end{equation}
 
 \begin{equation}
-  \Gamma_e \cdot \hat{n}
+  \Gamma_e
+  \left(
+    \partial \Omega
+  \right)
+  \cdot \hat{n}
   =
   \frac{
     1 - r_\text{dens}
@@ -332,30 +420,48 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
     \right)
     \mu_e
     \left(
-      n_e - n_\gamma
+    n_e
+    \left(
+      \partial \Omega
+    \right)
+    - n_\gamma
+    \left(
+      \partial \Omega
+    \right)
     \right)
     \nabla \phi
+    \left(
+      \partial \Omega
+    \right)
     \cdot
     \hat{n}
     +
     \frac{1}{2}
     \nu_\text{th,e}
     \left(
-      n_e - n_\gamma
+      n_e \left( \partial \Omega \right)
+      - n_\gamma \left( \partial \Omega \right)
     \right)
   \right]
+\end{equation}
+
+\begin{equation}
   -
   \left(
     1 - a_e
   \right)
   \gamma_p
   \Gamma_p
+  \left( \partial \Omega \right)
   \cdot
   \hat{n}
 \end{equation}
 
 \begin{equation}
   \Gamma_\varepsilon
+  \left(
+    \partial \Omega
+  \right)
   \cdot
   \hat{n}
   =
@@ -372,18 +478,21 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
     \frac{5}{3}
     \mu_e
      \left(
-      \varepsilon n_e -
-      \varepsilon_\gamma n_\gamma
+      \varepsilon n_e \left( \partial \Omega \right)  -
+      \varepsilon_\gamma n_\gamma \left( \partial \Omega \right)
     \right)
-    \nabla \phi
+    \nabla \phi \left( \partial \Omega \right)
     +
     \frac{5}{6}
     \nu_\text{th,e}
      \left(
-      \varepsilon n_e -
-      \varepsilon_\gamma n_\gamma
+      \varepsilon n_e \left( \partial \Omega \right) -
+      \varepsilon_\gamma n_\gamma \left( \partial \Omega \right)
     \right)
   \right]
+\end{equation}
+
+\begin{equation}
   -
   \frac{5}{3}
   \varepsilon_\gamma
@@ -391,7 +500,7 @@ In cases where electromagnetic systems are considered, MOOSE's [Electromagnetics
     1 - a_e
   \right)
   \gamma_p
-  \Gamma_p
+  \Gamma_p \left( \partial \Omega \right)
   \cdot
   \hat{n}
 \end{equation}
