@@ -15,12 +15,16 @@ a =
 1, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} > 0\\
 0, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
-\Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j} \text{-} \nabla (V) \cdot \textbf{n} \ n_{j} \right]
+\Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j}
+\left( 
+ \text{-} \nabla (V) 
+\right)
+\cdot \textbf{n} \ n_{j} \right]
 \end{equation}
 
-Where $\Gamma$ is the outflow normal to the boundary, $n$ is the normal of the boundary,
+Where $\Gamma_j \cdot \textbf{n}$ is the flux normal to the boundary, $n$ is the normal vector of the boundary,
 $\mu_{j}$ is the mobility coefficient, $n_{j}$ is the ion density, and $V$ is
-the potential. $a$ is defined such that the outflow is only defined when the drift velocity is direct towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `HagelaarIonAdvectionBC` is defined as
+the electric potential. $a$ is defined such that the outflow is only non-zero when the drift velocity is directed towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `HagelaarIonAdvectionBC` is defined as
 
 \begin{equation}
 a =
@@ -28,10 +32,14 @@ a =
 1, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} > 0\\
 0, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
-\Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j} \text{-} \nabla (V / l_{c}) \cdot \textbf{n} \ \exp(N_{j}) \right]
+\Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j} 
+\left( 
+\text{-} \nabla (V / l_{c})
+\right)
+ \cdot \textbf{n} \ \exp(N_{j}) \right]
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in log form and
+Where $N_{j}$ is the molar density of the species in log form and
 $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax

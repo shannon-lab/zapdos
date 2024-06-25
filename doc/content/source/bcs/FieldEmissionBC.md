@@ -4,7 +4,7 @@
 
 ## Overview
 
-`FieldEmissionBC` is the outflow boundary condition assuming the the electron current density is defined by field emission.
+`FieldEmissionBC` is an outflow boundary condition that assumes the electron current density is defined by field emission.
 
 Using a Fowler-Nordheim calculation for the field emission, the electron current density is defined as
 
@@ -23,16 +23,16 @@ f = c \frac{F}{\phi^{2}} \\[10pt]
 c = 1.439964e\text{-}9 \ eV^{2} \ V^{-1} \ m
 \end{equation}
 
-Where $\textbf{J}_{\textbf{e}}$ is the electron current density, $a$ is the first Fowler–Nordheim constant, $\phi$ is the local work function, $F$ is the local field, $b$ is the second Fowler–Nordheim constant, $v(f)$ is a correction factor that depends on the scaled barrier field ($f$), $\textbf{n}$ is the normal of the boundary, $\gamma$ is the field enhancement factor, and $V$ is the potential. $a$ is defined such that the outflow is only defined when the drift velocity is direct towards the wall and zero otherwise. With the electron current density, the outward electron flux is defined as
+Where $\textbf{J}_{\textbf{e}}$ is the electron current density, $a$ is the first Fowler–Nordheim constant, $\phi$ is the local work function, $F$ is the local field, $b$ is the second Fowler–Nordheim constant, $v(f)$ is a correction factor that depends on the scaled barrier field ($f$), $\textbf{n}$ is the normal vector of the boundary, $\gamma$ is the field enhancement factor, and $V$ is the potential. $a$ is defined such that the outflow is only defined when the drift velocity is direct towards the wall and zero otherwise. With the electron current density, the outward electron flux is defined as
 
 \begin{equation}
 \Gamma_{i} \cdot \textbf{n}  = \text{sign}_{i} \mu_{i} \ \text{-} \nabla (V) n_{i} - D_{i} \nabla (n_{i}) \\[10pt]
 \Gamma_{e} \cdot \textbf{n}  = \frac{2 (1 - a)}{1 + r} (\text{-} (\textbf{J}_{\textbf{e}} \cdot \textbf{n})/e - \gamma_{se} \Gamma_{i} \cdot \textbf{n})
 \end{equation}
 
-Where $\Gamma$ is the outflow normal to the boundary, $\mu_{i}$ is the mobility coefficient of the ions, $\text{sign}_{i}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $n_{i}$ is the ion density, $D_{i}$ is the diffusion coefficient of ions, $e$ is the elemental charge, and $\gamma_{se}$ is the ion induced secondary electron coefficient. $r$ is defined as the fraction of particles reflected by the surface.
+Where $\Gamma$ is the outflow normal to the boundary, $\mu_{i}$ is the mobility coefficient of the ions, $\text{sign}_{i}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $n_{i}$ is the ion density, $D_{i}$ is the diffusion coefficient of ions, $e$ is the elemental charge, and $\gamma_{se}$ is the ion induced secondary electron emission coefficient. $r$ is defined as the fraction of particles reflected by the surface.
 
-When converting the density to log form and applying a scaling factor of the mesh and voltage, the changes to `FieldEmissionBC` are defined as
+When converting the density to log form and applying a scaling factor of the mesh and voltage, the strong form is given by
 
 
 \begin{equation}

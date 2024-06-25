@@ -4,7 +4,7 @@
 
 ## Overview
 
-`EconomouDielectricBC` is an type of [`PenaltyDirichletBC`](/bcs/ADPenaltyDirichletBC.md) for the potential on the boundary of a grounded ideal dielectric.
+`EconomouDielectricBC` is a type of [`PenaltyDirichletBC`](/bcs/ADPenaltyDirichletBC.md) for the potential on the boundary of a grounded ideal dielectric.
 
 The potential at the boundary of a grounded ideal dielectric is defined as
 

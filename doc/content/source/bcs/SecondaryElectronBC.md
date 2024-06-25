@@ -12,12 +12,14 @@ Note: add $n_{\gamma}$
 \begin{equation}
 a =
 \begin{cases}
-1, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} > 0\\
-0, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \leq 0\\
+1, & \mu_{j} \left( \text{-} \nabla (V) \right)  \cdot \textbf{n} > 0\\
+0, & \mu_{j} \left( \text{-} \nabla (V) \right) \cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
 \Gamma_{e} \cdot \textbf{n} = \frac{-2}{1+r} (1 - a_{e}) \gamma \Gamma_{j} \cdot \textbf{n} \\[10pt]
-\Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j} \text{-} \nabla (V) \cdot \textbf{n} \ n_{j} + \frac{1}{2}v_{th,j}n_{j} \right] \\[10pt]
-v_{th,j} = \sqrt{\frac{8k_{B}T}{\pi m_{j}}}
+\Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j}
+\left(  \text{-} \nabla (V) \right) 
+ \cdot \textbf{n} \ n_{j} + \frac{1}{2}v_{\text{th},j}n_{j} \right] \\[10pt]
+v_{\text{th},j} = \sqrt{\frac{8k_{B}T}{\pi m_{j}}}
 \end{equation}
 
 Where $\Gamma$ is the flux of the electron or ions, $\textbf{n}$ is the normal of the boundary,
@@ -25,10 +27,10 @@ $\mu$ is the mobility coefficient, $n$ is the specie density, $v_{th}$ is the th
 
 \begin{equation}
 \Gamma_{e} \cdot \textbf{n} = \frac{-2}{1+r} (1 - a_{e}) \gamma \Gamma_{j} \cdot \textbf{n} \\[10pt]
-\Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j} \text{-} \nabla (V / l_{c}) \cdot \textbf{n} \ \exp(N_{j}) + \frac{1}{2}v_{th,j}\exp(N_{j}) \right]
+\Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j} \left( \text{-} \nabla (V / l_{c}) \right) \cdot \textbf{n} \ \exp(N_{j}) + \frac{1}{2}v_{\text{th},j}\exp(N_{j}) \right]
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in log form and $l_{c}$ is the scaling factor of the mesh.
+Where $N_{j}$ is the molar density of the species in log form and $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 

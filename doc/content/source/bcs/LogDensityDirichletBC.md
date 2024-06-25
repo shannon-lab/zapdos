@@ -12,7 +12,7 @@ The formulation of the density at the wall is:
 n_{j} = N_{A} \exp(N_{j})
 \end{equation}
 
-Where $n_{j}$ is the density, $N_{j}$ is the molar density of the specie in logarithmic form, and $N_{A}$ is Avogadro's
+Where $n_{j}$ is the density, $N_{j}$ is the molar density of the species in logarithmic form, and $N_{A}$ is Avogadro's
 number.
 
 ## Example Input File Syntax

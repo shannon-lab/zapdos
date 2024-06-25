@@ -4,7 +4,7 @@
 
 ## Overview
 
-`ElectronTemperatureDirichletBC` is an type of [`PenaltyDirichletBC`](/bcs/ADPenaltyDirichletBC.md) for the electron temperature on the boundary.
+`ElectronTemperatureDirichletBC` is a type of [`PenaltyDirichletBC`](/bcs/ADPenaltyDirichletBC.md) for the electron temperature.
 
 The electron temperature at the boundary is defined as
 

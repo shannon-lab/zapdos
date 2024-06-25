@@ -9,16 +9,24 @@
 The outflow is defined as
 
 \begin{equation}
-\Gamma_{+} \cdot \textbf{n} = \mu_{+} n_{+} \text{-} \nabla (V) \cdot \textbf{n}
+\Gamma_{+} \cdot \textbf{n} = \mu_{+} n_{+} 
+\left( 
+\text{-} \nabla (V)
+\right) 
+ \cdot \textbf{n}
 \end{equation}
 
-Where $\Gamma_{+}$ is the outflow of the ions normal to the boundary, $\textbf{n}$ is the normal of the boundary, $n_{+}$ is the ion density, $\mu_{+}$ is the ion mobility coefficient, and $V$ is the potential. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `LymberopoulosIonBC` is defined as
+Where $\Gamma_{+} \cdot \textbf{n}$ is the flux of ions normal to the boundary, $\textbf{n}$ is the normal vector of the boundary, $n_{+}$ is the ion density, $\mu_{+}$ is the ion mobility coefficient, and $V$ is the electric potential. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `LymberopoulosIonBC` is defined as
 
 \begin{equation}
-\Gamma_{e} \cdot \textbf{n} = \mu_{+} \exp(N_{+}) \text{-} \nabla (V / l_{c}) \cdot \textbf{n}
+\Gamma_{e} \cdot \textbf{n} = \mu_{+} \exp(N_{+}) 
+\left( 
+\text{-} \nabla (V / l_{c}) 
+\right) 
+\cdot \textbf{n}
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in log form and
+Where $N_{j}$ is the molar density of the species in log form and
 $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax

@@ -15,10 +15,10 @@ documentation clear for users.
 The formulation of the potential at the wall is:
 
 \begin{equation}
-V_{source} + V_{cathode} = J \ A \ R
+V_\text{source} + V_\text{cathode} = J \ A \ R
 \end{equation}
 
-Where $V_{source}$ is driven the potential, $V_{cathode}$ is the potential at cathode,
+Where $V_\text{source}$ is driven the potential, $V_\text{cathode}$ is the potential at cathode,
 $J$ is the current density, $A$ is the cross-sectional area of the plasma, and
 $R$ is the ballast resistance. The current density is supplied through the [`CurrentDensityShapeSideUserObject`](/userobjects/CurrentDensityShapeSideUserObject.md).
 
