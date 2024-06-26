@@ -308,9 +308,8 @@ dom1Scale = 1e-7
     r = 0
     position_units = ${dom0Scale}
   []
-
-  #Mean electron energy on the plasma-liquid interface
   [mean_en_physical_right]
+    #Mean electron energy on the plasma-liquid interface
     type = HagelaarEnergyBC
     variable = mean_en
     boundary = 'master0_interface'
