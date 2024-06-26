@@ -27,15 +27,16 @@
 !row!
 !col! small=12 medium=4 large=4 icon=flash_on
 !media media/experimental.png
-       style=width:60%;display:block;margin-top:0.5em;margin-left:auto;margin-right:auto;
-       caption=Experimental Comparison.
+       style=width:40%;display:block;margin-top:-0.5em;margin-left:3em;margin-right:auto;
+       caption=Experimental Comparison with results from [!cite](greenberg1993electron).
 
 !col-end!
 
 !col! small=12 medium=4 large=4 icon=flash_on
 !media media/mms.png
-       style=width:72%;display:block;margin-top:0.5em;margin-left:auto;margin-right:auto;
-       caption=MMS Convergence Study Results.
+       style=width:37%;display:block;margin-top:-0.5em;margin-left:-5em;margin-right:auto;
+       caption=1D MMS Convergence study results for a single ionic species, electrons and mean electron energy.
+
 !col-end!
 !row-end!
 
