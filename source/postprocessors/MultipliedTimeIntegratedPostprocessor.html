@@ -1,0 +1,205 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>MultipliedTimeIntegratedPostprocessor | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="3aca1204-3ff7-4a68-9554-1d3e685f36ae" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="33d999b5-2af2-4706-87ed-a6ca9c1300ad" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="cfd985e7-0eac-4927-9e82-62db59090138" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="20573645-1a31-40b6-9994-ea8b44947cc8"><i class="material-icons">menu</i></a><ul class="sidenav" id="20573645-1a31-40b6-9994-ea8b44947cc8"><li><a href="#!" class="dropdown-trigger" data-target="ed89f62e-c434-4e75-a53c-b589b360d468" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c8cbb3d5-1b21-4614-ac45-ca812ac8f367" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c8589a3e-654d-4eb5-9d59-7ccf7a2926a5" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="3aca1204-3ff7-4a68-9554-1d3e685f36ae"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="33d999b5-2af2-4706-87ed-a6ca9c1300ad"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="cfd985e7-0eac-4927-9e82-62db59090138"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="ed89f62e-c434-4e75-a53c-b589b360d468"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="c8cbb3d5-1b21-4614-ac45-ca812ac8f367"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="c8589a3e-654d-4eb5-9d59-7ccf7a2926a5"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">postprocessors</span><a href="#" class="breadcrumb">MultipliedTimeIntegratedPostprocessor</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="408bbb86-ea98-417d-9b0a-bc0dd3f835a8" data-section-level="1" data-section-text="MultipliedTimeIntegratedPostprocessor"><h1 id="multipliedtimeintegratedpostprocessor">MultipliedTimeIntegratedPostprocessor</h1><p><code>MultipliedTimeIntegratedPostprocessor</code> provides the same functionationlity as <a href="TimeIntegratedPostprocessor.html">TimeIntegratedPostprocessor</a> except you can multiply the time integral by a constant coefficient.</p><p>If the value of <a href="TimeIntegratedPostprocessor.html">TimeIntegratedPostprocessor</a> is given by</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-8ebfb20f-2578-4e9d-b614-eefedf5c0501"></span><script>var element = document.getElementById("moose-equation-8ebfb20f-2578-4e9d-b614-eefedf5c0501");katex.render("  I = \\int_0^t   f(t) dt", element, {displayMode:true,throwOnError:false});</script></span></p><p>The value returned by <code>MultipliedTimeIntegratedPostprocessor</code> will be given by</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-0d944925-dbfa-4990-a678-dcc6dbbdc146"></span><script>var element = document.getElementById("moose-equation-0d944925-dbfa-4990-a678-dcc6dbbdc146");katex.render("  I =   C   \\int_0^t   f(t) dt", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where <span class="moose-katex-inline-equation" id="moose-equation-f6988f33-37ca-4305-860b-2adcb45c4908"><script>var element = document.getElementById("moose-equation-f6988f33-37ca-4305-860b-2adcb45c4908");katex.render("C", element, {displayMode:false,throwOnError:false});</script></span> is the constant factor to scale the time integration.</p><section class="scrollspy" id="6762921d-b1a7-4738-8c4a-2c2072e5acc9" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><p>In this example, the variable <code>v</code> is integrated over the spatial domain using <a href="ElementIntegralVariablePostprocessor.html">ElementIntegralVariablePostprocessor</a>, resulting in the variable <code>a</code>, and then integrated over time by a factor of <span class="moose-katex-inline-equation" id="moose-equation-5f4627a4-bcd6-4271-b53a-2e5ec9024136"><script>var element = document.getElementById("moose-equation-5f4627a4-bcd6-4271-b53a-2e5ec9024136");katex.render("2", element, {displayMode:false,throwOnError:false});</script></span> using <code>MultipliedTimeIntegratedPostprocessor</code>. For reference, <code>a</code> was also integrated over time using <a href="TimeIntegratedPostprocessor.html">TimeIntegratedPostprocessor</a>.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Postprocessors]
+  [a]
+    type = ElementIntegralVariablePostprocessor
+    variable = v
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [true]
+    type = TimeIntegratedPostprocessor
+    value = a
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [multiplied]
+    type = MultipliedTimeIntegratedPostprocessor
+    value = a
+    coefficient = 2
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#6d5d9c14-88b5-425b-b6fe-d85c3984d233">(test/tests/postprocessors/multiplied_time_integration/multiplied_integral.i)</a></section><section class="scrollspy" id="50fcb2bf-891b-4124-b925-5f1999d26a10" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="ccc2d80a-3a08-4b6e-9999-c6025ff2ccfe" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">coefficient</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">The value to multiply the postprocessor by when integrating</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The value to multiply the postprocessor by when integrating</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">TIMESTEP_END</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, POSTCHECK, TIMESTEP_END, TIMESTEP_BEGIN, MULTIAPP_FIXED_POINT_END, MULTIAPP_FIXED_POINT_BEGIN, FINAL, CUSTOM.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>TIMESTEP_END</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, INITIAL, LINEAR, NONLINEAR, POSTCHECK, TIMESTEP_END, TIMESTEP_BEGIN, MULTIAPP_FIXED_POINT_END, MULTIAPP_FIXED_POINT_BEGIN, FINAL, CUSTOM, TRANSFER</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, POSTCHECK, TIMESTEP_END, TIMESTEP_BEGIN, MULTIAPP_FIXED_POINT_END, MULTIAPP_FIXED_POINT_BEGIN, FINAL, CUSTOM.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">value</span><span class="moose-parameter-header-description">The name of the postprocessor you are integrating over time</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>PostprocessorName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the postprocessor you are integrating over time</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="29c4485e-1d58-43d9-882f-42dda3f40800" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">allow_duplicate_execution_on_initial</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execution_order_group</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">Execution order groups are executed in increasing order (e.g., the lowest number is executed first). Note that negative group numbers may be used to execute groups before the default (0) group. Please refer to the user object documentation for ordering of user object execution within a group.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Execution order groups are executed in increasing order (e.g., the lowest number is executed first). Note that negative group numbers may be used to execute groups before the default (0) group. Please refer to the user object documentation for ordering of user object execution within a group.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_postaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in POSTAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in POSTAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preic</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREIC during initial setup</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREIC during initial setup</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-description">Vector of output names where you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Vector of output names where you would like to restrict the output of variables(s) associated with this object</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section><section class="scrollspy" id="fc15b537-1479-4b46-b74f-e0a974d4abc7" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#15c8580b-64b5-45a1-8e6f-35c9f8778c48">(test/tests/postprocessors/multiplied_time_integration/multiplied_integral.i)</a></li></ul></section><section class="scrollspy" id="370edc50-89b8-49a0-b724-e2bb4de3c618" data-section-level="2" data-section-text="Child Objects"><h2 id="child-objects">Child Objects</h2><ul class="moose-list-children browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#4a5b7ab7-382d-4c1c-a14b-be4d697a0cd0">(include/postprocessors/PeriodicTimeIntegratedPostprocessor.h)</a></li></ul></section></section><div class="moose-modal modal" id="6d5d9c14-88b5-425b-b6fe-d85c3984d233"><div class="modal-content"><h4>(test/tests/postprocessors/multiplied_time_integration/multiplied_integral.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [generator]
+    type = GeneratedMeshGenerator
+    dim = 1
+    xmax = 1
+    nx = 100
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [null_kernel]
+    type = NullKernel
+    variable = u
+  []
+[]
+
+[AuxVariables]
+  [v]
+  []
+[]
+
+[AuxKernels]
+  [func_kernel]
+    type = FunctionAux
+    variable = v
+    function = ic
+  []
+[]
+
+[Functions]
+  [ic]
+    type = ParsedFunction
+    expression = &#x27;-4 * x * (x-1)&#x27;
+  []
+[]
+
+
+[Postprocessors]
+  [a]
+    type = ElementIntegralVariablePostprocessor
+    variable = v
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [true]
+    type = TimeIntegratedPostprocessor
+    value = a
+    execute_on =  &#x27;initial timestep_end&#x27;
+  []
+
+  [multiplied]
+    type = MultipliedTimeIntegratedPostprocessor
+    value = a
+    coefficient = 2
+    execute_on =  &#x27;initial timestep_end&#x27;
+  []
+[]
+
+
+[Executioner]
+  type = Transient
+  end_time = 10
+  dt = 0.1
+[]
+
+[Outputs]
+  exodus = false
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="15c8580b-64b5-45a1-8e6f-35c9f8778c48"><div class="modal-content"><h4>(test/tests/postprocessors/multiplied_time_integration/multiplied_integral.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [generator]
+    type = GeneratedMeshGenerator
+    dim = 1
+    xmax = 1
+    nx = 100
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [null_kernel]
+    type = NullKernel
+    variable = u
+  []
+[]
+
+[AuxVariables]
+  [v]
+  []
+[]
+
+[AuxKernels]
+  [func_kernel]
+    type = FunctionAux
+    variable = v
+    function = ic
+  []
+[]
+
+[Functions]
+  [ic]
+    type = ParsedFunction
+    expression = &#x27;-4 * x * (x-1)&#x27;
+  []
+[]
+
+
+[Postprocessors]
+  [a]
+    type = ElementIntegralVariablePostprocessor
+    variable = v
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [true]
+    type = TimeIntegratedPostprocessor
+    value = a
+    execute_on =  &#x27;initial timestep_end&#x27;
+  []
+
+  [multiplied]
+    type = MultipliedTimeIntegratedPostprocessor
+    value = a
+    coefficient = 2
+    execute_on =  &#x27;initial timestep_end&#x27;
+  []
+[]
+
+
+[Executioner]
+  type = Transient
+  end_time = 10
+  dt = 0.1
+[]
+
+[Outputs]
+  exodus = false
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="4a5b7ab7-382d-4c1c-a14b-be4d697a0cd0"><div class="modal-content"><h4>(include/postprocessors/PeriodicTimeIntegratedPostprocessor.h)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of Zapdos, an open-source
+// application for the simulation of plasmas
+// https://github.com/shannon-lab/zapdos
+//
+// Zapdos is powered by the MOOSE Framework
+// https://www.mooseframework.org
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#pragma once
+
+#include &quot;MultipliedTimeIntegratedPostprocessor.h&quot;
+
+class PeriodicTimeIntegratedPostprocessor : public MultipliedTimeIntegratedPostprocessor
+{
+public:
+  static InputParameters validParams();
+
+  PeriodicTimeIntegratedPostprocessor(const InputParameters &amp; parameters);
+
+  virtual void execute() override;
+
+protected:
+  const Real _period;
+  Real _period_count;
+  Real _next_period_start;
+};
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#6762921d-b1a7-4738-8c4a-2c2072e5acc9" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#50fcb2bf-891b-4124-b925-5f1999d26a10" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#fc15b537-1479-4b46-b74f-e0a974d4abc7" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li><li><a href="#370edc50-89b8-49a0-b724-e2bb4de3c618" class="tooltipped" data-position="left" data-tooltip="Child Objects">Child Objects</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
