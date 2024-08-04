@@ -18,8 +18,9 @@ PeriodicTimeIntegratedPostprocessor::validParams()
   InputParameters params = MultipliedTimeIntegratedPostprocessor::validParams();
   params.addClassDescription(
       "Integrate a Postprocessor value over a period in time using trapezoidal rule.");
-  params.addParam<Real>(
+  params.addRangeCheckedParam<Real>(
       "cycle_frequency",
+      "cycle_frequency > 0",
       "The frequency of the process. Used to calculate the period over which you are integrating.");
   return params;
 }

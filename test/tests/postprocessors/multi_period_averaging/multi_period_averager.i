@@ -67,7 +67,6 @@
   []
 []
 
-
 [Executioner]
   type = Transient
   end_time = 41

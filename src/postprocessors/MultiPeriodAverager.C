@@ -17,11 +17,14 @@ MultiPeriodAverager::validParams()
   InputParameters params = GeneralPostprocessor::validParams();
   params.addClassDescription(
       "Calculate the average value of a post processor over multiple periods");
-  params.addParam<Real>("number_of_periods", "The number of periods over which you are averaging");
+  params.addRangeCheckedParam<Real>("number_of_periods",
+                                    "number_of_periods > 0",
+                                    "The number of periods over which you are averaging");
   params.addParam<PostprocessorName>(
       "value", "The name of the postprocessor you would like to average over multiple periods");
-  params.addParam<Real>(
+  params.addRequiredRangeCheckedParam<Real>(
       "cycle_frequency",
+      "cycle_frequency > 0",
       "The frequency of the process. Used to calculate the period over which you are integrating.");
   return params;
 }

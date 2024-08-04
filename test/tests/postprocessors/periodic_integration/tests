@@ -1,10 +1,20 @@
 [Tests]
-  [receiver]
+  design = 'PeriodicTimeIntegratedPostprocessor.md'
+  issues = '#222 #253'
+  [test]
     type = CSVDiff
     input = periodic_integral.i
     csvdiff = periodic_integral_out.csv
-    requirement = "Integrate a postprocesssor over a period of time specified by a frequency"
-    design = 'PeriodicTimeIntegratedPostprocessor.md'
-    issues = '#222'
+    requirement = "Integrate a postprocesssor over a period of time specified by a frequency."
+  []
+  [errors]
+    requirement = "The system shall report a reasonable error when the user provides an invalid"
+    [invalid_cycle_frequency]
+      type = RunException
+      input = periodic_integral.i
+      cli_args = 'Postprocessors/periodic/cycle_frequency=0'
+      expect_err = 'Range check failed for parameter Postprocessors/periodic/cycle_frequency'
+      detail = 'cycle frequency.'
+    []
   []
 []
