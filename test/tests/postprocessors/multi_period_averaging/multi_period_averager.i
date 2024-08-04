@@ -46,6 +46,7 @@
 [GlobalParams]
   cycle_frequency = 0.1
 []
+
 [Postprocessors]
   [a]
     type = ElementIntegralVariablePostprocessor
