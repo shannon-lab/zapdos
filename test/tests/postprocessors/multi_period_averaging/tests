@@ -1,10 +1,27 @@
 [Tests]
-  [receiver]
+  design = 'MultiPeriodAverager.md'
+  issues = '#222 #253'
+  [averaging]
     type = CSVDiff
     input = multi_period_averager.i
     csvdiff = multi_period_averager_out.csv
-    requirement = "Take the average value of a postprocesser over multiple periods"
-    design = 'MultiPeriodAverager.md'
-    issues = '#222'
+    requirement = "Take the average value of a postprocesser over multiple periods."
+  []
+  [errors]
+    requirement = "The system shall report a reasonable error when the user provides an invalid"
+    [invalid_number_of_periods]
+      type = RunException
+      input = multi_period_averager.i
+      cli_args = 'Postprocessors/multi_period/number_of_periods=0'
+      expect_err = 'Range check failed for parameter Postprocessors/multi_period/number_of_period'
+      detail = 'number of periods.'
+    []
+    [invalid_cycle_frequency]
+      type = RunException
+      input = multi_period_averager.i
+      cli_args = 'Postprocessors/multi_period/cycle_frequency=0'
+      expect_err = 'Range check failed for parameter Postprocessors/multi_period/cycle_frequency'
+      detail = 'cycle frequency.'
+    []
   []
 []

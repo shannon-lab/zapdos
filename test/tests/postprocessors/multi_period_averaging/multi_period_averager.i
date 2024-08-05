@@ -46,6 +46,7 @@
 [GlobalParams]
   cycle_frequency = 0.1
 []
+
 [Postprocessors]
   [a]
     type = ElementIntegralVariablePostprocessor
@@ -65,7 +66,6 @@
     number_of_periods = 2
   []
 []
-
 
 [Executioner]
   type = Transient
