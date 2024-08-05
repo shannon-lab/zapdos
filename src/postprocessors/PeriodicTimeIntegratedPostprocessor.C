@@ -18,8 +18,9 @@ PeriodicTimeIntegratedPostprocessor::validParams()
   InputParameters params = MultipliedTimeIntegratedPostprocessor::validParams();
   params.addClassDescription(
       "Integrate a Postprocessor value over a period in time using trapezoidal rule.");
-  params.addParam<Real>(
+  params.addRangeCheckedParam<Real>(
       "cycle_frequency",
+      "cycle_frequency > 0",
       "The frequency of the process. Used to calculate the period over which you are integrating.");
   return params;
 }
@@ -38,8 +39,9 @@ PeriodicTimeIntegratedPostprocessor::execute()
 {
   // performing the integral
   MultipliedTimeIntegratedPostprocessor::execute();
-  // checking if we are on the next period or not if so reset the integral
-  if (std::abs(_t - _next_period_start) <= _dt * 1e-3)
+  // lets check if we will be reaching the next period on the next
+  // time step
+  if ((_t + _dt - _next_period_start) / _next_period_start >= 1e-6)
   {
     _period_count++;
     _next_period_start = (_period_count + 1) * _period;

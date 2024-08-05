@@ -17,11 +17,14 @@ MultiPeriodAverager::validParams()
   InputParameters params = GeneralPostprocessor::validParams();
   params.addClassDescription(
       "Calculate the average value of a post processor over multiple periods");
-  params.addParam<Real>("number_of_periods", "The number of periods over which you are averaging");
+  params.addRangeCheckedParam<Real>("number_of_periods",
+                                    "number_of_periods > 0",
+                                    "The number of periods over which you are averaging");
   params.addParam<PostprocessorName>(
       "value", "The name of the postprocessor you would like to average over multiple periods");
-  params.addParam<Real>(
+  params.addRequiredRangeCheckedParam<Real>(
       "cycle_frequency",
+      "cycle_frequency > 0",
       "The frequency of the process. Used to calculate the period over which you are integrating.");
   return params;
 }
@@ -41,8 +44,9 @@ MultiPeriodAverager::MultiPeriodAverager(const InputParameters & parameters)
 void
 MultiPeriodAverager::execute()
 {
-  // lets check if we have reached the next period
-  if (std::abs(_t - _next_period_start) <= _dt * 1e-3)
+  // lets check if we will be reaching the next period on the next
+  // time step
+  if ((_t + _dt - _next_period_start) / _next_period_start >= 1e-6)
   {
     _period_count += 1;
     _cyclic_period_count += 1;
