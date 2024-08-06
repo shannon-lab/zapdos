@@ -36,9 +36,9 @@ protected:
   /// The previous post process value of the post processor we are averaging over several periods
   const PostprocessorValue & _pps_value_old;
   /// The number of periods that have passed
-  uint _period_count;
+  unsigned int _period_count;
   /// The counter for how many periods have passed since we last updated
-  uint _cyclic_period_count;
+  unsigned int _cyclic_period_count;
   /// the number of periods over which we are averaging
-  uint _num_periods;
+  unsigned int _num_periods;
 };

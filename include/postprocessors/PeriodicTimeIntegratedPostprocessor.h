@@ -25,7 +25,7 @@ protected:
   /// the period of time over which to integrate
   const Real _period;
   /// the total number of periods that have occured
-  uint _period_count;
+  unsigned int _period_count;
   /// the point in the time when the next period begins
   Real _next_period_start;
 };
