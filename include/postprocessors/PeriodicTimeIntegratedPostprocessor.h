@@ -22,7 +22,10 @@ public:
   virtual void execute() override;
 
 protected:
+  /// the period of time over which to integrate
   const Real _period;
-  Real _period_count;
+  /// the total number of periods that have occured
+  uint _period_count;
+  /// the point in the time when the next period begins
   Real _next_period_start;
 };
