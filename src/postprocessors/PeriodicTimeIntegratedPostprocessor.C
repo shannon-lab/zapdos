@@ -41,10 +41,10 @@ PeriodicTimeIntegratedPostprocessor::execute()
   MultipliedTimeIntegratedPostprocessor::execute();
   // lets check if we will be reaching the next period on the next
   // time step
-  if ((_t + _dt - _next_period_start) / _next_period_start >= 1e-6)
-  {
-    _period_count++;
-    _next_period_start = (_period_count + 1) * _period;
-    this->_value = 0;
-  }
+  if ((_t + _dt - _next_period_start) / _next_period_start < 1e-6)
+    return;
+
+  _period_count++;
+  _next_period_start = (_period_count + 1) * _period;
+  this->_value = 0;
 }
