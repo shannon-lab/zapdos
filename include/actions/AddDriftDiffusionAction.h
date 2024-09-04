@@ -79,7 +79,8 @@ protected:
    *  @param particle_name The name of the charge density variable
    *  @param potential_name The name of the electrostatic potential
    */
-  virtual void addCurrent(const std::string & particle_name, const std::string & field_property_name);
+  virtual void addCurrent(const std::string & particle_name,
+                          const std::string & field_property_name);
 
   /**
    *  Helper function that supplies the Aux kernels for the electric field
@@ -91,5 +92,8 @@ protected:
   virtual void addEfield(const std::string & Efield_name,
                          const std::string & field_property_name,
                          const int & component);
-  virtual void addFieldSolverMaterial(const std::string & field_name, const std::string & field_property_name, const MooseEnum & field_solver, const bool & effective_field);
+  virtual void addFieldSolverMaterial(const std::string & field_name,
+                                      const std::string & field_property_name,
+                                      const MooseEnum & field_solver,
+                                      const bool & effective_field);
 };
