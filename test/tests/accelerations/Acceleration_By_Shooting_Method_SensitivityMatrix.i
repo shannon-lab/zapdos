@@ -323,7 +323,6 @@ dom0Scale = 25.4e-3
     variable = SMDeriv
     density = Ar*
     electron = em
-    energy = mean_en
     reaction = 'em + Ar* -> em + em + Ar+'
     coefficient = -1
   []
@@ -333,7 +332,6 @@ dom0Scale = 25.4e-3
     variable = SMDeriv
     density = Ar*
     electron = em
-    energy = mean_en
     reaction = 'em + Ar* -> em + Ar'
     coefficient = -1
   []
