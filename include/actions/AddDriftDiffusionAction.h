@@ -34,9 +34,13 @@ protected:
   virtual void addPosition(const std::string & position_name, const int & component);
 
   virtual void addDensityLog(const std::string & particle_name);
-  virtual void addCurrent(const std::string & particle_name, const std::string & field_property_name);
+  virtual void addCurrent(const std::string & particle_name,
+                          const std::string & field_property_name);
   virtual void addEfield(const std::string & Efield_name,
                          const std::string & field_property_name,
                          const int & component);
-  virtual void addFieldSolverMaterial(const std::string & field_name, const std::string & field_property_name, const MooseEnum & field_solver, const bool & effective_field);
+  virtual void addFieldSolverMaterial(const std::string & field_name,
+                                      const std::string & field_property_name,
+                                      const MooseEnum & field_solver,
+                                      const bool & effective_field);
 };
