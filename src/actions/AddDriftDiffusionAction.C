@@ -83,6 +83,7 @@ AddDriftDiffusionAction::validParams()
                                "Name of the solver interface material property.");
   params.addParam<std::vector<std::string>>(
       "eff_fields_property_names",
+      {},
       "Name of the solver interface material property for the effective fields.");
   params.addParam<bool>("Is_field_unique",
                         false,
