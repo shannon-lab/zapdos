@@ -39,7 +39,7 @@ ReactionThirdOrderLogForShootMethod::ReactionThirdOrderLogForShootMethod(
   : ADKernel(parameters),
     //_reaction_coeff(getADMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
     //                                            getParam<std::string>("reaction"))),
-    _reaction_coeff(getMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
+    _reaction_coeff(getADMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
                                                 getParam<std::string>("reaction"))),
 
     _density(adCoupledValue("density")),
