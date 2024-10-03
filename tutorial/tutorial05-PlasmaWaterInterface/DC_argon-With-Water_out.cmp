@@ -1,0 +1,56 @@
+#  *****************************************************************
+#             EXODIFF	(Version: 2.90) Modified: 2018-02-15
+#             Authors:  Richard Drake, rrdrake@sandia.gov           
+#                       Greg Sjaardema, gdsjaar@sandia.gov          
+#             Run on    2024/10/03   14:05:10 MDT
+#  *****************************************************************
+
+#  FILE 1: /Users/dechcs/projects-plasma-EM/zapdos/tutorial/tutorial05-PlasmaWaterInterface/DC_argon-With-Water_out.e
+#   Title: DC_argon-With-Water_out.e
+#          Dim = 3, Blocks = 2, Nodes = 275, Elements = 274, Nodesets = 4, Sidesets = 4
+#          Vars: Global = 0, Nodal = 6, Element = 15, Nodeset = 0, Sideset = 0, Times = 1
+
+
+# ==============================================================
+#  NOTE: All node and element ids are reported as global ids.
+
+# NOTES:  - The min/max values are reporting the min/max in absolute value.
+#         - Time values (t) are 1-offset time step numbers.
+#         - Element block numbers are the block ids.
+#         - Node(n) and element(e) numbers are 1-offset.
+
+COORDINATES absolute 1.e-6    # min separation not calculated
+
+TIME STEPS relative 1.e-6 floor 0.0     # min:             0.1 @ t1 max:             0.1 @ t1
+
+
+# No GLOBAL VARIABLES
+
+NODAL VARIABLES relative 1.e-6 floor 0.0
+	Arp        # min:               0 @ t1,n213	max:       21.595687 @ t1,n212
+	OHm        # min:               0 @ t1,n1	max:       2.8391219 @ t1,n274
+	em         # min:               0 @ t1,n213	max:       20.006448 @ t1,n1
+	emliq      # min:               0 @ t1,n1	max:       5.5470029 @ t1,n275
+	mean_en    # min:               0 @ t1,n213	max:       18.647559 @ t1,n1
+	potential  # min:               0 @ t1,n275	max:      0.57237498 @ t1,n1
+
+ELEMENT VARIABLES relative 9.9e-6 floor 0.0
+	Ar             # min:         3.70109 @ t1,b0,e2	max:         3.70109 @ t1,b0,e22
+	Arp_density    # min:   2.6165522e+14 @ t1,b0,e211	max:   6.8642755e+18 @ t1,b0,e70
+	Current_Arp    # min:   0.00044689888 @ t1,b0,e198	max:        1308.159 @ t1,b0,e1
+	Current_OHm    # min:    0.0069367777 @ t1,b1,e212	max:       1276.2152 @ t1,b1,e274
+	Current_em     # min:       46.466347 @ t1,b0,e1	max:       1355.2903 @ t1,b0,e211
+	Current_emliq  # min:       77.497342 @ t1,b1,e274	max:       1353.7056 @ t1,b1,e212
+	EFieldx0       # min:       264904.69 @ t1,b0,e103	max:       7369239.6 @ t1,b0,e1
+	EFieldx1       # min:       1.7999469 @ t1,b1,e212	max:       1115103.9 @ t1,b1,e274
+	H2O            # min:        10.92252 @ t1,b1,e226	max:        10.92252 @ t1,b1,e214
+	OHm_density    # min:   3.5225897e+22 @ t1,b1,e274	max:   6.1236462e+22 @ t1,b1,e212
+	e_temp         # min:       2.5965979 @ t1,b0,e1	max:       5.5044032 @ t1,b0,e57
+	em_density     # min:   1.2333335e+15 @ t1,b0,e1	max:   8.5396492e+17 @ t1,b0,e103
+	emliq_density  # min:   2.3738376e+21 @ t1,b1,e274	max:   2.7532382e+22 @ t1,b1,e212
+	position0      # min:   1.0438044e-09 @ t1,b0,e1	max:   0.00099999948 @ t1,b0,e211
+	position1      # min:   1.0000005e-07 @ t1,b1,e212	max:        1.95e-07 @ t1,b1,e274
+
+# No NODESET VARIABLES
+
+# No SIDESET VARIABLES
