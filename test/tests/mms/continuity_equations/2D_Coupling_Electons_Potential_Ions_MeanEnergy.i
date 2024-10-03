@@ -1,7 +1,7 @@
 [Mesh]
   [./geo]
     type = FileMeshGenerator
-    file = '2D_Coupling_Electons_Potential_Ions_MeanEnergy_Einstein_Relation_EffEfield_IC_out.e'
+    file = '2D_Coupling_Electons_Potential_Ions_MeanEnergy_IC_out.e'
     use_for_exodus_restart = true
   [../]
 []
@@ -23,13 +23,6 @@
   [./mean_en]
     initial_from_file_var = mean_en
   [../]
-
-  [./Ex]
-    initial_from_file_var = Ex
-  [../]
-  [./Ey]
-    initial_from_file_var = Ey
-  [../]
 []
 
 [Kernels]
@@ -46,8 +39,6 @@
   [./em_advection]
     type = EFieldAdvection
     variable = em
-    mean_en = mean_en
-    potential = 'potential'
     position_units = 1.0
   [../]
   [./em_source]
@@ -67,14 +58,8 @@
     position_units = 1.0
   [../]
   [./ion_advection]
-    #type = ADEFieldAdvection
-    #variable = ion
-    #potential = 'potential'
-    #position_units = 1.0
-    type = EffectiveEFieldAdvection
+    type = EFieldAdvection
     variable = ion
-    u = Ex
-    v = Ey
     position_units = 1.0
   [../]
   [./ion_source]
@@ -102,32 +87,6 @@
     potential_units = V
   [../]
 
-#Eff. Efield
-  [./EffEfield_X_time_deriv]
-    type = TimeDerivative
-    variable = Ex
-  [../]
-  [./EffEfield_X_ForceBody]
-    type = EffectiveEField
-    variable = Ex
-    potential = potential
-    nu = 5.0
-    component = 0
-    position_units = 1.0
-  [../]
-  [./EffEfield_Y_time_deriv]
-    type = TimeDerivative
-    variable = Ey
-  [../]
-  [./EffEfield_Y_ForceBody]
-    type = EffectiveEField
-    variable = Ey
-    potential = potential
-    nu = 5.0
-    component = 1
-    position_units = 1.0
-  [../]
-
 #Electron Energy Equations
   [./mean_en_time_deriv]
     type = TimeDerivativeLog
@@ -136,7 +95,6 @@
   [./mean_en_advection]
     type = EFieldAdvection
     variable = mean_en
-    potential = potential
     position_units = 1.0
   [../]
   [./mean_en_diffusion]
@@ -144,16 +102,9 @@
     variable = mean_en
     position_units = 1.0
   [../]
-  [./mean_en_diffusion_correction]
-    type = ThermalConductivityDiffusion
-    variable = mean_en
-    em = em
-    position_units = 1.0
-  [../]
   [./mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    potential = potential
     em = em
     position_units = 1.0
     potential_units = V
@@ -176,11 +127,6 @@
   [../]
 
   [./ion_sol]
-  [../]
-
-  [./Ex_sol]
-  [../]
-  [./Ey_sol]
   [../]
 []
 
@@ -207,17 +153,6 @@
     type = FunctionAux
     variable = ion_sol
     function = ion_fun
-  [../]
-
-  [./Ex_sol]
-    type = FunctionAux
-    variable = Ex_sol
-    function = Ex_fun
-  [../]
-  [./Ey_sol]
-    type = FunctionAux
-    variable = Ey_sol
-    function = Ey_fun
   [../]
 []
 
@@ -306,20 +241,6 @@
     vals = 'energy_fun em_fun'
     value = 'log(energy_fun) + em_fun'
   [../]
-  #The manufactured eff. Efield solution
-  [./Ex_fun]
-    type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
-    value = '-(ee*exp(-5*t)*sin((pi*x)/2)*(exp(5*t) - 1))/(5*diffpotential*pi)'
-  [../]
-  [./Ey_fun]
-    type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
-    value = '-(2*ee*exp(-5*t)*sin(pi*y))/(4*diffpotential*pi^2 + 25*diffpotential) -
-             (ee*sin(pi*y)*(5*sin(2*pi*t) - 2*pi*cos(2*pi*t)))/(diffpotential*pi*(4*pi^2 + 25))'
-  [../]
 
   #Electron diffusion coeff.
   [./diffem]
@@ -358,18 +279,20 @@
     vals = 'ee diffpotential diffem_coeff muem_coeff N_A'
     value = '((2*pi*cos(2*pi*t)*cos(pi*y))/5 - (diffem_coeff*pi^2*sin((pi*x)/2)^2)/4 -
               diffem_coeff*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos(pi*y) -
-              sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t)) + (diffem_coeff*pi^2*cos((pi*x)/2)*(cos((pi*x)/2) +
-              sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/4 + (diffem_coeff*pi^2*(5*sin(pi*y) +
+              sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t)) +
+              (diffem_coeff*pi^2*cos((pi*x)/2)*(cos((pi*x)/2) + sin(pi*y) +
+              cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/4 + (diffem_coeff*pi^2*(5*sin(pi*y) +
               cos(pi*y)*sin(2*pi*t))*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/5 -
               (ee*muem_coeff*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) +
-              cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(10*diffpotential) -
-              (ee*muem_coeff*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))/(10*diffpotential) +
-              (ee*muem_coeff*cos((pi*x)/2)*(cos((pi*x)/2) + sin(pi*y) +
-              (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(10*diffpotential) +
-              (ee*muem_coeff*cos(pi*y)*sin(2*pi*t)*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) +
-              sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential) + (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(cos(pi*y) -
-              sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t))*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))/(5*diffpotential) +
-              (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos((pi*x)/2) + sin(pi*y) +
+              cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(10*diffpotential) - (ee*muem_coeff*sin((pi*x)/2)^2*(cos((pi*x)/2) +
+              sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))/(10*diffpotential) + (ee*muem_coeff*cos((pi*x)/2)*(cos((pi*x)/2) +
+              sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) +
+              cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(10*diffpotential) +
+              (ee*muem_coeff*cos(pi*y)*sin(2*pi*t)*(cos((pi*x)/2) + sin(pi*y) +
+              (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential) +
+              (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(cos(pi*y) - sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t))*(cos((pi*x)/2) +
+              sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))/(5*diffpotential) + (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(pi*cos(pi*y) -
+              (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos((pi*x)/2) + sin(pi*y) +
               cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential*pi)) / N_A'
   [../]
   #The ion source term.
@@ -378,59 +301,59 @@
     vars = 'ee diffpotential diffion muion N_A'
     vals = 'ee diffpotential diffion muion N_A'
     value = '((diffion*pi^2*(9*cos((pi*x)/2) + 40*sin(pi*y)))/40 +
-              (9*ee*muion*exp(-5*t)*sin((pi*x)/2)^2*(exp(5*t) - 1))/(100*diffpotential) -
-              (ee*muion*exp(-5*t)*cos((pi*x)/2)*(exp(5*t) - 1)*((9*cos((pi*x)/2))/10 + sin(pi*y) + 1))/(10*diffpotential) -
-              (ee*muion*exp(-5*t)*cos(pi*y)*(2*pi + 5*exp(5*t)*sin(2*pi*t) -
-              2*pi*exp(5*t)*cos(2*pi*t))*((9*cos((pi*x)/2))/10 + sin(pi*y) + 1))/(diffpotential*(4*pi^2 + 25)) -
-              (ee*muion*exp(-5*t)*cos(pi*y)*sin(pi*y)*(2*pi + 5*exp(5*t)*sin(2*pi*t) -
-              2*pi*exp(5*t)*cos(2*pi*t)))/(diffpotential*(4*pi^2 + 25))) / N_A'
+              (9*ee*muion*sin((pi*x)/2)^2)/(100*diffpotential) -
+              (ee*muion*cos((pi*x)/2)*((9*cos((pi*x)/2))/10 + sin(pi*y) + 1))/(10*diffpotential) -
+              (ee*muion*cos(pi*y)*sin(2*pi*t)*sin(pi*y))/(5*diffpotential) -
+              (ee*muion*cos(pi*y)*sin(2*pi*t)*((9*cos((pi*x)/2))/10 + sin(pi*y) + 1))/(5*diffpotential)) / N_A'
   [../]
   [./energy_source]
     type = ParsedFunction
     vars = 'ee diffpotential diffem_coeff muem_coeff N_A'
     vals = 'ee diffpotential diffem_coeff muem_coeff N_A'
-    value = '(((4*cos((pi*x)/2) + 4*sin(pi*y) + 4*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3)*(172*ee*muem_coeff*cos(2*pi*t)^2 -
-              282*ee*muem_coeff + 180*ee*muem_coeff*cos((pi*x)/2)^2 + 160*ee*muem_coeff*cos((pi*x)/2)^3 +
-              664*ee*muem_coeff*cos(pi*y)^2 - 480*ee*muem_coeff*cos(pi*y)^4 -
-              66*ee*muem_coeff*cos((pi*x)/2) - 296*ee*muem_coeff*sin(pi*y) +
-              200*diffem_coeff*diffpotential*pi^2 - 664*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^2 +
-              480*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^4 + 364*ee*muem_coeff*cos(pi*y)*sin(2*pi*t) -
-              90*ee*muem_coeff*cos((pi*x)/2)*sin(pi*y) + 75*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2) +
-              140*diffem_coeff*diffpotential*pi^2*sin(pi*y) + 16*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2) -
-              8*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^2 + 176*ee*muem_coeff*cos(2*pi*t)^2*sin(pi*y) -
-              320*ee*muem_coeff*cos(pi*y)^3*sin(2*pi*t) + 200*ee*muem_coeff*cos((pi*x)/2)^2*sin(pi*y) +
-              464*ee*muem_coeff*cos(pi*y)^2*sin(pi*y) + 300*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)^2 -
-              1200*diffem_coeff*diffpotential*pi^2*cos(pi*y)^2 + 160*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*sin(pi*y) +
-              104*ee*muem_coeff*cos((pi*x)/2)^2*cos(pi*y)*sin(2*pi*t) - 40*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^3*sin(2*pi*t) +
-              408*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^2*sin(pi*y) + 96*ee*muem_coeff*cos(pi*y)^3*sin(2*pi*t)*sin(pi*y) +
-              160*diffem_coeff*diffpotential*pi^2*cos(2*pi*t)^2*sin(pi*y) -
-              2000*diffem_coeff*diffpotential*pi^2*cos(pi*y)^3*sin(2*pi*t) + 400*diffem_coeff*diffpotential*pi^2*cos(pi*y)^2*sin(pi*y) -
-              32*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*cos(pi*y)^2 - 464*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^2*sin(pi*y) +
-              186*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t) + 272*ee*muem_coeff*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
-              1260*diffem_coeff*diffpotential*pi^2*cos(pi*y)*sin(2*pi*t) + 500*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)*sin(pi*y) -
-              408*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*cos(pi*y)^2*sin(pi*y) -
+    value = '(((4*cos((pi*x)/2) + 4*sin(pi*y) +
+              4*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3)*(172*ee*muem_coeff*cos(2*pi*t)^2 - 282*ee*muem_coeff +
+              180*ee*muem_coeff*cos((pi*x)/2)^2 + 160*ee*muem_coeff*cos((pi*x)/2)^3 +
+              664*ee*muem_coeff*cos(pi*y)^2 - 480*ee*muem_coeff*cos(pi*y)^4 - 66*ee*muem_coeff*cos((pi*x)/2) -
+              296*ee*muem_coeff*sin(pi*y) + 200*diffem_coeff*diffpotential*pi^2 -
+              664*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^2 + 480*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^4 +
+              364*ee*muem_coeff*cos(pi*y)*sin(2*pi*t) - 90*ee*muem_coeff*cos((pi*x)/2)*sin(pi*y) +
+              75*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2) + 140*diffem_coeff*diffpotential*pi^2*sin(pi*y) +
+              16*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2) - 8*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^2 +
+              176*ee*muem_coeff*cos(2*pi*t)^2*sin(pi*y) - 320*ee*muem_coeff*cos(pi*y)^3*sin(2*pi*t) +
+              200*ee*muem_coeff*cos((pi*x)/2)^2*sin(pi*y) + 464*ee*muem_coeff*cos(pi*y)^2*sin(pi*y) +
+              300*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)^2 - 1200*diffem_coeff*diffpotential*pi^2*cos(pi*y)^2 +
+              160*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*sin(pi*y) +
+              104*ee*muem_coeff*cos((pi*x)/2)^2*cos(pi*y)*sin(2*pi*t) -
+              40*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^3*sin(2*pi*t) + 408*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^2*sin(pi*y) +
+              96*ee*muem_coeff*cos(pi*y)^3*sin(2*pi*t)*sin(pi*y) + 160*diffem_coeff*diffpotential*pi^2*cos(2*pi*t)^2*sin(pi*y) -
+              2000*diffem_coeff*diffpotential*pi^2*cos(pi*y)^3*sin(2*pi*t) +
+              400*diffem_coeff*diffpotential*pi^2*cos(pi*y)^2*sin(pi*y) - 32*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*cos(pi*y)^2 -
+              464*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^2*sin(pi*y) + 186*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t) +
+              272*ee*muem_coeff*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 1260*diffem_coeff*diffpotential*pi^2*cos(pi*y)*sin(2*pi*t) +
+              500*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)*sin(pi*y) - 408*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*cos(pi*y)^2*sin(pi*y) -
               96*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^3*sin(2*pi*t)*sin(pi*y) -
               400*diffem_coeff*diffpotential*pi^2*cos(2*pi*t)^2*cos(pi*y)^2*sin(pi*y) +
               448*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
               80*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t) +
               240*diffem_coeff*diffpotential*pi^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
-              48*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 80*ee*muem_coeff*cos((pi*x)/2)^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
+              48*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
+              80*ee*muem_coeff*cos((pi*x)/2)^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
               100*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t)*sin(pi*y)))/(960*diffpotential) +
               (pi*cos(2*pi*t)*cos(pi*y)*(4*cos((pi*x)/2) + 24*sin(pi*y) + 20*cos((pi*x)/2)*sin(pi*y) + 20*sin(pi*y)^2 +
-              8*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3))/10 - (diffem_coeff*pi^2*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) +
-              cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/4 - (diffem_coeff*pi^2*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) +
-              (cos(pi*y)*sin(2*pi*t))/5 + 1))/4 - diffem_coeff*pi^2*(cos(pi*y) - sin(2*pi*t) +
-              2*cos(pi*y)^2*sin(2*pi*t))^2*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1) +
-              (diffem_coeff*pi^2*cos((pi*x)/2)*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) +
-              cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/4 - diffem_coeff*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos(pi*y) -
-              sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t))*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4) +
-              (ee*sin(2*pi*t)*sin(pi*y)*(diffem_coeff*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos((pi*x)/2) +
-              sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4) - (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(cos((pi*x)/2) +
-              sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) +
-              cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential*pi)))/(5*diffpotential*pi) +
+              8*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3))/10 - (5*diffem_coeff*pi^2*sin((pi*x)/2)^2*(cos((pi*x)/2) +
+              sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/12 - (diffem_coeff*pi^2*sin((pi*x)/2)^2*((5*cos((pi*x)/2))/3 +
+              (5*sin(pi*y))/3 + (cos(pi*y)*sin(2*pi*t))/3 + 5/3))/4 - diffem_coeff*pi^2*(cos(pi*y) - sin(2*pi*t) +
+              2*cos(pi*y)^2*sin(2*pi*t))^2*((5*cos((pi*x)/2))/3 + (5*sin(pi*y))/3 + (cos(pi*y)*sin(2*pi*t))/3 + 5/3) +
+              (diffem_coeff*pi^2*cos((pi*x)/2)*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4)*((5*cos((pi*x)/2))/3 +
+              (5*sin(pi*y))/3 + (cos(pi*y)*sin(2*pi*t))/3 + 5/3))/4 - (diffem_coeff*pi^2*(5*cos(pi*y) -
+              sin(2*pi*t)*sin(pi*y))*(cos(pi*y) - sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t))*(cos((pi*x)/2) +
+              sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/3 + (ee*sin(2*pi*t)*sin(pi*y)*(diffem_coeff*(pi*cos(pi*y) -
+              (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4) -
+              (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) +
+              sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential*pi)))/(5*diffpotential*pi) +
               diffem_coeff*pi^2*sin(pi*y)*(4*cos(pi*y)*sin(2*pi*t) + 1)*(cos((pi*x)/2) + sin(pi*y) +
-              (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4) -
-              (ee*sin((pi*x)/2)^2*(4*cos((pi*x)/2) + 4*sin(pi*y) +
+              cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4)*((5*cos((pi*x)/2))/3 + (5*sin(pi*y))/3 +
+              (cos(pi*y)*sin(2*pi*t))/3 + 5/3) - (ee*sin((pi*x)/2)^2*(4*cos((pi*x)/2) + 4*sin(pi*y) +
               4*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3)*(10*ee*muem_coeff + 10*ee*muem_coeff*cos((pi*x)/2) +
               10*ee*muem_coeff*sin(pi*y) + 25*diffem_coeff*diffpotential*pi^2 +
               2*ee*muem_coeff*cos(pi*y)*sin(2*pi*t)))/(1000*diffpotential^2*pi^2)) / N_A'
@@ -461,18 +384,6 @@
     vals = 'N_A'
     value = 'log(((sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 7/4)*(sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) / N_A)'
   [../]
-  [./Ex_left_BC]
-    type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
-    value = '0.0'
-  [../]
-  [./Ey_left_BC]
-    type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
-    value = '- (2*ee*exp(-5*t)*sin(pi*y))/(4*diffpotential*pi^2 + 25*diffpotential) - (ee*sin(pi*y)*(5*sin(2*pi*t) - 2*pi*cos(2*pi*t)))/(diffpotential*pi*(4*pi^2 + 25))'
-  [../]
 
   #The right BC dirichlet function
   [./potential_right_BC]
@@ -498,18 +409,6 @@
     vars = 'N_A'
     vals = 'N_A'
     value = 'log(((sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4)*(sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A)'
-  [../]
-  [./Ex_right_BC]
-    type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
-    value = '-(ee*exp(-5*t)*(exp(5*t) - 1))/(5*diffpotential*pi)'
-  [../]
-  [./Ey_right_BC]
-    type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
-    value = '-(2*ee*exp(-5*t)*sin(pi*y))/(4*diffpotential*pi^2 + 25*diffpotential) - (ee*sin(pi*y)*(5*sin(2*pi*t) - 2*pi*cos(2*pi*t)))/(diffpotential*pi*(4*pi^2 + 25))'
   [../]
 
   #The Down BC dirichlet function
@@ -537,18 +436,6 @@
     vals = 'N_A'
     value = 'log(((cos((pi*x)/2) + 3/4)*(cos((pi*x)/2) + sin(2*pi*t)/5 + 1)) / N_A)'
   [../]
-  [./Ex_down_BC]
-    type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
-    value = '-(ee*exp(-5*t)*sin((pi*x)/2)*(exp(5*t) - 1))/(5*diffpotential*pi)'
-  [../]
-  [./Ey_down_BC]
-    type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
-    value = '0.0'
-  [../]
 
   #The up BC dirichlet function
   [./potential_up_BC]
@@ -574,18 +461,6 @@
     vars = 'N_A'
     vals = 'N_A'
     value = 'log(((cos((pi*x)/2) + 3/4)*(cos((pi*x)/2) - sin(2*pi*t)/5 + 1)) / N_A)'
-  [../]
-  [./Ex_up_BC]
-    type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
-    value = '-(ee*exp(-5*t)*sin((pi*x)/2)*(exp(5*t) - 1))/(5*diffpotential*pi)'
-  [../]
-  [./Ey_up_BC]
-    type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
-    value = '0.0'
   [../]
 
   [./em_ICs]
@@ -724,67 +599,13 @@
     boundary = 2
     preset = true
   [../]
-
-  [./Ex_left_BC]
-    type = FunctionDirichletBC
-    variable = Ex
-    function = 'Ex_left_BC'
-    boundary = 3
-    preset = true
-  [../]
-  [./Ex_right_BC]
-    type = FunctionDirichletBC
-    variable = Ex
-    function = 'Ex_right_BC'
-    boundary = 1
-    preset = true
-  [../]
-  [./Ex_down_BC]
-    type = FunctionDirichletBC
-    variable = Ex
-    function = 'Ex_down_BC'
-    boundary = 0
-    preset = true
-  [../]
-  [./Ex_up_BC]
-    type = FunctionDirichletBC
-    variable = Ex
-    function = 'Ex_up_BC'
-    boundary = 2
-    preset = true
-  [../]
-
-  [./Ey_left_BC]
-    type = FunctionDirichletBC
-    variable = Ey
-    function = 'Ey_left_BC'
-    boundary = 3
-    preset = true
-  [../]
-  [./Ey_right_BC]
-    type = FunctionDirichletBC
-    variable = Ey
-    function = 'Ey_right_BC'
-    boundary = 1
-    preset = true
-  [../]
-  [./Ey_down_BC]
-    type = FunctionDirichletBC
-    variable = Ey
-    function = 'Ey_down_BC'
-    boundary = 0
-    preset = true
-  [../]
-  [./Ey_up_BC]
-    type = FunctionDirichletBC
-    variable = Ey
-    function = 'Ey_up_BC'
-    boundary = 2
-    preset = true
-  [../]
 []
 
 [Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
   [./Material_Coeff]
     type = GenericFunctionMaterial
     prop_names =  'e N_A'
@@ -830,17 +651,6 @@
     type = ElementL2Error
     variable = mean_en
     function = mean_en_fun
-  [../]
-
-  [./Ex_l2Error]
-    type = ElementL2Error
-    variable = Ex
-    function = Ex_fun
-  [../]
-  [./Ey_l2Error]
-    type = ElementL2Error
-    variable = Ey
-    function = Ey_fun
   [../]
 
   [./h]

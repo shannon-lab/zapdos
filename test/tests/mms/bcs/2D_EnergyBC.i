@@ -145,7 +145,6 @@
   [./mean_en_advection]
     type = EFieldAdvection
     variable = mean_en
-    potential = 'potential'
     position_units = 1.0
   [../]
   [./mean_en_source]
@@ -643,7 +642,7 @@
   [./energy_left_physical_diffusion]
     type = SakiyamaEnergyDiffusionBC
     variable = mean_en
-    em = em
+    electrons = em
     boundary = 3
     position_units = 1.0
   [../]
@@ -654,7 +653,6 @@
     ip = ion
     Ex = Ex
     Ey = Ey
-    potential = potential
     Tse_equal_Te = false
     user_se_energy = 1.0
     se_coeff = 1.0
@@ -680,7 +678,7 @@
   [./energy_down_physical_diffusion]
     type = SakiyamaEnergyDiffusionBC
     variable = mean_en
-    em = em
+    electrons = em
     boundary = 0
     position_units = 1.0
   [../]
@@ -691,7 +689,6 @@
     ip = ion
     Ex = Ex
     Ey = Ey
-    potential = potential
     Tse_equal_Te = false
     user_se_energy = 1.0
     se_coeff = 1.0
@@ -796,6 +793,10 @@
 []
 
 [Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
   [./Material_Coeff]
     type = GenericFunctionMaterial
     prop_names =  'e  N_A  massem diffpotential  diffEx         diffEy'

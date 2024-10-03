@@ -38,8 +38,6 @@
   [./em_advection]
     type = EFieldAdvection
     variable = em
-    mean_en = mean_en
-    potential = 'potential'
     position_units = 1.0
   [../]
   [./em_source]
@@ -61,7 +59,6 @@
   [./ion_advection]
     type = EFieldAdvection
     variable = ion
-    potential = 'potential'
     position_units = 1.0
   [../]
   [./ion_source]
@@ -97,7 +94,6 @@
   [./mean_en_advection]
     type = EFieldAdvection
     variable = mean_en
-    potential = potential
     position_units = 1.0
   [../]
   [./mean_en_diffusion]
@@ -114,7 +110,6 @@
   [./mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    potential = potential
     em = em
     position_units = 1.0
     potential_units = V
@@ -616,6 +611,10 @@
 []
 
 [Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
   [./Material_Coeff]
     type = GenericFunctionMaterial
     prop_names =  'e N_A'
