@@ -30,7 +30,6 @@
   [./em_advection]
     type = EFieldAdvection
     variable = em
-    potential = 'potential'
     position_units = 1.0
   [../]
   [./em_source]
@@ -191,6 +190,10 @@
 []
 
 [Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
   [./Material_Coeff]
     type = GenericFunctionMaterial
     prop_names =  'e N_A'
