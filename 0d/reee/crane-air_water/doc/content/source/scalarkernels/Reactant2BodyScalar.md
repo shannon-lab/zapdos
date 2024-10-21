@@ -1,1 +1,0 @@
-!template load file=stubs/moose_object.md.template name=Reactant2BodyScalar syntax=/ScalarKernels/Reactant2BodyScalar
