@@ -1,0 +1,76 @@
+\subsection{Example 1: Predator-Prey Equations}
+\begin{frame}[fragile]
+	\frametitle{\insertsubsectionhead}
+	\begin{itemize}
+		\item As a simple example, consider the Lotka-Volterra (predator-prey) equations:
+		\begin{align*}
+			&\frac{dx}{dt} = ax - bxy \\
+			&\frac{dy}{dt} = -cy + dxy
+		\end{align*}
+		\item In this problem, x and y are the nonlinear variables that will be solved by CRANE.
+		\item a, b, c, and d are the ``rate coefficients".
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{\insertsubsectionhead}
+	\begin{itemize}
+		\item In order to be solved by CRANE, the problem must be cast into a system of ``reactions": 
+	\end{itemize}
+	\begin{minipage}{0.5\linewidth}
+		\begin{align*}
+			&\frac{dx}{dt} = ax - bxy \\
+			&\frac{dy}{dt} = -cy + dxy
+		\end{align*}
+	\end{minipage}%
+	\begin{minipage}{0.5\linewidth}
+		\begin{align*}
+			x &\xrightarrow{a} 2x \\
+			x + y &\xrightarrow{b} y \\
+			y &\xrightarrow{c} z \\
+			x + y &\xrightarrow{d} x + 2y
+		\end{align*}
+	\end{minipage}
+	\begin{itemize}
+		\item Problem statement:
+		\begin{align*}
+			&t = [0,50] \\
+			&x(0), \quad y(0) = 1 \\
+			&[a,b,c,d] = [\tfrac{2}{3},\tfrac{4}{3},1,1]
+		\end{align*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{\insertsubsectionhead \hspace{1pt} - Running}
+		\begin{itemize}
+			\item The problem input file is located in the \texttt{problems} directory, named \texttt{lotka\_volterra.i}
+			\item To run, navigate to the problems directory and provide the input file to the executable:
+			\begin{enumerate}
+				\item Navigate to the problems directory: \newline
+				\hspace*{8pt} \texttt{cd \textasciitilde/projects/crane/problems}
+				\item Locate the input file: \newline
+				\hspace*{8pt} \texttt{problems/example1.i}
+				\item Run the problem with CRANE: \newline
+				\hspace*{8pt} \texttt{../crane-opt -i example1.i}
+				\item Check output files: \newline
+				\hspace*{8pt} \texttt{problems/example1\_out.csv}
+				\item Plot results: \newline
+				\hspace*{8pt} \texttt{python example1\_plot.py}
+			\end{enumerate}
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\insertsubsectionhead \hspace{1pt} Results}
+	\begin{minipage}{0.5\linewidth}
+		\begin{itemize}
+			\item Outputs may be stored in either CSV or Exodus format; for scalar problems, CSV is convenient for immediate viewing and plotting
+			\item The results show a typical predator-prey system, whereby population `x' is consumed by `y', `y' becomes saturated, and `x' begins to rise again as `y' decreases
+		\end{itemize}
+	\end{minipage}%
+	\begin{minipage}{0.5\linewidth}
+	\centering
+	\includegraphics[scale=0.4]{pics/lotka_volterra.png}
+	\end{minipage}
+\end{frame}

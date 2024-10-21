@@ -1,0 +1,1 @@
+!template load file=stubs/moose_action.md.template name=AddScalarReactions syntax=/ChemicalReactions/ScalarNetwork/AddScalarReactions

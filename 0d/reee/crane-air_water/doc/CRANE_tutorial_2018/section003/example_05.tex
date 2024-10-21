@@ -1,0 +1,247 @@
+\subsection{Example 5 (Hands On): Two Argon Reactions}
+
+\begin{frame}[fragile]
+	\frametitle{\insertsubsectionhead}
+	%\begin{minipage}{0.6\linewidth}
+	\begin{itemize}
+		\item So far you have seen 4 pre-made examples of using CRANE. All of the input files are already in place, so you can ensure that the results are reproduced on your own machine(s).
+		\item ...but the point of this code is to let you use it for your own applications!
+		\item This next example will be \textbf{hands-on} - try to write your own input file!
+		%\item The completed input file is already present for guidance: \texttt{/problems/example5.i}
+		\item A ``skeleton" input file is included in \texttt{example5.i}. \textbf{You will need to add scalar variables, scalar kernels (for time derivatives), and the two reactions.}
+	\end{itemize}
+	%\end{minipage}%
+%	\begin{minipage}{0.4\linewidth}
+%		\includegraphics[scale=2.4]{pics/the_difference.png}
+%	\end{minipage}
+	%\footnotetext[4]{\scriptsize Image courtesy of https://xkcd.com/242/}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{\insertsubsectionhead}
+	\begin{itemize}
+		\item 2 reactions between 3 species (Ar, Ar+, e-)
+		\item \textbf{ZDPlasKin example}\footnotemark: Two Reaction Test Case 
+		\begin{align*}
+			&e + Ar \xrightarrow{k_1} 2e + Ar^+  \\
+			&e + Ar^+ + Ar \xrightarrow{k_2} 2Ar  
+		\end{align*}
+		\item $\tfrac{E}{N} = 50 Td \rightarrow 50\times 10^{-21} V m^2$
+		\item $T_{gas} = 300 K$ , $t=[0,0.25 \mu s]$
+		\item With these parameters, this becomes a system of three coupled ODEs with constant rate coefficients
+		\item The reduced electric field is added as an Auxiliary variable
+
+	\end{itemize}
+	\footnotetext[5]{{\scriptsize \color{blue} https://www.zdplaskin.laplace.univ-tlse.fr/two-reaction-test-case-start-here/}}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{\insertsubsectionhead}
+	\begin{itemize}
+		\item Input Parameters:
+		\begin{align*}
+				&e + Ar \xrightarrow{k_1} 2e + Ar^+  \\
+				&e + Ar^+ + Ar \xrightarrow{k_2} 2Ar  
+			\end{align*}
+		\begin{itemize}
+			\item[$\ast$] $n_{Ar}(t=0) = 2.5e19 [cm^{-3}]$
+			\item[$\ast$] $n_{e}(t=0), n_{Ar^+}(t=0) = 1.0 [cm^{-3}]$
+			\item[$\ast$] $k_1 = $\{EEDF convolution\}
+			\item[$\ast$] $k_2 = 1e-25 \quad [cm^6 s^{-1}]$
+			\item[$\ast$] $t=[0,0.25 \mu s]$
+		\end{itemize}
+		\item \textbf{Instructions}:
+		\begin{enumerate}
+			\item Add scalar variables ($e^-$ is already filled in for you)
+			\item Add scalar kernels (\texttt{type = ODETimeDerivative})
+			\item Fill in ChemicalReactions action (2 reactions)
+			\begin{itemize}
+				\item Rate constant $k_1$ tabulated as a function of reduced electric field included in `projects/crane/problems/Example5/'
+			\end{itemize}
+		\end{enumerate}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Example 5 (Hands On): Mesh and Variables}
+	\begin{minipage}{0.6\linewidth}
+	\begin{itemize}
+		\item First a ``dummy" mesh is needed to run a problem in MOOSE (dim = 1 with nx = 1 is sufficient)
+		\item Three variables are considered in this problem: electrons, argon ions, and argon neutrals (background gas)
+		\item An example of the Mesh and Variables are shown on the right. Note that you will need to add two more Variables
+		\item Initial conditions:
+		\begin{itemize}
+			\item $e^-$: 1
+			\item $Ar^+$: 1
+			\item $Ar$: $2.5 \times 10^{19}$
+		\end{itemize}
+	\end{itemize}
+	\end{minipage}%
+	\begin{minipage}{0.4\linewidth}
+	\begin{scriptsize}
+	\begin{BVerbatim}
+[Mesh]
+  type = GeneratedMesh
+  dim = 1
+  xmin = 0
+  xmax = 1
+  nx = 1
+[]
+
+[Variables]
+  [./e]
+    family = SCALAR
+    order = FIRST
+    initial_condition = 1
+  [../]
+[]
+	\end{BVerbatim}
+	\end{scriptsize}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Example 5 (Hands On): Kernels and AuxVariables}
+	\begin{minipage}{0.6\linewidth}
+	\begin{itemize}
+		\item Time derivative kernels must be added for each variable in the system. (Note that you will need to add two more to the example shown here) 
+		\item One of the reaction rate coefficients is read from a tabulated file. In general these need to be computed manually by the user through BOLSIG+ or an equivalent software. 
+		\item In this case, the reaction file already exists in the \texttt{/problems/Example5} directory
+	\end{itemize}
+	\end{minipage}%
+	\begin{minipage}{0.4\linewidth}
+	\begin{scriptsize}
+	\begin{BVerbatim}
+  [ScalarKernels]
+    [./de_dt]
+      type = ODETimeDerivative
+      variable = e
+    [../]
+  []
+
+  [AuxVariables]
+    [./reduced_field]
+      order = FIRST
+      family = SCALAR
+      initial_condition = 50e-21
+    [../]
+  []
+	\end{BVerbatim}
+	\end{scriptsize}
+	
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Example 5 (Hands On): Kernels and AuxVariables cont.}
+	\begin{minipage}{0.6\linewidth}
+	\begin{itemize}
+		\item The data is tabulated with respect to the reduced electric field, $V m^{-2}$. \textbf{The sampling variable must be a variable in the system, either Nonlinear or Auxiliary.}
+		\item With this in mind, we will create a (constant) \texttt{AuxVariable} called \texttt{reduced\_field}, with an initial condition of $50 \times 10^{-21} V m^{-2}$
+	\end{itemize}
+	\end{minipage}%
+	\begin{minipage}{0.4\linewidth}
+	\begin{scriptsize}
+	\begin{BVerbatim}
+  [ScalarKernels]
+    [./de_dt]
+      type = ODETimeDerivative
+      variable = e
+    [../]
+  []
+
+  [AuxVariables]
+    [./reduced_field]
+      order = FIRST
+      family = SCALAR
+      initial_condition = 50e-21
+    [../] 
+  []  
+	\end{BVerbatim}
+	\end{scriptsize}
+	
+	\end{minipage}
+\end{frame}
+
+%\begin{frame}[fragile]
+%	\frametitle{Declaring Scalar Variables}
+%	\begin{columns}
+%	\column{0.5\textwidth}
+%	\begin{Verbatim}[fontsize=\scriptsize]
+%    [./Ar]
+%      family = SCALAR
+%      order = FIRST
+%      initial_condition = 2.5e19
+%      scaling = 2.5e-19
+%    [../]
+%	\end{Verbatim}
+%	\begin{itemize}
+%		\item This block declares a \textbf{first-order scalar} variable named \textbf{Ar}
+%		\item The (optional) scaling parameter is used to scale the variable values closer to unity, which is desireable for convergence
+%	\end{itemize}
+%
+%	\column{0.5\textwidth}
+%	\begin{Verbatim}[fontsize=\scriptsize]
+%    [./dAr_dt]
+%      type = ODETimeDerivative
+%      variable = Ar
+%    [../]
+%    
+%	\end{Verbatim}
+%	\begin{itemize}
+%		\item All nonlinear variables need at least one Kernel active
+%		\item The \textit{ChemicalReactions} Action automatically adds all reaction kernels, but the time derivative term must be added manually for each nonlinear variable
+%	\end{itemize}
+%	\end{columns}
+%\end{frame}
+
+%\begin{frame}[fragile]
+%	\frametitle{\insertsubsectionhead: \hspace{1pt} Reactions}
+%	\begin{minipage}{0.5\linewidth}
+%	\begin{itemize}
+%		\item The Action allows you to
+%	\end{itemize}
+%	\end{minipage}%
+%	\begin{minipage}{0.5\linewidth}
+%	\begin{scriptsize}
+%	\begin{BVerbatim}
+%    [ChemicalReactions]
+%      [./ScalarNetwork]
+%        species = 'e Ar+ Ar'
+%        file_location = 'Example5'
+%        sampling_format = 'reduced_field'
+%
+%        reactions = `e + Ar -> e + e + Ar+          : EEDF
+%                     e + Ar+ + Ar -> Ar + Ar        : 1e-25'
+%
+%       [../]
+%    []
+%	\end{BVerbatim}
+%	\end{scriptsize}
+%	\end{minipage}
+%\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{\insertsubsectionhead \hspace{1pt} - Running}
+		\begin{itemize}
+			\item To run, navigate to the problems directory and provide the input file to the executable:
+			\begin{enumerate}
+				\item Navigate to the problems directory: \newline
+				\hspace*{8pt} \texttt{cd \textasciitilde/projects/crane/problems}
+				\item Locate the input file: \newline
+				\hspace*{8pt} \texttt{problems/example5.i}
+				\item Run the problem with CRANE: \newline
+				\hspace*{8pt} \texttt{../crane-opt -i example5.i}
+				\item Check output files: \newline
+				\hspace*{8pt} \texttt{problems/example5\_out.csv}
+				\item Plot results: \newline
+				\hspace*{8pt} \texttt{python example5.py}
+			\end{enumerate}
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example 5 Results}
+	\centering
+	\includegraphics[width=0.75\textwidth]{./pics/example3.png}
+\end{frame}

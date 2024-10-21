@@ -1,0 +1,1 @@
+!template load file=stubs/moose_object.md.template name=Reactant1BodyScalarLog syntax=/ScalarKernels/Reactant1BodyScalarLog

@@ -1,0 +1,142 @@
+\subsection{Using CRANE}
+	\begin{frame}[fragile]
+		\frametitle{Action Description}
+		\begin{columns}
+			\column{0.45\textwidth}
+			\begin{itemize}
+				\item The focus of CRANE is the \textit{ChemicalReactions} Action, which accepts explicitly written reaction equations.
+				\item The Action automatically adds all of the necessary Kernels, AuxKernels, UserObjects, etc. needed to solve equation (1).
+				\item It includes two subblocks: [./Network] for spatial problems, and [./ScalarNetwork] for 0D problems.
+			\end{itemize}
+			\column{0.55\textwidth}
+			\begin{Verbatim}[fontsize=\tiny]
+[ChemicalReactions]
+  [./ScalarNetwork]
+    species = `e Ar+ Ar'
+    file_location = 'RateCoefficients'
+
+    reactions = `e + Ar -> e + e + Ar+      : EEDF
+                 e + Ar+ + Ar -> Ar + Ar    : 1e-25'
+  [../]
+[]
+			\end{Verbatim}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Action Description}
+		\begin{Verbatim}[fontsize=\tiny]
+          [ChemicalReactions]
+            [./ScalarNetwork]
+              species = `e Ar+ Ar'
+              file_location = `RateCoefficients'
+              reactions = `e + Ar -> e + e + Ar+      : EEDF
+                            e + Ar+ + Ar -> Ar + Ar    : 1e-25'
+            [../]
+          []
+		\end{Verbatim}
+		\vspace{-1em}
+			\begin{itemize}
+				\item {\footnotesize \textbf{species} - Denotes the active species in the reaction equations.}
+				\begin{enumerate}
+					\item {\scriptsize If a species appears in an equation but not in the ``species" parameter, it is ignored by the problem.}
+					\item {\scriptsize All reactants must be either nonlinear or Auxiliary variables.}
+				\end{enumerate}
+				\item {\footnotesize \textbf{reactions} - Lists all reactions to be solved, with rate coefficients separated by a `:` character.}
+				\item {\footnotesize \textbf{file\_location} - CRANE includes the option of having rate coefficients tabulated as a function of Auxiliary variables.}
+				\begin{enumerate}
+					\item {\scriptsize \textit{ChemicalReactions} looks up a corresponding file for each reaction with a `EEDF` rate coefficient. In this case, it will look for a file named `reaction\_e + Ar $->$ e + e + Ar+.txt` in the directory `RateCoefficients`.}
+				\end{enumerate}
+			\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Action Description}
+		\begin{Verbatim}[fontsize=\scriptsize]
+[ChemicalReactions]
+  [./ScalarNetwork]
+    species = `e Ar+ Ar'
+    file_location = `RateCoefficients'
+    reactions = `e + Ar -> e + e + Ar+      : EEDF
+                 e + Ar+ + Ar -> Ar + Ar    : 1e-25'
+  [../]
+[]
+		\end{Verbatim}
+			\begin{itemize}
+				\item The Action automatically counts the stoichiometric coefficients and applies Kernels.
+				\item This problem adds six total Kernels:
+				\begin{enumerate}
+					\item \textbf{e}: Product2BodyScalar (reaction 1), Reactant3BodyScalar (reaction 2)
+					\item \textbf{Ar}: Reactant2BodyScalar (reaction 1), Product3BodyScalar (reaction 2)
+					\item \textbf{Ar+}: Product2BodyScalar (reaction 1), Reactant3BodyScalar (reaction 2)
+				\end{enumerate}
+				\item Rate coefficients are included as Auxiliary variables, which are calculated at the beginning of each timestep
+			\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Rate Coefficients}
+			\begin{itemize}
+				\item Three rate coefficient formats are accepted:
+				\begin{enumerate}
+					\item \textbf{Constant} - denoted as a single value, e.g. $1e-25$
+					\item \textbf{EEDF} - calculated externally by an EEDF software and tabulated. Denoted as `EEDF`.
+					\item \textbf{Equation} - Explicit equations may be denoted by brackets. e.g. $\{(6.06e-6/Tgas)*exp(-15130.0/Tgas)\}$
+				\end{enumerate}
+				\item \textit{ChemicalReactions} automatically recognizes each format and adds the appropriate Auxiliary kernels.
+				\item BOLSIG+ is the recommended Boltzmann solver for EEDF rate coefficients. An open source python equivalent, BOLOS, may also be used.
+			\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+	\frametitle{Tabulated Rate Coefficients}
+	\begin{itemize}
+		\item If an `EEDF' rate coefficient is included, CRANE will search for files of tabulated rate coefficients in the location specified by \textbf{file\_location}
+		\item Rate coefficient files are typically stored in /problems/: \texttt{~/projects/crane/problems/[RateCoefficientsFile]}
+		\item If no file is specified, CRANE will search the \texttt{~/projects/crane/problems} directory for the necessary files
+		\item Files must be named after the reaction they are applied to, e.g.:
+		\begin{itemize}
+			\item {\scriptsize Reaction: \texttt{e + Ar -> e + e + Ar+   : EEDF}}
+			\item {\scriptsize File: \texttt{reaction\_e + Ar -> e + e + Ar+.txt}}
+		\end{itemize}
+	\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+	\frametitle{Tabulated Rate Coefficients (cont.)}
+	\begin{itemize}
+		\item Rate coefficient units are up to the user; however, make sure that the units are consistent with the units being used for the nonlinear variables in the system (if species densities are measured in $\# cm^{-3}$, rate coefficients must be $s^{-1}$, $cm^3 s^{-1}$, $cm^6 s^{-1}$.
+		\item The sampling variable can be either electron temperature ($eV$) or reduced electric field ($V m^2$), both computed by BOLSIG+. 
+		\begin{itemize}
+			\item In either case, the sampling variable must be a nonlinear or auxiliary variable in the CRANE input file. 
+		\end{itemize}
+	\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Kernels}
+		\begin{itemize}
+			\item The suite of Kernels available in CRANE includes treatment of one-, two-, and three-body reactions.
+			\item $\nu$ is the stoichiometric coefficient, $k$ is the rate coefficient, and $n_i$ is the species concentration.
+		\end{itemize}
+		\resizebox{\linewidth}{!}
+		{
+		% \begin{table}
+		% \centering
+		% \caption{Scalar kernels included in CRANE. The sign of the stoichiometric coefficient, $\nu$, determines whether a product or reactant ScalarKernel is included.}
+		\begin{tabular}{| c | c | c |}
+		\hline
+		\textbf{ScalarKernel Name} & \textbf{Governing Equation} & \textbf{Reaction Equation} \\
+		\hline
+		[Product/Reactant]1BodyScalar & $\nu k n_A$ & $A \xrightarrow{k} B$ \\
+		\hline
+		[Product/Reactant]2BodyScalar & $\nu k n_A n_B$ & $A + B \xrightarrow{k} C + D$\\
+		\hline
+		[Product/Reactant]3BodyScalar & $\nu k n_A n_B n_C$ & $A + B + C \xrightarrow{k} D + E + F$ \\
+		\hline
+	\end{tabular}
+	}
+	% \end{table}
+	\end{frame}
+	
+	

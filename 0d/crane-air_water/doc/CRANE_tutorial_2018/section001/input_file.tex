@@ -1,0 +1,145 @@
+
+	\begin{frame}[fragile]
+		\frametitle{Input Structure}
+		\begin{columns}
+			\column{0.5\textwidth}
+			\begin{itemize}
+				\item A basic moose input file requires seven parts, or ``blocks":
+				\begin{enumerate}
+					\item Mesh
+					\item Variables
+					\item Kernels
+					\item BCs
+					\item ICs
+					\item Executioner
+					\item Outputs
+				\end{enumerate}
+				\item If no boundary condition is included for a variable, it will default to a Neumann BC
+				\item Similarly, initial conditions (ICs) default to 1.
+			\end{itemize}
+			\column{0.5\textwidth}
+			\begin{Verbatim}[fontsize=\tiny]
+	[Mesh]
+	  file = mug.e
+	[]
+
+	[Variables]
+	  [./diffused]
+	    order = FIRST
+	    family = LAGRANGE
+	  [../]
+	[]
+
+	[Kernels]
+	  [./diff]
+	    type = Diffusion
+	    variable = diffused
+	  [../]
+	[]
+
+	[Executioner]
+	  type = Steady
+	  solve_type = 'PJFNK'
+	[]
+
+	[Outputs]
+	  execute_on = 'timestep_end'
+	  exodus = true
+	[]
+			\end{Verbatim}
+		\end{columns}
+	\end{frame}
+
+
+	\begin{frame}[fragile]
+		\frametitle{Mesh}
+		\begin{columns}
+			\column{0.6\textwidth}
+			\begin{itemize}
+				\item MOOSE accepts meshes generated from third party meshing tools (e.g. Gmsh)
+				\item Alternatively, MOOSE may generate a mesh based on user input
+				\item The example shown here generates a 1D mesh on the domain [0,1] with 10 nodes
+			\end{itemize}
+			\column{0.4\textwidth}
+			\begin{Verbatim}[fontsize=\large]
+[Mesh]
+  type = GeneratedMesh
+  dim = 1
+  xmin = 0
+  xmax = 1
+  nx = 10
+[]
+			\end{Verbatim}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Variables}
+		\begin{columns}
+			\column{0.5\textwidth}
+			\begin{itemize}
+				\item The Variables block defines the nonlinear variables in the system
+				\item Order options: CONSTANT, FIRST, SECOND, THIRD, FOURTH
+				\item The example shown here defines a variable ``x" with an initial condition of 10.
+				\item Most commonly used Families are LAGRANGE and SCALAR
+				\item Other options included on the website: http://mooseframework.org/source/actions/AddVariableAction.html
+			\end{itemize}
+			\column{0.5\textwidth}
+			\begin{Verbatim}[fontsize=\large]
+[Variables]
+  [./x]
+    order = FIRST
+    family = LAGRANGE
+    initial_condition = 10
+  [../]
+[]
+			\end{Verbatim}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Executioner}
+		\begin{columns}
+			\column{0.5\textwidth}
+			\begin{itemize}
+				\item The Executioner block defines both the type of problem and the method with which it will be solved
+				\item User may define Steady, Transient, or Eigenvalue problems
+				\item Executioner block also accepts sub-blocks to define adaptive timesteppers and different integrators
+			\end{itemize}
+			\column{0.5\textwidth}
+			\begin{Verbatim}[fontsize=\small]
+[Executioner]
+  type = Transient
+  solve_type = `PJFNK`
+  scheme = crank-nicolson
+[]
+			\end{Verbatim}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Executioner cont.}
+		\begin{columns}
+			\column{0.5\textwidth}
+			\begin{itemize}
+				\item ``solve type`` defines the numerical routine used to solve the nonlinear variables at each timestep
+				\item Options include: JFNK, PJFNK, NEWTON, FD, LINEAR
+%				\begin{enumerate}
+%					\item PJFNK (preconditioned jacobian-free Newton Krylov)
+%					\item JFNK (jacobian-free Newton Krylov)
+%					\item NEWTON (full Newton solve)
+%					\item FD (uses finite differences to compute jacobian)
+%					\item LINEAR (solves a linear problem)
+%				\end{enumerate}
+				\item ``scheme`` denotes the time integration scheme. Default: implicit euler. 
+			\end{itemize}
+			\column{0.5\textwidth}
+			\begin{Verbatim}[fontsize=\small]
+[Executioner]
+  type = Transient
+  solve_type = `PJFNK`
+  scheme = crank-nicolson
+[]
+			\end{Verbatim}
+		\end{columns}
+	\end{frame}

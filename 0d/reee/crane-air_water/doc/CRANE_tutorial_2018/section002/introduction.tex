@@ -1,0 +1,34 @@
+
+	\subsection{CRANE Introduction}
+	\begin{frame}[shrink=5]
+		\frametitle{CRANE: \textbf{C}hemical \textbf{R}e\textbf{A}ction \textbf{NE}twork}
+		\begin{itemize}
+			\item CRANE is an open source software dedicated to modeling the time evolution of coupled rate equations.
+			\item Utilizing the Action system of the MOOSE framework, the software is designed to accept an arbitrary number of human-readable reaction equations.
+			\item CRANE was developed with two use cases in mind:
+			\begin{enumerate}
+				\item Global (0D) model, as a standalone application
+				\item Spatial (1D-3D) model, used as a subapp of other MOOSE applications
+			\end{enumerate}
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[shrink=5]
+		\frametitle{Solving Systems of Reactions}
+		\begin{itemize}
+			\item The mathematical kernel of the software is a system of ODE equations:
+			\begin{equation}
+				\frac{d [n_i]}{dt} = \sum_{j=1}^{j_{max}} S_{ij}
+			\end{equation}
+			\item Consider a reaction involving species A, B, and C with rate coefficient K:
+			\begin{equation}
+				a_1A + bB \xrightarrow{K} a_2A + cC
+			\end{equation}
+			\item The rate of production for each species $S_{ij}$ is described as
+			\begin{align}
+				S_A &= (a_2 - a_1)K_j (n_A)^a (n_B)^b \\
+				S_B &= -b K_j (n_A)^a (n_B)^b \\
+				S_C &= c K_j (n_A)^a (n_B)^b
+			\end{align}
+		\end{itemize}
+	\end{frame}

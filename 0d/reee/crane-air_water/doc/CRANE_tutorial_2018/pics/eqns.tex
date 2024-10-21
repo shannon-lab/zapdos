@@ -1,0 +1,246 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{fullpage}
+
+\DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n}
+
+\begin{document}
+	
+	\section*{Fick's Law}
+	
+	\begin{align*}
+		\frac{\partial C}{\partial t} - D \nabla^2 C = R
+	\end{align*}
+	
+	\begin{align*}
+		\int\limits_{\Omega} \frac{\partial C}{\partial t} \psi_i + \int\limits_{\Omega} D \nabla C \cdot \nabla \psi_i - \int\limits_{\partial \Omega} D (\nabla C \cdot \hat{n}) \psi_i - \int\limits_{\Omega} R \psi_i = 0
+	\end{align*}
+	
+	\section*{Polynomial Fitting}
+	
+	\begin{align*}
+		f(x) = a + bx + cx^2 + \cdots
+	\end{align*}
+	
+	\begin{align*}
+		f(x) = \sum_{i=0}^{d} c_i x^i
+	\end{align*}
+	
+	\begin{align*}
+		(x_1, y_1) &= (1, 4) \\
+		(x_2, y_2) &= (3, 1) \\
+		(x_3, y_3) &= (4, 2)
+	\end{align*}
+	
+	\begin{align*}
+		y_i = a + bx_i + c x_i^2, i = 1, 2, 3 
+	\end{align*}
+	
+	\begin{align*}
+		\begin{bmatrix}
+			1 & 1 & 1 \\
+			1  & 3 & 9 \\
+			1 & 4 & 16
+		\end{bmatrix} \! \! \!
+		\begin{bmatrix}
+			a \\ b \\ c
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+		4 \\ 1 \\ 2
+		\end{bmatrix}
+	\end{align*}
+	
+	\begin{align*}
+		\begin{bmatrix}
+			a \\ b \\ c
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			8 \\ -\frac{29}{6} \vspace{0.25em} \\ \frac{5}{6}
+		\end{bmatrix}
+	\end{align*}
+	
+	\begin{align*}
+		f(x) = 8 - \frac{29}{6} x + \frac{5}{6} x^2
+	\end{align*}
+	
+	\begin{align*}
+		f(2) = \sum_{i=0}^{2} c_i 2^i \text{, or more generically: } f(2) = \sum_{i=0}^{2} c_i g_i(2)
+	\end{align*}
+	
+	\section*{Refresher: The Divergence Theorem}
+	
+	\begin{align*}
+		\int_{\Omega} \nabla \cdot \vec{g} \, \text{d}x = \int_{\partial \Omega} \vec{g} \cdot \hat{n} \, \text{d}s
+	\end{align*}
+	
+	\begin{align*}
+		\int_{\Omega} \psi (\nabla \cdot \vec{g}) \, \text{d}x &= \int_{\Omega} \nabla \cdot (\psi \vec{g}) \, \text{d}x - \int_{\Omega} \nabla \psi \cdot \vec{g} \, \text{d}x \\
+		&= \int_{\partial \Omega} \psi \vec{g} \cdot \hat{n} \, \text{d}s - \int_{\Omega} \nabla \psi \cdot \vec{g} \, \text{d}x
+	\end{align*}
+	
+	\begin{align*}
+		- \int_{\Omega} \psi (\nabla \cdot k(x) \nabla u) \, \text{d}x = \int_{\Omega} \nabla \psi \cdot k(x) \nabla u \, \text{d}x - \int_{\partial \Omega} \psi (k(x) \nabla u \cdot \hat{n}) \, \text{d}s
+	\end{align*}
+	
+	\begin{align*}
+		-(\psi , \nabla \cdot k(x) \nabla u) = (\nabla \psi ,  k(x) \nabla u) - \langle \psi , k(x) \nabla u \cdot \hat{n} \rangle
+	\end{align*}
+	
+	\section*{Example: Convection Diffusion}
+	
+	\begin{align*}
+		-\nabla \cdot k \nabla u + \vec{\beta} \cdot \nabla u = f
+	\end{align*}
+	
+	\begin{align*}
+		-\nabla \cdot k \nabla u + \vec{\beta} \cdot \nabla u - f = 0
+	\end{align*}
+	
+	\begin{align*}
+		-\psi (\nabla \cdot k \nabla u) + \psi \left(\vec{\beta} \cdot \nabla u\right) - \psi f = 0
+	\end{align*}
+	
+	\begin{align*}
+		- \int_{\Omega} \psi (\nabla \cdot k \nabla u) + \int_{\Omega} \psi \left(\vec{\beta} \cdot \nabla u\right) - \int_{\Omega} \psi f = 0
+	\end{align*}
+	
+	\begin{align*}
+		\int_{\Omega} \nabla \psi \cdot k \nabla u - \int_{\partial \Omega} \psi (k \nabla u \cdot \hat{n}) + \int_{\Omega} \psi \left(\vec{\beta} \cdot \nabla u\right) - \int_{\Omega} \psi f = 0
+	\end{align*}
+	
+	\begin{align*}
+	\underbrace{(\nabla \psi , k \nabla u)}_{Kernel} - \underbrace{\langle \psi , k \nabla u \cdot \hat{n} \rangle}_{BoundaryCondition} + \underbrace{\left(\psi , \vec{\beta} \cdot \nabla u\right)}_{Kernel} - \underbrace{(\psi , f)}_{Kernel} = 0
+	\end{align*}
+	
+	\section*{Shape Functions}
+	
+	\begin{align*}
+		u \approx u_h = \sum_{j=1}^{N} u_j \phi_j
+	\end{align*}
+	
+	\begin{align*}
+		\nabla u \approx \nabla u_h = \sum_{j=1}^{N} u_j \nabla \phi_j
+	\end{align*}
+	
+	\begin{align*}
+		\psi = \{ \phi_i \}^{N}_{i=1} 
+	\end{align*}
+	
+	\begin{align*}
+		(\nabla \psi_i , k \nabla u_h) - \langle \psi_i , k \nabla u_h \cdot \hat{n} \rangle + \left(\psi_i , \vec{\beta} \cdot \nabla u_h \right) - (\psi_i , f) = 0, \hspace{2em} i = 1, \cdots,N
+	\end{align*}
+	
+	\section*{Numerical Integration}
+	
+	\begin{align*}
+		\int_{\Omega} f(\vec{x}) \, \text{d} \vec{x} = \sum_{e} \int_{\Omega_e} f(\vec{x}) \, \text{d} \vec{x}
+	\end{align*}
+	
+	\begin{align*}
+		\sum_{e} \int_{\Omega_e} f(\vec{x}) \, \text{d} \vec{x} = \sum_{e} \int_{\hat{\Omega}_e} f(\vec{\xi}) |\mathbfcal{J}_e| \text{d} \vec{\xi}
+	\end{align*}
+	
+	\begin{align*}
+		\sum_{e} \int_{\hat{\Omega}_e} f(\vec{\xi}) |\mathbfcal{J}_e| \text{d} \vec{\xi} \approx \sum_{e} \sum_{q} w_q f(\vec{x}_q) |\mathbfcal{J}_e(\vec{x}_q)|
+	\end{align*}
+	
+	\begin{align*}
+		u(\vec{x}_q) &\approx u_h(\vec{x}_q) = \sum u_j \phi_j(\vec{x}_q) \\
+		\nabla u(\vec{x}_q) &\approx \nabla u_h(\vec{x}_q) = \sum u_j \nabla \phi_j (\vec{x}_q)
+	\end{align*}
+	
+	\begin{align*}
+		R_i (u_h) &= \sum_e \sum_q w_q |\mathbfcal{J}_e| \left[ \nabla \psi_i \cdot k \nabla u_h + \psi_i \left( \vec{\beta} \cdot \nabla u_h \right) - \psi_i f \right] (\vec{x}_q) \\
+		&- \sum_f \sum_{q_{face}} w_{q_{face}} |\mathbfcal{J}_f| [\psi_i k\nabla u_h \cdot \hat{n}](\vec{x}_{q_{face}})
+	\end{align*}
+	
+	\section*{Newton's Method}
+	
+	\begin{align*}
+		R_i(u_h) = 0, \hspace{3em} i = 1, \dots ,N
+	\end{align*}
+	
+	\begin{align*}
+		f'(x_n) \delta x_{n+1} &= -f(x_n) \\
+					   x_{n+1} &= x_n + \delta x_{n+1}
+	\end{align*}
+	
+	\begin{align*}
+		\mathbf{J}(\vec{u}_n) \delta\vec{u}_{n+1} &= -\vec{R}(\vec{u}_n) \\
+									\vec{u}_{n+1} &= \vec{u}_n + \delta \vec{u}_{n+1}
+	\end{align*}
+	
+	\begin{align*}
+		J_{ij}(\vec{u}_n) = \frac{\partial R_i (\vec{u}_n)}{\partial u_j}
+	\end{align*}
+	
+	\begin{align*}
+		\frac{\partial u_h}{\partial u_j} = \sum_k \frac{\partial}{\partial u_j} (u_k \phi_k) = \phi_j
+	\end{align*}
+	
+	\begin{align*}
+		\frac{\partial(\nabla u_h)}{\partial u_j} = \sum_k \frac{\partial}{\partial u_j} (u_k \nabla \phi_k) = \nabla \phi_j
+	\end{align*}
+	
+	\section*{Newton for a Simple Equation}
+	
+	\begin{align*}
+		-\nabla \cdot k\nabla u + \vec{\beta} \cdot \nabla u = f
+	\end{align*}
+	
+	\begin{align*}
+		R_i(u_h) = (\nabla\psi_i, k \nabla u_h) - \langle \psi_i, k\nabla u_h \cdot \hat{n} \rangle + \left( \psi_i , \vec{\beta} \cdot \nabla u_h \right) - (\psi_i , f)
+	\end{align*}
+	
+	\begin{align*}
+		J_{ij}(u_h) &= \left( \nabla \psi_i , \frac{\partial k}{\partial u_j} \nabla u_h \right) + (\nabla \psi_i, k\nabla \phi_j) - \left \langle \psi_i , \frac{\partial k}{\partial u_j} \nabla u_h \cdot \hat{n} \right \rangle \\
+		&- \langle \psi_i, k\nabla \phi_j \cdot \hat{n} \rangle + \left( \psi_i, \frac{\partial \vec{\beta}}{\partial u_j} \cdot \nabla u_h \right) + \left( \psi_i, \vec{\beta} \cdot \nabla \phi_j \right) - \left( \phi_i , \frac{\partial f}{\partial u_j} \right)
+	\end{align*}
+	
+	\section*{Chain Rule}
+	
+	\begin{align*}
+		\frac{\partial f}{\partial u_j} &= \frac{\partial f}{\partial u_h} \frac{\partial u_h}{\partial u_j} \\
+										&= \frac{\partial f}{\partial u_h} \phi_j
+	\end{align*}
+	
+	\begin{align*}
+		\frac{\partial f}{\partial u_j} = \cos (u_h) \phi_j
+	\end{align*}
+	
+	\section*{Jacobian Free Newton Krylov}
+	
+	\begin{align*}
+		\vec{\rho}_k \equiv \mathbf{A} \vec{x}_k - \vec{b}
+	\end{align*}
+	
+	\begin{align*}
+		\mathcal{K}_k = \text{span}\{\vec{b}, \mathbf{A} \vec{b}, \mathbf{A}^2 \vec{b}, \cdots, \mathbf{A}^{k-1} \vec{b}\}
+	\end{align*}
+	
+	\begin{align*}
+		\mathbf{J} \vec{\nu} \approx \frac{\vec{R}(\vec{u} + \epsilon \vec{\nu}) - \vec{R}(\vec{u})}{\epsilon}
+	\end{align*}
+	
+	\section*{Diffusion}
+	
+	\begin{align*}
+		-\nabla \cdot \nabla u - f &= 0 \\
+		u|_{\partial \Omega_1} &= g_1 \\
+		\nabla u \cdot \hat{n}|_{\partial \Omega_2} &= g_2
+	\end{align*}
+	
+	\begin{align*}
+		(-\nabla \cdot \nabla u, \psi_i) - (f, \psi_i) = 0
+	\end{align*}
+	
+	\begin{align*}
+		(\nabla u, \nabla \psi_i) - (f, \psi_i) - \langle g_2, \psi_i \rangle = 0
+	\end{align*}
+	
+	\begin{align*}
+		(\nabla \phi_j, \nabla \psi_i)
+	\end{align*}
+\end{document}

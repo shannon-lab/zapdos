@@ -1,0 +1,82 @@
+\subsection{Example 3: Microcathode Argon Discharge} 
+\begin{frame}[fragile]
+	\frametitle{\insertsubsectionhead}
+	\begin{itemize}
+		\item \textbf{ZDPlasKin example}\footnotemark: 13 reactions between 5 species ($Ar, Ar^+, Ar^{2+}, Ar^*, e^-$) 
+		\item This example shows the capability of CRANE to use expressions for both rate coefficients and other variables in the system (in this case, reduced electric field)
+		\item All species are nonlinear variables
+		\item Reduced electric field is calculated based on electron mobility, gas density, and physical domain
+		\item Auxiliary variables: reduced electric field, mobility, current (used in reduced electric field calculation)
+		\item Electron-impact rate coefficients and electron mobility calculated by \textit{Bolsig+} (results pre-computed and available in /projects/crane/problems/Example3)
+	\end{itemize}
+	\footnotetext[2]{{\scriptsize \color{blue} https://www.zdplaskin.laplace.univ-tlse.fr/micro-cathode-sustained-discharged-in-ar/}}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+	\frametitle{Example 3: Input Parameters}
+	\begin{itemize}
+		\item Initial Conditions:
+		\begin{itemize}
+			\item[$\ast$] $e, Ar^+, Ar^*= 1e6 cm^{-3}$
+			\item[$\ast$]  $Ar = 3.21883e18 cm^{-3}$ $(p = 100$ Torr $)$
+			\item[$\ast$]  $Ar^{2+} = 1.0 cm^{-3}$
+			\item[$\ast$] $d = 0.004 cm$, $r = 0.004 cm$, $R = 1e5 \Omega$
+		\end{itemize}
+		\item $T_{gas} = 300 K$ , $t=[0,1 ms]$
+		\item $\Big(\tfrac{E}{N}\Big)^n = V / \Big(d + R*J/\Big(\Big(\tfrac{E}{N}\Big)^{n-1}*n_{Ar}\Big)\Big)/n_{Ar}$
+		\item $J = \Big(\Big(\tfrac{E}{N}\Big)^n * \mu^n * n_{Ar}\Big) * q_e * \pi r^2 * n_e$
+		\item Input file: `example3.i'
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Example 3: Calculating Parameters}
+		\begin{Verbatim}[fontsize=\scriptsize]
+    [./reduced_field_calculate]
+      type = ParsedAuxScalar
+      variable = reduced_field
+      constant_names = `V d qe R'
+      constant_expressions = `1000 0.004 1.602e-19 1e5'
+      args = `reduced_field Ar current'
+      function = `V/(d+R*current/(reduced_field*Ar*1e6))/(Ar*1e6)'
+      execute_on = `TIMESTEP_END'
+    [../]
+	\end{Verbatim}
+
+	\begin{itemize}
+		\item Reduced electric field and current may be calculated by MOOSE as Auxiliary variables, which may be coupled into problems like any other variable
+		\item `\textbf{constant\_names}' and `\textbf{constant\_expressions}' supplies the function with names and values for each constant appearing in the functions
+		\item \textbf{`args'} - nonlinear or auxiliary variable values that must be accessed by function
+		\item \textbf{`execute\_on'} - Tells MOOSE when to run the AuxKernel
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Example 3: Reading Parameters From File}
+		\begin{Verbatim}[fontsize=\footnotesize]
+    [./mobility_calculation]
+      type = DataReadScalar
+      variable = mobility
+      sampler = reduced_field
+      property_file = `Example3/electron_mobility.txt'
+      execute_on = `INITIAL TIMESTEP_BEGIN'
+    [../]
+	\end{Verbatim}
+
+	\begin{itemize}
+		\item Electron mobility and temperature are both read from data files tabulated as a function of reduced electric field (calculated by \textit{Bolsig+})
+		\item The `DataReadScalar' AuxKernel may be used to pull this data from the files
+		\item `property\_file' tells MOOSE where to find the tabulated data file
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example 3: Results}
+	\centering
+	\includegraphics[width=0.75\textwidth]{./pics/example4.png}
+\end{frame}

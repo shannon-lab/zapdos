@@ -1,0 +1,37 @@
+Content:
+    Crane:
+        root_dir: ${ROOT_DIR}/doc/content
+    moose:
+        root_dir: ${MOOSE_DIR}/framework/doc/content
+        content:
+            - js/*
+            - css/*
+            - contrib/**
+            - media/**
+            - templates/stubs/*
+
+Renderer:
+    type: MooseDocs.base.MaterializeRenderer
+    name: CRANE
+    home: https://lcpp-org.github.io/crane
+    repo: https://github.com/lcpp-org/crane
+    #extra-css: # if you wanted to add extra CSS (like changing the default coloring), uncomment and add it here
+            #- css/zapdos.css  # example - location relative to your "doc/content" directory
+
+Extensions:
+    MooseDocs.extensions.navigation:
+        name: 'CRANE'
+        home: https://lcpp-org.github.io/crane
+        repo: https://github.com/lcpp-org/crane
+        menu:
+          #  Below are examples of adding menu navigation items. Anything with "menu.md" indicates a file holding the content of a drop-down menu. See Zapdos for examples
+          #  Getting Started: getting_started/index.md
+          #  Documentation: documentation.menu.md
+          #  Help: help.menu.md
+            Test: test.md
+    MooseDocs.extensions.template:
+        active: True
+    MooseDocs.extensions.appsyntax:
+        executable: ${ROOT_DIR}
+        includes:
+            - include
