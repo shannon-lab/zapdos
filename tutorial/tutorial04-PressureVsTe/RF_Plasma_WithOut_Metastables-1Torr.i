@@ -255,8 +255,8 @@ dom0Scale = 1.0
     mobility = 0.144409938
     diffusivity = 6.428571e-3
   []
-  #The material properties of the background gas
   [gas_species_2]
+  #The material properties of the background gas
     type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
