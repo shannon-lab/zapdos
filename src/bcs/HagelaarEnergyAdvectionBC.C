@@ -24,8 +24,9 @@ HagelaarEnergyAdvectionBC::validParams()
       "The species-dependent secondary electron emission coefficients for this boundary");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<Real>("secondary_electron_energy", "The secondary electron energy in eV");
-  params.addClassDescription("Kinetic advective electron energy boundary condition"
-                             " (Based on work of [Sakiyama et al.](https://doi.org/10.1063/1.2715745))");
+  params.addClassDescription(
+      "Kinetic advective electron energy boundary condition"
+      " (Based on work of [Sakiyama et al.](https://doi.org/10.1063/1.2715745))");
   return params;
 }
 

@@ -21,8 +21,9 @@ SakiyamaSecondaryElectronBC::validParams()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs", "A list of species-dependent secondary electron emission coefficients");
-  params.addClassDescription("Kinetic secondary electron boundary condition"
-                             " (Based on work by [Lymberopoulos et al.](https://doi.org/10.1116/1.579300))");
+  params.addClassDescription(
+      "Kinetic secondary electron boundary condition"
+      " (Based on work by [Lymberopoulos et al.](https://doi.org/10.1116/1.579300))");
   return params;
 }
 

@@ -18,8 +18,9 @@ SakiyamaEnergyDiffusionBC::validParams()
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription("Kinetic advective electron energy boundary condition"
-                             " (Based on work by [Lymberopoulos et al.](https://doi.org/10.1116/1.579300))");
+  params.addClassDescription(
+      "Kinetic advective electron energy boundary condition"
+      " (Based on work by [Lymberopoulos et al.](https://doi.org/10.1116/1.579300))");
   return params;
 }
 

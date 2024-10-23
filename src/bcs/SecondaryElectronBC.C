@@ -24,8 +24,7 @@ SecondaryElectronBC::validParams()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs", "A list of species-dependent secondary electron emission coefficients");
-  params.addClassDescription(
-      "Kinetic secondary electron boundary condition");
+  params.addClassDescription("Kinetic secondary electron boundary condition");
   return params;
 }
 
