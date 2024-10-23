@@ -23,7 +23,7 @@ n_{\gamma} = (1 - a_{e}) \frac{\gamma \Gamma_{i} \cdot \textbf{n}}{\mu_{e} (\tex
 \end{equation}
 
 Where the subscripts $e$, $j$ and $\varepsilon$ represents properties of electrons, ions and electron energy respectively, $\Gamma$ is the flux of the electron or ions, $\textbf{n}$ is the normal vector of the boundary,
-$\mu$ is the mobility coefficient, $n$ is the species density, $v_{th}$ is the thermal velocity of the species, $k_{B}$ is the Boltzmann constant, $T$ is the gas temperature, and $n_{\gamma}$ is electron density emitted by the surface. $a$ is defined such that the outflow is non-zero when the drift velocity is directed towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `SecondaryElectronBC` is defined as
+$\mu$ is the mobility coefficient, $n$ is the species density, $v_\text{th}$ is the thermal velocity of the species, $k_{B}$ is the Boltzmann constant, $T$ is the gas temperature, and $n_{\gamma}$ is electron density emitted by the surface. $a$ is defined such that the outflow is non-zero when the drift velocity is directed towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `SecondaryElectronBC` is defined as
 
 \begin{equation}
 v_{\text{th},e} = \sqrt{\frac{8e}{\pi m_{e}} \frac{2}{3} \exp (N_{\varepsilon} - N_{e})} \\[10pt]
