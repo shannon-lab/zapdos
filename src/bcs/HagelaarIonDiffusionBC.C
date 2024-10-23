@@ -21,7 +21,7 @@ HagelaarIonDiffusionBC::validParams()
   params.addParam<Real>(
       "user_velocity", -1., "Optional parameter if user wants to specify the thermal velocity.");
   params.addClassDescription("Kinetic electron boundary condition"
-                             "(Based on DOI:https://doi.org/10.1103/PhysRevE.62.1452)");
+                             " (Based on work of [Hagelaar et al.](https://doi.org/10.1103/PhysRevE.62.1452))");
   return params;
 }
 

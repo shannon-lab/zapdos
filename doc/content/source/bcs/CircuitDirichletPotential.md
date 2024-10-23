@@ -1,11 +1,5 @@
 # CircuitDirichletPotential
 
-!alert construction title=Undocumented Class
-The CircuitDirichletPotential has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /BCs/CircuitDirichletPotential
 
 ## Overview
@@ -32,9 +26,33 @@ Where $N_{A}$ is Avogadro's number, $l_{c}$ is the scaling factor of the mesh, a
 
 The charged flux is supplied as a [Postprocessor](syntax/Postprocessors/index.md) (usually the [`SideCurrent`](/postprocessors/SideCurrent.md) Postprocessor).
 
+!alert warning title=Untested Class
+The CircuitDirichletPotential does not have a formalized test, yet. For this reason,
+users should be aware of unforeseen bugs when using CircuitDirichletPotential. To
+report a bug or discuss future contributions to Zapdos, please refer to the
+[Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions).
+For standards of how to contribute to Zapdos and the MOOSE framework,
+please refer to the [MOOSE Contributing page](framework/contributing.md).
+
 ## Example Input File Syntax
 
 !! Describe and include an example of how to use the CircuitDirichletPotential object.
+
+```text
+[BCs]
+  [circuit_potential]
+    type = CircuitDirichletPotential
+    variable = potential
+    current = SideCurrent
+    position_units = 1.0
+    potential_units = V
+    resist = 100 #in Ohms
+    surface = anode
+    surfuce_potential = 100 #in V
+    boundary = 'electrode'
+  []
+[]
+```
 
 !syntax parameters /BCs/CircuitDirichletPotential
 

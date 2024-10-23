@@ -20,7 +20,7 @@ MatchedValueLogBC::validParams()
   params.addRequiredCoupledVar("v", "The variable whose value we are to match.");
   params.addClassDescription(
       "Henry’s Law like thermodynamic boundary condition for specifying a specie"
-      "concentration ratio at the gas-liquid interface");
+      " concentration ratio at the gas-liquid interface");
   return params;
 }
 

@@ -16,8 +16,7 @@ The outflow is defined as
 \cdot \textbf{n} \right]
 \end{equation}
 
-Where $\Gamma_{e}$ is the outflow of the electrons normal to the boundary, $\textbf{n}$ is the normal of the boundary, $n_{e}$ is the electron density, $n_{i}$ is the ion density, $k_{s}$ is thermal speed of the electrons, $\mu_{i}$ is the oion mobility coefficient, $\text{sign}_{i}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $V$ is the potential, and $\gamma$ is the ion induced secondary electron coefficient. When converting the density to log form and applying a scaling
-factor of the mesh, the strong form for `LymberopoulosElectronBC` is defined as
+Where $\Gamma_{e} \cdot \textbf{n}$ is the flux of the electrons normal to the boundary, $\textbf{n}$ is the normal of the boundary, $n_{e}$ is the electron density, $n_{i}$ is the ion density, $\mu_{i}$ is the ion mobility coefficient, $\text{sign}_{i}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $V$ is the electric potential, $\gamma$ is the ion induced secondary electron coefficient, and $k_{s}$ is electron surface recombination coefficient. For an electron sticking coefficient of unity, $k_{s}$ is equal to the thermal speed of the electrons. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `LymberopoulosElectronBC` is defined as
 
 \begin{equation}
 \Gamma_{e} \cdot \textbf{n} = k_{s} \exp(N_{e}) - \gamma \left[ \text{sign}_{i} \mu_{i} \exp(N_{i})

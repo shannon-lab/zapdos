@@ -1,11 +1,5 @@
 # DriftDiffusionDoNothingBC
 
-!alert construction title=Undocumented Class
-The DriftDiffusionDoNothingBC has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /BCs/DriftDiffusionDoNothingBC
 
 ## Overview
@@ -30,9 +24,28 @@ the potential. When converting the density to logarithmic form and applying a sc
 Where $N_{j}$ is the molar density of the species in logarithmic form and
 $l_{c}$ is the scaling factor of the mesh.
 
+!alert warning title=Untested Class
+The DriftDiffusionDoNothingBC does not have a formalized test, yet. For this reason,
+users should be aware of unforeseen bugs when using DriftDiffusionDoNothingBC. To
+report a bug or discuss future contributions to Zapdos, please refer to the
+[Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions).
+For standards of how to contribute to Zapdos and the MOOSE framework,
+please refer to the [MOOSE Contributing page](framework/contributing.md).
+
 ## Example Input File Syntax
 
 !! Describe and include an example of how to use the DriftDiffusionDoNothingBC object.
+
+```text
+[BCs]
+  [electron_gap_drift_diffusion]
+    type = DriftDiffusionDoNothingBC
+    variable = electrons
+    position_units = 1.0
+    boundary = 'gap'
+  []
+[]
+```
 
 !syntax parameters /BCs/DriftDiffusionDoNothingBC
 

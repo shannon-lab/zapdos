@@ -20,7 +20,7 @@ HagelaarIonAdvectionBC::validParams()
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Kinetic advective ion boundary condition"
-                             "(Based on DOI:https://doi.org/10.1103/PhysRevE.62.1452)");
+                             " (Based on work of [Hagelaar et al.](https://doi.org/10.1103/PhysRevE.62.1452))");
   return params;
 }
 

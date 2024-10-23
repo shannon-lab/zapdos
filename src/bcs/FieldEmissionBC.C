@@ -26,7 +26,8 @@ FieldEmissionBC::validParams()
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addParam<Real>("tau", 1e-9, "The time constant for ramping the boundary condition.");
   params.addParam<bool>("relax", false, "Use relaxation for emission.");
-  params.addClassDescription("The electron flux boundary condition due to field emission");
+  params.addClassDescription("The electron flux boundary condition due to field emission"
+                             " (Based on the works by Forbes [1](https://doi.org/10.1063/1.2354582) and [2](https://doi.org/10.1116/1.2827505))");
   return params;
 }
 

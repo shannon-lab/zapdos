@@ -28,6 +28,9 @@ SchottkyEmissionBC::validParams()
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addParam<Real>("tau", 1e-9, "The time constant for ramping the boundary condition.");
   params.addParam<bool>("relax", false, "Use relaxation for emission.");
+  params.addClassDescription(
+      "The electron flux boundary condition due to field ehanced thermionic emission (Schottky emission)"
+      " (Based on work by [Go](https://iopscience.iop.org/article/10.1088/0022-3727/46/3/035202))");
   return params;
 }
 

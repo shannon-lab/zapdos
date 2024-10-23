@@ -23,6 +23,8 @@ PotentialDriftOutflowBC::validParams()
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
 
   params.addParam<MooseEnum>("charge_sign", charge_sign, "The sign of the charged particle.");
+  params.addClassDescription(
+      "The drift flux boundary condition");
   return params;
 }
 

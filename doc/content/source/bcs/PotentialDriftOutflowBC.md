@@ -1,11 +1,5 @@
 # PotentialDriftOutflowBC
 
-!alert construction title=Undocumented Class
-The PotentialDriftOutflowBC has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /BCs/PotentialDriftOutflowBC
 
 ## Overview
@@ -18,17 +12,39 @@ The electrostatic electric field driven outflow is defined as
 \begin{equation}
 a =
 \begin{cases}
-1, & \text{sign}_{j} \ \text{-} \nabla (V) \cdot \textbf{n} > 0\\
-0, & \text{sign}_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \leq 0\\
+1, & \text{sign}_{j} \left( \text{-} \nabla (V) \right) \cdot \textbf{n} > 0\\
+0, & \text{sign}_{j} \left( \text{-} \nabla (V) \right) \cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
-\Gamma_{j} \cdot \textbf{n} = a \ \text{sign}_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \ n_{j}
+\Gamma_{j} \cdot \textbf{n} = a \ \text{sign}_{j} \left( \text{-} \nabla (V)\right) \cdot \textbf{n} \ n_{j}
 \end{equation}
 
+Where $\Gamma_{j}$ is the flux assuming drift-diffusion formulation, $\textbf{n}$ is the normal vector of the boundary, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species),
+$V$ is the potential, and $n_{j}$ is the density.
+
 When calculating with scaled densities and non-unity coefficients, please refer to [`HagelaarIonAdvectionBC`](/bcs/HagelaarIonAdvectionBC.md), [`DCIonBC`](/bcs/DCIonBC.md), or [`SakiyamaIonAdvectionBC`](/bcs/SakiyamaIonAdvectionBC.md).
+
+!alert warning title=Untested Class
+The PotentialDriftOutflowBC does not have a formalized test, yet. For this reason,
+users should be aware of unforeseen bugs when using PotentialDriftOutflowBC. To
+report a bug or discuss future contributions to Zapdos, please refer to the
+[Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions).
+For standards of how to contribute to Zapdos and the MOOSE framework,
+please refer to the [MOOSE Contributing page](framework/contributing.md).
 
 ## Example Input File Syntax
 
 !! Describe and include an example of how to use the PotentialDriftOutflowBC object.
+
+```text
+[BCs]
+  [Ion_electrode]
+    type = PotentialDriftOutflowBC
+    variable = ions
+    potential = potential
+    boundary = 'electrode'
+  []
+[]
+```
 
 !syntax parameters /BCs/PotentialDriftOutflowBC
 
