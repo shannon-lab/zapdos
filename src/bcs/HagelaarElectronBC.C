@@ -21,9 +21,8 @@ HagelaarElectronBC::validParams()
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
 
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-      "Kinetic electron boundary condition"
-      " (Based on [!cite](hagelaar2000boundary))");
+  params.addClassDescription("Kinetic electron boundary condition"
+                             " (Based on [!cite](hagelaar2000boundary))");
   return params;
 }
 

@@ -19,9 +19,8 @@ HagelaarIonAdvectionBC::validParams()
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-      "Kinetic advective ion boundary condition"
-      " (Based on [!cite](hagelaar2000boundary))");
+  params.addClassDescription("Kinetic advective ion boundary condition"
+                             " (Based on [!cite](hagelaar2000boundary))");
   return params;
 }
 

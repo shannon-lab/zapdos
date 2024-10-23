@@ -18,9 +18,8 @@ SakiyamaElectronDiffusionBC::validParams()
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-      "Kinetic electron boundary condition"
-      " (Based on [!cite](sakiyama2006corona))");
+  params.addClassDescription("Kinetic electron boundary condition"
+                             " (Based on [!cite](sakiyama2006corona))");
   return params;
 }
 

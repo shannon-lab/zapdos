@@ -20,9 +20,8 @@ HagelaarIonDiffusionBC::validParams()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<Real>(
       "user_velocity", -1., "Optional parameter if user wants to specify the thermal velocity.");
-  params.addClassDescription(
-      "Kinetic electron boundary condition"
-      " (Based on [!cite](hagelaar2000boundary))");
+  params.addClassDescription("Kinetic electron boundary condition"
+                             " (Based on [!cite](hagelaar2000boundary))");
   return params;
 }
 

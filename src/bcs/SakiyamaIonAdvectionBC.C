@@ -18,9 +18,8 @@ SakiyamaIonAdvectionBC::validParams()
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-      "Kinetic advective ion boundary condition"
-      " (Based on [!cite](sakiyama2006corona))");
+  params.addClassDescription("Kinetic advective ion boundary condition"
+                             " (Based on [!cite](sakiyama2006corona))");
   return params;
 }
 

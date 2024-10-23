@@ -29,9 +29,8 @@ EconomouDielectricBC::validParams()
       "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
 
-  params.addClassDescription(
-      "Dielectric boundary condition"
-      " (Based on [!cite](lymberopoulos1994modeling))");
+  params.addClassDescription("Dielectric boundary condition"
+                             " (Based on [!cite](lymberopoulos1994modeling))");
   return params;
 }
 

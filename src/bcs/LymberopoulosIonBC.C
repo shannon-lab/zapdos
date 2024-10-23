@@ -18,9 +18,8 @@ LymberopoulosIonBC::validParams()
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addClassDescription(
-      "Simpified kinetic ion boundary condition"
-      " (Based on [!cite](Lymberopoulos1993))");
+  params.addClassDescription("Simpified kinetic ion boundary condition"
+                             " (Based on [!cite](Lymberopoulos1993))");
   return params;
 }
 
