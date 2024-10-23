@@ -34,8 +34,6 @@ Where $N_{e}$, $N_{i}$ and $N_{\varepsilon}$ is the molar density of the electro
 
 ## Example Input File Syntax
 
-An example of how to use `SecondaryElectronBC` can be found in the
-test file `mean_en.i`.
 
 !listing test/tests/1d_dc/mean_en.i block=BCs/sec_electrons_left
 

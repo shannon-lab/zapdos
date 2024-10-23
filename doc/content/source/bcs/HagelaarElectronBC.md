@@ -47,8 +47,6 @@ $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 
-An example of how to use `HagelaarElectronBC` can be found in the
-test file `mean_en.i`.
 
 !listing test/tests/1d_dc/mean_en.i block=BCs/em_physical_right
 

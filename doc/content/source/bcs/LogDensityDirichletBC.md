@@ -17,8 +17,6 @@ number.
 
 ## Example Input File Syntax
 
-An example of how to use `LogDensityDirichletBC` can be found in the
-test file `RF_Plasma_actions.i`.
 
 !listing test/tests/DriftDiffusionAction/RF_Plasma_actions.i block=BCs/Ar*_physical_right_diffusion
 

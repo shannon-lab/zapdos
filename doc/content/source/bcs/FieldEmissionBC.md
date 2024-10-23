@@ -48,8 +48,6 @@ Where $N_{i}$ is the molar density of the specie in log form, $N_{A}$ is Avogadr
 
 ## Example Input File Syntax
 
-An example of how to use `FieldEmissionBC` can be found in the
-test file `field_emission.i`.
 
 !listing test/tests/field_emission/field_emission.i block=BCs/FieldEmission_left
 

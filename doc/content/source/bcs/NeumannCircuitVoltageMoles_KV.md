@@ -51,8 +51,6 @@ Where $N_{e}$, $N_{i}$ and $N_{\varepsilon}$ is the molar density of the electro
 
 ## Example Input File Syntax
 
-An example of how to use `NeumannCircuitVoltageMoles_KV` can be found in the
-test file `mean_en.i`.
 
 !listing test/tests/1d_dc/mean_en.i block=BCs/potential_left
 

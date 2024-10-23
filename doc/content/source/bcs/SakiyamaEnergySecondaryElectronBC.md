@@ -33,8 +33,6 @@ Where $N_{j}$ is the molar density of the species in log form and $l_{c}$ is the
 
 ## Example Input File Syntax
 
-An example of how to use `SakiyamaEnergySecondaryElectronBC` can be found in the
-test file `2D_RF_Plasma_actions.i`.
 
 !listing test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i block=BCs/mean_en_Ar+_second_emissions
 

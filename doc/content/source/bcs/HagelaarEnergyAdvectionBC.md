@@ -48,8 +48,6 @@ $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 
-An example of how to use `HagelaarEnergyAdvectionBC` can be found in the
-test file `Input.i`.
 
 !listing test/tests/reflections/Schottky_300_V_5_um/Input.i block=BCs/mean_en_physical_left
 

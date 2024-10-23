@@ -24,8 +24,6 @@ Where $\epsilon_{i}$ is the permittivity of the dielectric, $d_{i}$ is the thick
 
 ## Example Input File Syntax
 
-An example of how to use `EconomouDielectricBC` can be found in the
-test file `2D_RF_Plasma_actions.i`.
 
 !listing test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i block=BCs/potential_Dielectric
 

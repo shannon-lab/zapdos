@@ -23,8 +23,6 @@ Where $N$ is the molar density of the species in logarithmic form.
 
 ## Example Input File Syntax
 
-An example of how to use `ElectronTemperatureDirichletBC` can be found in the
-test file `2D_RF_Plasma_actions.i`.
 
 !listing test/tests/DriftDiffusionAction/RF_Plasma_actions.i block=BCs/mean_en_physical_right
 

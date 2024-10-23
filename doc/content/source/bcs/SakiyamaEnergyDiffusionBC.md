@@ -22,8 +22,6 @@ Where $N_{j}$ is the molar density of the species in log form.
 
 ## Example Input File Syntax
 
-An example of how to use `SakiyamaEnergyDiffusionBC` can be found in the
-test file `2D_RF_Plasma_actions.i`.
 
 !listing test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i block=BCs/mean_en_physical_diffusion
 
