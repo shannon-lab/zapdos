@@ -28,8 +28,7 @@ FieldEmissionBC::validParams()
   params.addParam<bool>("relax", false, "Use relaxation for emission.");
   params.addClassDescription(
       "The electron flux boundary condition due to field emission"
-      " (Based on the works by Forbes [1](https://doi.org/10.1063/1.2354582) and "
-      "[2](https://doi.org/10.1116/1.2827505))");
+      " (Based on [!cite](forbes2006simple) and [!cite](forbes2008physics))");
   return params;
 }
 

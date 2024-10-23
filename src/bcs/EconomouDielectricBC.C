@@ -31,7 +31,7 @@ EconomouDielectricBC::validParams()
 
   params.addClassDescription(
       "Dielectric boundary condition"
-      " (Based on work by [Lymberopoulos et al.](https://doi.org/10.1116/1.579300))");
+      " (Based on [!cite](lymberopoulos1994modeling))");
   return params;
 }
 

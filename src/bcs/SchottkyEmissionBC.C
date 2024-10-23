@@ -31,7 +31,7 @@ SchottkyEmissionBC::validParams()
   params.addClassDescription(
       "The electron flux boundary condition due to field ehanced thermionic emission (Schottky "
       "emission)"
-      " (Based on work by [Go](https://iopscience.iop.org/article/10.1088/0022-3727/46/3/035202))");
+      " (Based on [!cite](go2012theoretical))");
   return params;
 }
 

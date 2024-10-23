@@ -24,7 +24,7 @@ LymberopoulosElectronBC::validParams()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
       "Simpified kinetic electron boundary condition"
-      " (Based on work by [Lymberopoulos et al.](https://doi.org/10.1063/1.352926))");
+      " (Based on [!cite](Lymberopoulos1993))");
   return params;
 }
 
