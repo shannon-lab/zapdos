@@ -14,7 +14,5 @@
 // Begin the main program.
 int main(int argc, char *argv[])
 {
-  Moose::main<ZapdosTestApp>(argc, argv);
-
-  return 0;
+  return Moose::main<ZapdosTestApp>(argc, argv);
 }
