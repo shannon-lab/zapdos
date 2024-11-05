@@ -12,8 +12,8 @@ The electrostatic electric field driven outflow is defined as
 \begin{equation}
 a =
 \begin{cases}
-1, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} > 0\\
-0, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \leq 0\\
+1, & \mu_{j} \left( -\nabla V \right) \cdot \textbf{n} > 0\\
+0, & \mu_{j} \left( -\nabla V \right) \cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
 \Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j}
 \left( 
@@ -29,8 +29,8 @@ the electric potential. $a$ is defined such that the outflow is only non-zero wh
 \begin{equation}
 a =
 \begin{cases}
-1, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} > 0\\
-0, & \mu_{j} \ \text{-} \nabla (V) \cdot \textbf{n} \leq 0\\
+1, & \mu_{j} \left(- \nabla V \right) \cdot \textbf{n} > 0\\
+0, & \mu_{j} \left( - \nabla V \right) \cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
 \Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j} 
 \left( 

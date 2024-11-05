@@ -12,7 +12,7 @@ The electron temperature at the boundary is defined as
 T_{e} = \frac{2}{3} \frac{n_{\varepsilon}}{n_{e}}
 \end{equation}
 
-Where $T_{e}$ is the electron temperature, $n_{\varepsilon}$ is the electron mean energy density, and $n_{e}$ is the electron density. When converting the density to logarithmic form,
+Where $T_{e}$ is the electron temperature, $n_{\varepsilon}$ is the mean electron energy density, and $n_{e}$ is the electron density. When converting the density to logarithmic form,
 `ElectronTemperatureDirichletBC` is defined as
 
 \begin{equation}

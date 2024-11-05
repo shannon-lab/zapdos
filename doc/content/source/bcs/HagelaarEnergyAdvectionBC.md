@@ -23,7 +23,7 @@ a =
 \end{equation}
 
 
-Where $\Gamma_{\epsilon} \cdot \textbf{n}$ is the outflow of the electron energy density normal to the boundary, $\textbf{n}$ is the normal vector of the boundary, $n_{e}$ is the electron density, $n_{+}$ is the mean energy density, $\mu_{j}$ is the mobility coefficient, $V$ is the electric potential, $\epsilon_{\gamma}$ is the energy of the secondary electron, and $\gamma$ is the ion induced secondary electron coefficient. $a$ is defined such that the outflow is only defined when the drift velocity is direct towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling
+Where $\Gamma_{\epsilon} \cdot \textbf{n}$ is the outflow of the electron energy density normal to the boundary, $\textbf{n}$ is the normal vector of the boundary, $n_{e}$ is the electron density, $n_{+}$ is the mean energy density, $\mu_{j}$ is the mobility coefficient, $V$ is the electric potential, $\epsilon_{\gamma}$ is the energy of the secondary electron, and $\gamma$ is the ion induced secondary electron coefficient. $a$ is defined such that the outflow is only defined when the drift velocity is directed towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling
 factor of the mesh, the strong form for `HagelaarEnergyAdvectionBC` is defined as
 
 \begin{equation}

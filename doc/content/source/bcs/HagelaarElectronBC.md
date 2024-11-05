@@ -25,7 +25,7 @@ v_{\text{th},e} = \sqrt{\frac{8e}{\pi m_{e}} \frac{2}{3} \frac{n_{\varepsilon}}{
 
 Where $\Gamma_e \cdot \textbf{n}$ is the outflow normal to the boundary, $\textbf{n}$ is the normal of the boundary,
 $\mu_{e}$ is the mobility coefficient, $n_{e}$ is the electron density, $V$ is
-the electric potential, v_{\text{th},e} is the thermal velocity of the electrons, $e$ is the elementary charge, and $n_{\varepsilon}$ is the mean energy density. $a$ is defined such that the outflow is only defined when the drift velocity is direct towards the wall and zero otherwise. $r_e$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling
+the electric potential, $v_{\text{th},e}$ is the thermal velocity of the electrons, $e$ is the elementary charge, and $n_{\varepsilon}$ is the mean energy density. $a$ is defined such that the outflow is only defined when the drift velocity is directed towards the wall and zero otherwise. $r_e$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling
 factor of the mesh, the strong form for `HagelaarElectronBC` is defined as
 
 \begin{equation}

@@ -22,7 +22,7 @@ a =
 
 Where $\Gamma_e \cdot \textbf{n}$ is the outflow normal to the boundary, $n$ is the normal vector of the boundary,
 $\mu_{e}$ is the mobility coefficient, $n_{e}$ is the electron density, and $V$ is
-the electric potential. $a$ is defined such that the outflow is only defined when the drift velocity is direct towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling
+the electric potential. $a$ is defined such that the outflow is only defined when the drift velocity is directed towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling
 factor of the mesh, the strong form for `HagelaarElectronAdvectionBC` is defined as
 
 \begin{equation}

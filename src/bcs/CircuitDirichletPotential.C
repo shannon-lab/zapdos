@@ -36,7 +36,7 @@ CircuitDirichletPotential::validParams()
                         "For 1D calculations, an area has to be passed. This area also must "
                         "match the units convention of position_units.");
   params.addClassDescription("Dirichlet circuit boundary condition for potential"
-                             " (The current is given through an UserObject)");
+                             " (The current is given through a UserObject)");
   return params;
 }
 

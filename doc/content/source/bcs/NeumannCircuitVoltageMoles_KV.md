@@ -4,7 +4,7 @@
 
 ## Overview
 
-`NeumannCircuitVoltageMoles_KV` is a Neumann boundary condition the equates the plasma and drive potential to the plasma current using Kirchoff’s voltage law for a circuit.
+`NeumannCircuitVoltageMoles_KV` is a Neumann boundary condition that equates the plasma and drive potential to the plasma current using Kirchoff’s voltage law for a circuit.
 
 The Kirchoff’s voltage law at the cathode is defined as
 
@@ -13,7 +13,7 @@ V_\text{source} + V_\text{cathode} = e\left( \Gamma_{i} - \Gamma_{e}  \right) AR
 \end{equation}
 
 Where $V_\text{source}$ is the driven potential, $V_\text{cathode}$ is the potential at cathode,
-$e$ is the elemental charge , $\Gamma_i$ and $\Gamma_e$ are fluxes ions and electrons respectively, $A$ is the cross-sectional area of the plasma, and $R$ is the ballast resistance. Within `NeumannCircuitVoltageMoles_KV`, the charged species' flux at the boundary are assumed to be given by:
+$e$ is the elemental charge , $\Gamma_i$ and $\Gamma_e$ are the ion and and electron particle fluxes, respectively, $A$ is the cross-sectional area of the plasma, and $R$ is the ballast resistance. Within `NeumannCircuitVoltageMoles_KV`, the charged species' flux at the boundary is assumed to be given by:
 
 \begin{equation}
 a =
@@ -39,7 +39,7 @@ To convert Kirchoff’s voltage law into a Neumann type BC, the set of equations
 \nabla (V) \cdot \textbf{n} =\frac{\frac{1+r}{1-r}\left( \text{-} V_\text{source}-V_\text{cathode} \right) + \frac{1}{2} e \left[ v_{\text{th},e}\left( n_{e} - n_{\gamma} \right) - \left[(1-a)\gamma - 1\right]v_{\text{th},i}n_{i} \right] \ AR}{e \ \left[ (2a-1)\mu_{e} \left( n_{e} - n_{\gamma} \right) - (2a_{i}-1)\left[(a-1)\gamma - 1\right]\mu_{i}n_{i} \right] AR}
 \end{equation}
 
-When converting the density to logarithmic form and applying a scaling factor of the mesh and voltage, the strong form for `NeumannCircuitVoltageMoles_KV` is defined as
+When converting the density to logarithmic-molar form and applying a scaling factor of the mesh and voltage, the strong form for `NeumannCircuitVoltageMoles_KV` is defined as
 
 \begin{equation}
 v_{\text{th},e} = \sqrt{\frac{8e}{\pi m_{e}} \frac{2}{3} \exp (N_{\varepsilon} - N_{e})} \\[10pt]

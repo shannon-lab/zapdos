@@ -5,7 +5,7 @@
 ## Overview
 
 `ElectronDiffusionDoNothingBC` is an outflow boundary condition where the outflow at the
-boundary is equal to the bulk election diffusion equation.
+boundary is equal to the bulk electron diffusion equation.
 
 The outflow is defined as
 

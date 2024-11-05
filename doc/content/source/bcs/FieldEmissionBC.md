@@ -26,7 +26,7 @@ c = 1.439964e\text{-}9 : \text{units of} \ eV^{2} \ V^{-1} \ m
 Where $\textbf{J}_{\textbf{e}}$ is the electron current density, $a$ is the first Fowler–Nordheim constant, $\phi$ is the local work function, $F$ is the local field, $b$ is the second Fowler–Nordheim constant, $v(f)$ is a correction factor that depends on the scaled barrier field ($f$), $\textbf{n}$ is the normal vector of the boundary, $\gamma$ is the field enhancement factor, and $V$ is the potential. $a_{e}$ is defined such that the outflow is only defined when the drift velocity is direct towards the wall and zero otherwise. With the electron current density, the outward electron flux is defined as
 
 \begin{equation}
-\Gamma_{i} \cdot \textbf{n}  = \text{sign}_{i} \mu_{i} \ \text{-} \nabla (V) n_{i} - D_{i} \nabla (n_{i}) \\[10pt]
+\Gamma_{i} \cdot \textbf{n}  = \text{sign}_{i} \mu_{i} \left(- \nabla V\right) n_{i} - D_{i} \nabla (n_{i}) \\[10pt]
 \Gamma_{e} \cdot \textbf{n}  = \frac{2 (1 - a_{e})}{1 + r} (\text{-} (\textbf{J}_{\textbf{e}} \cdot \textbf{n})/e - \gamma_{se} \Gamma_{i} \cdot \textbf{n})
 \end{equation}
 
@@ -40,11 +40,11 @@ F =  \left( 1-a \right) \gamma \left( \text{-} \nabla V / l_{c} \right) \cdot \t
 a = 1.541434e\text{-}6 * V_{c}^{2} \\[10pt]
 b = 6.830890e9 / V_{c} \\[10pt]
 c = 1.439964e\text{-}9 * V_{c}\\[10pt]
-\Gamma_{i} \cdot \textbf{n}  = \text{sign}_{i} \mu_{i} \ \text{-} \nabla (V / l_{c}) \exp(N_{i}) - D_{i} \exp(N_{i}) \nabla (N_{i} / l_{c}) \\[10pt]
+\Gamma_{i} \cdot \textbf{n}  = \text{sign}_{i} \mu_{i} \left( - \nabla V / l_{c}\right) \exp(N_{i}) - D_{i} \exp(N_{i}) \nabla (N_{i} / l_{c}) \\[10pt]
 \Gamma_{e} \cdot \textbf{n}  = \frac{2 (1 - a)}{1 + r} (\text{-} (\textbf{J}_{\textbf{e}} \cdot \textbf{n})/ (e / N_{A}) - \gamma_{se} \Gamma_{i} \cdot \textbf{n})
 \end{equation}
 
-Where $N_{i}$ is the molar density of the specie in log form, $N_{A}$ is Avogadro's number, $V_{c}$ is the scaling factor of the potential, and $l_{c}$ is the scaling factor of the mesh.
+Where $N_{i}$ is the molar density of the species in log form, $N_{A}$ is Avogadro's number, $V_{c}$ is the scaling factor of the potential, and $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 

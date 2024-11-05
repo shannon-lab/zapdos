@@ -21,7 +21,7 @@ factor of the mesh, the strong form for `ElectronAdvectionDoNothingBC` is define
 \Gamma_{e} \cdot \textbf{n} = \text{-} \mu_{e} \exp(N_{e}) \left(  \text{-} \nabla (V / l_{c}) \right) \cdot \textbf{n}
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form and
+Where $N_{j}$ is the molar density of the species in logarithmic form and
 $l_{c}$ is the scaling factor of the mesh.
 
 !alert warning title=Untested Class
