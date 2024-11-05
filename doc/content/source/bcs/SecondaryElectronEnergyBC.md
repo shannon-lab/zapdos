@@ -8,10 +8,15 @@
 `SecondaryElectronEnergyBC` assumes the electrostatic approximation for the electric field.
 
 \begin{equation}
-a =
+a_{e} =
 \begin{cases}
 1, & \mu_{e} \left( \nabla (V) \right) \cdot \textbf{n} > 0\\
-0, & \mu_{j} \left( \text{-} \nabla (V) \right) \cdot \textbf{n} \leq 0\\
+0, & \mu_{e} \left( \nabla (V) \right)\cdot \textbf{n} \leq 0\\
+\end{cases} \\[10pt]
+a_{i} =
+\begin{cases}
+1, & \mu_{i} \left( - \nabla (V) \right) \cdot \textbf{n} > 0\\
+0, & \mu_{i} \left( - \nabla (V) \right)\cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
 \Gamma_{\epsilon} \cdot \textbf{n} = \frac{1 - r_{e}}{1 + r_{e}} \frac{\text{-}5}{6} v_{\text{th},e} n_{\gamma} \varepsilon_{\gamma} - \frac{5}{3} \frac{2}{1+r} (1 - a_{e}) \gamma \Gamma_{j} \cdot \textbf{n} \\[10pt]
 \Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j}

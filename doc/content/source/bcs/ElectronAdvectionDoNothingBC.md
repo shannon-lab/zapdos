@@ -5,7 +5,7 @@
 ## Overview
 
 `ElectronAdvectionDoNothingBC` is an outflow boundary condition where the outflow at the
-boundary is equal to the bulk election advection equation.
+boundary is equal to the bulk electron advection equation.
 `ElectronAdvectionDoNothingBC` assumes the electrostatic approximation for the electric field.
 
 The outflow is defined as

@@ -16,10 +16,15 @@ Where $V_\text{source}$ is the driven potential, $V_\text{cathode}$ is the poten
 $e$ is the elemental charge , $\Gamma_i$ and $\Gamma_e$ are the ion and and electron particle fluxes, respectively, $A$ is the cross-sectional area of the plasma, and $R$ is the ballast resistance. Within `NeumannCircuitVoltageMoles_KV`, the charged species' flux at the boundary is assumed to be given by:
 
 \begin{equation}
-a =
+a_{e} =
 \begin{cases}
 1, & \mu_{e} \left( \nabla (V) \right) \cdot \textbf{n} > 0\\
-0, & \mu_{i} \left( \text{-} \nabla (V) \right)\cdot \textbf{n} \leq 0\\
+0, & \mu_{e} \left( \nabla (V) \right)\cdot \textbf{n} \leq 0\\
+\end{cases} \\[10pt]
+a_{i} =
+\begin{cases}
+1, & \mu_{i} \left( - \nabla (V) \right) \cdot \textbf{n} > 0\\
+0, & \mu_{i} \left( - \nabla (V) \right)\cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
 \Gamma_{e} \cdot \textbf{n} = \frac{1-r_{e}}{1+r_{e}} \left[ -(2 a_{e}-1) \ \mu_{e} 
 \left(\text{-} \nabla (V) \right)
