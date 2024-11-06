@@ -34,7 +34,7 @@ NeumannCircuitVoltageMoles_KV::validParams()
   params.addRequiredParam<Real>("r",
                                 "The reflection coefficient applied to both electrons and ions");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-
+  params.addClassDescription("A Neumann boundary condition based on Kirchhoff's law of voltage");
   return params;
 }
 

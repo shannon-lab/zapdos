@@ -19,8 +19,8 @@ ElectronAdvectionDoNothingBC::validParams()
   params.addRequiredCoupledVar(
       "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredParam<Real>("position_units", "The units of position.");
-  params.addClassDescription("Boundary condition where the election advection flux at the boundary "
-                             "is equal to the bulk election advection equation");
+  params.addClassDescription("Boundary condition where the electron advection flux at the boundary "
+                             "is equal to the bulk electron advection equation");
   return params;
 }
 

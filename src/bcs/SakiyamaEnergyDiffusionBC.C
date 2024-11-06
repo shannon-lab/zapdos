@@ -19,7 +19,7 @@ SakiyamaEnergyDiffusionBC::validParams()
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Kinetic advective electron energy boundary condition"
-                             "(Based on DOI: https://doi.org/10.1116/1.579300)");
+                             " (Based on [!cite](sakiyama2007nonthermal))");
   return params;
 }
 

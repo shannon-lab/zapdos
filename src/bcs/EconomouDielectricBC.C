@@ -30,7 +30,7 @@ EconomouDielectricBC::validParams()
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
 
   params.addClassDescription("Dielectric boundary condition"
-                             "(Based on DOI: https://doi.org/10.1116/1.579300)");
+                             " (Based on [!cite](lymberopoulos1994modeling))");
   return params;
 }
 

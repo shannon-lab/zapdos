@@ -1,20 +1,28 @@
 # TM0PECVertBC
 
-!alert construction title=Undocumented Class
-The TM0PECVertBC has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /BCs/TM0PECVertBC
 
 ## Overview
 
-!! Replace these lines with information regarding the TM0PECVertBC object.
+`TM0PECVertBC` is a perfect electric conductor boundary condition of the azimuthal component of the magnetizing field. `TM0PECVertBC` assumes an axisymmetric transverse magnetic (TM) wave.
+
+The perfect electric conductor boundary condition of the azimuthal component of the magnetizing field normal to the antenna surface is
+
+\begin{equation}
+  \textbf{n} \times \left( \nabla \times \textbf{H} \right) = 0
+\end{equation}
+
+Where $\textbf{H}$ is the magnetizing field and $\textbf{n}$ is the normal vector of the boundary. By assuming the normal of azimuthal component of the magnetizing field to the surface is purely in the axial direction, the integrated boundary condition simplifies to
+
+\begin{equation}
+  \nabla \text{H}_{\theta} \cdot \textbf{n} = \frac{\text{-} \text{H}_{\theta}}{r}
+\end{equation}
+
+Where $H_{\phi}$ is the azimuthal component of the magnetizing field and $r$ is the radial distance from the axial centerline.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the TM0PECVertBC object.
+!listing test/tests/TM10_circular_wg/TM_steady_dieletric.i block=BCs/vert_wall
 
 !syntax parameters /BCs/TM0PECVertBC
 

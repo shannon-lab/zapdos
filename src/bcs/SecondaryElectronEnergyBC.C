@@ -25,6 +25,8 @@ SecondaryElectronEnergyBC::validParams()
   params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs", "A species-dependent list of secondary electron emission coefficients");
   params.addRequiredParam<Real>("secondary_electron_energy", "The secondary electron energy in eV");
+  params.addClassDescription(
+      "Kinetic secondary electron for mean electron energy boundary condition");
   return params;
 }
 
