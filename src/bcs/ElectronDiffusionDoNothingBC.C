@@ -17,8 +17,8 @@ ElectronDiffusionDoNothingBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("position_units", "Units of position");
-  params.addClassDescription("Boundary condition where the election diffusion flux at the boundary "
-                             "is equal to the bulk election diffusion equation");
+  params.addClassDescription("Boundary condition where the electron diffusion flux at the boundary "
+                             "is equal to the bulk electron diffusion equation");
   return params;
 }
 

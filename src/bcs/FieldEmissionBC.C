@@ -26,6 +26,9 @@ FieldEmissionBC::validParams()
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addParam<Real>("tau", 1e-9, "The time constant for ramping the boundary condition.");
   params.addParam<bool>("relax", false, "Use relaxation for emission.");
+  params.addClassDescription(
+      "The electron flux boundary condition due to field emission"
+      " (Based on [!cite](forbes2006simple) and [!cite](forbes2008physics))");
   return params;
 }
 
@@ -66,8 +69,8 @@ FieldEmissionBC::FieldEmissionBC(const InputParameters & parameters)
   }
 
   FE_a = 1.541434E-6 * std::pow(_voltage_scaling, 2); // A eV/kV^2 (if _voltage_scaling == 1000)
-  FE_b = 6.830890E9 / _voltage_scaling;          // kV/m-eV^1.5 (if _voltage_scaling == 1000)
-  FE_c = 1.439964E-9 * _voltage_scaling;         // eV^2*m/kV (if _voltage_scaling == 1000)
+  FE_b = 6.830890E9 / _voltage_scaling;               // kV/m-eV^1.5 (if _voltage_scaling == 1000)
+  FE_c = 1.439964E-9 * _voltage_scaling;              // eV^2*m/kV (if _voltage_scaling == 1000)
 
   _ip.resize(_num_ions);
   _ip_var.resize(_num_ions);

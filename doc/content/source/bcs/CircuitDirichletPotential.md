@@ -1,20 +1,58 @@
 # CircuitDirichletPotential
 
-!alert construction title=Undocumented Class
-The CircuitDirichletPotential has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /BCs/CircuitDirichletPotential
 
 ## Overview
 
-!! Replace these lines with information regarding the CircuitDirichletPotential object.
+`CircuitDirichletPotential` is a Dirichlet boundary condition for a potential based on Kirchoff's voltage law.
+
+The formulation of the potential at the wall is:
+
+\begin{equation}
+V_\text{source} + V_\text{cathode} = e \Gamma A R
+\end{equation}
+
+Where $V_\text{source}$ is driven the potential, $V_\text{cathode}$ is the potential at cathode,
+$\Gamma$ is the charged particle flux at the boundary, $e$ is the elemental charge, $A$ is the cross-sectional area of the plasma, and
+$R$ is the ballast resistance. When converting the density to log-molar form and applying a scaling factor for both the mesh and voltage,
+`CircuitDirichletPotential` is defined as
+
+\begin{equation}
+V_\text{source} + V_\text{cathode} = e N_{A} \Gamma \frac{A}{l_{c}^2} \frac{R}{V_{c}}
+\end{equation}
+
+Where $N_{A}$ is Avogadro's number, $l_{c}$ is the scaling factor of the mesh, and $V_{c}$ is the scaling factor of the potential.
+
+
+The charged particle flux is supplied as a [Postprocessor](syntax/Postprocessors/index.md) (usually the [`SideCurrent`](/postprocessors/SideCurrent.md) Postprocessor).
+
+!alert warning title=Untested Class
+The CircuitDirichletPotential does not have a formalized test, yet. For this reason,
+users should be aware of unforeseen bugs when using CircuitDirichletPotential. To
+report a bug or discuss future contributions to Zapdos, please refer to the
+[Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions).
+For standards of how to contribute to Zapdos and the MOOSE framework,
+please refer to the [MOOSE Contributing page](framework/contributing.md).
 
 ## Example Input File Syntax
 
 !! Describe and include an example of how to use the CircuitDirichletPotential object.
+
+```text
+[BCs]
+  [circuit_potential]
+    type = CircuitDirichletPotential
+    variable = potential
+    current = SideCurrent
+    position_units = 1.0
+    potential_units = V
+    resist = 100 #in Ohms
+    surface = anode
+    surface_potential = 100 #in V
+    boundary = 'electrode'
+  []
+[]
+```
 
 !syntax parameters /BCs/CircuitDirichletPotential
 

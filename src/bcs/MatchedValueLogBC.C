@@ -10,6 +10,8 @@
 
 #include "MatchedValueLogBC.h"
 
+registerMooseObject("ZapdosApp", MatchedValueLogBC);
+
 InputParameters
 MatchedValueLogBC::validParams()
 {
@@ -17,8 +19,8 @@ MatchedValueLogBC::validParams()
   params.addRequiredParam<Real>("H", "The ratio of liquid phase density to gas phase density");
   params.addRequiredCoupledVar("v", "The variable whose value we are to match.");
   params.addClassDescription(
-      "Henry’s Law like thermodynamic boundary condition for specifying a specie"
-      "concentration ratio at the gas-liquid interface");
+      "Henry’s Law like thermodynamic boundary condition for specifying a species"
+      " concentration ratio at the gas-liquid interface");
   return params;
 }
 

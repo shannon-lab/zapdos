@@ -1,20 +1,28 @@
 # TM0AntennaVertBC
 
-!alert construction title=Undocumented Class
-The TM0AntennaVertBC has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /BCs/TM0AntennaVertBC
 
 ## Overview
 
-!! Replace these lines with information regarding the TM0AntennaVertBC object.
+`TM0AntennaVertBC` is the boundary condition of the azimuthal component of the magnetizing field for a simple vertical antenna. `TM0AntennaVertBC` assumes an axisymmetric transverse magnetic (TM) wave, an incoming electric field of unity, and negligible current density compared to the displacement current.
+
+The boundary condition of the azimuthal component of the magnetizing field normal to the antenna surface is
+
+\begin{equation}
+  \textbf{n} \times \left( \nabla \times \textbf{H} \right) = j \omega \epsilon \textbf{E}
+\end{equation}
+
+Where $\textbf{H}$ is the magnetizing field, $\textbf{n}$ is the normal vector of the boundary, $\epsilon$ is the material permittivity, $\omega$ is the drive frequency of the system, $\textbf{E}$ is the electric field, and $j = \sqrt{-1}$. By assuming the normal of azimuthal component of the magnetizing field to the surface is purely in the axial direction and an incoming electric field of unity (such that $\textbf{E} = (1 - j)$), the integrated boundary condition simplifies to
+
+\begin{equation}
+  \nabla \text{H}_{\theta} \cdot \textbf{n} = \frac{\text{-} \text{H}_{\theta}}{r} + \omega \epsilon
+\end{equation}
+
+Where $H_{\phi}$ is the azimuthal component of the magnetizing field and $r$ is the radial distance from the axial centerline.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the TM0AntennaVertBC object.
+!listing test/tests/TM10_circular_wg/TM_steady_dieletric.i block=BCs/launcher
 
 !syntax parameters /BCs/TM0AntennaVertBC
 

@@ -1,20 +1,30 @@
 # ElectronTemperatureDirichletBC
 
-!alert construction title=Undocumented Class
-The ElectronTemperatureDirichletBC has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /BCs/ElectronTemperatureDirichletBC
 
 ## Overview
 
-!! Replace these lines with information regarding the ElectronTemperatureDirichletBC object.
+`ElectronTemperatureDirichletBC` is a type of [`PenaltyDirichletBC`](/bcs/ADPenaltyDirichletBC.md) for the electron temperature.
+
+The electron temperature at the boundary is defined as
+
+\begin{equation}
+T_{e} = \frac{2}{3} \frac{n_{\varepsilon}}{n_{e}}
+\end{equation}
+
+Where $T_{e}$ is the electron temperature, $n_{\varepsilon}$ is the mean electron energy density, and $n_{e}$ is the electron density. When converting the density to logarithmic form,
+`ElectronTemperatureDirichletBC` is defined as
+
+\begin{equation}
+T_{e} = \frac{2}{3} \exp (N_{\varepsilon} - N_{e})
+\end{equation}
+
+Where $N$ is the molar density of the species in logarithmic form.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the ElectronTemperatureDirichletBC object.
+
+!listing test/tests/DriftDiffusionAction/RF_Plasma_actions.i block=BCs/mean_en_physical_right
 
 !syntax parameters /BCs/ElectronTemperatureDirichletBC
 
