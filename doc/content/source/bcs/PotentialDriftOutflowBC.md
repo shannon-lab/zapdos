@@ -5,21 +5,21 @@
 ## Overview
 
 `PotentialDriftOutflowBC` is an electric field driven outflow boundary condition.
-`PotentialDriftOutflowBC` assumes a mobility coefficient of unity, the electrostatic approximation for the electric field, and a non-scaled version of the species' density.
+`PotentialDriftOutflowBC` assumes a mobility coefficient of unity and a non-scaled version of the species' density.
 
-The electrostatic electric field driven outflow is defined as
+The electric field driven outflow is defined as
 
 \begin{equation}
 a =
 \begin{cases}
-1, & \text{sign}_{j} \left( \text{-} \nabla (V) \right) \cdot \textbf{n} > 0\\
-0, & \text{sign}_{j} \left( \text{-} \nabla (V) \right) \cdot \textbf{n} \leq 0\\
+1, & \text{sign}_{j} \vec{E} \cdot \textbf{n} > 0\\
+0, & \text{sign}_{j} \vec{E} \cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
-\Gamma_{j} \cdot \textbf{n} = a \ \text{sign}_{j} \left( \text{-} \nabla (V)\right) \cdot \textbf{n} \ n_{j}
+\Gamma_{j} \cdot \textbf{n} = a \ \text{sign}_{j} \vec{E} \cdot \textbf{n} \ n_{j}
 \end{equation}
 
 Where $\Gamma_{j}$ is the flux assuming drift-diffusion formulation, $\textbf{n}$ is the normal vector of the boundary, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species),
-$V$ is the potential, and $n_{j}$ is the density.
+$\vec{E}$ is the electric field, and $n_{j}$ is the density.
 
 When calculating with scaled densities and non-unity coefficients, please refer to [`HagelaarIonAdvectionBC`](/bcs/HagelaarIonAdvectionBC.md), [`DCIonBC`](/bcs/DCIonBC.md), or [`SakiyamaIonAdvectionBC`](/bcs/SakiyamaIonAdvectionBC.md).
 

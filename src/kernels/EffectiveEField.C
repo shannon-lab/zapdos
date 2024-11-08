@@ -23,6 +23,7 @@ EffectiveEField::validParams()
   params.addParam<std::string>("field_property_name",
                                "field_solver_interface_property",
                                "Name of the solver interface material property.");
+  params.addClassDescription("Supplies the source term of the time derivative calculation of the effective electric field for ions.");
   return params;
 }
 
@@ -36,8 +37,6 @@ EffectiveEField::EffectiveEField(const InputParameters & parameters)
 {
 }
 
-// ADRealVectorValue
-// EffectiveEField::precomputeQpResidual()
 ADReal
 EffectiveEField::computeQpResidual()
 {

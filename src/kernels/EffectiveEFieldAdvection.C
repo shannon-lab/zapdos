@@ -20,6 +20,9 @@ EffectiveEFieldAdvection::validParams()
   params.addCoupledVar("v", 0, "y-Effective Efield"); // only required in 2D and 3D
   params.addCoupledVar("w", 0, "z-Effective Efield"); // only required in 3D
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addClassDescription(
+      "Effective electric field driven advection term. The effective electric field is supplied as "
+      "scalar components of the field. (Densities must be in logarithmic form.)");
   return params;
 }
 
@@ -39,6 +42,6 @@ EffectiveEFieldAdvection::computeQpResidual()
 {
   ADRealVectorValue Efield(_u_Efield[_qp], _v_Efield[_qp], _w_Efield[_qp]);
 
-  return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * Efield * _r_units *
-         -_grad_test[_i][_qp] * _r_units;
+  return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * Efield * _r_units * -_grad_test[_i][_qp] *
+         _r_units;
 }

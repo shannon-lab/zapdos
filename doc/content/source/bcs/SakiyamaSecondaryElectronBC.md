@@ -5,24 +5,23 @@
 ## Overview
 
 `SakiyamaSecondaryElectronBC` accounts for the mean electron energy density of secondary electrons induced by an ion flux outflow boundary condition.
-`SakiyamaSecondaryElectronBC` assumes the electrostatic approximation for the electric field.
 
 The ion induced secondary electron mean energy density outflow is defined as
 
 \begin{equation}
 a =
 \begin{cases}
-1, & \mu_{j} \left( \text{-} \nabla (V) \right) \cdot \textbf{n} > 0\\
-0, & \mu_{j} \left( \text{-} \nabla (V) \right) \cdot \textbf{n} \leq 0\\
+1, & \mu_{j} \vec{E} \cdot \textbf{n} > 0\\
+0, & \mu_{j} \vec{E} \cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
-\Gamma_{e} \cdot \textbf{n} = \gamma \left[a \ \mu_{j} \left( \text{-} \nabla (V) \right) \cdot \textbf{n} \ n_{j} \right]
+\Gamma_{e} \cdot \textbf{n} = \gamma \left[a \ \mu_{j} \vec{E} \cdot \textbf{n} \ n_{j} \right]
 \end{equation}
 
 Where $\Gamma_e \cdot \textbf{n}$ is the flux normal to the boundary, $\textbf{n}$ is the normal vector of the boundary,
-$\mu_{j}$ is the mobility coefficient, $n_{j}$ is the ion density, $\gamma$ is the secondary electron coefficient, and $V$ is the electric potential. $a$ is defined such that the outflow is only non-zero when the drift velocity is directed towards the wall and zero otherwise. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `SakiyamaSecondaryElectronBC` is defined as
+$\mu_{j}$ is the mobility coefficient, $n_{j}$ is the ion density, $\gamma$ is the secondary electron coefficient, and $\vec{E}$ is the electric field. $a$ is defined such that the outflow is only non-zero when the drift velocity is directed towards the wall and zero otherwise. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `SakiyamaSecondaryElectronBC` is defined as
 
 \begin{equation}
-\Gamma_{e} \cdot \textbf{n} = \gamma \left[a \ \mu_{j} \left( \text{-} \nabla (V / l_{c}) \right) \cdot \textbf{n} \ \exp(N_{j}) \right]
+\Gamma_{e} \cdot \textbf{n} = \gamma \left[a \ \mu_{j} \left( \vec{E} / l_{c} \right) \cdot \textbf{n} \ \exp(N_{j}) \right]
 \end{equation}
 
 Where $N_{j}$ is the molar density of the species in log form and $l_{c}$ is the scaling factor of the mesh.
