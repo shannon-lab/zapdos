@@ -1,20 +1,42 @@
 # SakiyamaIonAdvectionWithEffEfieldBC
 
-!alert construction title=Undocumented Class
-The SakiyamaIonAdvectionWithEffEfieldBC has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /BCs/SakiyamaIonAdvectionWithEffEfieldBC
 
 ## Overview
 
-!! Replace these lines with information regarding the SakiyamaIonAdvectionWithEffEfieldBC object.
+`SakiyamaIonAdvectionWithEffEfieldBC` is an electric field driven outflow boundary condition. The effective electric field is supplied as scalar componets of the field.
+
+The ion outflow is defined as
+
+\begin{equation}
+a =
+\begin{cases}
+1, & \mu_{j} \vec{E}_{\text{Eff.}} \cdot \textbf{n} > 0\\
+0, & \mu_{j} \vec{E}_{\text{Eff.}} \cdot \textbf{n} \leq 0\\
+\end{cases} \\[10pt]
+\Gamma_{j} \cdot \textbf{n} = a \ \mu_{j} \vec{E}_{\text{Eff.}} \cdot \textbf{n} \ n_{j}
+\end{equation}
+
+Where 
+
+- $\Gamma$ is the outflow normal to the boundary, 
+- $\textbf{n}$ is the normal of the boundary,
+- $\mu_{j}$ is the mobility coefficient, 
+- $n_{j}$ is the species density, 
+- $\vec{E}_{\text{Eff.}}$ is the electric field (supplied as scalar components), and
+- $a$ is defined such that the outflow is only non-zero when the drift velocity is directed towards the wall and zero otherwise. 
+
+When converting the density to log form and applying a scaling factor of the mesh, the strong form for `SakiyamaIonAdvectionWithEffEfieldBC` is defined as
+
+\begin{equation}
+\Gamma_{j} \cdot \textbf{n} = a \ \mu_{j} \left( \vec{E}_{\text{Eff.}} / l_{c} \right) \cdot \textbf{n} \ \exp(N_{j})
+\end{equation}
+
+Where $N_{j}$ is the molar density of the species in log form and $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the SakiyamaIonAdvectionWithEffEfieldBC object.
+!listing test/tests/mms/bcs/2D_IonBC.i block=BCs/ion_left_physical_advection
 
 !syntax parameters /BCs/SakiyamaIonAdvectionWithEffEfieldBC
 

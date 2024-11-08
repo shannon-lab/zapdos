@@ -6,11 +6,13 @@ InputParameters
 PlasmaDielectricConstant::validParams()
 {
   InputParameters params = ADMaterial::validParams();
-  params.addClassDescription("");
   params.addRequiredParam<Real>("electron_neutral_collision_frequency",
                                 "The electron-neutral collision frequency (in Hz).");
   params.addRequiredParam<Real>("driving_frequency", "Driving frequency of plasma (in Hz).");
   params.addRequiredCoupledVar("em", "Electron density coupled variable.");
+  params.addClassDescription(
+      "Provides the real and complex components, the spatial gradient, the first time derivative, "
+      "and second time derivative of the plasma dielectric.");
   return params;
 }
 

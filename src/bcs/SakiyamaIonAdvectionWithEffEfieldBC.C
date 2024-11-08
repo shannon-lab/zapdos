@@ -21,7 +21,7 @@ SakiyamaIonAdvectionWithEffEfieldBC::validParams()
   params.addCoupledVar("Ez", 0, "The EField in the z-direction"); // only required in 3D
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Kinetic advective ion boundary condition"
-                             "(Based on DOI: https://doi.org/10.1116/1.579300)");
+                             " (Based on [!cite](sakiyama2006corona))");
   return params;
 }
 

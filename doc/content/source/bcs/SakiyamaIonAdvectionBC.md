@@ -6,7 +6,7 @@
 
 `SakiyamaIonAdvectionBC` is an electric field driven outflow boundary condition.
 
-The ion induced secondary electron mean energy density outflow is defined as
+The ion density outflow is defined as
 
 \begin{equation}
 a =
