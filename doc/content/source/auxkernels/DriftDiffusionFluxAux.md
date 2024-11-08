@@ -5,16 +5,16 @@
 ## Overview
 
 `DriftDiffusionFluxAux` returns the simplified drift-diffusion flux of a species. `DriftDiffusionFluxAux`
-assumes a mobility and diffusion coefficient of unity, the electrostatic approximation for the electric field, and a non-scaled version of the specie's density.
+assumes a mobility and diffusion coefficient of unity and a non-scaled version of the specie's density.
 
-The electrostatic flux is defined as
+The flux is defined as
 
 \begin{equation}
-\Gamma_{j} =  \text{sign}_{j}  \left( \text{-}\nabla V\right) n_{j} - \nabla (n_{j})
+\Gamma_{j} =  \text{sign}_{j} \vec{E} n_{j} - \nabla (n_{j})
 \end{equation}
 
 Where $\Gamma_{j}$ is the flux assuming drift-diffusion formulation, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species),
-$V$ is the potential, and $n_{j}$ is the density.
+$\vec{E}$ is the electric field, and $n_{j}$ is the density.
 
 !alert note
 When calculating the drift-diffusion flux for scaled densities and non-unity coefficients, please refer to [`TotalFlux`](/auxkernels/TotalFlux.md).

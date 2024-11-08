@@ -4,20 +4,19 @@
 
 ## Overview
 
-`EFieldAdvAux` returns electric field driven advective flux of defined species in logarithmic form. `EFieldAdvAux`
-assumes the electrostatic approximation for the electric field.
+`EFieldAdvAux` returns electric field driven advective flux of defined species in logarithmic form.
 
 The advective flux is defined as
 
 \begin{equation}
-\Gamma_{\text{Advection}}  = \text{sign}_{j} \mu_{j} \left( \text{-} \nabla V\right) n_{j}
+\Gamma_{\text{Advection}}  = \text{sign}_{j} \mu_{j} \vec{E} n_{j}
 \end{equation}
 
-Where $\Gamma_{\text{Advection}}$ is the advective flux, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $\mu_{j}$ is the mobility coefficient, $V$ is the potential, and $n_{j}$ is the density. When converting the density to logarithmic form and applying a scaling factor of the mesh,
+Where $\Gamma_{\text{Advection}}$ is the advective flux, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $\mu_{j}$ is the mobility coefficient, $\vec{E}$ is the electric field, and $n_{j}$ is the density. When converting the density to logarithmic form and applying a scaling factor of the mesh,
 `EFieldAdvAux` is defined as
 
 \begin{equation}
-\Gamma_{\text{Advection}}  = N_{A} \text{sign}_{j} \mu_{j} \frac{\text{-} \nabla (V)}{l_{c}} \exp(N_{j})
+\Gamma_{\text{Advection}}  = N_{A} \text{sign}_{j} \mu_{j} \frac{\vec{E}}{l_{c}} \exp(N_{j})
 \end{equation}
 
 Where $N_{j}$ is the molar density of the specie in logarithmic form, $N_{A}$ is Avogadro's
