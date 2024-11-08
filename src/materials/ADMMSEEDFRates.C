@@ -24,6 +24,8 @@ ADMMSEEDFRates::validParams()
                                              "actual mean energy for the variables");
   params.addCoupledVar("mean_energy", "The electron mean energy in log form.");
   params.addCoupledVar("electrons", "The electron density.");
+  params.addClassDescription("Add material properties used for MMS verifications involving "
+                             "properties as a function of electron mean energy.");
   return params;
 }
 
@@ -40,8 +42,7 @@ ADMMSEEDFRates::ADMMSEEDFRates(const InputParameters & parameters)
   unsigned int num_deriv = _d_prop_values_actual_mean_en.size();
 
   if ((num_names != num_values) || (num_names != num_deriv) || (num_values != num_deriv))
-    mooseError(
-        "Number of prop_names, prop_values and d_prop_d_actual_mean_en much match.");
+    mooseError("Number of prop_names, prop_values and d_prop_d_actual_mean_en much match.");
 
   _num_props = num_names;
 
@@ -55,7 +56,6 @@ ADMMSEEDFRates::ADMMSEEDFRates(const InputParameters & parameters)
     _functions[i] = &getFunctionByName(_prop_values[i]);
     _deriv_functions[i] = &getFunctionByName(_d_prop_values_actual_mean_en[i]);
   }
-
 }
 
 void
@@ -78,7 +78,7 @@ ADMMSEEDFRates::computeQpFunctions()
     (*_properties[i])[_qp].value() = (*_functions[i]).value(_t, _q_point[_qp]);
 
     (*_properties[i])[_qp].derivatives() = (*_deriv_functions[i]).value(_t, _q_point[_qp]) *
-                                            std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
-                                            (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
+                                           std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+                                           (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
   }
 }

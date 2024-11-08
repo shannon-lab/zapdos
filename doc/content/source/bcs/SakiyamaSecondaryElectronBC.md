@@ -4,9 +4,9 @@
 
 ## Overview
 
-`SakiyamaSecondaryElectronBC` accounts for the mean electron energy density of secondary electrons induced by an ion flux outflow boundary condition.
+`SakiyamaSecondaryElectronBC` accounts for the electron density of secondary electrons induced by an ion flux outflow boundary condition.
 
-The ion induced secondary electron mean energy density outflow is defined as
+The ion induced secondary electron density outflow is defined as
 
 \begin{equation}
 a =

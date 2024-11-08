@@ -1,20 +1,14 @@
 # ADMMSEEDFRates
 
-!alert construction title=Undocumented Class
-The ADMMSEEDFRates has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Materials/ADMMSEEDFRates
 
 ## Overview
 
-!! Replace these lines with information regarding the ADMMSEEDFRates object.
+`ADMMSEEDFRates` supplies the electron mean energy dependent coefficients for a user-specifed function for the purposes of methods of manufactured solutions (MMS) verification. This object also calculates the derivative of the electron mean energy dependent coefficients with respect to the electron density and the electron energy density.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the ADMMSEEDFRates object.
+!listing test/tests/mms/continuity_equations/2D_Coupling_Electons_Potential_Ions_MeanEnergy.i block=Materials/Material_Coeff_Set2
 
 !syntax parameters /Materials/ADMMSEEDFRates
 
