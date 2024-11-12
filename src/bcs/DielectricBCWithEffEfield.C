@@ -29,6 +29,8 @@ DielectricBCWithEffEfield::validParams()
   params.addParam<Real>("users_gamma",
                         "A secondary electron emission coeff. only used for this BC.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
+  params.addClassDescription("Time integrated dielectric boundary condition"
+                             " (Based on [!cite](lymberopoulos1994modeling))");
   return params;
 }
 
