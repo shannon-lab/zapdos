@@ -27,7 +27,6 @@ public:
   virtual Real computeValue() override;
 
 protected:
-
   /// First body variable
   const VariableValue & _v;
   /// Second body variable

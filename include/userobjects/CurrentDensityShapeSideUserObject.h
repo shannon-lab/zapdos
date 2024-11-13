@@ -56,7 +56,6 @@ public:
   ///@}
 
 protected:
-
   /// Term that represents the value of the side integral
   Real _integral;
   /// Term that represents the Jacobian

@@ -117,7 +117,6 @@ HeavySpeciesTempl<is_ad>::computeQpProperties()
     _diffHeavy[_qp] =
         0.004 * _time_units / (760. * _p_gas[_qp] / 1.01E5); // covert to m^2 and include press
   }
-
 }
 
 template class HeavySpeciesTempl<false>;

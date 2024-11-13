@@ -33,7 +33,6 @@ public:
   virtual Real computeQpJacobian(Moose::ConstraintJacobianType type);
 
 protected:
-
   /// Scaling factor
   const Real _scaling;
   /// Ratio of secondary to primary variable

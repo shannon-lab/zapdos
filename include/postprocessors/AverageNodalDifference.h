@@ -30,7 +30,6 @@ public:
   virtual void threadJoin(const UserObject & y) override;
 
 protected:
-
   /// The coupled variable used to determined the difference
   const VariableValue & _other_var;
   /// The sum of the square of the difference

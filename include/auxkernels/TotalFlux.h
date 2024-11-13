@@ -27,7 +27,7 @@ protected:
   const int _component;
   /// Coupled density variable
   const MooseVariable & _density_var;
-   /// Value of the coupled density variable
+  /// Value of the coupled density variable
   const VariableValue & _density_log;
   /// Gradient of the coupled density variable
   const VariableGradient & _grad_density_log;

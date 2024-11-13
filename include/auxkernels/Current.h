@@ -27,7 +27,6 @@ public:
   virtual Real computeValue() override;
 
 protected:
-
   /// The component of the current
   const int _component;
   /// The scaling units for the position
