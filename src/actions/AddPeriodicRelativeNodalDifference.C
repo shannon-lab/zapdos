@@ -57,7 +57,7 @@ AddPeriodicRelativeNodalDifference::validParams()
       "starting_cycle", 0.0, "The number of the cycles before starting the difference calculation");
   params.addRequiredParam<Real>("cycle_frequency", "The cycle's frequency in Hz");
   params.addParam<Real>(
-      "num_cycles", 2000.0, "The number of cycles to calculation the difference for.");
+      "num_cycles", 2000.0, "The number of cycles to calculate the difference.");
   params.addParam<std::vector<SubdomainName>>(
       "block", {}, "The subdomain that this action applies to.");
   params.addClassDescription(

@@ -80,7 +80,6 @@ GasBase::GasBase(const InputParameters & parameters)
 
     _muem(declareADProperty<Real>("muem")),
     _diffem(declareADProperty<Real>("diffem")),
-    _rate_coeff_ion(declareProperty<Real>("rate_coeff_ion")),
     _Eiz(declareProperty<Real>("Eiz")),
     _Eex(declareProperty<Real>("Eex")),
     _mumean_en(declareADProperty<Real>("mumean_en")),
@@ -97,24 +96,11 @@ GasBase::GasBase(const InputParameters & parameters)
 
     _se_energy(declareProperty<Real>("se_energy")),
 
-    _ElectronTotalFluxMag(declareProperty<Real>("ElectronTotalFluxMag")),
-    _ElectronTotalFluxMagSizeForm(declareProperty<Real>("ElectronTotalFluxMagSizeForm")),
-    _ElectronTotalFlux(declareProperty<Real>("ElectronTotalFlux")),
-    _ElectronAdvectiveFlux(declareProperty<Real>("ElectronAdvectiveFlux")),
-    _ElectronDiffusiveFlux(declareProperty<Real>("ElectronDiffusiveFlux")),
-    _IonTotalFlux(declareProperty<Real>("IonTotalFlux")),
-    _IonAdvectiveFlux(declareProperty<Real>("IonAdvectiveFlux")),
-    _IonDiffusiveFlux(declareProperty<Real>("IonDiffusiveFlux")),
-    _Source_term(declareProperty<Real>("Source_term")),
-    _Source_term_coeff(declareProperty<Real>("Source_term_coeff")),
     _e(declareProperty<Real>("e")),
     _eps(declareProperty<Real>("eps")),
-    _Tem_lfa(declareProperty<Real>("Tem_lfa")),
-    _Tip_lfa(declareProperty<Real>("Tip_lfa")),
+
     _k_boltz(declareProperty<Real>("k_boltz")),
     _Avogadro(declareProperty<Real>("Avogadro")),
-    _vthermal_em(declareProperty<Real>("vthermal_em")),
-    _vthermal_ip(declareProperty<Real>("vthermal_ip")),
     _iz_coeff_efield_a(declareProperty<Real>("iz_coeff_efield_a")),
     _iz_coeff_efield_b(declareProperty<Real>("iz_coeff_efield_b")),
     _iz_coeff_efield_c(declareProperty<Real>("iz_coeff_efield_c")),
@@ -133,8 +119,7 @@ GasBase::GasBase(const InputParameters & parameters)
     _diffpotential(declareADProperty<Real>("diffpotential")),
     _actual_mean_energy(declareADProperty<Real>("actual_mean_energy")),
     _Tem(declareADProperty<Real>("Tem")),
-    _diffu(declareProperty<Real>("diffu")),
-    _sgnu(declareProperty<Real>("sgnu")),
+
     _T_gas(declareProperty<Real>("T_gas")),
     _p_gas(declareProperty<Real>("p_gas")),
     _n_gas(declareProperty<Real>("n_gas")),

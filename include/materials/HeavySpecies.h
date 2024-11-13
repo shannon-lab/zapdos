@@ -11,9 +11,11 @@
 #pragma once
 
 #include "Material.h"
-/* #include "LinearInterpolation.h" */
 #include "SplineInterpolation.h"
 
+/*
+ *  Material properties of ions
+ */
 template <bool is_ad>
 class HeavySpeciesTempl : public Material
 {
@@ -25,29 +27,37 @@ public:
 protected:
   virtual void computeQpProperties() override;
 
+  /// User defined ion mass
   Real _user_massHeavy;
+  /// User defined charge sign of ion
   Real _user_sgnHeavy;
-  // Real _user_T_gas;
-  // Real _user_p_gas;
+  /// Scaling units for the potential (V or kV)
   std::string _potential_units;
+  /// Scaling value for the potential
   Real _voltage_scaling;
 
-  MaterialProperty<Real> & _massHeavy;                      // Replaces _massArp
-  GenericMaterialProperty<Real, is_ad> & _temperatureHeavy; // Replaces _tempArp
-  MaterialProperty<Real> & _sgnHeavy;                       // Replaces _sgnArp (unused though)
-  GenericMaterialProperty<Real, is_ad> & _muHeavy;          // Replaces _muArp
-  GenericMaterialProperty<Real, is_ad> & _diffHeavy;        // Replaces _diffArp
+  /// Ion mass
+  MaterialProperty<Real> & _massHeavy;
+  /// Ion temperature                      
+  GenericMaterialProperty<Real, is_ad> & _temperatureHeavy;
+  /// Charge sign of ion
+  MaterialProperty<Real> & _sgnHeavy;
+  /// Ion mobility coefficient                   
+  GenericMaterialProperty<Real, is_ad> & _muHeavy;
+  /// Ion diffusion coefficient        
+  GenericMaterialProperty<Real, is_ad> & _diffHeavy;        
 
+  /// Neutal gas temperature
   const MaterialProperty<Real> & _T_gas;
+  /// Neutal gas density
   const MaterialProperty<Real> & _p_gas;
 
+  /// Time units
   Real _time_units;
+  /// If true, calculate mobility coefficient assuming argon ions
   bool _calc_mobility;
+  /// If true, calculate diffusion coefficient assuming argon ions
   bool _calc_diffusivity;
-
-  // MaterialProperty<Real> & _T_gas;
-  // MaterialProperty<Real> & _p_gas;  // Replace with gas fraction?
-  // MaterialProperty<Real> & _n_gas;
 };
 
 typedef HeavySpeciesTempl<false> HeavySpecies;
