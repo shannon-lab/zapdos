@@ -17,20 +17,13 @@ InterfaceAdvection::validParams()
 {
   InputParameters params = ADInterfaceKernel::validParams();
   params.addRequiredCoupledVar("potential_neighbor",
-                               "The potential on the slave side of the interface.");
-  params.addRequiredCoupledVar("mean_en_neighbor",
-                               "The log of the product of the mean energy and "
-                               "electron density on the slave side of the "
-                               "interface.");
+                               "The potential on the neighboring side of the interface.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<Real>("neighbor_position_units",
                                 "The units of position in the neighboring domain.");
   params.addClassDescription(
       "Used to include the electric field driven advective flux of species"
-      "into or out of a neighboring subdomain. Currently this interface kernel"
-      "is specific to electrons because the transport coefficients are assumed"
-      "to be a function of the mean electron energy. A generic interface"
-      "kernel with constant transport coefficients will have a much simpler Jacobian");
+      "into or out of a neighboring subdomain.");
   return params;
 }
 
@@ -41,8 +34,6 @@ InterfaceAdvection::InterfaceAdvection(const InputParameters & parameters)
 
     _potential_neighbor_var(*getVar("potential_neighbor", 0)),
     _grad_potential_neighbor(_potential_neighbor_var.adGradSlnNeighbor()),
-    _mean_en_neighbor_var(*getVar("mean_en_neighbor", 0)),
-    _mean_en_neighbor(_mean_en_neighbor_var.adSlnNeighbor()),
 
     _mu_neighbor(getNeighborADMaterialProperty<Real>("mu" + _neighbor_var.name())),
     _sgn_neighbor(getNeighborMaterialProperty<Real>("sgn" + _neighbor_var.name()))

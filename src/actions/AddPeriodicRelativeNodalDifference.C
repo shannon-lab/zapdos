@@ -62,7 +62,7 @@ AddPeriodicRelativeNodalDifference::validParams()
       "block", {}, "The subdomain that this action applies to.");
   params.addClassDescription(
       "This Action automatically adds the necessary objects to calculate the relative"
-      " periodic difference. Relative Difference will be outputted as an Postprocessor named: "
+      " periodic difference. Relative Difference will be outputted as a Postprocessor named: "
       "'var'_periodic_difference");
 
   return params;

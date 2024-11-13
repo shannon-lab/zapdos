@@ -13,7 +13,9 @@
 #include "ADInterfaceKernel.h"
 
 /**
- * DG kernel for interfacing diffusion between two variables on adjacent blocks
+ * DG kernel for interfacing of the axial electic field on adjacent blocks.
+ * The axial electic field is relate to the azmithal magnetic flux 
+ * through using Ampère–Maxwell law.
  */
 class HphiRadialInterface : public ADInterfaceKernel
 {
@@ -25,6 +27,8 @@ public:
 protected:
   virtual ADReal computeQpResidual(Moose::DGResidualType type) override;
 
+  /// The relative permittivity of the neighboring domain
   const ADMaterialProperty<Real> & _eps_r_neighbor;
+  /// The relative permittivity of the main domain
   const ADMaterialProperty<Real> & _eps_r;
 };

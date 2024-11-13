@@ -12,6 +12,9 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Normalize variables expressed in log form
+ */
 class DensityNormalization : public AuxKernel
 {
 public:
@@ -22,8 +25,15 @@ public:
 protected:
   virtual Real computeValue() override;
 
+  /// Coupled density value
   const VariableValue & _density;
-  const Real * _pp_on_source;
+
+  /// Denominator to normalize to
+  const Real * _pp_on_source; 
+  
+  /// A factor to shift the normilization by
   const Real * _shift;
+
+  /// A factor to multiple the normilization by
   Real _normal_factor;
 };

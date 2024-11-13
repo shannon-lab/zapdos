@@ -13,7 +13,8 @@
 #include "ADNodalBC.h"
 
 /**
- * Implements a simple coupled boundary condition where u=v on the boundary.
+ *  Henry’s Law like thermodynamic boundary condition for specifying a specie
+ *  concentration ratio at the gas-liquid interface
  */
 class MatchedValueLogBC : public ADNodalBC
 {
@@ -25,7 +26,8 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Couple variable to match at the boundary
   const ADVariableValue & _v;
-
+  /// Ratio of liquid phase density to gas phase density
   const Real _H;
 };

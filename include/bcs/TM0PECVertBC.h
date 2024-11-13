@@ -12,6 +12,9 @@
 
 #include "ADIntegratedBC.h"
 
+/*
+ *  A perfect electric conductor BC of the azimuthal component of the magnetizing field.
+ */
 class TM0PECVertBC : public ADIntegratedBC
 {
 public:

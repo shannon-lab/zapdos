@@ -12,8 +12,10 @@
 
 #include "ADIntegratedBC.h"
 
-// This diffusion kernel should only be used with species whose values are in the logarithmic form.
-
+/**
+ *  Boundary condition where the election diffusion flux at the boundary
+ *  is equal to the bulk election diffusion equation
+ */
 class ElectronDiffusionDoNothingBC : public ADIntegratedBC
 {
 public:
@@ -24,7 +26,8 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Scaling units for the position
   const Real _r_units;
-
+  /// Diffusion coefficient electrons
   const ADMaterialProperty<Real> & _diffem;
 };

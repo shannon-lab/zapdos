@@ -12,14 +12,12 @@
 
 #include "ElementVariablePostprocessor.h"
 
-/// A postprocessor for collecting the nodal min or max value
+/*
+ *  Returns the inverse of the peak electron frequency
+ */
 class PlasmaFrequencyInverse : public ElementVariablePostprocessor
 {
 public:
-  /**
-   * Class constructor
-   * @param parameters The input parameters
-   */
   PlasmaFrequencyInverse(const InputParameters & parameters);
 
   static InputParameters validParams();
@@ -31,12 +29,14 @@ public:
   virtual void threadJoin(const UserObject & y) override;
 
 protected:
-  /// Get the extreme value at each quadrature point
   virtual void computeQpValue() override;
 
-  /// The extreme value
+  /// Value of the electron density in units of #/m^3
   Real _value;
+  /// Coupled electron density variable
   Real _em_density;
+  /// True if molar density is used
   bool _use_moles;
+  /// The inverse of the plasma frequency
   Real _inverse;
 };

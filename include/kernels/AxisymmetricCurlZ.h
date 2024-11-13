@@ -12,6 +12,9 @@
 
 #include "ADKernel.h"
 
+/**
+ *  The Z-component of an axisymmetric curl
+ */
 class AxisymmetricCurlZ : public ADKernel
 {
 public:

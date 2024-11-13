@@ -12,6 +12,9 @@
 
 #include "ADKernel.h"
 
+/**
+ *  The axisymmetric wave equation for the axial component of the electric field
+ */
 class TM0CylindricalEz : public ADKernel
 {
 public:
@@ -22,10 +25,16 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Angular frequency
   const Real _omega;
+  /// Relative permittivity
   const ADMaterialProperty<Real> & _eps_r;
+  /// Permeability of free space
   const Real _mu0;
+  /// Permittivity of free space
   const Real _eps0;
+  /// Azimuthal component of magnetic field 
   const ADVariableValue & _Hphi;
+  /// Gradient of azimuthal component of magnetic field 
   const ADVariableGradient & _grad_Hphi;
 };

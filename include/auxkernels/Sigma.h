@@ -12,6 +12,10 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Calculates the surface charge due to a simplified version of the ion flux 
+ *  to a boundary
+ */
 class Sigma : public AuxKernel
 {
 public:
@@ -23,7 +27,10 @@ public:
   virtual Real computeValue() override;
 
 protected:
+  /// Variable value during previous time step
   const VariableValue & _u_old;
+  /// Coupled ion density
   const VariableValue & _n;
+  /// Gradient of the coupled potential
   const VariableGradient & _grad_potential;
 };

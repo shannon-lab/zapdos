@@ -12,6 +12,9 @@
 
 #include "ADIntegratedBC.h"
 
+/**
+ *  Electric field driven outflow boundary condition
+ */
 class DCIonBC : public ADIntegratedBC
 {
 public:
@@ -22,14 +25,14 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Scaling units for the position
   const Real _r_units;
-
-  /// Coupled variables
+  /// Gradient of the coupled potential
   const ADVariableGradient & _grad_potential;
-
-  /// Material properties
+  /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
+  /// Charge sign of the species
   const MaterialProperty<Real> & _sgn;
-
+  /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise
   Real _a;
 };

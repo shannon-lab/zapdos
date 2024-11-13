@@ -12,6 +12,9 @@
 
 #include "ADIntegratedBC.h"
 
+/**
+ *  Simpified kinetic electron boundary condition
+ */
 class LymberopoulosElectronBC : public ADIntegratedBC
 {
 public:
@@ -22,18 +25,26 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Scaling units for the position
   const Real _r_units;
+  /// Recombination coefficient (in units of m/s)
   const Real _ks;
+  /// secondary electron coefficients
   const std::vector<Real> _gamma;
+  /// Number of ions defined
   const unsigned int _num_ions;
 
   // Coupled variables
   const ADVariableGradient & _grad_potential;
+  /// Ion density variables
   std::vector<MooseVariable *> _ion_var;
+  /// Ion density values
   std::vector<const ADVariableValue *> _ion;
 
+  /// Charge sign of the ions
   std::vector<const MaterialProperty<Real> *> _sgnion;
+  /// Mobility coefficient of the ions
   std::vector<const ADMaterialProperty<Real> *> _muion;
-
+  /// Ion flux
   ADRealVectorValue _ion_flux;
 };

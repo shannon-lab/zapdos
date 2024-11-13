@@ -12,6 +12,9 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Calculates the radial E-field for an axisymmetric TM_0 wave
+ */
 class TM0CylindricalErAux : public AuxKernel
 {
 public:
@@ -23,9 +26,12 @@ protected:
   virtual Real computeValue() override;
 
 private:
+  /// Gradient of the azimuthal component of the magnetic field 
   const VariableGradient & _grad_Hphi;
-
+  /// Angular frequency of the wave
   Real _omega;
+  /// Relative permittivity of the medium
   Real _eps_r;
+  /// Permittivity of free space
   Real _eps0;
 };

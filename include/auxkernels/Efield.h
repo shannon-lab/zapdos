@@ -13,7 +13,7 @@
 #include "AuxKernel.h"
 
 /**
- * Constant auxiliary value
+ *  Returns the defined component of the electric field
  */
 class Efield : public AuxKernel
 {
@@ -25,18 +25,16 @@ public:
   virtual ~Efield() {}
 
 protected:
-  /**
-   * AuxKernels MUST override computeValue.  computeValue() is called on
-   * every quadrature point.  For Nodal Auxiliary variables those quadrature
-   * points coincide with the nodes.
-   */
   virtual Real computeValue() override;
 
+  /// Component of the electric field
   int _component;
+  /// Scaling units for the position
   Real _r_units;
+  /// Scaling units for the potential (V or kV)
   std::string _potential_units;
-
-  /// The gradient of a coupled variable
+  /// Gradient of a coupled potential
   const VariableGradient & _grad_potential;
+  /// Scaling value for the potential
   Real _voltage_scaling;
 };

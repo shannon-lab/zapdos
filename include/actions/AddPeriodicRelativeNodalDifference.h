@@ -13,6 +13,11 @@
 #include "AddVariableAction.h"
 #include "Action.h"
 
+/*
+ *  This Action automatically adds the necessary objects to calculate the relative
+ *  periodic difference. Relative Difference will be outputted as a Postprocessor named:
+ *  'var'_periodic_difference
+ */
 class AddPeriodicRelativeNodalDifference : public Action
 {
 public:
@@ -23,31 +28,47 @@ public:
   virtual void act();
 
 protected:
+  /// Function for setting ICs for the previous and sudo previous solutions
   virtual void addPerviousSolutionsIC(const std::string & variable_name, const Real & initial);
+  /// Function for setting AuxKernels for the previous and sudo previous solutions
   virtual void addPerviousSolutionsKernels(const std::string & variable_name,
                                            const std::string & var_old_name);
+  /// Function for setting AuxKernels to normalize solutions
   virtual void addNormalizationKernels(const std::string & variable_name,
                                        const std::string & source,
                                        const std::string & averaged,
                                        const bool & log);
+  /// Function for setting Postprocessor to take to nodal average
   virtual void addAverageNodalPP(const std::string & variable_name, const bool & log);
+  /// Function for setting Postprocessor to take to average nodal difference
   virtual void addRelativePeriodicDiffPP(const std::string & variable_name,
                                          const std::string & var_old_name,
                                          const std::string & name);
+  /// Function that adds a 'TimePeriod' controller to begin calculating the relative periodic difference
   virtual void AddTimePeriod(const std::vector<std::string> & objects,
                              const std::vector<Real> & start_times,
                              const std::vector<Real> & end_times,
                              const std::string & name_num,
                              const bool & first_controller);
 
+  /// The starting time to begin calculating the relative periodic difference
   Real _start_time;
+  /// The period of the cycle
   Real _period;
+  /// The number of cycles to calculate the difference
   Real _num_controller_set;
 
+  /// The name of objects to enable at the start of the cycle
   std::vector<std::string> _enable_start;
+  /// The name of objects to enable at the end of the cycle
   std::vector<std::string> _enable_end;
+
+  /// The array that holds the start times for objects that are enable at the start of the cycle
   std::vector<Real> _enable_start_start_time_index;
+  /// The array that holds the end times for objects that are enable at the start of the cycle
   std::vector<Real> _enable_start_end_time_index;
+  /// The array that holds the start times for objects that are enable at the end of the cycle
   std::vector<Real> _enable_end_start_time_index;
+  /// The array that holds the end times for objects that are enable at the end of the cycle
   std::vector<Real> _enable_end_end_time_index;
 };

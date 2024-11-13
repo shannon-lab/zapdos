@@ -12,6 +12,9 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Kernel for adding charged sources to Poisson’s equation
+ */
 class ChargeSourceMoles_KV : public ADKernel
 {
 public:
@@ -22,16 +25,20 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  /// Coupled variable
+  /// Coupled charge density variable
   MooseVariable & _charged_var;
+  /// Coupled charge density value
   const ADVariableValue & _charged;
 
-  /// Material properties (regular because these are constants)
+  /// Elementary charge
   const MaterialProperty<Real> & _e;
+  /// Charge sign of the species
   const MaterialProperty<Real> & _sgn;
+  /// Avogadro's number
   const MaterialProperty<Real> & _N_A;
 
-  /// Units scaling
+  /// Scaling units for the potential (V or kV)
   const std::string & _potential_units;
+  /// Scaling value for the potential
   Real _voltage_scaling;
 };

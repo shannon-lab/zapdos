@@ -12,6 +12,10 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Reaction rate for two body collisions in units of #/m^{3}s. User can pass
+ *  choice of elastic, excitation, or ionization reaction rate coefficients
+ */
 template <bool is_ad>
 class ProcRateForRateCoeffThreeBodyTempl : public AuxKernel
 {
@@ -23,9 +27,14 @@ public:
   virtual Real computeValue() override;
 
 protected:
+
+  /// First body variable
   const VariableValue & _v;
+  /// Second body variable
   const VariableValue & _w;
+  /// Third body variable
   const VariableValue & _x;
+  /// Reaction rate coefficient
   const GenericMaterialProperty<Real, is_ad> & _reaction_coeff;
 };
 
