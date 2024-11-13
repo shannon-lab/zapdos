@@ -1,7 +1,4 @@
-#This test starts the simulation at 50 rf cycle, then accelerates
-#at the 55 rf cycle mark and stops at 57 rf cycles
-
-dom0Scale = 25.4e-3
+dom0Scale=25.4e-3
 
 [GlobalParams]
   potential_units = kV
@@ -9,11 +6,28 @@ dom0Scale = 25.4e-3
 []
 
 [Mesh]
-  file = 'Acceleration_By_Shooting_Method_Initial_Conditions.e'
+  [geo]
+    type = FileMeshGenerator
+    file = 'Acceleration_By_Shooting_Method_Initial_Conditions.e'
+    use_for_exodus_restart = true
+  []
+  [left]
+    type = SideSetsFromNormalsGenerator
+    normals = '-1 0 0'
+    new_boundary = 'left'
+    input = geo
+  []
+  [right]
+    type = SideSetsFromNormalsGenerator
+    normals = '1 0 0'
+    new_boundary = 'right'
+    input = left
+  []
 []
 
 [Problem]
   type = FEProblem
+  allow_initial_conditions_with_restart = true
 []
 
 [Variables]
@@ -36,13 +50,17 @@ dom0Scale = 25.4e-3
   [potential]
     initial_from_file_var = potential
   []
+
+  [SM_Ar*]
+    initial_from_file_var = SM_Ar*
+  []
 []
 
 [Kernels]
-  #Electron Equations
+#Electron Equations
   #Time Derivative term of electron
   [em_time_deriv]
-    type = ElectronTimeDerivative
+    type = TimeDerivativeLog
     variable = em
   []
   #Advection term of electron
@@ -59,27 +77,25 @@ dom0Scale = 25.4e-3
   []
   #Net electron production from ionization
   [em_ionization]
-    type = EEDFReactionLog
+    type = ADEEDFReactionLog
     variable = em
     electrons = em
-    mean_energy = mean_en
     target = Ar
     reaction = 'em + Ar -> em + em + Ar+'
     coefficient = 1
   []
   #Net electron production from step-wise ionization
   [em_stepwise_ionization]
-    type = EEDFReactionLog
+    type = ADEEDFReactionLog
     variable = em
     electrons = em
-    mean_energy = mean_en
     target = Ar*
     reaction = 'em + Ar* -> em + em + Ar+'
     coefficient = 1
   []
   #Net electron production from metastable pooling
   [em_pooling]
-    type = ReactionSecondOrderLog
+    type = ADReactionSecondOrderLog
     variable = em
     v = Ar*
     w = Ar*
@@ -87,10 +103,10 @@ dom0Scale = 25.4e-3
     coefficient = 1
   []
 
-  #Argon Ion Equations
+#Argon Ion Equations
   #Time Derivative term of the ions
   [Ar+_time_deriv]
-    type = ElectronTimeDerivative
+    type = TimeDerivativeLog
     variable = Ar+
   []
   #Advection term of ions
@@ -106,27 +122,25 @@ dom0Scale = 25.4e-3
   []
   #Net ion production from ionization
   [Ar+_ionization]
-    type = EEDFReactionLog
+    type = ADEEDFReactionLog
     variable = Ar+
     electrons = em
-    mean_energy = mean_en
     target = Ar
     reaction = 'em + Ar -> em + em + Ar+'
     coefficient = 1
   []
   #Net ion production from step-wise ionization
   [Ar+_stepwise_ionization]
-    type = EEDFReactionLog
+    type = ADEEDFReactionLog
     variable = Ar+
     electrons = em
-    mean_energy = mean_en
     target = Ar*
     reaction = 'em + Ar* -> em + em + Ar+'
     coefficient = 1
   []
   #Net ion production from metastable pooling
   [Ar+_pooling]
-    type = ReactionSecondOrderLog
+    type = ADReactionSecondOrderLog
     variable = Ar+
     v = Ar*
     w = Ar*
@@ -134,10 +148,10 @@ dom0Scale = 25.4e-3
     coefficient = 1
   []
 
-  #Argon Excited Equations
+#Argon Excited Equations
   #Time Derivative term of excited Argon
   [Ar*_time_deriv]
-    type = ElectronTimeDerivative
+    type = TimeDerivativeLog
     variable = Ar*
   []
   #Diffusion term of excited Argon
@@ -148,47 +162,44 @@ dom0Scale = 25.4e-3
   []
   #Net excited Argon production from excitation
   [Ar*_excitation]
-    type = EEDFReactionLog
+    type = ADEEDFReactionLog
     variable = Ar*
     electrons = em
     target = Ar
-    mean_energy = mean_en
     reaction = 'em + Ar -> em + Ar*'
     coefficient = 1
   []
   #Net excited Argon loss from step-wise ionization
   [Ar*_stepwise_ionization]
-    type = EEDFReactionLog
+    type = ADEEDFReactionLog
     variable = Ar*
     electrons = em
     target = Ar*
-    mean_energy = mean_en
     reaction = 'em + Ar* -> em + em + Ar+'
     coefficient = -1
   []
   #Net excited Argon loss from superelastic collisions
   [Ar*_collisions]
-    type = EEDFReactionLog
+    type = ADEEDFReactionLog
     variable = Ar*
     electrons = em
     target = Ar*
-    mean_energy = mean_en
     reaction = 'em + Ar* -> em + Ar'
     coefficient = -1
   []
   #Net excited Argon loss from quenching to resonant
   [Ar*_quenching]
-    type = EEDFReactionLog
+    type = ADReactionSecondOrderLog
     variable = Ar*
-    electrons = em
-    target = Ar*
-    mean_energy = mean_en
+    v = em
+    w = Ar*
     reaction = 'em + Ar* -> em + Ar_r'
     coefficient = -1
+    _w_eq_u = true
   []
   #Net excited Argon loss from  metastable pooling
   [Ar*_pooling]
-    type = ReactionSecondOrderLog
+    type = ADReactionSecondOrderLog
     variable = Ar*
     v = Ar*
     w = Ar*
@@ -199,17 +210,17 @@ dom0Scale = 25.4e-3
   []
   #Net excited Argon loss from two-body quenching
   [Ar*_2B_quenching]
-    type = ReactionSecondOrderLog
+    type = ADReactionSecondOrderLog
     variable = Ar*
-    v = Ar*
-    w = Ar
+    v = Ar
+    w = Ar*
     reaction = 'Ar* + Ar -> Ar + Ar'
     coefficient = -1
     _v_eq_u = true
   []
   #Net excited Argon loss from three-body quenching
   [Ar*_3B_quenching]
-    type = ReactionThirdOrderLog
+    type = ADReactionThirdOrderLog
     variable = Ar*
     v = Ar*
     w = Ar
@@ -219,7 +230,7 @@ dom0Scale = 25.4e-3
     _v_eq_u = true
   []
 
-  #Voltage Equations
+#Voltage Equations
   #Voltage term in Poissons Eqaution
   [potential_diffusion_dom0]
     type = CoeffDiffusionLin
@@ -227,7 +238,7 @@ dom0Scale = 25.4e-3
     position_units = ${dom0Scale}
   []
   #Ion term in Poissons Equation
-  [Ar+_charge_source]
+    [Ar+_charge_source]
     type = ChargeSourceMoles_KV
     variable = potential
     charged = Ar+
@@ -239,10 +250,10 @@ dom0Scale = 25.4e-3
     charged = em
   []
 
-  #Electron Energy Equations
+#Electron Energy Equations
   #Time Derivative term of electron energy
   [mean_en_time_deriv]
-    type = ElectronTimeDerivative
+    type = TimeDerivativeLog
     variable = mean_en
   []
   #Advection term of electron energy
@@ -257,6 +268,13 @@ dom0Scale = 25.4e-3
     variable = mean_en
     position_units = ${dom0Scale}
   []
+  #The correction for electrons energy's diffusion term
+  [mean_en_diffusion_correction]
+    type = ThermalConductivityDiffusion
+    variable = mean_en
+    em = em
+    position_units = ${dom0Scale}
+  []
   #Joule Heating term
   [mean_en_joule_heating]
     type = JouleHeating
@@ -266,7 +284,7 @@ dom0Scale = 25.4e-3
   []
   #Energy loss from ionization
   [Ionization_Loss]
-    type = EEDFEnergyLog
+    type = ADEEDFEnergyLog
     variable = mean_en
     electrons = em
     target = Ar
@@ -275,7 +293,7 @@ dom0Scale = 25.4e-3
   []
   #Energy loss from excitation
   [Excitation_Loss]
-    type = EEDFEnergyLog
+    type = ADEEDFEnergyLog
     variable = mean_en
     electrons = em
     target = Ar
@@ -284,7 +302,7 @@ dom0Scale = 25.4e-3
   []
   #Energy loss from step-wise ionization
   [Stepwise_Ionization_Loss]
-    type = EEDFEnergyLog
+    type = ADEEDFEnergyLog
     variable = mean_en
     electrons = em
     target = Ar*
@@ -293,16 +311,113 @@ dom0Scale = 25.4e-3
   []
   #Energy gain from superelastic collisions
   [Collisions_Loss]
-    type = EEDFEnergyLog
+    type = ADEEDFEnergyLog
     variable = mean_en
     electrons = em
     target = Ar*
     reaction = 'em + Ar* -> em + Ar'
     threshold_energy = 11.56
   []
+
+###################################################################################
+
+#Argon Excited Equations
+  #Time Derivative term of excited Argon
+  [SM_Ar*_time_deriv]
+    type = MassLumpedTimeDerivative
+    variable = SM_Ar*
+    enable = false
+  []
+  #Diffusion term of excited Argon
+  [SM_Ar*_diffusion]
+   type = CoeffDiffusionForShootMethod
+   variable = SM_Ar*
+   density = Ar*
+   position_units = ${dom0Scale}
+   enable = false
+  []
+  #Net excited Argon loss from step-wise ionization
+  [SM_Ar*_stepwise_ionization]
+    type = EEDFReactionLogForShootMethod
+    variable = SM_Ar*
+    electron = em
+    density = Ar*
+    reaction = 'em + Ar* -> em + em + Ar+'
+    coefficient = -1
+    enable = false
+  []
+  #Net excited Argon loss from superelastic collisions
+  [SM_Ar*_collisions]
+    type = EEDFReactionLogForShootMethod
+    variable = SM_Ar*
+    electron = em
+    density = Ar*
+    reaction = 'em + Ar* -> em + Ar'
+    coefficient = -1
+    enable = false
+  []
+  #Net excited Argon loss from quenching to resonant
+  [SM_Ar*_quenching]
+    type = ReactionSecondOrderLogForShootMethod
+    variable = SM_Ar*
+    density = Ar*
+    v = em
+    reaction = 'em + Ar* -> em + Ar_r'
+    coefficient = -1
+    enable = false
+  []
+  #Net excited Argon loss from  metastable pooling
+  [SM_Ar*_pooling]
+    type = ReactionSecondOrderLogForShootMethod
+    variable = SM_Ar*
+    density = Ar*
+    v = Ar*
+    reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
+    coefficient = -2
+    enable = false
+  []
+  #Net excited Argon loss from two-body quenching
+  [SM_Ar*_2B_quenching]
+    type = ReactionSecondOrderLogForShootMethod
+    variable = SM_Ar*
+    density = Ar*
+    v = Ar
+    reaction = 'Ar* + Ar -> Ar + Ar'
+    coefficient = -1
+    enable = false
+  []
+  #Net excited Argon loss from three-body quenching
+  [SM_Ar*_3B_quenching]
+    type = ReactionThirdOrderLogForShootMethod
+    variable = SM_Ar*
+    density = Ar*
+    v = Ar
+    w = Ar
+    reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
+    coefficient = -1
+    enable = false
+  []
+
+  [SM_Ar*_Null]
+    type = NullKernel
+    variable = SM_Ar*
+  []
 []
 
+#Variables for scaled nodes and background gas
 [AuxVariables]
+  [SM_Ar*Reset]
+    initial_condition = 1.0
+  []
+  [Ar*S]
+  []
+
+  [x_node]
+  []
+
+  [Ar]
+  []
+
   [Te]
     order = CONSTANT
     family = MONOMIAL
@@ -313,142 +428,52 @@ dom0Scale = 25.4e-3
     family = MONOMIAL
   []
 
-  [x_node]
-  []
-
   [em_lin]
     order = CONSTANT
     family = MONOMIAL
   []
-
   [Ar+_lin]
     order = CONSTANT
     family = MONOMIAL
   []
-
   [Ar*_lin]
     order = CONSTANT
     family = MONOMIAL
   []
-
-  [Ar]
-  []
-
-  [Efield]
-    order = CONSTANT
-    family = MONOMIAL
-  []
-
-  [Current_em]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  []
-  [Current_Ar]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  []
-  [emRate]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  []
-  [exRate]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  []
-  [swRate]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  []
-  [deexRate]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  []
-  [quRate]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  []
-  [poolRate]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  []
-  [TwoBRate]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  []
-  [ThreeBRate]
-    order = CONSTANT
-    family = MONOMIAL
-    block = 0
-  []
 []
 
+#Kernels that define the scaled nodes and background gas
 [AuxKernels]
-  [emRate]
-    type = ProcRateForRateCoeff
-    variable = emRate
-    v = em
-    w = Ar
-    reaction = 'em + Ar -> em + em + Ar+'
+  [Ar*S_for_Shooting]
+  type = QuotientAux
+  variable = Ar*S
+  numerator = Ar*
+  denominator = 1.0
+  enable = false
+  execute_on = 'TIMESTEP_END'
+[]
+
+[Constant_SM_Ar*Reset]
+  type = ConstantAux
+  variable = SM_Ar*Reset
+  value = 1.0
+  execute_on = INITIAL
+[]
+
+  [x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
   []
-  [exRate]
-    type = ProcRateForRateCoeff
-    variable = exRate
-    v = em
-    w = Ar
-    reaction = 'em + Ar -> em + Ar*'
+
+  [Ar_val]
+    type = FunctionAux
+    variable = Ar
+    # value = 3.22e22
+    function = 'log(3.22e22/6.02e23)'
+    execute_on = INITIAL
   []
-  [swRate]
-    type = ProcRateForRateCoeff
-    variable = swRate
-    v = em
-    w = Ar*
-    reaction = 'em + Ar* -> em + em + Ar+'
-  []
-  [deexRate]
-    type = ProcRateForRateCoeff
-    variable = deexRate
-    v = em
-    w = Ar*
-    reaction = 'em + Ar* -> em + Ar'
-  []
-  [quRate]
-    type = ProcRateForRateCoeff
-    variable = quRate
-    v = em
-    w = Ar*
-    reaction = 'em + Ar* -> em + Ar_r'
-  []
-  [poolRate]
-    type = ProcRateForRateCoeff
-    variable = poolRate
-    v = Ar*
-    w = Ar*
-    reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
-  []
-  [TwoBRate]
-    type = ProcRateForRateCoeff
-    variable = TwoBRate
-    v = Ar*
-    w = Ar
-    reaction = 'Ar* + Ar -> Ar + Ar'
-  []
-  [ThreeBRate]
-    type = ProcRateForRateCoeffThreeBody
-    variable = ThreeBRate
-    v = Ar*
-    w = Ar
-    x = Ar
-    reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
-  []
+
   [Te]
     type = ElectronTemperature
     variable = Te
@@ -458,12 +483,6 @@ dom0Scale = 25.4e-3
   [x_g]
     type = Position
     variable = x
-    position_units = ${dom0Scale}
-  []
-
-  [x_ng]
-    type = Position
-    variable = x_node
     position_units = ${dom0Scale}
   []
 
@@ -482,41 +501,10 @@ dom0Scale = 25.4e-3
     variable = Ar*_lin
     density_log = Ar*
   []
-
-  [Ar_val]
-    type = ConstantAux
-    variable = Ar
-    # value = 3.22e22
-    value = -2.928623
-    execute_on = INITIAL
-  []
-
-  [Efield_calc]
-    type = Efield
-    component = 0
-    variable = Efield
-    position_units = ${dom0Scale}
-  []
-  [Current_em]
-    type = ADCurrent
-    density_log = em
-    variable = Current_em
-    art_diff = false
-    block = 0
-    position_units = ${dom0Scale}
-  []
-  [Current_Ar]
-    type = ADCurrent
-    density_log = Ar+
-    variable = Current_Ar
-    art_diff = false
-    block = 0
-    position_units = ${dom0Scale}
-  []
 []
 
 [BCs]
-  #Voltage Boundary Condition
+#Voltage Boundary Condition
   [potential_left]
     type = FunctionDirichletBC
     variable = potential
@@ -532,15 +520,13 @@ dom0Scale = 25.4e-3
     preset = false
   []
 
-  #Boundary conditions for electons
+#Boundary conditions for electons
   [em_physical_right]
     type = LymberopoulosElectronBC
     variable = em
     boundary = 'right'
     emission_coeffs = 0.01
-    #gamma = 1
     ks = 1.19e5
-    #ks = 0.0
     ions = Ar+
     position_units = ${dom0Scale}
   []
@@ -549,14 +535,12 @@ dom0Scale = 25.4e-3
     variable = em
     boundary = 'left'
     emission_coeffs = 0.01
-    #gamma = 1
     ks = 1.19e5
-    #ks = 0.0
     ions = Ar+
     position_units = ${dom0Scale}
   []
 
-  #Boundary conditions for ions
+#Boundary conditions for ions
   [Ar+_physical_right_advection]
     type = LymberopoulosIonBC
     variable = Ar+
@@ -570,21 +554,7 @@ dom0Scale = 25.4e-3
     position_units = ${dom0Scale}
   []
 
-  #New Boundary conditions for metastables
-  [Ar*_physical_right_diffusion]
-    type = LogDensityDirichletBC
-    variable = Ar*
-    boundary = 'right'
-    value = 1e-5
-  []
-  [Ar*_physical_left_diffusion]
-    type = LogDensityDirichletBC
-    variable = Ar*
-    boundary = 'left'
-    value = 1e-5
-  []
-
-  #Boundary conditions for electron mean energy
+#Boundary conditions for mean energy
   [mean_en_physical_right]
     type = ElectronTemperatureDirichletBC
     variable = mean_en
@@ -599,31 +569,59 @@ dom0Scale = 25.4e-3
     value = 0.5
     boundary = 'left'
   []
-[]
 
-[Functions]
-  [potential_bc_func]
-    type = ParsedFunction
-    expression = '0.100*sin(2*pi*13.56e6*t)'
+  #Boundary conditions for ions
+  [Ar*_physical_right_diffusion]
+    type = ADDirichletBC
+    variable = Ar*
+    boundary = 'right'
+    value = -50.0
+  []
+  [Ar*_physical_left_diffusion]
+    type = ADDirichletBC
+    variable = Ar*
+    boundary = 'left'
+    value = -50.0
   []
 []
 
+#Functions for IC and Potential BC
+[Functions]
+  [potential_bc_func]
+    type = ParsedFunction
+    value = '0.100*sin(2*pi*13.56e6*t)'
+  []
+  [density_ic_func]
+    type = ParsedFunction
+    value = 'log((1e13 + 1e15 * (1-x/(1.0))^2 * (x/(1.0))^2)/6.02e23)'
+  []
+  [energy_density_ic_func]
+    type = ParsedFunction
+    value = 'log(32.) + log((1e13 + 1e15 * (1-x/(1.0))^2 * (x/(1.0))^2)/6.02e23)'
+  []
+[]
+
+#Material properties of species and background gas
 [Materials]
   [field_solver]
     type = FieldSolverMaterial
     potential = potential
   []
   [GasBasics]
+    #If elecron mobility and diffusion are NOT constant, set
+    #"interp_elastic_coeff = true". This lets the mobility and
+    #diffusivity to be energy dependent, as dictated by the txt file
     type = GasElectronMoments
-    interp_trans_coeffs = false
-    interp_elastic_coeff = false
-    ramp_trans_coeffs = false
-    user_p_gas = 133.322
     em = em
     mean_en = mean_en
+    interp_elastic_coeff = false
+    interp_trans_coeffs = false
+    ramp_trans_coeffs = false
+    user_p_gas = 133.33
+    user_T_gas = 300
     user_electron_mobility = 30.0
     user_electron_diffusion_coeff = 119.8757763975
-    property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
+    property_tables_file = Argon_reactions_RateCoefficients/electron_moments.txt
   []
   [gas_species_0]
     type = ADHeavySpecies
@@ -633,6 +631,12 @@ dom0Scale = 25.4e-3
     mobility = 0.144409938
     diffusivity = 6.428571e-3
   []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+  []
   [gas_species_1]
     type = ADHeavySpecies
     heavy_species_name = Ar*
@@ -640,66 +644,74 @@ dom0Scale = 25.4e-3
     heavy_species_charge = 0.0
     diffusivity = 7.515528e-3
   []
-  [gas_species_2]
-    type = ADHeavySpecies
-    heavy_species_name = Ar
-    heavy_species_mass = 6.64e-26
-    heavy_species_charge = 0.0
-  []
   [reaction_0]
-    type = ZapdosEEDFRateConstant
+    #type = ADZapdosEEDFRateLinearInterpolation
+    type = InterpolatedCoefficientLinear
+    #type = ADZapdosEEDFRateConstant
     mean_energy = mean_en
-    property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + Ar*.txt'
+    property_file = 'Argon_reactions_RateCoefficients/reaction_em + Ar -> em + Ar*.txt'
     reaction = 'em + Ar -> em + Ar*'
+    file_location = '.'
     electrons = em
   []
   [reaction_1]
-    type = ZapdosEEDFRateConstant
+    #type = ADZapdosEEDFRateLinearInterpolation
+    type = InterpolatedCoefficientLinear
+    #type = ADZapdosEEDFRateConstant
     mean_energy = mean_en
-    property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar -> em + em + Ar+.txt'
+    property_file = 'Argon_reactions_RateCoefficients/reaction_em + Ar -> em + em + Ar+.txt'
     reaction = 'em + Ar -> em + em + Ar+'
+    file_location = '.'
     electrons = em
   []
   [reaction_2]
-    type = ZapdosEEDFRateConstant
+    #type = ADZapdosEEDFRateLinearInterpolation
+    type = InterpolatedCoefficientLinear
+    #type = ADZapdosEEDFRateConstant
     mean_energy = mean_en
-    property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + Ar.txt'
+    property_file = 'Argon_reactions_RateCoefficients/reaction_em + Ar* -> em + Ar.txt'
     reaction = 'em + Ar* -> em + Ar'
+    file_location = '.'
     electrons = em
   []
   [reaction_3]
-    type = ZapdosEEDFRateConstant
+    #type = ADZapdosEEDFRateLinearInterpolation
+    type = InterpolatedCoefficientLinear
+    #type = ADZapdosEEDFRateConstant
     mean_energy = mean_en
-    property_file = 'Argon_reactions_paper_RateCoefficients/reaction_em + Ar* -> em + em + Ar+.txt'
+    property_file = 'Argon_reactions_RateCoefficients/reaction_em + Ar* -> em + em + Ar+.txt'
     reaction = 'em + Ar* -> em + em + Ar+'
+    file_location = '.'
     electrons = em
   []
   [reaction_4]
-    type = GenericRateConstant
+    type = ADGenericRateConstant
     reaction = 'em + Ar* -> em + Ar_r'
     #reaction_rate_value = 2e-13
     reaction_rate_value = 1.2044e11
   []
   [reaction_5]
-    type = GenericRateConstant
+    type = ADGenericRateConstant
     reaction = 'Ar* + Ar* -> Ar+ + Ar + em'
     #reaction_rate_value = 6.2e-16
     reaction_rate_value = 373364000
   []
   [reaction_6]
-    type = GenericRateConstant
+    type = ADGenericRateConstant
     reaction = 'Ar* + Ar -> Ar + Ar'
     #reaction_rate_value = 3e-21
     reaction_rate_value = 1806.6
   []
   [reaction_7]
-    type = GenericRateConstant
+    type = ADGenericRateConstant
     reaction = 'Ar* + Ar + Ar -> Ar_2 + Ar'
     #reaction_rate_value = 1.1e-43
     reaction_rate_value = 39890.9324
   []
 []
 
+#Acceleration Schemes are dictated by MultiApps, Transfers,
+#and PeriodicControllers
 [MultiApps]
   #MultiApp of Acceleration by Shooting Method
   [Shooting]
@@ -710,56 +722,75 @@ dom0Scale = 25.4e-3
   []
 []
 
+
 [Transfers]
   #MultiApp Transfers for Acceleration by Shooting Method
-  [em_to_Shooting]
+  [SM_Ar*Reset_to_Shooting]
     type = MultiAppCopyTransfer
-    to_multi_app = Shooting
-    source_variable = em
-    variable = em
+    direction = to_multiapp
+    multi_app = Shooting
+    source_variable = SM_Ar*Reset
+    variable = SM_Ar*Reset
     enable = false
   []
-  [Ar+_to_Shooting]
-    type = MultiAppCopyTransfer
-    to_multi_app = Shooting
-    source_variable = Ar+
-    variable = Ar+
-    enable = false
-  []
-  [mean_en_to_Shooting]
-    type = MultiAppCopyTransfer
-    to_multi_app = Shooting
-    source_variable = mean_en
-    variable = mean_en
-    enable = false
-  []
-  [potential_to_Shooting]
-    type = MultiAppCopyTransfer
-    to_multi_app = Shooting
-    source_variable = potential
-    variable = potential
-    enable = false
-  []
+
   [Ar*_to_Shooting]
     type = MultiAppCopyTransfer
-    to_multi_app = Shooting
+    direction = to_multiapp
+    multi_app = Shooting
     source_variable = Ar*
     variable = Ar*
     enable = false
   []
   [Ar*S_to_Shooting]
     type = MultiAppCopyTransfer
-    to_multi_app = Shooting
-    source_variable = Ar*
+    direction = to_multiapp
+    multi_app = Shooting
+    source_variable = Ar*S
     variable = Ar*S
+    enable = false
+  []
+  [Ar*T_to_Shooting]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Shooting
+    source_variable = Ar*
+    variable = Ar*T
+    enable = false
+  []
+  [SMDeriv_to_Shooting]
+    type = MultiAppCopyTransfer
+    direction = to_multiapp
+    multi_app = Shooting
+    source_variable = SM_Ar*
+    variable = SM_Ar*
     enable = false
   []
 
   [Ar*New_from_Shooting]
     type = MultiAppCopyTransfer
-    from_multi_app = Shooting
+    direction = from_multiapp
+    multi_app = Shooting
     source_variable = Ar*
     variable = Ar*
+    enable = false
+  []
+  [SM_Ar*Reset_from_Shooting]
+    type = MultiAppCopyTransfer
+    direction = from_multiapp
+    multi_app = Shooting
+    source_variable = SM_Ar*Reset
+    variable = SM_Ar*
+    enable = false
+  []
+
+  [Ar*Relative_Diff]
+    type = MultiAppPostprocessorTransfer
+    direction = from_multiapp
+    multi_app = Shooting
+    from_postprocessor = Meta_Relative_Diff
+    to_postprocessor = Meta_Relative_Diff
+    reduction_type = minimum
     enable = false
   []
 []
@@ -767,25 +798,33 @@ dom0Scale = 25.4e-3
 #The Action the add the TimePeriod Controls to turn off and on the MultiApps
 [PeriodicControllers]
   [Shooting]
-    Enable_at_cycle_start = 'MultiApps::Shooting
-                              Transfers::em_to_Shooting *::Ar+_to_Shooting *::mean_en_to_Shooting
-                              *::potential_to_Shooting *::Ar*_to_Shooting *::Ar*S_to_Shooting
-                              Transfers::Ar*New_from_Shooting'
-    starting_cycle = 55
+    Enable_at_cycle_start = '*::Ar*S_for_Shooting'
+
+    Enable_during_cycle = '*::SM_Ar*_time_deriv *::SM_Ar*_diffusion *::SM_Ar*_stepwise_ionization
+                           *::SM_Ar*_collisions *::SM_Ar*_quenching *::SM_Ar*_pooling
+                           *::SM_Ar*_2B_quenching *::SM_Ar*_3B_quenching'
+
+    Enable_at_cycle_end = 'MultiApps::Shooting
+                           *::SM_Ar*Reset_to_Shooting *::Ar*_to_Shooting
+                           *::Ar*S_to_Shooting *::Ar*T_to_Shooting
+                           *::SMDeriv_to_Shooting *::Ar*New_from_Shooting
+                           *::SM_Ar*Reset_from_Shooting *::Ar*Relative_Diff'
     cycle_frequency = 13.56e6
-    cycles_between_controls = 30
-    num_controller_set = 2000
+    #starting_cycle = 25
+    #cycles_between_controls = 25
+    starting_cycle = 50
+    cycles_between_controls = 50
+    cycles_per_controls = 1
+    num_controller_set = 2
     name = Shooting
   []
 []
 
-#New postprocessor that calculates the inverse of the plasma frequency
 [Postprocessors]
-  [InversePlasmaFreq]
-    type = PlasmaFrequencyInverse
-    variable = em
-    use_moles = true
-    execute_on = 'INITIAL TIMESTEP_BEGIN'
+  #Hold the metastable relative difference during the
+  #Shooting Method acceleration
+  [Meta_Relative_Diff]
+    type = Receiver
   []
 []
 
@@ -804,23 +843,24 @@ dom0Scale = 25.4e-3
 
 [Executioner]
   type = Transient
-  start_time = 3.68731563e-6
-  end_time = 4.20353982e-6
-  petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
+  start_time = 3.6873e-6
+  end_time = 3.798e-6
+
   solve_type = NEWTON
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda'
-  petsc_options_value = 'lu NONZERO 1.e-10 fgmres 1e-3'
+  line_search = none
+  petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
+  petsc_options_value = 'lu NONZERO 1.e-10'
 
-  dtmin = 1e-14
-  l_max_its = 20
-
-  scheme = bdf2
+  scheme = newmark-beta
   dt = 1e-9
+  dtmin = 1e-14
 []
 
 [Outputs]
   perf_graph = true
   [out]
     type = Exodus
+    execute_on = 'FINAL'
   []
 []

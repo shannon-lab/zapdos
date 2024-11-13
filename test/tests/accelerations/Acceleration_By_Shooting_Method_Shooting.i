@@ -1,5 +1,12 @@
+dom0Scale=25.4e-3
+
+# [GlobalParams]
+#   potential_units = kV
+#   use_moles = true
+# []
+
 [Mesh]
-  [file]
+  [geo]
     type = FileMeshGenerator
     file = 'Lymberopoulos_paper.msh'
   []
@@ -7,7 +14,7 @@
     type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
-    input = file
+    input = geo
   []
   [right]
     type = SideSetsFromNormalsGenerator
@@ -27,24 +34,22 @@
 []
 
 [AuxVariables]
-  [em]
-  []
-  [Ar+]
-  []
-  [mean_en]
-  []
-  [potential]
-  []
   [Ar*S]
   []
-
   [Ar*T]
   []
-  [SMDeriv]
+
+  [SM_Ar*]
+  []
+  [SM_Ar*Reset]
+    initial_condition = 1.0
   []
 
-  [SMDerivReset]
-    initial_condition = 1.0
+  [x_node]
+  []
+  [x]
+    order = CONSTANT
+    family = MONOMIAL
   []
 []
 
@@ -54,85 +59,53 @@
     variable = Ar*
     density_at_start_cycle = Ar*S
     density_at_end_cycle = Ar*T
-    sensitivity_variable = SMDeriv
-    growth_limit = 100.0
+    sensitivity_variable = SM_Ar*
+    growth_limit = 100
+  []
+[]
+
+[AuxKernels]
+  [Constant_SM_Ar*Reset]
+    type = ConstantAux
+    variable = SM_Ar*Reset
+    value = 1.0
+    execute_on = 'TIMESTEP_BEGIN'
+  []
+
+  [x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
+  []
+  [x_g]
+    type = Position
+    variable = x
+    position_units = ${dom0Scale}
   []
 []
 
 [BCs]
-  [Ar*_physical_right_diffusion]
-    type = LogDensityDirichletBC
-    variable = Ar*
-    boundary = 'right'
-    value = 1e-5
-  []
-  [Ar*_physical_left_diffusion]
-    type = LogDensityDirichletBC
-    variable = Ar*
-    boundary = 'left'
-    value = 1e-5
-  []
+  #Boundary conditions for metastables
+    [Ar*_physical_right_value]
+      type = DirichletBC
+      variable = Ar*
+      boundary = 'right'
+      value = -50.0
+    []
+    [Ar*_physical_left_value]
+      type = DirichletBC
+      variable = Ar*
+      boundary = 'left'
+      value = -50.0
+    []
 []
 
-#MultiApp used to calculate the non-accelerated density for 1RF cycle.
-#This is used to get A*T (density at end of cycle) and
-##the sensitivity variable needed for the shoot method.
-[MultiApps]
-  [SensitivityMatrix]
-    type = FullSolveMultiApp
-    input_files = 'Acceleration_By_Shooting_Method_SensitivityMatrix.i'
-  []
-[]
-
-[Transfers]
-  [em_to_sub]
-    type = MultiAppCopyTransfer
-    to_multi_app = SensitivityMatrix
-    source_variable = em
-    variable = em
-  []
-  [Ar+_to_sub]
-    type = MultiAppCopyTransfer
-    to_multi_app = SensitivityMatrix
-    source_variable = Ar+
-    variable = Ar+
-  []
-  [mean_en_to_sub]
-    type = MultiAppCopyTransfer
-    to_multi_app = SensitivityMatrix
-    source_variable = mean_en
-    variable = mean_en
-  []
-  [potential_to_sub]
-    type = MultiAppCopyTransfer
-    to_multi_app = SensitivityMatrix
-    source_variable = potential
-    variable = potential
-  []
-  [Ar*_to_sub]
-    type = MultiAppCopyTransfer
-    to_multi_app = SensitivityMatrix
-    source_variable = Ar*
+[Postprocessors]
+  [Meta_Relative_Diff]
+    type = RelativeElementL2Difference
     variable = Ar*
-  []
-  [Deriv_to_sub]
-    type = MultiAppCopyTransfer
-    to_multi_app = SensitivityMatrix
-    source_variable = SMDerivReset
-    variable = SMDeriv
-  []
-
-  [Ar*T_from_sub]
-    type = MultiAppCopyTransfer
-    from_multi_app = SensitivityMatrix
-    source_variable = Ar*
-    variable = Ar*T
-  []
-  [Deriv_from_sub]
-    type = MultiAppCopyTransfer
-    from_multi_app = SensitivityMatrix
-    source_variable = SMDeriv
-    variable = SMDeriv
+    other_variable = Ar*S
+    execute_on = 'TIMESTEP_END'
   []
 []
 
@@ -154,12 +127,15 @@
 
   petsc_options = '-snes_converged_reason -snes_linesearch_monitor'
   solve_type = NEWTON
-  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type'
-  petsc_options_value = 'lu NONZERO 1.e-10 fgmres'
+
+  petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_shift_amount'
+  petsc_options_value = 'lu NONZERO 1.e-10'
+
+  # abort_on_solve_fail = true
 []
 
 [Outputs]
-  perf_graph = true
+  print_perf_log = true
   [out]
     type = Exodus
   []
