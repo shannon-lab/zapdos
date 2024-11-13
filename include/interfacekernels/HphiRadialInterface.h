@@ -14,7 +14,7 @@
 
 /**
  * DG kernel for interfacing of the axial electic field on adjacent blocks.
- * The axial electic field is relate to the azmithal magnetic flux 
+ * The axial electic field is relate to the azmithal magnetic flux
  * through using Ampère–Maxwell law.
  */
 class HphiRadialInterface : public ADInterfaceKernel

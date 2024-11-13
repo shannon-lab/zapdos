@@ -32,7 +32,7 @@ protected:
 
   /// Number of ions defined
   const unsigned int _num_ions;
-  
+
   /// Gradient of the coupled potential
   const ADVariableGradient & _grad_potential;
   /// Ion density variables
@@ -42,8 +42,7 @@ protected:
   /// Gradient of ion density values
   std::vector<const ADVariableGradient *> _grad_ip;
 
-
- /// Mobility coefficient of the electrons
+  /// Mobility coefficient of the electrons
   const ADMaterialProperty<Real> & _muem;
   /// Mass of electrons
   const MaterialProperty<Real> & _massem;

@@ -37,7 +37,7 @@ protected:
 
   /// Coupled density variable
   MooseVariable & _density_var;
-  
+
   /// Value of the coupled density variable
   const VariableValue & _density_log;
 

@@ -13,8 +13,8 @@
 #include "ADKernel.h"
 
 /**
- *  Generic drift-diffusion equation that contains both 
- *  an electric field driven advection term and a diffusion term 
+ *  Generic drift-diffusion equation that contains both
+ *  an electric field driven advection term and a diffusion term
  */
 class DriftDiffusion : public ADKernel
 {

@@ -13,7 +13,7 @@
 #include "ADKernel.h"
 
 /**
- *  The derivative of an EEDF reaction term used to calculate the 
+ *  The derivative of an EEDF reaction term used to calculate the
  *  sensitivity variable for the shoothing method
  */
 class EEDFReactionLogForShootMethod : public ADKernel

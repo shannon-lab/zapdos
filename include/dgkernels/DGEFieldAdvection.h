@@ -11,7 +11,7 @@
 #include "ADDGKernel.h"
 
 /**
- * The discontinuous Galerkin form of the generic electric 
+ * The discontinuous Galerkin form of the generic electric
  * field driven advection term
  */
 class DGEFieldAdvection : public ADDGKernel

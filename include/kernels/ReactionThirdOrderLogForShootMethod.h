@@ -13,7 +13,7 @@
 #include "ADKernel.h"
 
 /**
- *  The derivative of a third order reaction term used to calculate the 
+ *  The derivative of a third order reaction term used to calculate the
  *  sensitivity variable for the shoothing method.
  */
 class ReactionThirdOrderLogForShootMethod : public ADKernel
@@ -35,11 +35,11 @@ protected:
   unsigned int _density_id;
   /// First coupled density value
   const ADVariableValue & _v;
-  /// First coupled density variable 
+  /// First coupled density variable
   unsigned int _v_id;
   /// Second coupled density value
   const ADVariableValue & _w;
-  /// Second coupled density variable 
+  /// Second coupled density variable
   unsigned int _w_id;
   /// Stoichiometric coefficient
   const Real & _stoichiometric_coeff;

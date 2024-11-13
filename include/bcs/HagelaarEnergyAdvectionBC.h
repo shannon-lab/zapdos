@@ -63,7 +63,7 @@ protected:
   /// Electron thermal velocity
   Real _v_thermal;
   /// Gamma electron density (electrons emitted by the surface)
-  Real _n_gamma;  /// TODO: currently '_n_gamma' is fixed at 0 
+  Real _n_gamma; /// TODO: currently '_n_gamma' is fixed at 0
   /// Total flux form secondary electrons
   ADReal _bc_val;
 };

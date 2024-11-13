@@ -26,7 +26,7 @@ protected:
   virtual Real computeValue() override;
 
 private:
-  /// Gradient of the azimuthal component of the magnetic field 
+  /// Gradient of the azimuthal component of the magnetic field
   const VariableGradient & _grad_Hphi;
   /// Angular frequency of the wave
   Real _omega;

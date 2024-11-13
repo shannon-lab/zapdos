@@ -29,8 +29,8 @@ protected:
   const VariableValue & _density;
 
   /// Denominator to normalize to
-  const Real * _pp_on_source; 
-  
+  const Real * _pp_on_source;
+
   /// A factor to shift the normilization by
   const Real * _shift;
 

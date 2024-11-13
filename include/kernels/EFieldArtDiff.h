@@ -13,7 +13,7 @@
 #include "ADKernel.h"
 
 /**
- *  Generic artificial electric field driven advection term 
+ *  Generic artificial electric field driven advection term
  *  (Densities must be in logarithmic form)
  */
 class EFieldArtDiff : public ADKernel

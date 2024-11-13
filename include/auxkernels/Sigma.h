@@ -13,7 +13,7 @@
 #include "AuxKernel.h"
 
 /**
- *  Calculates the surface charge due to a simplified version of the ion flux 
+ *  Calculates the surface charge due to a simplified version of the ion flux
  *  to a boundary
  */
 class Sigma : public AuxKernel

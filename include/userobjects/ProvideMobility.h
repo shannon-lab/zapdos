@@ -13,7 +13,7 @@
 #include "GeneralUserObject.h"
 
 /*
- *  Defines ballast resistance and the area of 
+ *  Defines ballast resistance and the area of
  *  an electrode (Used with Circuit BCs)
  */
 class ProvideMobility : public GeneralUserObject

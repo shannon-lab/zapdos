@@ -37,7 +37,7 @@ protected:
   SplineInterpolation _mu_interpolation;
   /// Spline Interpolation fuction for diffusion mobility coefficient
   SplineInterpolation _diff_interpolation;
-  
+
   /// True if interpolating transport coefficients as a function of the mean energy
   bool _interp_trans_coeffs;
   /// True if interpolating the elastic collision townsend coefficient as a function of the mean energy
@@ -83,7 +83,7 @@ protected:
   ADMaterialProperty<Real> & _mumean_en;
   /// AD electron energy diffusion coefficient
   ADMaterialProperty<Real> & _diffmean_en;
-  /// Constant elastic collision rate coefficient 
+  /// Constant elastic collision rate coefficient
   MaterialProperty<Real> & _rate_coeff_elastic;
   /// Mass of electrons
   MaterialProperty<Real> & _massem;

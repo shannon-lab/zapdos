@@ -33,8 +33,8 @@ protected:
   const Real _mu0;
   /// Permittivity of free space
   const Real _eps0;
-  /// Azimuthal component of magnetic field 
+  /// Azimuthal component of magnetic field
   const ADVariableValue & _Hphi;
-  /// Gradient of azimuthal component of magnetic field 
+  /// Gradient of azimuthal component of magnetic field
   const ADVariableGradient & _grad_Hphi;
 };

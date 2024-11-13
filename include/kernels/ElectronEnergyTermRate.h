@@ -13,8 +13,8 @@
 #include "ADKernel.h"
 
 /**
- *  Electron energy loss term for inelastic collisions 
- *  using reaction rate coefficients. Threshold energy is the energy lost in Volts in a single 
+ *  Electron energy loss term for inelastic collisions
+ *  using reaction rate coefficients. Threshold energy is the energy lost in Volts in a single
  *  collision (Densities must be in logarithmic form)
  */
 class ElectronEnergyTermRate : public ADKernel

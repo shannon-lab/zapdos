@@ -31,11 +31,11 @@ protected:
 
   /// Accelerated density value
   const ADVariableValue & _density;
-  /// Accelerated density variable 
+  /// Accelerated density variable
   unsigned int _density_id;
   /// Coupled density value
   const ADVariableValue & _v;
-  /// Coupled density variable 
+  /// Coupled density variable
   unsigned int _v_id;
   /// Stoichiometric coefficient
   const Real & _stoichiometric_coeff;

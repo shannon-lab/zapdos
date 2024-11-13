@@ -28,7 +28,7 @@ protected:
 private:
   /// Gradient of the azimuthal component of the magnetic field
   const VariableGradient & _grad_Hphi;
-  /// Azimuthal component of the magnetic field 
+  /// Azimuthal component of the magnetic field
   const VariableValue & _Hphi;
   /// Angular frequency of the wave
   Real _omega;

@@ -89,7 +89,7 @@ protected:
   ADMaterialProperty<Real> & _mumean_en;
   /// AD electron energy diffusion coefficient
   ADMaterialProperty<Real> & _diffmean_en;
-  /// Constant elastic collision rate coefficient 
+  /// Constant elastic collision rate coefficient
   MaterialProperty<Real> & _rate_coeff_elastic;
   /// Mass of electrons
   MaterialProperty<Real> & _massem;

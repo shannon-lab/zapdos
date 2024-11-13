@@ -27,7 +27,7 @@ protected:
   Real _r_units;
   /// Scaling units for the position for the neighbor variable
   Real _r_neighbor_units;
-  
+
   /// Diffusion coefficient of the neighbor variable
   const ADMaterialProperty<Real> & _diffem;
 };

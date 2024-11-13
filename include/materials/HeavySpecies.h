@@ -38,14 +38,14 @@ protected:
 
   /// Ion mass
   MaterialProperty<Real> & _massHeavy;
-  /// Ion temperature                      
+  /// Ion temperature
   GenericMaterialProperty<Real, is_ad> & _temperatureHeavy;
   /// Charge sign of ion
   MaterialProperty<Real> & _sgnHeavy;
-  /// Ion mobility coefficient                   
+  /// Ion mobility coefficient
   GenericMaterialProperty<Real, is_ad> & _muHeavy;
-  /// Ion diffusion coefficient        
-  GenericMaterialProperty<Real, is_ad> & _diffHeavy;        
+  /// Ion diffusion coefficient
+  GenericMaterialProperty<Real, is_ad> & _diffHeavy;
 
   /// Neutal gas temperature
   const MaterialProperty<Real> & _T_gas;

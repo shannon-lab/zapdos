@@ -34,8 +34,8 @@ protected:
 
   /*
    *   _epsilon and _sigma (as described above) are used to penalize the jumps
-   *   in discontinuity between cells. More information can be found in "Discontinuous 
-   *   Galerkin Methods for Solving Elliptic and Parabolic Equations: Theory 
+   *   in discontinuity between cells. More information can be found in "Discontinuous
+   *   Galerkin Methods for Solving Elliptic and Parabolic Equations: Theory
    *   and Implementation" by B. Rivière
    */
   Real _epsilon;

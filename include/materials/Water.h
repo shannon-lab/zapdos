@@ -117,7 +117,7 @@ protected:
   /*
    * Reaction coefficient for:
    * H + OH --> H2O
-   */ 
+   */
   MaterialProperty<Real> & _k14;
   /*
    * Reaction coefficient for:
@@ -157,7 +157,7 @@ protected:
   /*
    * Reaction coefficient for:
    * 2OH --> H2O2
-   */ 
+   */
   MaterialProperty<Real> & _k22;
   /*
    * Reaction coefficient for:

@@ -40,7 +40,7 @@ protected:
 
   /*
    *  Helper function that supplies the Kernels for drift-diffusion for the electrons,
-   *  energy independent charged particles, neutral particles, and 
+   *  energy independent charged particles, neutral particles, and
    *  electron mean energy depending
    */
   virtual void addADKernels(const std::string & name,

@@ -35,7 +35,7 @@ protected:
   const std::vector<std::string> _se_coeff_names;
   /// Material value of secondary electron coefficient
   std::vector<const ADMaterialProperty<Real> *> _se_coeff;
-  
+
   // Gradient of the coupled potential
   const ADVariableGradient & _grad_potential;
   /// Electron density

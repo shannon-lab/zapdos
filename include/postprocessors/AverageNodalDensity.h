@@ -13,7 +13,7 @@
 #include "NodalVariablePostprocessor.h"
 
 /*
- *  Similar to AverageNodalVariableValue except meant to 
+ *  Similar to AverageNodalVariableValue except meant to
  *  average variables expressed in logarithmic form
  */
 class AverageNodalDensity : public NodalVariablePostprocessor
