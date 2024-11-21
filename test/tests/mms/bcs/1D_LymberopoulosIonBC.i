@@ -1,10 +1,3 @@
-#Need to Edit
-
-#This MMS test was designed to test the log version of LymberopoulosIonBC,
-#when coupled with a "potential" variable. This test is done twice with
-#mixed BCs, once where the left is the LymberopoulosIonBC while the right
-#is a DirichletBC and vice-versa.
-
 [Mesh]
   [./geo]
     type = FileMeshGenerator

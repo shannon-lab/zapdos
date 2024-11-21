@@ -10,9 +10,8 @@ PlasmaDielectricConstant::validParams()
                                 "The electron-neutral collision frequency (in Hz).");
   params.addRequiredParam<Real>("driving_frequency", "Driving frequency of plasma (in Hz).");
   params.addRequiredCoupledVar("em", "Electron density coupled variable.");
-  params.addClassDescription(
-      "Provides the real and complex components, the spatial gradient, the first time derivative, "
-      "and second time derivative of the plasma dielectric.");
+  params.addClassDescription("Provides the real and complex components, the spatial gradient and "
+                             "the first time derivative of the plasma dielectric.");
   return params;
 }
 
@@ -72,6 +71,16 @@ PlasmaDielectricConstant::computeQpProperties()
         -1.0 * std::pow(omega_pe_const, 2) * 2 * _pi * _nu * lin_dot /
         (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(2 * _pi * _nu, 2));
 
+    /*
+     *  TODO: The second derivative of the dielectric coefficient is currently showing
+     *        a convergence slope of less than 2 using the manufactured solution in file
+     *        /test/tests/mms/materials/2D_PlasmaDielectricConstant.i.
+     *
+     *        The current theory is that one of the terms in 'lin_dot_dot' is
+     *        significantly smaller than the other term that the error is affecting the
+     *        convergence slope, but more study is needed.
+     */
+    /*
     // Calculate the second time derivative of the linear electron density
     ADReal lin_dot_dot =
         _em_dot_dot[_qp] * std::exp(_em[_qp]) + std::pow(_em_dot[_qp], 2) * std::exp(_em[_qp]);
@@ -82,5 +91,6 @@ PlasmaDielectricConstant::computeQpProperties()
     _eps_r_imag_dot_dot[_qp] =
         -1.0 * std::pow(omega_pe_const, 2) * 2 * _pi * _nu * lin_dot_dot /
         (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(2 * _pi * _nu, 2));
+    */
   }
 }

@@ -1,15 +1,3 @@
-#This MMS test was designed to test the log version of Zapdos'
-#kernels with coupling between electrons, ions, potential, and
-#the mean electron energy density.
-
-#The mean electron energy density has a "correction" term that assumes
-#an thermal conductivity coefficient of K=3/2*D_e*n_e (this is based on
-#using the assumption of Einstein Relation)
-
-#Note: The electron/mean energy's diffusion and mobility coefficients are
-#directly proportional to the energy function.
-
-
 [Mesh]
   [./geo]
     type = FileMeshGenerator
