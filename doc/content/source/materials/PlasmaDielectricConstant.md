@@ -1,16 +1,10 @@
 # PlasmaDielectricConstant
 
-!alert construction title=Undocumented Class
-The PlasmaDielectricConstant has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Materials/PlasmaDielectricConstant
 
 ## Overview
 
-`PlasmaDielectricConstant` provides the real and complex components of the plasma dielectric coefficient, along with the spatial gradient, the first time derivative, and second time derivative of the plasma dielectric coefficient.
+`PlasmaDielectricConstant` provides the real and complex components of the plasma dielectric coefficient, along with the spatial gradient and the first time derivative of the plasma dielectric coefficient.
 
 The plasma dielectic coefficient is defined as:
 
@@ -32,7 +26,7 @@ where
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the PlasmaDielectricConstant object.
+!listing test/tests/mms/materials/2D_PlasmaDielectricConstant.i block=Materials/Plasma_dielectric
 
 !syntax parameters /Materials/PlasmaDielectricConstant
 
