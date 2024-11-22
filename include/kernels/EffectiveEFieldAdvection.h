@@ -13,7 +13,7 @@
 #include "ADKernel.h"
 
 /*
- *  Effective electric field driven advection term. The effective electric 
+ *  Effective electric field driven advection term. The effective electric
  *  field is supplied as scalar components of the field
  */
 class EffectiveEFieldAdvection : public ADKernel

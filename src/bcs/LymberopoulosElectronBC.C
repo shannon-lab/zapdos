@@ -36,8 +36,9 @@ LymberopoulosElectronBC::LymberopoulosElectronBC(const InputParameters & paramet
     _ks(getParam<Real>("ks")),
     _gamma(getParam<std::vector<Real>>("emission_coeffs")),
     _num_ions(coupledComponents("ions")),
-    
-    _electric_field(getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
+
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
   // Resize the vectors to store _num_ions values:
   _ion.resize(_num_ions);

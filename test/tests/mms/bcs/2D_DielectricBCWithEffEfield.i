@@ -1,16 +1,10 @@
 [Mesh]
-    # [geo]
-    #   type = GeneratedMeshGenerator
-    #   nx = 50
-    #   ny = 50
-    #   dim = 2
-    # []
-    [geo]
-        type = FileMeshGenerator
-        file = '2D_DielectricBCWithEffEfield_IC_out.e'
-        use_for_exodus_restart = true
-      []
+  [geo]
+    type = FileMeshGenerator
+    file = '2D_DielectricBCWithEffEfield_IC_out.e'
+    use_for_exodus_restart = true
   []
+[]
 
   [Problem]
     type = FEProblem
@@ -18,20 +12,20 @@
 
   [Variables]
     [em]
-        initial_from_file_var = em
+      initial_from_file_var = em
     []
     [ion]
-        initial_from_file_var = ion
+      initial_from_file_var = ion
     []
     [mean_en]
-        initial_from_file_var = mean_en
+      initial_from_file_var = mean_en
     []
 
     [Ex]
-        initial_from_file_var = Ex
+      initial_from_file_var = Ex
     []
     [Ey]
-        initial_from_file_var = Ey
+      initial_from_file_var = Ey
     []
 
     [potential]

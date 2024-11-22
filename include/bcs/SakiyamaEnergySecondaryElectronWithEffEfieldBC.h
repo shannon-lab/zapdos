@@ -13,7 +13,7 @@
 #include "ADIntegratedBC.h"
 
 /**
- *  Kinetic secondary electron for mean electron energy boundary condition 
+ *  Kinetic secondary electron for mean electron energy boundary condition
  *  with an effective electric field for ions
  */
 class SakiyamaEnergySecondaryElectronWithEffEfieldBC : public ADIntegratedBC
