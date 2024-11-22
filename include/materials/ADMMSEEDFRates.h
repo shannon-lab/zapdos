@@ -46,7 +46,6 @@ protected:
   /// Functions of derivatives of material properties
   std::vector<const Function *> _deriv_functions;
 
-
   using ADMaterial::_communicator;
 
 private:

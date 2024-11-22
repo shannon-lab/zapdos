@@ -67,6 +67,6 @@ ShootMethodLog::computeQpResidual()
 
   return _test[_i][_qp] *
          (std::exp(_u[_qp]) - std::exp(_density_at_start_cycle[_qp]) +
-           (std::exp(_density_at_start_cycle[_qp]) -
-            std::exp(_density_at_end_cycle[_qp])) * Scaling);
+          (std::exp(_density_at_start_cycle[_qp]) - std::exp(_density_at_end_cycle[_qp])) *
+              Scaling);
 }

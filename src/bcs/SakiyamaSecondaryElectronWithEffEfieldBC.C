@@ -28,7 +28,8 @@ SakiyamaSecondaryElectronWithEffEfieldBC::validParams()
   return params;
 }
 
-SakiyamaSecondaryElectronWithEffEfieldBC::SakiyamaSecondaryElectronWithEffEfieldBC(const InputParameters & parameters)
+SakiyamaSecondaryElectronWithEffEfieldBC::SakiyamaSecondaryElectronWithEffEfieldBC(
+    const InputParameters & parameters)
   : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
@@ -74,8 +75,8 @@ SakiyamaSecondaryElectronWithEffEfieldBC::computeQpResidual()
     //_ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
     //             std::exp((*_ip[i])[_qp]);
 
-    _ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * EField * _r_units  *
-                 std::exp((*_ip[i])[_qp]);
+    _ion_flux +=
+        _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * EField * _r_units * std::exp((*_ip[i])[_qp]);
   }
 
   return -_test[_i][_qp] * _r_units * _a * _user_se_coeff * _ion_flux * _normals[_qp];

@@ -13,7 +13,8 @@
 #include "ADKernel.h"
 
 /**
- *  Supplies the source term of the time derivative calculation of the effective electric field for ions
+ *  Supplies the source term of the time derivative calculation of the effective electric field for
+ * ions
  */
 class EffectiveEField : public ADKernel
 {

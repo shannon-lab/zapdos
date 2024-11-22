@@ -143,16 +143,20 @@ AddPeriodicControllers::act()
       // The end time is start time plus 0.0001 times the period
       for (MooseIndex(_enable_start) j = 0; j < _enable_start.size(); ++j)
       {
-        _enable_start_start_time_index[j] = _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i;
+        _enable_start_start_time_index[j] =
+            _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i;
         _enable_start_end_time_index[j] =
-            _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
+            _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i +
+            (_period * 0.0001);
       }
 
       for (MooseIndex(_enable_during) j = 0; j < _enable_during.size(); ++j)
       {
-        _enable_during_start_time_index[j] = _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i;
+        _enable_during_start_time_index[j] =
+            _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i;
         _enable_during_end_time_index[j] =
-            (_start_time + _period * _cycles_per_controls) + (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
+            (_start_time + _period * _cycles_per_controls) +
+            (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
       }
 
       // If control cycles are back to back, then enable_start and enable_end times would be the
@@ -163,9 +167,11 @@ AddPeriodicControllers::act()
         for (MooseIndex(_enable_end) j = 0; j < _enable_end.size(); ++j)
         {
           _enable_end_start_time_index[j] =
-              (_start_time + _period * _cycles_per_controls) + (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
+              (_start_time + _period * _cycles_per_controls) +
+              (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
           _enable_end_end_time_index[j] =
-              (_start_time + _period * _cycles_per_controls) + (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0002);
+              (_start_time + _period * _cycles_per_controls) +
+              (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0002);
         }
       }
       else
@@ -173,24 +179,30 @@ AddPeriodicControllers::act()
         for (MooseIndex(_enable_end) j = 0; j < _enable_end.size(); ++j)
         {
           _enable_end_start_time_index[j] =
-              (_start_time + _period * _cycles_per_controls) + (_cycles_between_controls + _cycles_per_controls) * _period * i;
+              (_start_time + _period * _cycles_per_controls) +
+              (_cycles_between_controls + _cycles_per_controls) * _period * i;
           _enable_end_end_time_index[j] =
-              (_start_time + _period * _cycles_per_controls) + (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
+              (_start_time + _period * _cycles_per_controls) +
+              (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
         }
       }
 
       for (MooseIndex(_disable_start) j = 0; j < _disable_start.size(); ++j)
       {
-        _disable_start_start_time_index[j] = _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i;
+        _disable_start_start_time_index[j] =
+            _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i;
         _disable_start_end_time_index[j] =
-            _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
+            _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i +
+            (_period * 0.0001);
       }
 
       for (MooseIndex(_disable_during) j = 0; j < _disable_during.size(); ++j)
       {
-        _disable_during_start_time_index[j] = _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i;
+        _disable_during_start_time_index[j] =
+            _start_time + (_cycles_between_controls + _cycles_per_controls) * _period * i;
         _disable_during_end_time_index[j] =
-            (_start_time + _period * _cycles_per_controls) + (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
+            (_start_time + _period * _cycles_per_controls) +
+            (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
       }
 
       // If control cycles are back to back, then disable_start and disable_end times would be the
@@ -201,9 +213,11 @@ AddPeriodicControllers::act()
         for (MooseIndex(_disable_end) j = 0; j < _disable_end.size(); ++j)
         {
           _disable_end_start_time_index[j] =
-              (_start_time + _period * _cycles_per_controls) + (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
+              (_start_time + _period * _cycles_per_controls) +
+              (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
           _disable_end_end_time_index[j] =
-              (_start_time + _period * _cycles_per_controls) + (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0002);
+              (_start_time + _period * _cycles_per_controls) +
+              (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0002);
         }
       }
       else
@@ -211,9 +225,11 @@ AddPeriodicControllers::act()
         for (MooseIndex(_disable_end) j = 0; j < _disable_end.size(); ++j)
         {
           _disable_end_start_time_index[j] =
-              (_start_time + _period * _cycles_per_controls) + (_cycles_between_controls + _cycles_per_controls) * _period * i;
+              (_start_time + _period * _cycles_per_controls) +
+              (_cycles_between_controls + _cycles_per_controls) * _period * i;
           _disable_end_end_time_index[j] =
-              (_start_time + _period * _cycles_per_controls) + (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
+              (_start_time + _period * _cycles_per_controls) +
+              (_cycles_between_controls + _cycles_per_controls) * _period * i + (_period * 0.0001);
         }
       }
 
