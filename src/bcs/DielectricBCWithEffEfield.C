@@ -109,15 +109,13 @@ DielectricBCWithEffEfield::computeQpResidual()
     _a = 0.0;
   }
 
-  _ion_flux =
-      (_a * _sgnip[_qp] * _muip[_qp] * EField * _r_units * std::exp(_ip[_qp]));
+  _ion_flux = (_a * _sgnip[_qp] * _muip[_qp] * EField * _r_units * std::exp(_ip[_qp]));
 
   _v_thermal =
       std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
 
   _em_flux =
       (0.25 * _v_thermal * std::exp(_em[_qp]) * _normals[_qp]) - (_user_se_coeff * _ion_flux);
-
 
   RealVectorValue EField_old(_Ex_old[_qp], _Ey_old[_qp], _Ez_old[_qp]);
 
@@ -133,17 +131,16 @@ DielectricBCWithEffEfield::computeQpResidual()
   _ion_flux_old =
       (_a_old * _sgnip[_qp] * _muip[_qp] * EField_old * _r_units * std::exp(_ip_old[_qp]));
 
+  _v_thermal_old = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en_old[_qp] - _em_old[_qp]) /
+                             (M_PI * _massem[_qp]));
 
-  _v_thermal_old =
-      std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en_old[_qp] - _em_old[_qp]) / (M_PI * _massem[_qp]));
-
-  _em_flux_old =
-      (0.25 * _v_thermal_old * std::exp(_em_old[_qp]) * _normals[_qp]) - (_user_se_coeff * _ion_flux_old);
-
+  _em_flux_old = (0.25 * _v_thermal_old * std::exp(_em_old[_qp]) * _normals[_qp]) -
+                 (_user_se_coeff * _ion_flux_old);
 
   ADRealVectorValue _int = (_e[_qp] * _N_A[_qp] / _voltage_scaling) * _dt *
                            (0.5 * (_ion_flux - _em_flux) + 0.5 * (_ion_flux_old - _em_flux_old));
 
-  return _test[_i][_qp] * _r_units * (-_epsilon_0[_qp] * _grad_u_old[_qp] * _normals[_qp] +
-              (_epsilon_d / _thickness) * (_u[_qp] - _u_old[_qp]) - _int * _normals[_qp]);
+  return _test[_i][_qp] * _r_units *
+         (-_epsilon_0[_qp] * _grad_u_old[_qp] * _normals[_qp] +
+          (_epsilon_d / _thickness) * (_u[_qp] - _u_old[_qp]) - _int * _normals[_qp]);
 }

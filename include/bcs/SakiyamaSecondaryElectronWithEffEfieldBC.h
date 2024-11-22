@@ -42,7 +42,7 @@ protected:
   ADRealVectorValue _ion_flux;
   /// Secondary electron coefficient
   Real _user_se_coeff;
-   /// Charge sign of the ions
+  /// Charge sign of the ions
   std::vector<const MaterialProperty<Real> *> _sgnip;
   /// Mobility coefficient of the ions
   std::vector<const ADMaterialProperty<Real> *> _muip;

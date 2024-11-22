@@ -73,6 +73,6 @@ SideTotFluxIntegral::computeQpIntegral()
 
   return (1. - _r) / (1. + _r) * 0.5 * _v_thermal * std::exp(_u[_qp]) +
          (1. - _r) / (1. + _r) *
-             ((2 * _a - 1) * _sgn[_qp] * _mobility_coef[_qp] * raw_value(_electric_field[_qp]) * _r_units *
-              std::exp(_u[_qp]) * _normals[_qp]);
+             ((2 * _a - 1) * _sgn[_qp] * _mobility_coef[_qp] * raw_value(_electric_field[_qp]) *
+              _r_units * std::exp(_u[_qp]) * _normals[_qp]);
 }

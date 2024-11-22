@@ -25,7 +25,8 @@ SakiyamaIonAdvectionWithEffEfieldBC::validParams()
   return params;
 }
 
-SakiyamaIonAdvectionWithEffEfieldBC::SakiyamaIonAdvectionWithEffEfieldBC(const InputParameters & parameters)
+SakiyamaIonAdvectionWithEffEfieldBC::SakiyamaIonAdvectionWithEffEfieldBC(
+    const InputParameters & parameters)
   : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
@@ -54,11 +55,10 @@ SakiyamaIonAdvectionWithEffEfieldBC::computeQpResidual()
     _a = 0.0;
   }
 
-  //return _test[_i][_qp] * _r_units *
-  //       (_a * _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) *
-  //        _normals[_qp]);
+  // return _test[_i][_qp] * _r_units *
+  //        (_a * _sgn[_qp] * _mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) *
+  //         _normals[_qp]);
 
   return _test[_i][_qp] * _r_units *
-         (_a * _sgn[_qp] * _mu[_qp] * EField * _r_units * std::exp(_u[_qp]) *
-          _normals[_qp]);
+         (_a * _sgn[_qp] * _mu[_qp] * EField * _r_units * std::exp(_u[_qp]) * _normals[_qp]);
 }

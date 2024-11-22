@@ -61,8 +61,8 @@ Real
 CurrentTempl<is_ad>::computeValue()
 {
   Real r = _sgn[_qp] * 1.6e-19 * 6.02e23 *
-           (_sgn[_qp] * raw_value(_mu[_qp]) * raw_value(_electric_field[_qp](_component)) * _r_units *
-                std::exp(_density_log[_qp]) -
+           (_sgn[_qp] * raw_value(_mu[_qp]) * raw_value(_electric_field[_qp](_component)) *
+                _r_units * std::exp(_density_log[_qp]) -
             raw_value(_diff[_qp]) * std::exp(_density_log[_qp]) *
                 _grad_density_log[_qp](_component) * _r_units);
 

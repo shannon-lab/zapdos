@@ -47,10 +47,11 @@ PlasmaDielectricConstant::computeQpProperties()
   ADReal omega_pe = omega_pe_const * std::sqrt(std::exp(_em[_qp]));
 
   // Calculate the value of the plasma dielectric constant
-  _eps_r_real[_qp] =
-      1.0 - (std::pow(omega_pe, 2) / (std::pow(2 * _pi * _frequency, 2) + std::pow(2 * _pi * _nu, 2)));
-  _eps_r_imag[_qp] = (-1.0 * std::pow(omega_pe, 2) * 2 * _pi * _nu) /
-                     (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(2 * _pi * _nu, 2));
+  _eps_r_real[_qp] = 1.0 - (std::pow(omega_pe, 2) /
+                            (std::pow(2 * _pi * _frequency, 2) + std::pow(2 * _pi * _nu, 2)));
+  _eps_r_imag[_qp] =
+      (-1.0 * std::pow(omega_pe, 2) * 2 * _pi * _nu) /
+      (std::pow(2 * _pi * _frequency, 3) + 2 * _pi * _frequency * std::pow(2 * _pi * _nu, 2));
 
   // Calculate the gradient of the plasma dielectric constant
   ADReal grad_const =

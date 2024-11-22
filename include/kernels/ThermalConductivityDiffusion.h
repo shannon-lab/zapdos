@@ -28,7 +28,6 @@ protected:
   virtual ADReal computeQpResidual() override;
 
 private:
-
   /// Position units
   Real _r_units;
   /// Coefficient relating diffusion coefficient * density to thermal conductivity
