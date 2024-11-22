@@ -12,6 +12,9 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Supplies the source term of the time derivative calculation of the effective electric field for ions
+ */
 class EffectiveEField : public ADKernel
 {
 public:
@@ -20,15 +23,15 @@ public:
   EffectiveEField(const InputParameters & parameters);
 
 protected:
-  // virtual ADRealVectorValue precomputeQpResidual() override;
   virtual ADReal computeQpResidual();
-
-  //  // using ADKernelGrad::getPostprocessorValue;
 
 private:
   /// Position units
   const Real _r_units;
+  /// Momentum-transfer frequency of ions
   const Real _nu;
+  /// Component of the electric field
   unsigned _component;
+  /// Electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

@@ -40,8 +40,6 @@ SakiyamaEnergySecondaryElectronWithEffEfieldBC::SakiyamaEnergySecondaryElectronW
     _r_units(1. / getParam<Real>("position_units")),
     Te_dependent(getParam<bool>("Tse_equal_Te")),
 
-    // Coupled Variables
-    // Coupled Variables
     _Ex(adCoupledValue("Ex")),
     _Ey(adCoupledValue("Ey")),
     _Ez(adCoupledValue("Ez")),

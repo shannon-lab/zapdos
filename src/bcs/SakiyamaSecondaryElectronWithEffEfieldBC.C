@@ -33,7 +33,6 @@ SakiyamaSecondaryElectronWithEffEfieldBC::SakiyamaSecondaryElectronWithEffEfield
 
     _r_units(1. / getParam<Real>("position_units")),
 
-    // Coupled Variables
     _Ex(adCoupledValue("Ex")),
     _Ey(adCoupledValue("Ey")),
     _Ez(adCoupledValue("Ez")),

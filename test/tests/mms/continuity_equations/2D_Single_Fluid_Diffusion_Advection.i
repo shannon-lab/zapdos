@@ -1,9 +1,9 @@
 [Mesh]
-  [./geo]
+  [geo]
     type = FileMeshGenerator
     file = '2D_Single_Fluid_Diffusion_Advection_IC_out.e'
     use_for_exodus_restart = true
-  [../]
+  []
 []
 
 [Problem]
@@ -11,102 +11,102 @@
 []
 
 [Variables]
-  [./em]
+  [em]
     initial_from_file_var = em
-  [../]
+  []
 []
 
 [Kernels]
 #Electron Equations
-  [./em_time_derivative]
+  [em_time_derivative]
     type = TimeDerivativeLog
     variable = em
-  [../]
-  [./em_diffusion]
+  []
+  [em_diffusion]
     type = CoeffDiffusion
     variable = em
     position_units = 1.0
-  [../]
-  [./em_advection]
+  []
+  [em_advection]
     type = EFieldAdvection
     variable = em
     position_units = 1.0
-  [../]
-  [./em_source]
+  []
+  [em_source]
     type = BodyForce
     variable = em
     function = 'em_source'
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./potential]
-  [../]
+  [potential]
+  []
 
-  [./em_sol]
-  [../]
+  [em_sol]
+  []
 []
 
 [AuxKernels]
-  [./potential_sol]
+  [potential_sol]
     type = FunctionAux
     variable = potential
     function = potential_fun
-  [../]
+  []
 
-  [./em_sol]
+  [em_sol]
     type = FunctionAux
     variable = em_sol
     function = em_fun
-  [../]
+  []
 []
 
 [Functions]
 #Material Variables
   #Electron diffusion coeff.
-  [./diffem_coeff]
+  [diffem_coeff]
     type = ConstantFunction
     value = 0.05
-  [../]
+  []
   #Electron mobility coeff.
-  [./muem_coeff]
+  [muem_coeff]
     type = ConstantFunction
     value = 0.01
-  [../]
+  []
 
-  [./N_A]
+  [N_A]
     type = ConstantFunction
     value = 1.0
-  [../]
-  [./ee]
+  []
+  [ee]
     type = ConstantFunction
     value = 1.0
-  [../]
-  [./diffpotential]
+  []
+  [diffpotential]
     type = ConstantFunction
     value = 0.01
-  [../]
+  []
 
 
 #Manufactured Solutions
   #The manufactured electron density solution
-  [./em_fun]
+  [em_fun]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
     value = 'log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)'
-  [../]
+  []
   #The manufactured electron density solution
-  [./potential_fun]
+  [potential_fun]
     type = ParsedFunction
     vars = 'ee diffpotential'
     vals = 'ee diffpotential'
     value = '-(ee*(2*cos((pi*x)/2) + cos(pi*y)*sin(2*pi*t)))/(5*diffpotential*pi^2)'
-  [../]
+  []
 
 #Source Terms in moles
   #The electron source term.
-  [./em_source]
+  [em_source]
     type = ParsedFunction
     vars = 'ee diffem_coeff muem_coeff diffpotential N_A'
     vals = 'ee diffem_coeff muem_coeff diffpotential N_A'
@@ -116,77 +116,24 @@
               10*cos(pi*y)*sin(2*pi*t) + 5*cos((pi*x)/2)*sin(pi*y) + 2*cos(2*pi*t)^2 +
               10*cos((pi*x)/2)^2 + 4*cos(pi*y)^2 + 11*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t) +
               20*cos(pi*y)*sin(2*pi*t)*sin(pi*y) - 7))/(50*diffpotential)) / N_A'
-  [../]
+  []
 
-  #The left BC dirichlet function
-  [./em_left_BC]
-    type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
-    value = 'log((sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2) / N_A)'
-  [../]
-
-  #The right BC dirichlet function
-  [./em_right_BC]
-    type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
-    value = 'log((sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1) / N_A)'
-  [../]
-
-  #The Down BC dirichlet function
-  [./em_down_BC]
-    type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
-    value = 'log((cos((pi*x)/2) + sin(2*pi*t)/5 + 1) / N_A)'
-  [../]
-
-  #The up BC dirichlet function
-  [./em_up_BC]
-    type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
-    value = 'log((cos((pi*x)/2) - sin(2*pi*t)/5 + 1) / N_A)'
-  [../]
-
-  [./em_ICs]
+  [em_ICs]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
     value = 'log((3.0 + cos(pi/2*x)) / N_A)'
-  [../]
+  []
 []
 
 [BCs]
-  [./em_left_BC]
+  [em_BC]
     type = FunctionDirichletBC
     variable = em
-    function = 'em_left_BC'
-    boundary = 3
+    function = 'em_fun'
+    boundary = '0 1 2 3'
     preset = true
-  [../]
-  [./em_right_BC]
-    type = FunctionDirichletBC
-    variable = em
-    function = 'em_right_BC'
-    boundary = 1
-    preset = true
-  [../]
-  [./em_down_BC]
-    type = FunctionDirichletBC
-    variable = em
-    function = 'em_down_BC'
-    boundary = 0
-    preset = true
-  [../]
-  [./em_up_BC]
-    type = FunctionDirichletBC
-    variable = em
-    function = 'em_up_BC'
-    boundary = 2
-    preset = true
-  [../]
+  []
 []
 
 [Materials]
@@ -194,46 +141,46 @@
     type = FieldSolverMaterial
     potential = potential
   []
-  [./Material_Coeff]
+  [Material_Coeff]
     type = GenericFunctionMaterial
     prop_names =  'e N_A'
     prop_values = 'ee N_A'
-  [../]
-  [./ADMaterial_Coeff]
+  []
+  [ADMaterial_Coeff]
     type = ADGenericFunctionMaterial
     prop_names =  'diffem        muem        diffpotential'
     prop_values = 'diffem_coeff  muem_coeff  diffpotential'
-  [../]
-  [./Charge_Signs]
+  []
+  [Charge_Signs]
     type = GenericConstantMaterial
     prop_names =  'sgnem'
     prop_values = '-1.0'
-  [../]
+  []
 []
 
 [Postprocessors]
-  [./em_l2Error]
+  [em_l2Error]
     type = ElementL2Error
     variable = em
     function = em_fun
-  [../]
+  []
 
-  [./h]
+  [h]
     type = AverageElementSize
-  [../]
+  []
 []
 
 [Preconditioning]
   active = 'smp'
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 
-  [./fdp]
+  [fdp]
     type = FDP
     full = true
-  [../]
+  []
 []
 
 [Executioner]
@@ -260,7 +207,7 @@
 
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
     interval = 10
   []
