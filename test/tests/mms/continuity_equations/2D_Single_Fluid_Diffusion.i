@@ -1,201 +1,156 @@
 [Mesh]
-  [./geo]
+  [geo]
     type = FileMeshGenerator
     file = '2D_Single_Fluid_Diffusion_IC_out.e'
     use_for_exodus_restart = true
-  [../]
+  []
 []
 [Problem]
   type = FEProblem
 []
 
 [Variables]
-  [./em]
+  [em]
     initial_from_file_var = em
-  [../]
+  []
 []
 
 [Kernels]
 #Electron Equations
-  [./em_time_derivative]
+  [em_time_derivative]
     type = TimeDerivativeLog
     variable = em
-  [../]
-  [./em_diffusion]
+  []
+  [em_diffusion]
     type = CoeffDiffusion
     variable = em
     position_units = 1.0
-  [../]
-  [./em_source]
+  []
+  [em_source]
     type = BodyForce
     variable = em
     function = 'em_source'
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./em_sol]
-  [../]
+  [em_sol]
+  []
 []
 
 [AuxKernels]
-  [./em_sol]
+  [em_sol]
     type = FunctionAux
     variable = em_sol
     function = em_fun
-  [../]
+  []
 []
 
 [Functions]
 #Material Variables
   #Electron diffusion coeff.
-  [./diffem_coeff]
+  [diffem_coeff]
     type = ConstantFunction
     value = 0.05
-  [../]
+  []
 
-  [./N_A]
+  [N_A]
     type = ConstantFunction
     value = 1.0
-  [../]
-  [./ee]
+  []
+  [ee]
     type = ConstantFunction
     value = 1.0
-  [../]
+  []
 
 
 #Manufactured Solutions
   #The manufactured electron density solution
-  [./em_fun]
+  [em_fun]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
     value = 'log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)'
-  [../]
+  []
 
 #Source Terms in moles
   #The electron source term.
-  [./em_source]
+  [em_source]
     type = ParsedFunction
     vars = 'ee diffem_coeff N_A'
     vals = 'ee diffem_coeff N_A'
     value = '(diffem_coeff*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5) +
               (2*pi*cos(2*pi*t)*cos(pi*y))/5 +
               (diffem_coeff*pi^2*cos((pi*x)/2))/4) / N_A'
-  [../]
+  []
 
   #The left BC dirichlet function
-  [./em_left_BC]
+  [em_left_BC]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
     value = 'log((sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2) / N_A)'
-  [../]
+  []
 
-  #The right BC dirichlet function
-  [./em_right_BC]
-    type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
-    value = 'log((sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1) / N_A)'
-  [../]
-
-  #The Down BC dirichlet function
-  [./em_down_BC]
-    type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
-    value = 'log((cos((pi*x)/2) + sin(2*pi*t)/5 + 1) / N_A)'
-  [../]
-
-  #The up BC dirichlet function
-  [./em_up_BC]
-    type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
-    value = 'log((cos((pi*x)/2) - sin(2*pi*t)/5 + 1) / N_A)'
-  [../]
-
-  [./em_ICs]
+  [em_ICs]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
     value = 'log((3.0 + cos(pi/2*x)) / N_A)'
-  [../]
+  []
 []
 
 [BCs]
-  [./em_left_BC]
+  [em_BC]
     type = FunctionDirichletBC
     variable = em
-    function = 'em_left_BC'
-    boundary = 3
+    function = 'em_fun'
+    boundary = '0 1 2 3'
     preset = true
-  [../]
-  [./em_right_BC]
-    type = FunctionDirichletBC
-    variable = em
-    function = 'em_right_BC'
-    boundary = 1
-    preset = true
-  [../]
-  [./em_down_BC]
-    type = FunctionDirichletBC
-    variable = em
-    function = 'em_down_BC'
-    boundary = 0
-    preset = true
-  [../]
-  [./em_up_BC]
-    type = FunctionDirichletBC
-    variable = em
-    function = 'em_up_BC'
-    boundary = 2
-    preset = true
-  [../]
+  []
 []
 
 [Materials]
-  [./Material_Coeff]
+  [Material_Coeff]
     type = GenericFunctionMaterial
     prop_names =  'e N_A'
     prop_values = 'ee N_A'
-  [../]
-  [./ADMaterial_Coeff]
+  []
+  [ADMaterial_Coeff]
     type = ADGenericFunctionMaterial
     prop_names =  'diffem'
     prop_values = 'diffem_coeff'
-  [../]
-  [./Charge_Signs]
+  []
+  [Charge_Signs]
     type = GenericConstantMaterial
     prop_names =  'sgnem'
     prop_values = '-1.0'
-  [../]
+  []
 []
 
 [Postprocessors]
-  [./em_l2Error]
+  [em_l2Error]
     type = ElementL2Error
     variable = em
     function = em_fun
-  [../]
+  []
 
-  [./h]
+  [h]
     type = AverageElementSize
-  [../]
+  []
 []
 
 [Preconditioning]
   active = 'smp'
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 
-  [./fdp]
+  [fdp]
     type = FDP
     full = true
-  [../]
+  []
 []
 
 [Executioner]
@@ -222,7 +177,7 @@
 
 [Outputs]
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
     interval = 10
   []

@@ -12,6 +12,10 @@
 
 #include "ADIntegratedBC.h"
 
+/**
+ *  Kinetic secondary electron boundary condition
+ *  with an effective electric field for ions
+ */
 class SakiyamaSecondaryElectronWithEffEfieldBC : public ADIntegratedBC
 {
 public:
@@ -22,21 +26,26 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Scaling units for the position
   Real _r_units;
-
-  // Coupled variables
-
+  /// x-component of the electric field
   const ADVariableValue & _Ex;
+  /// y-component of the electric field
   const ADVariableValue & _Ey;
+  /// z-component of the electric field
   const ADVariableValue & _Ez;
+  /// Ion density values
   std::vector<const ADVariableValue *> _ip;
-
+  /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise
   Real _a;
+  /// Ion flux
   ADRealVectorValue _ion_flux;
+  /// Secondary electron coefficient
   Real _user_se_coeff;
-
+   /// Charge sign of the ions
   std::vector<const MaterialProperty<Real> *> _sgnip;
+  /// Mobility coefficient of the ions
   std::vector<const ADMaterialProperty<Real> *> _muip;
-
+  /// Number of ions defined
   unsigned int _num_ions;
 };

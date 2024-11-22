@@ -1,29 +1,29 @@
 [Mesh]
-  [./geo]
+  [geo]
     type = FileMeshGenerator
     file = 'LymberopoulosElectronBC_LeftBC_IC_out.e'
     #file = 'LymberopoulosElectronBC_RightBC_IC_out.e'
     use_for_exodus_restart = true
-  [../]
-  [./left]
+  []
+  [left]
     type = SideSetsFromNormalsGenerator
     normals = '-1 0 0'
     new_boundary = 'left'
     input = geo
-  [../]
-  [./right]
+  []
+  [right]
     type = SideSetsFromNormalsGenerator
     normals = '1 0 0'
     new_boundary = 'right'
     input = left
-  [../]
+  []
 []
 
 [Outputs]
   file_base = 'LymberopoulosElectronBC_LeftBC_out'
   #file_base = 'LymberopoulosElectronBC_RightBC_out'
   perf_graph = true
-  [./out]
+  [out]
     type = Exodus
     interval = 10
   []
@@ -34,271 +34,254 @@
 []
 
 [Variables]
-  [./em]
+  [em]
     initial_from_file_var = em
-  [../]
+  []
 
-  [./potential]
+  [potential]
     initial_from_file_var = potential
-  [../]
-  [./ion]
+  []
+  [ion]
     initial_from_file_var = ion
-  [../]
+  []
 []
 
 [Kernels]
 #Electron Equations
-  [./em_time_derivative]
+  [em_time_derivative]
     type = TimeDerivativeLog
     variable = em
-  [../]
-  [./em_diffusion]
+  []
+  [em_diffusion]
     type = CoeffDiffusion
     variable = em
     position_units = 1.0
-  [../]
-  [./em_advection]
+  []
+  [em_advection]
     type = EFieldAdvection
     variable = em
     position_units = 1.0
-  [../]
-  [./em_source]
+  []
+  [em_source]
     type = BodyForce
     variable = em
     function = 'em_source'
-  [../]
+  []
 
 #Ion Equations
-  [./ion_time_derivative]
+  [ion_time_derivative]
     type = TimeDerivativeLog
     variable = ion
-  [../]
-  [./ion_diffusion]
+  []
+  [ion_diffusion]
     type = CoeffDiffusion
     variable = ion
     position_units = 1.0
-  [../]
-  [./ion_advection]
+  []
+  [ion_advection]
     type = EFieldAdvection
     variable = ion
     position_units = 1.0
-  [../]
-  [./ion_source]
+  []
+  [ion_source]
     type = BodyForce
     variable = ion
     function = 'ion_source'
-  [../]
+  []
 
 #Potential Equations
-  [./potential_diff]
+  [potential_diff]
     type = CoeffDiffusionLin
     variable = potential
     position_units = 1.0
-  [../]
-  [./potential_source]
+  []
+  [potential_source]
     type = BodyForce
     variable = potential
     function = 'potential_source'
-  [../]
+  []
 []
 
 [AuxVariables]
-  [./potential_sol]
-  [../]
-  [./ion_sol]
-  [../]
+  [potential_sol]
+  []
+  [ion_sol]
+  []
 
-  [./em_sol]
-  [../]
+  [em_sol]
+  []
 []
 
 [AuxKernels]
-  [./potential_sol]
+  [potential_sol]
     type = FunctionAux
     variable = potential_sol
     function = potential_fun
-  [../]
-  [./ion_sol]
+  []
+  [ion_sol]
     type = FunctionAux
     variable = ion_sol
     function = ion_fun
-  [../]
+  []
 
-  [./em_sol]
+  [em_sol]
     type = FunctionAux
     variable = em_sol
     function = em_fun
-  [../]
+  []
 []
 
 [Functions]
 #Constants for the manufactured solutions
   #The lenght between electrode
-  [./l]
+  [l]
     type = ConstantFunction
     value = 1.0
-  [../]
+  []
   #The frequency
-  [./f]
+  [f]
     type = ConstantFunction
     value = 1.0
-  [../]
+  []
 
 #Material Variables
   #Electron diffusion coeff.
-  [./diffem]
+  [diffem]
     type = ConstantFunction
     value = '1.0'
-  [../]
+  []
   #Electron mobility coeff.
-  [./muem]
+  [muem]
     type = ConstantFunction
     value = 1.0
-  [../]
+  []
   #Ion diffusion coeff.
-  [./diffion]
+  [diffion]
     type = ParsedFunction
     vars = 'diffem'
     vals = 'diffem'
     value = 'diffem'
-  [../]
+  []
   #Ion mobility coeff.
-  [./muion]
+  [muion]
     type = ParsedFunction
     vars = 'muem'
     vals = 'muem'
     value = 'muem'
-  [../]
-  [./N_A]
+  []
+  [N_A]
     type = ConstantFunction
     value = 1.0
-  [../]
-  [./ee]
+  []
+  [ee]
     type = ConstantFunction
     value = 1.0
-  [../]
-  [./diffpotential]
+  []
+  [diffpotential]
     type = ConstantFunction
     value = 1.0
-  [../]
+  []
 
 
 #Manufactured Solutions
   #The manufactured electron density solution
-  [./em_fun]
+  [em_fun]
     type = ParsedFunction
     vars = 'l f N_A'
     vals = 'l f N_A'
     value = 'log(((sin(2.*pi*f*t) + 2.) * ((x/l)*(1. - x/l) + 1.)) / N_A)'
-  [../]
+  []
   #The manufactured ion density solution
-  [./ion_fun]
+  [ion_fun]
     type = ParsedFunction
     vars = 'em_fun'
     vals = 'em_fun'
     value = 'em_fun'
-  [../]
+  []
   #The manufactured electron density solution
-  [./potential_fun]
+  [potential_fun]
     type = ParsedFunction
     vars = 'l f'
     vals = 'l f'
     value = '-sin(2.*pi*f*t)*(x/l)^2. + (x/l)^2.'
-  [../]
+  []
 
 #Source Terms in moles
   #The electron source term.
-  [./em_source]
+  [em_source]
     type = ParsedFunction
     vars = 'l f diffem muem N_A'
     vals = 'l f diffem muem N_A'
     value = '((2.*diffem*(sin(2.*pi*f*t) + 2.))/l^2. + (2.*f*pi*cos(2.*pi*f*t)*(l^2. + l*x - x^2.))/l^2. -
               (2.*muem*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l^2. + l*x - x^2.))/l^4. -
               (2.*muem*x*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l - 2.*x))/l^4.) / N_A'
-  [../]
-  [./ion_source]
+  []
+  [ion_source]
     type = ParsedFunction
     vars = 'l f diffion muion N_A'
     vals = 'l f diffion muion N_A'
     value = '((2.*diffion*(sin(2.*pi*f*t) + 2.))/l^2. + (2.*f*pi*cos(2.*pi*f*t)*(l^2. + l*x - x^2.))/l^2. +
               (2.*muion*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l^2. + l*x - x^2.))/l^4. +
               (2.*muion*x*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l - 2.*x))/l^4.) / N_A'
-  [../]
-  [./potential_source]
+  []
+  [potential_source]
     type = ParsedFunction
     vars = 'l f'
     vals = 'l f'
     value = 'sin(2.*pi*f*t)*(2./l^2.) - (2./l^2.)'
-  [../]
+  []
 
   #The left BC dirichlet function
-  [./em_left_BC]
+  [em_left_BC]
     type = ParsedFunction
     vars = 'l f N_A'
     vals = 'l f N_A'
     value = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
-  [../]
-  [./ion_left_BC]
+  []
+  [ion_left_BC]
     type = ParsedFunction
     vars = 'l f N_A'
     vals = 'l f N_A'
     value = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
-  [../]
-  [./potential_left_BC]
+  []
+  [potential_left_BC]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
     value = '0.0'
-  [../]
+  []
   #The right BC dirichlet function
-  [./em_right_BC]
+  [em_right_BC]
     type = ParsedFunction
     vars = 'l f N_A'
     vals = 'l f N_A'
     value = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
-  [../]
-  [./ion_right_BC]
+  []
+  [ion_right_BC]
     type = ParsedFunction
     vars = 'l f N_A'
     vals = 'l f N_A'
     value = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
-  [../]
-  [./potential_right_BC]
+  []
+  [potential_right_BC]
     type = ParsedFunction
     vars = 'f N_A'
     vals = 'f N_A'
     value = '1. - sin(2.*pi*f*t)'
-  [../]
+  []
 
-#'log(((sin(2.*pi*f*t) + 2.) * ((x/l)*(1. - x/l) + 1.)) / N_A)'
-
-  #The left Flux BC function
-  [./em_left_Flux_BC]
-    type = ParsedFunction
-    vars = 'l f diffem muem N_A'
-    vals = 'l f diffem muem N_A'
-    value = '(-(diffem*(sin(2.*pi*f*t) + 2.))/l) / N_A'
-  [../]
-  #The right Flux BC function
-  [./em_right_Flux_BC]
-    type = ParsedFunction
-    vars = 'l f diffem muem N_A'
-    vals = 'l f diffem muem N_A'
-    value = '-1.0 * ((diffem*(sin(2.*pi*f*t) + 2.))/l - muem*(sin(2.*pi*f*t) + 2.)*((2.*sin(2.*pi*f*t))/l - 2./l)) / N_A'
-  [../]
-
-  [./em_ICs]
+  [em_ICs]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
     value = 'log((1.) / N_A)'
-  [../]
-  [./ion_ICs]
+  []
+  [ion_ICs]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
     value = 'log((1.) / N_A)'
-  [../]
+  []
 []
 
 [BCs]
@@ -323,45 +306,45 @@
   #          em_left_BC                      em_right_LymberopoulosElectronBC'
 
 
-  [./potential_left_BC]
+  [potential_left_BC]
     type = FunctionDirichletBC
     variable = potential
-    function = 'potential_left_BC'
+    function = 'potential_fun'
     boundary = 'left'
-  [../]
-  [./potential_right_BC]
+  []
+  [potential_right_BC]
     type = FunctionDirichletBC
     variable = potential
-    function = 'potential_right_BC'
+    function = 'potential_fun'
     boundary = 'right'
-  [../]
+  []
 
-  [./ion_left_BC]
+  [ion_left_BC]
     type = FunctionDirichletBC
     variable = ion
-    function = 'ion_left_BC'
+    function = 'ion_fun'
     boundary = 'left'
-  [../]
-  [./ion_right_BC]
+  []
+  [ion_right_BC]
     type = FunctionDirichletBC
     variable = ion
-    function = 'ion_right_BC'
+    function = 'ion_fun'
     boundary = 'right'
-  [../]
+  []
 
-  [./em_left_BC]
+  [em_left_BC]
     type = FunctionDirichletBC
     variable = em
-    function = 'em_left_BC'
+    function = 'em_fun'
     boundary = 'left'
-  [../]
-  [./em_left_Flux_BC]
+  []
+  [em_left_Flux_BC]
     type = FunctionNeumannBC
     variable = em
     function = 'em_left_Flux_BC'
     boundary = 'left'
-  [../]
-  [./em_left_LymberopoulosElectronBC]
+  []
+  [em_left_LymberopoulosElectronBC]
     type = LymberopoulosElectronBC
     variable = em
     boundary = 'left'
@@ -369,21 +352,21 @@
     ks = 1.0
     ions = ion
     position_units = 1.0
-  [../]
+  []
 
-  [./em_right_BC]
+  [em_right_BC]
     type = FunctionDirichletBC
     variable = em
-    function = 'em_right_BC'
+    function = 'em_fun'
     boundary = 'right'
-  [../]
-  [./em_right_Flux_BC]
+  []
+  [em_right_Flux_BC]
     type = FunctionNeumannBC
     variable = em
     function = 'em_right_Flux_BC'
     boundary = 'right'
-  [../]
-  [./em_right_LymberopoulosElectronBC]
+  []
+  [em_right_LymberopoulosElectronBC]
     type = LymberopoulosElectronBC
     variable = em
     boundary = 'right'
@@ -391,7 +374,7 @@
     ks = 1.0
     ions = ion
     position_units = 1.0
-  [../]
+  []
 []
 
 [Materials]
@@ -399,52 +382,52 @@
     type = FieldSolverMaterial
     potential = potential
   []
-  [./Material_Coeff]
+  [Material_Coeff]
     type = GenericFunctionMaterial
     prop_names =  'e  N_A'
     prop_values = 'ee N_A'
-  [../]
-  [./ADMaterial_Coeff]
+  []
+  [ADMaterial_Coeff]
     type = ADGenericFunctionMaterial
     prop_names =  'diffpotential diffem muem diffion muion'
     prop_values = 'diffpotential diffem muem diffion muion'
-  [../]
-  [./Charge_Signs]
+  []
+  [Charge_Signs]
     type = GenericConstantMaterial
     prop_names =  'sgnem  sgnion'
     prop_values = '-1.0   1.0'
-  [../]
+  []
 []
 
 [Postprocessors]
-  [./em_l2Error]
+  [em_l2Error]
     type = ElementL2Error
     variable = em
     function = em_fun
-  [../]
-  [./ion_l2Error]
+  []
+  [ion_l2Error]
     type = ElementL2Error
     variable = ion
     function = ion_fun
-  [../]
-  [./potential_l2Error]
+  []
+  [potential_l2Error]
     type = ElementL2Error
     variable = potential
     function = potential_fun
-  [../]
+  []
 []
 
 [Preconditioning]
   active = 'smp'
-  [./smp]
+  [smp]
     type = SMP
     full = true
-  [../]
+  []
 
-  [./fdp]
+  [fdp]
     type = FDP
     full = true
-  [../]
+  []
 []
 
 [Executioner]

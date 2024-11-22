@@ -12,6 +12,10 @@
 
 #include "ADKernel.h"
 
+/*
+ *  Effective electric field driven advection term. The effective electric 
+ *  field is supplied as scalar components of the field
+ */
 class EffectiveEFieldAdvection : public ADKernel
 {
 public:
@@ -20,20 +24,20 @@ public:
   EffectiveEFieldAdvection(const InputParameters & parameters);
 
 protected:
-  // virtual ADRealVectorValue precomputeQpResidual() override;
   virtual ADReal computeQpResidual();
-
-  //  // using ADKernelGrad::getPostprocessorValue;
 
 private:
   /// Position units
   const Real _r_units;
 
-  /// The diffusion coefficient (either constant or mixture-averaged)
+  /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
+  /// Charge sign of the species
   const MaterialProperty<Real> & _sign;
-
+  /// x-component of the electric field
   const ADVariableValue & _u_Efield;
+  /// y-component of the electric field
   const ADVariableValue & _v_Efield;
+  /// z-component of the electric field
   const ADVariableValue & _w_Efield;
 };

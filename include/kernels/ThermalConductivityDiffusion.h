@@ -12,6 +12,11 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Electron energy diffusion term
+ *  that assumes a thermal conductivity of
+ *  K = 3/2 D_e n_e
+ */
 class ThermalConductivityDiffusion : public ADKernel
 {
 public:
@@ -23,11 +28,15 @@ protected:
   virtual ADReal computeQpResidual() override;
 
 private:
+
+  /// Position units
   Real _r_units;
+  /// Coefficient relating diffusion coefficient * density to thermal conductivity
   Real _coeff;
-
+  /// Diffusion coefficient
   const ADMaterialProperty<Real> & _diffem;
-
+  /// Electron density
   const ADVariableValue & _em;
+  /// Gradient of electron density
   const ADVariableGradient & _grad_em;
 };
