@@ -390,7 +390,7 @@
 []
 
 [Outputs]
-  [out]
+  [./out]
     type = Exodus
     interval = 10
   []

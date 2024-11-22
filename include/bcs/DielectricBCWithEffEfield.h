@@ -37,19 +37,19 @@ protected:
   const ADVariableValue & _mean_en;
   /// Electron mean energy density variable
   MooseVariable & _mean_en_var;
-  /// Electron mean energy density value during previous time step 
+  /// Electron mean energy density value during previous time step
   const VariableValue & _mean_en_old;
   /// Electron density value
   const ADVariableValue & _em;
   /// Electron density variable
   MooseVariable & _em_var;
-  /// Electron density value during previous time step 
+  /// Electron density value during previous time step
   const VariableValue & _em_old;
   /// Ion density value
   const ADVariableValue & _ip;
   /// Ion density variable
   MooseVariable & _ip_var;
-  /// Ion density value during previous time step 
+  /// Ion density value during previous time step
   const VariableValue & _ip_old;
 
   /// x-component of the electric field value
