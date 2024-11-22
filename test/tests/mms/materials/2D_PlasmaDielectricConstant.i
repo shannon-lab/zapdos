@@ -25,7 +25,7 @@
 # []
 
 [Kernels]
-#Electron Equations
+  #Electron Equations
   [em_time_derivative]
     type = TimeDerivativeLog
     variable = em
@@ -95,7 +95,6 @@
     function = em_fun
   []
 
-
   [dielectric_real]
     type = ADMaterialRealAux
     variable = dielectric_real
@@ -131,7 +130,7 @@
 []
 
 [Functions]
-#Material Variables
+  #Material Variables
   #Electron diffusion coeff.
   [diffem_coeff]
     type = ConstantFunction
@@ -156,8 +155,7 @@
     value = 0.01
   []
 
-
-#Manufactured Solutions
+  #Manufactured Solutions
   #The manufactured electron density solution
   [em_fun]
     type = ParsedFunction
@@ -173,7 +171,7 @@
     value = '-(ee*(2*cos((pi*x)/2) + cos(pi*y)*sin(2*pi*t)))/(5*diffpotential*pi^2)'
   []
 
-#Source Terms in moles
+  #Source Terms in moles
   #The electron source term.
   [em_source]
     type = ParsedFunction
@@ -218,26 +216,26 @@
   [dielectric_real_fun]
     type = ParsedFunction
     expression = '-ec^2*(sin(y*pi) + 0.2*sin(2*pi*t)*cos(y*pi) + cos((1/2)*x*pi) + 1.0)/(epsilon_0*m_e*(nu^2 + omega^2)) + 1'
-    symbol_names =  'omega m_e ec nu epsilon_0'
+    symbol_names = 'omega m_e ec nu epsilon_0'
     symbol_values = 'omega m_e ec nu epsilon_0'
   []
   [dielectric_image_fun]
     type = ParsedFunction
     expression = '-1.0*ec^2*nu*(sin(y*pi) + 0.2*sin(2*pi*t)*cos(y*pi) + cos((1/2)*x*pi) + 1.0)/(epsilon_0*m_e*(nu^2*omega + omega^3))'
-    symbol_names =  'omega m_e ec nu epsilon_0'
+    symbol_names = 'omega m_e ec nu epsilon_0'
     symbol_values = 'omega m_e ec nu epsilon_0'
   []
 
   [dielectric_real_grad_fun]
     type = ParsedVectorFunction
-    symbol_names =  'omega m_e ec nu epsilon_0'
+    symbol_names = 'omega m_e ec nu epsilon_0'
     symbol_values = 'omega m_e ec nu epsilon_0'
     expression_x = '(1/2)*pi*ec^2*sin((1/2)*x*pi)/(epsilon_0*m_e*(nu^2 + omega^2))'
     expression_y = '-ec^2*(-0.2*pi*sin(y*pi)*sin(2*pi*t) + pi*cos(y*pi))/(epsilon_0*m_e*(nu^2 + omega^2))'
   []
   [dielectric_image_grad_fun]
     type = ParsedVectorFunction
-    symbol_names =  'omega m_e ec nu epsilon_0'
+    symbol_names = 'omega m_e ec nu epsilon_0'
     symbol_values = 'omega m_e ec nu epsilon_0'
     expression_x = '0.5*pi*ec^2*nu*sin((1/2)*x*pi)/(epsilon_0*m_e*(nu^2*omega + omega^3))'
     expression_y = '-1.0*ec^2*nu*(-0.2*pi*sin(y*pi)*sin(2*pi*t) + pi*cos(y*pi))/(epsilon_0*m_e*(nu^2*omega + omega^3))'
@@ -245,26 +243,26 @@
 
   [d_dielectric_real_dt_fun]
     type = ParsedFunction
-    symbol_names =  'omega m_e ec nu epsilon_0'
+    symbol_names = 'omega m_e ec nu epsilon_0'
     symbol_values = 'omega m_e ec nu epsilon_0'
     expression = '-0.4*pi*ec^2*cos(y*pi)*cos(2*pi*t)/(epsilon_0*m_e*(nu^2 + omega^2))'
   []
   [d_dielectric_image_dt_fun]
     type = ParsedFunction
-    symbol_names =  'omega m_e ec nu epsilon_0'
+    symbol_names = 'omega m_e ec nu epsilon_0'
     symbol_values = 'omega m_e ec nu epsilon_0'
     expression = '-0.4*pi*ec^2*nu*cos(y*pi)*cos(2*pi*t)/(epsilon_0*m_e*(nu^2*omega + omega^3))'
   []
 
   [d2_dielectric_real_dt2_fun]
     type = ParsedFunction
-    symbol_names =  'omega m_e ec nu epsilon_0'
+    symbol_names = 'omega m_e ec nu epsilon_0'
     symbol_values = 'omega m_e ec nu epsilon_0'
     expression = '0.8*pi^2*ec^2*sin(2*pi*t)*cos(y*pi)/(epsilon_0*m_e*(nu^2 + omega^2))'
   []
   [d2_dielectric_image_dt2_fun]
     type = ParsedFunction
-    symbol_names =  'omega m_e ec nu epsilon_0'
+    symbol_names = 'omega m_e ec nu epsilon_0'
     symbol_values = 'omega m_e ec nu epsilon_0'
     expression = '0.8*pi^2*ec^2*nu*sin(2*pi*t)*cos(y*pi)/(epsilon_0*m_e*(nu^2*omega + omega^3))'
   []
@@ -293,17 +291,17 @@
   []
   [Material_Coeff]
     type = GenericFunctionMaterial
-    prop_names =  'e N_A'
+    prop_names = 'e N_A'
     prop_values = 'ee N_A'
   []
   [ADMaterial_Coeff]
     type = ADGenericFunctionMaterial
-    prop_names =  'diffem        muem        diffpotential'
+    prop_names = 'diffem        muem        diffpotential'
     prop_values = 'diffem_coeff  muem_coeff  diffpotential'
   []
   [Charge_Signs]
     type = GenericConstantMaterial
-    prop_names =  'sgnem'
+    prop_names = 'sgnem'
     prop_values = '-1.0'
   []
 []
@@ -390,7 +388,7 @@
 []
 
 [Outputs]
-  [./out]
+  [out]
     type = Exodus
     interval = 10
   []
