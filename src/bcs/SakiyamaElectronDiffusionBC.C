@@ -19,7 +19,7 @@ SakiyamaElectronDiffusionBC::validParams()
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Kinetic electron boundary condition"
-                             "(Based on DOI: https://doi.org/10.1116/1.579300)");
+                             " (Based on [!cite](sakiyama2006corona))");
   return params;
 }
 

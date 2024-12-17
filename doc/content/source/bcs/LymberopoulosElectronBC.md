@@ -1,20 +1,38 @@
 # LymberopoulosElectronBC
 
-!alert construction title=Undocumented Class
-The LymberopoulosElectronBC has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /BCs/LymberopoulosElectronBC
 
 ## Overview
 
-!! Replace these lines with information regarding the LymberopoulosElectronBC object.
+`LymberopoulosElectronBC` is a thermal outflow boundary condition with the addition of ion induced secondary electron energy.
+
+The outflow is defined as
+
+\begin{equation}
+\Gamma_{e} \cdot \textbf{n} = k_{s} n_{e} - \gamma \left[ \text{sign}_{i} \mu_{i} n_{i}
+\left( 
+ \text{-} \nabla (V) 
+\right) 
+\cdot \textbf{n} \right]
+\end{equation}
+
+Where $\Gamma_{e} \cdot \textbf{n}$ is the flux of the electrons normal to the boundary, $\textbf{n}$ is the normal of the boundary, $n_{e}$ is the electron density, $n_{i}$ is the ion density, $\mu_{i}$ is the ion mobility coefficient, $\text{sign}_{i}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $V$ is the electric potential, $\gamma$ is the ion induced secondary electron coefficient, and $k_{s}$ is electron surface recombination coefficient. For an electron sticking coefficient of unity, $k_{s}$ is equal to the thermal speed of the electrons. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `LymberopoulosElectronBC` is defined as
+
+\begin{equation}
+\Gamma_{e} \cdot \textbf{n} = k_{s} \exp(N_{e}) - \gamma \left[ \text{sign}_{i} \mu_{i} \exp(N_{i})
+\left( 
+ \text{-} \nabla (V / l_{c})
+ \right) 
+  \cdot \textbf{n} \right]
+\end{equation}
+
+Where $N_{j}$ is the molar density of the species in log form and
+$l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the LymberopoulosElectronBC object.
+
+!listing test/tests/DriftDiffusionAction/RF_Plasma_actions.i block=BCs/em_physical_right
 
 !syntax parameters /BCs/LymberopoulosElectronBC
 

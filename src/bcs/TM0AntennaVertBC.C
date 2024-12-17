@@ -20,6 +20,8 @@ TM0AntennaVertBC::validParams()
   params.addParam<Real>("eps_r", 1., "The relative permittivity.");
   params.addParam<bool>(
       "time_dependent", false, "Whether the antenna boundary condition should oscillate in time.");
+  params.addClassDescription(
+      "A simple vertical antenna BC of the azimuthal component of the magnetizing field.");
   return params;
 }
 

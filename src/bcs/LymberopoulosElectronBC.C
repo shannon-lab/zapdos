@@ -23,7 +23,7 @@ LymberopoulosElectronBC::validParams()
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Simpified kinetic electron boundary condition"
-                             "(Based on DOI: https://doi.org/10.1063/1.352926)");
+                             " (Based on [!cite](Lymberopoulos1993))");
   return params;
 }
 

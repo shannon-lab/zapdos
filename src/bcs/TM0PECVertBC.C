@@ -16,6 +16,8 @@ InputParameters
 TM0PECVertBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
+  params.addClassDescription(
+      "A perfect electric conductor BC of the azimuthal component of the magnetizing field.");
   return params;
 }
 
