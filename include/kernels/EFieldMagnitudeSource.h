@@ -25,6 +25,6 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  /// Gradient of coupled gradient
+  /// Gradient of coupled potential
   const ADVariableGradient & _grad_potential;
 };

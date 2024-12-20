@@ -27,15 +27,15 @@ public:
 protected:
   virtual void computeQpProperties() override;
 
-  /// Spline Interpolation fuction for ionization Townsend coefficient
+  /// Spline Interpolation function for the ionization Townsend coefficient
   SplineInterpolation _alpha_interpolation;
-  /// Spline Interpolation fuction for excitation Townsend coefficient
+  /// Spline Interpolation function for the excitation Townsend coefficient
   SplineInterpolation _alphaEx_interpolation;
-  /// Spline Interpolation fuction for elastic Townsend coefficient
+  /// Spline Interpolation function for the elastic Townsend coefficient
   SplineInterpolation _alphaEl_interpolation;
-  /// Spline Interpolation fuction for electron mobility coefficient
+  /// Spline Interpolation function for the electron mobility coefficient
   SplineInterpolation _mu_interpolation;
-  /// Spline Interpolation fuction for diffusion mobility coefficient
+  /// Spline Interpolation function for the diffusion mobility coefficient
   SplineInterpolation _diff_interpolation;
 
   /// True if interpolating transport coefficients as a function of the mean energy
@@ -115,25 +115,31 @@ protected:
    *  Curve fitting for ionization coefficients dependent
    *  on the electric field based on bolos simulations
    */
+  ///@{
   MaterialProperty<Real> & _iz_coeff_efield_a;
   MaterialProperty<Real> & _iz_coeff_efield_b;
   MaterialProperty<Real> & _iz_coeff_efield_c;
+  ///@}
   /*
    *  Curve fitting for ionization coefficients dependent
    *  on the electron energy based on bolos simulations
    */
+  ///@{
   MaterialProperty<Real> & _iz_coeff_energy_a;
   MaterialProperty<Real> & _iz_coeff_energy_b;
   MaterialProperty<Real> & _iz_coeff_energy_c;
+  ///@}
   /// Avogadro's number
   MaterialProperty<Real> & _N_A;
   /*
    *  Curve fitting for elastic coefficients dependent
    *  on the electron energy based on bolos simulations
    */
+  ///@{
   MaterialProperty<Real> & _el_coeff_energy_a;
   MaterialProperty<Real> & _el_coeff_energy_b;
   MaterialProperty<Real> & _el_coeff_energy_c;
+ ///@}
   /// AD Ionization Townsend coefficient
   ADMaterialProperty<Real> & _alpha_iz;
   /// AD Excitation Townsend coefficient

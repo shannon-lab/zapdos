@@ -68,9 +68,9 @@ protected:
   /// Mobility coefficient of the electron mean energy density
   const ADMaterialProperty<Real> & _mumean_en;
 
-  /// Equal to 1 when the electron drift velocity is direct towards the wall and zero otherwise
+  /// Equal to 1 when the electron drift velocity is directed towards the wall and zero otherwise
   Real _a;
-  /// Equal to 1 when the ion drift velocity is direct towards the wall and zero otherwise
+  /// Equal to 1 when the ion drift velocity is directed towards the wall and zero otherwise
   Real _b;
   /// Electron thermal velocity
   ADReal _v_thermal;

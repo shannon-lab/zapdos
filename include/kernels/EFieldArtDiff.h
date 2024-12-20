@@ -26,7 +26,7 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  /// Gradient of the coupled gradient
+  /// Gradient of the coupled potential
   const ADVariableGradient & _grad_potential;
 
   /// Scaling factor for the artificial diffusion

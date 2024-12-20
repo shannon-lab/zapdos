@@ -14,7 +14,7 @@
 
 /*
  *  This Action automatically adds multiply 'TimePeriod' controllers for
- *  the purpose of enabling and disabling multiple objects during multiple cycles.
+ *  the purpose of enabling and disabling multiple objects cyclically.
  */
 class AddPeriodicControllers : public Action
 {

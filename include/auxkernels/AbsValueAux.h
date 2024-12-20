@@ -26,6 +26,6 @@ protected:
   virtual Real computeValue() override;
 
 private:
-  /// The coupled variable in which to take to absolute value
+  /// The coupled variable that this object is taking the absolute value of.
   const VariableValue & _u;
 };

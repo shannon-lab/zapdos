@@ -83,7 +83,7 @@ protected:
 
   /// Term for 'dPhi' divided by the local field squared
   Real _dPhi_over_F;
-  /// The different in the work funtion due to the electric field
+  /// The difference in the work function due to the electric field
   ADReal dPhi;
   /// Boltzmann constant
   Real kB;

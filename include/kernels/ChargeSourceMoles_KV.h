@@ -13,7 +13,7 @@
 #include "ADKernel.h"
 
 /**
- *  Kernel for adding charged sources to Poisson’s equation
+ *  Kernel for adding charge density sources to Poisson’s equation
  */
 class ChargeSourceMoles_KV : public ADKernel
 {

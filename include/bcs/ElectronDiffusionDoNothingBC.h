@@ -13,8 +13,8 @@
 #include "ADIntegratedBC.h"
 
 /**
- *  Boundary condition where the election diffusion flux at the boundary
- *  is equal to the bulk election diffusion equation
+ *  Boundary condition where the electron diffusion flux at the boundary
+ *  is equal to the bulk electron diffusion equation
  */
 class ElectronDiffusionDoNothingBC : public ADIntegratedBC
 {

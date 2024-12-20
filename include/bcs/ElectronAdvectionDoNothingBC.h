@@ -13,8 +13,8 @@
 #include "ADIntegratedBC.h"
 
 /**
- *  Boundary condition where the election advection flux at the boundary
- *  is equal to the bulk election advection equation
+ *  Boundary condition where the electron advection flux at the boundary
+ *  is equal to the bulk electron advection equation
  */
 class ElectronAdvectionDoNothingBC : public ADIntegratedBC
 {
