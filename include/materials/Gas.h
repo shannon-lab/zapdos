@@ -139,7 +139,7 @@ protected:
   MaterialProperty<Real> & _el_coeff_energy_a;
   MaterialProperty<Real> & _el_coeff_energy_b;
   MaterialProperty<Real> & _el_coeff_energy_c;
- ///@}
+  ///@}
   /// AD Ionization Townsend coefficient
   ADMaterialProperty<Real> & _alpha_iz;
   /// AD Excitation Townsend coefficient
