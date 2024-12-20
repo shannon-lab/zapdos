@@ -26,7 +26,15 @@ public:
   virtual void act();
 
 protected:
-  /// Function that adds a 'TimePeriod' controller
+  /** 
+   *  Function that adds a 'TimePeriod' controller
+   *  @param enableORdisable Stating to uses either the "enable_objects" or "disable_objects" parameter from 'TimePeriod'
+   *  @param objects The name of objects that are either being enabled or disabled
+   *  @param start_times The time values to start the controller
+   *  @param end_times The time values to stop the controller
+   *  @param name_num The current number of the controller for the naming of the controller object
+   *  @param first_controller True if this is the first controller object being set
+   */
   virtual void AddTimePeriod(const std::string & enableORdisable,
                              const std::vector<std::string> & objects,
                              const std::vector<Real> & start_times,

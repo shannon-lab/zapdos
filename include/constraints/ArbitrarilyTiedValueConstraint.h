@@ -35,7 +35,7 @@ public:
 protected:
   /// Scaling factor
   const Real _scaling;
-  /// Ratio of secondary to primary variable
+  /// User defined ratio of secondary to primary variable
   const Real _H;
   /// Copy of residual
   NumericVector<Number> & _residual_copy;

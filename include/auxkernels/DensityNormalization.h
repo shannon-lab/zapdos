@@ -13,7 +13,14 @@
 #include "AuxKernel.h"
 
 /**
- *  Normalize variables expressed in log form
+ *  Normalize variables expressed in logarithmic form (n) by a
+ *  postprocessor value (pp_value) in the form of:
+ *
+ *  f * (exp(n) / pp_value) - shift
+ *
+ *  where f and shift are user defined normalization and
+ *  shifting factors, respectively (the default values being
+ *  f = 1. and shift = 0.)
  */
 class DensityNormalization : public AuxKernel
 {

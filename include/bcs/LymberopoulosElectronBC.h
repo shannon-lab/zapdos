@@ -34,7 +34,7 @@ protected:
   /// Number of ions defined
   const unsigned int _num_ions;
 
-  // Coupled variables
+  /// Gradient of coupled potential
   const ADVariableGradient & _grad_potential;
   /// Ion density variables
   std::vector<MooseVariable *> _ion_var;
