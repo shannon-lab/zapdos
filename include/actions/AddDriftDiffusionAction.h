@@ -61,15 +61,16 @@ protected:
   /**
    *  Helper function that supplies the Aux kernels to convert scaled position units
    *  when the user sets position_units to non-unity value
-   *  @param position_name The name of the position variable in the format of {component + "_position" + block}
+   *  @param position_name The name of the position variable in the format of {component +
+   * "_position" + block}
    *  @param component The spatial component defined as x=0, y=1, and z=2
    */
   virtual void addPosition(const std::string & position_name, const int & component);
 
-  /** 
+  /**
    *  Helper function that supplies the Aux kernels to convert densities from logarithmic form
    *  @param particle_name The name of the density variable
-   */ 
+   */
   virtual void addDensityLog(const std::string & particle_name);
 
   /**
@@ -81,7 +82,8 @@ protected:
 
   /**
    *  Helper function that supplies the Aux kernels for the electric field
-   *  @param Efield_name The name of the electric field variable in the format of {"Efield" + component + block}
+   *  @param Efield_name The name of the electric field variable in the format of {"Efield" +
+   * component + block}
    *  @param potential_name The name of the electrostatic potential
    *  @param component The spatial component defined as x=0, y=1, and z=2
    */

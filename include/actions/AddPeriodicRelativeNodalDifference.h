@@ -37,7 +37,8 @@ protected:
   /**
    *  Function for setting AuxKernels for the previous and sudo previous solutions
    *  @param variable_name The name of the auxvariable to stores the previous cycle solution
-   *  @param var_old_name The name of the variable storing the solution at the beginning of the time step
+   *  @param var_old_name The name of the variable storing the solution at the beginning of the time
+   * step
    */
   virtual void addPerviousSolutionsKernels(const std::string & variable_name,
                                            const std::string & var_old_name);
@@ -68,7 +69,8 @@ protected:
                                          const std::string & var_old_name,
                                          const std::string & name);
   /**
-   *  Function that adds a 'TimePeriod' controller to begin calculating the relative periodic difference
+   *  Function that adds a 'TimePeriod' controller to begin calculating the relative periodic
+   * difference
    *  @param objects The name of objects that are either being enabled or disabled
    *  @param start_times The time values to start the controller
    *  @param end_times The time values to stop the controller

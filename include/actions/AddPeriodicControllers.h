@@ -26,9 +26,10 @@ public:
   virtual void act();
 
 protected:
-  /** 
+  /**
    *  Function that adds a 'TimePeriod' controller
-   *  @param enableORdisable Stating to uses either the "enable_objects" or "disable_objects" parameter from 'TimePeriod'
+   *  @param enableORdisable Stating to uses either the "enable_objects" or "disable_objects"
+   * parameter from 'TimePeriod'
    *  @param objects The name of objects that are either being enabled or disabled
    *  @param start_times The time values to start the controller
    *  @param end_times The time values to stop the controller
