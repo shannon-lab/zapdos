@@ -4,7 +4,7 @@
 
 ## Overview
 
-`ThermalConductivityDiffusion` supplies a electron energy diffusion term that assumes an electron thermal conductivity for the electron energy flux.
+`ThermalConductivityDiffusion` supplies an electron energy diffusion term that assumes an electron thermal conductivity for the electron energy flux.
 
 The thermal conductivity formulation of the electron energy flux in terms of electron temperature is defined as:
 

@@ -21,7 +21,7 @@ a =
 
 where
 
-- $\Gamma_\epsilon \cdot \textbf{n}$ is the flux normal to the boundary, 
+- $\Gamma_\epsilon \cdot \textbf{n}$ is the mean energy density flux normal to the boundary, 
 - $\textbf{n}$ is the normal vector of the boundary,
 - $\mu_{j}$ is the mobility coefficient, 
 - $n_{\epsilon}$ is the mean energy density, 

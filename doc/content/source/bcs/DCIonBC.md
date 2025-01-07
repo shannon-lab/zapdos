@@ -18,7 +18,7 @@ a =
 \end{equation}
 
 Where $\Gamma$ is the outflow normal to the boundary, $\textbf{n}$ is the normal vector of the boundary, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $\mu_{j}$ is the mobility coefficient, $n_{j}$ is the density, and $\vec{E}$ is
-the electric field. $a$ is defined such that the outflow is only defined when the drift velocity is direct towards the wall and zero otherwise. When converting the density to logarithmic form and applying a scaling
+the electric field. $a$ is defined such that the outflow is only defined when the drift velocity is directed towards the wall and zero otherwise. When converting the density to logarithmic form and applying a scaling
 factor of the mesh, the strong form for `DCIonBC` is defined as
 
 \begin{equation}
