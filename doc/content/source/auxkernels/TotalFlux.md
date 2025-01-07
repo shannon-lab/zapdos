@@ -18,7 +18,7 @@ Where $\Gamma_{j}$ is the flux assuming drift-diffusion formulation, $\mu_{j}$ i
 \Gamma_{j} = \text{sign}_{j} \mu_{j} \vec{E} \exp(N_{j}) - D_{j} \exp(N_{j}) \nabla (N_{j})
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form.
+Where $N_{j}$ is the molar density of the species in logarithmic form.
 
 ## Example Input File Syntax
 

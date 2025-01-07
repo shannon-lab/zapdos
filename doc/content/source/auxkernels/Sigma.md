@@ -4,7 +4,7 @@
 
 ## Overview
 
-`Sigma` calculates a simplifed version of the surface charge on a boundary due to the advection flux of an ion species. `Sigma` assumes a mobility coefficient of unity, and a non-scaled version of the specie's density.
+`Sigma` calculates a simplifed version of the surface charge on a boundary due to the advection flux of an ion species. `Sigma` assumes a mobility coefficient of unity, and a non-scaled version of the species density.
 
 The surface charge is defined as
 

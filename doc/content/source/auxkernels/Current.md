@@ -18,9 +18,9 @@ Where $J_{j}$ is the current density, $q_{j}$ is the charge of the species, $\te
 J_{j} = q_{j} N_{A} \left(\text{sign}_{j} \mu_{j} \frac{\vec{E}}{l_{c}} \exp(N_{j}) - D_{j} \exp(N_{j}) \frac{\nabla (N_{j})}{l_{c}} \right)
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form, $N_{A}$ is Avogadro's number, $l_{c}$ is the scaling factor of the mesh.
+Where $N_{j}$ is the molar density of the species in logarithmic form, $N_{A}$ is Avogadro's number, $l_{c}$ is the scaling factor of the mesh.
 
-For the case of the where artificial diffusion is introduced to the charge specie flux, an additional term is included in the current density, such that:
+For the case of the where artificial diffusion is introduced to the charge species flux, an additional term is included in the current density, such that:
 
 \begin{equation}
 J_{j,\text{ Total}} = J_{j} + q_{j} N_{A} \mu_{j} \frac{\text{-}\lVert \vec{E} \rVert_{2}}{l_{c}} \frac{h_\text{max}}{2} \exp(N_{j}) \frac{\nabla (N_{j})}{l_{c}}

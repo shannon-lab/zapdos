@@ -19,7 +19,7 @@ a =
 
 Where 
 
-- $\Gamma$ is the outflow normal to the boundary, 
+- $\Gamma \cdot \textbf{n}$ is the outflow normal to the boundary, 
 - $\textbf{n}$ is the normal of the boundary,
 - $\mu_{j}$ is the mobility coefficient, 
 - $n_{j}$ is the species density, 

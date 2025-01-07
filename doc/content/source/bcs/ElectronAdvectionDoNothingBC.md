@@ -13,7 +13,7 @@ The outflow is defined as
 \Gamma_{e} \cdot \textbf{n} = \text{-} \mu_{e} n_{e} \vec{E} \cdot \textbf{n} 
 \end{equation}
 
-Where $\Gamma$ is the outflow normal to the boundary, $\textbf{n}$ is the normal of the boundary, $\mu_{e}$ is the mobility coefficient, $n_{e}$ is the electron density, and $\vec{E}$ is the electric field. When converting the density to logarithmic form and applying a scaling
+Where $\Gamma_{e} \cdot \textbf{n}$ is the outflow normal to the boundary, $\textbf{n}$ is the normal of the boundary, $\mu_{e}$ is the mobility coefficient, $n_{e}$ is the electron density, and $\vec{E}$ is the electric field. When converting the density to logarithmic form and applying a scaling
 factor of the mesh, the strong form for `ElectronAdvectionDoNothingBC` is defined as
 
 \begin{equation}

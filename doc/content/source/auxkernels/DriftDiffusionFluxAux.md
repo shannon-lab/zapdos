@@ -5,7 +5,7 @@
 ## Overview
 
 `DriftDiffusionFluxAux` returns the simplified drift-diffusion flux of a species. `DriftDiffusionFluxAux`
-assumes a mobility and diffusion coefficient of unity and a non-scaled version of the specie's density.
+assumes a mobility and diffusion coefficient of unity and a non-scaled version of the species density.
 
 The flux is defined as
 

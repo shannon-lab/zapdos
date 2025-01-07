@@ -4,7 +4,7 @@
 
 ## Overview
 
-`EFieldAdvAux` returns electric field driven advective flux of defined species in logarithmic form.
+`EFieldAdvAux` returns electric field driven advective flux of a defined species in logarithmic form.
 
 The advective flux is defined as
 
@@ -19,7 +19,7 @@ Where $\Gamma_{\text{Advection}}$ is the advective flux, $\text{sign}_{j}$ indic
 \Gamma_{\text{Advection}}  = N_{A} \text{sign}_{j} \mu_{j} \frac{\vec{E}}{l_{c}} \exp(N_{j})
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in logarithmic form, $N_{A}$ is Avogadro's
+Where $N_{j}$ is the molar density of the species in logarithmic form, $N_{A}$ is Avogadro's
 number, $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax

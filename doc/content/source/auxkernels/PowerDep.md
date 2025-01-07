@@ -4,7 +4,7 @@
 
 ## Overview
 
-`PowerDep` returns the amount of power deposited into a user specified specie by
+`PowerDep` returns the amount of power deposited into a user specified species by
 Joule Heating.
 
 The power deposited by Joule Heating is defined as
@@ -26,7 +26,7 @@ P_{\text{Joule Heating}} = \Gamma_{j}  \cdot \frac{\vec{E} V_{c}}{l_{c}} \\
 \Gamma_{j} = q_{j} N_{A} \left( \text{sign}_{j} \mu_{j} \frac{\vec{E}}{l_{c}} \exp(N_{j}) - D_{j} \exp(N_{j}) \frac{\nabla (N_{j})}{l_{c}} \right)
 \end{equation}
 
-Where $N_{j}$ is the molar density of the specie in log form, $N_{A}$ is Avogadro's
+Where $N_{j}$ is the molar density of the species in log form, $N_{A}$ is Avogadro's
 number, $l_{c}$ is the scaling factor of the mesh, and $V_{c}$ is the scaling factor
 of the potential.
 

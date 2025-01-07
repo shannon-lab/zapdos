@@ -5,7 +5,7 @@
 ## Overview
 
 `PotentialDriftOutflowBC` is an electric field driven outflow boundary condition.
-`PotentialDriftOutflowBC` assumes a mobility coefficient of unity and a non-scaled version of the species' density.
+`PotentialDriftOutflowBC` assumes a mobility coefficient of unity and a non-scaled version of the species density.
 
 The electric field driven outflow is defined as
 

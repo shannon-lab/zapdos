@@ -27,14 +27,14 @@ where
 - $\textbf{n}$ is the normal to the boundary, 
 - $e$ is the elemental charge, 
 - $\epsilon_{0}$ is the permittivity of free space,
-- $E$ is the electric field normal to the dielectric, 
+- $\vec{E} \cdot \textbf{n}$ is the electric field normal to the dielectric, 
 - $\Gamma_{e}$ is the electron outflow flux, and 
-- $\Gamma_{+}$ are the ion outflow flux.
+- $\Gamma_{+}$ is the ion outflow flux.
 
 !alert note title=Flux Information
 $\Gamma_{e}$ and $\Gamma_{+}$ are defined with the [`SakiyamaElectronDiffusionBC`](/bcs/SakiyamaElectronDiffusionBC.md), [`SakiyamaSecondaryElectronWithEffEfieldBC`](/bcs/SakiyamaSecondaryElectronWithEffEfieldBC.md) and [`SakiyamaIonAdvectionWithEffEfieldBC`](/bcs/SakiyamaIonAdvectionWithEffEfieldBC.md) (please refer to those BC's for more information on the fluxes).
 
-To convert the above equation into the form at a NeumannBC, the time integral is taken such that:
+To convert the above equation into the form of a NeumannBC, the time integral is taken such that:
 
 \begin{equation}
 \int{ \epsilon_{0}\frac{\partial (E \cdot \textbf{n}) }{\partial t} } dt - \int{ \frac{\epsilon_{i}}{d_{i}}\frac{\partial V_{i}}{\partial t} } dt = \int{ - e \left( \Gamma_{+} \cdot \textbf{n} -\Gamma_{e} \cdot \textbf{n} \right) } dt
@@ -52,7 +52,7 @@ where
 - The subscript $\text{old}$ is the value of the variable during the previous time step, and
 - $dt$ is the current time step size.
 
-Lastly, the electrostatics approximation is applied to the electric field normal to the dielectric, which results in a NeumannBC for the potential defined as:
+Lastly, the electrostatic approximation is applied to the electric field normal to the dielectric, which results in a NeumannBC for the potential defined as:
 
 \begin{equation}
 \epsilon_{0} \left( -\nabla V \cdot \textbf{n} \right) = \epsilon_{0} \left( -\nabla V_{\text{old}} \cdot \textbf{n} \right) + \frac{\epsilon_{i}}{d_{i}} \left( V - V_
