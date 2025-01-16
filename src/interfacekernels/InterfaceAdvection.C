@@ -21,8 +21,9 @@ InterfaceAdvection::validParams()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<Real>("neighbor_position_units",
                                 "The units of position in the neighboring domain.");
-  params.addClassDescription("Used to include the electric field driven advective flux of a species "
-                             "into or out of a neighboring subdomain.");
+  params.addClassDescription(
+      "Used to include the electric field driven advective flux of a species "
+      "into or out of a neighboring subdomain.");
   return params;
 }
 
