@@ -41,6 +41,6 @@ protected:
   /// A factor to shift the normilization by
   const Real * _shift;
 
-  /// A factor to multiple the normilization by
+  /// A factor to multiply the normilization by
   Real _normal_factor;
 };

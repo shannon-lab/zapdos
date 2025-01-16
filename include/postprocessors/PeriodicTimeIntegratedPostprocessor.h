@@ -13,7 +13,7 @@
 #include "MultipliedTimeIntegratedPostprocessor.h"
 
 /*
- *  Integrate a Postprocessor value over a period in time using trapezoidal rule.
+ *  Integrates a Postprocessor value over a period in time using trapezoidal rule.
  */
 class PeriodicTimeIntegratedPostprocessor : public MultipliedTimeIntegratedPostprocessor
 {

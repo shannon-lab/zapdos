@@ -34,7 +34,7 @@ protected:
   const VariableValue & _other_var;
   /// The sum of the square of the difference
   Real _sum_of_squared_diff;
-  /// The simple size
+  /// The sample size
   Real _n;
   /// The root mean squared of the difference
   Real _value;

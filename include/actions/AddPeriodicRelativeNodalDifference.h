@@ -36,7 +36,7 @@ protected:
   virtual void addPerviousSolutionsIC(const std::string & variable_name, const Real & initial);
   /**
    *  Function for setting AuxKernels for the previous and sudo previous solutions
-   *  @param variable_name The name of the auxvariable to stores the previous cycle solution
+   *  @param variable_name The name of the auxvariable that stores the previous cycle solution
    *  @param var_old_name The name of the variable storing the solution at the beginning of the time
    * step
    */
@@ -44,7 +44,7 @@ protected:
                                            const std::string & var_old_name);
   /**
    *  Function for setting AuxKernels to normalize solutions
-   *  @param variable_name The name of the auxvariable to stores normalization value
+   *  @param variable_name The name of the auxvariable that stores normalization value
    *  @param source The name of the variable to be normalizated
    *  @param averaged The name of the postprocessor that calculates the spatial average
    *  @param log True if the source is in a logarithmic form
@@ -54,13 +54,13 @@ protected:
                                        const std::string & averaged,
                                        const bool & log);
   /**
-   *  Function for setting Postprocessor to take to nodal average
+   *  Function for setting Postprocessor to take the nodal average
    *  @param variable_name The name of the variable to be averaged
    *  @param log True if the variable is in a logarithmic form
    */
   virtual void addAverageNodalPP(const std::string & variable_name, const bool & log);
   /**
-   *  Function for setting Postprocessor to take to average nodal difference
+   *  Function for setting Postprocessor to take the average nodal difference
    *  @param variable_name The name of the variable that stores the current average
    *  @param var_old_name The name of the variable that stores the average from the previous cycle
    *  @param name The name of the variable that was averaged
@@ -95,12 +95,12 @@ protected:
   /// The name of objects to enable at the end of the cycle
   std::vector<std::string> _enable_end;
 
-  /// The array that holds the start times for objects that are enable at the start of the cycle
+  /// The array that holds the start times for objects that are enabled at the start of the cycle
   std::vector<Real> _enable_start_start_time_index;
-  /// The array that holds the end times for objects that are enable at the start of the cycle
+  /// The array that holds the end times for objects that are enabled at the start of the cycle
   std::vector<Real> _enable_start_end_time_index;
-  /// The array that holds the start times for objects that are enable at the end of the cycle
+  /// The array that holds the start times for objects that are enabled at the end of the cycle
   std::vector<Real> _enable_end_start_time_index;
-  /// The array that holds the end times for objects that are enable at the end of the cycle
+  /// The array that holds the end times for objects that are enabled at the end of the cycle
   std::vector<Real> _enable_end_end_time_index;
 };

@@ -61,7 +61,7 @@ protected:
   Real _user_Richardson_coefficient;
   /// User defined cathode temperature
   Real _user_cathode_temperature;
-  /// User defined neutral gase and ion temperature
+  /// User defined neutral gas and ion temperature
   Real _user_T_gas;
   /// Coupled pressure variable
   const VariableValue & _user_p_gas;

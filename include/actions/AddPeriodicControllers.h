@@ -13,7 +13,7 @@
 #include "Action.h"
 
 /*
- *  This Action automatically adds multiply 'TimePeriod' controllers for
+ *  This Action automatically adds multiple 'TimePeriod' controllers for
  *  the purpose of enabling and disabling multiple objects cyclically.
  */
 class AddPeriodicControllers : public Action
@@ -43,18 +43,18 @@ protected:
                              const std::string & name_num,
                              const bool & first_controller);
 
-  /// A list of objects names to enable at the start of the cycle
+  /// A list of object names to enable at the start of the cycle
   std::vector<std::string> _enable_start;
-  /// A list of objects names to enable during the cycle
+  /// A list of object names to enable during the cycle
   std::vector<std::string> _enable_during;
-  /// A list of objects names to enable at the end of the cycle
+  /// A list of object names to enable at the end of the cycle
   std::vector<std::string> _enable_end;
 
-  /// A list of objects names to disable at the start of the cycle
+  /// A list of object names to disable at the start of the cycle
   std::vector<std::string> _disable_start;
-  /// A list of objects names to disable during the cycle
+  /// A list of object names to disable during the cycle
   std::vector<std::string> _disable_during;
-  /// A list of objects names to disable at the end of the cycle
+  /// A list of object names to disable at the end of the cycle
   std::vector<std::string> _disable_end;
 
   /// The starting time to begin adding 'TimePeriod' controllers
@@ -68,33 +68,33 @@ protected:
   /// Name of the 'TimePeriod' controllers
   std::string _name;
 
-  /// The array that holds the start times for objects that are enable at the start of the cycle
+  /// The array that holds the start times for objects that are enabled at the start of the cycle
   std::vector<Real> _enable_start_start_time_index;
-  /// The array that holds the end times for objects that are enable at the start of the cycle
+  /// The array that holds the end times for objects that are enabled at the start of the cycle
   std::vector<Real> _enable_start_end_time_index;
 
-  /// The array that holds the start times for objects that are enable at during the cycle
+  /// The array that holds the start times for objects that are enabled during the cycle
   std::vector<Real> _enable_during_start_time_index;
-  /// The array that holds the end times for objects that are enable at during the cycle
+  /// The array that holds the end times for objects that are enabled during the cycle
   std::vector<Real> _enable_during_end_time_index;
 
-  /// The array that holds the start times for objects that are enable at the end of the cycle
+  /// The array that holds the start times for objects that are enabled at the end of the cycle
   std::vector<Real> _enable_end_start_time_index;
-  /// The array that holds the end times for objects that are enable at the end of the cycle
+  /// The array that holds the end times for objects that are enabled at the end of the cycle
   std::vector<Real> _enable_end_end_time_index;
 
-  /// The array that holds the start times for objects that are disable at the start of the cycle
+  /// The array that holds the start times for objects that are disabled at the start of the cycle
   std::vector<Real> _disable_start_start_time_index;
-  /// The array that holds the end times for objects that are disable at the start of the cycle
+  /// The array that holds the end times for objects that are disabled at the start of the cycle
   std::vector<Real> _disable_start_end_time_index;
 
-  /// The array that holds the start times for objects that are disable at during the cycle
+  /// The array that holds the start times for objects that are disabled during the cycle
   std::vector<Real> _disable_during_start_time_index;
-  /// The array that holds the end times for objects that are disable at during the cycle
+  /// The array that holds the end times for objects that are disabled during the cycle
   std::vector<Real> _disable_during_end_time_index;
 
-  /// The array that holds the start times for objects that are disable at the end of the cycle
+  /// The array that holds the start times for objects that are disabled at the end of the cycle
   std::vector<Real> _disable_end_start_time_index;
-  /// The array that holds the end times for objects that are disable at the end of the cycle
+  /// The array that holds the end times for objects that are disabled at the end of the cycle
   std::vector<Real> _disable_end_end_time_index;
 };

@@ -57,7 +57,7 @@ protected:
   unsigned int _num_species;
   /// Charged species variables
   std::vector<const ADVariableValue *> _species;
-  /// Gradient of charge species
+  /// Gradient of charged species
   std::vector<const ADVariableGradient *> _grad_species;
   /// Mobility coefficient
   std::vector<const ADMaterialProperty<Real> *> _mu;

@@ -13,7 +13,7 @@
 #include "ADNodalBC.h"
 
 /**
- *  Henry’s Law like thermodynamic boundary condition for specifying a specie
+ *  Henry’s Law like thermodynamic boundary condition for specifying a species'
  *  concentration ratio at the gas-liquid interface
  */
 class MatchedValueLogBC : public ADNodalBC
