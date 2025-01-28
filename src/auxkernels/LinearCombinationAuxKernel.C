@@ -32,12 +32,10 @@ LinearCombinationAuxKernel::LinearCombinationAuxKernel(const InputParameters & p
     _num_vars(coupledComponents("coupled_variables")),
     _bias(getParam<Real>("bias"))
 {
-  _vars.resize(_num_vars);
   _var_vals.resize(_num_vars);
 
   for (unsigned int i = 0; i < _num_vars; ++i)
   {
-    _vars[i] = getVar("coupled_variables", i);
     _var_vals[i] = &coupledValue("coupled_variables", i);
   }
 }

@@ -722,7 +722,6 @@ dom1Scale = 1e-7
 [InterfaceKernels]
   [em_advection]
     type = InterfaceAdvection
-    mean_en_neighbor = mean_en
     potential_neighbor = potential
     neighbor_var = em
     variable = emliq
@@ -732,7 +731,6 @@ dom1Scale = 1e-7
   []
   [em_diffusion]
     type = InterfaceLogDiffusionElectrons
-    mean_en_neighbor = mean_en
     neighbor_var = em
     variable = emliq
     boundary = master1_interface

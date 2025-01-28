@@ -12,6 +12,9 @@
 
 #include "ADIntegratedBC.h"
 
+/*
+ *  A simple vertical antenna BC of the azimuthal component of the magnetizing field.
+ */
 class TM0AntennaVertBC : public ADIntegratedBC
 {
 public:
@@ -22,8 +25,12 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Angular frequency
   const Real _omega;
+  /// Relative permittivity
   const Real _eps_r;
+  /// Permittivity of free space
   const Real _eps0;
+  /// True if the antenna oscillates in time
   const bool _time_dependent;
 };

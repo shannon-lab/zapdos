@@ -19,8 +19,6 @@ InputParameters
 SideCurrent::validParams()
 {
   InputParameters params = SideIntegralVariablePostprocessor::validParams();
-  // params.addRequiredParam<std::string>("diffusivity", "The name of the diffusivity material
-  // property that will be used in the flux computation.");
   params.addRequiredParam<std::string>(
       "mobility",
       "The name of the mobility material property that will be used in the flux computation.");
@@ -29,7 +27,7 @@ SideCurrent::validParams()
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredCoupledVar("mean_en", "Electron energy.");
   params.addRequiredCoupledVar("ions", "All of the ions that can interact with this boundary.");
-  params.addRequiredCoupledVar("Arp", "Argon ion density. (temporary)");
+  params.addClassDescription("Computes a side integral of current density");
   return params;
 }
 
@@ -40,15 +38,11 @@ SideCurrent::SideCurrent(const InputParameters & parameters)
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
     _kb(getMaterialProperty<Real>("k_boltz")),
-    _T_heavy(getMaterialProperty<Real>("TArp")),
-    _mass(getMaterialProperty<Real>("massArp")),
     _e(getMaterialProperty<Real>("e")),
     _sgn(getMaterialProperty<Real>("sgnArp")),
     _a(0.5),
     _grad_potential(coupledGradient("potential")),
-    _mean_en(coupledValue("mean_en")),
-    _Arp(coupledValue("Arp")),
-    _muArp(getMaterialProperty<Real>("muArp"))
+    _mean_en(coupledValue("mean_en"))
 {
   _num_ions = coupledComponents("ions");
 
@@ -75,7 +69,6 @@ Real
 SideCurrent::computeQpIntegral()
 {
   // Output units for base case are: mol / (m^2 * s)
-  // _v_thermal = std::sqrt(8 * _kb[_qp] * _T_heavy[_qp] / (M_PI * _mass[_qp]));
 
   if (_normals[_qp] * _sgn[_qp] * -_grad_potential[_qp] > 0.0)
   {
@@ -106,15 +99,4 @@ SideCurrent::computeQpIntegral()
                    std::exp(_u[_qp]) * _normals[_qp] +
                0.5 * _ve_thermal * std::exp(_u[_qp]))) *
          6.022e23 * 1.602e-19 * _r_units;
-  /*
-  return ((1. - _r) / (1. + _r) * 0.5 * _v_thermal * std::exp(_Arp[_qp]) +
-          (1. - _r) / (1. + _r) *
-              ((2 * _a - 1) * _sgn[_qp] * _muArp[_qp] * -_grad_potential[_qp] * _r_units *
-               std::exp(_Arp[_qp]) * _normals[_qp]) +
-          (1. - _r) / (1. + _r) *
-              (-(2 * _b - 1) * _mobility_coef[_qp] * -_grad_potential[_qp] * _r_units *
-                   std::exp(_u[_qp]) * _normals[_qp] +
-               0.5 * _ve_thermal * std::exp(_u[_qp]))) *
-         6.022e23 * 1.602e-19 * _r_units;
-         */
 }

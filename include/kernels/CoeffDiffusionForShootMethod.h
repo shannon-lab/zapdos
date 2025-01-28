@@ -12,8 +12,10 @@
 
 #include "ADKernel.h"
 
-// This diffusion kernel should only be used with species whose values are in the logarithmic form.
-
+/**
+ *  The derivative of the generic diffusion term used to calculate the
+ *  sensitivity value for the shoothing method
+ */
 class CoeffDiffusionForShootMethod : public ADKernel
 {
 public:
@@ -24,8 +26,11 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Position units
   const Real _r_units;
 
+  /// Density variable to be accelerated
   MooseVariable & _density_var;
+  /// Diffusion coefficient
   const ADMaterialProperty<Real> & _diffusivity;
 };

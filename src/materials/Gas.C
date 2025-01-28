@@ -20,8 +20,6 @@ Gas::validParams()
 
   params.addParam<Real>(
       "user_relative_permittivity", 1.0, "Multiplies the permittivity of free space.");
-  // params.addRequiredParam<bool>("townsend","Whether to use the townsend formulation for the rate
-  // terms.");
   params.addRequiredParam<bool>("interp_trans_coeffs",
                                 "Whether to interpolate transport "
                                 "coefficients as a function of the mean "
@@ -102,8 +100,6 @@ Gas::Gas(const InputParameters & parameters)
     _eps(declareProperty<Real>("eps")),
     _k_boltz(declareProperty<Real>("k_boltz")),
     _Avogadro(declareProperty<Real>("Avogadro")),
-    _vthermal_em(declareProperty<Real>("vthermal_em")),
-    _vthermal_ip(declareProperty<Real>("vthermal_ip")),
     _iz_coeff_efield_a(declareProperty<Real>("iz_coeff_efield_a")),
     _iz_coeff_efield_b(declareProperty<Real>("iz_coeff_efield_b")),
     _iz_coeff_efield_c(declareProperty<Real>("iz_coeff_efield_c")),

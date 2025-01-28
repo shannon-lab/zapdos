@@ -12,6 +12,10 @@
 
 #include "NodalVariablePostprocessor.h"
 
+/*
+ *  Similar to AverageNodalVariableValue except meant to
+ *  average variables expressed in logarithmic form
+ */
 class AverageNodalDensity : public NodalVariablePostprocessor
 {
 public:
@@ -27,6 +31,8 @@ public:
   virtual void threadJoin(const UserObject & y) override;
 
 protected:
+  /// Sum of the exponential value of the variable
   Real _sum;
+  /// The sample size
   unsigned int _n;
 };

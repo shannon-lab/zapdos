@@ -23,13 +23,21 @@ public:
   virtual Real computeValue() override;
 
 protected:
+  /// Component of the flux
   const int _component;
+  /// Coupled density variable
   const MooseVariable & _density_var;
+  /// Value of the coupled density variable
   const VariableValue & _density_log;
+  /// Gradient of the coupled density variable
   const VariableGradient & _grad_density_log;
+  /// Gradient of coupled potential
   const VariableGradient & _grad_potential;
+  /// Mobility coefficient
   const GenericMaterialProperty<Real, is_ad> & _mu;
+  /// Charge sign of the coupled species
   const MaterialProperty<Real> & _sgn;
+  /// Diffusion coefficient
   const GenericMaterialProperty<Real, is_ad> & _diff;
 };
 

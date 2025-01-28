@@ -12,8 +12,9 @@
 
 #include "ADIntegratedBC.h"
 
-// This diffusion kernel should only be used with species whose values are in the logarithmic form.
-
+/**
+ *  The drift flux boundary conditions
+ */
 class PotentialDriftOutflowBC : public ADIntegratedBC
 {
 public:
@@ -24,6 +25,8 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Charge sign of the species
   const int _charge_sign;
+  /// Gradient of coupled potential
   const ADVariableGradient & _grad_potential;
 };

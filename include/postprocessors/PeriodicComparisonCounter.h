@@ -12,6 +12,10 @@
 
 #include "GeneralPostprocessor.h"
 
+/*
+ *  Compares two Postprocessors or values and keeps count
+ *  of how many cycles in a row that comparision is true.
+ */
 class PeriodicComparisonCounter : public GeneralPostprocessor
 {
 public:
@@ -36,11 +40,18 @@ protected:
     LESS_THAN
   };
 
+  /// First variable for comparison
   const PostprocessorValue & _value1;
+  /// Second variable for comparison
   const PostprocessorValue & _value2;
+  /// The type of comparions to perform
   const ComparisonType _comparison_type;
+  /// The period of the sample space
   Real _period;
+  /// The FE problem base that stores the current simulation time
   FEProblemBase & _feproblem;
+  /// The number of consecutive periods where the comparions type was true
   Real _counter;
+  /// Total number of periods
   Real _period_counter;
 };

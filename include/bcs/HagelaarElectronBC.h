@@ -12,6 +12,9 @@
 
 #include "ADIntegratedBC.h"
 
+/**
+ *  Kinetic electron boundary condition
+ */
 class HagelaarElectronBC : public ADIntegratedBC
 {
 public:
@@ -22,18 +25,25 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Scaling units for the position
   const Real _r_units;
+  /// Reflection coefficient
   const Real & _r;
 
-  /// Coupled variables
+  /// Gradient of coupled potential
   const ADVariableGradient & _grad_potential;
+  /// Electron mean energy density
   const ADVariableValue & _mean_en;
 
-  /// Material properties
+  /// Mobility coefficient of electrons
   const ADMaterialProperty<Real> & _muem;
+  /// Mass of electrons
   const MaterialProperty<Real> & _massem;
+  /// Elementary charge
   const MaterialProperty<Real> & _e;
 
+  /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise
   Real _a;
+  /// Electron thermal velocity
   ADReal _v_thermal;
 };

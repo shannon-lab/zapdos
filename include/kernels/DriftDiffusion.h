@@ -12,8 +12,10 @@
 
 #include "ADKernel.h"
 
-// This diffusion kernel should only be used with species whose values are in the logarithmic form.
-
+/**
+ *  Generic drift-diffusion equation that contains both
+ *  an electric field driven advection term and a diffusion term
+ */
 class DriftDiffusion : public ADKernel
 {
 public:
@@ -24,17 +26,26 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Position units
   const Real _r_units;
 
+  /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
+  /// Charge sign of the species
   const MaterialProperty<Real> & _sign;
+  /// Custom mobility coefficient, if needed
   ADMaterialProperty<Real> _user_mu;
+  /// Custom charge sign of the species, if need
   MaterialProperty<Real> _user_sign;
-
+  /// Diffusion coefficient
   const ADMaterialProperty<Real> & _diffusivity;
+  /// Custom diffusion coefficient
   ADMaterialProperty<Real> _user_diff;
 
+  /// Potential variable
   unsigned int _potential_id;
+  /// Gradient of the coupled potential
   const ADVariableGradient & _grad_potential;
+  /// The user-defined 1-D electric field with a sign correction
   ADVariableGradient _minus_e_field;
 };

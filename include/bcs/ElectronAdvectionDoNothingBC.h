@@ -12,6 +12,10 @@
 
 #include "ADIntegratedBC.h"
 
+/**
+ *  Boundary condition where the electron advection flux at the boundary
+ *  is equal to the bulk electron advection equation
+ */
 class ElectronAdvectionDoNothingBC : public ADIntegratedBC
 {
 public:
@@ -22,14 +26,15 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Scaling units for the position
   const Real _position_units;
 
-  // Material properties
-
+  /// Mobility coefficient of electrons
   const ADMaterialProperty<Real> & _muem;
+  /// Charge sign of electrons
   const MaterialProperty<Real> & _sign;
 
 private:
-  // Coupled variables
+  // Gradient of the coupled potential
   const ADVariableGradient & _grad_potential;
 };

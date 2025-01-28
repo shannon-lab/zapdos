@@ -12,6 +12,9 @@
 
 #include "NodalVariablePostprocessor.h"
 
+/*
+ *  Returns the average nodal differences between two variables
+ */
 class AverageNodalDifference : public NodalVariablePostprocessor
 {
 public:
@@ -27,8 +30,12 @@ public:
   virtual void threadJoin(const UserObject & y) override;
 
 protected:
+  /// The coupled variable used to determined the difference
   const VariableValue & _other_var;
+  /// The sum of the square of the difference
   Real _sum_of_squared_diff;
+  /// The sample size
   Real _n;
+  /// The root mean squared of the difference
   Real _value;
 };

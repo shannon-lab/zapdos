@@ -12,6 +12,10 @@
 
 #include "ADKernel.h"
 
+/**
+ *  The derivative of an EEDF reaction term used to calculate the
+ *  sensitivity variable for the shoothing method
+ */
 class EEDFReactionLogForShootMethod : public ADKernel
 {
 public:
@@ -22,10 +26,13 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Electron density
   const ADVariableValue & _electron;
+  /// Density to be accelerated
   const ADVariableValue & _density;
-  const ADVariableValue & _energy;
 
+  /// Reaction coefficient
   const ADMaterialProperty<Real> & _reaction_coeff;
+  /// Stoichiometric coefficient
   const Real & _stoichiometric_coeff;
 };

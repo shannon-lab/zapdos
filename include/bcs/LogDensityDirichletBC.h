@@ -13,7 +13,8 @@
 #include "ADNodalBC.h"
 
 /**
- * Implements a simple coupled boundary condition where u=v on the boundary.
+ *  Density Dirichlet boundary condition
+ *  (Densities must be in log form and in moles/m^3)
  */
 class LogDensityDirichletBC : public ADNodalBC
 {
@@ -25,5 +26,6 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Value of the density on the boundary (in units of #/m^3)
   const Real _value;
 };
