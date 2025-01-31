@@ -16,8 +16,10 @@ InputParameters
 DCIonBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Electric field driven outflow boundary condition"
                              " (Based on [!cite](hagelaar2000boundary))");
   return params;
@@ -28,8 +30,8 @@ DCIonBC::DCIonBC(const InputParameters & parameters)
 
     _r_units(1. / getParam<Real>("position_units")),
 
-    // Coupled Variables
-    _grad_potential(adCoupledGradient("potential")),
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
 
     _mu(getADMaterialProperty<Real>("mu" + _var.name())),
     _sgn(getMaterialProperty<Real>("sgn" + _var.name()))
@@ -40,7 +42,7 @@ DCIonBC::DCIonBC(const InputParameters & parameters)
 ADReal
 DCIonBC::computeQpResidual()
 {
-  if (_normals[_qp] * _sgn[_qp] * -_grad_potential[_qp] > 0.0)
+  if (_normals[_qp] * _sgn[_qp] * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
   }
@@ -50,6 +52,6 @@ DCIonBC::computeQpResidual()
   }
 
   return _test[_i][_qp] * _r_units *
-         (_a * _mu[_qp] * _sgn[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) *
+         (_a * _mu[_qp] * _sgn[_qp] * _electric_field[_qp] * _r_units * std::exp(_u[_qp]) *
           _normals[_qp]);
 }

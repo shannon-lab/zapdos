@@ -22,12 +22,10 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  /// Coupled variables
-  const ADVariableGradient & _grad_potential;
-
   const Real & _scale;
   const Real _r_units;
 
   /// Material Properties
   const ADMaterialProperty<Real> & _mu;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

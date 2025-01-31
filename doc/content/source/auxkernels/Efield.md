@@ -4,15 +4,15 @@
 
 ## Overview
 
-`Efield` returns a component of the electrostatic electric field.
+`Efield` returns a component of the electric field.
 
 The formulation of `Efield` is defined as
 
 \begin{equation}
-E_{\text{comp.}} = \frac{\text{-} \nabla_{\text{comp.}} (V) \ V_{c}}{l_{c}}
+    \frac{\vec{E}_{\text{comp.}} \ V_{c}}{l_{c}}
 \end{equation}
 
-Where $E_{\text{comp.}}$ is a component of the electric field, $V$ is the potential, $V_{c}$ is the
+Where $\vec{E}_{\text{comp.}}$ is a component of the electric field, $V_{c}$ is the
 scaling factor of the potential , and $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax

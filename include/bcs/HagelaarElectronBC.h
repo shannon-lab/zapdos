@@ -26,13 +26,14 @@ protected:
   const Real & _r;
 
   /// Coupled variables
-  const ADVariableGradient & _grad_potential;
   const ADVariableValue & _mean_en;
 
   /// Material properties
   const ADMaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _e;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   Real _a;
   ADReal _v_thermal;

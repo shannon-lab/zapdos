@@ -24,12 +24,10 @@ protected:
 
   const Real _r_units;
 
-  // Coupled variables
-
-  const ADVariableGradient & _grad_potential;
-
   const ADMaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sgn;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   Real _a;
 };

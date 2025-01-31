@@ -38,6 +38,9 @@ Water::validParams()
   params.addCoupledVar("O3", "ozone molecules");
   params.addCoupledVar("O3m", "ozone anions");
   params.addCoupledVar("potential", "The potential");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Material properties of water species");
   return params;
 }
@@ -192,7 +195,9 @@ Water::Water(const InputParameters & parameters)
     _HO2(isCoupled("HO2") ? adCoupledValue("HO2") : _ad_zero),
     _O3(isCoupled("O3") ? adCoupledValue("O3") : _ad_zero),
     _O3m(isCoupled("O3m") ? adCoupledValue("O3m") : _ad_zero),
-    _grad_potential(isCoupled("potential") ? adCoupledGradient("potential") : _ad_grad_zero)
+
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 
 {
 }
@@ -330,7 +335,8 @@ Water::computeQpProperties()
 
   // Material version of aux variables
 
-  _EField[_qp] = -_grad_potential[_qp](0);
+  _EField[_qp] = _electric_field[_qp](0); // TODO: does this need to be 0 component now? consider
+                                          // fixing this up....1D will request the 0 by default
   _OHm_lin[_qp] = std::exp(_OHm[_qp]);
   _H3Op_lin[_qp] = std::exp(_H3Op[_qp]);
 }

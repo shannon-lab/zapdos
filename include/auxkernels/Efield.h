@@ -36,7 +36,7 @@ protected:
   Real _r_units;
   std::string _potential_units;
 
-  /// The gradient of a coupled variable
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+
   Real _voltage_scaling;
 };

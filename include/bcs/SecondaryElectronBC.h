@@ -30,8 +30,6 @@ protected:
   const std::vector<std::string> _se_coeff_names;
   std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   // Coupled variables
-
-  const ADVariableGradient & _grad_potential;
   const ADVariableValue & _mean_en;
   std::vector<const ADVariableValue *> _ip;
   std::vector<const ADVariableGradient *> _grad_ip;
@@ -43,6 +41,8 @@ protected:
   std::vector<const ADMaterialProperty<Real> *> _muip;
   std::vector<const ADMaterialProperty<Real> *> _Tip;
   std::vector<const MaterialProperty<Real> *> _massip;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   Real _a;
   Real _b;

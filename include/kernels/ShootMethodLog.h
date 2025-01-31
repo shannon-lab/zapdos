@@ -26,5 +26,4 @@ protected:
   const ADVariableValue & _density_at_end_cycle;
   const ADVariableValue & _sensitivity;
   const Real & _limit;
-  ADReal _acceleration;
 };

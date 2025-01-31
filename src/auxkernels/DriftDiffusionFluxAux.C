@@ -10,13 +10,14 @@
 
 #include "DriftDiffusionFluxAux.h"
 
+using MetaPhysicL::raw_value;
+
 registerMooseObject("ZapdosApp", DriftDiffusionFluxAux);
 
 InputParameters
 DriftDiffusionFluxAux::validParams()
 {
   InputParameters params = AuxKernel::validParams();
-  params.addRequiredCoupledVar("potential", "The potential responsible for charge advection");
   params.addParam<bool>("positive_charge",
                         true,
                         "Whether the potential is advecting positive "
@@ -24,6 +25,9 @@ DriftDiffusionFluxAux::validParams()
                         "negative.");
   params.addRequiredCoupledVar("u", "The drift-diffusing species.");
   params.addParam<int>("component", 0, "The flux component you want to see.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Returns the drift-diffusion flux of the specified species");
   return params;
 }
@@ -31,7 +35,8 @@ DriftDiffusionFluxAux::validParams()
 DriftDiffusionFluxAux::DriftDiffusionFluxAux(const InputParameters & parameters)
   : AuxKernel(parameters),
     _sgn(getParam<bool>("positive_charge") ? 1 : -1),
-    _grad_potential(coupledGradient("potential")),
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
     _u(coupledValue("u")),
     _grad_u(coupledGradient("u")),
     _component(getParam<int>("component"))
@@ -41,5 +46,5 @@ DriftDiffusionFluxAux::DriftDiffusionFluxAux(const InputParameters & parameters)
 Real
 DriftDiffusionFluxAux::computeValue()
 {
-  return _sgn * -_grad_potential[_qp](_component) * _u[_qp] - _grad_u[_qp](_component);
+  return _sgn * raw_value(_electric_field[_qp](_component)) * _u[_qp] - _grad_u[_qp](_component);
 }

@@ -30,8 +30,8 @@ protected:
   const MaterialProperty<Real> & _massem;
   const MaterialProperty<Real> & _massGas;
   const ADMaterialProperty<Real> & _alpha_el;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
-  const ADVariableGradient & _grad_potential;
   const ADVariableValue & _em;
   const ADVariableGradient & _grad_em;
 };

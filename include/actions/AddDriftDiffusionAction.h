@@ -23,18 +23,24 @@ public:
   virtual void act();
 
 protected:
-  virtual void addChargeSourceKernels(const std::string & potential_name,
-                                      const std::string & charged_particle_name);
+  virtual void addChargeSourceKernels(const std::string & field_name,
+                                      const std::string & charged_particle_name,
+                                      const MooseEnum & field_solver);
   virtual void addADKernels(const std::string & name,
-                            const std::string & potential_name,
+                            const std::string & field_name,
                             const bool & Using_offset,
                             const bool & charged,
                             const bool & energy);
   virtual void addPosition(const std::string & position_name, const int & component);
 
   virtual void addDensityLog(const std::string & particle_name);
-  virtual void addCurrent(const std::string & particle_name, const std::string & potential_name);
+  virtual void addCurrent(const std::string & particle_name,
+                          const std::string & field_property_name);
   virtual void addEfield(const std::string & Efield_name,
-                         const std::string & potential_name,
+                         const std::string & field_property_name,
                          const int & component);
+  virtual void addFieldSolverMaterial(const std::string & field_name,
+                                      const std::string & field_property_name,
+                                      const MooseEnum & field_solver,
+                                      const bool & effective_field);
 };

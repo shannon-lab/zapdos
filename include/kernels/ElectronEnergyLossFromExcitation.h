@@ -28,8 +28,8 @@ protected:
   const ADMaterialProperty<Real> & _muem;
   const ADMaterialProperty<Real> & _alpha_ex;
   const MaterialProperty<Real> & _Eex;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
-  const ADVariableGradient & _grad_potential;
   const ADVariableValue & _em;
   const ADVariableGradient & _grad_em;
 };

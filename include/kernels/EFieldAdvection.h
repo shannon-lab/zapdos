@@ -29,6 +29,5 @@ private:
   /// The diffusion coefficient (either constant or mixture-averaged)
   const ADMaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _sign;
-
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

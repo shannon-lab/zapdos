@@ -26,8 +26,6 @@ protected:
   const Real _r;
   const unsigned int _num_ions;
   // Coupled variables
-
-  const ADVariableGradient & _grad_potential;
   std::vector<MooseVariable *> _ip_var;
   std::vector<const ADVariableValue *> _ip;
   std::vector<const ADVariableGradient *> _grad_ip;
@@ -39,6 +37,8 @@ protected:
   std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   const Real _se_energy;
   const ADMaterialProperty<Real> & _mumean_en;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   Real _a;
   ADRealVectorValue _ion_flux;

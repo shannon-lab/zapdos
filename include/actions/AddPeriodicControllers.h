@@ -41,6 +41,7 @@ protected:
   Real _start_time;
   Real _period;
   Real _cycles_per_controls;
+  Real _cycles_between_controls;
   Real _num_controller_set;
   std::string _name;
 

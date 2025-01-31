@@ -25,5 +25,5 @@ public:
 protected:
   const VariableValue & _u_old;
   const VariableValue & _n;
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

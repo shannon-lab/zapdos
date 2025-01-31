@@ -24,7 +24,7 @@ protected:
 
 private:
   const Real _sgn;
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   const VariableValue & _u;
   const VariableGradient & _grad_u;
   const int _component;

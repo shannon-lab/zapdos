@@ -16,7 +16,14 @@ InputParameters
 DGEFieldAdvection::validParams()
 {
   InputParameters params = ADDGKernel::validParams();
-  params.addRequiredCoupledVar("potential", "The potential that drives advection.");
+  params.addParam<std::string>(
+      "field_property_name",
+      "field_solver_interface_property",
+      "Name of the solver interface material property on the primary side of the interface.");
+  params.addParam<std::string>(
+      "neighbor_field_property_name",
+      "field_solver_interface_property",
+      "Name of the solver interface material property on the neighbor side of the interface.");
   params.addClassDescription(
       "The discontinuous Galerkin form of the generic electric field driven advection term"
       "(Densities must be in log form)");
@@ -31,9 +38,10 @@ DGEFieldAdvection::DGEFieldAdvection(const InputParameters & parameters)
     _mu_neighbor(getNeighborADMaterialProperty<Real>("mu" + _var.name())),
     _sgn_neighbor(getNeighborMaterialProperty<Real>("sgn" + _var.name())),
 
-    _potential_var(*getVar("potential", 0)),
-    _grad_potential(adCoupledGradient("potential")),
-    _grad_potential_neighbor(_potential_var.adGradSlnNeighbor())
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
+    _electric_field_neighbor(getNeighborADMaterialProperty<RealVectorValue>(
+        getParam<std::string>("neighbor_field_property_name")))
 {
 }
 
@@ -41,9 +49,9 @@ ADReal
 DGEFieldAdvection::computeQpResidual(Moose::DGResidualType type)
 {
   ADReal r = 0;
-  ADRealVectorValue _velocity = _mu[_qp] * _sgn[_qp] * -_grad_potential[_qp];
+  ADRealVectorValue _velocity = _mu[_qp] * _sgn[_qp] * _electric_field[_qp];
   ADRealVectorValue _velocity_neighbor =
-      _mu_neighbor[_qp] * _sgn_neighbor[_qp] * -_grad_potential_neighbor[_qp];
+      _mu_neighbor[_qp] * _sgn_neighbor[_qp] * _electric_field_neighbor[_qp];
   ADRealVectorValue _velocity_average = 0.5 * (_velocity + _velocity_neighbor);
 
   switch (type)

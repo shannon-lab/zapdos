@@ -168,5 +168,6 @@ private:
   const ADVariableValue & _HO2;
   const ADVariableValue & _O3;
   const ADVariableValue & _O3m;
-  const ADVariableGradient & _grad_potential;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

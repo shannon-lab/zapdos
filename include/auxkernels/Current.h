@@ -30,7 +30,7 @@ protected:
   const MooseVariable & _density_var;
   const VariableValue & _density_log;
   const VariableGradient & _grad_density_log;
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   const GenericMaterialProperty<Real, is_ad> & _mu;
   const MaterialProperty<Real> & _sgn;
   const GenericMaterialProperty<Real, is_ad> & _diff;

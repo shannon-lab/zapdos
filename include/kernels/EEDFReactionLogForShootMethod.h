@@ -24,7 +24,6 @@ protected:
 
   const ADVariableValue & _electron;
   const ADVariableValue & _density;
-  const ADVariableValue & _energy;
 
   const ADMaterialProperty<Real> & _reaction_coeff;
   const Real & _stoichiometric_coeff;

@@ -27,13 +27,12 @@ protected:
   const ADMaterialProperty<Real> & _diffem;
   const ADMaterialProperty<Real> & _muem;
   const ADMaterialProperty<Real> & _alpha_iz;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   ADMaterialProperty<Real> _user_diffem;
   ADMaterialProperty<Real> _user_muem;
   ADMaterialProperty<Real> _user_alpha_iz;
 
   const ADVariableValue & _mean_en;
-  const ADVariableGradient & _grad_potential;
-  ADVariableGradient _minus_e_field;
   const ADVariableValue & _em;
   const ADVariableGradient & _grad_em;
 };
