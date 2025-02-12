@@ -24,7 +24,6 @@ public:
 
   virtual ~CurrentDensityShapeSideUserObject() {}
 
-
   virtual void initialize();
   virtual void execute();
   virtual void executeJacobian(unsigned int jvar);
