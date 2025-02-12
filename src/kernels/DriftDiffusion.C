@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "DriftDiffusion.h"
+#include "FEProblemBase.h"
 
 registerMooseObject("ZapdosApp", DriftDiffusion);
 
