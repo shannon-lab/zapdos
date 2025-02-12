@@ -109,5 +109,4 @@ protected:
 
   const ADVariableValue & _em;
   const ADVariableValue & _mean_en;
-  const ADVariableGradient & _grad_potential;
 };

@@ -24,8 +24,7 @@ protected:
 
   const Real _r_units;
 
-  /// Coupled variables
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Material properties
   const ADMaterialProperty<Real> & _mu;

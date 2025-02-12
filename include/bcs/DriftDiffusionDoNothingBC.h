@@ -34,6 +34,5 @@ protected:
   const ADMaterialProperty<Real> & _diffusivity;
   ADMaterialProperty<Real> _user_diff;
 
-  const ADVariableGradient & _grad_potential;
-  ADVariableGradient _minus_e_field;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

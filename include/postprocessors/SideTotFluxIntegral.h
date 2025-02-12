@@ -42,5 +42,5 @@ protected:
   const MaterialProperty<Real> & _sgn;
   Real _a;
 
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

@@ -28,9 +28,10 @@ protected:
   const unsigned int _num_ions;
 
   // Coupled variables
-  const ADVariableGradient & _grad_potential;
   std::vector<MooseVariable *> _ion_var;
   std::vector<const ADVariableValue *> _ion;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   std::vector<const MaterialProperty<Real> *> _sgnion;
   std::vector<const ADMaterialProperty<Real> *> _muion;

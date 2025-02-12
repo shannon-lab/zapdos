@@ -28,9 +28,9 @@ protected:
   const ADMaterialProperty<Real> & _diffem;
   const ADMaterialProperty<Real> & _muem;
   const ADMaterialProperty<Real> & _alpha_source;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   const ADVariableValue & _mean_en;
-  const ADVariableGradient & _grad_potential;
   const ADVariableValue & _em;
   const ADVariableGradient & _grad_em;
 

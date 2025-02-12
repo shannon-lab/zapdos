@@ -28,8 +28,5 @@ protected:
 
   const ADMaterialProperty<Real> & _muem;
   const MaterialProperty<Real> & _sign;
-
-private:
-  // Coupled variables
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

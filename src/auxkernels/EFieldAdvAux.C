@@ -22,10 +22,11 @@ InputParameters
 EFieldAdvAuxTempl<is_ad>::validParams()
 {
   InputParameters params = AuxKernel::validParams();
-  params.addRequiredCoupledVar(
-      "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addParam<int>("component", 0, "The component the EField Vector. (0 = x, 1 = y, 2 = z)");
   params.addClassDescription(
       "Returns the electric field driven advective flux of the specified species");
@@ -42,7 +43,9 @@ EFieldAdvAuxTempl<is_ad>::EFieldAdvAuxTempl(const InputParameters & parameters)
 
     _density_var(*getVar("density_log", 0)),
     _density_log(coupledValue("density_log")),
-    _grad_potential(coupledGradient("potential")),
+
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
 
     // Material properties
 
@@ -56,7 +59,7 @@ Real
 EFieldAdvAuxTempl<is_ad>::computeValue()
 {
   return _sgn[_qp] * raw_value(_mu[_qp]) * std::exp(_density_log[_qp]) *
-         -_grad_potential[_qp](_component) * _r_units * 6.02e23;
+         raw_value(_electric_field[_qp](_component)) * _r_units * 6.02e23;
 }
 
 template class EFieldAdvAuxTempl<false>;

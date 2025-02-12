@@ -27,7 +27,7 @@ protected:
 
   const VariableValue & _em;
   const VariableGradient & _grad_em;
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   const GenericMaterialProperty<Real, is_ad> & _muem;
   const MaterialProperty<Real> & _sgnem;
   const GenericMaterialProperty<Real, is_ad> & _diffem;

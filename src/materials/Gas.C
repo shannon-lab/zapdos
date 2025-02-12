@@ -49,7 +49,6 @@ Gas::validParams()
   params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
   params.addParam<Real>("user_p_gas", 1.01e5, "The gas pressure in Pascals.");
 
-  params.addCoupledVar("potential", "The potential for calculating the electron velocity");
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("mean_en", "The electron mean energy in log form.");
   params.addCoupledVar("ip", "The ion density.");

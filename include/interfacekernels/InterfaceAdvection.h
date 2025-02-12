@@ -28,8 +28,7 @@ protected:
   Real _r_units;
   Real _r_neighbor_units;
 
-  MooseVariable & _potential_neighbor_var;
-  const ADVariableGradient & _grad_potential_neighbor;
+  const ADMaterialProperty<RealVectorValue> & _electric_field_neighbor;
   MooseVariable & _mean_en_neighbor_var;
   const ADVariableValue & _mean_en_neighbor;
 

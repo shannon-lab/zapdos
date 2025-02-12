@@ -22,5 +22,5 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

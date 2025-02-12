@@ -43,7 +43,8 @@ protected:
   Real _a;
   Real _b;
 
-  const VariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+
   const VariableValue & _mean_en;
   const VariableValue & _Arp;
   const MaterialProperty<Real> & _muArp;

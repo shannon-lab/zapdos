@@ -28,7 +28,6 @@ protected:
   const std::vector<std::string> _se_coeff_names;
   std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   // Coupled variables
-  const ADVariableGradient & _grad_potential;
   const ADVariableValue & _em;
   std::vector<MooseVariable *> _ip_var;
   std::vector<const ADVariableValue *> _ip;
@@ -41,4 +40,6 @@ protected:
   Real _a;
   ADReal _se_energy;
   ADRealVectorValue _ion_flux;
+
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

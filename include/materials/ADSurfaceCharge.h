@@ -32,8 +32,7 @@ protected:
 
   Real _r_units;
   const std::string _potential_units;
-
-  const ADVariableGradient & _grad_potential;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   unsigned int _num_species;
   std::vector<const ADVariableValue *> _species;

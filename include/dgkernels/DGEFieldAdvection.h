@@ -25,7 +25,6 @@ protected:
   const ADMaterialProperty<Real> & _mu_neighbor;
   const MaterialProperty<Real> & _sgn_neighbor;
 
-  MooseVariable & _potential_var;
-  const ADVariableGradient & _grad_potential;
-  const ADVariableGradient & _grad_potential_neighbor;
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+  const ADMaterialProperty<RealVectorValue> & _electric_field_neighbor;
 };
