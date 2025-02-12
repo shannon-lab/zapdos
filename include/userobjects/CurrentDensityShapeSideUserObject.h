@@ -24,30 +24,11 @@ public:
 
   virtual ~CurrentDensityShapeSideUserObject() {}
 
-  /**
-   * This is called before execute so you can reset any internal data.
-   */
-  virtual void initialize();
-  /**
-   * Called on every "object" (like every element or node).
-   * In this case, it is called at every quadrature point on every element.
-   */
-  virtual void execute();
 
-  /**
-   * Implement this function to compute Jacobian terms for this UserObject. The
-   * shape function index _j and its corrsponding global DOF index _j_global
-   * will be provided.
-   */
+  virtual void initialize();
+  virtual void execute();
   virtual void executeJacobian(unsigned int jvar);
-  /**
-   * Called _once_ after execute has been called all all "objects".
-   */
   virtual void finalize();
-  /**
-   * Called when using threading.  You need to combine the data from "y"
-   * into _this_ object.
-   */
   virtual void threadJoin(const UserObject & y);
 
   ///@{ custom UserObject interface functions

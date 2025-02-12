@@ -30,18 +30,8 @@ public:
   /// Function that returns the value of the coulombic charge
   Real coulomb_charge() const;
 
-  /**
-   * This is called before execute so you can reset any internal data.
-   */
   virtual void initialize();
-  /**
-   * Called on every "object" (like every element or node).
-   * In this case, it is called at every quadrature point on every element.
-   */
   virtual void execute();
-  /**
-   * Called _once_ after execute has been called on all "objects".
-   */
   virtual void finalize();
 
 protected:
