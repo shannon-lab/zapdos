@@ -16,10 +16,6 @@ InputParameters
 InterfaceLogDiffusionElectrons::validParams()
 {
   InputParameters params = ADInterfaceKernel::validParams();
-  params.addRequiredCoupledVar("mean_en_neighbor",
-                               "The log of the product of the mean energy and "
-                               "electron density on the slave side of the "
-                               "interface.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<Real>("neighbor_position_units",
                                 "The units of position in the neighboring domain.");
@@ -34,9 +30,7 @@ InterfaceLogDiffusionElectrons::InterfaceLogDiffusionElectrons(const InputParame
     _r_units(1. / getParam<Real>("position_units")),
     _r_neighbor_units(1. / getParam<Real>("neighbor_position_units")),
 
-    _diffem(getNeighborADMaterialProperty<Real>("diffem")),
-    _mean_en_neighbor_var(*getVar("mean_en_neighbor", 0)),
-    _mean_en_neighbor(_mean_en_neighbor_var.adSlnNeighbor())
+    _diffem(getNeighborADMaterialProperty<Real>("diffem"))
 {
   if (!parameters.isParamValid("boundary"))
   {

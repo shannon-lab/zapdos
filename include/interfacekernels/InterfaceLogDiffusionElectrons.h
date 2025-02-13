@@ -23,11 +23,11 @@ public:
 protected:
   virtual ADReal computeQpResidual(Moose::DGResidualType type) override;
 
+  /// Scaling units for the position
   Real _r_units;
+  /// Scaling units for the position for the neighbor variable
   Real _r_neighbor_units;
 
+  /// Diffusion coefficient of the neighbor variable
   const ADMaterialProperty<Real> & _diffem;
-
-  MooseVariable & _mean_en_neighbor_var;
-  const ADVariableValue & _mean_en_neighbor;
 };

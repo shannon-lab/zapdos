@@ -19,8 +19,6 @@ InputParameters
 SideTotFluxIntegral::validParams()
 {
   InputParameters params = SideIntegralVariablePostprocessor::validParams();
-  // params.addRequiredParam<std::string>("diffusivity", "The name of the diffusivity material
-  // property that will be used in the flux computation.");
   params.addRequiredParam<std::string>(
       "mobility",
       "The name of the mobility material property that will be used in the flux computation.");
@@ -35,8 +33,6 @@ SideTotFluxIntegral::validParams()
 
 SideTotFluxIntegral::SideTotFluxIntegral(const InputParameters & parameters)
   : SideIntegralVariablePostprocessor(parameters),
-    // _diffusivity(parameters.get<std::string>("diffusivity")),
-    // _diffusion_coef(getMaterialProperty<Real>(_diffusivity)),
     _mobility(parameters.get<std::string>("mobility")),
     _mobility_coef(getMaterialProperty<Real>(_mobility)),
     _r_units(1. / getParam<Real>("position_units")),
@@ -69,9 +65,6 @@ SideTotFluxIntegral::computeQpIntegral()
     _a = 1.0;
   else
     _a = 0.0;
-
-  // return -_mobility_coef[_qp] * _grad_potential[_qp] * _normals[_qp] * std::exp(_u[_qp])
-  // -_diffusion_coef[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _normals[_qp];
 
   return (1. - _r) / (1. + _r) * 0.5 * _v_thermal * std::exp(_u[_qp]) +
          (1. - _r) / (1. + _r) *

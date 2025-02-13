@@ -12,6 +12,9 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Returns the electron temperature
+ */
 class ElectronTemperature : public AuxKernel
 {
 public:
@@ -24,6 +27,8 @@ public:
 protected:
   virtual Real computeValue() override;
 
+  /// Coupled electron density
   const VariableValue & _electron_density;
+  /// Coupled electron mean energy density
   const VariableValue & _mean_en;
 };

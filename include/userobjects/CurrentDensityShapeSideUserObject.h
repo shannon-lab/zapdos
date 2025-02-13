@@ -12,6 +12,9 @@
 
 #include "ShapeSideUserObject.h"
 
+/*
+ *  Calculates the total current at a boundary
+ */
 class CurrentDensityShapeSideUserObject : public ShapeSideUserObject
 {
 public:
@@ -33,25 +36,46 @@ public:
   ///@}
 
 protected:
+  /// Term that represents the value of the side integral
   Real _integral;
+  /// Term that represents the Jacobian
   std::vector<Real> _jacobian_storage;
 
+  /// Value of the electron density variable
   const VariableValue & _em;
+  /// ID of the electron density variable
   unsigned int _em_id;
+  /// Gradient of the electron density
   const VariableGradient & _grad_em;
+
+  /// Ion density variable
   const MooseVariable & _ip_var;
+  /// Value of the ion density variable
   const VariableValue & _ip;
+  /// ID of the ion density variable
   unsigned int _ip_id;
+  /// Gradient of the ion density
   const VariableGradient & _grad_ip;
+  /// Gradient of the potential
   const VariableGradient & _grad_potential;
+  /// ID of the potential variable
   unsigned int _potential_id;
+  /// Value of the electron energy density variable
   const VariableValue & _mean_en;
+  /// ID of the electron energy density variable
   unsigned int _mean_en_id;
+  /// Mobility coefficient of the ions
   const ADMaterialProperty<Real> & _muip;
+  /// Diffusion coefficient of the ions
   const ADMaterialProperty<Real> & _diffip;
+  /// Mobility coefficient of the electrons
   const ADMaterialProperty<Real> & _muem;
+  /// Diffusion coefficient of the electrons
   const ADMaterialProperty<Real> & _diffem;
+  /// Elementary charge
   Real _e;
+  /// True if molar density is used
   bool _use_moles;
+  /// Avogadro's number
   Real _avogadro;
 };

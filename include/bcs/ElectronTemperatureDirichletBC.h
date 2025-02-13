@@ -13,7 +13,7 @@
 #include "ADNodalBC.h"
 
 /**
- * Implements a simple coupled boundary condition where u=v on the boundary.
+ *  Electron temperature boundary condition
  */
 class ElectronTemperatureDirichletBC : public ADNodalBC
 {
@@ -25,7 +25,10 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Electron density
   const ADVariableValue & _em;
+  /// Value of electron temperature
   const Real _value;
+  /// Penalty value
   const Real _penalty_value;
 };

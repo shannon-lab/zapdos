@@ -12,6 +12,9 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Electric field magnitude source term
+ */
 class EFieldMagnitudeSource : public ADKernel
 {
 public:
@@ -22,5 +25,6 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Gradient of coupled potential
   const ADVariableGradient & _grad_potential;
 };

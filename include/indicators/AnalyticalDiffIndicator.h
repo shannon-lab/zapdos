@@ -12,6 +12,10 @@
 
 #include "ElementIntegralIndicator.h"
 
+/**
+ *  Returns the difference between the function of the analytic solution
+ *  vs the computed solution
+ */
 class AnalyticalDiffIndicator : public ElementIntegralIndicator
 {
 public:
@@ -24,5 +28,6 @@ public:
 protected:
   virtual Real computeQpIntegral();
 
+  /// Analytic solution to compare against
   const Function & _func;
 };

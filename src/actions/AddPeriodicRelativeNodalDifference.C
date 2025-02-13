@@ -56,13 +56,12 @@ AddPeriodicRelativeNodalDifference::validParams()
   params.addParam<Real>(
       "starting_cycle", 0.0, "The number of the cycles before starting the difference calculation");
   params.addRequiredParam<Real>("cycle_frequency", "The cycle's frequency in Hz");
-  params.addParam<Real>(
-      "num_cycles", 2000.0, "The number of cycles to calculation the difference for.");
+  params.addParam<Real>("num_cycles", 2000.0, "The number of cycles this object is active.");
   params.addParam<std::vector<SubdomainName>>(
       "block", {}, "The subdomain that this action applies to.");
   params.addClassDescription(
       "This Action automatically adds the necessary objects to calculate the relative"
-      " periodic difference. Relative Difference will be outputted as an Postprocessor named: "
+      " periodic difference. Relative Difference will be outputted as a Postprocessor named: "
       "'var'_periodic_difference");
 
   return params;

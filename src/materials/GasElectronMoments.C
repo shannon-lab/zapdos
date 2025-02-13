@@ -20,8 +20,6 @@ GasElectronMoments::validParams()
 
   params.addParam<Real>(
       "user_relative_permittivity", 1.0, "Multiplies the permittivity of free space.");
-  // params.addRequiredParam<bool>("townsend","Whether to use the townsend formulation for the rate
-  // terms.");
   params.addRequiredParam<bool>("interp_trans_coeffs",
                                 "Whether to interpolate transport "
                                 "coefficients as a function of the mean "
@@ -91,7 +89,6 @@ GasElectronMoments::GasElectronMoments(const InputParameters & parameters)
 
     _muem(declareADProperty<Real>("muem")),
     _diffem(declareADProperty<Real>("diffem")),
-    _rate_coeff_ion(declareProperty<Real>("rate_coeff_ion")),
     _Eiz(declareProperty<Real>("Eiz")),
     _Eex(declareProperty<Real>("Eex")),
     _Ar(declareProperty<Real>("Ar")),
@@ -109,34 +106,14 @@ GasElectronMoments::GasElectronMoments(const InputParameters & parameters)
 
     _se_energy(declareProperty<Real>("se_energy")),
 
-    _ElectronTotalFluxMag(declareProperty<Real>("ElectronTotalFluxMag")),
-    _ElectronTotalFluxMagSizeForm(declareProperty<Real>("ElectronTotalFluxMagSizeForm")),
-    _ElectronTotalFlux(declareProperty<Real>("ElectronTotalFlux")),
-    _ElectronAdvectiveFlux(declareProperty<Real>("ElectronAdvectiveFlux")),
-    _ElectronDiffusiveFlux(declareProperty<Real>("ElectronDiffusiveFlux")),
-    _IonTotalFlux(declareProperty<Real>("IonTotalFlux")),
-    _IonAdvectiveFlux(declareProperty<Real>("IonAdvectiveFlux")),
-    _IonDiffusiveFlux(declareProperty<Real>("IonDiffusiveFlux")),
-    _Source_term(declareProperty<Real>("Source_term")),
-    _Source_term_coeff(declareProperty<Real>("Source_term_coeff")),
     _e(declareProperty<Real>("e")),
     _eps(declareProperty<Real>("eps")),
-    _Tem_lfa(declareProperty<Real>("Tem_lfa")),
-    _Tip_lfa(declareProperty<Real>("Tip_lfa")),
+
     _k_boltz(declareProperty<Real>("k_boltz")),
     _Avogadro(declareProperty<Real>("Avogadro")),
-    _vthermal_em(declareProperty<Real>("vthermal_em")),
-    _vthermal_ip(declareProperty<Real>("vthermal_ip")),
-    _iz_coeff_efield_a(declareProperty<Real>("iz_coeff_efield_a")),
-    _iz_coeff_efield_b(declareProperty<Real>("iz_coeff_efield_b")),
-    _iz_coeff_efield_c(declareProperty<Real>("iz_coeff_efield_c")),
-    _iz_coeff_energy_a(declareProperty<Real>("iz_coeff_energy_a")),
-    _iz_coeff_energy_b(declareProperty<Real>("iz_coeff_energy_b")),
-    _iz_coeff_energy_c(declareProperty<Real>("iz_coeff_energy_c")),
+
     _N_A(declareProperty<Real>("N_A")),
-    _el_coeff_energy_a(declareProperty<Real>("el_coeff_energy_a")),
-    _el_coeff_energy_b(declareProperty<Real>("el_coeff_energy_b")),
-    _el_coeff_energy_c(declareProperty<Real>("el_coeff_energy_c")),
+
     _sgnem(declareProperty<Real>("sgnem")),
     _sgnmean_en(declareProperty<Real>("sgnmean_en")),
     _diffpotential(declareADProperty<Real>("diffpotential")),

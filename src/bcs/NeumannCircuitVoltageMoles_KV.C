@@ -64,8 +64,6 @@ NeumannCircuitVoltageMoles_KV::NeumannCircuitVoltageMoles_KV(const InputParamete
   _v_i_th = 0.0;
   _a = 0.0;
   _b = 0.0;
-  _numerator = 0.0;
-  _denominator = 0.0;
   if (_potential_units.compare("V") == 0)
     _voltage_scaling = 1.;
   else if (_potential_units.compare("kV") == 0)

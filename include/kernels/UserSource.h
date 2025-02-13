@@ -12,6 +12,9 @@
 
 #include "ADKernel.h"
 
+/**
+ *  User defined source term
+ */
 class UserSource : public ADKernel
 {
 public:
@@ -22,5 +25,6 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Custom source term value
   const Real & _source;
 };

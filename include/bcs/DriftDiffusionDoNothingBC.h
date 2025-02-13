@@ -12,8 +12,10 @@
 
 #include "ADIntegratedBC.h"
 
-// This diffusion kernel should only be used with species whose values are in the logarithmic form.
-
+/**
+ *  Boundary condition where the flux at the boundary is equal to the
+ *  bulk dift-diffusion equation
+ */
 class DriftDiffusionDoNothingBC : public ADIntegratedBC
 {
 public:
@@ -24,16 +26,22 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Scaling units for the position
   const Real _r_units;
-
+  /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
+  /// Charge sign of the species
   const MaterialProperty<Real> & _sign;
+  /// User input for the a custom mobility coefficient
   ADMaterialProperty<Real> _user_mu;
+  /// User input for the a custom charge sign of the species
   MaterialProperty<Real> _user_sign;
-
+  /// Diffusion coefficient
   const ADMaterialProperty<Real> & _diffusivity;
+  /// User input for the a custom diffusion coefficient
   ADMaterialProperty<Real> _user_diff;
-
+  /// Gradient of the coupled potential
   const ADVariableGradient & _grad_potential;
+  /// The user-defined 1-D electric field with a sign correction
   ADVariableGradient _minus_e_field;
 };

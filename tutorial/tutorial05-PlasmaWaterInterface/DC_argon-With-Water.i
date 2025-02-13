@@ -174,7 +174,6 @@ dom1Scale = 1e-7
   # if you want to account for electrons going out of the water into the air then you would need there to be interface conditions for master interface 0
   [em_advection]
     type = InterfaceAdvection
-    mean_en_neighbor = mean_en
     potential_neighbor = potential
     neighbor_var = em
 
@@ -187,7 +186,6 @@ dom1Scale = 1e-7
   []
   [em_diffusion]
     type = InterfaceLogDiffusionElectrons
-    mean_en_neighbor = mean_en
     neighbor_var = em
     variable = emliq
     boundary = master1_interface
