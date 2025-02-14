@@ -30,7 +30,6 @@ protected:
   /// Scaling units for the position for the neighbor variable
   Real _r_neighbor_units;
 
-
   const ADMaterialProperty<RealVectorValue> & _electric_field_neighbor;
 
   /// Mobility coefficient of the neighbor variable
