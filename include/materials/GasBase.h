@@ -174,6 +174,4 @@ protected:
   const ADVariableValue & _em;
   /// Coupled electron energy density
   const ADVariableValue & _mean_en;
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
 };

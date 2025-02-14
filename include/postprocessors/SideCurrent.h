@@ -54,8 +54,9 @@ protected:
   /// Equal to 1 when the ion drift velocity is direct towards the wall and zero otherwise
   Real _b;
 
-  /// Gradient of the coupled potential
-  const VariableGradient & _grad_potential;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+
   /// Electron energy density
   const VariableValue & _mean_en;
 

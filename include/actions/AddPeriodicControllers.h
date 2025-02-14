@@ -63,6 +63,7 @@ protected:
   Real _period;
   /// The number of cycles between enabling and disabling objects
   Real _cycles_per_controls;
+  Real _cycles_between_controls;
   /// Total number of 'TimePeriod' controllers to add
   Real _num_controller_set;
   /// Name of the 'TimePeriod' controllers

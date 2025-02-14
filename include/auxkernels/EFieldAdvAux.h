@@ -34,8 +34,8 @@ protected:
   MooseVariable & _density_var;
   /// Value of the coupled density variable
   const VariableValue & _density_log;
-  /// Gradient of coupled potential
-  const VariableGradient & _grad_potential;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Mobility coefficient
   const GenericMaterialProperty<Real, is_ad> & _mu;
   /// Charge sign of the coupled species
