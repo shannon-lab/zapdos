@@ -42,5 +42,6 @@ protected:
   /// Custom diffusion coefficient
   ADMaterialProperty<Real> _user_diff;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

@@ -33,5 +33,6 @@ private:
   const ADMaterialProperty<Real> & _mu;
   /// Charge sign of the species
   const MaterialProperty<Real> & _sign;
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

@@ -30,6 +30,7 @@ protected:
   /// Reflection coefficient
   const Real & _r;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Mobility coefficient of ions

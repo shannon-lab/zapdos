@@ -31,6 +31,7 @@ protected:
   const VariableValue & _density_log;
   /// Gradient of the coupled density variable
   const VariableGradient & _grad_density_log;
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Mobility coefficient
   const GenericMaterialProperty<Real, is_ad> & _mu;

@@ -60,8 +60,7 @@ protected:
   /// Field enhancement factor of surface
   const MaterialProperty<Real> & _field_enhancement;
 
-  const ADMaterialProperty<RealVectorValue> & _electric_field;
-
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise

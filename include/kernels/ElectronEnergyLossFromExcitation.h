@@ -38,6 +38,7 @@ protected:
   const ADMaterialProperty<Real> & _alpha_ex;
   /// Energy threshold for excitation
   const MaterialProperty<Real> & _Eex;
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Electron density

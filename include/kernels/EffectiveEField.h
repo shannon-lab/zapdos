@@ -34,5 +34,6 @@ private:
   /// Component of the electric field
   unsigned _component;
   /// Electric field provided as a material property
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

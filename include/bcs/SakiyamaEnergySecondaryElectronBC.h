@@ -56,5 +56,6 @@ protected:
   /// Ion flux
   ADRealVectorValue _ion_flux;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

@@ -61,8 +61,7 @@ protected:
   /// Mass of ions
   std::vector<const MaterialProperty<Real> *> _massip;
 
-  const ADMaterialProperty<RealVectorValue> & _electric_field;
-
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Equal to 1 when the electron drift velocity is direct towards the wall and zero otherwise

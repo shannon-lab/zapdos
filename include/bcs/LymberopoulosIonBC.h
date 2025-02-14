@@ -28,6 +28,7 @@ protected:
   /// Scaling units for the position
   const Real _r_units;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Mobility coefficient

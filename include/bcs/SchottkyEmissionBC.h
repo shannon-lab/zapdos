@@ -76,6 +76,7 @@ protected:
   /// Scaling units for the potential (V or kV)
   std::string _potential_units;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Scaling value for the potential
   Real _voltage_scaling;

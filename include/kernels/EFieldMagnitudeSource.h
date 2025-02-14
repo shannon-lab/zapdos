@@ -25,5 +25,6 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

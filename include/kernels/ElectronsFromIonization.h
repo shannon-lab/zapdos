@@ -35,6 +35,7 @@ protected:
   const ADMaterialProperty<Real> & _muem;
   /// Townsend coefficient for ionization
   const ADMaterialProperty<Real> & _alpha_iz;
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Custom diffusion coefficient
   ADMaterialProperty<Real> _user_diffem;

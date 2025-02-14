@@ -66,8 +66,7 @@ protected:
   /// Mobility coefficient of the electron mean energy density
   const ADMaterialProperty<Real> & _mumean_en;
 
-  const ADMaterialProperty<RealVectorValue> & _electric_field;
-
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Equal to 1 when the electron drift velocity is directed towards the wall and zero otherwise

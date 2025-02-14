@@ -418,5 +418,6 @@ private:
   /// Coupled O3- ion
   const ADVariableValue & _O3m;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

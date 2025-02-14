@@ -39,8 +39,7 @@ protected:
   /// Ion density values
   std::vector<const ADVariableValue *> _ion;
 
-  const ADMaterialProperty<RealVectorValue> & _electric_field;
-
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Charge sign of the ions

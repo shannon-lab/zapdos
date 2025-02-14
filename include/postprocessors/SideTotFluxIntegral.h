@@ -52,5 +52,6 @@ protected:
   /// Equal to 1 when the ion drift velocity is direct towards the wall and zero otherwise
   Real _a;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

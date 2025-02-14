@@ -31,5 +31,6 @@ protected:
   const VariableValue & _u_old;
   /// Coupled ion density
   const VariableValue & _n;
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

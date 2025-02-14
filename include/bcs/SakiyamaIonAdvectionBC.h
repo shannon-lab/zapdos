@@ -33,6 +33,7 @@ protected:
   /// Charge sign of the species
   const MaterialProperty<Real> & _sgn;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   Real _a;

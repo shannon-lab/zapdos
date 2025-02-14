@@ -33,5 +33,6 @@ protected:
 
   /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

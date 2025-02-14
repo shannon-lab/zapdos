@@ -49,6 +49,7 @@ protected:
   Real _r_units;
   /// Scaling units for the potential (V or kV)
   const std::string _potential_units;
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Number of charged species

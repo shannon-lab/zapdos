@@ -33,6 +33,7 @@ protected:
   const VariableValue & _em;
   /// Gradient of the electron density
   const VariableGradient & _grad_em;
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Electron mobility coefficient
   const GenericMaterialProperty<Real, is_ad> & _muem;

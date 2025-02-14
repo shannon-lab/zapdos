@@ -33,6 +33,7 @@ protected:
   /// Charge sign of the species in neighboring cell
   const MaterialProperty<Real> & _sgn_neighbor;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
   const ADMaterialProperty<RealVectorValue> & _electric_field_neighbor;
 };

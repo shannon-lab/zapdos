@@ -27,5 +27,6 @@ protected:
 
   /// Charge sign of the species
   const int _charge_sign;
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

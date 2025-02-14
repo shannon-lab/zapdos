@@ -44,5 +44,6 @@ protected:
   /// Mobility coefficient of the ions
   std::vector<const ADMaterialProperty<Real> *> _muip;
 
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

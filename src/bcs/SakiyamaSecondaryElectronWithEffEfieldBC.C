@@ -72,8 +72,6 @@ SakiyamaSecondaryElectronWithEffEfieldBC::computeQpResidual()
     {
       _a = 0.0;
     }
-    //_ion_flux += _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
-    //             std::exp((*_ip[i])[_qp]);
 
     _ion_flux +=
         _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * EField * _r_units * std::exp((*_ip[i])[_qp]);

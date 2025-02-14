@@ -37,6 +37,7 @@ protected:
   const MaterialProperty<Real> & _massGas;
   /// Townsend coefficient for elastic collisions
   const ADMaterialProperty<Real> & _alpha_el;
+  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Electron density

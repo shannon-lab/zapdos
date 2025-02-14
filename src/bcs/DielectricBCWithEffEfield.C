@@ -55,16 +55,12 @@ DielectricBCWithEffEfield::DielectricBCWithEffEfield(const InputParameters & par
     _Ex_var(*getVar("Ex", 0)),
     _Ex_old(_Ex_var.slnOld()),
 
-    //_Ey(adCoupledValue("Ey")),
     _Ey(isCoupled("Ey") ? adCoupledValue("Ey") : _ad_zero),
     _Ey_var(*getVar("Ey", 0)),
-    //_Ey_old(_Ey_var.slnOld()),
     _Ey_old(isCoupled("Ey") ? _Ey_var.slnOld() : _zero),
 
-    //_Ez(adCoupledValue("Ez")),
     _Ez(isCoupled("Ez") ? adCoupledValue("Ez") : _ad_zero),
     _Ez_var(*getVar("Ez", 0)),
-    //_Ez_old(_Ez_var.slnOld()),
     _Ez_old(isCoupled("Ez") ? _Ez_var.slnOld() : _zero),
 
     _e(getMaterialProperty<Real>("e")),
