@@ -12,6 +12,9 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Returns the electric field driven advective flux of the specified species
+ */
 template <bool is_ad>
 class EFieldAdvAuxTempl : public AuxKernel
 {
@@ -23,18 +26,19 @@ public:
 protected:
   virtual Real computeValue() override;
 
+  /// Component of the flux
   const int _component;
+  /// Scaling units for the position
   const Real _r_units;
-
-  // Coupled variables
-
+  /// Coupled density variable
   MooseVariable & _density_var;
+  /// Value of the coupled density variable
   const VariableValue & _density_log;
+  /// Gradient of coupled potential
   const VariableGradient & _grad_potential;
-
-  // Material properties
-
+  /// Mobility coefficient
   const GenericMaterialProperty<Real, is_ad> & _mu;
+  /// Charge sign of the coupled species
   const MaterialProperty<Real> & _sgn;
 };
 

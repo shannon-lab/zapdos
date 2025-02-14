@@ -10,6 +10,10 @@
 
 #include "ADDGKernel.h"
 
+/**
+ * The discontinuous Galerkin form of the generic electric
+ * field driven advection term
+ */
 class DGEFieldAdvection : public ADDGKernel
 {
 public:
@@ -20,12 +24,19 @@ public:
 protected:
   virtual ADReal computeQpResidual(Moose::DGResidualType type) override;
 
+  /// Mobility coefficient of current cell
   const ADMaterialProperty<Real> & _mu;
+  /// Charge sign of the species in current cell
   const MaterialProperty<Real> & _sgn;
+  /// Mobility coefficient of neighboring cell
   const ADMaterialProperty<Real> & _mu_neighbor;
+  /// Charge sign of the species in neighboring cell
   const MaterialProperty<Real> & _sgn_neighbor;
 
+  /// Coupled Potential variable
   MooseVariable & _potential_var;
+  /// Gradient of coupled potential in current cell
   const ADVariableGradient & _grad_potential;
+  /// Gradient of coupled potential in neighboring cell
   const ADVariableGradient & _grad_potential_neighbor;
 };

@@ -16,7 +16,6 @@
  * This diffusion kernel should only be used with species whose values are in
  * the linear form.
  */
-
 class CoeffDiffusionLin : public ADKernel
 {
 public:
@@ -31,6 +30,6 @@ private:
   /// Position units
   const Real _r_units;
 
-  /// The diffusion coefficient (either constant or mixture-averaged)
+  /// The diffusion coefficient
   const ADMaterialProperty<Real> & _diffusivity;
 };

@@ -65,7 +65,6 @@ Water::Water(const InputParameters & parameters)
     _kem(declareADProperty<Real>("kem")),
     _kemliqemliq(declareADProperty<Real>("kemliqemliq")),
     _kemem(declareADProperty<Real>("kemem")),
-    _k3(declareProperty<Real>("k3")),
     _k4(declareProperty<Real>("k4")),
     _k5(declareProperty<Real>("k5")),
     _k6(declareProperty<Real>("k6")),
@@ -241,7 +240,7 @@ Water::computeQpProperties()
   _k25[_qp] = 1.3e10;       // OH + OH- --> O- + H2O
   _k26[_qp] = 6.0e9;        // OH + HO2 --> H2O + O2
   _k27[_qp] = 8.0e9;        // OH + O2- --> OH- + O2
-  _k28[_qp] = 1.8e6;        // ] O- + H2O --> OH- + OH
+  _k28[_qp] = 1.8e6;        // O- + H2O --> OH- + OH
   _k29[_qp] = 8.0e7;        // O- + H2 --> OH- + H
   _k30[_qp] = 5.0e8;        // O- + H2O2 --> O2- + H2O
   _k31[_qp] = 4.0e8;        // O- + HO2- --> O2- + OH-

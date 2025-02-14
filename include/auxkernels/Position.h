@@ -13,15 +13,14 @@
 #include "AuxKernel.h"
 
 /**
- * Function auxiliary value
+ *  Produces an elemental auxiliary variable useful for plotting against other
+ *  elemental auxiliary variables. Mesh points automatically output by Zapdos only work
+ *  for plotting nodal variables. Since almost all auxiliary variables are elemental, this
+ *  AuxKernel is very important.
  */
 class Position : public AuxKernel
 {
 public:
-  /**
-   * Factory constructor, takes parameters so that all derived classes can be built using the same
-   * constructor.
-   */
   Position(const InputParameters & parameters);
 
   static InputParameters validParams();
@@ -29,7 +28,9 @@ public:
   virtual ~Position() {}
 
 protected:
+  /// Component of the position
   int _component;
+  /// Scaling units for the position
   Real _r_units;
 
   virtual Real computeValue() override;

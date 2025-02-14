@@ -12,6 +12,10 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Reaction rate for electron impact collisions in units of #/m^{3}s. User can pass
+ *  choice of elastic, excitation, or ionization Townsend coefficients
+ */
 template <bool is_ad>
 class ProcRateTempl : public AuxKernel
 {
@@ -23,16 +27,23 @@ public:
   virtual Real computeValue() override;
 
 protected:
+  /// The scaling units for the position
   Real _r_units;
-
+  /// Electron density
   const VariableValue & _em;
+  /// Gradient of the electron density
   const VariableGradient & _grad_em;
+  /// Gradient of the coupled potential
   const VariableGradient & _grad_potential;
+  /// Electron mobility coefficient
   const GenericMaterialProperty<Real, is_ad> & _muem;
+  /// Charge sign of electrons
   const MaterialProperty<Real> & _sgnem;
+  /// Electron diffusion coefficient
   const GenericMaterialProperty<Real, is_ad> & _diffem;
+  /// Townsend coefficient
   const GenericMaterialProperty<Real, is_ad> & _alpha;
-
+  /// Term for the electron current
   RealVectorValue _em_current;
 };
 

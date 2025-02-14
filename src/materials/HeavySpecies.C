@@ -30,10 +30,7 @@ HeavySpeciesTempl<is_ad>::validParams()
   params.addParam<Real>("time_units", 1, "Units of time");
   params.addParam<Real>("mobility", "The species mobility (if applicable).");
   params.addParam<Real>("diffusivity", "The species diffusivity (if applicable).");
-  // params.addRequiredParam<FileName>(
-  // "reactions_file", "The file containing interpolation tables for material properties.");
-  // params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
-  // params.addParam<Real>("user_p_gas", 1.01e5, "The gas pressure in Pascals.");
+  params.addClassDescription("Material properties of ions");
   return params;
 }
 
@@ -90,12 +87,7 @@ HeavySpeciesTempl<is_ad>::computeQpProperties()
   _massHeavy[_qp] = _user_massHeavy;
   _sgnHeavy[_qp] = _user_sgnHeavy;
 
-  // _T_gas[_qp] = _user_T_gas;
-  // _p_gas[_qp] = _user_p_gas;
-
   _temperatureHeavy[_qp] = _T_gas[_qp]; // Needs to be changed.
-
-  // _n_gas[_qp] = _p_gas[_qp] / (8.3145 * _T_gas[_qp]);
 
   if (!_calc_mobility && !_calc_diffusivity)
   {
@@ -125,29 +117,6 @@ HeavySpeciesTempl<is_ad>::computeQpProperties()
     _diffHeavy[_qp] =
         0.004 * _time_units / (760. * _p_gas[_qp] / 1.01E5); // covert to m^2 and include press
   }
-
-  /*
-  if (isParamValid("mobility"))
-  {
-    _muHeavy[_qp] = getParam<Real>("mobility") * _voltage_scaling * _time_units;
-  }
-  else
-  {
-    _muHeavy[_qp] =
-        1444. * _voltage_scaling * _time_units /
-        (10000. * 760. * _p_gas[_qp] / 1.01E5); // units of m^2/(kV*s) if _voltage_scaling = 1000
-  }
-
-  if (isParamValid("diffusivity"))
-  {
-    _diffHeavy[_qp] = getParam<Real>("diffusivity") * _time_units;
-  }
-  else
-  {
-    _diffHeavy[_qp] =
-        0.004 * _time_units / (760. * _p_gas[_qp] / 1.01E5); // covert to m^2 and include press
-  }
-  */
 }
 
 template class HeavySpeciesTempl<false>;

@@ -16,6 +16,9 @@ InputParameters
 HphiRadialInterface::validParams()
 {
   InputParameters params = ADInterfaceKernel::validParams();
+  params.addClassDescription(
+      "Used to include the electric field into or out of a neighboring subdomain. This is done "
+      "using Ampère–Maxwell law to relate the azmithal magnetic flux to the axial electric field.");
   return params;
 }
 

@@ -12,6 +12,10 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Rate of production of electrons from ionization using Townsend coefficients
+ *  (Electron density must be in logarithmic form)
+ */
 class ElectronsFromIonization : public ADKernel
 {
 public:
@@ -22,18 +26,30 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Position units
   const Real _r_units;
 
+  /// Diffusion coefficient of electrons
   const ADMaterialProperty<Real> & _diffem;
+  /// Mobility coefficient of electrons
   const ADMaterialProperty<Real> & _muem;
+  /// Townsend coefficient for ionization
   const ADMaterialProperty<Real> & _alpha_iz;
+  /// Custom diffusion coefficient
   ADMaterialProperty<Real> _user_diffem;
+  /// Custom mobility coefficient
   ADMaterialProperty<Real> _user_muem;
+  /// Custom Townsend coefficient for ionization
   ADMaterialProperty<Real> _user_alpha_iz;
 
+  /// Electron mean energy density
   const ADVariableValue & _mean_en;
+  /// Gradient of the coupled potential
   const ADVariableGradient & _grad_potential;
+  /// The user-defined 1-D electric field with a sign correction
   ADVariableGradient _minus_e_field;
+  /// Electron density
   const ADVariableValue & _em;
+  /// Gradient of the electron density
   const ADVariableGradient & _grad_em;
 };

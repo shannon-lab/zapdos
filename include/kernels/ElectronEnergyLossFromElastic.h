@@ -22,16 +22,26 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Position units
   const Real _r_units;
 
+  /// Diffusion coefficient of electrons
   const ADMaterialProperty<Real> & _diffem;
+  /// Mobility coefficient of electrons
   const ADMaterialProperty<Real> & _muem;
+  /// Townsend coefficient for ionization
   const ADMaterialProperty<Real> & _alpha_iz;
+  /// Mass of electrons
   const MaterialProperty<Real> & _massem;
+  /// Mass of neutral gas
   const MaterialProperty<Real> & _massGas;
+  /// Townsend coefficient for elastic collisions
   const ADMaterialProperty<Real> & _alpha_el;
 
+  /// Gradient of the coupled gradient
   const ADVariableGradient & _grad_potential;
+  /// Electron density
   const ADVariableValue & _em;
+  /// Gradient of the electron density
   const ADVariableGradient & _grad_em;
 };

@@ -12,6 +12,11 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Generic second order reaction sink term for u in which two
+ *  molecules of u are consumed
+ *  (Densities must be in logarithmic form)
+ */
 class ReactantAARxn : public ADKernel
 {
 public:
@@ -22,6 +27,6 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  /// The reaction coefficient
+  /// Reaction coefficient
   const ADMaterialProperty<Real> & _reaction_coeff;
 };
