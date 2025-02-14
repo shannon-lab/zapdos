@@ -1,0 +1,1016 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>ElementSubdomainModifier | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="b15310d7-223e-4089-8901-6149a53f72ae" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="3c62a7ff-36f0-4aa8-997c-0153c5429f3a" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="8817e205-c5a1-4f9c-9ff7-13ad664e7a6b" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="a026c3db-b5af-48b4-9ae1-e2259baf39aa"><i class="material-icons">menu</i></a><ul class="sidenav" id="a026c3db-b5af-48b4-9ae1-e2259baf39aa"><li><a href="#!" class="dropdown-trigger" data-target="9fd9bec8-525d-4218-9131-6c71dca7ed8c" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="8799c84e-929f-46d1-87eb-627d1df0d8ef" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="b5b4b858-4f62-4262-8b47-6d9e24f3c51d" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="b15310d7-223e-4089-8901-6149a53f72ae"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="3c62a7ff-36f0-4aa8-997c-0153c5429f3a"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="8817e205-c5a1-4f9c-9ff7-13ad664e7a6b"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="9fd9bec8-525d-4218-9131-6c71dca7ed8c"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="8799c84e-929f-46d1-87eb-627d1df0d8ef"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="b5b4b858-4f62-4262-8b47-6d9e24f3c51d"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">meshmodifiers</span><a href="#" class="breadcrumb">ElementSubdomainModifier</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="61f4b79a-bee0-46ff-a8e8-2fe06c0ffa4f" data-section-level="1" data-section-text="ElementSubdomainModifier"><h1 id="elementsubdomainmodifier">ElementSubdomainModifier</h1><section class="scrollspy" id="8f2cc866-44ed-470c-be68-80f78d51016e" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p>The <code>ElementSubdomainModifier</code> modifies an element subdomain ID. This class is inherited by other mesh modifiers, such as <a href="CoupledVarThresholdElementSubdomainModifier.html">CoupledVarThresholdElementSubdomainModifier</a> and <a href="TimedSubdomainModifier.html">TimedSubdomainModifier</a>, which implement different criteria for a subdomain ID to be modified.</p><p>The <code>ElementSubdomainModifier</code> can model</p><ul class="browser-default"><li><p>Element death (with applications in ablation, fracture, etc.); </p></li><li><p>Element activation (with applications in additive manufacturing, sintering, solidification, etc.); </p></li><li><p>Moving interface (with applications in metal oxidation, phase transformation, melt pool, etc.).</p></li></ul><p>The <code>ElementSubdomainModifier</code> only changes the element&#x27;s subdomain. It inherits from <code>ElementSubdomainModifierBase</code>, which handles the corresponding</p><ul class="browser-default"><li><p>Moving boundary/interface nodeset/sideset modification, </p></li><li><p>Solution reinitialization, and </p></li><li><p>Stateful material property reinitialization,</p></li></ul><p>all of which are demonstrated below.</p><p>Consider a unit square domain decomposed by a vertical line <span class="moose-katex-inline-equation" id="moose-equation-335952cd-7049-46f5-bfcc-948bed56ad0f"><script>var element = document.getElementById("moose-equation-335952cd-7049-46f5-bfcc-948bed56ad0f");katex.render("x=0.25", element, {displayMode:false,throwOnError:false});</script></span>. The elements on the left side of the vertical line have subdomain ID of 1, and the elements on the right side have subdomain ID of 2. The <code>ElementSubdomainModifier</code> is used to change the subdomain ID from 2 to 1 for elements within a circle of radius 0.5 whose center moves along the bottom side towards the right.</p></section><section class="scrollspy" id="ac594779-0868-42cf-b876-bf324e8b5d9e" data-section-level="2" data-section-text="Moving boundary / interface nodeset / sideset modification"><h2 id="moving-boundary-interface-nodeset-sideset-modification">Moving boundary/interface nodeset/sideset modification</h2><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note</span></div><div class="card-content"><div class="moose-alert-content"><p>If the moving boundary is defined completely around a subdomain, or between subdomains, then <a href="SidesetAroundSubdomainUpdater.html">SidesetAroundSubdomainUpdater</a> may be more useful to use in conjunction with the <code>ElementSubdomainModifier</code>, rather than using the <code>moving_boundaries</code> and <code>moving_boundary_subdomain_pairs</code> parameters in <code>ElementSubdomainModifier</code>.</p></div></div></div><p>The change of element subdomains will alter the definitions of certain sidesets and nodesets. The parameters <code>moving_boundaries</code> and <code>moving_boundary_subdomain_pairs</code> can optionally be used to modify the corresponding sidesets/nodesets over the elements that change subdomain. The names of the boundaries are specified in <code>moving_boundaries</code>, and the pair of subdomains that each boundary in <code>moving_boundaries</code> lies between must be specified in the corresponding <code>moving_boundary_subdomain_pairs</code>. The element side from the first subdomain of the pair is added to the boundary.</p><p>If the boundaries provided through <code>moving_boundaries</code> already exist, the modifier will attempt to modify the provided sidesets/nodesets whenever an element changes subdomain ID. If the boundaries do not exist, the modifier will create sidesets and nodesets with the provided names.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">  [moving_circle]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    moving_boundaries = &#x27;moving_boundary&#x27;
+    moving_boundary_subdomain_pairs = &#x27;1 2&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#bc475c27-9d9b-4643-aa5b-84531d6ed105">(moose/test/tests/meshmodifiers/element_subdomain_modifier/moving_boundary.i)</a><div class="card moose-float" style="float:center;width:100%;"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/mesh_modifiers/element_subdomain_modifier/nodeset.png"></img></picture><p class="moose-caption"><span class="moose-caption-text">The evolving nodeset (green) between subdomains 1 and 2, as created by the modifier without an existing boundary.</span></p></div></div><p>The modifier only creates and modifies boundaries over elements that change subdomain, so the vertical boundary between subdomains 1 and 2 at <span class="moose-katex-inline-equation" id="moose-equation-34979b21-5322-4d4c-a121-394d3925a5f1"><script>var element = document.getElementById("moose-equation-34979b21-5322-4d4c-a121-394d3925a5f1");katex.render("x=0.25", element, {displayMode:false,throwOnError:false});</script></span> is not added to the created boundary. </p><p>If only one boundary is provided but multiple pairs of subdomains are specified, then all the pairs are applied to the one boundary. Element sides on a subdomain&#x27;s external boundary can also be added by specifying only one subdomain.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">  [ext]
+    type = SideSetsAroundSubdomainGenerator
+    input = &#x27;right&#x27;
+    block = 1
+    new_boundary = &#x27;moving_boundary&#x27;
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    moving_boundaries = &#x27;moving_boundary&#x27;
+    moving_boundary_subdomain_pairs = &#x27;1 2; 1&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#c9217ba4-57d5-4bd5-99ea-f43d763b003e">(moose/test/tests/meshmodifiers/element_subdomain_modifier/external_moving_boundary.i)</a><div class="card moose-float" style="float:center;width:100%;"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/mesh_modifiers/element_subdomain_modifier/ext.png"></img></picture><p class="moose-caption"><span class="moose-caption-text">The evolving sideset (green) around subdomain 1, including the external element sides, from an existing boundary.</span></p></div></div><p>Since the update of the moving boundary only occurs over elements that change subdomain, this can be used to update boundaries which do not cover the entirety of a subdomain:</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">  [moving_circle]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    moving_boundaries = &#x27;right&#x27;
+    moving_boundary_subdomain_pairs = &#x27;1 2&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#0f95284c-a46c-4d76-98c1-05f84d35b95e">(moose/test/tests/meshmodifiers/element_subdomain_modifier/partial_moving_boundary.i)</a><div class="card moose-float" style="float:center;width:100%;"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/mesh_modifiers/element_subdomain_modifier/partial.png"></img></picture><p class="moose-caption"><span class="moose-caption-text">The evolving sideset (green) around subdomain 1, including the external element sides, from an existing boundary.</span></p></div></div><p>Even though the <code>moving_boundary_subdomain_pairs</code> defines the moving boundary to be between subdomains 1 and 2 only, the right side of subdomain 2 remains throughout, as no element sides belong to elements that change subdomain.</p><p>Nodal and integrated BCs can be applied on the moving boundary.</p></section><section class="scrollspy" id="c60566e7-a5ee-4259-b590-0adf106bac40" data-section-level="2" data-section-text="Solution reinitialization"><h2 id="solution-reinitialization">Solution reinitialization</h2><p>By default, all elements that change subdomain ID are reinitialized to the new subdomain&#x27;s initial condition. Suppose the auxiliary variable <span class="moose-katex-inline-equation" id="moose-equation-eb834c7f-3256-420c-ae73-1260f80e6bc9"><script>var element = document.getElementById("moose-equation-eb834c7f-3256-420c-ae73-1260f80e6bc9");katex.render("u", element, {displayMode:false,throwOnError:false});</script></span> has an initial variable value of <span class="moose-katex-inline-equation" id="moose-equation-9bcc530a-6a99-480d-ba03-ea820b0a998e"><script>var element = document.getElementById("moose-equation-9bcc530a-6a99-480d-ba03-ea820b0a998e");katex.render("1", element, {displayMode:false,throwOnError:false});</script></span> in subdomain 1 and <span class="moose-katex-inline-equation" id="moose-equation-fbfcec3b-19c6-41a5-9751-bafd68d08836"><script>var element = document.getElementById("moose-equation-fbfcec3b-19c6-41a5-9751-bafd68d08836");katex.render("-0.5", element, {displayMode:false,throwOnError:false});</script></span> in subdomain 2, and the variable value doubles at each timestep in subdomain 1:</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[ICs]
+  [u_1]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 1
+    block = 1
+  []
+  [u_2]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = -0.5
+    block = 2
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[AuxKernels]
+  [phi]
+    type = ParsedAux
+    variable = &#x27;phi&#x27;
+    expression = &#x27;(x-t)^2+(y)^2-0.5^2&#x27;
+    use_xyzt = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [double_u]
+    type = StatefulAux
+    variable = &#x27;u&#x27;
+    coupled = &#x27;u&#x27;
+    block = 1
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#b54c0fa3-7b8c-44a0-ba3b-c0fe4e11338f">(moose/test/tests/meshmodifiers/element_subdomain_modifier/initial_condition.i)</a><div class="card moose-float" style="float:center;width:100%;"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/mesh_modifiers/element_subdomain_modifier/init_cond.png"></img></picture><p class="moose-caption"><span class="moose-caption-text">The auxiliary variable <span class="moose-katex-inline-equation" id="moose-equation-47f2e1fd-6082-448c-bac9-1da68018e390"><script>var element = document.getElementById("moose-equation-47f2e1fd-6082-448c-bac9-1da68018e390");katex.render("u", element, {displayMode:false,throwOnError:false});</script></span> is reinitialized to <span class="moose-katex-inline-equation" id="moose-equation-b6259923-8552-45f4-a3d9-94c1d8b9263f"><script>var element = document.getElementById("moose-equation-b6259923-8552-45f4-a3d9-94c1d8b9263f");katex.render("1", element, {displayMode:false,throwOnError:false});</script></span>, which doubles over the timestep to <span class="moose-katex-inline-equation" id="moose-equation-5600a551-6416-4e93-bdae-c904258e2232"><script>var element = document.getElementById("moose-equation-5600a551-6416-4e93-bdae-c904258e2232");katex.render("2", element, {displayMode:false,throwOnError:false});</script></span>, for all the elements that change subdomain ID to 1</span></p></div></div></section><section class="scrollspy" id="769841d8-cde8-4bc5-a669-10510835d1d8" data-section-level="2" data-section-text="Stateful material property reinitialization"><h2 id="stateful-material-property-reinitialization">Stateful material property reinitialization</h2><p>Similarly, all stateful material properties will be re-initialized when an element changes subdomain ID. Suppose initially the diffusivity is <span class="moose-katex-inline-equation" id="moose-equation-e0ebba64-08f2-4e2a-8a84-923119698cb0"><script>var element = document.getElementById("moose-equation-e0ebba64-08f2-4e2a-8a84-923119698cb0");katex.render("0.5", element, {displayMode:false,throwOnError:false});</script></span> in subdomain 1 and <span class="moose-katex-inline-equation" id="moose-equation-9edc508c-acee-4ac3-8715-f7b2bb9b4204"><script>var element = document.getElementById("moose-equation-9edc508c-acee-4ac3-8715-f7b2bb9b4204");katex.render("-1", element, {displayMode:false,throwOnError:false});</script></span> in subdomain 2, and the diffusivity doubles at each time step in subdomain 1:</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Materials]
+  [stateful]
+    type = StatefulMaterial
+    initial_diffusivity = 0.5
+    multiplier = 2
+    block = &#x27;left&#x27;
+    outputs = &#x27;exodus&#x27;
+  []
+  [non_stateful]
+    type = GenericConstantMaterial
+    prop_names = &#x27;diffusivity&#x27;
+    prop_values = &#x27;-1&#x27;
+    block = &#x27;right&#x27;
+    outputs = &#x27;exodus&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#901c5c67-4cfb-416c-b7c2-2d2faa9ff676">(moose/test/tests/meshmodifiers/element_subdomain_modifier/stateful_property.i)</a><div class="card moose-float" style="float:center;width:100%;"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/mesh_modifiers/element_subdomain_modifier/stateful_prop.png"></img></picture><p class="moose-caption"><span class="moose-caption-text">The diffusivity is reinitialized to <span class="moose-katex-inline-equation" id="moose-equation-6583336f-5f3d-4608-9780-ed932b70e869"><script>var element = document.getElementById("moose-equation-6583336f-5f3d-4608-9780-ed932b70e869");katex.render("0.5", element, {displayMode:false,throwOnError:false});</script></span>, which doubles over the timestep to <span class="moose-katex-inline-equation" id="moose-equation-74bba73e-5565-4108-9f6d-593099d4aa85"><script>var element = document.getElementById("moose-equation-74bba73e-5565-4108-9f6d-593099d4aa85");katex.render("1", element, {displayMode:false,throwOnError:false});</script></span>, for all the elements that change subdomain ID to 1.</span></p></div></div></section><section class="scrollspy" id="fe385170-d2d7-4a9d-b7ae-01663eef9d83" data-section-level="2" data-section-text="Reinitialization restrictions"><h2 id="reinitialization-restrictions">Reinitialization restrictions</h2><p>Depending on the physics, one may or may not want to reinitialize the solution when an element and its related nodes change subdomain ID. For the below examples, consider a unit square domain decomposed by vertical lines <span class="moose-katex-inline-equation" id="moose-equation-fd28ca95-2635-4942-877d-00b2f27d1ddd"><script>var element = document.getElementById("moose-equation-fd28ca95-2635-4942-877d-00b2f27d1ddd");katex.render("x=0.3", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-0e87121f-3421-44e7-8866-84e9d834cd0a"><script>var element = document.getElementById("moose-equation-0e87121f-3421-44e7-8866-84e9d834cd0a");katex.render("x=0.6", element, {displayMode:false,throwOnError:false});</script></span>. The elements on the left have subdomain ID of 1, the elements in the middle have subdomain ID of 2, and the elements on the right have subdomain ID of 3.</p><p>The <code>ElementSubdomainModifier</code> is used to change the subdomain ID to 1 for elements within a circle of radius 0.3 whose center moves along the bottom side towards the right, and to subdomain ID 2 for elements within a circle of radius 0.3 whose center moves along the top side towards the right.</p><p>An auxiliary variable <span class="moose-katex-inline-equation" id="moose-equation-aee447ad-48e2-4c27-a98c-77f1a3fa7069"><script>var element = document.getElementById("moose-equation-aee447ad-48e2-4c27-a98c-77f1a3fa7069");katex.render("u", element, {displayMode:false,throwOnError:false});</script></span> is defined over the domain, with initial values of 1, 2, and 3 in subdomains 1, 2, and 3 respectively:</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[MeshModifiers]
+  [moving_circle_bottom]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_1&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [moving_circle_top]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_2&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 2
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#e3c80d1e-6c6e-4ae5-90c4-34083819f5ec">(moose/test/tests/meshmodifiers/element_subdomain_modifier/reinitialization.i)</a><div class="card moose-float" style="float:center;width:100%;"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/mesh_modifiers/element_subdomain_modifier/orig.png"></img></picture><p class="moose-caption"><span class="moose-caption-text">The default behaviour of the modifier is to reinitializate all elements that change subdomain ID.</span></p></div></div><p>However, if a list of subdomains (IDs or names) is provided through the parameter <code>reinitialize_subdomains</code>, the reinitialization only occurs if the element&#x27;s new subdomain ID is in the provided list:</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[MeshModifiers]
+  [moving_circle_bottom]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_1&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [moving_circle_top]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_2&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 2
+    reinitialize_subdomains = &#x27;1&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#8d0368f1-9825-4c3d-a1b5-9b3c285bba80">(moose/test/tests/meshmodifiers/element_subdomain_modifier/reinitialization_into.i)</a><div class="card moose-float" style="float:center;width:100%;"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/mesh_modifiers/element_subdomain_modifier/into.png"></img></picture><p class="moose-caption"><span class="moose-caption-text">Reinitialization of only the elements that change subdomain ID to 1.</span></p></div></div><p>If an empty list is given in <code>reinitialize_subdomains</code>, then there is no reinitialization of any elements that change subdomain ID.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[MeshModifiers]
+  [moving_circle_bottom]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_1&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    reinitialize_subdomains = &#x27;&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [moving_circle_top]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_2&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 2
+    reinitialize_subdomains = &#x27;&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#19f1dfa1-1f2c-433e-86ed-831c9ec2411c">(moose/test/tests/meshmodifiers/element_subdomain_modifier/no_reinitialization.i)</a><div class="card moose-float" style="float:center;width:100%;"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/mesh_modifiers/element_subdomain_modifier/none.png"></img></picture><p class="moose-caption"><span class="moose-caption-text">No reinitialization of any elements that change subdomain ID.</span></p></div></div><p>Reinitialization can be further restricted by setting the parameter <code>old_subdomain_reinitialized</code> to <code>false</code>. The modifier will then additionally check the element&#x27;s old subdomain ID. Reinitialization then only occurs if the old subdomain ID was not in the list provided in the parameter <code>reinitialize_subdomains</code>.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[MeshModifiers]
+  [moving_circle_bottom]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_1&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    reinitialize_subdomains = &#x27;1 2&#x27;
+    old_subdomain_reinitialized = false
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [moving_circle_top]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_2&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 2
+    reinitialize_subdomains = &#x27;1 2&#x27;
+    old_subdomain_reinitialized = false
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#9d1ea11b-10c6-446b-897e-157dc3b595d4">(moose/test/tests/meshmodifiers/element_subdomain_modifier/reinitialization_from_into.i)</a><div class="card moose-float" style="float:center;width:100%;"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/mesh_modifiers/element_subdomain_modifier/from_into.png"></img></picture><p class="moose-caption"><span class="moose-caption-text">Reinitialization of only the elements which change subdomain ID from 3, to subdomain IDs 1 or 2</span></p></div></div></section></section><div class="moose-modal modal" id="bc475c27-9d9b-4643-aa5b-84531d6ed105"><div class="modal-content"><h4>(moose/test/tests/meshmodifiers/element_subdomain_modifier/moving_boundary.i)</h4><pre class="moose-pre"><code class="language-text">[Problem]
+  solve = false
+[]
+
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 16
+    ny = 16
+  []
+  [left]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;gen&#x27;
+    block_id = 1
+    bottom_left = &#x27;0 0 0&#x27;
+    top_right = &#x27;0.25 1 1&#x27;
+  []
+  [right]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;left&#x27;
+    block_id = 2
+    bottom_left = &#x27;0.25 0 0&#x27;
+    top_right = &#x27;1 1 1&#x27;
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    moving_boundaries = &#x27;moving_boundary&#x27;
+    moving_boundary_subdomain_pairs = &#x27;1 2&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[AuxVariables]
+  [phi]
+    [AuxKernel]
+      type = ParsedAux
+      expression = &#x27;(x-t)^2+(y)^2-0.5^2&#x27;
+      use_xyzt = true
+      execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+    []
+  []
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.3
+  num_steps = 3
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="c9217ba4-57d5-4bd5-99ea-f43d763b003e"><div class="modal-content"><h4>(moose/test/tests/meshmodifiers/element_subdomain_modifier/external_moving_boundary.i)</h4><pre class="moose-pre"><code class="language-text">[Problem]
+  solve = false
+[]
+
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 16
+    ny = 16
+  []
+  [left]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;gen&#x27;
+    block_id = 1
+    bottom_left = &#x27;0 0 0&#x27;
+    top_right = &#x27;0.25 1 1&#x27;
+  []
+  [right]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;left&#x27;
+    block_id = 2
+    bottom_left = &#x27;0.25 0 0&#x27;
+    top_right = &#x27;1 1 1&#x27;
+  []
+  [ext]
+    type = SideSetsAroundSubdomainGenerator
+    input = &#x27;right&#x27;
+    block = 1
+    new_boundary = &#x27;moving_boundary&#x27;
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    moving_boundaries = &#x27;moving_boundary&#x27;
+    moving_boundary_subdomain_pairs = &#x27;1 2; 1&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[AuxVariables]
+  [phi]
+    [AuxKernel]
+      type = ParsedAux
+      expression = &#x27;(x-t)^2+(y)^2-0.5^2&#x27;
+      use_xyzt = true
+      execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+    []
+  []
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.3
+  num_steps = 3
+[]
+
+[Outputs]
+  exodus = true
+[]
+
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="0f95284c-a46c-4d76-98c1-05f84d35b95e"><div class="modal-content"><h4>(moose/test/tests/meshmodifiers/element_subdomain_modifier/partial_moving_boundary.i)</h4><pre class="moose-pre"><code class="language-text">[Problem]
+  solve = false
+[]
+
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 16
+    ny = 16
+  []
+  [left]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;gen&#x27;
+    block_id = 1
+    bottom_left = &#x27;0 0 0&#x27;
+    top_right = &#x27;0.25 1 1&#x27;
+  []
+  [right]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;left&#x27;
+    block_id = 2
+    bottom_left = &#x27;0.25 0 0&#x27;
+    top_right = &#x27;1 1 1&#x27;
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    moving_boundaries = &#x27;right&#x27;
+    moving_boundary_subdomain_pairs = &#x27;1 2&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[AuxVariables]
+  [phi]
+    [AuxKernel]
+      type = ParsedAux
+      expression = &#x27;(x-t)^2+(y)^2-0.5^2&#x27;
+      use_xyzt = true
+      execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+    []
+  []
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.3
+  num_steps = 3
+[]
+
+[Outputs]
+  exodus = true
+[]
+
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="b54c0fa3-7b8c-44a0-ba3b-c0fe4e11338f"><div class="modal-content"><h4>(moose/test/tests/meshmodifiers/element_subdomain_modifier/initial_condition.i)</h4><pre class="moose-pre"><code class="language-text">[Problem]
+  solve = false
+[]
+
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 16
+    ny = 16
+  []
+  [left]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;gen&#x27;
+    block_id = 1
+    block_name = &#x27;left&#x27;
+    bottom_left = &#x27;0 0 0&#x27;
+    top_right = &#x27;0.25 1 1&#x27;
+  []
+  [right]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;left&#x27;
+    block_id = 2
+    block_name = &#x27;right&#x27;
+    bottom_left = &#x27;0.25 0 0&#x27;
+    top_right = &#x27;1 1 1&#x27;
+  []
+[]
+
+[AuxVariables]
+  [u]
+  []
+  [phi]
+  []
+
+  # for the &#x27;displaced&#x27; test only
+  inactive = &#x27;disp_x disp_y&#x27;
+  [disp_x]
+  []
+  [disp_y]
+  []
+[]
+
+[ICs]
+  [u_1]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 1
+    block = 1
+  []
+  [u_2]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = -0.5
+    block = 2
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[AuxKernels]
+  [phi]
+    type = ParsedAux
+    variable = &#x27;phi&#x27;
+    expression = &#x27;(x-t)^2+(y)^2-0.5^2&#x27;
+    use_xyzt = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [double_u]
+    type = StatefulAux
+    variable = &#x27;u&#x27;
+    coupled = &#x27;u&#x27;
+    block = 1
+  []
+[]
+
+[Postprocessors]
+  # for the &#x27;subdomain_caching&#x27; test only
+  active = &#x27;&#x27;
+  [average]
+    type = SideAverageValue
+    variable = &#x27;u&#x27;
+    boundary = &#x27;bottom&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.1
+  num_steps = 3
+[]
+
+[Outputs]
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="901c5c67-4cfb-416c-b7c2-2d2faa9ff676"><div class="modal-content"><h4>(moose/test/tests/meshmodifiers/element_subdomain_modifier/stateful_property.i)</h4><pre class="moose-pre"><code class="language-text">[Problem]
+  solve = false
+[]
+
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 16
+    ny = 16
+  []
+  [left]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;gen&#x27;
+    block_id = 1
+    block_name = &#x27;left&#x27;
+    bottom_left = &#x27;0 0 0&#x27;
+    top_right = &#x27;0.25 1 1&#x27;
+  []
+  [right]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;left&#x27;
+    block_id = 2
+    block_name = &#x27;right&#x27;
+    bottom_left = &#x27;0.25 0 0&#x27;
+    top_right = &#x27;1 1 1&#x27;
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[AuxVariables]
+  [phi]
+    [AuxKernel]
+      type = ParsedAux
+      expression = &#x27;(x-t)^2+(y)^2-0.5^2&#x27;
+      use_xyzt = true
+      execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+    []
+  []
+[]
+
+[Materials]
+  [stateful]
+    type = StatefulMaterial
+    initial_diffusivity = 0.5
+    multiplier = 2
+    block = &#x27;left&#x27;
+    outputs = &#x27;exodus&#x27;
+  []
+  [non_stateful]
+    type = GenericConstantMaterial
+    prop_names = &#x27;diffusivity&#x27;
+    prop_values = &#x27;-1&#x27;
+    block = &#x27;right&#x27;
+    outputs = &#x27;exodus&#x27;
+  []
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.1
+  num_steps = 3
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="e3c80d1e-6c6e-4ae5-90c4-34083819f5ec"><div class="modal-content"><h4>(moose/test/tests/meshmodifiers/element_subdomain_modifier/reinitialization.i)</h4><pre class="moose-pre"><code class="language-text">[Problem]
+  kernel_coverage_check = false
+[]
+
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    xmax = 1
+    ymax = 1
+    nx = 25
+    ny = 25
+  []
+  [left]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;gen&#x27;
+    block_id = 1
+    bottom_left = &#x27;0 0 0&#x27;
+    top_right = &#x27;0.3 1 0&#x27;
+  []
+  [middle]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;left&#x27;
+    block_id = 2
+    bottom_left = &#x27;0.3 0 0&#x27;
+    top_right = &#x27;0.6 1 0&#x27;
+  []
+  [right]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;middle&#x27;
+    block_id = 3
+    bottom_left = &#x27;0.6 0 0&#x27;
+    top_right = &#x27;1 1 0&#x27;
+  []
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[ICs]
+  [u_1]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 1
+    block = 1
+  []
+  [u_2]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 2
+    block = 2
+  []
+  [u_3]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 3
+    block = 3
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle_bottom]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_1&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [moving_circle_top]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_2&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 2
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[AuxVariables]
+  [phi_1]
+  []
+  [phi_2]
+  []
+[]
+
+[AuxKernels]
+  [phi_1]
+    type = ParsedAux
+    variable = &#x27;phi_1&#x27;
+    expression = &#x27;(x-t)^2+(y)^2-0.3^2&#x27;
+    use_xyzt = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [phi_2]
+    type = ParsedAux
+    variable = &#x27;phi_2&#x27;
+    expression = &#x27;(x-t)^2+(y-1)^2-0.3^2&#x27;
+    use_xyzt = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.3
+  num_steps = 3
+[]
+
+[Outputs]
+  exodus = true
+[]
+
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="8d0368f1-9825-4c3d-a1b5-9b3c285bba80"><div class="modal-content"><h4>(moose/test/tests/meshmodifiers/element_subdomain_modifier/reinitialization_into.i)</h4><pre class="moose-pre"><code class="language-text">[Problem]
+  kernel_coverage_check = false
+[]
+
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    xmax = 1
+    ymax = 1
+    nx = 25
+    ny = 25
+  []
+  [left]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;gen&#x27;
+    block_id = 1
+    bottom_left = &#x27;0 0 0&#x27;
+    top_right = &#x27;0.3 1 0&#x27;
+  []
+  [middle]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;left&#x27;
+    block_id = 2
+    bottom_left = &#x27;0.3 0 0&#x27;
+    top_right = &#x27;0.6 1 0&#x27;
+  []
+  [right]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;middle&#x27;
+    block_id = 3
+    bottom_left = &#x27;0.6 0 0&#x27;
+    top_right = &#x27;1 1 0&#x27;
+  []
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[ICs]
+  [u_1]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 1
+    block = 1
+  []
+  [u_2]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 2
+    block = 2
+  []
+  [u_3]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 3
+    block = 3
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle_bottom]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_1&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [moving_circle_top]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_2&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 2
+    reinitialize_subdomains = &#x27;1&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[AuxVariables]
+  [phi_1]
+  []
+  [phi_2]
+  []
+[]
+
+[AuxKernels]
+  [phi_1]
+    type = ParsedAux
+    variable = &#x27;phi_1&#x27;
+    expression = &#x27;(x-t)^2+(y)^2-0.3^2&#x27;
+    use_xyzt = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [phi_2]
+    type = ParsedAux
+    variable = &#x27;phi_2&#x27;
+    expression = &#x27;(x-t)^2+(y-1)^2-0.3^2&#x27;
+    use_xyzt = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.3
+  num_steps = 3
+[]
+
+[Outputs]
+  exodus = true
+[]
+
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="19f1dfa1-1f2c-433e-86ed-831c9ec2411c"><div class="modal-content"><h4>(moose/test/tests/meshmodifiers/element_subdomain_modifier/no_reinitialization.i)</h4><pre class="moose-pre"><code class="language-text">[Problem]
+  kernel_coverage_check = false
+[]
+
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    xmax = 1
+    ymax = 1
+    nx = 25
+    ny = 25
+  []
+  [left]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;gen&#x27;
+    block_id = 1
+    bottom_left = &#x27;0 0 0&#x27;
+    top_right = &#x27;0.3 1 0&#x27;
+  []
+  [middle]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;left&#x27;
+    block_id = 2
+    bottom_left = &#x27;0.3 0 0&#x27;
+    top_right = &#x27;0.6 1 0&#x27;
+  []
+  [right]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;middle&#x27;
+    block_id = 3
+    bottom_left = &#x27;0.6 0 0&#x27;
+    top_right = &#x27;1 1 0&#x27;
+  []
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[ICs]
+  [u_1]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 1
+    block = 1
+  []
+  [u_2]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 2
+    block = 2
+  []
+  [u_3]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 3
+    block = 3
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle_bottom]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_1&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    reinitialize_subdomains = &#x27;&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [moving_circle_top]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_2&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 2
+    reinitialize_subdomains = &#x27;&#x27;
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[AuxVariables]
+  [phi_1]
+  []
+  [phi_2]
+  []
+[]
+
+[AuxKernels]
+  [phi_1]
+    type = ParsedAux
+    variable = &#x27;phi_1&#x27;
+    expression = &#x27;(x-t)^2+(y)^2-0.3^2&#x27;
+    use_xyzt = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [phi_2]
+    type = ParsedAux
+    variable = &#x27;phi_2&#x27;
+    expression = &#x27;(x-t)^2+(y-1)^2-0.3^2&#x27;
+    use_xyzt = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.3
+  num_steps = 3
+[]
+
+[Outputs]
+  exodus = true
+[]
+
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="9d1ea11b-10c6-446b-897e-157dc3b595d4"><div class="modal-content"><h4>(moose/test/tests/meshmodifiers/element_subdomain_modifier/reinitialization_from_into.i)</h4><pre class="moose-pre"><code class="language-text">[Problem]
+  kernel_coverage_check = false
+[]
+
+[Mesh]
+  [gen]
+    type = GeneratedMeshGenerator
+    dim = 2
+    xmax = 1
+    ymax = 1
+    nx = 25
+    ny = 25
+  []
+  [left]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;gen&#x27;
+    block_id = 1
+    bottom_left = &#x27;0 0 0&#x27;
+    top_right = &#x27;0.3 1 0&#x27;
+  []
+  [middle]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;left&#x27;
+    block_id = 2
+    bottom_left = &#x27;0.3 0 0&#x27;
+    top_right = &#x27;0.6 1 0&#x27;
+  []
+  [right]
+    type = SubdomainBoundingBoxGenerator
+    input = &#x27;middle&#x27;
+    block_id = 3
+    bottom_left = &#x27;0.6 0 0&#x27;
+    top_right = &#x27;1 1 0&#x27;
+  []
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[ICs]
+  [u_1]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 1
+    block = 1
+  []
+  [u_2]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 2
+    block = 2
+  []
+  [u_3]
+    type = ConstantIC
+    variable = &#x27;u&#x27;
+    value = 3
+    block = 3
+  []
+[]
+
+[MeshModifiers]
+  [moving_circle_bottom]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_1&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 1
+    reinitialize_subdomains = &#x27;1 2&#x27;
+    old_subdomain_reinitialized = false
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [moving_circle_top]
+    type = CoupledVarThresholdElementSubdomainModifier
+    coupled_var = &#x27;phi_2&#x27;
+    criterion_type = &#x27;BELOW&#x27;
+    threshold = 0
+    subdomain_id = 2
+    reinitialize_subdomains = &#x27;1 2&#x27;
+    old_subdomain_reinitialized = false
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[AuxVariables]
+  [phi_1]
+  []
+  [phi_2]
+  []
+[]
+
+[AuxKernels]
+  [phi_1]
+    type = ParsedAux
+    variable = &#x27;phi_1&#x27;
+    expression = &#x27;(x-t)^2+(y)^2-0.3^2&#x27;
+    use_xyzt = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+  [phi_2]
+    type = ParsedAux
+    variable = &#x27;phi_2&#x27;
+    expression = &#x27;(x-t)^2+(y-1)^2-0.3^2&#x27;
+    use_xyzt = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Executioner]
+  type = Transient
+  dt = 0.3
+  num_steps = 3
+[]
+
+[Outputs]
+  exodus = true
+[]
+
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#8f2cc866-44ed-470c-be68-80f78d51016e" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#ac594779-0868-42cf-b876-bf324e8b5d9e" class="tooltipped" data-position="left" data-tooltip="Moving boundary / interface nodeset / sideset modification">Moving boundary / interface nodeset / sideset modification</a></li><li><a href="#c60566e7-a5ee-4259-b590-0adf106bac40" class="tooltipped" data-position="left" data-tooltip="Solution reinitialization">Solution reinitialization</a></li><li><a href="#769841d8-cde8-4bc5-a669-10510835d1d8" class="tooltipped" data-position="left" data-tooltip="Stateful material property reinitialization">Stateful material property reinitialization</a></li><li><a href="#fe385170-d2d7-4a9d-b7ae-01663eef9d83" class="tooltipped" data-position="left" data-tooltip="Reinitialization restrictions">Reinitialization restrictions</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
