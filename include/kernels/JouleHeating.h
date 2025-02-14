@@ -12,6 +12,9 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Joule heating term for electrons (densities must be in logarithmic form)
+ */
 class JouleHeating : public ADKernel
 {
 public:
@@ -25,14 +28,20 @@ protected:
 private:
   /// Position units
   const Real _r_units;
+  /// Scaling units for the potential (V or kV)
   const std::string & _potential_units;
 
-  /// The diffusion coefficient (either constant or mixture-averaged)
+  /// Diffusion coefficient
   const ADMaterialProperty<Real> & _diff;
+  /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
+  /// Gradient of the coupled potential
   const ADVariableGradient & _grad_potential;
+  /// Electron density
   const ADVariableValue & _em;
+  /// Gradient of electron density
   const ADVariableGradient & _grad_em;
 
+  /// Scaling value for the potential
   Real _voltage_scaling;
 };

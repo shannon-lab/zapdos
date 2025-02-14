@@ -12,6 +12,9 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Returns the diffusive flux of the specified species
+ */
 template <bool is_ad>
 class DiffusiveFluxTempl : public AuxKernel
 {
@@ -23,17 +26,22 @@ public:
 protected:
   virtual Real computeValue() override;
 
+  /// component of the flux
   const int _component;
+
+  /// The scaling units for the position
   const Real _r_units;
 
-  // Coupled variables
-
+  /// Gradient of the coupled density variable
   const VariableGradient & _grad_density_log;
+
+  /// Coupled density variable
   MooseVariable & _density_var;
+
+  /// Value of the coupled density variable
   const VariableValue & _density_log;
 
-  // Material properties
-
+  /// Diffusion coefficient
   const GenericMaterialProperty<Real, is_ad> & _diff;
 };
 

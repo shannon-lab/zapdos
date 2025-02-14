@@ -12,6 +12,9 @@
 
 #include "Density.h"
 
+/**
+ *  Returns physical densities in units of #/m^3
+ */
 class DensityMoles : public Density
 {
 public:
@@ -24,6 +27,9 @@ public:
 protected:
   virtual Real computeValue() override;
 
+  /// True if molar density is used
   bool _convert_moles;
+
+  /// Avogadro's number
   const MaterialProperty<Real> & _N_A;
 };

@@ -12,6 +12,10 @@
 
 #include "GeneralPostprocessor.h"
 
+/*
+ *  Postprocessor that will modify its value by the ratio of another
+ *  postprocessor to the provided reference value
+ */
 class PeriodicAmplitudeRegulator : public GeneralPostprocessor
 {
 public:

@@ -12,6 +12,9 @@
 
 #include "ADKernel.h"
 
+/**
+ *  The axisymmetric wave equation for the azimuthal component of the magnetizing field.
+ */
 class TM0Cylindrical : public ADKernel
 {
 public:
@@ -22,8 +25,12 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Angular frequency
   const Real _omega;
+  /// Relative permittivity
   const ADMaterialProperty<Real> & _eps_r;
+  /// Permeability of free space
   const Real _mu0;
+  /// Permittivity of free space
   const Real _eps0;
 };

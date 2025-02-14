@@ -12,6 +12,11 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Generic second order reaction source term in which two molecules of
+ *  v are produced from two molecules of u
+ *  (Densities must be in logarithmic form)
+ */
 class ProductAABBRxn : public ADKernel
 {
 public:
@@ -22,9 +27,11 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Coupled species density variable
   MooseVariable & _coupled_var;
+  /// Coupled species density value
   const ADVariableValue & _v;
 
-  /// The reaction coefficient
+  /// Reaction coefficient
   const ADMaterialProperty<Real> & _reaction_coeff;
 };

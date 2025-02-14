@@ -12,6 +12,9 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Returns the absolute value of the specified variable.
+ */
 class AbsValueAux : public AuxKernel
 {
 public:
@@ -23,5 +26,6 @@ protected:
   virtual Real computeValue() override;
 
 private:
+  /// The coupled variable that this object is taking the absolute value of.
   const VariableValue & _u;
 };

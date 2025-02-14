@@ -12,6 +12,9 @@
 
 #include "GeneralPostprocessor.h"
 
+/*
+ *  Calculate the average value of a postprocessor over multiple periods
+ */
 class MultiPeriodAverager : public GeneralPostprocessor
 {
 public:

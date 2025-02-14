@@ -12,6 +12,10 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Electron energy loss term for elastic collisions using reaction rate coefficients
+ *  (Densities must be in logarithmic form)
+ */
 class ElectronEnergyTermElasticRate : public ADKernel
 {
 public:
@@ -22,13 +26,16 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
+  /// Position units
   const Real _r_units;
-
+  /// Reaction coefficient
   const ADMaterialProperty<Real> & _rate_coefficient;
-
+  /// Electron density
   const ADVariableValue & _electron;
+  /// Density of colliding species
   const ADVariableValue & _target;
-
+  /// Mass of electrons
   const ADMaterialProperty<Real> & _massIncident;
+  /// Mass of colliding species
   const ADMaterialProperty<Real> & _massTarget;
 };
