@@ -28,14 +28,14 @@ protected:
   virtual Real computeQpIntegral();
 
   /// Name of the mobility coefficient for electrons
-  std::string _mobility;
+  const std::string _mobility;
   /// Mobility coefficient for electrons
   const MaterialProperty<Real> & _mobility_coef;
 
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
   /// Reflection coefficient
-  Real _r;
+  const Real _r;
   /// Boltzmann constant
   const MaterialProperty<Real> & _kb;
   /// Thermal velocity of the electrons

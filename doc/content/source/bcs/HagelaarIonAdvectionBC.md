@@ -31,7 +31,7 @@ a =
 \end{cases} \\[10pt]
 \Gamma_{j} \cdot \textbf{n} = \frac{1-r_{j}}{1+r_{j}} \left[ (2 a_{j}-1) \ \mu_{j} 
 \left( 
-\vec{E}V / l_{c}
+\vec{E} / l_{c}
 \right)
  \cdot \textbf{n} \ \exp(N_{j}) \right]
 \end{equation}

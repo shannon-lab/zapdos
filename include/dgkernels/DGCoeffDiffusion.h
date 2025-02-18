@@ -38,8 +38,8 @@ protected:
    *   Galerkin Methods for Solving Elliptic and Parabolic Equations: Theory
    *   and Implementation" by B. Rivière
    */
-  Real _epsilon;
-  Real _sigma;
+  const Real _epsilon;
+  const Real _sigma;
   /// Diffusion coefficient of current cell
   const ADMaterialProperty<Real> & _diff;
   /// Diffusion coefficient of neighboring cell

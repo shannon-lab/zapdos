@@ -154,7 +154,8 @@ AddDriftDiffusionAction::act()
   unsigned int number_neutrals = Neutrals.size();
 
   if (!field_present && (em_present || (number_ions > 0)))
-    mooseError(
+    paramError(
+        "field",
         "There are electrons or charged_particles that are missing their electric field! Please "
         "check your input.");
 
@@ -171,7 +172,8 @@ AddDriftDiffusionAction::act()
 
   // TODO: add another != for this for the property names list
   if (number_sec_particle != number_eff_fields)
-    mooseError("There are secondary_charged_particles that are missing their corresponding "
+    paramError("secondary_charged_particles",
+               "There are secondary_charged_particles that are missing their corresponding "
                "effective fields (eff_fields)! Please check your input.");
 
   // Converting the given additional outputs

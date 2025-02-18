@@ -73,7 +73,7 @@ protected:
   /// Electron flux
   ADRealVectorValue _em_flux;
   /// Scaling units for the potential (V or kV)
-  std::string _potential_units;
+  const std::string _potential_units;
   /// Scaling value for the potential
   Real _voltage_scaling;
   /// Number of ions defined

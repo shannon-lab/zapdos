@@ -26,10 +26,11 @@ protected:
   virtual ADReal computeQpResidual(Moose::DGResidualType type) override;
 
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
   /// Scaling units for the position for the neighbor variable
-  Real _r_neighbor_units;
+  const Real _r_neighbor_units;
 
+  /// The electric field provided as a material property in neighboring cell
   const ADMaterialProperty<RealVectorValue> & _electric_field_neighbor;
 
   /// Mobility coefficient of the neighbor variable

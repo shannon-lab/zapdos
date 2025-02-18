@@ -12,6 +12,9 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Returns the total flux of the specified species
+ */
 template <bool is_ad>
 class TotalFluxTempl : public AuxKernel
 {

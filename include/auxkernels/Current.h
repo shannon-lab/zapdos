@@ -46,7 +46,7 @@ protected:
   /// The diffusion coefficient
   const GenericMaterialProperty<Real, is_ad> & _diff;
   /// True if an artifical diffusion term is needed
-  bool _art_diff;
+  const bool _art_diff;
 };
 
 typedef CurrentTempl<false> Current;

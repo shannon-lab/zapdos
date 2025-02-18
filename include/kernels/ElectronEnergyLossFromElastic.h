@@ -12,6 +12,10 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Electron energy loss term for elastic collisions using Townsend coefficient
+ *  (Densities must be in logarithmic form)
+ */
 class ElectronEnergyLossFromElastic : public ADKernel
 {
 public:

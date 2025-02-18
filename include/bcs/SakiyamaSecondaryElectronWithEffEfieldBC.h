@@ -27,7 +27,7 @@ protected:
   virtual ADReal computeQpResidual() override;
 
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
   /// x-component of the electric field
   const ADVariableValue & _Ex;
   /// y-component of the electric field
@@ -40,8 +40,10 @@ protected:
   Real _a;
   /// Ion flux
   ADRealVectorValue _ion_flux;
-  /// Secondary electron coefficient
-  Real _user_se_coeff;
+  /// Material name of secondary electron coefficients
+  const std::vector<std::string> _se_coeff_names;
+  /// Material value of secondary electron coefficient
+  std::vector<const ADMaterialProperty<Real> *> _user_se_coeff;
   /// Charge sign of the ions
   std::vector<const MaterialProperty<Real> *> _sgnip;
   /// Mobility coefficient of the ions

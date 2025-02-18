@@ -65,7 +65,7 @@ protected:
   const ADVariableGradient & _em_grad;
 
   /// Electron density variable
-  MooseVariable * _em_var;
+  const MooseVariable * _em_var;
 
   /// Electron density first time derivative
   const ADVariableValue & _em_dot;

@@ -35,5 +35,6 @@ protected:
 
   /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
+  /// The electric field provided as a material property in neighboring cell
   const ADMaterialProperty<RealVectorValue> & _electric_field_neighbor;
 };

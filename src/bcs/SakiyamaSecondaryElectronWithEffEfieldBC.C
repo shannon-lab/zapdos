@@ -16,13 +16,14 @@ InputParameters
 SakiyamaSecondaryElectronWithEffEfieldBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredCoupledVar("ip", "The ion density.");
+  params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredCoupledVar("Ex", "The EField in the x-direction");
   params.addCoupledVar("Ey", 0, "The EField in the y-direction"); // only required in 2D and 3D
   params.addCoupledVar("Ez", 0, "The EField in the z-direction"); // only required in 3D
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addParam<Real>("users_gamma",
-                        "A secondary electron emission coeff. only used for this BC.");
+  params.addParam<std::vector<std::string>>(
+      "emission_coeffs",
+      "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addClassDescription("Kinetic secondary electron boundary condition"
                              " (Based on [!cite](sakiyama2006corona))");
   return params;
@@ -40,19 +41,21 @@ SakiyamaSecondaryElectronWithEffEfieldBC::SakiyamaSecondaryElectronWithEffEfield
 
     _a(0.5),
     _ion_flux(0, 0, 0),
-    _user_se_coeff(getParam<Real>("users_gamma"))
+    _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs"))
 {
-  _num_ions = coupledComponents("ip");
+  _num_ions = coupledComponents("ions");
 
   _ip.resize(_num_ions);
   _muip.resize(_num_ions);
   _sgnip.resize(_num_ions);
+  _user_se_coeff.resize(_num_ions);
 
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _ip[i] = &adCoupledValue("ip", i);
-    _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ip", i)).name());
-    _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ip", i)).name());
+    _ip[i] = &adCoupledValue("ions", i);
+    _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ions", i)).name());
+    _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ions", i)).name());
+    _user_se_coeff[i] = &getADMaterialProperty<Real>(_se_coeff_names[i]);
   }
 }
 
@@ -73,9 +76,9 @@ SakiyamaSecondaryElectronWithEffEfieldBC::computeQpResidual()
       _a = 0.0;
     }
 
-    _ion_flux +=
-        _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * EField * _r_units * std::exp((*_ip[i])[_qp]);
+    _ion_flux += _a * (*_user_se_coeff[i])[_qp] * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * EField *
+                 _r_units * std::exp((*_ip[i])[_qp]);
   }
 
-  return -_test[_i][_qp] * _r_units * _a * _user_se_coeff * _ion_flux * _normals[_qp];
+  return -_test[_i][_qp] * _r_units * _ion_flux * _normals[_qp];
 }

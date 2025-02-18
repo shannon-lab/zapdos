@@ -29,9 +29,9 @@ protected:
 
 private:
   /// Position units
-  Real _r_units;
+  const Real _r_units;
   /// Coefficient relating diffusion coefficient * density to thermal conductivity
-  Real _coeff;
+  const Real _coeff;
   /// Diffusion coefficient
   const ADMaterialProperty<Real> & _diffem;
   /// Electron density

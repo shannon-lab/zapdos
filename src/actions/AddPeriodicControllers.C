@@ -162,7 +162,7 @@ AddPeriodicControllers::act()
       // If control cycles are back to back, then enable_start and enable_end times would be the
       // same, To avoid this, if cycles are back to back, then the enable_end starts at +
       // 0.0001*period.
-      if (_cycles_between_controls == 1.0)
+      if (MooseUtils::absoluteFuzzyEqual(_cycles_between_controls, 1.0, 0.0001))
       {
         for (MooseIndex(_enable_end) j = 0; j < _enable_end.size(); ++j)
         {
@@ -208,7 +208,7 @@ AddPeriodicControllers::act()
       // If control cycles are back to back, then disable_start and disable_end times would be the
       // same, To avoid this, if cycles are back to back, then the disable_end starts at +
       // 0.0001*period
-      if (_cycles_between_controls == 1.0)
+      if (MooseUtils::absoluteFuzzyEqual(_cycles_between_controls, 1.0, 0.0001))
       {
         for (MooseIndex(_disable_end) j = 0; j < _disable_end.size(); ++j)
         {

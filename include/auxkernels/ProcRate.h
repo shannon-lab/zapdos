@@ -28,7 +28,7 @@ public:
 
 protected:
   /// The scaling units for the position
-  Real _r_units;
+  const Real _r_units;
   /// Electron density
   const VariableValue & _em;
   /// Gradient of the electron density

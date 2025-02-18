@@ -31,7 +31,7 @@ protected:
   /// Scaling units for the position
   const Real _r_units;
   /// Coupled density variable
-  MooseVariable & _density_var;
+  const MooseVariable & _density_var;
   /// Value of the coupled density variable
   const VariableValue & _density_log;
   /// The electric field provided as a material property

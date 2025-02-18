@@ -27,7 +27,7 @@ protected:
   virtual ADReal computeQpResidual() override;
 
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
   /// x-component of the electric field
   const ADVariableValue & _Ex;
   /// y-component of the electric field

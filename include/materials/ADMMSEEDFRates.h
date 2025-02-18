@@ -30,11 +30,11 @@ protected:
   const ADVariableValue & _mean_en;
 
   /// Name of material properties
-  std::vector<std::string> _prop_names;
+  const std::vector<std::string> _prop_names;
   /// Name of functions representing property values
-  std::vector<FunctionName> _prop_values;
+  const std::vector<FunctionName> _prop_values;
   /// Name of functions representing derivative of the property values wrt the electron mean energy
-  std::vector<FunctionName> _d_prop_values_actual_mean_en;
+  const std::vector<FunctionName> _d_prop_values_actual_mean_en;
 
   /// Number of named material properties
   unsigned int _num_props;

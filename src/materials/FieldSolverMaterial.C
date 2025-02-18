@@ -40,25 +40,29 @@ FieldSolverMaterial::FieldSolverMaterial(const InputParameters & parameters)
   if (_mode == ELECTROSTATIC && parameters.isParamSetByUser("electric_field") &&
       !parameters.isParamSetByUser("potential"))
   {
-    mooseError("Solver mode is electrostatic, but electric field was provided. Please either "
+    paramError("solver",
+               "Solver mode is electrostatic, but electric field was provided. Please either "
                "change the mode or provide a potential variable.");
   }
   else if (_mode == ELECTROMAGNETIC && parameters.isParamSetByUser("potential") &&
            !parameters.isParamSetByUser("electric_field"))
   {
-    mooseError("Solver mode is electromagnetic, but potential was provided. Please either change "
+    paramError("solver",
+               "Solver mode is electromagnetic, but potential was provided. Please either change "
                "the mode or provide an electric field variable.");
   }
   else if (parameters.isParamSetByUser("electric_field") &&
            parameters.isParamSetByUser("potential"))
   {
-    mooseError("Both electric field and potential variables have been provided. Please provide "
+    paramError("solver",
+               "Both electric field and potential variables have been provided. Please provide "
                "only one, consistent with the solver mode parameter.");
   }
   else if (!parameters.isParamSetByUser("electric_field") &&
            !parameters.isParamSetByUser("potential"))
   {
-    mooseError("Neither potential nor electric field variables are defined. Please provide a "
+    paramError("solver",
+               "Neither potential nor electric field variables are defined. Please provide a "
                "variable for field determination.");
   }
 }
