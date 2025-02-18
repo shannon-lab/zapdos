@@ -14,7 +14,7 @@
 
 /**
  *  Supplies the source term of the time derivative calculation of the effective electric field for
- * ions
+ *  ions
  */
 class EffectiveEField : public ADKernel
 {
@@ -32,8 +32,7 @@ private:
   /// Momentum-transfer frequency of ions
   const Real _nu;
   /// Component of the electric field
-  unsigned _component;
+  const unsigned _component;
   /// Electric field provided as a material property
-  /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

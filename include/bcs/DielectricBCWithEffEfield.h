@@ -26,7 +26,7 @@ protected:
   virtual ADReal computeQpResidual() override;
 
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
 
   /// Variable value during previous time step
   const VariableValue & _u_old;
@@ -35,39 +35,28 @@ protected:
 
   /// Electron mean energy density value
   const ADVariableValue & _mean_en;
-  /// Electron mean energy density variable
-  MooseVariable & _mean_en_var;
   /// Electron mean energy density value during previous time step
   const VariableValue & _mean_en_old;
   /// Electron density value
   const ADVariableValue & _em;
-  /// Electron density variable
-  MooseVariable & _em_var;
   /// Electron density value during previous time step
   const VariableValue & _em_old;
-  /// Ion density value
-  const ADVariableValue & _ip;
-  /// Ion density variable
-  MooseVariable & _ip_var;
-  /// Ion density value during previous time step
-  const VariableValue & _ip_old;
+
+  /// Ion density values
+  std::vector<const ADVariableValue *> _ip;
+  /// Ion density values during previous time step
+  std::vector<const VariableValue *> _ip_old;
 
   /// x-component of the electric field value
   const ADVariableValue & _Ex;
-  /// x-component of the electric field variable
-  MooseVariable & _Ex_var;
   /// x-component of the electric field value during previous time step
   const VariableValue & _Ex_old;
   /// y-component of the electric field value
   const ADVariableValue & _Ey;
-  /// y-component of the electric field variable
-  MooseVariable & _Ey_var;
   /// y-component of the electric field value during previous time step
   const VariableValue & _Ey_old;
   /// z-component of the electric field value
   const ADVariableValue & _Ez;
-  /// z-component of the electric field variable
-  MooseVariable & _Ez_var;
   /// z-component of the electric field value during previous time step
   const VariableValue & _Ez_old;
 
@@ -79,13 +68,16 @@ protected:
   const MaterialProperty<Real> & _N_A;
 
   /// Charge sign of the ions
-  const MaterialProperty<Real> & _sgnip;
+  std::vector<const MaterialProperty<Real> *> _sgnip;
   /// Mobility coefficient of the ions
-  const ADMaterialProperty<Real> & _muip;
+  std::vector<const ADMaterialProperty<Real> *> _muip;
+
   /// Mass of electrons
   const MaterialProperty<Real> & _massem;
-  /// Secondary electron coefficient
-  Real _user_se_coeff;
+  /// Material name of secondary electron coefficients
+  const std::vector<std::string> _se_coeff_names;
+  /// Material value of secondary electron coefficient
+  std::vector<const ADMaterialProperty<Real> *> _user_se_coeff;
 
   /// Permittivity of the dielectric
   const Real & _epsilon_d;
@@ -95,10 +87,12 @@ protected:
   Real _a;
   /// Value of "_a" during previous time step
   Real _a_old;
-  /// Value of ion flux
+  /// Value of total ion flux
   ADRealVectorValue _ion_flux;
-  /// Value of ion flux during previous time step
+  /// Value of total ion flux during previous time step
   ADRealVectorValue _ion_flux_old;
+  /// Value of a single ion flux
+  ADRealVectorValue _temp_flux;
   /// Electron thermal velocity
   ADReal _v_thermal;
   /// Value of electron thermal velocity during previous time step
@@ -108,7 +102,10 @@ protected:
   /// Value of electron flux during previous time step
   ADRealVectorValue _em_flux_old;
   /// Scaling units for the potential (V or kV)
-  std::string _potential_units;
+  const std::string _potential_units;
   /// Scaling value for the potential
   Real _voltage_scaling;
+
+  /// Number of ions defined
+  const unsigned int _num_ions;
 };

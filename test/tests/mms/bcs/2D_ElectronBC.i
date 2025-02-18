@@ -428,8 +428,8 @@
     variable = em
     Ex = Ex
     Ey = Ey
-    ip = ion
-    users_gamma = 1.0
+    ions = ion
+    emission_coeffs = 'users_gamma'
     boundary = 3
     position_units = 1.0
   []
@@ -468,8 +468,8 @@
     variable = em
     Ex = Ex
     Ey = Ey
-    ip = ion
-    users_gamma = 1.0
+    ions = ion
+    emission_coeffs = 'users_gamma'
     boundary = 0
     position_units = 1.0
   []
@@ -542,6 +542,11 @@
     type = GenericConstantMaterial
     prop_names =  'sgnem  sgnion  sgnmean_en'
     prop_values = '-1.0   1.0     -1.0'
+  []
+  [emission_coeffs]
+    type = ADGenericConstantMaterial
+    prop_names = 'users_gamma'
+    prop_values = '1.0'
   []
 []
 

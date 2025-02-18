@@ -424,14 +424,14 @@
   [potential_left_BC]
     type = DielectricBCWithEffEfield
     variable = potential
-    em = em
-    mean_en = mean_en
-    ip = ion
+    electrons = em
+    electron_energy = mean_en
+    ions = 'ion'
     Ex = Ex
     Ey = Ey
     dielectric_constant = 1.0
     thickness = 1.0
-    users_gamma = 1.0
+    emission_coeffs = 'users_gamma'
     potential_units = V
     position_units = 1.0
     boundary = 3
@@ -465,6 +465,11 @@
     type = GenericConstantMaterial
     prop_names = 'sgnem  sgnion  sgnmean_en'
     prop_values = '-1.0   1.0     -1.0'
+  []
+  [emission_coeffs]
+    type = ADGenericConstantMaterial
+    prop_names = 'users_gamma'
+    prop_values = '1.0'
   []
 []
 

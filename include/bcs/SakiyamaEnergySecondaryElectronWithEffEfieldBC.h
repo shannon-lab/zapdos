@@ -27,9 +27,9 @@ protected:
   virtual ADReal computeQpResidual() override;
 
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
   /// If true, secondary electron energy is equal to electron energy
-  bool Te_dependent;
+  const bool Te_dependent;
   /// x-component of the electric field
   const ADVariableValue & _Ex;
   /// y-component of the electric field
@@ -38,18 +38,18 @@ protected:
   const ADVariableValue & _Ez;
   /// Electron density
   const ADVariableValue & _em;
-  /// Ion density variables
-  std::vector<MooseVariable *> _ip_var;
   /// Ion density values
   std::vector<const ADVariableValue *> _ip;
   /// Charge sign of the ions
   std::vector<const MaterialProperty<Real> *> _sgnip;
   /// Mobility coefficient of the ions
   std::vector<const ADMaterialProperty<Real> *> _muip;
-  /// Secondary electron coefficient
-  Real _se_coeff;
+  /// Material name of secondary electron coefficients
+  const std::vector<std::string> _se_coeff_names;
+  /// Material value of secondary electron coefficient
+  std::vector<const ADMaterialProperty<Real> *> _user_se_coeff;
   /// Custom secondary electron energy
-  Real _user_se_energy;
+  const Real _user_se_energy;
   /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise
   Real _a;
   /// Term for secondary electron energy

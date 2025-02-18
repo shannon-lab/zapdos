@@ -28,11 +28,11 @@ protected:
   virtual Real computeValue() override;
 
   /// Component of the electric field
-  int _component;
+  const int _component;
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
   /// Scaling units for the potential (V or kV)
-  std::string _potential_units;
+  const std::string _potential_units;
   /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Scaling value for the potential

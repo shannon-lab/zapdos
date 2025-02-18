@@ -84,11 +84,11 @@ protected:
                              const bool & first_controller);
 
   /// The starting time to begin calculating the relative periodic difference
-  Real _start_time;
+  const Real _start_time;
   /// The period of the cycle
-  Real _period;
+  const Real _period;
   /// The number of cycles this object, PeriodicRelativeNodalDifference, is active
-  Real _num_controller_set;
+  const Real _num_controller_set;
 
   /// The name of objects to enable at the start of the cycle
   std::vector<std::string> _enable_start;

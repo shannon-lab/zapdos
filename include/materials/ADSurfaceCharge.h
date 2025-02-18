@@ -46,7 +46,7 @@ protected:
   MaterialProperty<Real> & _plasma_current;
 
   /// Position units
-  Real _r_units;
+  const Real _r_units;
   /// Scaling units for the potential (V or kV)
   const std::string _potential_units;
   /// The electric field provided as a material property

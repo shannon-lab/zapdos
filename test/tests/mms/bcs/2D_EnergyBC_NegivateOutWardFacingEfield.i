@@ -445,12 +445,12 @@
     type = SakiyamaEnergySecondaryElectronWithEffEfieldBC
     variable = mean_en
     em = em
-    ip = ion
+    ions = ion
     Ex = Ex
     Ey = Ey
     Tse_equal_Te = false
     user_se_energy = 1.0
-    se_coeff = 1.0
+    emission_coeffs = 'users_gamma'
     boundary = 3
     position_units = 1.0
   []
@@ -481,12 +481,12 @@
     type = SakiyamaEnergySecondaryElectronWithEffEfieldBC
     variable = mean_en
     em = em
-    ip = ion
+    ions = ion
     Ex = Ex
     Ey = Ey
     Tse_equal_Te = false
     user_se_energy = 1.0
-    se_coeff = 1.0
+    emission_coeffs = 'users_gamma'
     boundary = 0
     position_units = 1.0
   []
@@ -543,6 +543,11 @@
     type = GenericConstantMaterial
     prop_names =  'sgnem  sgnion  sgnmean_en'
     prop_values = '-1.0   1.0     -1.0'
+  []
+  [emission_coeffs]
+    type = ADGenericConstantMaterial
+    prop_names = 'users_gamma'
+    prop_values = '1.0'
   []
 []
 

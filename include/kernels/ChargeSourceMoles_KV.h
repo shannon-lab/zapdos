@@ -26,7 +26,7 @@ protected:
   virtual ADReal computeQpResidual() override;
 
   /// Coupled charge density variable
-  MooseVariable & _charged_var;
+  const MooseVariable & _charged_var;
   /// Coupled charge density value
   const ADVariableValue & _charged;
 
