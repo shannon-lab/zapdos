@@ -33,10 +33,8 @@ protected:
   /// Charge sign of the species in neighboring cell
   const MaterialProperty<Real> & _sgn_neighbor;
 
-  /// Coupled Potential variable
-  MooseVariable & _potential_var;
-  /// Gradient of coupled potential in current cell
-  const ADVariableGradient & _grad_potential;
-  /// Gradient of coupled potential in neighboring cell
-  const ADVariableGradient & _grad_potential_neighbor;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+  /// The electric field provided as a material property in neighboring cell
+  const ADMaterialProperty<RealVectorValue> & _electric_field_neighbor;
 };

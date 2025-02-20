@@ -40,8 +40,7 @@ protected:
   const ADMaterialProperty<Real> & _diffusivity;
   /// User input for the a custom diffusion coefficient
   ADMaterialProperty<Real> _user_diff;
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
-  /// The user-defined 1-D electric field with a sign correction
-  ADVariableGradient _minus_e_field;
+
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

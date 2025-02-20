@@ -4,20 +4,18 @@
 
 ## Overview
 
-`DriftDiffusion` is a flux term containing an electric field driven advection and diffusion term used for variables in logarithmic form. `DriftDiffusion` assumes the electrostatic approximation for the electric field in multiple dimensions and can assume a uniform electric field for 1D.
+`DriftDiffusion` is a flux term containing an electric field driven advection and diffusion term used for variables in logarithmic form.
 
 The strong form for an electric field driven advection and diffusion flux is usually defined as
 
 \begin{equation}
-\nabla \cdot \Gamma = \nabla \cdot \left[ \text{sign}_{j} \mu_{j} n_{j} \ E - D_{j} \nabla (n_{j}) \right] \\[10pt]
-E = \text{-} \nabla (V)
+\nabla \cdot \Gamma = \nabla \cdot \left[ \text{sign}_{j} \mu_{j} n_{j} \ \vec{E} - D_{j} \nabla (n_{j}) \right] \\[10pt]
 \end{equation}
 
-Where $\Gamma$ is the species' flux, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $\mu_{j}$ is the mobility coefficient, $n_{j}$ is the density, $D_{j}$ is the diffusion coefficient, $E$ is the electric field and $V$ is
-the potential. When converting the density to logarithmic form and applying a scaling factor of the mesh, the strong form for `DriftDiffusion` is defined as
+Where $\Gamma$ is the species' flux, $\text{sign}_{j}$ indicates the advection behavior ($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $\mu_{j}$ is the mobility coefficient, $n_{j}$ is the density, $D_{j}$ is the diffusion coefficient, and $\vec{E}$ is the electric field. When converting the density to logarithmic form and applying a scaling factor of the mesh, the strong form for `DriftDiffusion` is defined as
 
 \begin{equation}
-\nabla \cdot \Gamma = \nabla \cdot \left[ \text{sign}_{j} \mu_{j} \exp(N_{j}) \ \text{-} \nabla (V / l_{c}) - D_{j} \exp(N_{j}) \nabla (N_{j} / l_{c}) \right]
+\nabla \cdot \Gamma = \nabla \cdot \left[ \text{sign}_{j} \mu_{j} \exp(N_{j}) \ (\vec{E} / l_{c}) - D_{j} \exp(N_{j}) \nabla (N_{j} / l_{c}) \right]
 \end{equation}
 
 Where $N_{j}$ is the molar density of the species in logarithmic form and $l_{c}$ is the scaling factor of the mesh.

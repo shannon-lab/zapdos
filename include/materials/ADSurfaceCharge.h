@@ -46,12 +46,11 @@ protected:
   MaterialProperty<Real> & _plasma_current;
 
   /// Position units
-  Real _r_units;
+  const Real _r_units;
   /// Scaling units for the potential (V or kV)
   const std::string _potential_units;
-
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Number of charged species
   unsigned int _num_species;

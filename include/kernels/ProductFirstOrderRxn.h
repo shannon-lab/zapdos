@@ -27,7 +27,7 @@ protected:
   virtual ADReal computeQpResidual() override;
 
   /// Coupled species density variable
-  MooseVariable & _coupled_var;
+  const MooseVariable & _coupled_var;
   /// Coupled species density value
   const ADVariableValue & _v;
 

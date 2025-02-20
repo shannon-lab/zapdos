@@ -36,9 +36,9 @@ public:
 
 protected:
   /// Electrode area
-  Real _electrode_area;
+  const Real _electrode_area;
   /// Ballast resistor
-  Real _ballast_resist;
+  const Real _ballast_resist;
   /// Coulombic charge
-  Real _e;
+  const Real _e;
 };

@@ -26,9 +26,6 @@ public:
 protected:
   virtual ADReal computeQpResidual() override;
 
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
-
   /// Scaling factor for the artificial diffusion
   const Real & _scale;
   /// Position units
@@ -36,4 +33,6 @@ protected:
 
   /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };
