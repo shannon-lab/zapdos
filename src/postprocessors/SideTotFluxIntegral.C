@@ -13,6 +13,8 @@
 // MOOSE includes
 #include "MooseVariable.h"
 
+using MetaPhysicL::raw_value;
+
 registerMooseObject("ZapdosApp", SideTotFluxIntegral);
 
 InputParameters
@@ -22,11 +24,13 @@ SideTotFluxIntegral::validParams()
   params.addRequiredParam<std::string>(
       "mobility",
       "The name of the mobility material property that will be used in the flux computation.");
-  params.addRequiredCoupledVar("potential", "The potential that drives the advective flux.");
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<Real>(
       "user_velocity", -1., "Optional parameter if user wants to specify the thermal velocity");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Returns the flux of a defined species at a boundary");
   return params;
 }
@@ -47,7 +51,8 @@ SideTotFluxIntegral::SideTotFluxIntegral(const InputParameters & parameters)
     _sgn(getMaterialProperty<Real>("sgn" + _variable->name())),
     _a(0.5),
 
-    _grad_potential(coupledGradient("potential"))
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
 }
 
@@ -61,13 +66,13 @@ SideTotFluxIntegral::computeQpIntegral()
   else
     _v_thermal = std::sqrt(8 * _kb[_qp] * _T_heavy[_qp] / (M_PI * _mass[_qp]));
 
-  if (_normals[_qp] * _sgn[_qp] * -_grad_potential[_qp] > 0.0)
+  if (_normals[_qp] * _sgn[_qp] * _electric_field[_qp] > 0.0)
     _a = 1.0;
   else
     _a = 0.0;
 
   return (1. - _r) / (1. + _r) * 0.5 * _v_thermal * std::exp(_u[_qp]) +
          (1. - _r) / (1. + _r) *
-             ((2 * _a - 1) * _sgn[_qp] * _mobility_coef[_qp] * -_grad_potential[_qp] * _r_units *
-              std::exp(_u[_qp]) * _normals[_qp]);
+             ((2 * _a - 1) * _sgn[_qp] * _mobility_coef[_qp] * raw_value(_electric_field[_qp]) *
+              _r_units * std::exp(_u[_qp]) * _normals[_qp]);
 }

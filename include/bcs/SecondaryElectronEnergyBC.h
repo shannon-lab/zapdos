@@ -40,8 +40,6 @@ protected:
   /// Material value of secondary electron coefficient
   std::vector<const ADMaterialProperty<Real> *> _se_coeff;
 
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Electron density
   const ADVariableValue & _em;
   /// Ion density values
@@ -67,6 +65,9 @@ protected:
   const Real & _se_energy;
   /// Mobility coefficient of the electron mean energy density
   const ADMaterialProperty<Real> & _mumean_en;
+
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Equal to 1 when the electron drift velocity is directed towards the wall and zero otherwise
   Real _a;

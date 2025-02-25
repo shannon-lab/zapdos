@@ -28,13 +28,13 @@ public:
 
 protected:
   /// The scaling units for the position
-  Real _r_units;
+  const Real _r_units;
   /// Electron density
   const VariableValue & _em;
   /// Gradient of the electron density
   const VariableGradient & _grad_em;
-  /// Gradient of the coupled potential
-  const VariableGradient & _grad_potential;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Electron mobility coefficient
   const GenericMaterialProperty<Real, is_ad> & _muem;
   /// Charge sign of electrons

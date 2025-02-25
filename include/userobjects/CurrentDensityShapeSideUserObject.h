@@ -44,7 +44,7 @@ protected:
   /// Value of the electron density variable
   const VariableValue & _em;
   /// ID of the electron density variable
-  unsigned int _em_id;
+  const unsigned int _em_id;
   /// Gradient of the electron density
   const VariableGradient & _grad_em;
 
@@ -53,17 +53,17 @@ protected:
   /// Value of the ion density variable
   const VariableValue & _ip;
   /// ID of the ion density variable
-  unsigned int _ip_id;
+  const unsigned int _ip_id;
   /// Gradient of the ion density
   const VariableGradient & _grad_ip;
   /// Gradient of the potential
   const VariableGradient & _grad_potential;
   /// ID of the potential variable
-  unsigned int _potential_id;
+  const unsigned int _potential_id;
   /// Value of the electron energy density variable
   const VariableValue & _mean_en;
   /// ID of the electron energy density variable
-  unsigned int _mean_en_id;
+  const unsigned int _mean_en_id;
   /// Mobility coefficient of the ions
   const ADMaterialProperty<Real> & _muip;
   /// Diffusion coefficient of the ions
@@ -73,9 +73,9 @@ protected:
   /// Diffusion coefficient of the electrons
   const ADMaterialProperty<Real> & _diffem;
   /// Elementary charge
-  Real _e;
+  const Real _e;
   /// True if molar density is used
-  bool _use_moles;
+  const bool _use_moles;
   /// Avogadro's number
-  Real _avogadro;
+  const Real _avogadro;
 };

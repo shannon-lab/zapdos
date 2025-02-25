@@ -12,6 +12,10 @@
 
 #include "ADKernel.h"
 
+/**
+ *  Electron energy loss term for elastic collisions using Townsend coefficient
+ *  (Densities must be in logarithmic form)
+ */
 class ElectronEnergyLossFromElastic : public ADKernel
 {
 public:
@@ -37,9 +41,9 @@ protected:
   const MaterialProperty<Real> & _massGas;
   /// Townsend coefficient for elastic collisions
   const ADMaterialProperty<Real> & _alpha_el;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
-  /// Gradient of the coupled gradient
-  const ADVariableGradient & _grad_potential;
   /// Electron density
   const ADVariableValue & _em;
   /// Gradient of the electron density
