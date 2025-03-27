@@ -37,11 +37,11 @@ protected:
   const ADMaterialProperty<Real> & _muem;
   /// Townsend coefficient for excitation
   const ADMaterialProperty<Real> & _alpha_source;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Electron mean energy density
   const ADVariableValue & _mean_en;
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Electron density
   const ADVariableValue & _em;
   /// Gradient of the electron density

@@ -34,12 +34,13 @@ protected:
   /// Number of ions defined
   const unsigned int _num_ions;
 
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Ion density variables
   std::vector<MooseVariable *> _ion_var;
   /// Ion density values
   std::vector<const ADVariableValue *> _ion;
+
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Charge sign of the ions
   std::vector<const MaterialProperty<Real> *> _sgnion;

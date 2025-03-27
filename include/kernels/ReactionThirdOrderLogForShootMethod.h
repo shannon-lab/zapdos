@@ -32,15 +32,15 @@ protected:
   /// Accelerated density value
   const ADVariableValue & _density;
   /// Accelerated density variable
-  unsigned int _density_id;
+  const unsigned int _density_id;
   /// First coupled density value
   const ADVariableValue & _v;
   /// First coupled density variable
-  unsigned int _v_id;
+  const unsigned int _v_id;
   /// Second coupled density value
   const ADVariableValue & _w;
   /// Second coupled density variable
-  unsigned int _w_id;
+  const unsigned int _w_id;
   /// Stoichiometric coefficient
   const Real & _stoichiometric_coeff;
 };

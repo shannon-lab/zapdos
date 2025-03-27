@@ -220,4 +220,16 @@ dom1Scale = 1e-4
     prop_values = '8.85e-11'
     block = 1
   []
+
+  [field_solver0]
+    type = FieldSolverMaterial
+    potential = potential_dom0
+    block = 0
+  []
+
+  [field_solver1]
+    type = FieldSolverMaterial
+    potential = potential_dom1
+    block = 1
+  []
 []
