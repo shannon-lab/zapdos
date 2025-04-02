@@ -51,10 +51,6 @@
 
 !include examples/tutorial3.md
 
-!---
-
-!include examples/tutorial3-fenix.md
-
 
 !---
 
