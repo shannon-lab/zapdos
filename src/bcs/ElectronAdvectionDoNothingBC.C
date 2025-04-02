@@ -16,9 +16,10 @@ InputParameters
 ElectronAdvectionDoNothingBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredCoupledVar(
-      "potential", "The gradient of the potential will be used to compute the advection velocity.");
   params.addRequiredParam<Real>("position_units", "The units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Boundary condition where the electron advection flux at the boundary "
                              "is equal to the bulk electron advection equation");
   return params;
@@ -32,14 +33,14 @@ ElectronAdvectionDoNothingBC::ElectronAdvectionDoNothingBC(const InputParameters
     _muem(getADMaterialProperty<Real>("muem")),
     _sign(getMaterialProperty<Real>("sgnem")),
 
-    // Coupled variables
-    _grad_potential(adCoupledGradient("potential"))
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
 }
 
 ADReal
 ElectronAdvectionDoNothingBC::computeQpResidual()
 {
-  return _muem[_qp] * _sign[_qp] * std::exp(_u[_qp]) * -_grad_potential[_qp] * _position_units *
+  return _muem[_qp] * _sign[_qp] * std::exp(_u[_qp]) * _electric_field[_qp] * _position_units *
          _normals[_qp] * _test[_i][_qp] * _position_units;
 }

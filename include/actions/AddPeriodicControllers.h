@@ -44,29 +44,31 @@ protected:
                              const bool & first_controller);
 
   /// A list of object names to enable at the start of the cycle
-  std::vector<std::string> _enable_start;
+  const std::vector<std::string> _enable_start;
   /// A list of object names to enable during the cycle
-  std::vector<std::string> _enable_during;
+  const std::vector<std::string> _enable_during;
   /// A list of object names to enable at the end of the cycle
-  std::vector<std::string> _enable_end;
+  const std::vector<std::string> _enable_end;
 
   /// A list of object names to disable at the start of the cycle
-  std::vector<std::string> _disable_start;
+  const std::vector<std::string> _disable_start;
   /// A list of object names to disable during the cycle
-  std::vector<std::string> _disable_during;
+  const std::vector<std::string> _disable_during;
   /// A list of object names to disable at the end of the cycle
-  std::vector<std::string> _disable_end;
+  const std::vector<std::string> _disable_end;
 
   /// The starting time to begin adding 'TimePeriod' controllers
-  Real _start_time;
+  const Real _start_time;
   /// The period of the cycle
-  Real _period;
+  const Real _period;
   /// The number of cycles between enabling and disabling objects
-  Real _cycles_per_controls;
+  const Real _cycles_per_controls;
+  /// the number of cycles between controllers (i.e. acceleration sets)
+  const Real _cycles_between_controls;
   /// Total number of 'TimePeriod' controllers to add
-  Real _num_controller_set;
+  const Real _num_controller_set;
   /// Name of the 'TimePeriod' controllers
-  std::string _name;
+  const std::string _name;
 
   /// The array that holds the start times for objects that are enabled at the start of the cycle
   std::vector<Real> _enable_start_start_time_index;

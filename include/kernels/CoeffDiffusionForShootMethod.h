@@ -30,7 +30,7 @@ protected:
   const Real _r_units;
 
   /// Density variable to be accelerated
-  MooseVariable & _density_var;
+  const MooseVariable & _density_var;
   /// Diffusion coefficient
   const ADMaterialProperty<Real> & _diffusivity;
 };

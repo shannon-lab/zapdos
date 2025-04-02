@@ -28,8 +28,8 @@ protected:
   /// Scaling units for the position
   const Real _r_units;
 
-  // Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
   /// Mobility coefficient
   const ADMaterialProperty<Real> & _mu;
