@@ -10,9 +10,9 @@
 ## Example Input File Syntax
 
 An example of how to use `EEDFReactionLogForShootMethod` can be found in the
-test file `Acceleration_By_Shooting_Method_SensitivityMatrix.i`.
+test file `Acceleration_By_Shooting_Method.i`.
 
-!listing test/tests/accelerations/Acceleration_By_Shooting_Method_SensitivityMatrix.i block=Kernels/SM_Ar*_stepwise_ionization
+!listing test/tests/accelerations/Acceleration_By_Shooting_Method.i block=Kernels/SM_Ar*_stepwise_ionization
 
 !syntax parameters /Kernels/EEDFReactionLogForShootMethod
 

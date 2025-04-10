@@ -38,9 +38,9 @@ protected:
   const ADMaterialProperty<Real> & _alpha_iz;
   /// Energy threshold for ionization
   const MaterialProperty<Real> & _Eiz;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Electron density
   const ADVariableValue & _em;
   /// Gradient of the electron density

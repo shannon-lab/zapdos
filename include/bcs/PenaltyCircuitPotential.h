@@ -50,11 +50,11 @@ protected:
   /// Degree of freedoms for the variable
   const std::vector<dof_id_type> & _var_dofs;
   /// Electron variable
-  unsigned int _em_id;
+  const unsigned int _em_id;
   /// Degree of freedoms for electron variable
   const std::vector<dof_id_type> & _em_dofs;
   /// Electron mean energy density variable
-  unsigned int _mean_en_id;
+  const unsigned int _mean_en_id;
   /// Degree of freedoms for electron mean energy density variable
   const std::vector<dof_id_type> & _mean_en_dofs;
   /// Scaling units for the position

@@ -28,11 +28,11 @@ protected:
   virtual void computeQpProperties() override;
 
   /// User defined ion mass
-  Real _user_massHeavy;
+  const Real _user_massHeavy;
   /// User defined charge sign of ion
-  Real _user_sgnHeavy;
+  const Real _user_sgnHeavy;
   /// Scaling units for the potential (V or kV)
-  std::string _potential_units;
+  const std::string _potential_units;
   /// Scaling value for the potential
   Real _voltage_scaling;
 
@@ -53,7 +53,7 @@ protected:
   const MaterialProperty<Real> & _p_gas;
 
   /// Time units
-  Real _time_units;
+  const Real _time_units;
   /// If true, calculate mobility coefficient assuming argon ions
   bool _calc_mobility;
   /// If true, calculate diffusion coefficient assuming argon ions

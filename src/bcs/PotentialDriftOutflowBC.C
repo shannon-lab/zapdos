@@ -17,12 +17,10 @@ PotentialDriftOutflowBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
   MooseEnum charge_sign("positive=1 negative=-1", "positive");
-  params.addRequiredCoupledVar(
-      "potential", "The gradient of the potential will be used to compute the advection velocity.");
-  params.addRequiredCoupledVar(
-      "potential", "The gradient of the potential will be used to compute the advection velocity.");
-
   params.addParam<MooseEnum>("charge_sign", charge_sign, "The sign of the charged particle.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("The drift flux boundary condition");
   return params;
 }
@@ -30,15 +28,16 @@ PotentialDriftOutflowBC::validParams()
 PotentialDriftOutflowBC::PotentialDriftOutflowBC(const InputParameters & parameters)
   : ADIntegratedBC(parameters),
     _charge_sign(getParam<MooseEnum>("charge_sign")),
-    _grad_potential(adCoupledGradient("potential"))
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
 }
 
 ADReal
 PotentialDriftOutflowBC::computeQpResidual()
 {
-  if (_charge_sign * -_grad_potential[_qp] * _normals[_qp] > 0.)
-    return _charge_sign * -_grad_potential[_qp] * _normals[_qp] * _u[_qp];
+  if (_charge_sign * _electric_field[_qp] * _normals[_qp] > 0.)
+    return _charge_sign * _electric_field[_qp] * _normals[_qp] * _u[_qp];
   else
     return 0.;
 }
