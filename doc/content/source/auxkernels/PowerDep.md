@@ -30,7 +30,7 @@ Where $N_{j}$ is the molar density of the species in log form, $N_{A}$ is Avogad
 number, $l_{c}$ is the scaling factor of the mesh, and $V_{c}$ is the scaling factor
 of the potential.
 
-For the case where artificial diffusion is introduced to the charge specie flux, an additional term is included, such that:
+For the case where artificial diffusion is introduced to the charged species flux, an additional term is included, such that:
 
 \begin{equation}
 \Gamma_{j\text{, Total}} = \Gamma_{j} + q_{j} N_{A} \mu_{j} \frac{\text{-}\lVert \vec{E} \rVert_{2}}{l_{c}} \frac{h_\text{max}}{2} \exp(N_{j}) \frac{\nabla (N_{j})}{l_{c}}

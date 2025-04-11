@@ -73,7 +73,7 @@ AddPeriodicControllers::validParams()
   params.addRequiredParam<Real>("cycle_frequency", "The cycle's frequency in Hz");
   params.addParam<Real>("cycles_per_controls",
                         1.0,
-                        "The number of cycles that occurs during the controllers"
+                        "The number of cycles that occur during the controllers"
                         "(e.g. the number of cycles during the accelerations)");
   params.addParam<Real>("cycles_between_controls",
                         1.0,

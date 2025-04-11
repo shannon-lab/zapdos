@@ -13,7 +13,7 @@
 #include "AuxKernel.h"
 
 /**
- *  Amount of power deposited into a user specified specie by Joule Heating
+ *  Amount of power deposited into a user specified species by Joule Heating
  */
 template <bool is_ad>
 class PowerDepTempl : public AuxKernel

@@ -6,7 +6,7 @@
 
 `SakiyamaEnergySecondaryElectronWithEffEfieldBC` accounts for the mean electron energy density of secondary electrons induced by an ion flux outflow boundary condition. The effective electric field is supplied as scalar componets of the field.
 
-The ion induced secondary electron mean energy density outflow is defined as
+The ion induced secondary mean electron energy density outflow is defined as
 
 \begin{equation}
 a =

@@ -36,7 +36,7 @@ protected:
   const ADVariableValue & _Ez;
   /// Ion density values
   std::vector<const ADVariableValue *> _ip;
-  /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise
+  /// Equal to 1 when the drift velocity is directed towards the wall and zero otherwise
   Real _a;
   /// Ion flux
   ADRealVectorValue _ion_flux;
