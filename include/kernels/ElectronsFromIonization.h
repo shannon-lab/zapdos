@@ -35,6 +35,8 @@ protected:
   const ADMaterialProperty<Real> & _muem;
   /// Townsend coefficient for ionization
   const ADMaterialProperty<Real> & _alpha_iz;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Custom diffusion coefficient
   ADMaterialProperty<Real> _user_diffem;
   /// Custom mobility coefficient
@@ -44,10 +46,6 @@ protected:
 
   /// Electron mean energy density
   const ADVariableValue & _mean_en;
-  /// Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
-  /// The user-defined 1-D electric field with a sign correction
-  ADVariableGradient _minus_e_field;
   /// Electron density
   const ADVariableValue & _em;
   /// Gradient of the electron density

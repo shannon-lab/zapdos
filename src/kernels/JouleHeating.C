@@ -17,9 +17,11 @@ JouleHeating::validParams()
 {
   InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("em", "The electron density.");
-  params.addRequiredCoupledVar("potential", "The electron density.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Joule heating term for electrons (densities must be in logarithmic "
                              "form), where the Jacobian is "
                              "computed using forward automatic differentiation.");
@@ -32,7 +34,8 @@ JouleHeating::JouleHeating(const InputParameters & parameters)
     _potential_units(getParam<std::string>("potential_units")),
     _diff(getADMaterialProperty<Real>("diffem")),
     _mu(getADMaterialProperty<Real>("muem")),
-    _grad_potential(adCoupledGradient("potential")),
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
     _em(adCoupledValue("em")),
     _grad_em(adCoupledGradient("em"))
 {
@@ -47,7 +50,7 @@ JouleHeating::JouleHeating(const InputParameters & parameters)
 ADReal
 JouleHeating::computeQpResidual()
 {
-  return _test[_i][_qp] * -_grad_potential[_qp] * _r_units * _voltage_scaling *
-         (-_mu[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -
+  return _test[_i][_qp] * _electric_field[_qp] * _r_units * _voltage_scaling *
+         (-_mu[_qp] * _electric_field[_qp] * _r_units * std::exp(_em[_qp]) -
           _diff[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units);
 }

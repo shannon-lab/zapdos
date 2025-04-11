@@ -150,7 +150,6 @@ dom0Scale=25.4e-3
     emission_coeffs = 0.01  #Secondary electron coeff.
     ks = 1.19e5 #Thermal electron velocity
     ions = Ar+
-    potential = potential
     position_units = ${dom0Scale}
   []
 
@@ -158,7 +157,6 @@ dom0Scale=25.4e-3
   [Ar+_physical_right_advection]
     type = LymberopoulosIonBC
     variable = Ar+
-    potential = potential
     boundary = 'right left'
     position_units = ${dom0Scale}
   []
@@ -233,8 +231,6 @@ dom0Scale=25.4e-3
     user_p_gas = 133.322
     #Name for electrons (usually 'em')
     em = em
-    #Name for potential (usually 'potential')
-    potential = potential
     #Name for the electron mean energy density (usually 'mean_en')
     mean_en = mean_en
     #User define electron mobility coeff. (define as 0.0 if not used)

@@ -17,8 +17,10 @@ HagelaarElectronAdvectionBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
-  params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Kinetic advective electron boundary condition"
                              " (Based on [!cite](hagelaar2000boundary))");
   return params;
@@ -30,17 +32,18 @@ HagelaarElectronAdvectionBC::HagelaarElectronAdvectionBC(const InputParameters &
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
 
-    _grad_potential(adCoupledGradient("potential")),
-
     _muem(getADMaterialProperty<Real>("muem")),
-    _a(0.5)
+    _a(0.5),
+
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
 }
 
 ADReal
 HagelaarElectronAdvectionBC::computeQpResidual()
 {
-  if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
+  if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
   }
@@ -50,6 +53,6 @@ HagelaarElectronAdvectionBC::computeQpResidual()
   }
 
   return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) *
-         (-(2 * _a - 1) * _muem[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_u[_qp]) *
+         (-(2 * _a - 1) * _muem[_qp] * _electric_field[_qp] * _r_units * std::exp(_u[_qp]) *
           _normals[_qp]);
 }

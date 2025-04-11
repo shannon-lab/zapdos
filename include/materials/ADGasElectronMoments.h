@@ -34,15 +34,15 @@ protected:
   SplineInterpolation _diff_interpolation;
 
   /// Scaling units for the potential (V or kV)
-  std::string _potential_units;
+  const std::string _potential_units;
   /// Scaling value for the potential
   Real _voltage_scaling;
 
   /// Time units
-  Real _time_units;
+  const Real _time_units;
 
   /// True if molar density is used
-  bool _use_moles;
+  const bool _use_moles;
 
   /// Electron mobility coefficient
   ADMaterialProperty<Real> & _muem;

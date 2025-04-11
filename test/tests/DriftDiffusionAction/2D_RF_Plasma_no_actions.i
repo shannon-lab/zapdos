@@ -48,7 +48,6 @@ dom0Scale = 25.4e-3
   [em_advection]
     type = EFieldAdvection
     variable = em
-    potential = potential
     position_units = ${dom0Scale}
   []
   #Diffusion term of electrons
@@ -97,7 +96,7 @@ dom0Scale = 25.4e-3
   [Ar+_advection]
     type = EFieldAdvection
     variable = Ar+
-    potential = potential_ion
+    field_property_name = field_solver_interface_property_eff
     position_units = ${dom0Scale}
   []
   [Ar+_diffusion]
@@ -251,7 +250,6 @@ dom0Scale = 25.4e-3
   [mean_en_advection]
     type = EFieldAdvection
     variable = mean_en
-    potential = potential
     position_units = ${dom0Scale}
   []
   #Diffusion term of electrons energy
@@ -264,7 +262,6 @@ dom0Scale = 25.4e-3
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    potential = potential
     em = em
     position_units = ${dom0Scale}
   []
@@ -553,21 +550,18 @@ dom0Scale = 25.4e-3
   [Efieldx_calc]
     type = Efield
     component = 0
-    potential = potential
     variable = Efieldx
     position_units = ${dom0Scale}
   []
   [Efieldy_calc]
     type = Efield
     component = 1
-    potential = potential
     variable = Efieldy
     position_units = ${dom0Scale}
   []
 
   [Current_em]
     type = ADCurrent
-    potential = potential
     density_log = em
     variable = Current_em
     art_diff = false
@@ -576,7 +570,7 @@ dom0Scale = 25.4e-3
   []
   [Current_Ar]
     type = ADCurrent
-    potential = potential_ion
+    field_property_name = field_solver_interface_property_eff
     density_log = Ar+
     variable = Current_Ar+
     art_diff = false
@@ -593,18 +587,21 @@ dom0Scale = 25.4e-3
     variable = potential
     boundary = 'Top_Electrode'
     function = potential_top_bc_func
+    preset = false
   []
   [potential_bottom_plate]
     type = FunctionDirichletBC
     variable = potential
     boundary = 'Bottom_Electrode'
     function = potential_bottom_bc_func
+    preset = false
   []
   [potential_dirichlet_bottom_plate]
     type = DirichletBC
     variable = potential
     boundary = 'Walls'
     value = 0
+    preset = false
   []
   [potential_Dielectric]
     type = EconomouDielectricBC
@@ -631,7 +628,7 @@ dom0Scale = 25.4e-3
   [em_Ar+_second_emissions]
     type = SakiyamaSecondaryElectronBC
     variable = em
-    potential = potential_ion
+    field_property_name = field_solver_interface_property_eff
     ions = Ar+
     emission_coeffs = 0.01
     boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls'
@@ -642,7 +639,7 @@ dom0Scale = 25.4e-3
   [Ar+_physical_advection]
     type = SakiyamaIonAdvectionBC
     variable = Ar+
-    potential = potential_ion
+    field_property_name = field_solver_interface_property_eff
     boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls'
     position_units = ${dom0Scale}
   []
@@ -669,7 +666,7 @@ dom0Scale = 25.4e-3
     variable = mean_en
     electrons = em
     ions = Ar+
-    potential = potential_ion
+    field_property_name = field_solver_interface_property_eff
     Tse_equal_Te = true
     emission_coeffs = 0.01
     boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls'
@@ -735,6 +732,15 @@ dom0Scale = 25.4e-3
 []
 
 [Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [field_solver_eff]
+    type = FieldSolverMaterial
+    potential = potential_ion
+    property_name = field_solver_interface_property_eff
+  []
   [GasBasics]
     type = GasElectronMoments
     interp_trans_coeffs = true
@@ -742,7 +748,6 @@ dom0Scale = 25.4e-3
     ramp_trans_coeffs = false
     user_p_gas = 133.322
     em = em
-    potential = potential
     mean_en = mean_en
     user_se_coeff = 0.00
     property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt

@@ -21,7 +21,6 @@ ADSurfaceCharge::validParams()
                                "Hagelaar",
                                "The name of the family of BCs being used in this model. "
                                "Options: Hagelaar (DEFAULT), Sakiyama, Lymberopoulos.");
-  params.addRequiredCoupledVar("potential", "The potential that drives the advective flux.");
   params.addParam<Real>("r_ion", 0.0, "The ion reflection coefficient on this boundary.");
   params.addParam<Real>("r_electron", 0.0, "The electron reflection coefficient on this boundary.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
@@ -35,6 +34,9 @@ ADSurfaceCharge::validParams()
       "Note that this should be consistent with the selected boundary conditions; if a secondary "
       "electron BC is used on this boundary, this should be true. DEFAULT: true.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription(
       "Adds a surface charge material property based on the rate of change of the total charged "
       "flux to a boundary. (NOTE: this material is meant to be boundary-restricted.)");
@@ -50,7 +52,8 @@ ADSurfaceCharge::ADSurfaceCharge(const InputParameters & parameters)
     _r_units(1. / getParam<Real>("position_units")),
 
     _potential_units(getParam<std::string>("potential_units")),
-    _grad_potential(adCoupledGradient("potential"))
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
   // Define voltage scaling parameter
   if (_potential_units.compare("V") == 0)
@@ -97,7 +100,7 @@ ADSurfaceCharge::computeQpProperties()
     for (unsigned int i = 0; i < _num_species; ++i)
     {
       _charge_flux += (*_sgn[i])[_qp] * std::exp((*_species[i])[_qp]) *
-                      ((*_sgn[i])[_qp] * (*_mu[i])[_qp] * -_grad_potential[_qp] * _r_units -
+                      ((*_sgn[i])[_qp] * (*_mu[i])[_qp] * _electric_field[_qp] * _r_units -
                        (*_diff[i])[_qp] * (*_grad_species[i])[_qp] * _r_units) *
                       _normals[_qp];
     }

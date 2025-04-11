@@ -29,9 +29,9 @@ public:
 
 protected:
   /// Component of the position
-  int _component;
+  const int _component;
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
 
   virtual Real computeValue() override;
 };

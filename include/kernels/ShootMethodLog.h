@@ -33,6 +33,4 @@ protected:
   const ADVariableValue & _sensitivity;
   /// Growth limit for acceleration
   const Real & _limit;
-  /// The acceleration term
-  ADReal _acceleration;
 };

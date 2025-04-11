@@ -36,7 +36,7 @@ protected:
   /// Coupled electron density variable
   Real _em_density;
   /// True if molar density is used
-  bool _use_moles;
+  const bool _use_moles;
   /// The inverse of the plasma frequency
   Real _inverse;
 };

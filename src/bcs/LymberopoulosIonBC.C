@@ -16,8 +16,10 @@ InputParameters
 LymberopoulosIonBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Simpified kinetic ion boundary condition"
                              " (Based on [!cite](Lymberopoulos1993))");
   return params;
@@ -28,8 +30,8 @@ LymberopoulosIonBC::LymberopoulosIonBC(const InputParameters & parameters)
 
     _r_units(1. / getParam<Real>("position_units")),
 
-    // Coupled Variables
-    _grad_potential(adCoupledGradient("potential")),
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
 
     _mu(getADMaterialProperty<Real>("mu" + _var.name()))
 {
@@ -38,6 +40,6 @@ LymberopoulosIonBC::LymberopoulosIonBC(const InputParameters & parameters)
 ADReal
 LymberopoulosIonBC::computeQpResidual()
 {
-  return _test[_i][_qp] * _r_units * _mu[_qp] * -_grad_potential[_qp] * _r_units *
+  return _test[_i][_qp] * _r_units * _mu[_qp] * _electric_field[_qp] * _r_units *
          std::exp(_u[_qp]) * _normals[_qp];
 }

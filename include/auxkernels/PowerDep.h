@@ -12,6 +12,9 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Amount of power deposited into a user specified species by Joule Heating
+ */
 template <bool is_ad>
 class PowerDepTempl : public AuxKernel
 {
@@ -25,16 +28,16 @@ public:
 
 protected:
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
 
   /// Coupled density variable
-  MooseVariable & _density_var;
+  const MooseVariable & _density_var;
   /// Value of the coupled density variable
   const VariableValue & _density_log;
   /// Gradient of the coupled density variable
   const VariableGradient & _grad_density_log;
-  /// Gradient of coupled potential
-  const VariableGradient & _grad_potential;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Mobility coefficient
   const GenericMaterialProperty<Real, is_ad> & _mu;
   /// Charge sign of the coupled species
@@ -42,9 +45,9 @@ protected:
   /// Diffusion coefficient
   const GenericMaterialProperty<Real, is_ad> & _diff;
   /// True if an artifical diffusion term is needed
-  bool _art_diff;
+  const bool _art_diff;
   /// Scaling units for the potential (V or kV)
-  std::string _potential_units;
+  const std::string _potential_units;
   /// Term for the current
   RealVectorValue _current;
   /// Scaling value for the potential

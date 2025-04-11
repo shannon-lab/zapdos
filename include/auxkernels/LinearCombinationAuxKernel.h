@@ -12,6 +12,9 @@
 
 #include "AuxKernel.h"
 
+/**
+ *  Linearly combine coupled variables with user provided weights and a bias
+ */
 class LinearCombinationAuxKernel : public AuxKernel
 {
 public:

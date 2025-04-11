@@ -18,7 +18,6 @@ EEDFReactionLogForShootMethod::validParams()
   InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("electron", "The electron species variable.");
   params.addRequiredCoupledVar("density", "The accelerated density variable.");
-  params.addRequiredCoupledVar("energy", "The energy variable.");
   params.addRequiredParam<std::string>("reaction", "The full reaction equation.");
   params.addRequiredParam<Real>("coefficient", "The stoichiometric coefficient.");
   params.addParam<std::string>(
@@ -47,6 +46,6 @@ EEDFReactionLogForShootMethod::EEDFReactionLogForShootMethod(const InputParamete
 ADReal
 EEDFReactionLogForShootMethod::computeQpResidual()
 {
-  return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * 1.0 *
-         std::exp(_electron[_qp]) * _u[_qp];
+  return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * _u[_qp] *
+         std::exp(_electron[_qp]);
 }

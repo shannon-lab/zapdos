@@ -1,9 +1,9 @@
 [Tests]
-  [tutorial06-Building-InputFile_syntax]
-    type = RunApp
+  [tutorial06-Building-InputFile]
+    type = Exodiff
     input = 'RF_Plasma_WithOut_Metastables.i'
-    check_input = True
-    method = opt
+    cli_args = 'Executioner/end_time=1e+30 Executioner/num_steps=200'
+    exodiff = 'RF_Plasma_WithOut_Metastables_out.e'
     group = 'tutorial'
   []
 []

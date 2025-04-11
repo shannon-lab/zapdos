@@ -16,11 +16,13 @@ InputParameters
 SakiyamaSecondaryElectronBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs", "A list of species-dependent secondary electron emission coefficients");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription("Kinetic secondary electron boundary condition"
                              " (Based on [!cite](sakiyama2006corona))");
   return params;
@@ -32,11 +34,11 @@ SakiyamaSecondaryElectronBC::SakiyamaSecondaryElectronBC(const InputParameters &
     _r_units(1. / getParam<Real>("position_units")),
     _num_ions(coupledComponents("ions")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
-    // Coupled Variables
-    _grad_potential(adCoupledGradient("potential")),
 
     _a(0.5),
-    _ion_flux(0, 0, 0)
+    _ion_flux(0, 0, 0),
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
   if (_se_coeff_names.size() != _num_ions)
     mooseError("SakiyamaSecondaryElectronBC with name ",
@@ -63,7 +65,7 @@ SakiyamaSecondaryElectronBC::computeQpResidual()
   _ion_flux.zero();
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    if (_normals[_qp] * (*_sgnip[i])[_qp] * -_grad_potential[_qp] > 0.0)
+    if (_normals[_qp] * (*_sgnip[i])[_qp] * _electric_field[_qp] > 0.0)
     {
       _a = 1.0;
     }
@@ -73,7 +75,7 @@ SakiyamaSecondaryElectronBC::computeQpResidual()
     }
 
     _ion_flux += (*_se_coeff[i])[_qp] * _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] *
-                 -_grad_potential[_qp] * _r_units * std::exp((*_ip[i])[_qp]);
+                 _electric_field[_qp] * _r_units * std::exp((*_ip[i])[_qp]);
   }
 
   return -_test[_i][_qp] * _r_units * _a * _ion_flux * _normals[_qp];

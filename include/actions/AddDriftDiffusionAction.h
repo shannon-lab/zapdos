@@ -36,24 +36,27 @@ public:
 protected:
   /**
    *  Helper function that supplies the potentials charge sources
-   *  @param potential_name The name of the electrostatic potential
+   *  when the electrostatic field solver is used
+   *  @param field_name The name of the electric field
    *  @param charged_particle_name The name of the charge particle density
+   *  @param field_solver The state of the field solver (either: ELECTROSTATIC or ELECTROMAGNETIC)
    */
-  virtual void addChargeSourceKernels(const std::string & potential_name,
-                                      const std::string & charged_particle_name);
+  virtual void addChargeSourceKernels(const std::string & field_name,
+                                      const std::string & charged_particle_name,
+                                      const MooseEnum & field_solver);
 
   /**
    *  Helper function that supplies the Kernels for drift-diffusion for the electrons,
    *  energy independent charged particles, neutral particles, and
    *  electron mean energy density
    *  @param name The name of the density variable
-   *  @param potential_name The name of the electrostatic potential
+   *  @param field_name The name of the electric field
    *  @param Using_offset True if the LogStabilizationMoles Kernel being used
    *  @param charged True if the density variable has a charge
    *  @param energy True if the density is a mean energy density variable
    */
   virtual void addADKernels(const std::string & name,
-                            const std::string & potential_name,
+                            const std::string & field_name,
                             const bool & Using_offset,
                             const bool & charged,
                             const bool & energy);
@@ -76,18 +79,30 @@ protected:
   /**
    *  Helper function that supplies the Aux kernels for current
    *  @param particle_name The name of the charge density variable
-   *  @param potential_name The name of the electrostatic potential
+   *  @param field_property_name The name of the electric field as a material property
    */
-  virtual void addCurrent(const std::string & particle_name, const std::string & potential_name);
+  virtual void addCurrent(const std::string & particle_name,
+                          const std::string & field_property_name);
 
   /**
    *  Helper function that supplies the Aux kernels for the electric field
    *  @param Efield_name The name of the electric field variable in the format of {"Efield" +
    * component + block}
-   *  @param potential_name The name of the electrostatic potential
+   *  @param field_property_name The name of the electric field as a material property
    *  @param component The spatial component defined as x=0, y=1, and z=2
    */
   virtual void addEfield(const std::string & Efield_name,
-                         const std::string & potential_name,
+                         const std::string & field_property_name,
                          const int & component);
+  /**
+   *  Helper function that supplies ...
+   *  @param field_name The name of the electric field
+   *  @param field_property_name The name of the electric field as a material property
+   *  @param field_solver The state of the field solver (either: ELECTROSTATIC or ELECTROMAGNETIC)
+   *  @param effective_field True if the field is the effective electric field
+   */
+  virtual void addFieldSolverMaterial(const std::string & field_name,
+                                      const std::string & field_property_name,
+                                      const MooseEnum & field_solver,
+                                      const bool & effective_field);
 };

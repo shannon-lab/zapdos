@@ -17,12 +17,14 @@ HagelaarEnergyAdvectionBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
-  params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs",
       "The species-dependent secondary electron emission coefficients for this boundary");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addRequiredParam<Real>("secondary_electron_energy", "The secondary electron energy in eV");
   params.addClassDescription("Kinetic advective electron energy boundary condition"
                              " (Based on [!cite](hagelaar2000boundary))");
@@ -36,10 +38,13 @@ HagelaarEnergyAdvectionBC::HagelaarEnergyAdvectionBC(const InputParameters & par
     _r(getParam<Real>("r")),
     _num_ions(coupledComponents("ions")),
     // Coupled Variables
-    _grad_potential(adCoupledGradient("potential")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     _se_energy(getParam<Real>("secondary_electron_energy")),
     _mumean_en(getADMaterialProperty<Real>("mumean_en")),
+
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
+
     _a(0.5),
     _ion_flux(0, 0, 0),
     _v_thermal(0),
@@ -71,7 +76,7 @@ HagelaarEnergyAdvectionBC::computeQpResidual()
 {
   // reset this value just to be safe
   _bc_val = 0;
-  if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
+  if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
   }
@@ -82,7 +87,7 @@ HagelaarEnergyAdvectionBC::computeQpResidual()
 
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
-    _ion_flux = (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
+    _ion_flux = (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * _electric_field[_qp] * _r_units *
                     std::exp((*_ip[i])[_qp]) -
                 (*_Dip[i])[_qp] * std::exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units;
     _bc_val +=
@@ -91,7 +96,7 @@ HagelaarEnergyAdvectionBC::computeQpResidual()
 
   return _test[_i][_qp] * _r_units / (6. * (_r + 1.)) *
          (_bc_val + (_r - 1.) * (std::exp(_u[_qp]) - _se_energy * _n_gamma) *
-                        (6. * -_grad_potential[_qp] * _r_units * _normals[_qp] * _mumean_en[_qp] *
+                        (6. * _electric_field[_qp] * _r_units * _normals[_qp] * _mumean_en[_qp] *
                              (2. * _a - 1.) -
                          5. * _v_thermal));
 }

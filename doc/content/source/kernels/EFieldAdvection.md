@@ -5,21 +5,20 @@
 ## Overview
 
 `EFieldAdvection` is the electric field driven advection term used for variables in logarithmic form.
-`EFieldAdvection` assumes the electrostatic approximation for the electric field.
 
-The strong form for an electrostatic advection term is usually defined as
+The strong form for an advection term is usually defined as
 
 \begin{equation}
-\nabla \cdot \Gamma_{\text{adv}} = \nabla \cdot \left[ \text{sign}_{j} \mu_{j} n_{j} \ \text{-} \nabla (V) \right]
+\nabla \cdot \Gamma_{\text{adv}} = \nabla \cdot \left[ \text{sign}_{j} \mu_{j} n_{j} \ \vec{E} \right]
 \end{equation}
 
 Where $\Gamma_{\text{adv}}$ is the advection component of a species' flux, $\text{sign}_{j}$ indicates the advection behavior
-($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $\mu_{j}$ is the mobility coefficient, $n_{j}$ is the density, and $V$ is
-the potential. When converting the density to logarithmic form and applying a scaling
+($\text{+}1$ for positively charged species and $\text{-}1$ for negatively charged species), $\mu_{j}$ is the mobility coefficient, $n_{j}$ is the density, and $\vec{E}$ is
+the electric field. When converting the density to logarithmic form and applying a scaling
 factor of the mesh, the strong form for `EFieldAdvection` is defined as
 
 \begin{equation}
-\nabla \cdot \Gamma_{\text{adv}} = \nabla \cdot \left[ \text{sign}_{j} \mu_{j} \exp(N_{j}) \ \text{-} \nabla (V / l_{c}) \right]
+\nabla \cdot \Gamma_{\text{adv}} = \nabla \cdot \left[ \text{sign}_{j} \mu_{j} \exp(N_{j}) \ (\vec{E} / l_{c}) \right]
 \end{equation}
 
 Where $N_{j}$ is the molar density of the species in logarithmic form and

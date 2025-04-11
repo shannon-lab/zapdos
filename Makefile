@@ -20,7 +20,8 @@ include $(FRAMEWORK_DIR)/build.mk
 include $(FRAMEWORK_DIR)/moose.mk
 
 ################################## MODULES ####################################
-ALL_MODULES := no
+ELECTROMAGNETICS := yes
+
 include $(MOOSE_DIR)/modules/modules.mk
 ###############################################################################
 
