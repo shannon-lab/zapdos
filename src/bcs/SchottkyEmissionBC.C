@@ -17,7 +17,6 @@ SchottkyEmissionBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
-  params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<std::vector<std::string>>(
@@ -28,6 +27,9 @@ SchottkyEmissionBC::validParams()
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addParam<Real>("tau", 1e-9, "The time constant for ramping the boundary condition.");
   params.addParam<bool>("relax", false, "Use relaxation for emission.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription(
       "The electron flux boundary condition due to field ehanced thermionic emission (Schottky "
       "emission)"
@@ -43,7 +45,6 @@ SchottkyEmissionBC::SchottkyEmissionBC(const InputParameters & parameters)
     _num_ions(coupledComponents("ions")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     // Coupled Variables
-    _grad_potential(adCoupledGradient("potential")),
     _mean_en(adCoupledValue("electron_energy")),
 
     _massem(getMaterialProperty<Real>("massem")),
@@ -57,7 +58,9 @@ SchottkyEmissionBC::SchottkyEmissionBC(const InputParameters & parameters)
     _ion_flux(0, 0, 0),
     _tau(getParam<Real>("tau")),
     _relax(getParam<bool>("relax")),
-    _potential_units(getParam<std::string>("potential_units"))
+    _potential_units(getParam<std::string>("potential_units")),
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 
 {
   if (_se_coeff_names.size() != _num_ions)
@@ -103,7 +106,7 @@ SchottkyEmissionBC::computeQpResidual()
   _v_thermal =
       std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
 
-  if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
+  if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
     return 0;
@@ -116,7 +119,7 @@ SchottkyEmissionBC::computeQpResidual()
     for (unsigned int i = 0; i < _num_ions; ++i)
     {
       _ion_flux += (*_se_coeff[i])[_qp] *
-                   ((*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
+                   ((*_sgnip[i])[_qp] * (*_muip[i])[_qp] * _electric_field[_qp] * _r_units *
                         std::exp((*_ip[i])[_qp]) -
                     (*_Dip[i])[_qp] * std::exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units);
     }
@@ -125,7 +128,7 @@ SchottkyEmissionBC::computeQpResidual()
     // je = AR * T^2 * exp(-(wf - dPhi) / (kB * T))
     // dPhi = _dPhi_over_F * sqrt(F) // eV
 
-    F = -(1 - _a) * _field_enhancement[_qp] * _normals[_qp] * _grad_potential[_qp] * _r_units;
+    F = -(1 - _a) * _field_enhancement[_qp] * _normals[_qp] * -_electric_field[_qp] * _r_units;
 
     kB = 8.617385E-5; // eV/K
     dPhi = _dPhi_over_F * std::sqrt(F);

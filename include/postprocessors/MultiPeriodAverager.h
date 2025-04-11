@@ -43,5 +43,5 @@ protected:
   /// The counter for how many periods have passed since we last updated
   unsigned int _cyclic_period_count;
   /// the number of periods over which we are averaging
-  unsigned int _num_periods;
+  const unsigned int _num_periods;
 };

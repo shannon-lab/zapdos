@@ -29,9 +29,9 @@ private:
   /// Gradient of the azimuthal component of the magnetic field
   const VariableGradient & _grad_Hphi;
   /// Angular frequency of the wave
-  Real _omega;
+  const Real _omega;
   /// Relative permittivity of the medium
-  Real _eps_r;
+  const Real _eps_r;
   /// Permittivity of free space
-  Real _eps0;
+  const Real _eps0;
 };

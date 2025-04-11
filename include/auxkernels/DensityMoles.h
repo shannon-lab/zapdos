@@ -28,7 +28,7 @@ protected:
   virtual Real computeValue() override;
 
   /// True if molar density is used
-  bool _convert_moles;
+  const bool _convert_moles;
 
   /// Avogadro's number
   const MaterialProperty<Real> & _N_A;

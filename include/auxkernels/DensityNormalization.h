@@ -42,5 +42,5 @@ protected:
   const Real * _shift;
 
   /// A factor to multiply the normilization by
-  Real _normal_factor;
+  const Real _normal_factor;
 };

@@ -12,6 +12,10 @@
 
 #include "ADIntegratedBC.h"
 
+/**
+ *  The electron flux boundary condition due to field ehanced thermionic emission
+ *  (Schottky emission)
+ */
 class SchottkyEmissionBC : public ADIntegratedBC
 {
 public:
@@ -32,9 +36,6 @@ protected:
   const std::vector<std::string> _se_coeff_names;
   /// Material value of secondary electron coefficient
   std::vector<const ADMaterialProperty<Real> *> _se_coeff;
-
-  /// Gradient of coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Electron mean energy density
   const ADVariableValue & _mean_en;
 
@@ -74,10 +75,13 @@ protected:
   /// Time constant for ramping the boundary condition
   const Real _tau;
   /// If true use "_tau" to ramp the boundary condition
-  bool _relax;
+  const bool _relax;
 
   /// Scaling units for the potential (V or kV)
-  std::string _potential_units;
+  const std::string _potential_units;
+
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
   /// Scaling value for the potential
   Real _voltage_scaling;
 

@@ -28,14 +28,14 @@ protected:
   virtual Real computeQpIntegral();
 
   /// Name of the mobility coefficient for electrons
-  std::string _mobility;
+  const std::string _mobility;
   /// Mobility coefficient for electrons
   const MaterialProperty<Real> & _mobility_coef;
 
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
   /// Reflection coefficient
-  Real _r;
+  const Real _r;
   /// Boltzmann constant
   const MaterialProperty<Real> & _kb;
   /// Thermal velocity of the electrons
@@ -54,8 +54,9 @@ protected:
   /// Equal to 1 when the ion drift velocity is direct towards the wall and zero otherwise
   Real _b;
 
-  /// Gradient of the coupled potential
-  const VariableGradient & _grad_potential;
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
+
   /// Electron energy density
   const VariableValue & _mean_en;
 

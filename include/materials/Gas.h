@@ -39,31 +39,31 @@ protected:
   SplineInterpolation _diff_interpolation;
 
   /// True if interpolating transport coefficients as a function of the mean energy
-  bool _interp_trans_coeffs;
+  const bool _interp_trans_coeffs;
   /// True if interpolating the elastic collision townsend coefficient as a function of the mean energy
-  bool _interp_elastic_coeff;
+  const bool _interp_elastic_coeff;
   /// True if ramping the non-linearity of coming from the electron energy dependence of the transport coefficients
-  bool _ramp_trans_coeffs;
+  const bool _ramp_trans_coeffs;
   /// Scaling units for the potential (V or kV)
-  std::string _potential_units;
+  const std::string _potential_units;
   /// Scaling value for the potential
   Real _voltage_scaling;
   /// User defined secondary electron coefficient
-  Real _user_se_coeff;
+  const Real _user_se_coeff;
   /// User defined work function
-  Real _user_work_function;
+  const Real _user_work_function;
   /// User defined field enhancement factor
-  Real _user_field_enhancement;
+  const Real _user_field_enhancement;
   /// User defined Richardson coefficient
-  Real _user_Richardson_coefficient;
+  const Real _user_Richardson_coefficient;
   /// User defined cathode temperature
-  Real _user_cathode_temperature;
+  const Real _user_cathode_temperature;
   /// User defined neutral gase and ion temperature
-  Real _user_T_gas;
+  const Real _user_T_gas;
   /// User defined neutral gase pressure
-  Real _user_p_gas;
+  const Real _user_p_gas;
   /// True if molar density is used
-  bool _use_moles;
+  const bool _use_moles;
 
   /// AD electron mobility coefficient
   ADMaterialProperty<Real> & _muem;

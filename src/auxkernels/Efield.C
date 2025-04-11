@@ -17,11 +17,13 @@ Efield::validParams()
 {
   InputParameters params = AuxKernel::validParams();
 
-  params.addRequiredCoupledVar("potential", "The potential");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<int>("component",
                                "The component of the electric field to access. Accepts an integer");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription(
       "Returns the defined component of the electric field (0 = x, 1 = y, 2 = z)");
   return params;
@@ -33,7 +35,8 @@ Efield::Efield(const InputParameters & parameters)
     _component(getParam<int>("component")),
     _r_units(1. / getParam<Real>("position_units")),
     _potential_units(getParam<std::string>("potential_units")),
-    _grad_potential(coupledGradient("potential"))
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {
   if (_potential_units.compare("V") == 0)
     _voltage_scaling = 1.;
@@ -44,5 +47,5 @@ Efield::Efield(const InputParameters & parameters)
 Real
 Efield::computeValue()
 {
-  return -_grad_potential[_qp](_component) * _r_units * _voltage_scaling;
+  return MetaPhysicL::raw_value(_electric_field[_qp](_component)) * _r_units * _voltage_scaling;
 }

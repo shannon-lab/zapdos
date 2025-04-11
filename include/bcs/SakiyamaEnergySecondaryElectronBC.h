@@ -36,8 +36,6 @@ protected:
   /// Material value of secondary electron coefficient
   std::vector<const ADMaterialProperty<Real> *> _se_coeff;
 
-  // Gradient of the coupled potential
-  const ADVariableGradient & _grad_potential;
   /// Electron density
   const ADVariableValue & _em;
   /// Ion density variables
@@ -57,4 +55,7 @@ protected:
   ADReal _se_energy;
   /// Ion flux
   ADRealVectorValue _ion_flux;
+
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };

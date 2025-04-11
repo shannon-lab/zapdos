@@ -17,10 +17,12 @@ ExcitationReaction::validParams()
 {
   InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("mean_en", "The electron mean energy.");
-  params.addRequiredCoupledVar("potential", "The potential.");
   params.addRequiredCoupledVar("em", "The electron density.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<bool>("reactant", "Checks if the variable is the reactant.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription(
       "Rate of production of metastables from excitation using Townsend coefficients "
       "(Densities must be in logarithmic form)");
@@ -35,8 +37,9 @@ ExcitationReaction::ExcitationReaction(const InputParameters & parameters)
     _diffem(getADMaterialProperty<Real>("diffem")),
     _muem(getADMaterialProperty<Real>("muem")),
     _alpha_source(getADMaterialProperty<Real>("alpha_ex")),
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
     _mean_en(adCoupledValue("mean_en")),
-    _grad_potential(adCoupledGradient("potential")),
     _em(adCoupledValue("em")),
     _grad_em(adCoupledGradient("em")),
     _reactant(getParam<bool>("reactant"))
@@ -46,7 +49,7 @@ ExcitationReaction::ExcitationReaction(const InputParameters & parameters)
 ADReal
 ExcitationReaction::computeQpResidual()
 {
-  ADReal electron_flux_mag = (-_muem[_qp] * -_grad_potential[_qp] * _r_units * std::exp(_em[_qp]) -
+  ADReal electron_flux_mag = (-_muem[_qp] * _electric_field[_qp] * _r_units * std::exp(_em[_qp]) -
                               _diffem[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units)
                                  .norm();
 

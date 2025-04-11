@@ -17,7 +17,6 @@ FieldEmissionBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
-  params.addRequiredCoupledVar("potential", "The electric potential");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
   params.addRequiredParam<std::vector<std::string>>(
       "emission_coeffs",
@@ -26,6 +25,9 @@ FieldEmissionBC::validParams()
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addParam<Real>("tau", 1e-9, "The time constant for ramping the boundary condition.");
   params.addParam<bool>("relax", false, "Use relaxation for emission.");
+  params.addParam<std::string>("field_property_name",
+                               "field_solver_interface_property",
+                               "Name of the solver interface material property.");
   params.addClassDescription(
       "The electron flux boundary condition due to field emission"
       " (Based on [!cite](forbes2006simple) and [!cite](forbes2008physics))");
@@ -38,8 +40,6 @@ FieldEmissionBC::FieldEmissionBC(const InputParameters & parameters)
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
     _num_ions(coupledComponents("ions")),
-    // Coupled Variables
-    _grad_potential(adCoupledGradient("potential")),
 
     _muem(getADMaterialProperty<Real>("muem")),
     _massem(getMaterialProperty<Real>("massem")),
@@ -47,6 +47,10 @@ FieldEmissionBC::FieldEmissionBC(const InputParameters & parameters)
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     _work_function(getMaterialProperty<Real>("work_function")),
     _field_enhancement(getMaterialProperty<Real>("field_enhancement")),
+
+    _electric_field(
+        getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
+
     _a(0.5),
     _ion_flux(0, 0, 0),
     _tau(getParam<Real>("tau")),
@@ -95,7 +99,7 @@ FieldEmissionBC::FieldEmissionBC(const InputParameters & parameters)
 ADReal
 FieldEmissionBC::computeQpResidual()
 {
-  if (_normals[_qp] * -1.0 * -_grad_potential[_qp] > 0.0)
+  if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
     return 0;
@@ -107,7 +111,7 @@ FieldEmissionBC::computeQpResidual()
     for (unsigned int i = 0; i < _num_ions; ++i)
     {
 
-      _ion_flux = (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -_grad_potential[_qp] * _r_units *
+      _ion_flux = (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * _electric_field[_qp] * _r_units *
                       std::exp((*_ip[i])[_qp]) -
                   (*_Dip[i])[_qp] * std::exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units;
       jSE += _e[_qp] * 6.02E23 * _normals[_qp] * (*_se_coeff[i])[_qp] * _ion_flux;
@@ -121,7 +125,7 @@ FieldEmissionBC::computeQpResidual()
     // v(f) = 1 - f + (f/6)*ln(f)
     // f = c*(F/wf^2)
 
-    F = -(1 - _a) * _field_enhancement[_qp] * _normals[_qp] * _grad_potential[_qp] * _r_units;
+    F = -(1 - _a) * _field_enhancement[_qp] * _normals[_qp] * -_electric_field[_qp] * _r_units;
 
     f = FE_c * F / std::pow(_work_function[_qp], 2);
     v = 1 - f + (f / 6) * std::log(f);

@@ -32,9 +32,9 @@ protected:
   const MaterialProperty<Real> & _mobility_coef;
 
   /// Scaling units for the position
-  Real _r_units;
+  const Real _r_units;
   /// Reflection coefficient
-  Real _r;
+  const Real _r;
   /// Boltzmann constant
   const MaterialProperty<Real> & _kb;
   /// Temperature of ions
@@ -44,13 +44,14 @@ protected:
   /// Thermal velocity of ions
   Real _v_thermal;
   /// User defined thermal velocity of ions
-  Real _user_velocity;
+  const Real _user_velocity;
   /// Elementary charge
   const MaterialProperty<Real> & _e;
   /// Charge sign of the ions
   const MaterialProperty<Real> & _sgn;
   /// Equal to 1 when the ion drift velocity is direct towards the wall and zero otherwise
   Real _a;
-  /// Gradient of the potential
-  const VariableGradient & _grad_potential;
+
+  /// The electric field provided as a material property
+  const ADMaterialProperty<RealVectorValue> & _electric_field;
 };
