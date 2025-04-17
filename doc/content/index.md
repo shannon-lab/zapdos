@@ -62,14 +62,14 @@ Begin by exploring [our installation page](getting_started/installation.md).
   [Grant No. 1740300](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1740300).
 
 - This research is being performed using funding received from the DOE Office of
-  Nuclear Energy's [Nuclear Energy University Programs](https://neup.inl.gov/SitePages/Home.aspx).
+  Nuclear Energy's [Nuclear Energy University Programs](https://neup.inl.gov/).
 
 - This research made use of [INL's High Performance Computing systems](https://hpc.inl.gov/)
   located at the Collaborative Computing Center and supported by the Office of Nuclear Energy of
   the U.S. DOE and the Nuclear Science User Facilities under Contract No. DE-AC07-05ID14517.
 
-- This research was supported by the [INL Graduate Fellowship Program](https://inl.gov/inl-initiatives/education/graduate-fellowship-program/)
-  which is supported by the U.S. DOE under Contract No. DE-AC07-05ID14517.
+- This research was supported by the INL Graduate Fellowship Program which is supported by the U.S.
+  DOE under Contract No. DE-AC07-05ID14517.
 
 - This research was supported through the INL Laboratory Directed Research & Development (LDRD)
   Program under DOE Idaho Operations Office Contract DE-AC07-05ID14517.
