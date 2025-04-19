@@ -1,0 +1,720 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Materials System | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="37d171c2-cb5b-43c6-aa51-7c0d39df3222" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="27b4540e-66a1-4766-8e96-014addc90643" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="0bfb2cce-1b86-496d-991e-cc3882c3f7ff" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="0bf994d7-9dd1-4012-b247-266fe673ad87"><i class="material-icons">menu</i></a><ul class="sidenav" id="0bf994d7-9dd1-4012-b247-266fe673ad87"><li><a href="#!" class="dropdown-trigger" data-target="ebf42b65-d5b4-4dac-ba93-63eacad5f5ff" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="f434e727-dda1-48be-bb21-1f492106d53f" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c8d5c4b2-f654-4c27-bc54-eb74a565a52a" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="37d171c2-cb5b-43c6-aa51-7c0d39df3222"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="27b4540e-66a1-4766-8e96-014addc90643"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="0bfb2cce-1b86-496d-991e-cc3882c3f7ff"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="ebf42b65-d5b4-4dac-ba93-63eacad5f5ff"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="f434e727-dda1-48be-bb21-1f492106d53f"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="c8d5c4b2-f654-4c27-bc54-eb74a565a52a"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">syntax</a><a href="." class="breadcrumb">Materials</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="a30e2934-f5dc-4a97-bcfb-810574951eaa" data-section-level="1" data-section-text="Materials System"><h1 id="materials-system">Materials System</h1><p>The material system is the primary mechanism for defining spatially varying properties. The system allows properties to be defined in a single object (a <code>Material</code>) and shared among the many other systems such as the <a href="../Kernels/index.html">Kernel</a> or <a href="../BCs/index.html">BoundaryCondition</a> systems. Material objects are designed to directly couple to solution variables as well as other materials and therefore allow for capturing the true nonlinear behavior of the equations.</p><p>The material system relies on a producer/consumer relationship: <code>Material</code> objects <strong>produce</strong> properties and other objects (including materials) <strong>consume</strong> these properties.</p><p>The properties are produced on demand, thus the computed values are always up to date. For example, a property that relies on a solution variable (e.g., thermal conductivity as function of temperature) will be computed with the current temperature during the solve iterations, so the properties are tightly coupled.</p><p>The material system supports the use of automatic differentiation for property calculations, as such there are two approaches for producing and consuming properties: with and without automatic differentiation. The following sections detail the producing and consuming properties using the two approaches. To further understand automatic differentiation, please refer to the <a href="../../automatic_differentiation/index.html">Automatic Differentiation</a> page for more information.</p><p>The proceeding sections briefly describe the different aspects of a <code>Material</code> object for producing and computing the properties as well as how other objects consume the properties. For an example of how a <code>Material</code> object is created and used please refer to ex08_materials.md.</p><section class="scrollspy" id="25abde4e-0056-4a23-b4f5-fd5ab9adf468" data-section-level="2" data-section-text="Producing / Computing Properties"><h2 id="producing-computing-properties">Producing/Computing Properties</h2><p>Properties must be produced by a <code>Material</code> object by declaring the property with one of two methods:</p><ol class="browser-default" start="1"><li><p><code>declareProperty&lt;TYPE&gt;(&quot;property_name&quot;)</code> declares a property with a name &quot;property_name&quot; to be computed by the <code>Material</code> object. </p></li><li><p><code>declareADProperty&lt;TYPE&gt;</code> declares a property with a name &quot;property_name&quot; to be computed by the <code>Material</code> object that will include automatic differentiation.</p></li></ol><p>The <code>TYPE</code> is any valid C++ type such an <code>int</code> or <code>Real</code> or <code>std::vector&lt;Real&gt;</code>. The properties must then be computed within the <code>computeQpProperties</code> method defined within the object.</p><p>The property name is an arbitrary name of the property, this name should be set such that it corresponds to the value be computed (e.g., &quot;diffusivity&quot;). The name provided here is the same name that will be used for consuming the property. More information on names is provided in <a href="index.html#property-names">Property Names</a> section below.</p><p>For example, consider a simulation that requires a diffusivity term. In the <code>Material</code> object header a property is declared (in the C++ since) as follows.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">  MaterialProperty&lt;Real&gt; &amp; _diffusivity;
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#6d4ede4d-73d4-4fda-8dbd-96a13ee1d83b">(moose/examples/ex08_materials/include/materials/ExampleMaterial.h)</a><p>All properties will either be a <code>MaterialProperty&lt;TYPE&gt;</code> or <code>ADMaterialProperty&lt;TYPE&gt;</code> and must be a non-const reference. Again, the <code>TYPE</code> can be any C++ type. In this example, a scalar <code>Real</code> number is being used.</p><p>In the source file the reference is initialized in the initialization list using the aforementioned declare functions as follows. This declares the property (in the material property sense) to be computed.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">    _diffusivity(declareProperty&lt;Real&gt;(&quot;diffusivity&quot;)),
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#c918416e-f2ce-46b6-97a1-effc74b9b97a">(moose/examples/ex08_materials/src/materials/ExampleMaterial.C)</a><p>The final step for producing a property is to compute the value. The computation occurs within a <code>Material</code> object <code>computeQpProperties</code> method. As the method name suggests, the purpose of the method is to compute the values of properties at a quadrature point. This method is a virtual method that must be overridden. To do this, in the header the virtual method is declared (again in the C++ sense).</p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">  virtual void computeQpProperties() override;
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#02e95d81-8bff-4e4b-b6ec-7c8faef9dd98">(moose/examples/ex08_materials/include/materials/ExampleMaterial.h)</a><p>In the source file the method is defined. For the current example this definition computes the &quot;diffusivity&quot; as well another term, refer to ex08_materials.md.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">ExampleMaterial::computeQpProperties()
+{
+  // Diffusivity is the value of the interpolated piece-wise function described by the user
+  _diffusivity[_qp] = _piecewise_func.sample(_q_point[_qp](2));
+
+  // Convection velocity is set equal to the gradient of the variable set by the user.
+  _convection_velocity[_qp] = _diffusion_gradient[_qp];
+}
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#5d813da3-8a5d-490d-bba7-8207c841f4bf">(moose/examples/ex08_materials/src/materials/ExampleMaterial.C)</a><p>The purpose of the content of this method is to assign values for the properties at a quadrature point. Recall that &quot;_diffusivity&quot; is a reference to a <code>MaterialProperty</code> type. The <code>MaterialProperty</code> type is a container that stores the values of a property for each quadrature point. Therefore, this container must be indexed by <code>_qp</code> to compute the value for a specific quadrature point.</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note</span></div><div class="card-content"><div class="moose-alert-content"><p><code>ExampleMaterial</code> can call <code>isPropertyActive(_diffusivity.id())</code> in its <code>computeQpProperties</code> to check whether this property is consumed during the run-time. This function provides a capability of skipping evaluations of certain material properties within a material when such evaluations are costly for performance optimization. MOOSE calls materials to do the evaluations when needed. This <code>isPropertyActive</code> routine gives code developers a finer control on the material property evaluation.</p></div></div></div></section><section class="scrollspy" id="b2410116-73f3-43ef-9bf8-e1665ab0b5b5" data-section-level="2" data-section-text="Consuming Properties"><h2 id="consuming-properties">Consuming Properties</h2><p>Objects that require material properties consume them using one of two functions</p><ol class="browser-default" start="1"><li><p><code>getMaterialProperty&lt;TYPE&gt;(&quot;property_name&quot;)</code> retrieves a property with a name &quot;property_name&quot; to be consumed by the object. </p></li><li><p><code>getADMaterialProperty&lt;TYPE&gt;(&quot;property_name&quot;)</code> retrieves a property with a name &quot;property_name&quot; to be consumed by the object that will include automatic differentiation.</p></li></ol><p>For an object to consume a property the same basic procedure is followed. First in the consuming objects header file a <code>MaterialProperty</code> with the correct type (e.g., <code>Real</code> for the diffusivity example) is declared (in the C++ sense) as follows. Notice, that the member variable is a <strong>const</strong> reference. The const is important. Consuming objects cannot modify a property, it only uses the property so it is marked to be constant.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">  const MaterialProperty&lt;Real&gt; &amp; _diffusivity;
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#ba72d1ce-b845-48c7-9148-f639a6501af0">(moose/examples/ex08_materials/include/kernels/ExampleDiffusion.h)</a><p>In the source file the reference is initialized in the initialization list using the aforementioned get methods. This method initializes the <code>_diffusivity</code> member variable to reference the desired value of the property as computed by the material object.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">  : Diffusion(parameters), _diffusivity(getMaterialProperty&lt;Real&gt;(&quot;diffusivity&quot;))
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#9a62172e-3a92-4e06-8540-555d57f1aa6d">(moose/examples/ex08_materials/src/kernels/ExampleDiffusion.C)</a><p>The name used in the get method, &quot;diffusivity&quot;, in this case is not arbitrary. This name corresponds with the name used to declare the property in the material object.</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note:</span>The declare/get calls must correspond</div><div class="card-content"><div class="moose-alert-content"><p>If a material property is declared for automatic differentiation (AD) using <code>declareADProperty</code> then it <strong>must</strong> be consumed with the <code>getADMaterialProperty</code>. The same is true for non-automatic differentiation; properties declared with <code>declareProperty</code> <strong>must</strong> be consumed with the <code>getMaterialProperty</code> method.</p></div></div></div><section id="286ed582-111a-428c-a6a1-d0d0e95f0290" data-section-level="3" data-section-text="Optional Properties"><h3 id="optional-properties">Optional Properties</h3><p>Objects can weakly couple to material properties that may or may not exist.</p><ol class="browser-default" start="1"><li><p><code>getOptionalMaterialProperty&lt;TYPE&gt;(&quot;property_name&quot;)</code> retrieves an optional property with a name &quot;property_name&quot; to be consumed by the object. </p></li><li><p><code>getOptionalADMaterialProperty&lt;TYPE&gt;(&quot;property_name&quot;)</code> retrieves an optional property with a name &quot;property_name&quot; to be consumed by the object that will include automatic differentiation.</p></li></ol><p>This API returns a reference to an optional material property (<code>OptionalMaterialProperty</code> or  <code>OptionalADMaterialProperty</code>). If the requested property is not provided by any material this reference will evaluate to <code>false</code>. It is the consuming object&#x27;s responsibility to check for this before accessing the material property data. Note that the state of the returned reference is only finalized _after_ all materials have been constructed, so a validity check must _not_ be made in the constructor of a material class but either at time of first use in <code>computeQpProperties</code> or in <code>initialSetup</code>.</p></section></section><section class="scrollspy" id="7409fa85-b987-45e7-a2d9-98e7b93be042" data-section-level="2" data-section-text="Property Names"><h2 id="property-names">Property Names</h2><p>When creating a Material object and declaring the properties that shall be computed, it is often desirable to allow for the property name to be changed via the input file. This may be accomplished by adding an input parameter for assigning the name. For example, considering the example above the following code snippet adds an input parameter, &quot;diffusivity_name&quot;, that allows the input file to set the name of the diffusivity property, but by default the name remains &quot;diffusivity&quot;.</p><pre class="moose-pre"><code class="language-c++">
+params.addParam&lt;MaterialPropertyName&gt;(&quot;diffusivity_name&quot;, &quot;diffusivity&quot;,
+                                      &quot;The name of the diffusivity material property.&quot;);
+</code></pre><p>In the material object, the declare function is simply changed to use the parameter name rather than string by itself. By default a property will be declared with the name &quot;diffusivity&quot;.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">    _diffusivity_name(declareProperty&lt;Real&gt;(&quot;diffusivity_name&quot;)),
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#830f389c-d918-4375-a27a-53c5af10b147">(moose/examples/ex08_materials/src/materials/ExampleMaterial.C)</a><p>However, if the user wants to alter this name to something else, such as &quot;not_diffusivity&quot; then the input parameter &quot;diffusivity_name&quot; is simply added to the input file block for the material.</p><pre class="moose-pre"><code class="language-text">
+[Materials]
+  [example]
+    type = ExampleMaterial
+    diffusivity_name = not_diffusivity
+  []
+[]
+</code></pre><p>On the consumer side, the get method will now be required to use the name &quot;not_diffusivity&quot; to retrieve the property. Consuming objects can also use the same procedure to allow for custom property names by adding a parameter and using the parameter name in the get method in the same fashion.</p></section><section class="scrollspy" id="bddd20db-a552-4724-bc1c-637e60fda2f3" data-section-level="2" data-section-text="Default Material Properties"><h2 id="default-material-properties">Default Material Properties</h2><p>The <code>MaterialPropertyName</code> input parameter also provides the ability to set default values for scalar (<code>Real</code>) properties. In the above example, the input file can use number or parsed function (see <a href="../../source/functions/MooseParsedFunction.html">ParsedFunction</a>) to define a the property value. For example, the input snippet above could set a constant value.</p><pre class="moose-pre"><code class="language-text">
+[Materials]
+  [example]
+    type = ExampleMaterial
+    diffusivity_name = 12345
+  []
+[]
+</code></pre></section><section class="scrollspy" id="32f8f6a6-4605-41e9-a2be-b3608cc2b097" data-section-level="2" data-section-text="Stateful Material Properties"><h2 id="stateful-material-properties">Stateful Material Properties</h2><p>In general properties are computed on demand and not stored. However, in some cases values of material properties from a previous timestep may be required. To access properties two methods exist:</p><ul class="browser-default"><li><p><code>getMaterialPropertyOld&lt;TYPE&gt;</code> returns a reference to the property from the previous timestep. </p></li><li><p><code>getMaterialPropertyOlder&lt;TYPE&gt;</code> returns a reference to the property from two timesteps before the current.</p></li></ul><p>This is often referred to as a &quot;state&quot; variable, in MOOSE we refer to them as &quot;stateful material properties.&quot; As stated, material properties are usually computed on demand.</p><div class="card moose-alert moose-alert-warning"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">warning</i><span class="moose-alert-title-brand">warning:</span>Stateful properties will increase memory use</div><div class="card-content"><div class="moose-alert-content"><p>When a stateful property is requested through one of the above methods this is no longer the case. When it is computed the value is also stored for every quadrature point on every element. As such, stateful properties can become memory intensive, especially if the property being stored is a vector or tensor value.</p></div></div></div></section><section class="scrollspy" id="42d49e71-d833-42b4-a9fa-a1a320ac8c2f" data-section-level="2" data-section-text="Material Property Output"><h2 id="material-property-output">Material Property Output</h2><p>Output of <code>Material</code> properties is enabled by setting the &quot;outputs&quot; parameter. The following example creates two additional variables called &quot;mat1&quot; and &quot;mat2&quot; that will show up in the output file. In this example, the <code>exodus</code> name is a special keyword used to signal to MOOSE that the material properties should be outputted to the output object created when setting <code>Outputs/exodus=true</code>.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Materials]
+  [block_1]
+    type = OutputTestMaterial
+    block = 1
+    output_properties = &#x27;real_property tensor_property&#x27;
+    outputs = exodus
+    variable = u
+  []
+  [block_2]
+    type = OutputTestMaterial
+    block = 2
+    output_properties = &#x27;vector_property tensor_property&#x27;
+    outputs = exodus
+    variable = u
+  []
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#a67828b6-9360-4f0a-945f-bfd5c3018d65">(moose/test/tests/materials/output/output_block.i)</a><p>If multiple output objects exist in the <code>[Outputs]</code> block, one or more names can be provided to the &quot;outputs&quot; parameter. Alternatively, the reserved output name <code>all</code> can be used to output the material property to all output objects in the <code>[Outputs]</code> block, while the reserved output name <code>none</code> can be used to prevent the material property from being outputted to any output object. If <code>all</code> or <code>none</code> is specified in the outputs parameter, no other additional names should be specified. In the following example, data from <code>block_1</code> will be outputted to both <code>exodus1</code> and <code>exodus2</code> output <a href="../../source/outputs/Exodus.html">Exodus</a> objects, while <code>block_2</code> will only be outputted to the <code>exodus2</code> object.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[Materials]
+  [block_1]
+    type = OutputTestMaterial
+    block = 1
+    output_properties = &#x27;real_property&#x27;
+    outputs = all
+    variable = u
+  []
+  [block_2]
+    type = OutputTestMaterial
+    block = 2
+    output_properties = &#x27;vector_property&#x27;
+    outputs = exodus2
+    variable = u
+  []
+[]
+
+[Outputs]
+  [exodus1]
+    type = Exodus
+    hide = u
+  []
+  [exodus2]
+    type = Exodus
+    hide = u
+  []
+[]
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#11eeb00d-926a-40c2-b1f1-432ff107e35a">(moose/test/tests/materials/output/output_multiple_files.i)</a><p><code>Material</code> properties can be of arbitrary (C++) type, but not all types can be output. The following table lists the types of properties that are available for automatic output.</p><div form="['left', 'left', 'left']" recursive class="moose-table-div"><table><thead><tr><th style=";text-align:left">Type</th><th style=";text-align:left">AuxKernel</th><th style=";text-align:left">Variable Name(s)</th></tr></thead><tbody><tr><td style=";text-align:left">Real</td><td style=";text-align:left"><code>MaterialRealAux</code></td><td style=";text-align:left">prop</td></tr></tbody><tbody><tr><td style=";text-align:left">RealVectorValue</td><td style=";text-align:left"><code>MaterialRealVectorValueAux</code></td><td style=";text-align:left">prop_1, prop_2, and prop_3</td></tr></tbody><tbody><tr><td style=";text-align:left">RealTensorValue</td><td style=";text-align:left"><code>MaterialRealTensorValueAux</code></td><td style=";text-align:left">prop_11, prop_12, prop_13, prop_21, etc.</td></tr></tbody></table></div></section><section class="scrollspy" id="10b51014-5cad-4ddc-80d1-19692b464330" data-section-level="2" data-section-text="Material sorting"><h2 id="material-sorting">Material sorting</h2><p>Materials are sorted such that one material may consume a property produced by another material and know that the consumed property will be up-to-date, e.g. the producer material will execute before the consumer material. If a cyclic dependency is detected between two materials, then MOOSE will produce an error.</p></section><section class="scrollspy" id="ed1ef189-4cd8-4f65-bcdf-0d9a3a0cb319" data-section-level="2" data-section-text="Functor Material Properties"><h2 id="functor-props">Functor Material Properties</h2><p>Functor materials are a special kind of materials used for on-the-fly material property evaluation. Please refer to the <a href="../FunctorMaterials/index.html">syntax page for FunctorMaterials</a> for more information.</p></section><section class="scrollspy" id="5ff8e96a-979c-4fe3-b039-a336f7bf1f0b" data-section-level="2" data-section-text="Advanced Topics"><h2 id="advanced-topics">Advanced Topics</h2><section id="ae4131b5-ad7a-4d3b-80a1-43fd54cec1c5" data-section-level="3" data-section-text="Evaluation of Material Properties on Element Faces"><h3 id="evaluation-of-material-properties-on-element-faces">Evaluation of Material Properties on Element Faces</h3><p>MOOSE creates three copies of a <em>non-boundary restricted</em> material for evaluations on quadrature points of elements, element faces on both the current element side and the neighboring element side. The name of the element interior material is the material name from the input file, while the name of the element face material is the material name appended with <code>_face</code> and the name of the neighbor face material is the material name appended with <code>_neighbor</code>. The element material can be identified in a material with its member variable <code>_bnd=false</code>. The other two copies have <code>_bnd=true</code>. The element face material and neighbor face material differentiate with each other by the value of another member variable <code>_neighbor</code>. If a material declares multiple material properties and some of them are not needed on element faces, users can switch off their declaration and evaluation based on member variable <code>_bnd</code>.</p></section><section id="21bda8be-6287-4e12-b85d-ff31ef10b44c" data-section-level="3" data-section-text="Interface Material Objects"><h3 id="interface-material-objects">Interface Material Objects</h3><p>MOOSE allows a material to be defined on an internal boundary of a mesh with a specific material type <code>InterfaceMaterial</code>. Material properties declared in interface materials are available on both sides of the boundary. Interface materials allows users to evaluate the properties on element faces based on quantities on both sides of the element face. Interface materials are often used along with <a href="../InterfaceKernels/index.html">InterfaceKernel</a>.</p></section><section id="24125d1d-7fc3-40e7-9fa7-e0b312287d14" data-section-level="3" data-section-text="Discrete Material Objects"><h3 id="discrete-material-objects">Discrete Material Objects</h3><p>A &quot;<a href="http://www.dictionary.com/browse/discrete">Discrete</a>&quot; <code>Material</code> is an object that may be detached from MOOSE and computed explicitly from other objects. An object inheriting from <a href="https://mooseframework.inl.gov/docs/doxygen/moose/classMaterialPropertyInterface.html">MaterialPropertyInterface</a> may explicitly call the compute methods of a <code>Material</code> object via the <code>getMaterial</code> method.</p><p>The following should be considered when computing <code>Material</code> properties explicitly.</p><ul class="browser-default"><li><p>It is possible to disable the automatic computation of a <code>Material</code> object by MOOSE by setting the <code>compute=false</code> parameter. </p></li><li><p>When <code>compute=false</code> is set the compute method (<code>computeQpProperties</code>) is <strong>not</strong> called by MOOSE, instead it must be called explicitly in your application using the <code>computeProperties</code> method that accepts a quadrature point index. </p></li><li><p>When <code>compute=false</code> an additional method should be defined, <code>resetQpProperties</code>, which sets the properties to a safe value (e.g., 0) for later calls to the compute method. Not doing this can lead to erroneous material properties values.</p></li></ul><p>The original intent for this functionality was to enable to ability for material properties to be computed via iteration by another object, as in the following example. First, consider define a material (<code>RecomputeMaterial</code>) that computes the value of a function and its derivative.</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-b2eb834b-6375-4cfa-8ac1-d0105993b6dd"></span><script>var element = document.getElementById("moose-equation-b2eb834b-6375-4cfa-8ac1-d0105993b6dd");katex.render("f(p) = p^2v", element, {displayMode:true,throwOnError:false});</script></span><p>and</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-546016cf-bfaf-4831-90ac-3763be4c9fd6"></span><script>var element = document.getElementById("moose-equation-546016cf-bfaf-4831-90ac-3763be4c9fd6");katex.render("f'(p) = 2pv,", element, {displayMode:true,throwOnError:false});</script></span><p>where v is known value and not a function of p. The following is the compute portion of this object.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">void
+RecomputeMaterial::computeQpProperties()
+{
+  Real x = _p[_qp];
+  _f[_qp] = x * x - _constant;
+  _f_prime[_qp] = 2 * x;
+}
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#2199eec7-846a-4d36-9d5c-0e8c0eb8d359">(moose/test/src/materials/RecomputeMaterial.C)</a><p>Second, define another material (<code>NewtonMaterial</code>) that computes the value of <span class="moose-katex-inline-equation" id="moose-equation-0cbb5902-ddde-4145-a83d-f22a4687ca8a"><script>var element = document.getElementById("moose-equation-0cbb5902-ddde-4145-a83d-f22a4687ca8a");katex.render("p: f(p)=0", element, {displayMode:false,throwOnError:false});</script></span> using Newton iterations. This material declares a material property (<code>_p</code>) which is what is solved for by iterating on the material properties containing <code>f</code> and <code>f&#x27;</code> from <code>RecomputeMaterial</code>. The <code>_discrete</code> member is a reference to a <code>Material</code> object retrieved with <code>getMaterial</code>.</p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">void
+NewtonMaterial::computeQpProperties()
+{
+  _p[_qp] = 0.5; // initial guess
+
+  // Only attempt to solve if iterations are to be taken. This is usually not required, but needed
+  // here to retain the old test behavior that would not trigger a discrete material evaluation. The
+  // NestedSolve class will always evaluate the residual for the initial guess (and will return a
+  // success state if the initial guess was exact).
+  if (getParam&lt;unsigned int&gt;(&quot;max_iterations&quot;) &gt; 0)
+    _nested_solve.nonlinear(
+        _p[_qp],
+        // Lambda function to compute residual and jacobian. The initial guess is not
+        // used here as it (_p) is directly coupled in the discrete material.
+        [&amp;](const Real &amp; /*guess*/, Real &amp; r, Real &amp; j)
+        {
+          _discrete-&gt;computePropertiesAtQp(_qp);
+          r = _f[_qp];
+          j = _f_prime[_qp];
+        });
+}
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#34267afd-2d24-4471-9113-767c3a31fbfb">(moose/test/src/materials/NewtonMaterial.C)</a><p>To create and use a &quot;Discrete&quot; <code>Material</code> use the following to guide the process.</p><ol class="browser-default" start="1"><li><p>Create a <code>Material</code> object by, in typical MOOSE fashion, inheriting from the <code>Material</code> object in your own application. </p></li><li><p>In your input file, set <code>compute=false</code> for this new object. </p></li><li><p>From within another object (e.g., another Material) that inherits from <code>MaterialPropertyInterface</code> call the <code>getMaterial</code> method. Note, this method returns a reference to a <code>Material</code> object, be sure to include <code>&amp;</code> when calling or declaring the variable. </p></li><li><p>When needed, call the <code>computeProperties</code> method of the <code>Material</code> being sure to provide the current quadrature point index to the method (<code>_qp</code> in most cases).</p></li></ol></section></section><section class="scrollspy" id="1f9045c6-1c32-44b2-90b8-d23a264d85ca" data-section-level="2" data-section-text="Available Objects"><h2 id="available-objects">Available Objects</h2><ul class="moose-syntax-list collection with-header"><li class="collection-header">Moose App</li><li class="collection-item"><a href="../../source/materials/CoupledGradientMaterial.html">ADCoupledGradientMaterial</a>Creates a gradient material equal to the gradient of the coupled variable times a scalar material property.</li><li class="collection-item"><a href="../../source/materials/CoupledValueFunctionMaterial.html">ADCoupledValueFunctionMaterial</a>Compute a function value from coupled variables</li><li class="collection-item"><a href="../../source/materials/DerivativeParsedMaterial.html">ADDerivativeParsedMaterial</a>Parsed Function Material with automatic derivatives.</li><li class="collection-item"><a href="../../source/materials/DerivativeSumMaterial.html">ADDerivativeSumMaterial</a>Meta-material to sum up multiple derivative materials</li><li class="collection-item"><a href="../../source/materials/GenericConstantMaterial.html">ADGenericConstantMaterial</a>Declares material properties based on names and values prescribed by input parameters.</li><li class="collection-item"><a href="../../source/materials/GenericConstantRankTwoTensor.html">ADGenericConstantRankTwoTensor</a>Object for declaring a constant rank two tensor as a material property.</li><li class="collection-item"><a href="../../source/materials/GenericConstantRealVectorValue.html">ADGenericConstantRealVectorValue</a>Object for declaring a constant 3-vector as a material property.</li><li class="collection-item"><a href="../../source/materials/GenericConstantSymmetricRankTwoTensor.html">ADGenericConstantSymmetricRankTwoTensor</a>Object for declaring a constant symmetric rank two tensor as a material property.</li><li class="collection-item"><a href="../../source/materials/GenericConstantVectorMaterial.html">ADGenericConstantVectorMaterial</a>Declares material properties based on names and vector values prescribed by input parameters.</li><li class="collection-item"><a href="../../source/materials/GenericFunctionMaterial.html">ADGenericFunctionMaterial</a>Material object for declaring properties that are populated by evaluation of Function object.</li><li class="collection-item"><a href="../../source/materials/GenericFunctionRankTwoTensor.html">ADGenericFunctionRankTwoTensor</a>Material object for defining rank two tensor properties using functions.</li><li class="collection-item"><a href="../../source/materials/GenericFunctionVectorMaterial.html">ADGenericFunctionVectorMaterial</a>Material object for declaring vector properties that are populated by evaluation of Function objects.</li><li class="collection-item"><a href="../../source/materials/ParsedMaterial.html">ADParsedMaterial</a>Parsed expression Material.</li><li class="collection-item"><a href="../../source/materials/PiecewiseConstantByBlockMaterial.html">ADPiecewiseConstantByBlockMaterial</a>Computes a property value on a per-subdomain basis</li><li class="collection-item"><a href="../../source/materials/ADPiecewiseLinearInterpolationMaterial.html">ADPiecewiseLinearInterpolationMaterial</a>Compute a property using a piecewise linear interpolation to define its dependence on a variable</li><li class="collection-item"><a href="../../source/materials/VectorFromComponentVariablesMaterial.html">ADVectorFromComponentVariablesMaterial</a>Computes a vector material property from coupled variables</li><li class="collection-item"><a href="../../source/materials/CoupledGradientMaterial.html">CoupledGradientMaterial</a>Creates a gradient material equal to the gradient of the coupled variable times a scalar material property.</li><li class="collection-item"><a href="../../source/materials/CoupledValueFunctionMaterial.html">CoupledValueFunctionMaterial</a>Compute a function value from coupled variables</li><li class="collection-item"><a href="../../source/materials/DerivativeParsedMaterial.html">DerivativeParsedMaterial</a>Parsed Function Material with automatic derivatives.</li><li class="collection-item"><a href="../../source/materials/DerivativeSumMaterial.html">DerivativeSumMaterial</a>Meta-material to sum up multiple derivative materials</li><li class="collection-item"><a href="../../source/materials/GenericConstant2DArray.html">GenericConstant2DArray</a>A material evaluating one material property in type of RealEigenMatrix</li><li class="collection-item"><a href="../../source/materials/GenericConstantArray.html">GenericConstantArray</a>A material evaluating one material property in type of RealEigenVector</li><li class="collection-item"><a href="../../source/materials/GenericConstantMaterial.html">GenericConstantMaterial</a>Declares material properties based on names and values prescribed by input parameters.</li><li class="collection-item"><a href="../../source/materials/GenericConstantRankTwoTensor.html">GenericConstantRankTwoTensor</a>Object for declaring a constant rank two tensor as a material property.</li><li class="collection-item"><a href="../../source/materials/GenericConstantRealVectorValue.html">GenericConstantRealVectorValue</a>Object for declaring a constant 3-vector as a material property.</li><li class="collection-item"><a href="../../source/materials/GenericConstantSymmetricRankTwoTensor.html">GenericConstantSymmetricRankTwoTensor</a>Object for declaring a constant symmetric rank two tensor as a material property.</li><li class="collection-item"><a href="../../source/materials/GenericConstantVectorMaterial.html">GenericConstantVectorMaterial</a>Declares material properties based on names and vector values prescribed by input parameters.</li><li class="collection-item"><a href="../../source/materials/GenericFunctionMaterial.html">GenericFunctionMaterial</a>Material object for declaring properties that are populated by evaluation of Function object.</li><li class="collection-item"><a href="../../source/materials/GenericFunctionRankTwoTensor.html">GenericFunctionRankTwoTensor</a>Material object for defining rank two tensor properties using functions.</li><li class="collection-item"><a href="../../source/materials/GenericFunctionVectorMaterial.html">GenericFunctionVectorMaterial</a>Material object for declaring vector properties that are populated by evaluation of Function objects.</li><li class="collection-item"><a href="../../source/materials/InterpolatedStatefulMaterial.html">InterpolatedStatefulMaterialRankFourTensor</a>Access old state from projected data.</li><li class="collection-item"><a href="../../source/materials/InterpolatedStatefulMaterial.html">InterpolatedStatefulMaterialRankTwoTensor</a>Access old state from projected data.</li><li class="collection-item"><a href="../../source/materials/InterpolatedStatefulMaterial.html">InterpolatedStatefulMaterialReal</a>Access old state from projected data.</li><li class="collection-item"><a href="../../source/materials/InterpolatedStatefulMaterial.html">InterpolatedStatefulMaterialRealVectorValue</a>Access old state from projected data.</li><li class="collection-item"><a href="../../source/materials/MaterialADConverter.html">MaterialADConverter</a>Converts regular material properties to AD properties and vice versa</li><li class="collection-item"><a href="../../source/materials/MaterialADConverter.html">MaterialConverter</a>Converts regular material properties to AD properties and vice versa</li><li class="collection-item"><a href="../../source/materials/MaterialFunctorConverter.html">MaterialFunctorConverter</a>Converts functor to non-AD and AD regular material properties</li><li class="collection-item"><a href="../../source/materials/ParsedMaterial.html">ParsedMaterial</a>Parsed expression Material.</li><li class="collection-item"><a href="../../source/materials/PiecewiseConstantByBlockMaterial.html">PiecewiseConstantByBlockMaterial</a>Computes a property value on a per-subdomain basis</li><li class="collection-item"><a href="../../source/materials/PiecewiseLinearInterpolationMaterial.html">PiecewiseLinearInterpolationMaterial</a>Compute a property using a piecewise linear interpolation to define its dependence on a variable</li><li class="collection-item"><a href="../../source/materials/MaterialADConverter.html">RankFourTensorMaterialADConverter</a>Converts regular material properties to AD properties and vice versa</li><li class="collection-item"><a href="../../source/materials/MaterialADConverter.html">RankFourTensorMaterialConverter</a>Converts regular material properties to AD properties and vice versa</li><li class="collection-item"><a href="../../source/materials/MaterialADConverter.html">RankTwoTensorMaterialADConverter</a>Converts regular material properties to AD properties and vice versa</li><li class="collection-item"><a href="../../source/materials/MaterialADConverter.html">RankTwoTensorMaterialConverter</a>Converts regular material properties to AD properties and vice versa</li><li class="collection-item"><a href="../../source/materials/VectorFromComponentVariablesMaterial.html">VectorFromComponentVariablesMaterial</a>Computes a vector material property from coupled variables</li><li class="collection-item"><a href="../../source/materials/MaterialFunctorConverter.html">VectorMaterialFunctorConverter</a>Converts functor to non-AD and AD regular material properties</li><li class="collection-header">Electromagnetics App</li><li class="collection-item">WaveEquationCoefficientMaterial for use as coefficient <span class="moose-katex-inline-equation" id="moose-equation-897dcf5f-2fe7-4da8-8a46-93c7464047d1"><script>var element = document.getElementById("moose-equation-897dcf5f-2fe7-4da8-8a46-93c7464047d1");katex.render("a k^2 \\mu_r \\epsilon_r", element, {displayMode:false,throwOnError:false});</script></span> (where a is a scalar coefficient) in standard-form Helmholtz wave equation applications with derivatives calculated using automatic differentiation.</li><li class="collection-header">Zapdos App</li><li class="collection-item"><a href="../../source/materials/ADGasElectronMoments.html">ADGasElectronMoments</a>Material properties of electrons(Defines reaction properties with rate coefficients)</li><li class="collection-item"><a href="../../source/materials/HeavySpecies.html">ADHeavySpecies</a>Material properties of ions</li><li class="collection-item"><a href="../../source/materials/ADMMSEEDFRates.html">ADMMSEEDFRates</a>Add material properties used for MMS verifications involving properties as a function of electron mean energy.</li><li class="collection-item"><a href="../../source/materials/ADSurfaceCharge.html">ADSurfaceCharge</a>Adds a surface charge material property based on the rate of change of the total charged flux to a boundary. (NOTE: this material is meant to be boundary-restricted.)</li><li class="collection-item"><a href="../../source/materials/FieldSolverMaterial.html">FieldSolverMaterial</a>FieldSolverMaterial provides an electric field property for Zapdos objects. This enables an interface to an external electromagnetic field solver for all Zapdos objects. Default is an electrostatic interface, where the <code>potential</code> coupled variable parameter must be provided.</li><li class="collection-item"><a href="../../source/materials/Gas.html">Gas</a>Material properties of electron and ions for argon gas(Defines reaction properties with Townsend coefficients)</li><li class="collection-item"><a href="../../source/materials/GasBase.html">GasBase</a>Material properties of electrons(Defines reaction properties with Townsend coefficients)</li><li class="collection-item"><a href="../../source/materials/GasElectronMoments.html">GasElectronMoments</a>Material properties of electrons(Defines reaction properties with rate coefficients)</li><li class="collection-item"><a href="../../source/materials/HeavySpecies.html">HeavySpecies</a>Material properties of ions</li><li class="collection-item"><a href="../../source/materials/PlasmaDielectricConstant.html">PlasmaDielectricConstant</a>Provides the real and complex components, the spatial gradient and the first time derivative of the plasma dielectric.</li><li class="collection-item"><a href="../../source/materials/Water.html">Water</a>Material properties of water species</li><li class="collection-header">Crane App</li><li class="collection-item"><a href="../../source/materials/ADEEDFRateConstantTownsend.html">ADEEDFRateConstantTownsend</a>Adds townsend coefficient for a reaction as a material property. Note that this material is only intended to be used with the plasma transport software, Zapdos. For any other MOOSE application (or when using Crane by itself) it is recommended to use rate coefficient formulation rather than the townsend coefficients, which may be done with the (AD)EEDFRateConstant material.</li><li class="collection-item"><a href="../../source/materials/GenericRateConstant.html">ADGenericRateConstant</a></li><li class="collection-item"><a href="../../source/materials/ADZapdosEEDFRateConstant.html">ADZapdosEEDFRateConstant</a></li><li class="collection-item"><a href="../../source/materials/DiffusionRateTemp.html">DiffusionRateTemp</a></li><li class="collection-item"><a href="../../source/materials/EEDFRateConstant.html">EEDFRateConstant</a></li><li class="collection-item"><a href="../../source/materials/EEDFRateConstantTownsend.html">EEDFRateConstantTownsend</a></li><li class="collection-item"><a href="../../source/materials/ElectricField.html">ElectricField</a></li><li class="collection-item"><a href="../../source/materials/GenericRateConstant.html">GenericRateConstant</a></li><li class="collection-item"><a href="../../source/materials/HeatCapacityRatio.html">HeatCapacityRatio</a></li><li class="collection-item"><a href="../../source/materials/InterpolatedCoefficientLinear.html">InterpolatedCoefficientLinear</a>Adds townsend coefficient for a reaction as a material property. Note that this material is only intended to be used with the plasma transport software, Zapdos. For any other MOOSE application (or when using Crane by itself) it is recommended to use rate coefficient formulation rather than the townsend coefficients, which may be done with the (AD)EEDFRateConstant material.</li><li class="collection-item"><a href="../../source/materials/InterpolatedCoefficientSpline.html">InterpolatedCoefficientSpline</a>Adds townsend coefficient for a reaction as a material property. Note that this material is only intended to be used with the plasma transport software, Zapdos. For any other MOOSE application (or when using Crane by itself) it is recommended to use rate coefficient formulation rather than the townsend coefficients, which may be done with the (AD)EEDFRateConstant material.</li><li class="collection-item"><a href="../../source/materials/SpeciesSum.html">SpeciesSum</a></li><li class="collection-item"><a href="../../source/materials/SuperelasticReactionRate.html">SuperelasticReactionRate</a></li><li class="collection-item"><a href="../../source/materials/ZapdosEEDFRateConstant.html">ZapdosEEDFRateConstant</a></li></ul></section><section class="scrollspy" id="239a8f10-f632-4ffd-9bf4-fb342f0e2fe6" data-section-level="2" data-section-text="Available Actions"><h2 id="available-actions">Available Actions</h2><ul class="moose-syntax-list collection with-header"><li class="collection-header">Moose App</li><li class="collection-item"><a href="../../source/actions/AddMaterialAction.html">AddMaterialAction</a>Add a Material object to the simulation.</li></ul></section></section><div class="moose-modal modal" id="6d4ede4d-73d4-4fda-8dbd-96a13ee1d83b"><div class="modal-content"><h4>(moose/examples/ex08_materials/include/materials/ExampleMaterial.h)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#pragma once
+
+#include &quot;Material.h&quot;
+#include &quot;LinearInterpolation.h&quot;
+
+class ExampleMaterial : public Material
+{
+public:
+  ExampleMaterial(const InputParameters &amp; parameters);
+
+  static InputParameters validParams();
+
+protected:
+  virtual void computeQpProperties() override;
+
+private:
+  /// member variable to hold the computed diffusivity coefficient
+  MaterialProperty&lt;Real&gt; &amp; _diffusivity;
+  /// member variable to hold the computed convection velocity gradient term
+  MaterialProperty&lt;RealGradient&gt; &amp; _convection_velocity;
+
+  /// A place to store the coupled variable gradient for calculating the convection velocity
+  /// property.
+  const VariableGradient &amp; _diffusion_gradient;
+
+  /// A helper object for performaing linear interpolations on tabulated data for calculating the
+  /// diffusivity property.
+  LinearInterpolation _piecewise_func;
+};
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="c918416e-f2ce-46b6-97a1-effc74b9b97a"><div class="modal-content"><h4>(moose/examples/ex08_materials/src/materials/ExampleMaterial.C)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;ExampleMaterial.h&quot;
+
+registerMooseObject(&quot;ExampleApp&quot;, ExampleMaterial);
+
+InputParameters
+ExampleMaterial::validParams()
+{
+  InputParameters params = Material::validParams();
+
+  // Allow users to specify vectors defining the points of a piecewise function formed via linear
+  // interpolation.
+  params.addRequiredParam&lt;std::vector&lt;Real&gt;&gt;(
+      &quot;independent_vals&quot;,
+      &quot;The vector of z-coordinate values for a piecewise function&#x27;s independent variable&quot;);
+  params.addRequiredParam&lt;std::vector&lt;Real&gt;&gt;(
+      &quot;dependent_vals&quot;, &quot;The vector of diffusivity values for a piecewise function&#x27;s dependent&quot;);
+
+  // Allow the user to specify which independent variable&#x27;s gradient to use for calculating the
+  // convection velocity property:
+  params.addCoupledVar(
+      &quot;diffusion_gradient&quot;,
+      &quot;The gradient of this variable will be used to compute a velocity vector property.&quot;);
+
+  return params;
+}
+
+ExampleMaterial::ExampleMaterial(const InputParameters &amp; parameters)
+  : Material(parameters),
+    // Declare that this material is going to provide a Real value typed
+    // material property named &quot;diffusivity&quot; that Kernels and other objects can use.
+    // This property is &quot;bound&quot; to the class&#x27;s &quot;_diffusivity&quot; member.
+    _diffusivity(declareProperty&lt;Real&gt;(&quot;diffusivity&quot;)),
+
+    // Also declare a second &quot;convection_velocity&quot; RealGradient value typed property.
+    _convection_velocity(declareProperty&lt;RealGradient&gt;(&quot;convection_velocity&quot;)),
+
+    // Get the reference to the variable coupled into this Material.
+    _diffusion_gradient(isCoupled(&quot;diffusion_gradient&quot;) ? coupledGradient(&quot;diffusion_gradient&quot;)
+                                                        : _grad_zero),
+
+    // Initialize our piecewise function helper with the user-specified interpolation points.
+    _piecewise_func(getParam&lt;std::vector&lt;Real&gt;&gt;(&quot;independent_vals&quot;),
+                    getParam&lt;std::vector&lt;Real&gt;&gt;(&quot;dependent_vals&quot;))
+{
+}
+
+void
+ExampleMaterial::computeQpProperties()
+{
+  // Diffusivity is the value of the interpolated piece-wise function described by the user
+  _diffusivity[_qp] = _piecewise_func.sample(_q_point[_qp](2));
+
+  // Convection velocity is set equal to the gradient of the variable set by the user.
+  _convection_velocity[_qp] = _diffusion_gradient[_qp];
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="02e95d81-8bff-4e4b-b6ec-7c8faef9dd98"><div class="modal-content"><h4>(moose/examples/ex08_materials/include/materials/ExampleMaterial.h)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#pragma once
+
+#include &quot;Material.h&quot;
+#include &quot;LinearInterpolation.h&quot;
+
+class ExampleMaterial : public Material
+{
+public:
+  ExampleMaterial(const InputParameters &amp; parameters);
+
+  static InputParameters validParams();
+
+protected:
+  virtual void computeQpProperties() override;
+
+private:
+  /// member variable to hold the computed diffusivity coefficient
+  MaterialProperty&lt;Real&gt; &amp; _diffusivity;
+  /// member variable to hold the computed convection velocity gradient term
+  MaterialProperty&lt;RealGradient&gt; &amp; _convection_velocity;
+
+  /// A place to store the coupled variable gradient for calculating the convection velocity
+  /// property.
+  const VariableGradient &amp; _diffusion_gradient;
+
+  /// A helper object for performaing linear interpolations on tabulated data for calculating the
+  /// diffusivity property.
+  LinearInterpolation _piecewise_func;
+};
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="5d813da3-8a5d-490d-bba7-8207c841f4bf"><div class="modal-content"><h4>(moose/examples/ex08_materials/src/materials/ExampleMaterial.C)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;ExampleMaterial.h&quot;
+
+registerMooseObject(&quot;ExampleApp&quot;, ExampleMaterial);
+
+InputParameters
+ExampleMaterial::validParams()
+{
+  InputParameters params = Material::validParams();
+
+  // Allow users to specify vectors defining the points of a piecewise function formed via linear
+  // interpolation.
+  params.addRequiredParam&lt;std::vector&lt;Real&gt;&gt;(
+      &quot;independent_vals&quot;,
+      &quot;The vector of z-coordinate values for a piecewise function&#x27;s independent variable&quot;);
+  params.addRequiredParam&lt;std::vector&lt;Real&gt;&gt;(
+      &quot;dependent_vals&quot;, &quot;The vector of diffusivity values for a piecewise function&#x27;s dependent&quot;);
+
+  // Allow the user to specify which independent variable&#x27;s gradient to use for calculating the
+  // convection velocity property:
+  params.addCoupledVar(
+      &quot;diffusion_gradient&quot;,
+      &quot;The gradient of this variable will be used to compute a velocity vector property.&quot;);
+
+  return params;
+}
+
+ExampleMaterial::ExampleMaterial(const InputParameters &amp; parameters)
+  : Material(parameters),
+    // Declare that this material is going to provide a Real value typed
+    // material property named &quot;diffusivity&quot; that Kernels and other objects can use.
+    // This property is &quot;bound&quot; to the class&#x27;s &quot;_diffusivity&quot; member.
+    _diffusivity(declareProperty&lt;Real&gt;(&quot;diffusivity&quot;)),
+
+    // Also declare a second &quot;convection_velocity&quot; RealGradient value typed property.
+    _convection_velocity(declareProperty&lt;RealGradient&gt;(&quot;convection_velocity&quot;)),
+
+    // Get the reference to the variable coupled into this Material.
+    _diffusion_gradient(isCoupled(&quot;diffusion_gradient&quot;) ? coupledGradient(&quot;diffusion_gradient&quot;)
+                                                        : _grad_zero),
+
+    // Initialize our piecewise function helper with the user-specified interpolation points.
+    _piecewise_func(getParam&lt;std::vector&lt;Real&gt;&gt;(&quot;independent_vals&quot;),
+                    getParam&lt;std::vector&lt;Real&gt;&gt;(&quot;dependent_vals&quot;))
+{
+}
+
+void
+ExampleMaterial::computeQpProperties()
+{
+  // Diffusivity is the value of the interpolated piece-wise function described by the user
+  _diffusivity[_qp] = _piecewise_func.sample(_q_point[_qp](2));
+
+  // Convection velocity is set equal to the gradient of the variable set by the user.
+  _convection_velocity[_qp] = _diffusion_gradient[_qp];
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="ba72d1ce-b845-48c7-9148-f639a6501af0"><div class="modal-content"><h4>(moose/examples/ex08_materials/include/kernels/ExampleDiffusion.h)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#pragma once
+
+#include &quot;Diffusion.h&quot;
+
+class ExampleDiffusion : public Diffusion
+{
+public:
+  ExampleDiffusion(const InputParameters &amp; parameters);
+
+  /**
+   * validParams returns the parameters that this Kernel accepts / needs
+   * The actual body of the function MUST be in the .C file.
+   */
+  static InputParameters validParams();
+
+protected:
+  virtual Real computeQpResidual() override;
+  virtual Real computeQpJacobian() override;
+
+  /**
+   * This MooseArray will hold the reference we need to our
+   * material property from the Material class
+   */
+  const MaterialProperty&lt;Real&gt; &amp; _diffusivity;
+};
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="9a62172e-3a92-4e06-8540-555d57f1aa6d"><div class="modal-content"><h4>(moose/examples/ex08_materials/src/kernels/ExampleDiffusion.C)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;ExampleDiffusion.h&quot;
+
+/**
+ * This function defines the valid parameters for
+ * this Kernel and their default values
+ */
+registerMooseObject(&quot;ExampleApp&quot;, ExampleDiffusion);
+
+InputParameters
+ExampleDiffusion::validParams()
+{
+  InputParameters params = Diffusion::validParams();
+  return params;
+}
+
+ExampleDiffusion::ExampleDiffusion(const InputParameters &amp; parameters)
+  : Diffusion(parameters), _diffusivity(getMaterialProperty&lt;Real&gt;(&quot;diffusivity&quot;))
+{
+}
+
+Real
+ExampleDiffusion::computeQpResidual()
+{
+  // Reusing the Diffusion Kernel&#x27;s residual calculation
+  return _diffusivity[_qp] * Diffusion::computeQpResidual();
+}
+
+Real
+ExampleDiffusion::computeQpJacobian()
+{
+  // Reusing the Diffusion Kernel&#x27;s jacobian calculation
+  return _diffusivity[_qp] * Diffusion::computeQpJacobian();
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="830f389c-d918-4375-a27a-53c5af10b147"><div class="modal-content"><h4>(moose/examples/ex08_materials/src/materials/ExampleMaterial.C)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;ExampleMaterial.h&quot;
+
+registerMooseObject(&quot;ExampleApp&quot;, ExampleMaterial);
+
+InputParameters
+ExampleMaterial::validParams()
+{
+  InputParameters params = Material::validParams();
+
+  // Allow users to specify vectors defining the points of a piecewise function formed via linear
+  // interpolation.
+  params.addRequiredParam&lt;std::vector&lt;Real&gt;&gt;(
+      &quot;independent_vals&quot;,
+      &quot;The vector of z-coordinate values for a piecewise function&#x27;s independent variable&quot;);
+  params.addRequiredParam&lt;std::vector&lt;Real&gt;&gt;(
+      &quot;dependent_vals&quot;, &quot;The vector of diffusivity values for a piecewise function&#x27;s dependent&quot;);
+
+  // Allow the user to specify which independent variable&#x27;s gradient to use for calculating the
+  // convection velocity property:
+  params.addCoupledVar(
+      &quot;diffusion_gradient&quot;,
+      &quot;The gradient of this variable will be used to compute a velocity vector property.&quot;);
+
+  return params;
+}
+
+ExampleMaterial::ExampleMaterial(const InputParameters &amp; parameters)
+  : Material(parameters),
+    // Declare that this material is going to provide a Real value typed
+    // material property named &quot;diffusivity&quot; that Kernels and other objects can use.
+    // This property is &quot;bound&quot; to the class&#x27;s &quot;_diffusivity&quot; member.
+    _diffusivity(declareProperty&lt;Real&gt;(&quot;diffusivity&quot;)),
+
+    // Also declare a second &quot;convection_velocity&quot; RealGradient value typed property.
+    _convection_velocity(declareProperty&lt;RealGradient&gt;(&quot;convection_velocity&quot;)),
+
+    // Get the reference to the variable coupled into this Material.
+    _diffusion_gradient(isCoupled(&quot;diffusion_gradient&quot;) ? coupledGradient(&quot;diffusion_gradient&quot;)
+                                                        : _grad_zero),
+
+    // Initialize our piecewise function helper with the user-specified interpolation points.
+    _piecewise_func(getParam&lt;std::vector&lt;Real&gt;&gt;(&quot;independent_vals&quot;),
+                    getParam&lt;std::vector&lt;Real&gt;&gt;(&quot;dependent_vals&quot;))
+{
+}
+
+void
+ExampleMaterial::computeQpProperties()
+{
+  // Diffusivity is the value of the interpolated piece-wise function described by the user
+  _diffusivity[_qp] = _piecewise_func.sample(_q_point[_qp](2));
+
+  // Convection velocity is set equal to the gradient of the variable set by the user.
+  _convection_velocity[_qp] = _diffusion_gradient[_qp];
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="a67828b6-9360-4f0a-945f-bfd5c3018d65"><div class="modal-content"><h4>(moose/test/tests/materials/output/output_block.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = FileMesh
+  file = rectangle.e
+  dim = 2
+  uniform_refine = 1
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = CoefDiffusion
+    variable = u
+    coef = 0.5
+  []
+  [time]
+    type = TimeDerivative
+    variable = u
+  []
+[]
+
+[BCs]
+  [left]
+    type = DirichletBC
+    variable = u
+    boundary = 1
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = u
+    boundary = 2
+    value = 2
+  []
+[]
+
+[Materials]
+  [block_1]
+    type = OutputTestMaterial
+    block = 1
+    output_properties = &#x27;real_property tensor_property&#x27;
+    outputs = exodus
+    variable = u
+  []
+  [block_2]
+    type = OutputTestMaterial
+    block = 2
+    output_properties = &#x27;vector_property tensor_property&#x27;
+    outputs = exodus
+    variable = u
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 5
+  dt = 0.1
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="11eeb00d-926a-40c2-b1f1-432ff107e35a"><div class="modal-content"><h4>(moose/test/tests/materials/output/output_multiple_files.i)</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = FileMesh
+  file = rectangle.e
+  dim = 2
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = CoefDiffusion
+    variable = u
+    coef = 0.5
+  []
+  [time]
+    type = TimeDerivative
+    variable = u
+  []
+[]
+
+[BCs]
+  [left]
+    type = DirichletBC
+    variable = u
+    boundary = 1
+    value = 0
+  []
+  [right]
+    type = DirichletBC
+    variable = u
+    boundary = 2
+    value = 1
+  []
+[]
+
+[Materials]
+  [block_1]
+    type = OutputTestMaterial
+    block = 1
+    output_properties = &#x27;real_property&#x27;
+    outputs = all
+    variable = u
+  []
+  [block_2]
+    type = OutputTestMaterial
+    block = 2
+    output_properties = &#x27;vector_property&#x27;
+    outputs = exodus2
+    variable = u
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 5
+  dt = 0.1
+  solve_type = PJFNK
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
+[]
+
+[Outputs]
+  [exodus1]
+    type = Exodus
+    hide = u
+  []
+  [exodus2]
+    type = Exodus
+    hide = u
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="2199eec7-846a-4d36-9d5c-0e8c0eb8d359"><div class="modal-content"><h4>(moose/test/src/materials/RecomputeMaterial.C)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+// MOOSE includes
+#include &quot;RecomputeMaterial.h&quot;
+
+registerMooseObject(&quot;MooseTestApp&quot;, RecomputeMaterial);
+
+InputParameters
+RecomputeMaterial::validParams()
+{
+  InputParameters params = Material::validParams();
+  params.addRequiredParam&lt;std::string&gt;(&quot;f_name&quot;,
+                                       &quot;The name of the property that holds the value to &quot;
+                                       &quot;of the function for which the root is being &quot;
+                                       &quot;computed&quot;);
+  params.addRequiredParam&lt;std::string&gt;(
+      &quot;f_prime_name&quot;,
+      &quot;The name of the property that holds the value to of the derivative of the function&quot;);
+  params.addRequiredParam&lt;std::string&gt;(&quot;p_name&quot;,
+                                       &quot;The name of the independent variable for the function&quot;);
+  params.addParam&lt;Real&gt;(&quot;constant&quot;, 0, &quot;The constant to add to the f equation.&quot;);
+  params.set&lt;bool&gt;(&quot;compute&quot;) = false;
+  return params;
+}
+
+RecomputeMaterial::RecomputeMaterial(const InputParameters &amp; parameters)
+  : Material(parameters),
+    _f(declareProperty&lt;Real&gt;(getParam&lt;std::string&gt;(&quot;f_name&quot;))),
+    _f_prime(declareProperty&lt;Real&gt;(getParam&lt;std::string&gt;(&quot;f_prime_name&quot;))),
+    _p(getMaterialProperty&lt;Real&gt;(getParam&lt;std::string&gt;(&quot;p_name&quot;))),
+    _constant(getParam&lt;Real&gt;(&quot;constant&quot;))
+{
+}
+
+void
+RecomputeMaterial::resetQpProperties()
+{
+  _f[_qp] = 84;
+  _f_prime[_qp] = 42;
+}
+
+// MOOSEDOCS_START
+void
+RecomputeMaterial::computeQpProperties()
+{
+  Real x = _p[_qp];
+  _f[_qp] = x * x - _constant;
+  _f_prime[_qp] = 2 * x;
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="34267afd-2d24-4471-9113-767c3a31fbfb"><div class="modal-content"><h4>(moose/test/src/materials/NewtonMaterial.C)</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+// MOOSE includes
+#include &quot;NewtonMaterial.h&quot;
+#include &quot;Material.h&quot;
+
+registerMooseObject(&quot;MooseTestApp&quot;, NewtonMaterial);
+
+InputParameters
+NewtonMaterial::validParams()
+{
+  InputParameters params = Material::validParams();
+  params += NestedSolve::validParams();
+  params.addRequiredParam&lt;std::string&gt;(&quot;f_name&quot;,
+                                       &quot;The name of the property that holds the value of &quot;
+                                       &quot;the function for which the root is being &quot;
+                                       &quot;computed&quot;);
+  params.addRequiredParam&lt;std::string&gt;(
+      &quot;f_prime_name&quot;,
+      &quot;The name of the property that holds the value to of the derivative of the function&quot;);
+  params.set&lt;Real&gt;(&quot;relative_tolerance&quot;) = 1e-15;
+  params.addRequiredParam&lt;std::string&gt;(&quot;p_name&quot;,
+                                       &quot;The name of the independent variable for the function&quot;);
+  params.addRequiredParam&lt;MaterialName&gt;(&quot;material&quot;, &quot;The material object to recompute.&quot;);
+  return params;
+}
+
+NewtonMaterial::NewtonMaterial(const InputParameters &amp; parameters)
+  : Material(parameters),
+    _f(getMaterialProperty&lt;Real&gt;(getParam&lt;std::string&gt;(&quot;f_name&quot;))),
+    _f_prime(getMaterialProperty&lt;Real&gt;(getParam&lt;std::string&gt;(&quot;f_prime_name&quot;))),
+    _p(declareProperty&lt;Real&gt;(getParam&lt;std::string&gt;(&quot;p_name&quot;))),
+    _nested_solve(NestedSolve(parameters))
+{
+}
+
+void
+NewtonMaterial::initialSetup()
+{
+  _discrete = &amp;getMaterial(&quot;material&quot;);
+}
+
+// MOOSEDOCS_START
+void
+NewtonMaterial::computeQpProperties()
+{
+  _p[_qp] = 0.5; // initial guess
+
+  // Only attempt to solve if iterations are to be taken. This is usually not required, but needed
+  // here to retain the old test behavior that would not trigger a discrete material evaluation. The
+  // NestedSolve class will always evaluate the residual for the initial guess (and will return a
+  // success state if the initial guess was exact).
+  if (getParam&lt;unsigned int&gt;(&quot;max_iterations&quot;) &gt; 0)
+    _nested_solve.nonlinear(
+        _p[_qp],
+        // Lambda function to compute residual and jacobian. The initial guess is not
+        // used here as it (_p) is directly coupled in the discrete material.
+        [&amp;](const Real &amp; /*guess*/, Real &amp; r, Real &amp; j)
+        {
+          _discrete-&gt;computePropertiesAtQp(_qp);
+          r = _f[_qp];
+          j = _f_prime[_qp];
+        });
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#25abde4e-0056-4a23-b4f5-fd5ab9adf468" class="tooltipped" data-position="left" data-tooltip="Producing / Computing Properties">Producing / Computing Properties</a></li><li><a href="#b2410116-73f3-43ef-9bf8-e1665ab0b5b5" class="tooltipped" data-position="left" data-tooltip="Consuming Properties">Consuming Properties</a></li><li><a href="#7409fa85-b987-45e7-a2d9-98e7b93be042" class="tooltipped" data-position="left" data-tooltip="Property Names">Property Names</a></li><li><a href="#bddd20db-a552-4724-bc1c-637e60fda2f3" class="tooltipped" data-position="left" data-tooltip="Default Material Properties">Default Material Properties</a></li><li><a href="#32f8f6a6-4605-41e9-a2be-b3608cc2b097" class="tooltipped" data-position="left" data-tooltip="Stateful Material Properties">Stateful Material Properties</a></li><li><a href="#42d49e71-d833-42b4-a9fa-a1a320ac8c2f" class="tooltipped" data-position="left" data-tooltip="Material Property Output">Material Property Output</a></li><li><a href="#10b51014-5cad-4ddc-80d1-19692b464330" class="tooltipped" data-position="left" data-tooltip="Material sorting">Material sorting</a></li><li><a href="#ed1ef189-4cd8-4f65-bcdf-0d9a3a0cb319" class="tooltipped" data-position="left" data-tooltip="Functor Material Properties">Functor Material Properties</a></li><li><a href="#5ff8e96a-979c-4fe3-b039-a336f7bf1f0b" class="tooltipped" data-position="left" data-tooltip="Advanced Topics">Advanced Topics</a></li><li><a href="#1f9045c6-1c32-44b2-90b8-d23a264d85ca" class="tooltipped" data-position="left" data-tooltip="Available Objects">Available Objects</a></li><li><a href="#239a8f10-f632-4ffd-9bf4-fb342f0e2fe6" class="tooltipped" data-position="left" data-tooltip="Available Actions">Available Actions</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
