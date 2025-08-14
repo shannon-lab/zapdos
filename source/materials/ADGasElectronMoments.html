@@ -1,0 +1,733 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>ADGasElectronMoments | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="d95250bf-2126-474b-966d-ca54ab7ef484" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="3380f60b-2b40-44d7-a0be-15d52378430e" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d44c38df-ce89-4a76-ba71-ef962ecfbf6c" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="0f05b848-28bd-46c3-b3ae-7077264bfa53"><i class="material-icons">menu</i></a><ul class="sidenav" id="0f05b848-28bd-46c3-b3ae-7077264bfa53"><li><a href="#!" class="dropdown-trigger" data-target="aed4adf5-7e3e-4cc2-8ee9-5149a6dd6027" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="81c491ef-4388-4578-a343-d3e30511527d" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="45fd2db9-d18f-4d2f-83d2-04084f6450b5" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="d95250bf-2126-474b-966d-ca54ab7ef484"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="3380f60b-2b40-44d7-a0be-15d52378430e"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="d44c38df-ce89-4a76-ba71-ef962ecfbf6c"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="aed4adf5-7e3e-4cc2-8ee9-5149a6dd6027"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="81c491ef-4388-4578-a343-d3e30511527d"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="45fd2db9-d18f-4d2f-83d2-04084f6450b5"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">materials</span><a href="#" class="breadcrumb">ADGasElectronMoments</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="5898dddc-fbec-4795-aa88-d8bf79a76e7a" data-section-level="1" data-section-text="ADGasElectronMoments"><h1 id="adgaselectronmoments">ADGasElectronMoments</h1><div class="card moose-alert moose-alert-construction"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">build</i><span class="moose-alert-title-brand">construction:</span>Undocumented Class</div><div class="card-content"><div class="moose-alert-content"><p>The ADGasElectronMoments has not been documented. The content listed below should be used as a starting point for documenting the class, which includes the typical automatic documentation associated with a MooseObject; however, what is contained is ultimately determined by what is necessary to make the documentation clear for users.</p></div></div></div><p>Material properties of electrons(Defines reaction properties with rate coefficients)</p><section class="scrollspy" id="b44ea82e-9269-422d-afd3-adf23aee5f0d" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p></p></section><section class="scrollspy" id="62ba0ed1-aa73-4985-b7ad-6d11074c7834" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><p></p></section><section class="scrollspy" id="87568f14-b64a-41c1-9ce0-c52f1dc9aacc" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="26574d0b-9205-45ac-8318-f926b416b6f4" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">em</span><span class="moose-parameter-header-description">Species concentration needed to calculate the poisson source</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Species concentration needed to calculate the poisson source</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">mean_en</span><span class="moose-parameter-header-description">The electron mean energy in log form.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electron mean energy in log form.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">potential_units</span><span class="moose-parameter-header-description">The potential units.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The potential units.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">property_tables_file</span><span class="moose-parameter-header-description">The file containing interpolation tables for material properties.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>FileName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The file containing interpolation tables for material properties.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_moles</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether to use units of moles as opposed to # of molecules.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to use units of moles as opposed to # of molecules.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="4e77aca2-4aa1-49e3-ba3a-e82e180e98db" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundaries (ids or names) from the mesh where this object applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of boundaries (ids or names) from the mesh where this object applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">compute</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">constant_on</span><span class="moose-parameter-header-default">NONE</span><span class="moose-parameter-header-description">When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>NONE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, ELEMENT, SUBDOMAIN</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">declare_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">time_units</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">Units of time</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Units of time</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="99b38ee8-9925-4973-b354-d66fe9c04daa" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="8aaeb987-b235-4b09-85fa-a9ee0d8b46ab" data-section-level="3" data-section-text="Outputs Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">output_properties</span><span class="moose-parameter-header-description">List of material properties, from this material, to output (outputs must also be defined to an output type)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of material properties, from this material, to output (outputs must also be defined to an output type)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-default">none </span><span class="moose-parameter-header-description">Vector of output names where you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>none </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Vector of output names where you would like to restrict the output of variables(s) associated with this object</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Outputs Parameters</h3></summary></details></section><section id="027a5e6f-e17b-4903-aa0b-a6748e0327f9" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="469e71cc-260c-4bc2-94be-83d2b81581c9" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#789be343-0d54-4cc7-b3c6-7b4d3ca95b68">(test/tests/automatic_differentiation/ad_argon.i)</a></li></ul></section></section><div class="moose-modal modal" id="789be343-0d54-4cc7-b3c6-7b4d3ca95b68"><div class="modal-content"><h4>(test/tests/automatic_differentiation/ad_argon.i)</h4><pre style="max-height:350px;"><code class="language-moose">dom0Scale = 1e-3
+
+[GlobalParams]
+  offset = 30
+  potential_units = kV
+  use_moles = true
+[]
+
+[Mesh]
+  [file]
+    type = FileMeshGenerator
+    file = &#x27;ad_argon.msh&#x27;
+  []
+  [left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = file
+  []
+  [right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  automatic_scaling = true
+  compute_scaling_once = false
+  end_time = 1e-1
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = &#x27;basic&#x27;
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+  nl_rel_tol = 1e-6
+  nl_abs_tol = 1e-10
+  dtmin = 1e-18
+  l_max_its = 20
+  [TimeSteppers]
+    [Adaptive]
+      type = IterationAdaptiveDT
+      cutback_factor = 0.4
+      dt = 1e-11
+      growth_factor = 1.2
+      optimal_iterations = 30
+    []
+  []
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    execute_on = &#x27;final&#x27;
+  []
+[]
+
+[UserObjects]
+  [data_provider]
+    type = ProvideMobility
+    electrode_area = 5.02e-7 # Formerly 3.14e-6
+    ballast_resist = 1e6
+    e = 1.6e-19
+  []
+[]
+
+[Kernels]
+  [Arex_time_deriv]
+    type = TimeDerivativeLog
+    variable = Ar*
+    block = 0
+  []
+  [Arex_diffusion]
+    type = CoeffDiffusion
+    variable = Ar*
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [Arex_log_stabilization]
+    type = LogStabilizationMoles
+    variable = Ar*
+    block = 0
+    #offset = 25
+  []
+
+  [em_time_deriv]
+    type = TimeDerivativeLog
+    variable = em
+    block = 0
+  []
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    block = 0
+    position_units = ${dom0Scale}
+  []
+
+  [em_log_stabilization]
+    type = LogStabilizationMoles
+    variable = em
+    block = 0
+  []
+
+  [potential_diffusion_dom1]
+    type = CoeffDiffusionLin
+    variable = potential
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [Arp_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = Arp
+    block = 0
+  []
+  [Ar2p_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = Ar2p
+    block = 0
+  []
+  [em_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = em
+    block = 0
+  []
+
+  [Arp_time_deriv]
+    type = TimeDerivativeLog
+    variable = Arp
+    block = 0
+  []
+  [Arp_advection]
+    type = EFieldAdvection
+    variable = Arp
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [Arp_diffusion]
+    type = CoeffDiffusion
+    variable = Arp
+    block = 0
+    position_units = ${dom0Scale}
+  []
+
+  [Arp_log_stabilization]
+    type = LogStabilizationMoles
+    variable = Arp
+    block = 0
+  []
+
+  [Ar2p_time_deriv]
+    #type = ElectronTimeDerivative
+    type = TimeDerivativeLog
+    variable = Ar2p
+    block = 0
+  []
+  [Ar2p_advection]
+    type = EFieldAdvection
+    variable = Ar2p
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [Ar2p_diffusion]
+    type = CoeffDiffusion
+    variable = Ar2p
+    block = 0
+    position_units = ${dom0Scale}
+  []
+
+  [Ar2p_log_stabilization]
+    type = LogStabilizationMoles
+    variable = Ar2p
+    block = 0
+  []
+
+  [mean_en_time_deriv]
+    type = TimeDerivativeLog
+    variable = mean_en
+    block = 0
+  []
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [mean_en_joule_heating]
+    type = JouleHeating
+    variable = mean_en
+    em = em
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [mean_en_log_stabilization]
+    type = LogStabilizationMoles
+    variable = mean_en
+    block = 0
+    offset = 15
+  []
+[]
+
+[Variables]
+  [potential]
+  []
+
+  [em]
+    initial_condition = -24
+    block = 0
+  []
+
+  [Arp]
+    initial_condition = -24.69314718056
+    block = 0
+  []
+
+  [Ar*]
+    initial_condition = -26
+    block = 0
+  []
+
+  [Ar2p]
+    initial_condition = -24.69314718056
+    block = 0
+  []
+
+  [mean_en]
+    block = 0
+    initial_condition = -24
+  []
+[]
+
+[AuxVariables]
+  [Arex_lin]
+    block = 0
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Ar2p_lin]
+    block = 0
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Ar]
+    block = 0
+    order = CONSTANT
+    family = MONOMIAL
+    initial_condition = 3.70109
+  []
+  [e_temp]
+    block = 0
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [x]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [x_node]
+  []
+  [rho]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [em_lin]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [Arp_lin]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [Efield]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Current_em]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [Current_Arp]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [Current_Ar2p]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [tot_gas_current]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [EFieldAdvAux_em]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [DiffusiveFlux_em]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [PowerDep_em]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [PowerDep_Arp]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+[]
+
+[AuxKernels]
+  [Arex_lin]
+    type = DensityMoles
+    variable = Arex_lin
+    density_log = Ar*
+    block = 0
+  []
+  [Ar2p_lin]
+    type = DensityMoles
+    variable = Ar2p_lin
+    density_log = Ar2p
+    block = 0
+  []
+  [PowerDep_em]
+    type = ADPowerDep
+    density_log = em
+    art_diff = false
+    potential_units = kV
+    variable = PowerDep_em
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [PowerDep_Arp]
+    type = ADPowerDep
+    density_log = Arp
+    art_diff = false
+    potential_units = kV
+    variable = PowerDep_Arp
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [e_temp]
+    type = ElectronTemperature
+    variable = e_temp
+    electron_density = em
+    mean_en = mean_en
+    block = 0
+  []
+  [x_g]
+    type = Position
+    variable = x
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [rho]
+    type = ParsedAux
+    variable = rho
+    coupled_variables = &#x27;em_lin Arp_lin Ar2p_lin&#x27;
+    expression = &#x27;Arp_lin + Ar2p_lin - em_lin&#x27;
+    execute_on = &#x27;timestep_end&#x27;
+    block = 0
+  []
+  [tot_gas_current]
+    type = ParsedAux
+    variable = tot_gas_current
+    coupled_variables = &#x27;Current_em Current_Arp Current_Ar2p&#x27;
+    expression = &#x27;Current_em + Current_Arp + Current_Ar2p&#x27;
+    execute_on = &#x27;timestep_end&#x27;
+    block = 0
+  []
+  [em_lin]
+    type = DensityMoles
+    variable = em_lin
+    density_log = em
+    block = 0
+  []
+  [Arp_lin]
+    type = DensityMoles
+    variable = Arp_lin
+    density_log = Arp
+    block = 0
+  []
+  [Efield_g]
+    type = Efield
+    component = 0
+    variable = Efield
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [Current_em]
+    type = ADCurrent
+    density_log = em
+    variable = Current_em
+    art_diff = false
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [Current_Arp]
+    type = ADCurrent
+    density_log = Arp
+    variable = Current_Arp
+    art_diff = false
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [Current_Ar2p]
+    type = ADCurrent
+    density_log = Ar2p
+    variable = Current_Ar2p
+    art_diff = false
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [EFieldAdvAux_em]
+    type = ADEFieldAdvAux
+    density_log = em
+    variable = EFieldAdvAux_em
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [DiffusiveFlux_em]
+    type = ADDiffusiveFlux
+    density_log = em
+    variable = DiffusiveFlux_em
+    block = 0
+    position_units = ${dom0Scale}
+  []
+[]
+
+[BCs]
+  [mean_en_physical_right]
+    type = HagelaarEnergyBC
+    variable = mean_en
+    boundary = &#x27;right&#x27;
+    electrons = em
+    r = 0.0
+    position_units = ${dom0Scale}
+  []
+  [mean_en_physical_left]
+    type = HagelaarEnergyBC
+    variable = mean_en
+    boundary = &#x27;left&#x27;
+    electrons = em
+    r = 0
+    position_units = ${dom0Scale}
+  []
+  [secondary_energy_left]
+    type = SecondaryElectronEnergyBC
+    variable = mean_en
+    boundary = &#x27;left&#x27;
+    electrons = em
+    ions = &#x27;Arp Ar2p&#x27;
+    r = 0
+    emission_coeffs = &#x27;0.05 0.05&#x27;
+    position_units = ${dom0Scale}
+    secondary_electron_energy = 3
+  []
+
+  [potential_left]
+    type = NeumannCircuitVoltageMoles_KV
+    variable = potential
+    boundary = left
+    function = potential_bc_func
+    ions = &#x27;Arp Ar2p&#x27;
+    data_provider = data_provider
+    electrons = em
+    electron_energy = mean_en
+    r = 0
+    position_units = ${dom0Scale}
+    emission_coeffs = &#x27;0.05 0.05&#x27;
+  []
+  [potential_dirichlet_right]
+    type = DirichletBC
+    variable = potential
+    boundary = right
+    value = 0
+    preset = false
+  []
+  [em_physical_right]
+    type = HagelaarElectronBC
+    variable = em
+    boundary = &#x27;right&#x27;
+    electron_energy = mean_en
+    r = 0.0
+    position_units = ${dom0Scale}
+  []
+  [Arp_physical_right_diffusion]
+    type = HagelaarIonDiffusionBC
+    variable = Arp
+    boundary = &#x27;right&#x27;
+    r = 0
+    position_units = ${dom0Scale}
+  []
+  [Arp_physical_right_advection]
+    type = HagelaarIonAdvectionBC
+    variable = Arp
+    boundary = &#x27;right&#x27;
+    r = 0
+    position_units = ${dom0Scale}
+  []
+  [Ar2p_physical_right_diffusion]
+    type = HagelaarIonDiffusionBC
+    variable = Ar2p
+    boundary = &#x27;right&#x27;
+    r = 0
+    position_units = ${dom0Scale}
+  []
+  [Ar2p_physical_right_advection]
+    type = HagelaarIonAdvectionBC
+    variable = Ar2p
+    boundary = &#x27;right&#x27;
+    r = 0
+    position_units = ${dom0Scale}
+  []
+
+  [em_physical_left]
+    type = HagelaarElectronBC
+    variable = em
+    boundary = &#x27;left&#x27;
+    electron_energy = mean_en
+    r = 0
+    position_units = ${dom0Scale}
+  []
+  [sec_electrons_left]
+    type = SecondaryElectronBC
+    variable = em
+    boundary = &#x27;left&#x27;
+    ions = Arp
+    electron_energy = mean_en
+    r = 0
+    position_units = ${dom0Scale}
+    emission_coeffs = 0.05
+  []
+  [Arp_physical_left_diffusion]
+    type = HagelaarIonDiffusionBC
+    variable = Arp
+    boundary = &#x27;left&#x27;
+    r = 0
+    position_units = ${dom0Scale}
+  []
+  [Arp_physical_left_advection]
+    type = HagelaarIonAdvectionBC
+    variable = Arp
+    boundary = &#x27;left&#x27;
+    r = 0
+    position_units = ${dom0Scale}
+  []
+  [Ar2p_physical_left_diffusion]
+    type = HagelaarIonDiffusionBC
+    variable = Ar2p
+    boundary = &#x27;left&#x27;
+    r = 0
+    position_units = ${dom0Scale}
+  []
+  [Ar2p_physical_left_advection]
+    type = HagelaarIonAdvectionBC
+    variable = Ar2p
+    boundary = &#x27;left&#x27;
+    r = 0
+    position_units = ${dom0Scale}
+  []
+[]
+
+[ICs]
+  [potential_ic]
+    type = FunctionIC
+    variable = potential
+    function = potential_ic_func
+  []
+[]
+
+[Functions]
+  [potential_bc_func]
+    type = ParsedFunction
+    expression = -0.8
+  []
+  [potential_ic_func]
+    type = ParsedFunction
+    expression = &#x27;-0.8 * (1 - x)&#x27;
+  []
+[]
+
+[Materials]
+  [electron_moments]
+    type = ADGasElectronMoments
+    block = 0
+    em = em
+    mean_en = mean_en
+    property_tables_file = &#x27;argon_chemistry_rates/electron_moments.txt&#x27;
+  []
+
+  [gas_constants]
+    type = GenericConstantMaterial
+    block = 0
+    prop_names = &#x27; e         N_A     k_boltz  eps       T_gas massem   p_gas  n_gas    se_coeff se_energy&#x27;
+    prop_values = &#x27;1.6e-19 6.022e23  1.38e-23 8.854e-12 300   9.11e-31 1.01e5 40.4915  0.05     3.&#x27;
+  []
+  [ad_gas_constants]
+    type = ADGenericConstantMaterial
+    block = 0
+    prop_names = &#x27;diffpotential&#x27;
+    prop_values = &#x27;8.85e-12&#x27;
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Arp
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    block = 0
+  []
+  [gas_species_1]
+    type = ADHeavySpecies
+    heavy_species_name = Ar2p
+    heavy_species_mass = 1.328e-25
+    heavy_species_charge = 1.0
+    block = 0
+  []
+
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    block = 0
+  []
+
+  [gas_species_3]
+    type = ADHeavySpecies
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    block = 0
+  []
+
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+[]
+
+[Reactions]
+  # This argon reaction network based on a ZDPlasKin example:
+  # zdplaskin.laplace.univ-tlse.fr
+  # Example: &quot;Micro-cathode sustained discharged in Ar&quot;
+  [Argon]
+    species = &#x27;em Arp Ar2p Ar*&#x27;
+    aux_species = &#x27;Ar&#x27;
+    reaction_coefficient_format = &#x27;townsend&#x27;
+    gas_species = &#x27;Ar&#x27;
+    electron_energy = &#x27;mean_en&#x27;
+    electron_density = &#x27;em&#x27;
+    include_electrons = true
+    file_location = &#x27;argon_chemistry_rates&#x27;
+    equation_constants = &#x27;Tgas&#x27;
+    equation_values = &#x27;300&#x27;
+
+    # For function-based reactions (e.g. those whose rate coefficients are
+    # enclosed in curly braces, {}), the e_temp auxiliary variable is
+    # named as a variable. Note that while e_temp is an AuxVariable, it does
+    # depend on nonlinear variables and therefore should contribute to the
+    # jacobian of any functions which depend on it.
+    # At the moment this jacobian contribution is not included, but the
+    # contribution is minimal compared to advection and diffusion so we
+    # can get away with a NEWTON solver in this case.
+    #
+    # For more complex reaction networks with many functions that depend on
+    # electron temperature, it may be necessary to use PJFNK instead of
+    # NEWTON.
+    equation_variables = &#x27;e_temp&#x27;
+    potential = &#x27;potential&#x27;
+    use_log = true
+    position_units = ${dom0Scale}
+    use_ad = true
+    block = 0
+
+    reactions = &#x27;em + Ar -&gt; em + Ar               : EEDF [elastic] (reaction1)
+                 em + Ar -&gt; em + Ar*              : EEDF [-11.5]   (reaction2)
+                 em + Ar -&gt; em + em + Arp         : EEDF [-15.76]  (reaction3)
+                 em + Ar* -&gt; em + Ar              : EEDF [11.5]    (reaction4)
+                 em + Ar* -&gt; em + em + Arp        : EEDF [-4.3]    (reaction5)
+                 Ar2p + em -&gt; Ar* + Ar            : {5.1187e11*(e_temp/300)^(-0.67)}
+                 Ar2p + Ar -&gt; Arp + Ar + Ar       : {3.649332e12/Tgas*exp(-15130/Tgas)}
+                 Ar* + Ar* -&gt; Ar2p + em           : 3.6132e8
+                 Arp + em + em -&gt; Ar + em         : {3.17314235e9*(e_temp/11600)^(-4.5)}
+                 Ar* + Ar + Ar -&gt; Ar + Ar + Ar    : 5077.02776
+                 Arp + Ar + Ar -&gt; Ar2p + Ar       : {81595.089*(Tgas/300)^(-0.4)}&#x27;
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#b44ea82e-9269-422d-afd3-adf23aee5f0d" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#62ba0ed1-aa73-4985-b7ad-6d11074c7834" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#87568f14-b64a-41c1-9ce0-c52f1dc9aacc" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#469e71cc-260c-4bc2-94be-83d2b81581c9" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
