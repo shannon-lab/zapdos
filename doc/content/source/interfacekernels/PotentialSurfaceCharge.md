@@ -1,20 +1,39 @@
 # PotentialSurfaceCharge
 
-!alert construction title=Undocumented Class
-The PotentialSurfaceCharge has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /InterfaceKernels/PotentialSurfaceCharge
 
 ## Overview
 
-!! Replace these lines with information regarding the PotentialSurfaceCharge object.
+`PotentialSurfaceCharge` enforces the dielectric boundary condition at an interface by equating the difference in the electric field at an interface to a surface charge. To supply the surface charge, the [ADSurfaceCharge.md] object is often used.
+
+The dielectric boundary condition is defined as
+
+\begin{equation}
+\left( \epsilon_{1} \vec{E}_{1} - \epsilon_{2} \vec{E}_{2} \right) \cdot \textbf{n} = \sigma
+\end{equation}
+
+Where:
+
+- Subscript $1$ is the the primary side of the interface,
+- Subscript $2$ is the the neighboring side of the interface,
+- $\textbf{n}$ is the normal vector of the interface,
+- $\vec{E}$ is the electric field, and
+- $\sigma$ is the surface charge.
+
+`PotentialSurfaceCharge` assumes the electrostatic approximation (i.e., $\vec{E} = -\nabla V$). When converting to the electrostatic potential and applying a scaling factor of the mesh, `PotentialSurfaceCharge` is defined as
+
+\begin{equation}
+\left( \epsilon_{2} \left( \nabla V_{2} / l_{c2} \right) -  \epsilon_{1} \nabla \left( V_{1} / l_{c1} \right) \right) \cdot \textbf{n} = \sigma
+\end{equation}
+
+Where:
+
+- $V$ is the electrostatic potential, and
+- $l_{c}$ is the scaling factor of the mesh.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the PotentialSurfaceCharge object.
+!listing test/tests/surface_charge/dbd_test.i block=InterfaceKernels/potential_right
 
 !syntax parameters /InterfaceKernels/PotentialSurfaceCharge
 
