@@ -27,7 +27,7 @@ ArbitrarilyTiedValueConstraint::validParams()
   params.addRequiredParam<Real>("H", "The value of u_secondary/u_primary.");
   params.set<bool>("use_displaced_mesh") = true;
   params.addClassDescription(
-      "Constraint that forces the value of a variable on one side of an interface by a ratio to "
+      "Constraint that forces the value of a variable on one side of an interface to be scaled by a ratio to "
       "the same variable on the other side of the interface.");
   return params;
 }
