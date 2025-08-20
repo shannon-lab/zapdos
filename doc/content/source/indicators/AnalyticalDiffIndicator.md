@@ -7,10 +7,10 @@
 The `AnalyticalDiffIndicator` object computes the raw difference between a solution variable and
 a known function.
 
-For more information about the Indicators System within MOOSE, please see [Indicators System page](syntax/Adaptivity/Indicators/index.md).
+For more information about the Indicators System within MOOSE, please see the [Indicators System page](syntax/Adaptivity/Indicators/index.md).
 
 !alert! warning title=Untested Class
-The `AnalyticalDiffIndicator` does not have a formalized test, yet. For this reason,
+The `AnalyticalDiffIndicator` object does not have a formalized test, yet. For this reason,
 users should beware of unforeseen bugs when using `AnalyticalDiffIndicator`. To
 report a bug or discuss future contributions to Zapdos, please refer to the
 [Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions).
