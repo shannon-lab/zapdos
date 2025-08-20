@@ -18,6 +18,9 @@ PotentialSurfaceCharge::validParams()
   InputParameters params = ADInterfaceKernel::validParams();
   params.addParam<Real>("position_units", 1.0, "The units of position.");
   params.addParam<Real>("neighbor_position_units", 1.0, "The units of position.");
+  params.addClassDescription(
+      "Enforces the dielectric boundary condition on a potential variable at an interface, "
+      "where the surface charge is provided as an ADMaterialProperty.");
   return params;
 }
 
