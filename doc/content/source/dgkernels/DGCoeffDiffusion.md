@@ -9,7 +9,7 @@
 For more information about the discontinuous Galerkin method within MOOSE, please see [DGKernels syntax page](syntax/DGKernels/index.md).
 
 !alert! warning title=Untested Class
-The `DGCoeffDiffusion` does not have a formalized test, yet. For this reason,
+The `DGCoeffDiffusion` object does not have a formalized test, yet. For this reason,
 users should beware of unforeseen bugs when using `DGCoeffDiffusion`. To
 report a bug or discuss future contributions to Zapdos, please refer to the
 [Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions).
