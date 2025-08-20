@@ -14,8 +14,8 @@
 #include "NodeFaceConstraint.h"
 
 /**
- * A ArbitrarilyTiedValueConstraint forces the value of a variable to be the same on both sides of
- * an interface.
+ * The ArbitrarilyTiedValueConstraint object forces the value of a variable on one side of an
+ * interface to be scaled by a ratio to the same variable on the other side of the interface.
  */
 class ArbitrarilyTiedValueConstraint : public NodeFaceConstraint
 {
