@@ -1,20 +1,34 @@
 # DGEFieldAdvection
 
-!alert construction title=Undocumented Class
-The DGEFieldAdvection has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /DGKernels/DGEFieldAdvection
 
 ## Overview
 
-!! Replace these lines with information regarding the DGEFieldAdvection object.
+`DGEFieldAdvection` is a version of [EFieldAdvection.md] that uses the discontinous Galerkin method.
+
+For more information about the discontinuous Galerkin method within MOOSE, please see [DGKernels syntax page](syntax/DGKernels/index.md).
+
+!alert! warning title=Untested Class
+The `DGEFieldAdvection` does not have a formalized test, yet. For this reason,
+users should beware of unforeseen bugs when using `DGEFieldAdvection`. To
+report a bug or discuss future contributions to Zapdos, please refer to the
+[Zapdos GitHub Discussions page](https://github.com/shannon-lab/zapdos/discussions).
+For standards on how to contribute to Zapdos and the MOOSE framework,
+please refer to the [MOOSE Contributing page](framework/contributing.md).
+!alert-end!
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the DGEFieldAdvection object.
+```text
+[DGKernels]
+  [em_dg_advection]
+    type = DGEFieldAdvection
+    variable = em
+    field_property_name = efield_plasma
+    neighbor_field_property_name = efield_water
+  []
+[]
+```
 
 !syntax parameters /DGKernels/DGEFieldAdvection
 
