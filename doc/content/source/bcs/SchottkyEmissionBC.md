@@ -16,7 +16,7 @@ a_{e} =
 \end{cases} \\[10pt]
 \textbf{J}_{\textbf{e}} \cdot \textbf{n} = A_{G} T^{2} \exp\left( \frac{\text{-} \left( \phi - \Delta \phi \right) }{ k_{B} T} \right) \\[10pt]
 F =  \left( 1-a_{e} \right) \gamma \left( \text{-} \nabla V \right) \cdot \textbf{n} \\[10pt]
-\Delta \phi = \sqrt{\frac{e^{3} F}{4 \pi \epsilon_{0}}} 
+\Delta \phi = \sqrt{\frac{e^{3} F}{4 \pi \varepsilon_{0}}}
 \end{equation}
 
 Where $\textbf{J}_{\textbf{e}}$ is the electron current density, $A_{G}$ is the Richardson coefficient, $T$ is the temperature of the cathode, $k_{B}$ is Boltzmann constant in units of eV/K, $\phi$ is the local work function, $\Delta \phi$ is the difference in the work funtion due to the electric field, $F$ is the local field, $\textbf{n}$ is the normal vector of the boundary, $\gamma$ is the field enhancement factor, and $V$ is the potential. $a_{e}$ is defined such that the outflow is only defined when the drift velocity is directed towards the wall and zero otherwise. With the electron current density, the outward electron flux is defined as

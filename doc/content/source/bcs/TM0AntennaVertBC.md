@@ -9,13 +9,13 @@
 The boundary condition of the azimuthal component of the magnetizing field normal to the antenna surface is
 
 \begin{equation}
-  \textbf{n} \times \left( \nabla \times \textbf{H} \right) = j \omega \epsilon \textbf{E}
+  \textbf{n} \times \left( \nabla \times \textbf{H} \right) = j \omega \varepsilon \textbf{E}
 \end{equation}
 
-Where $\textbf{H}$ is the magnetizing field, $\textbf{n}$ is the normal vector of the boundary, $\epsilon$ is the material permittivity, $\omega$ is the drive frequency of the system, $\textbf{E}$ is the electric field, and $j = \sqrt{-1}$. By assuming the normal of azimuthal component of the magnetizing field to the surface is purely in the axial direction and an incoming electric field of unity (such that $\textbf{E} = (1 - j)$), the integrated boundary condition simplifies to
+Where $\textbf{H}$ is the magnetizing field, $\textbf{n}$ is the normal vector of the boundary, $\varepsilon$ is the material permittivity, $\omega$ is the drive frequency of the system, $\textbf{E}$ is the electric field, and $j = \sqrt{-1}$. By assuming the normal of azimuthal component of the magnetizing field to the surface is purely in the axial direction and an incoming electric field of unity (such that $\textbf{E} = (1 - j)$), the integrated boundary condition simplifies to
 
 \begin{equation}
-  \nabla \text{H}_{\theta} \cdot \textbf{n} = \frac{\text{-} \text{H}_{\theta}}{r} + \omega \epsilon
+  \nabla \text{H}_{\theta} \cdot \textbf{n} = \frac{\text{-} \text{H}_{\theta}}{r} + \omega \varepsilon
 \end{equation}
 
 Where $H_{\phi}$ is the azimuthal component of the magnetizing field and $r$ is the radial distance from the axial centerline.

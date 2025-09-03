@@ -9,13 +9,13 @@
 The wave equation for the H-field is defined as
 
 \begin{equation}
-  \nabla \times \nabla \times \textbf{H} = \text{-} \epsilon \mu_{0} \omega^{2} \textbf{H}
+  \nabla \times \nabla \times \textbf{H} = \text{-} \varepsilon \mu_{0} \omega^{2} \textbf{H}
 \end{equation}
 
-Where $\textbf{H}$ is the magnetizing field, $\epsilon$ is the material permittivity, $\mu_{0}$ is the permeability of free space, and $\omega$ is the frequency. By assuming an axisymmetric cylindrical geometry, the wave equation simplifies to
+Where $\textbf{H}$ is the magnetizing field, $\varepsilon$ is the material permittivity, $\mu_{0}$ is the permeability of free space, and $\omega$ is the frequency. By assuming an axisymmetric cylindrical geometry, the wave equation simplifies to
 
 \begin{equation}
-  \nabla^2 \text{H}_{\theta} - \frac{\text{H}_{\theta}}{r^2} = \text{-} \epsilon \mu_{0} \omega^{2} \text{H}_{\theta}
+  \nabla^2 \text{H}_{\theta} - \frac{\text{H}_{\theta}}{r^2} = \text{-} \varepsilon \mu_{0} \omega^{2} \text{H}_{\theta}
 \end{equation}
 
 Where $H_{\phi}$ is the azimuthal component of the magnetizing field and $r$ is the radial distance from the axial centerline.
