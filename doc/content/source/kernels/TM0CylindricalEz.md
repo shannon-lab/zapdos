@@ -9,10 +9,10 @@
 The wave equation for the electric field is defined as
 
 \begin{equation}
-  \nabla \times \textbf{H} = \epsilon \omega \textbf{E}
+  \nabla \times \textbf{H} = \varepsilon \omega \textbf{E}
 \end{equation}
 
-Where $\textbf{H}$ is the magnetizing field, $\epsilon$ is the material permittivity, $\textbf{E}$ is the electric field, and $\omega$ is the frequency. By assuming an axisymmetric cylindrical geometry, the wave equation simplifies to
+Where $\textbf{H}$ is the magnetizing field, $\varepsilon$ is the material permittivity, $\textbf{E}$ is the electric field, and $\omega$ is the frequency. By assuming an axisymmetric cylindrical geometry, the wave equation simplifies to
 
 \begin{equation}
   \frac{\partial H_{\phi}}{\partial r} + \frac{H_{\phi}}{r}  = \varepsilon \omega \text{E}_{z}
