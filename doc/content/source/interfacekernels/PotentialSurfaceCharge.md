@@ -9,7 +9,7 @@
 The dielectric boundary condition is defined as
 
 \begin{equation}
-\left( \epsilon_{1} \vec{E}_{1} - \epsilon_{2} \vec{E}_{2} \right) \cdot \textbf{n} = \sigma
+\left( \varepsilon_{1} \vec{E}_{1} - \varepsilon_{2} \vec{E}_{2} \right) \cdot \textbf{n} = \sigma
 \end{equation}
 
 Where:
@@ -23,7 +23,7 @@ Where:
 `PotentialSurfaceCharge` assumes the electrostatic approximation (i.e., $\vec{E} = -\nabla V$). When converting to the electrostatic potential and applying a scaling factor of the mesh, `PotentialSurfaceCharge` is defined as
 
 \begin{equation}
-\left( \epsilon_{2} \left( \nabla V_{2} / l_{c2} \right) -  \epsilon_{1} \nabla \left( V_{1} / l_{c1} \right) \right) \cdot \textbf{n} = \sigma
+\left( \varepsilon_{2} \left( \nabla V_{2} / l_{c,2} \right) -  \varepsilon_{1} \nabla \left( V_{1} / l_{c,1} \right) \right) \cdot \textbf{n} = \sigma
 \end{equation}
 
 Where:

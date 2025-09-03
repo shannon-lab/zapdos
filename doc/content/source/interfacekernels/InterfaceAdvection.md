@@ -9,7 +9,7 @@
 This advection term at the interface is defined as
 
 \begin{equation}
-\Gamma_{\text{adv}1} \cdot \textbf{n} = \text{sign}_{j2} \mu_{j2} n_{j2} \ \vec{E}_{2} \cdot \textbf{n}
+\Gamma_{\text{adv},1} \cdot \textbf{n} = \text{sign}_{j,2} \mu_{j,2} n_{j,2} \ \vec{E}_{2} \cdot \textbf{n}
 \end{equation}
 
 Where:
@@ -27,7 +27,7 @@ When converting the density to logarithmic form and applying a scaling
 factor of the mesh, `InterfaceAdvection` is defined as
 
 \begin{equation}
-\Gamma_{\text{adv1}} \cdot \textbf{n} = \text{sign}_{j2} \mu_{j2} \exp(N_{j2}) \ (\vec{E}_{2} / l_{c}) \cdot \textbf{n}
+\Gamma_{\text{adv}, 1} \cdot \textbf{n} = \text{sign}_{j,2} \mu_{j,2} \exp \left( N_{j,2} \right) \ \left( \vec{E}_{2} / l_{c} \right) \cdot \textbf{n}
 \end{equation}
 
 Where:
