@@ -1,20 +1,14 @@
 # ProvideMobility
 
-!alert construction title=Undocumented Class
-The ProvideMobility has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /UserObjects/ProvideMobility
 
 ## Overview
 
-!! Replace these lines with information regarding the ProvideMobility object.
+`ProvideMobility` provides a user defined electrode area, ballast resistance, and custom Coulomb charge for other Zapdos objects. Most commonly used with the boundary condition objects [NeumannCircuitVoltageMoles_KV.md] and [PenaltyCircuitPotential.md].
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the ProvideMobility object.
+!listing test/tests/1d_dc/mean_en.i block=UserObjects/data_provider
 
 !syntax parameters /UserObjects/ProvideMobility
 
