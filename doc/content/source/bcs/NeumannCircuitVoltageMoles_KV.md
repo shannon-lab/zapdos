@@ -25,13 +25,13 @@ a_{e} =
 \end{cases} \\[10pt]
 a_{i} =
 \begin{cases}
-1, & \mu_{i} \left( - \nabla (V) \right) \cdot \textbf{n} > 0\\
-0, & \mu_{i} \left( - \nabla (V) \right)\cdot \textbf{n} \leq 0\\
+1, & \mu_{i} \left( - \nabla V \right) \cdot \textbf{n} > 0\\
+0, & \mu_{i} \left( - \nabla V \right)\cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
 \Gamma_{e} \cdot \textbf{n} = \frac{1-r_{e}}{1+r_{e}} \left[ -(2 a_{e}-1) \ \mu_{e}
-\left(\text{-} \nabla (V) \right)
+\left(\text{-} \nabla V \right)
  \cdot \textbf{n} \ \left( n_{e} - n_{\gamma} \right) + \frac{1}{2}v_{\text{th},e} \left( n_{e} - n_{\gamma} \right) \right] - (1 - a_{e}) \gamma \Gamma_{i} \cdot \textbf{n} \\[10pt]
-\Gamma_{i} \cdot \textbf{n} = \frac{1-r_{i}}{1+r_{i}} \left[ (2 a_{i}-1) \ \mu_{i} \left( \text{-} \nabla (V) \right) \cdot \textbf{n} \ n_{i} + \frac{1}{2}v_{\text{th},i}n_{i} \right] \\[10pt]
+\Gamma_{i} \cdot \textbf{n} = \frac{1-r_{i}}{1+r_{i}} \left[ (2 a_{i}-1) \ \mu_{i} \left( \text{-} \nabla V \right) \cdot \textbf{n} \ n_{i} + \frac{1}{2}v_{\text{th},i}n_{i} \right] \\[10pt]
 v_{\text{th},e} = \sqrt{\frac{8e}{\pi m_{e}} \frac{2}{3} \frac{n_{\varepsilon}}{n_{e}}} \\[10pt]
 v_{\text{th},i} = \sqrt{\frac{8k_{B}T}{\pi m_{i}}} \\[10pt]
 n_{\gamma} = (1 - a_{e}) \frac{\gamma \Gamma_{i} \cdot \textbf{n}}{\mu_{e} (\text{-}\nabla V) \cdot \textbf{n}}

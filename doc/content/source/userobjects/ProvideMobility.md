@@ -4,7 +4,7 @@
 
 ## Overview
 
-`ProvideMobility` provides a user defined electrode area, ballast resistance, and costume Coulomb charge for other Zapdos objects. Most commonly used with the boundary condition objects [NeumannCircuitVoltageMoles_KV.md] and [PenaltyCircuitPotential.md].
+`ProvideMobility` provides a user defined electrode area, ballast resistance, and custom Coulomb charge for other Zapdos objects. Most commonly used with the boundary condition objects [NeumannCircuitVoltageMoles_KV.md] and [PenaltyCircuitPotential.md].
 
 ## Example Input File Syntax
 
