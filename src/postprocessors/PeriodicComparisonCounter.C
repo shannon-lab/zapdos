@@ -29,8 +29,8 @@ PeriodicComparisonCounter::validParams()
 
   params.addRequiredParam<Real>("frequency", "The frequency of the periodic cycle in Hz");
 
-  params.addClassDescription("Compares two Postprocessors or values and keeps count"
-                             "of how many cycles in a row that comparision is true.");
+  params.addClassDescription("Compares two Postprocessors or values and keeps count "
+                             "of how many cycles in a row that comparison is true.");
 
   return params;
 }

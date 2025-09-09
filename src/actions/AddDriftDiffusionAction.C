@@ -105,7 +105,7 @@ AddDriftDiffusionAction::validParams()
   params.addParam<Real>(
       "offset", 20.0, "The offset parameter that goes into the exponential function");
   params.addRequiredParam<std::string>("potential_units", "Units of potential (V or kV)");
-  params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to #.");
+  params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to \\#.");
   params.addParam<std::vector<std::string>>(
       "Additional_Outputs",
       {},

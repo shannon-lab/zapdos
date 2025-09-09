@@ -1,20 +1,37 @@
 # AverageNodalDifference
 
-!alert construction title=Undocumented Class
-The AverageNodalDifference has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Postprocessors/AverageNodalDifference
 
 ## Overview
 
-!! Replace these lines with information regarding the AverageNodalDifference object.
+`AverageNodalDifference` computes the nodal differences between two variables. In particular, `AverageNodalDifference` returns the expression:
+
+\begin{equation}
+  \sqrt{ \frac{\sum_{i=1}^{K} \left( u_{i} - v_{i} \right)^{2}}{K^{2}} }
+\end{equation}
+
+Where:
+
+- $u$ is the first variable,
+- $v$ is the second variable,
+- $i$ is the nodal index, and
+- $K$ is the total number of nodes.
+
+!alert! note title=Untested Class
+While `AverageNodalDifference` object does not have a stand-alone formalized test, yet, this object is called within the [AddPeriodicRelativeNodalDifference.md] action, which has a formalized test.
+!alert-end!
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the AverageNodalDifference object.
+```text
+[Postprocessors]
+  [average_difference]
+    type = AverageNodalDifference
+    variable = electrons
+    other_variable = ions
+  []
+[]
+```
 
 !syntax parameters /Postprocessors/AverageNodalDifference
 

@@ -1,20 +1,23 @@
 # RelativeElementL2Difference
 
-!alert construction title=Undocumented Class
-The RelativeElementL2Difference has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Postprocessors/RelativeElementL2Difference
 
 ## Overview
 
-!! Replace these lines with information regarding the RelativeElementL2Difference object.
+`RelativeElementL2Difference` computes the relative L$_{2}$ difference between two variables. The relative L$_{2}$ difference is defined as:
+
+\begin{equation}
+  \frac{|| u - v ||_{L_2}}{|| u ||}
+\end{equation}
+
+Where:
+
+- $u$ is the primary variable, and
+- $v$ is the secondary variable.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the RelativeElementL2Difference object.
+!listing test/tests/accelerations/Acceleration_By_Shooting_Method_Shooting.i block=Postprocessors/Meta_Relative_Diff
 
 !syntax parameters /Postprocessors/RelativeElementL2Difference
 

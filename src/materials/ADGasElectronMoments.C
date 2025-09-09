@@ -20,7 +20,7 @@ ADGasElectronMoments::validParams()
 
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<bool>("use_moles",
-                                "Whether to use units of moles as opposed to # of molecules.");
+                                "Whether to use units of moles as opposed to \\# of molecules.");
   params.addRequiredParam<FileName>(
       "property_tables_file", "The file containing interpolation tables for material properties.");
 
