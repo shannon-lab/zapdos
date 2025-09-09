@@ -30,7 +30,7 @@ CircuitDirichletPotential::validParams()
   params.addRequiredParam<Real>("resist", "The ballast resistance in Ohms");
   params.addRequiredParam<Real>("position_units", "Units of position");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
-  params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to #.");
+  params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to \\#.");
   params.addParam<Real>("A",
                         1.,
                         "For 1D calculations, an area has to be passed. This area also must "

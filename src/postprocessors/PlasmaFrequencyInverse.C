@@ -22,7 +22,7 @@ PlasmaFrequencyInverse::validParams()
   // Define the parameters
   InputParameters params = ElementVariablePostprocessor::validParams();
   params.addRequiredParam<bool>("use_moles",
-                                "Whether to use units of moles as opposed to # of molecules.");
+                                "Whether to use units of moles as opposed to \\# of molecules.");
   params.addClassDescription("Returns the inverse of the peak electron frequency");
 
   return params;
