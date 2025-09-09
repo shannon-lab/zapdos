@@ -1,21 +1,13 @@
 # AddPeriodicControllers
 
-!alert construction title=Undocumented Action Class
-The AddPeriodicControllers has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with an Action;
-however, what is contained is ultimately determined by what is necessary to make the documentation
-clear for users.
-
 !syntax description /PeriodicControllers/AddPeriodicControllers
 
 ## Overview
 
-!! Replace these lines with information regarding the AddPeriodicControllers action.
+The `PeriodicControllers` object automates the supply of [TimePeriod.md] controls to enable or disable objects at the beginning, during, or at the end of periodic cycles.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the AddPeriodicControllers action.
-
-!syntax description /PeriodicControllers/AddPeriodicControllers
+!listing test/tests/accelerations/Acceleration_By_Shooting_Method.i block=PeriodicControllers
 
 !syntax parameters /PeriodicControllers/AddPeriodicControllers

@@ -111,6 +111,9 @@ AddDriftDiffusionAction::validParams()
       {},
       "Current list of available ouputs options in this action: Current, ElectronTemperature,"
       " EField");
+  params.addClassDescription(
+      "This Action automatically adds the necessary variables and objects to model the "
+      "drift-diffusion equations within a domain block.");
   return params;
 }
 
