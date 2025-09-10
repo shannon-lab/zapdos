@@ -52,7 +52,7 @@ Real
 DiffusiveFluxTempl<is_ad>::computeValue()
 {
   return -raw_value(_diff[_qp]) * std::exp(_density_log[_qp]) * _grad_density_log[_qp](_component) *
-         _r_units * 6.02e23;
+         _r_units * ZAPDOS_CONSTANTS::N_A;
 }
 
 template class DiffusiveFluxTempl<false>;

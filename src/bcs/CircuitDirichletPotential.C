@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "CircuitDirichletPotential.h"
+#include "Zapdos.h"
 #include "Function.h"
 
 registerMooseObject("ZapdosApp", CircuitDirichletPotential);
@@ -46,8 +47,6 @@ CircuitDirichletPotential::CircuitDirichletPotential(const InputParameters & par
     _surface_potential(getFunction("surface_potential")),
     _surface(getParam<std::string>("surface")),
     _resist(getParam<Real>("resist")),
-    _coulomb_charge(1.6e-19),
-    _N_A(6.02e23),
     _potential_units(getParam<std::string>("potential_units")),
     _r_units(1. / getParam<Real>("position_units")),
     _convert_moles(getParam<bool>("use_moles")),
@@ -69,9 +68,9 @@ CircuitDirichletPotential::computeQpResidual()
   if (_convert_moles)
     return _surface_potential.value(_t, *_current_node) - _u +
            _current_sign * _current / std::pow(_r_units, 2.) * _resist / _voltage_scaling *
-               _coulomb_charge * _A * _N_A;
+               ZAPDOS_CONSTANTS::e * _A * ZAPDOS_CONSTANTS::N_A;
   else
     return _surface_potential.value(_t, *_current_node) - _u +
            _current_sign * _current / std::pow(_r_units, 2.) * _resist / _voltage_scaling *
-               _coulomb_charge * _A;
+               ZAPDOS_CONSTANTS::e * _A;
 }

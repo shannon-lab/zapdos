@@ -36,7 +36,6 @@ HagelaarIonAdvectionBC::HagelaarIonAdvectionBC(const InputParameters & parameter
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
 
     _mu(getADMaterialProperty<Real>("mu" + _var.name())),
-    _e(getMaterialProperty<Real>("e")),
     _sgn(getMaterialProperty<Real>("sgn" + _var.name()))
 {
   _a = 0.0;

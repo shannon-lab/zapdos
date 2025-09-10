@@ -37,8 +37,6 @@ protected:
   const ADMaterialProperty<Real> & _muem;
   /// Mass of electrons
   const MaterialProperty<Real> & _massem;
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
 
   /// The electric field provided as a material property
   const ADMaterialProperty<RealVectorValue> & _electric_field;

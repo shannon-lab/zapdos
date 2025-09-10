@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "PowerDep.h"
+#include "Zapdos.h"
 
 #include "metaphysicl/raw_type.h"
 
@@ -64,7 +65,7 @@ Real
 PowerDepTempl<is_ad>::computeValue()
 {
   _current =
-      _sgn[_qp] * 1.6e-19 * 6.02e23 *
+      _sgn[_qp] * ZAPDOS_CONSTANTS::e * ZAPDOS_CONSTANTS::N_A *
       (_sgn[_qp] * raw_value(_mu[_qp]) * raw_value(_electric_field[_qp]) * _r_units *
            std::exp(_density_log[_qp]) -
        raw_value(_diff[_qp]) * std::exp(_density_log[_qp]) * _grad_density_log[_qp] * _r_units);
@@ -73,8 +74,8 @@ PowerDepTempl<is_ad>::computeValue()
   {
     Real vd_mag = raw_value(_mu[_qp]) * raw_value((-_electric_field[_qp]).norm()) * _r_units;
     Real delta = vd_mag * _current_elem->hmax() / 2.;
-    _current += _sgn[_qp] * 1.6e-19 * 6.02e23 * -delta * std::exp(_density_log[_qp]) *
-                _grad_density_log[_qp] * _r_units;
+    _current += _sgn[_qp] * ZAPDOS_CONSTANTS::e * ZAPDOS_CONSTANTS::N_A * -delta *
+                std::exp(_density_log[_qp]) * _grad_density_log[_qp] * _r_units;
   }
 
   return _current * raw_value(_electric_field[_qp]) * _r_units * _voltage_scaling;

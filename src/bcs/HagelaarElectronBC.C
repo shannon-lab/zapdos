@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "HagelaarElectronBC.h"
+#include "Zapdos.h"
 
 registerADMooseObject("ZapdosApp", HagelaarElectronBC);
 
@@ -38,7 +39,6 @@ HagelaarElectronBC::HagelaarElectronBC(const InputParameters & parameters)
 
     _muem(getADMaterialProperty<Real>("muem")),
     _massem(getMaterialProperty<Real>("massem")),
-    _e(getMaterialProperty<Real>("e")),
 
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
@@ -59,8 +59,8 @@ HagelaarElectronBC::computeQpResidual()
     _a = 0.0;
   }
 
-  _v_thermal =
-      std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
+  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
+                         (M_PI * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) *
          (-(2 * _a - 1) * _muem[_qp] * _electric_field[_qp] * _r_units * std::exp(_u[_qp]) *

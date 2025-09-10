@@ -103,12 +103,6 @@ protected:
   MaterialProperty<Real> & _cathode_temperature;
   /// Secondary electron energy
   MaterialProperty<Real> & _se_energy;
-  /// Elementary charge
-  MaterialProperty<Real> & _e;
-  /// Permittivity of free space
-  MaterialProperty<Real> & _eps;
-  /// Boltzmann constant
-  MaterialProperty<Real> & _k_boltz;
   /// Avogadro's number
   MaterialProperty<Real> & _Avogadro;
   /*
@@ -129,8 +123,6 @@ protected:
   MaterialProperty<Real> & _iz_coeff_energy_b;
   MaterialProperty<Real> & _iz_coeff_energy_c;
   ///@}
-  /// Avogadro's number
-  MaterialProperty<Real> & _N_A;
   /*
    *  Curve fitting for elastic coefficients dependent
    *  on the electron energy based on bolos simulations

@@ -35,8 +35,6 @@ protected:
   const Real _r_units;
   /// Reflection coefficient
   const Real _r;
-  /// Boltzmann constant
-  const MaterialProperty<Real> & _kb;
   /// Temperature of ions
   const MaterialProperty<Real> & _T_heavy;
   /// Mass of ions
@@ -45,8 +43,6 @@ protected:
   Real _v_thermal;
   /// User defined thermal velocity of ions
   const Real _user_velocity;
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
   /// Charge sign of the ions
   const MaterialProperty<Real> & _sgn;
   /// Equal to 1 when the ion drift velocity is direct towards the wall and zero otherwise

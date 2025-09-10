@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "DensityMoles.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", DensityMoles);
 
@@ -25,8 +26,7 @@ DensityMoles::validParams()
 DensityMoles::DensityMoles(const InputParameters & parameters)
   : Density(parameters),
 
-    _convert_moles(getParam<bool>("use_moles")),
-    _N_A(getMaterialProperty<Real>("N_A"))
+    _convert_moles(getParam<bool>("use_moles"))
 {
 }
 
@@ -34,7 +34,7 @@ Real
 DensityMoles::computeValue()
 {
   if (_convert_moles)
-    return Density::computeValue() * _N_A[_qp];
+    return Density::computeValue() * ZAPDOS_CONSTANTS::N_A;
 
   else
     return Density::computeValue();

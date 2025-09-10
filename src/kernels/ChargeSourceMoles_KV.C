@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "ChargeSourceMoles_KV.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", ChargeSourceMoles_KV);
 
@@ -28,9 +29,7 @@ ChargeSourceMoles_KV::ChargeSourceMoles_KV(const InputParameters & parameters)
   : ADKernel(parameters),
     _charged_var(*getVar("charged", 0)),
     _charged(adCoupledValue("charged")),
-    _e(getMaterialProperty<Real>("e")),
     _sgn(getMaterialProperty<Real>("sgn" + _charged_var.name())),
-    _N_A(getMaterialProperty<Real>("N_A")),
     _potential_units(getParam<std::string>("potential_units"))
 {
   if (_potential_units.compare("V") == 0)
@@ -42,6 +41,6 @@ ChargeSourceMoles_KV::ChargeSourceMoles_KV(const InputParameters & parameters)
 ADReal
 ChargeSourceMoles_KV::computeQpResidual()
 {
-  return -_test[_i][_qp] * _e[_qp] * _sgn[_qp] * _N_A[_qp] * std::exp(_charged[_qp]) /
-         _voltage_scaling;
+  return -_test[_i][_qp] * ZAPDOS_CONSTANTS::e * _sgn[_qp] * ZAPDOS_CONSTANTS::N_A *
+         std::exp(_charged[_qp]) / _voltage_scaling;
 }

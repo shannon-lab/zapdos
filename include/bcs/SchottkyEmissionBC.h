@@ -55,8 +55,6 @@ protected:
 
   /// Mass of electrons
   const MaterialProperty<Real> & _massem;
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
   /// Work function of material
   const MaterialProperty<Real> & _work_function;
   /// Field enhancement factor of surface

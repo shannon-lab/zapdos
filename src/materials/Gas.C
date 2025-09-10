@@ -10,6 +10,7 @@
 
 #include "Gas.h"
 #include "MooseUtils.h"
+#include "Zapdos.h"
 
 registerADMooseObject("ZapdosApp", Gas);
 
@@ -95,9 +96,6 @@ Gas::Gas(const InputParameters & parameters)
 
     _se_energy(declareProperty<Real>("se_energy")),
 
-    _e(declareProperty<Real>("e")),
-    _eps(declareProperty<Real>("eps")),
-    _k_boltz(declareProperty<Real>("k_boltz")),
     _Avogadro(declareProperty<Real>("Avogadro")),
     _iz_coeff_efield_a(declareProperty<Real>("iz_coeff_efield_a")),
     _iz_coeff_efield_b(declareProperty<Real>("iz_coeff_efield_b")),
@@ -105,7 +103,6 @@ Gas::Gas(const InputParameters & parameters)
     _iz_coeff_energy_a(declareProperty<Real>("iz_coeff_energy_a")),
     _iz_coeff_energy_b(declareProperty<Real>("iz_coeff_energy_b")),
     _iz_coeff_energy_c(declareProperty<Real>("iz_coeff_energy_c")),
-    _N_A(declareProperty<Real>("N_A")),
     _el_coeff_energy_a(declareProperty<Real>("el_coeff_energy_a")),
     _el_coeff_energy_b(declareProperty<Real>("el_coeff_energy_b")),
     _el_coeff_energy_c(declareProperty<Real>("el_coeff_energy_c")),
@@ -185,12 +182,11 @@ Gas::computeQpProperties()
   _massArp[_qp] = 40.0 * 1.66e-27;
   _T_gas[_qp] = _user_T_gas;
   _p_gas[_qp] = _user_p_gas;
-  _k_boltz[_qp] = 1.38e-23;
   _Avogadro[_qp] = 6.0221409E23;
   if (_use_moles)
     _n_gas[_qp] = _p_gas[_qp] / (8.3145 * _T_gas[_qp]);
   else
-    _n_gas[_qp] = _p_gas[_qp] / (_k_boltz[_qp] * _T_gas[_qp]);
+    _n_gas[_qp] = _p_gas[_qp] / (ZAPDOS_CONSTANTS::k_boltz * _T_gas[_qp]);
 
   _se_coeff[_qp] = _user_se_coeff;
   _work_function[_qp] = _user_work_function;
@@ -201,12 +197,10 @@ Gas::computeQpProperties()
 
   _se_energy[_qp] = 2. * 3. / 2.; // Emi uses 2 Volts coming off the wall (presumably for Te).
                                   // Multiply by 3/2 to get mean_en
-  _e[_qp] = 1.6e-19;
-  _eps[_qp] = 8.85e-12;
   _sgnem[_qp] = -1.;
   _sgnmean_en[_qp] = -1.;
   _sgnArp[_qp] = 1.;
-  _diffpotential[_qp] = _eps[_qp];
+  _diffpotential[_qp] = ZAPDOS_CONSTANTS::eps_0;
 
   _TArp[_qp] = 300;
 
@@ -323,8 +317,7 @@ Gas::computeQpProperties()
   _el_coeff_energy_b[_qp] = 3.17917979e-1;
   _el_coeff_energy_c[_qp] = 4.66301096;
 
-  _N_A[_qp] = 6.02e23;
-  _Ar[_qp] = 1.01e5 / (300 * 1.38e-23);
+  _Ar[_qp] = 1.01e5 / (300 * ZAPDOS_CONSTANTS::k_boltz);
   _Eiz[_qp] = 15.76;
   _Eex[_qp] = 11.5;
 
@@ -346,7 +339,7 @@ Gas::computeQpProperties()
   _rate_coeff_elastic[_qp] = 1e-13;
 
   _TemVolts[_qp] = 2. / 3. * std::exp(_mean_en[_qp] - _em[_qp]);
-  _Tem[_qp] = _e[_qp] * _TemVolts[_qp] / _k_boltz[_qp];
+  _Tem[_qp] = ZAPDOS_CONSTANTS::e * _TemVolts[_qp] / ZAPDOS_CONSTANTS::k_boltz;
 
   _kiz[_qp] = 2.34e-14 * std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]);
   _kex[_qp] = 2.48e-14 * std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]);
@@ -354,8 +347,8 @@ Gas::computeQpProperties()
   _kel[_qp].derivatives() = 0.;
   if (_use_moles)
   {
-    _kiz[_qp] = _kiz[_qp] * _N_A[_qp];
-    _kex[_qp] = _kex[_qp] * _N_A[_qp];
-    _kel[_qp] = _kel[_qp] * _N_A[_qp];
+    _kiz[_qp] = _kiz[_qp] * ZAPDOS_CONSTANTS::N_A;
+    _kex[_qp] = _kex[_qp] * ZAPDOS_CONSTANTS::N_A;
+    _kel[_qp] = _kel[_qp] * ZAPDOS_CONSTANTS::N_A;
   }
 }

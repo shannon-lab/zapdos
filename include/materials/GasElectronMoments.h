@@ -108,17 +108,8 @@ protected:
   /// Secondary electron energy
   MaterialProperty<Real> & _se_energy;
 
-  /// Elementary charge
-  MaterialProperty<Real> & _e;
-  /// Permittivity of free space
-  MaterialProperty<Real> & _eps;
-
-  /// Boltzmann constant
-  MaterialProperty<Real> & _k_boltz;
   /// Avogadro's number
   MaterialProperty<Real> & _Avogadro;
-  /// Avogadro's number (reduced significant figures)
-  MaterialProperty<Real> & _N_A;
 
   /// Charge sign of electrons
   MaterialProperty<Real> & _sgnem;
