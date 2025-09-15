@@ -4,7 +4,7 @@
 
 ## Overview
 
-The `PeriodicRelativeNodalDifference` objects necessary to calculate the relative periodic difference of a variable (either in logarithmic or non-logarithmic form).
+The `PeriodicRelativeNodalDifference` provides the objects necessary to calculate the relative periodic difference of a variable (either in logarithmic or non-logarithmic form).
 
 The relative periodic difference is defined as:
 
