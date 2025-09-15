@@ -67,8 +67,6 @@ protected:
   ADMaterialProperty<Real> & _diffmean_en;
   /// Mass of electrons
   MaterialProperty<Real> & _massem;
-  /// Mass of argon neutrals
-  MaterialProperty<Real> & _massGas;
 
   /// Charge sign of electrons
   MaterialProperty<Real> & _sgnem;

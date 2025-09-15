@@ -74,7 +74,6 @@ ElectronTransportCoefficients::ElectronTransportCoefficients(const InputParamete
     _mumean_en(declareADProperty<Real>("mumean_en")),
     _diffmean_en(declareADProperty<Real>("diffmean_en")),
     _massem(declareProperty<Real>("massem")),
-    _massGas(declareProperty<Real>("massGas")),
 
     _sgnem(declareProperty<Real>("sgnem")),
     _sgnmean_en(declareProperty<Real>("sgnmean_en")),

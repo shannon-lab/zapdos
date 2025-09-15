@@ -1,23 +1,23 @@
-# GasBase
+# SimplifiedArgonChemistryCoefficients
 
 !alert construction title=Undocumented Class
-The GasBase has not been documented. The content listed below should be used as a starting point for
+The SimplifiedArgonChemistryCoefficients has not been documented. The content listed below should be used as a starting point for
 documenting the class, which includes the typical automatic documentation associated with a
 MooseObject; however, what is contained is ultimately determined by what is necessary to make the
 documentation clear for users.
 
-!syntax description /Materials/GasBase
+!syntax description /Materials/SimplifiedArgonChemistryCoefficients
 
 ## Overview
 
-!! Replace these lines with information regarding the GasBase object.
+!! Replace these lines with information regarding the SimplifiedArgonChemistryCoefficients object.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the GasBase object.
+!! Describe and include an example of how to use the SimplifiedArgonChemistryCoefficients object.
 
-!syntax parameters /Materials/GasBase
+!syntax parameters /Materials/SimplifiedArgonChemistryCoefficients
 
-!syntax inputs /Materials/GasBase
+!syntax inputs /Materials/SimplifiedArgonChemistryCoefficients
 
-!syntax children /Materials/GasBase
+!syntax children /Materials/SimplifiedArgonChemistryCoefficients
