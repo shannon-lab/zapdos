@@ -8,26 +8,21 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
-#include "GasElectronMoments.h"
+#include "ElectronTransportCoefficients.h"
 #include "MooseUtils.h"
 #include "Zapdos.h"
 
-registerMooseObject("ZapdosApp", GasElectronMoments);
+registerMooseObject("ZapdosApp", ElectronTransportCoefficients);
 
 InputParameters
-GasElectronMoments::validParams()
+ElectronTransportCoefficients::validParams()
 {
   InputParameters params = Material::validParams();
 
-  params.addParam<Real>(
-      "user_relative_permittivity", 1.0, "Multiplies the permittivity of free space.");
   params.addRequiredParam<bool>("interp_trans_coeffs",
                                 "Whether to interpolate transport "
                                 "coefficients as a function of the mean "
                                 "energy. If false, coeffs are constant.");
-  params.addRequiredParam<bool>("interp_elastic_coeff",
-                                "Whether to interpolate the elastic collision townsend coefficient "
-                                "as a function of the mean energy. If false, coeffs are constant.");
   params.addRequiredParam<bool>("ramp_trans_coeffs",
                                 "Whether to ramp the non-linearity of coming "
                                 "from the electron energy dependence of the "
@@ -39,12 +34,6 @@ GasElectronMoments::validParams()
       "property_tables_file", "The file containing interpolation tables for material properties.");
 
   params.addParam<Real>("time_units", 1, "Units of time");
-  params.addParam<Real>("user_se_coeff", 0.15, "The secondary electron emission coefficient.");
-  params.addParam<Real>("user_work_function", 5.00, "The work function.");
-  params.addParam<Real>("user_field_enhancement", 1, "The field enhancement factor.");
-
-  params.addParam<Real>("user_Richardson_coefficient", 1.20173E6, "The Richardson coefficient.");
-  params.addParam<Real>("user_cathode_temperature", 300, "The cathode temperature in Kelvin.");
 
   params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
   params.addCoupledVar("user_p_gas", "The gas pressure in Pascals.");
@@ -65,19 +54,12 @@ GasElectronMoments::validParams()
   return params;
 }
 
-GasElectronMoments::GasElectronMoments(const InputParameters & parameters)
+ElectronTransportCoefficients::ElectronTransportCoefficients(const InputParameters & parameters)
   : Material(parameters),
     _interp_trans_coeffs(getParam<bool>("interp_trans_coeffs")),
-    _interp_elastic_coeff(getParam<bool>("interp_elastic_coeff")),
     _ramp_trans_coeffs(getParam<bool>("ramp_trans_coeffs")),
     _potential_units(getParam<std::string>("potential_units")),
     _time_units(getParam<Real>("time_units")),
-    _user_se_coeff(getParam<Real>("user_se_coeff")),
-    _user_work_function(getParam<Real>("user_work_function")),
-    _user_field_enhancement(getParam<Real>("user_field_enhancement")),
-
-    _user_Richardson_coefficient(getParam<Real>("user_Richardson_coefficient")),
-    _user_cathode_temperature(getParam<Real>("user_cathode_temperature")),
 
     _user_T_gas(getParam<Real>("user_T_gas")),
     _user_p_gas(coupledValue("user_p_gas")),
@@ -89,37 +71,17 @@ GasElectronMoments::GasElectronMoments(const InputParameters & parameters)
 
     _muem(declareADProperty<Real>("muem")),
     _diffem(declareADProperty<Real>("diffem")),
-    _Eiz(declareProperty<Real>("Eiz")),
-    _Eex(declareProperty<Real>("Eex")),
-    _Ar(declareProperty<Real>("Ar")),
     _mumean_en(declareADProperty<Real>("mumean_en")),
     _diffmean_en(declareADProperty<Real>("diffmean_en")),
-    _rate_coeff_elastic(declareProperty<Real>("rate_coeff_elastic")),
     _massem(declareProperty<Real>("massem")),
     _massGas(declareProperty<Real>("massGas")),
-    _se_coeff(declareProperty<Real>("se_coeff")),
-    _work_function(declareProperty<Real>("work_function")),
-    _field_enhancement(declareProperty<Real>("field_enhancement")),
-
-    _Richardson_coefficient(declareProperty<Real>("Richardson_coefficient")),
-    _cathode_temperature(declareProperty<Real>("cathode_temperature")),
-
-    _se_energy(declareProperty<Real>("se_energy")),
-
-    _Avogadro(declareProperty<Real>("Avogadro")),
 
     _sgnem(declareProperty<Real>("sgnem")),
     _sgnmean_en(declareProperty<Real>("sgnmean_en")),
     _diffpotential(declareADProperty<Real>("diffpotential")),
     _actual_mean_energy(declareADProperty<Real>("actual_mean_energy")),
-    _Tem(declareADProperty<Real>("Tem")),
     _T_gas(declareProperty<Real>("T_gas")),
     _p_gas(declareProperty<Real>("p_gas")),
-    _n_gas(declareProperty<Real>("n_gas")),
-    _kiz(declareADProperty<Real>("kiz")),
-    _kex(declareADProperty<Real>("kex")),
-    _kel(declareADProperty<Real>("kel")),
-    _TemVolts(declareADProperty<Real>("TemVolts")),
 
     _em(isCoupled("em") ? adCoupledValue("em") : _ad_zero),
     _mean_en(isCoupled("mean_en") ? adCoupledValue("mean_en") : _ad_zero)
@@ -160,28 +122,13 @@ GasElectronMoments::GasElectronMoments(const InputParameters & parameters)
 }
 
 void
-GasElectronMoments::computeQpProperties()
+ElectronTransportCoefficients::computeQpProperties()
 {
   _massem[_qp] = 9.11e-31;
-  _massGas[_qp] = 4.0 * 1.66e-27;
   _T_gas[_qp] = _user_T_gas;
   _p_gas[_qp] = _user_p_gas[_qp];
-  _Avogadro[_qp] = 6.0221409E23;
-  if (_use_moles)
-    _n_gas[_qp] = _p_gas[_qp] / (8.3145 * _T_gas[_qp]);
-  else
-    _n_gas[_qp] = _p_gas[_qp] / (ZAPDOS_CONSTANTS::k_boltz * _T_gas[_qp]);
   Real _N_inverse = (ZAPDOS_CONSTANTS::k_boltz * _T_gas[_qp]) / _p_gas[_qp];
 
-  _se_coeff[_qp] = _user_se_coeff;
-  _work_function[_qp] = _user_work_function;
-  _field_enhancement[_qp] = _user_field_enhancement;
-
-  _Richardson_coefficient[_qp] = _user_Richardson_coefficient;
-  _cathode_temperature[_qp] = _user_cathode_temperature;
-
-  _se_energy[_qp] = 2. * 3. / 2.; // Emi uses 2 Volts coming off the wall (presumably for Te).
-                                  // Multiply by 3/2 to get mean_en
   _sgnem[_qp] = -1.;
   _sgnmean_en[_qp] = -1.;
   _diffpotential[_qp] = ZAPDOS_CONSTANTS::eps_0;
@@ -303,10 +250,6 @@ GasElectronMoments::computeQpProperties()
     }
   }
 
-  _Ar[_qp] = 1.01e5 / (300 * ZAPDOS_CONSTANTS::k_boltz);
-  _Eiz[_qp] = 24.58;
-  _Eex[_qp] = 19.80;
-
   // From Hagelaar: The below approximations can be derived assumption Maxwell EEDF, const
   // momentum-transfer frequency, and constant kinetic pressure.
   _mumean_en[_qp].value() = 5.0 / 3.0 * _muem[_qp].value();
@@ -320,22 +263,5 @@ GasElectronMoments::computeQpProperties()
   {
     _mumean_en[_qp].derivatives() = 0.0;
     _diffmean_en[_qp].derivatives() = 0.0;
-  }
-
-  // Might needed to change
-  _rate_coeff_elastic[_qp] = 1e-13;
-
-  _TemVolts[_qp] = 2. / 3. * std::exp(_mean_en[_qp] - _em[_qp]);
-  _Tem[_qp] = ZAPDOS_CONSTANTS::e * _TemVolts[_qp] / ZAPDOS_CONSTANTS::k_boltz;
-
-  _kiz[_qp] = 2.34e-14 * std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]);
-  _kex[_qp] = 2.48e-14 * std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]);
-  _kel[_qp].value() = 1e-13; // Approximate elastic rate coefficient
-  _kel[_qp].derivatives() = 0.;
-  if (_use_moles)
-  {
-    _kiz[_qp] = _kiz[_qp] * ZAPDOS_CONSTANTS::N_A;
-    _kex[_qp] = _kex[_qp] * ZAPDOS_CONSTANTS::N_A;
-    _kel[_qp] = _kel[_qp] * ZAPDOS_CONSTANTS::N_A;
   }
 }
