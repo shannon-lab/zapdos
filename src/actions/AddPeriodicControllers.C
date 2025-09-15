@@ -85,9 +85,9 @@ AddPeriodicControllers::validParams()
   params.addRequiredParam<std::string>("name", "Custom name for the 'PeriodicControllers'.");
 
   params.addClassDescription(
-      "This Action automatically adds multiply 'TimePeriod' controllers for"
-      "the purpose of enabling and disabling multiple objects during multiple cycles."
-      "(Ideally for periodic accelerations)");
+      "This Action automatically adds multiple 'TimePeriod' controllers for "
+      "the purpose of enabling and disabling multiple objects during multiple cycles. "
+      "(generally for periodic accelerations)");
 
   return params;
 }
