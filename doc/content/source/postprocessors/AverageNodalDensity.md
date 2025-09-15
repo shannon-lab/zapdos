@@ -1,20 +1,37 @@
 # AverageNodalDensity
 
-!alert construction title=Undocumented Class
-The AverageNodalDensity has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Postprocessors/AverageNodalDensity
 
 ## Overview
 
-!! Replace these lines with information regarding the AverageNodalDensity object.
+Similar to the [AverageNodalVariableValue.md] postprocessor, `AverageNodalDensity` computes the average nodal value of variables in logarithmic form.
+This is needed when calculating the nodal average of density values within Zapdos, since densities are in logarithmic form by default.
+`AverageNodalDensity` returns the expression:
+
+\begin{equation}
+  \frac{\sum_{i=1}^{K} \exp(N_{i})}{K}
+\end{equation}
+
+Where:
+
+- $N$ is the density in logarithmic form,
+- $i$ is the nodal index, and
+- $K$ is the total number of nodes.
+
+!alert! note title=Untested Class
+While `AverageNodalDensity` object does not have a stand-alone formalized test, yet, this object is called within the [AddPeriodicRelativeNodalDifference.md] action, which has a formalized test.
+!alert-end!
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the AverageNodalDensity object.
+```text
+[Postprocessors]
+  [average_electron_density]
+    type = AverageNodalDensity
+    variable = electrons
+  []
+[]
+```
 
 !syntax parameters /Postprocessors/AverageNodalDensity
 

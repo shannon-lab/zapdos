@@ -1,20 +1,26 @@
 # PlasmaFrequencyInverse
 
-!alert construction title=Undocumented Class
-The PlasmaFrequencyInverse has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Postprocessors/PlasmaFrequencyInverse
 
 ## Overview
 
-!! Replace these lines with information regarding the PlasmaFrequencyInverse object.
+`PlasmaFrequencyInverse` computes the peak value of the inverse plasma frequency. The plasma frequency is defined as:
+
+\begin{equation}
+  \omega_{\text{p}} = \sqrt{ \frac{e^{2} n_{e}}{\varepsilon_{0} m_{e}} }
+\end{equation}
+
+Where:
+
+- $\omega_{\text{p}}$ is the plasma frequency,
+- $n_{e}$ is the electron density,
+- $e$ is the elemental charge,
+- $\varepsilon_{0}$ is the permittivity of free space, and
+- $m_{e}$ is the mass of an electron.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the PlasmaFrequencyInverse object.
+!listing test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i block=Postprocessors/InversePlasmaFreq
 
 !syntax parameters /Postprocessors/PlasmaFrequencyInverse
 
