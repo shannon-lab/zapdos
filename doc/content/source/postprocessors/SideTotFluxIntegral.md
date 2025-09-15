@@ -20,7 +20,7 @@ v_{\text{th},j} = \sqrt{\frac{8k_{B}T_{j}}{\pi m_{j}}} \\[10pt]
 
 Where:
 
-- the subscripts $j$ represents the properties of chosen species,
+- the subscript $j$ represents the properties of the chosen species,
 - $\Gamma$ is the species flux,
 - $\textbf{n}$ is the normal vector of the boundary,
 - $\mu$ is the mobility coefficient,

@@ -4,7 +4,8 @@
 
 ## Overview
 
-`AverageNodalDifference` computes the nodal differences between two variables. In particular, `AverageNodalDifference` returns the expression:
+`AverageNodalDifference` computes the nodal differences between two variables. 
+`AverageNodalDifference` returns the expression:
 
 \begin{equation}
   \sqrt{ \frac{\sum_{i=1}^{K} \left( u_{i} - v_{i} \right)^{2}}{K^{2}} }

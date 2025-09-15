@@ -4,7 +4,7 @@
 
 ## Overview
 
-`AverageNodalDifference` computes the number of continuous cycles in which the comparison between two post-processor values are true.
+`PeriodicComparisonCounter` computes the number of continuous cycles in which the comparison between two post-processor values is true.
 
 ## Example Input File Syntax
 

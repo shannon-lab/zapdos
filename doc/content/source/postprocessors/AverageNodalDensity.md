@@ -4,8 +4,8 @@
 
 ## Overview
 
-Similar to the [AverageNodalVariableValue.md] postprocessor, `AverageNodalDensity` computes the average nodal solutions of variables cased in logarithmic form.
-This is needed when calculating the nodal average of density values within Zapdos, since densities are cased in logarithmic form by default. In particular,
+Similar to the [AverageNodalVariableValue.md] postprocessor, `AverageNodalDensity` computes the average nodal value of variables in logarithmic form.
+This is needed when calculating the nodal average of density values within Zapdos, since densities are in logarithmic form by default.
 `AverageNodalDensity` returns the expression:
 
 \begin{equation}

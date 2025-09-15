@@ -31,9 +31,9 @@ I = \int e \left( \Gamma_{i} + \Gamma_{e} \right) \cdot \textbf{n} \ dS \\[10pt]
 Where:
 
 - $I$ is the side current,
-- the subscripts $e$ represents properties of electrons,
-- the subscripts $i$ represents properties of ions,
-- the subscripts $\varepsilon$ represents properties of electron energy,
+- the subscript $e$ represents properties of electrons,
+- the subscript $i$ represents properties of ions,
+- the subscript $\varepsilon$ represents properties of electron energy,
 - $\Gamma$ is the species flux,
 - $\textbf{n}$ is the normal vector of the boundary,
 - $\mu$ is the mobility coefficient,
