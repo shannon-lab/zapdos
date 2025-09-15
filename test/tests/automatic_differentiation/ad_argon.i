@@ -645,8 +645,8 @@ dom0Scale = 1e-3
   [gas_constants]
     type = GenericConstantMaterial
     block = 0
-    prop_names = ' e         N_A     k_boltz  eps       n_gas    se_coeff se_energy'
-    prop_values = '1.6e-19 6.022e23  1.38e-23 8.854e-12 40.4915  0.05     3.'
+    prop_names = 'n_gas    se_coeff se_energy'
+    prop_values = '40.4915  0.05     3.'
   []
   # [ad_gas_constants]
   #   type = ADGenericConstantMaterial
