@@ -37,8 +37,8 @@ SimplifiedArgonChemistryCoefficients::validParams()
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("mean_en", "The electron mean energy in log form.");
 
-  params.addClassDescription("Material properties of electrons"
-                             "(Defines reaction properties with Townsend coefficients)");
+  params.addClassDescription("Rate and Townsend coefficients for a simplified argon chemistry "
+                             "network (includes elastic collision, ionization, and excitation).");
   return params;
 }
 

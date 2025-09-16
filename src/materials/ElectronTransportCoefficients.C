@@ -48,8 +48,8 @@ ElectronTransportCoefficients::validParams()
                         false,
                         "Are the values for the electron mobility and diffusion coefficient "
                         "dependent on gas pressure");
-  params.addClassDescription("Material properties of electrons"
-                             "(Defines reaction properties with rate coefficients)");
+  params.addClassDescription("Transport coefficients and material properties of electrons and "
+                             "electron mean energy density.");
 
   return params;
 }

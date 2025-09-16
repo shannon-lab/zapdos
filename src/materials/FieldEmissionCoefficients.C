@@ -25,8 +25,7 @@ FieldEmissionCoefficients::validParams()
   params.addParam<Real>("user_Richardson_coefficient", 1.20173E6, "The Richardson coefficient.");
   params.addParam<Real>("user_cathode_temperature", 300, "The cathode temperature in Kelvin.");
 
-  params.addClassDescription("Material properties of electron and ions for argon gas"
-                             "(Defines reaction properties with Townsend coefficients)");
+  params.addClassDescription("The material coefficients for field emission");
   return params;
 }
 
