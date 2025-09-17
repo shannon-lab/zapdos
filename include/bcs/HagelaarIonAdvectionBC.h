@@ -35,8 +35,6 @@ protected:
 
   /// Mobility coefficient of ions
   const ADMaterialProperty<Real> & _mu;
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
   /// Charge sign of the ions
   const MaterialProperty<Real> & _sgn;
   /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise

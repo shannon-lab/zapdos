@@ -655,9 +655,8 @@ dom0Scale = 25.4e-3
     potential = potential
   []
   [GasBasics]
-    type = GasElectronMoments
+    type = ElectronTransportCoefficients
     interp_trans_coeffs = false
-    interp_elastic_coeff = false
     ramp_trans_coeffs = false
     user_p_gas = 133.322
     em = em

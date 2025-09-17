@@ -47,7 +47,8 @@ Real
 ProcRateForRateCoeffTempl<is_ad>::computeValue()
 {
 
-  return 6.02e23 * raw_value(_reaction_coeff[_qp]) * std::exp(_v[_qp]) * std::exp(_w[_qp]);
+  return ZAPDOS_CONSTANTS::N_A * raw_value(_reaction_coeff[_qp]) * std::exp(_v[_qp]) *
+         std::exp(_w[_qp]);
 }
 
 template class ProcRateForRateCoeffTempl<false>;

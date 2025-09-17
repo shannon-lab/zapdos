@@ -38,16 +38,8 @@ protected:
   MaterialProperty<Real> & _electron_mult;
   /// Scaling for the potential
   MaterialProperty<Real> & _potential_mult;
-  /// Avogadro's number
-  MaterialProperty<Real> & _N_A;
   /// Relative permittivity of the medium
   MaterialProperty<Real> & _eps_r;
-  /// Permittivity of free space
-  MaterialProperty<Real> & _eps_0;
-  /// Elementary charge
-  MaterialProperty<Real> & _e;
-  /// Boltzmann constant
-  MaterialProperty<Real> & _k;
   /// Room temperature (300 K)
   MaterialProperty<Real> & _T;
   /*

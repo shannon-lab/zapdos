@@ -1005,18 +1005,24 @@ dom1Scale = 1e-7
 []
 
 [Materials]
-  [gas_block]
-    type = GasBase
+  [gas_block_electrons]
+    type = ElectronTransportCoefficients
     interp_trans_coeffs = true
-    interp_elastic_coeff = true
     ramp_trans_coeffs = false
     em = em
     ip = Arp
     mean_en = mean_en
-    user_se_coeff = .05
     block = 0
-    property_tables_file = td_argon_mean_en.txt
-    position_units = ${dom0Scale}
+    property_tables_file = td_argon_electrons.txt
+    user_p_gas = 1.01e5
+  []
+  [gas_block]
+    type = SimplifiedArgonChemistryCoefficients
+    interp_elastic_coeff = true
+    em = em
+    mean_en = mean_en
+    block = 0
+    property_tables_file = td_argon_chemistry.txt
   []
   [gas_species_0]
     type = ADHeavySpecies

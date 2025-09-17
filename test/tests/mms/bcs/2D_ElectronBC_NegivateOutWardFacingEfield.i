@@ -34,7 +34,7 @@
 []
 
 [Kernels]
-#Electron Equations
+  #Electron Equations
   [em_time_derivative]
     type = TimeDerivativeLog
     variable = em
@@ -55,7 +55,7 @@
     function = 'em_source'
   []
 
-#Ion Equations
+  #Ion Equations
   [ion_time_derivative]
     type = TimeDerivativeLog
     variable = ion
@@ -78,8 +78,7 @@
     function = 'ion_source'
   []
 
-
-#Eff. Efield
+  #Eff. Efield
   [EffEfield_X_time_deriv]
     type = TimeDerivative
     variable = Ex
@@ -125,7 +124,7 @@
     function = 'potential_source'
   []
 
-#Electron Energy Equations
+  #Electron Energy Equations
   [mean_en_time_deriv]
     type = TimeDerivativeLog
     variable = mean_en
@@ -199,10 +198,16 @@
 []
 
 [Functions]
-#Material Variables
+  #Material Variables
   [massem]
     type = ConstantFunction
     value = 1.0
+  []
+  [massem_mat]
+    type = ParsedFunction
+    vars = massem
+    vals = massem
+    value = 'massem*1.6e-19'
   []
   #Electron diffusion coeff.
   [diffem]
@@ -244,8 +249,7 @@
     value = 0.25
   []
 
-
-#Manufactured Solutions
+  #Manufactured Solutions
   #The manufactured electron density solution
   [em_fun]
     type = ParsedFunction
@@ -290,7 +294,7 @@
     value = '-(sin(pi*t) + 1.0)*(sin(pi*y) + sin(pi*x))'
   []
 
-#Source Terms in moles
+  #Source Terms in moles
   #The electron source term.
   [em_source]
     type = ParsedFunction
@@ -540,17 +544,17 @@
   []
   [Material_Coeff]
     type = GenericFunctionMaterial
-    prop_names =  'e  N_A  massem diffpotential  diffEx         diffEy'
-    prop_values = 'ee N_A  massem diffpotential  diffpotential  diffpotential '
+    prop_names = 'e  N_A  massem diffpotential  diffEx         diffEy'
+    prop_values = 'ee N_A  massem_mat diffpotential  diffpotential  diffpotential '
   []
   [ADMaterial_Coeff_Set1]
     type = ADGenericFunctionMaterial
-    prop_names =  'diffion  muion  diffem  muem  diffmean_en'
+    prop_names = 'diffion  muion  diffem  muem  diffmean_en'
     prop_values = 'diffion  muion  diffem  muem  diffmean_en'
   []
   [Charge_Signs]
     type = GenericConstantMaterial
-    prop_names =  'sgnem  sgnion  sgnmean_en'
+    prop_names = 'sgnem  sgnion  sgnmean_en'
     prop_values = '-1.0   1.0     -1.0'
   []
   [emission_coeffs]

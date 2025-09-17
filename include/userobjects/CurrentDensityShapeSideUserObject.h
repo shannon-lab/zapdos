@@ -72,10 +72,6 @@ protected:
   const ADMaterialProperty<Real> & _muem;
   /// Diffusion coefficient of the electrons
   const ADMaterialProperty<Real> & _diffem;
-  /// Elementary charge
-  const Real _e;
   /// True if molar density is used
   const bool _use_moles;
-  /// Avogadro's number
-  const Real _avogadro;
 };

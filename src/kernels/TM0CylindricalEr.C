@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "TM0CylindricalEr.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", TM0CylindricalEr);
 
@@ -29,7 +30,6 @@ TM0CylindricalEr::TM0CylindricalEr(const InputParameters & parameters)
     _omega(2. * libMesh::pi * getParam<Real>("f")),
     _eps_r(getADMaterialProperty<Real>("eps_r")),
     _mu0(4. * libMesh::pi * 1e-7),
-    _eps0(8.85e-12),
     _Hphi(adCoupledValue("Hphi")),
     _grad_Hphi(adCoupledGradient("Hphi"))
 {
@@ -38,5 +38,6 @@ TM0CylindricalEr::TM0CylindricalEr(const InputParameters & parameters)
 ADReal
 TM0CylindricalEr::computeQpResidual()
 {
-  return _test[_i][_qp] * (_grad_Hphi[_qp](1) + _omega * _eps0 * _eps_r[_qp] * _u[_qp]);
+  return _test[_i][_qp] *
+         (_grad_Hphi[_qp](1) + _omega * ZAPDOS_CONSTANTS::eps_0 * _eps_r[_qp] * _u[_qp]);
 }

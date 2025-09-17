@@ -31,8 +31,6 @@ protected:
   const ADVariableValue & _em;
   /// Mass of electrons
   const MaterialProperty<Real> & _massem;
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
   /// Electron thermal velocity
   ADReal _v_thermal;
 };

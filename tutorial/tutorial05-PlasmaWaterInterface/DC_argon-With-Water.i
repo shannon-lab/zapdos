@@ -397,12 +397,10 @@ dom1Scale = 1e-7
   #The material properties for electrons in plasma
   #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
   [electrons_in_plasma]
-    type = GasElectronMoments
+    type = ElectronTransportCoefficients
     interp_trans_coeffs = true
-    interp_elastic_coeff = true
     ramp_trans_coeffs = false
     user_p_gas = 101325
-    user_se_coeff = 0.05
     em = em
     mean_en = mean_en
     block = 0
