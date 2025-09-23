@@ -29,7 +29,6 @@ TM0CylindricalEz::TM0CylindricalEz(const InputParameters & parameters)
 
     _omega(2. * libMesh::pi * getParam<Real>("f")),
     _eps_r(getADMaterialProperty<Real>("eps_r")),
-    _mu0(4. * libMesh::pi * 1e-7),
     _Hphi(adCoupledValue("Hphi")),
     _grad_Hphi(adCoupledGradient("Hphi"))
 {

@@ -126,7 +126,7 @@ ElectronTransportCoefficients::computeQpProperties()
   _massem[_qp] = 9.11e-31;
   _T_gas[_qp] = _user_T_gas;
   _p_gas[_qp] = _user_p_gas[_qp];
-  Real _N_inverse = (ZAPDOS_CONSTANTS::k_boltz * _T_gas[_qp]) / _p_gas[_qp];
+  Real N_inverse = (ZAPDOS_CONSTANTS::k_boltz * _T_gas[_qp]) / _p_gas[_qp];
 
   _sgnem[_qp] = -1.;
   _sgnmean_en[_qp] = -1.;
@@ -146,49 +146,49 @@ ElectronTransportCoefficients::computeQpProperties()
             (std::tanh(_t / 1e-6) *
                  _mu_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) +
              (1. - std::tanh(_t / 1e-6)) * .0352) *
-            _voltage_scaling * _time_units * _N_inverse;
+            _voltage_scaling * _time_units * N_inverse;
         _muem[_qp].derivatives() =
             std::tanh(_t / 1e-6) *
             _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
             std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
             (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) * _voltage_scaling *
-            _time_units * _N_inverse;
+            _time_units * N_inverse;
         _diffem[_qp].value() =
             std::tanh(_t / 1e-6) *
                 _diff_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) +
-            (1. - std::tanh(_t / 1e-6)) * .30 * _time_units * _N_inverse;
+            (1. - std::tanh(_t / 1e-6)) * .30 * _time_units * N_inverse;
         _diffem[_qp].derivatives() = std::tanh(_t / 1e-6) *
                                      _diff_interpolation.sampleDerivative(
                                          std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
                                      std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
                                      (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) *
-                                     _time_units * _N_inverse;
+                                     _time_units * N_inverse;
       }
       else
       {
         _muem[_qp].value() =
             _mu_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-            _voltage_scaling * _time_units * _N_inverse;
+            _voltage_scaling * _time_units * N_inverse;
         _muem[_qp].derivatives() =
             _mu_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
             std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
             (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) * _voltage_scaling *
-            _time_units * _N_inverse;
+            _time_units * N_inverse;
         _diffem[_qp].value() =
             _diff_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-            _time_units * _N_inverse;
+            _time_units * N_inverse;
         _diffem[_qp].derivatives() = _diff_interpolation.sampleDerivative(
                                          std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
                                      std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
                                      (_mean_en[_qp].derivatives() - _em[_qp].derivatives()) *
-                                     _time_units * _N_inverse;
+                                     _time_units * N_inverse;
       }
     }
     else
     {
-      _muem[_qp].value() = _user_muem * _voltage_scaling * _time_units * _N_inverse;
+      _muem[_qp].value() = _user_muem * _voltage_scaling * _time_units * N_inverse;
       _muem[_qp].derivatives() = 0.0;
-      _diffem[_qp].value() = _user_diffem * _time_units * _N_inverse;
+      _diffem[_qp].value() = _user_diffem * _time_units * N_inverse;
       _diffem[_qp].derivatives() = 0.0;
     }
   }

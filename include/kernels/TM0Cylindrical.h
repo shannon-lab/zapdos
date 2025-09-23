@@ -29,6 +29,4 @@ protected:
   const Real _omega;
   /// Relative permittivity
   const ADMaterialProperty<Real> & _eps_r;
-  /// Permeability of free space
-  const Real _mu0;
 };
