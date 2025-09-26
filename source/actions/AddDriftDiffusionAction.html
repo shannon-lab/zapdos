@@ -1,0 +1,621 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>AddDriftDiffusionAction | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="1d7e228e-8f77-40af-a64d-79292d2b3ae5" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="264166cc-4ea0-47ca-86d2-ea02470e1328" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="b7e643cb-72d8-436f-8655-746297fbb11f" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="a931e38d-a9b8-4884-ad49-e76d9757da0b"><i class="material-icons">menu</i></a><ul class="sidenav" id="a931e38d-a9b8-4884-ad49-e76d9757da0b"><li><a href="#!" class="dropdown-trigger" data-target="bb1ceb91-51fa-4f5d-803d-41c355342e48" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="ed5239e2-590f-4ebe-a0b9-fdd6e4b38cc5" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="8c5c7d48-8405-4e7e-aeca-475e0961f485" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="1d7e228e-8f77-40af-a64d-79292d2b3ae5"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="264166cc-4ea0-47ca-86d2-ea02470e1328"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="b7e643cb-72d8-436f-8655-746297fbb11f"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="bb1ceb91-51fa-4f5d-803d-41c355342e48"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="ed5239e2-590f-4ebe-a0b9-fdd6e4b38cc5"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="8c5c7d48-8405-4e7e-aeca-475e0961f485"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">actions</span><a href="#" class="breadcrumb">AddDriftDiffusionAction</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="88da969e-f0d7-43d2-9698-7db927cbf25f" data-section-level="1" data-section-text="AddDriftDiffusionAction"><h1 id="adddriftdiffusionaction">AddDriftDiffusionAction</h1><p>This Action automatically adds the necessary variables and objects to model the drift-diffusion equations within a domain block.</p><section class="scrollspy" id="e9c097f0-db15-4d65-8603-dbeaec2fbfcd" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p>The <code>DriftDiffusionAction</code> object provides the necessary variables and objects to model the transport of plasma species using the drift-diffusion approximation.</p><p>The equation for the species density using the drift-diffusion approximation is:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-3ea65e58-98b5-4ea3-95cf-bebfcf47c4e9"></span><script>var element = document.getElementById("moose-equation-3ea65e58-98b5-4ea3-95cf-bebfcf47c4e9");katex.render("\\frac{d n_{j}}{d t} + \\nabla \\cdot \\left( \\text{sign}_{j} \\mu_{j} \\vec{E} n_{j} - D_{j} \\nabla n_{j} \\right) = S_{j}", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where:</p><ul class="browser-default"><li><p>the subscript <span class="moose-katex-inline-equation" id="moose-equation-c2fb97ed-5d8b-45d9-9ca9-13d0993ba6a7"><script>var element = document.getElementById("moose-equation-c2fb97ed-5d8b-45d9-9ca9-13d0993ba6a7");katex.render("j", element, {displayMode:false,throwOnError:false});</script></span> represents properties of the plasma species, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-5cc869c4-bb3c-4f31-8c92-03fd81e3f1e0"><script>var element = document.getElementById("moose-equation-5cc869c4-bb3c-4f31-8c92-03fd81e3f1e0");katex.render("\\text{sign}", element, {displayMode:false,throwOnError:false});</script></span> indicates the advection behavior (<span class="moose-katex-inline-equation" id="moose-equation-8fc26dcd-b5cb-4ab2-8fe7-a30d22b92860"><script>var element = document.getElementById("moose-equation-8fc26dcd-b5cb-4ab2-8fe7-a30d22b92860");katex.render("\\text{+}1", element, {displayMode:false,throwOnError:false});</script></span> for positively charged species, <span class="moose-katex-inline-equation" id="moose-equation-e5aeb947-ac38-40f9-9835-5185077bf457"><script>var element = document.getElementById("moose-equation-e5aeb947-ac38-40f9-9835-5185077bf457");katex.render("\\text{-}1", element, {displayMode:false,throwOnError:false});</script></span> for negatively charged species, and <span class="moose-katex-inline-equation" id="moose-equation-cd666b1b-5b54-4530-a796-b97ec8136dfa"><script>var element = document.getElementById("moose-equation-cd666b1b-5b54-4530-a796-b97ec8136dfa");katex.render("0", element, {displayMode:false,throwOnError:false});</script></span> for neutral species), </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-74c291d1-a68f-4deb-9570-1a81368c035d"><script>var element = document.getElementById("moose-equation-74c291d1-a68f-4deb-9570-1a81368c035d");katex.render("\\mu", element, {displayMode:false,throwOnError:false});</script></span> is the mobility coefficient, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-ab8793bd-121f-4011-8020-bcfc7cde7eb7"><script>var element = document.getElementById("moose-equation-ab8793bd-121f-4011-8020-bcfc7cde7eb7");katex.render("D", element, {displayMode:false,throwOnError:false});</script></span> is the diffusion coefficient, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-1f1a1a20-902a-4444-b688-2b0929a7dd18"><script>var element = document.getElementById("moose-equation-1f1a1a20-902a-4444-b688-2b0929a7dd18");katex.render("n", element, {displayMode:false,throwOnError:false});</script></span> is the density, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-5bc38273-3e3e-4c8d-9252-ef1714fe98d7"><script>var element = document.getElementById("moose-equation-5bc38273-3e3e-4c8d-9252-ef1714fe98d7");katex.render("\\vec{E}", element, {displayMode:false,throwOnError:false});</script></span> is the electric field, and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-8d02043a-91bc-4bbc-b029-c3e6cb24d08a"><script>var element = document.getElementById("moose-equation-8d02043a-91bc-4bbc-b029-c3e6cb24d08a");katex.render("S_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the source term.</p></li></ul><p>In addition to the species density, Zapdos also tracks the mean energy density of the electrons using the equation:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-483357de-eb0f-4fbf-bd11-9e3ecd327d93"></span><script>var element = document.getElementById("moose-equation-483357de-eb0f-4fbf-bd11-9e3ecd327d93");katex.render("\\frac{d n_{\\varepsilon}}{d t} + \\nabla \\cdot \\left( - \\mu_{\\varepsilon} \\vec{E} n_{\\varepsilon} - D_{\\varepsilon} \\nabla n_{\\varepsilon} \\right) - \\left( - \\mu_{e} \\vec{E} n_{e} - D_{e} \\nabla n_{e} \\right) \\cdot \\vec{E} = S_{\\varepsilon}", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where:</p><ul class="browser-default"><li><p>the subscript <span class="moose-katex-inline-equation" id="moose-equation-8b97c120-15cb-4598-af01-43c0a46bd7c0"><script>var element = document.getElementById("moose-equation-8b97c120-15cb-4598-af01-43c0a46bd7c0");katex.render("e", element, {displayMode:false,throwOnError:false});</script></span> represents properties of the electrons, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-24a2e23f-d0ce-4f7d-8198-b473652365ed"><script>var element = document.getElementById("moose-equation-24a2e23f-d0ce-4f7d-8198-b473652365ed");katex.render("n_{\\varepsilon}", element, {displayMode:false,throwOnError:false});</script></span> is the electron mean energy density (defined as <span class="moose-katex-inline-equation" id="moose-equation-7d938f75-d726-45b2-913f-745476b962fc"><script>var element = document.getElementById("moose-equation-7d938f75-d726-45b2-913f-745476b962fc");katex.render("n_{\\varepsilon} = \\varepsilon n_{e}", element, {displayMode:false,throwOnError:false});</script></span>) </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-11fd7c54-b1b2-4a0d-90ea-cc716628b659"><script>var element = document.getElementById("moose-equation-11fd7c54-b1b2-4a0d-90ea-cc716628b659");katex.render("\\varepsilon", element, {displayMode:false,throwOnError:false});</script></span> is the electron mean energy in units of eV, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-f7c950c0-f5ba-47f8-8c01-c0b71bf76f31"><script>var element = document.getElementById("moose-equation-f7c950c0-f5ba-47f8-8c01-c0b71bf76f31");katex.render("\\mu_{\\varepsilon}", element, {displayMode:false,throwOnError:false});</script></span> is the electron mean energy density mobility coefficient (defined as <span class="moose-katex-inline-equation" id="moose-equation-ccc22c48-2353-480f-98fc-8c43c9ac89ce"><script>var element = document.getElementById("moose-equation-ccc22c48-2353-480f-98fc-8c43c9ac89ce");katex.render("\\mu_{\\varepsilon} = \\frac{5}{3} \\mu_{e}", element, {displayMode:false,throwOnError:false});</script></span> by default), </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-d85fac10-66f0-4dcb-ac79-764404e66dc2"><script>var element = document.getElementById("moose-equation-d85fac10-66f0-4dcb-ac79-764404e66dc2");katex.render("D_{\\varepsilon}", element, {displayMode:false,throwOnError:false});</script></span> is the electron mean energy density diffusion coefficient (defined as <span class="moose-katex-inline-equation" id="moose-equation-228d66e0-6d2a-44ff-9347-923ac8674523"><script>var element = document.getElementById("moose-equation-228d66e0-6d2a-44ff-9347-923ac8674523");katex.render("D_{\\varepsilon} = \\frac{5}{3} D_{e}", element, {displayMode:false,throwOnError:false});</script></span> by default), and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-13dfa2fa-1903-48cb-8257-cfb1834b8344"><script>var element = document.getElementById("moose-equation-13dfa2fa-1903-48cb-8257-cfb1834b8344");katex.render("S_{\\varepsilon}", element, {displayMode:false,throwOnError:false});</script></span> is the electron mean energy source term.</p></li></ul><p><code>DriftDiffusionAction</code> provides the objects for the right hand side of the above equations, while <a href="https://github.com/lcpp-org/crane">CRANE</a>&#x27;s <a href="AddZapdosReactions.html">AddZapdosReactions</a> action is often used to supply the chemistry network which defines <span class="moose-katex-inline-equation" id="moose-equation-e5f471a8-6ca3-4765-8b75-c0df51dc3dd9"><script>var element = document.getElementById("moose-equation-e5f471a8-6ca3-4765-8b75-c0df51dc3dd9");katex.render("S_{j}", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-1822bc10-3789-4dc7-9b8e-74358008e7e9"><script>var element = document.getElementById("moose-equation-1822bc10-3789-4dc7-9b8e-74358008e7e9");katex.render("S_{\\varepsilon}", element, {displayMode:false,throwOnError:false});</script></span>.</p><p>If using the electrostatic approximation for the electric field, <code>DriftDiffusionAction</code> supplies the Poisson&#x27;s equation, in the form of:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-e60807d1-f41c-41bd-ab4b-4a4db477ef18"></span><script>var element = document.getElementById("moose-equation-e60807d1-f41c-41bd-ab4b-4a4db477ef18");katex.render("\\nabla \\cdot \\left( - \\varepsilon_{0} \\nabla V \\right) = e \\left( \\left[\\sum{ \\text{sign}_{i} n_{i} } \\right] - n_{e} \\right)", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where:</p><ul class="browser-default"><li><p><span class="moose-katex-inline-equation" id="moose-equation-27c3f1ce-bd6f-456a-816f-059f6da64436"><script>var element = document.getElementById("moose-equation-27c3f1ce-bd6f-456a-816f-059f6da64436");katex.render("V", element, {displayMode:false,throwOnError:false});</script></span> is the electrostatic potential, and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-2b4ac39b-b071-4b3d-a4b0-387b34ff6d8d"><script>var element = document.getElementById("moose-equation-2b4ac39b-b071-4b3d-a4b0-387b34ff6d8d");katex.render("\\varepsilon_{0}", element, {displayMode:false,throwOnError:false});</script></span> is the permittivity of free space.</p></li></ul><p><code>DriftDiffusionAction</code> can supply additional outputs for electron temperature, current, and electric field by supplying the auxkernels <a href="../auxkernels/ElectronTemperature.html">ElectronTemperature</a>, <a href="../auxkernels/Current.html">Current</a>, and <a href="../auxkernels/Efield.html">Efield</a> respectively.</p></section><section class="scrollspy" id="6873abca-264c-4b81-8774-d890ff14aeb8" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[DriftDiffusionAction&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/DriftDiffusionAction/index.html&quot;}&gt;&gt;&gt;]
+  [Plasma]
+    electrons&lt;&lt;&lt;{&quot;description&quot;: &quot;User given variable name for energy dependent electrons&quot;}&gt;&gt;&gt; = em
+    charged_particle&lt;&lt;&lt;{&quot;description&quot;: &quot;User given variable name for energy independent charged particle&quot;}&gt;&gt;&gt; = Ar+
+    Neutrals&lt;&lt;&lt;{&quot;description&quot;: &quot;The names of the neutrals that should be added&quot;}&gt;&gt;&gt; = Ar*
+    mean_energy&lt;&lt;&lt;{&quot;description&quot;: &quot;The gives the mean energy a variable name&quot;}&gt;&gt;&gt; = mean_en
+    field&lt;&lt;&lt;{&quot;description&quot;: &quot;The gives the field a variable name&quot;}&gt;&gt;&gt; = potential
+    Is_field_unique&lt;&lt;&lt;{&quot;description&quot;: &quot;Is the field unique to this block?If not, then the field variable should be defined in the Variable Block.&quot;}&gt;&gt;&gt; = true
+    using_offset&lt;&lt;&lt;{&quot;description&quot;: &quot;Is the LogStabilizationMoles Kernel being used&quot;}&gt;&gt;&gt; = false
+    position_units&lt;&lt;&lt;{&quot;description&quot;: &quot;Units of position&quot;}&gt;&gt;&gt; = ${dom0Scale}
+    Additional_Outputs&lt;&lt;&lt;{&quot;description&quot;: &quot;Current list of available ouputs options in this action: Current, ElectronTemperature, EField&quot;}&gt;&gt;&gt; = &#x27;ElectronTemperature Current EField&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#6176fe3d-1d9c-4d15-93be-3af71a389bc9">(test/tests/DriftDiffusionAction/RF_Plasma_actions.i)</a></section><section class="scrollspy" id="293157af-8e0c-446d-8f4e-c31526e453ab" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="4927e321-6534-418a-8869-585920f9b8ef" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">position_units</span><span class="moose-parameter-header-description">Units of position</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Units of position</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">potential_units</span><span class="moose-parameter-header-description">Units of potential (V or kV)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Units of potential (V or kV)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_moles</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether to convert from units of moles to \#.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to convert from units of moles to \#.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="5e0c7a38-c0e6-4f7e-872a-be2f326a42fa" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">Additional_Outputs</span><span class="moose-parameter-header-description">Current list of available ouputs options in this action: Current, ElectronTemperature, EField</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Current list of available ouputs options in this action: Current, ElectronTemperature, EField</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">First_DriftDiffusionAction_in_block</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Is this the first DriftDiffusionAction for this block?If not, then the field solver kernels and Position auxkernel will NOT be supplied by this action.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Is this the first DriftDiffusionAction for this block?If not, then the field solver kernels and Position auxkernel will NOT be supplied by this action.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">Is_field_unique</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Is the field unique to this block?If not, then the field variable should be defined in the Variable Block.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Is the field unique to this block?If not, then the field variable should be defined in the Variable Block.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">Neutrals</span><span class="moose-parameter-header-description">The names of the neutrals that should be added</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;NonlinearVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The names of the neutrals that should be added</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">active</span><span class="moose-parameter-header-default">__all__ </span><span class="moose-parameter-header-description">If specified only the blocks named will be visited and made active</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>__all__ </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>If specified only the blocks named will be visited and made active</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The subdomain that this action applies to.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The subdomain that this action applies to.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">charged_particle</span><span class="moose-parameter-header-description">User given variable name for energy independent charged particle</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;NonlinearVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>User given variable name for energy independent charged particle</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">eff_fields</span><span class="moose-parameter-header-description">The effective fields that only affect their respective secondary charged particle.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;NonlinearVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The effective fields that only affect their respective secondary charged particle.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">eff_fields_property_names</span><span class="moose-parameter-header-description">Name of the solver interface material property for the effective fields.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Name of the solver interface material property for the effective fields.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electrons</span><span class="moose-parameter-header-description">User given variable name for energy dependent electrons</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>User given variable name for energy dependent electrons</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">family</span><span class="moose-parameter-header-default">LAGRANGE</span><span class="moose-parameter-header-description">Specifies the family of FE shape functions to use for this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>LAGRANGE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>LAGRANGE, MONOMIAL, HERMITE, SCALAR, HIERARCHIC, CLOUGH, XYZ, SZABAB, BERNSTEIN, L2_LAGRANGE, L2_HIERARCHIC, NEDELEC_ONE, LAGRANGE_VEC, MONOMIAL_VEC, RAVIART_THOMAS, RATIONAL_BERNSTEIN, SIDE_HIERARCHIC, L2_HIERARCHIC_VEC, L2_LAGRANGE_VEC, L2_RAVIART_THOMAS</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies the family of FE shape functions to use for this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">field</span><span class="moose-parameter-header-description">The gives the field a variable name</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The gives the field a variable name</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">field_property_name</span><span class="moose-parameter-header-default">field_solver_interface_property</span><span class="moose-parameter-header-description">Name of the solver interface material property.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>field_solver_interface_property</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Name of the solver interface material property.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">field_solver</span><span class="moose-parameter-header-default">electrostatic</span><span class="moose-parameter-header-description">Electrostatic or electromagnetic field solver (default = electrostatic).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>electrostatic</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>electrostatic, electromagnetic</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Electrostatic or electromagnetic field solver (default = electrostatic).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">inactive</span><span class="moose-parameter-header-description">If specified blocks matching these identifiers will be skipped.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>If specified blocks matching these identifiers will be skipped.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">initial_condition</span><span class="moose-parameter-header-description">Specifies a constant initial condition for this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies a constant initial condition for this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">initial_from_file_var</span><span class="moose-parameter-header-description">Gives the name of a variable for which to read an initial condition from a mesh file</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Gives the name of a variable for which to read an initial condition from a mesh file</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">mean_energy</span><span class="moose-parameter-header-description">The gives the mean energy a variable name</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The gives the mean energy a variable name</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">offset</span><span class="moose-parameter-header-default">20</span><span class="moose-parameter-header-description">The offset parameter that goes into the exponential function</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>20</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The offset parameter that goes into the exponential function</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">order</span><span class="moose-parameter-header-default">FIRST</span><span class="moose-parameter-header-description">Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>FIRST</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>CONSTANT, FIRST, SECOND, THIRD, FOURTH</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">scaling</span><span class="moose-parameter-header-description">Specifies a scaling factor to apply to this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies a scaling factor to apply to this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">secondary_charged_particles</span><span class="moose-parameter-header-description">These are charged particles whose advection term in determined by an effective field.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;NonlinearVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>These are charged particles whose advection term in determined by an effective field.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">using_offset</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Is the LogStabilizationMoles Kernel being used</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Is the LogStabilizationMoles Kernel being used</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="83f6265c-b080-4f00-814a-94e72f44b4ae" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="6176fe3d-1d9c-4d15-93be-3af71a389bc9"><div class="modal-content"><h4>(test/tests/DriftDiffusionAction/RF_Plasma_actions.i)</h4><pre style="max-height:350px;"><code class="language-moose">dom0Scale = 25.4e-3
+
+[GlobalParams]
+  potential_units = kV
+  use_moles = true
+[]
+
+[Mesh]
+  [file]
+    type = FileMeshGenerator
+    file = &#x27;Lymberopoulos.msh&#x27;
+  []
+  [left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = file
+  []
+  [right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+#Action the supplies the drift-diffusion equations
+#This action also adds JouleHeating and the ChargeSourceMoles_KV Kernels
+[DriftDiffusionAction]
+  [Plasma]
+    electrons = em
+    charged_particle = Ar+
+    Neutrals = Ar*
+    mean_energy = mean_en
+    field = potential
+    Is_field_unique = true
+    using_offset = false
+    position_units = ${dom0Scale}
+    Additional_Outputs = &#x27;ElectronTemperature Current EField&#x27;
+  []
+[]
+
+#The Kernels supply the sources terms
+[Kernels]
+  #Net electron production from ionization
+  [em_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from step-wise ionization
+  [em_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from metastable pooling
+  [em_pooling]
+    type = ReactionSecondOrderLog
+    variable = em
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Net ion production from ionization
+  [Ar+_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from step-wise ionization
+  [Ar+_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from metastable pooling
+  [Ar+_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar+
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Net excited Argon production from excitation
+  [Ar*_excitation]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    coefficient = 1
+  []
+  #Net excited Argon loss from step-wise ionization
+  [Ar*_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from superelastic collisions
+  [Ar*_collisions]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from quenching to resonant
+  [Ar*_quenching]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from  metastable pooling
+  [Ar*_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = -2
+    _v_eq_u = true
+    _w_eq_u = true
+  []
+  #Net excited Argon loss from two-body quenching
+  [Ar*_2B_quenching]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+  #Net excited Argon loss from three-body quenching
+  [Ar*_3B_quenching]
+    type = ReactionThirdOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+
+  #Energy loss from ionization
+  [Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    threshold_energy = -15.7
+  []
+  #Energy loss from excitation
+  [Excitation_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    threshold_energy = -11.56
+  []
+  #Energy loss from step-wise ionization
+  [Stepwise_Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    threshold_energy = -4.14
+  []
+  #Energy gain from superelastic collisions
+  [Collisions_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    threshold_energy = 11.56
+  []
+[]
+
+[AuxVariables]
+  [x_node]
+  []
+
+  [rho]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar]
+  []
+
+  [emRate]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [exRate]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [swRate]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [deexRate]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [quRate]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [poolRate]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [TwoBRate]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [ThreeBRate]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+[]
+
+[AuxKernels]
+  [emRate]
+    type = ProcRateForRateCoeff
+    variable = emRate
+    v = em
+    w = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+  []
+  [exRate]
+    type = ProcRateForRateCoeff
+    variable = exRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+  []
+  [swRate]
+    type = ProcRateForRateCoeff
+    variable = swRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+  []
+  [deexRate]
+    type = ProcRateForRateCoeff
+    variable = deexRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+  []
+  [quRate]
+    type = ProcRateForRateCoeff
+    variable = quRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+  []
+  [poolRate]
+    type = ProcRateForRateCoeff
+    variable = poolRate
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+  []
+  [TwoBRate]
+    type = ProcRateForRateCoeff
+    variable = TwoBRate
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+  []
+  [ThreeBRate]
+    type = ProcRateForRateCoeffThreeBody
+    variable = ThreeBRate
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+  []
+
+  [x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
+  []
+
+  [Ar_val]
+    type = ConstantAux
+    variable = Ar
+    # value = 3.22e22
+    value = -2.928623
+    execute_on = INITIAL
+  []
+[]
+
+[BCs]
+  #Voltage Boundary Condition, same as in paper
+  [potential_left]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;left&#x27;
+    function = potential_bc_func
+    preset = false
+  []
+  [potential_dirichlet_right]
+    type = DirichletBC
+    variable = potential
+    boundary = &#x27;right&#x27;
+    value = 0
+    preset = false
+  []
+
+  #New Boundary conditions for electons, same as in paper
+  [em_physical_right]
+    type = LymberopoulosElectronBC
+    variable = em
+    boundary = &#x27;right&#x27;
+    emission_coeffs = 0.01
+    #emission_coeffs = 1
+    ks = 1.19e5
+    #ks = 0.0
+    ions = Ar+
+    position_units = ${dom0Scale}
+  []
+  [em_physical_left]
+    type = LymberopoulosElectronBC
+    variable = em
+    boundary = &#x27;left&#x27;
+    emission_coeffs = 0.01
+    #emission_coeffs = 1
+    ks = 1.19e5
+    #ks = 0.0
+    ions = Ar+
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  [Ar+_physical_right_advection]
+    type = LymberopoulosIonBC
+    variable = Ar+
+    boundary = &#x27;right&#x27;
+    position_units = ${dom0Scale}
+  []
+  [Ar+_physical_left_advection]
+    type = LymberopoulosIonBC
+    variable = Ar+
+    boundary = &#x27;left&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  #(except the metastables are not set to zero, since Zapdos uses log form)
+  [Ar*_physical_right_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;right&#x27;
+    value = 100
+  []
+  [Ar*_physical_left_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;left&#x27;
+    value = 100
+  []
+
+  #New Boundary conditions for mean energy, should be the same as in paper
+  [mean_en_physical_right]
+    type = ElectronTemperatureDirichletBC
+    variable = mean_en
+    electrons = em
+    value = 0.5
+    boundary = &#x27;right&#x27;
+  []
+  [mean_en_physical_left]
+    type = ElectronTemperatureDirichletBC
+    variable = mean_en
+    electrons = em
+    value = 0.5
+    boundary = &#x27;left&#x27;
+  []
+
+[]
+
+[ICs]
+  [em_ic]
+    type = FunctionIC
+    variable = em
+    function = density_ic_func
+  []
+  [Ar+_ic]
+    type = FunctionIC
+    variable = Ar+
+    function = density_ic_func
+  []
+  [Ar*_ic]
+    type = FunctionIC
+    variable = Ar*
+    function = density_ic_func
+  []
+  [mean_en_ic]
+    type = FunctionIC
+    variable = mean_en
+    function = energy_density_ic_func
+  []
+
+  [potential_ic]
+    type = FunctionIC
+    variable = potential
+    function = potential_ic_func
+  []
+[]
+
+[Functions]
+  [potential_bc_func]
+    type = ParsedFunction
+    expression = &#x27;0.100*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_ic_func]
+    type = ParsedFunction
+    expression = &#x27;0.100 * (25.4e-3 - x)&#x27;
+  []
+  [density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e13 + 1e15 * (1-x/1)^2 * (x/1)^2)/6.022e23)&#x27;
+  []
+  [energy_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log(3./2.) + log((1e13 + 1e15 * (1-x/1)^2 * (x/1)^2)/6.022e23)&#x27;
+  []
+[]
+
+[Materials]
+  [GasBasics]
+    type = GasElectronMoments
+    interp_trans_coeffs = false
+    interp_elastic_coeff = false
+    ramp_trans_coeffs = false
+    user_p_gas = 133.322
+    em = em
+    mean_en = mean_en
+    user_electron_mobility = 30.0
+    user_electron_diffusion_coeff = 119.8757763975
+    property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Ar+
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    mobility = 0.144409938
+    diffusivity = 6.428571e-3
+  []
+  [gas_species_1]
+    type = ADHeavySpecies
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    diffusivity = 7.515528e-3
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+  []
+  [reaction_0]
+    type = ZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excitation.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    electrons = em
+  []
+  [reaction_1]
+    type = ZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_ionization.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    electrons = em
+  []
+  [reaction_2]
+    type = ZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt&#x27;
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    electrons = em
+  []
+  [reaction_3]
+    type = ZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt&#x27;
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    electrons = em
+  []
+  [reaction_4]
+    type = GenericRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    #reaction_rate_value = 2e-13
+    reaction_rate_value = 1.2044e11
+  []
+  [reaction_5]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    #reaction_rate_value = 6.2e-16
+    reaction_rate_value = 373364000
+  []
+  [reaction_6]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    #reaction_rate_value = 3e-21
+    reaction_rate_value = 1806.6
+  []
+  [reaction_7]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    #reaction_rate_value = 1.1e-42
+    reaction_rate_value = 398909.324
+  []
+[]
+
+#New postprocessor that calculates the inverse of the plasma frequency
+[Postprocessors]
+  [InversePlasmaFreq]
+    type = PlasmaFrequencyInverse
+    variable = em
+    use_moles = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 3e-7
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 fgmres 1e-3&#x27;
+
+  dtmin = 1e-14
+  l_max_its = 20
+
+  scheme = bdf2
+  dt = 1e-9
+[]
+
+[Outputs]
+  file_base = &#x27;RF_out&#x27;
+  perf_graph = true
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#e9c097f0-db15-4d65-8603-dbeaec2fbfcd" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#6873abca-264c-4b81-8774-d890ff14aeb8" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#293157af-8e0c-446d-8f4e-c31526e453ab" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
