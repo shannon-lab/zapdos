@@ -8,7 +8,7 @@
 
 !style halign=center
 Zapdos utilizes the fluid description of plasmas to model a wide range of applications, for both industrial and fusion purposes.
-A summary of the models that Zapdos employees can be found on the [Plasma Models page](plasma_modeling.md). Zapdos is based on the
+A summary of the models that Zapdos employees can be found on the [Plasma Models page](plasma_models/index.md). Zapdos is based on the
 [MOOSE framework](https://mooseframework.inl.gov), and builds on the framework and modules for many of its capabilities.
 
 !row!
@@ -29,7 +29,7 @@ A summary of the models that Zapdos employees can be found on the [Plasma Models
 !style halign=center
 
 - Extensive [V&V cases](verification_and_validation/index.md)
-- [Software documentation](plasma_modeling.md)
+- [Software documentation](syntax/zapdos_only.md)
 - CI testing with [CIVET](https://github.com/idaholab/civet)
 
 !col-end!
