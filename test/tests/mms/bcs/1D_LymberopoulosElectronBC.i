@@ -160,14 +160,14 @@
     type = ParsedFunction
     vars = 'diffem'
     vals = 'diffem'
-    value = 'diffem'
+    expression = 'diffem'
   []
   #Ion mobility coeff.
   [muion]
     type = ParsedFunction
     vars = 'muem'
     vals = 'muem'
-    value = 'muem'
+    expression = 'muem'
   []
   [N_A]
     type = ConstantFunction
@@ -189,21 +189,21 @@
     type = ParsedFunction
     vars = 'l f N_A'
     vals = 'l f N_A'
-    value = 'log(((sin(2.*pi*f*t) + 2.) * ((x/l)*(1. - x/l) + 1.)) / N_A)'
+    expression = 'log(((sin(2.*pi*f*t) + 2.) * ((x/l)*(1. - x/l) + 1.)) / N_A)'
   []
   #The manufactured ion density solution
   [ion_fun]
     type = ParsedFunction
     vars = 'em_fun'
     vals = 'em_fun'
-    value = 'em_fun'
+    expression = 'em_fun'
   []
   #The manufactured electron density solution
   [potential_fun]
     type = ParsedFunction
     vars = 'l f'
     vals = 'l f'
-    value = '-sin(2.*pi*f*t)*(x/l)^2. + (x/l)^2.'
+    expression = '-sin(2.*pi*f*t)*(x/l)^2. + (x/l)^2.'
   []
 
 #Source Terms in moles
@@ -212,23 +212,23 @@
     type = ParsedFunction
     vars = 'l f diffem muem N_A'
     vals = 'l f diffem muem N_A'
-    value = '((2.*diffem*(sin(2.*pi*f*t) + 2.))/l^2. + (2.*f*pi*cos(2.*pi*f*t)*(l^2. + l*x - x^2.))/l^2. -
-              (2.*muem*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l^2. + l*x - x^2.))/l^4. -
-              (2.*muem*x*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l - 2.*x))/l^4.) / N_A'
+    expression = '((2.*diffem*(sin(2.*pi*f*t) + 2.))/l^2. + (2.*f*pi*cos(2.*pi*f*t)*(l^2. + l*x - x^2.))/l^2. -
+                   (2.*muem*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l^2. + l*x - x^2.))/l^4. -
+                   (2.*muem*x*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l - 2.*x))/l^4.) / N_A'
   []
   [ion_source]
     type = ParsedFunction
     vars = 'l f diffion muion N_A'
     vals = 'l f diffion muion N_A'
-    value = '((2.*diffion*(sin(2.*pi*f*t) + 2.))/l^2. + (2.*f*pi*cos(2.*pi*f*t)*(l^2. + l*x - x^2.))/l^2. +
-              (2.*muion*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l^2. + l*x - x^2.))/l^4. +
-              (2.*muion*x*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l - 2.*x))/l^4.) / N_A'
+    expression = '((2.*diffion*(sin(2.*pi*f*t) + 2.))/l^2. + (2.*f*pi*cos(2.*pi*f*t)*(l^2. + l*x - x^2.))/l^2. +
+                   (2.*muion*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l^2. + l*x - x^2.))/l^4. +
+                   (2.*muion*x*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l - 2.*x))/l^4.) / N_A'
   []
   [potential_source]
     type = ParsedFunction
     vars = 'l f'
     vals = 'l f'
-    value = 'sin(2.*pi*f*t)*(2./l^2.) - (2./l^2.)'
+    expression = 'sin(2.*pi*f*t)*(2./l^2.) - (2./l^2.)'
   []
 
   #The left BC dirichlet function
@@ -236,51 +236,51 @@
     type = ParsedFunction
     vars = 'l f N_A'
     vals = 'l f N_A'
-    value = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
+    expression = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
   []
   [ion_left_BC]
     type = ParsedFunction
     vars = 'l f N_A'
     vals = 'l f N_A'
-    value = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
+    expression = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
   []
   [potential_left_BC]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
-    value = '0.0'
+    expression = '0.0'
   []
   #The right BC dirichlet function
   [em_right_BC]
     type = ParsedFunction
     vars = 'l f N_A'
     vals = 'l f N_A'
-    value = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
+    expression = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
   []
   [ion_right_BC]
     type = ParsedFunction
     vars = 'l f N_A'
     vals = 'l f N_A'
-    value = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
+    expression = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
   []
   [potential_right_BC]
     type = ParsedFunction
     vars = 'f N_A'
     vals = 'f N_A'
-    value = '1. - sin(2.*pi*f*t)'
+    expression = '1. - sin(2.*pi*f*t)'
   []
 
   [em_ICs]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
-    value = 'log((1.) / N_A)'
+    expression = 'log((1.) / N_A)'
   []
   [ion_ICs]
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
-    value = 'log((1.) / N_A)'
+    expression = 'log((1.) / N_A)'
   []
 []
 
