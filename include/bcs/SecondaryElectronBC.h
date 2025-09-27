@@ -31,8 +31,6 @@ protected:
   const Real & _r;
   /// Reflection coefficient for ions
   const Real & _r_ion;
-  /// Boltzmann constant
-  const MaterialProperty<Real> & _kb;
   /// Number of ions defined
   const unsigned int _num_ions;
   /// Material name of secondary electron coefficients
@@ -50,8 +48,6 @@ protected:
   const ADMaterialProperty<Real> & _muem;
   /// Mass of electrons
   const MaterialProperty<Real> & _massem;
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
   /// Charge sign of the ions
   std::vector<const MaterialProperty<Real> *> _sgnip;
   /// Mobility coefficient of the ions

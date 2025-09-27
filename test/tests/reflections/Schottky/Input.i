@@ -243,7 +243,6 @@ vhigh = -150E-3 #kV
   [mean_en]
     block = 0
   []
-
 []
 
 [AuxVariables]
@@ -612,20 +611,38 @@ vhigh = -150E-3 #kV
     type = FieldSolverMaterial
     potential = potential
   []
-  [gas_block]
-    type = Gas
-    interp_trans_coeffs = true
-    interp_elastic_coeff = true
-    ramp_trans_coeffs = false
-    em = em
-    ip = Arp
-    mean_en = mean_en
-    user_se_coeff = 0.02
+  [gas_block_field_emission]
+    type = FieldEmissionCoefficients
     user_work_function = 4.55 # eV
     user_field_enhancement = 55
     user_Richardson_coefficient = 80E4
     user_cathode_temperature = 1273
-    property_tables_file = td_argon_mean_en.txt
+    block = 0
+  []
+  [gas_block_electrons]
+    type = ElectronTransportCoefficients
+    interp_trans_coeffs = true
+    ramp_trans_coeffs = false
+    em = em
+    ip = Arp
+    mean_en = mean_en
+    block = 0
+    property_tables_file = td_argon_electrons.txt
+    user_p_gas = 1.01e5
+  []
+  [gas_block]
+    type = SimplifiedArgonChemistryCoefficients
+    interp_elastic_coeff = true
+    em = em
+    mean_en = mean_en
+    block = 0
+    property_tables_file = td_argon_chemistry.txt
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Arp
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
     block = 0
   []
 []

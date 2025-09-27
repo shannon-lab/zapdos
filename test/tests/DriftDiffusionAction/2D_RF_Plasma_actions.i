@@ -291,7 +291,6 @@ dom0Scale = 25.4e-3
     family = MONOMIAL
     block = 'plasma'
   []
-
 []
 
 [AuxKernels]
@@ -468,7 +467,6 @@ dom0Scale = 25.4e-3
     boundary = 'Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls'
     position_units = ${dom0Scale}
   []
-
 []
 
 [ICs]
@@ -529,14 +527,12 @@ dom0Scale = 25.4e-3
 
 [Materials]
   [GasBasics]
-    type = GasElectronMoments
+    type = ElectronTransportCoefficients
     interp_trans_coeffs = true
-    interp_elastic_coeff = false
     ramp_trans_coeffs = false
     user_p_gas = 133.322
     em = em
     mean_en = mean_en
-    user_se_coeff = 0.00
     property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
   []
   [gas_species_0]

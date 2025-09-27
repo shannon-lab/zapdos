@@ -8,6 +8,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "DielectricBCWithEffEfield.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", DielectricBCWithEffEfield);
 
@@ -56,9 +57,7 @@ DielectricBCWithEffEfield::DielectricBCWithEffEfield(const InputParameters & par
     _Ez(isCoupled("Ez") ? adCoupledValue("Ez") : _ad_zero),
     _Ez_old(isCoupled("Ez") ? (*getVar("Ez", 0)).slnOld() : _zero),
 
-    _e(getMaterialProperty<Real>("e")),
     _epsilon_0(getADMaterialProperty<Real>("diff" + _var.name())),
-    _N_A(getMaterialProperty<Real>("N_A")),
 
     _massem(getMaterialProperty<Real>("massem")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
@@ -143,17 +142,17 @@ DielectricBCWithEffEfield::computeQpResidual()
     _em_flux_old -= (*_user_se_coeff[i])[_qp] * _temp_flux;
   }
 
-  _v_thermal =
-      std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
+  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
+                         (M_PI * _massem[_qp]));
 
   _em_flux += (0.25 * _v_thermal * std::exp(_em[_qp]) * _normals[_qp]);
 
-  _v_thermal_old = std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en_old[_qp] - _em_old[_qp]) /
-                             (M_PI * _massem[_qp]));
+  _v_thermal_old = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 *
+                             std::exp(_mean_en_old[_qp] - _em_old[_qp]) / (M_PI * _massem[_qp]));
 
   _em_flux_old += (0.25 * _v_thermal_old * std::exp(_em_old[_qp]) * _normals[_qp]);
 
-  ADRealVectorValue _int = (_e[_qp] * _N_A[_qp] / _voltage_scaling) * _dt *
+  ADRealVectorValue _int = (ZAPDOS_CONSTANTS::e * ZAPDOS_CONSTANTS::N_A / _voltage_scaling) * _dt *
                            (0.5 * (_ion_flux - _em_flux) + 0.5 * (_ion_flux_old - _em_flux_old));
 
   return _test[_i][_qp] * _r_units *

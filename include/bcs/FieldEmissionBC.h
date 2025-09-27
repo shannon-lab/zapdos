@@ -43,8 +43,6 @@ protected:
   const ADMaterialProperty<Real> & _muem;
   /// Mass of electrons
   const MaterialProperty<Real> & _massem;
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
   /// Charge sign of the ions
   std::vector<const MaterialProperty<Real> *> _sgnip;
   /// Mobility coefficient of the ions

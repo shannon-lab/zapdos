@@ -47,24 +47,16 @@ protected:
   std::vector<const ADMaterialProperty<Real> *> _se_coeff;
   /// Mobility coefficient of the ions
   std::vector<const ADMaterialProperty<Real> *> _muip;
-  /// Permittivity of free space
-  const MaterialProperty<Real> & _eps;
-  /// Avogadro's number
-  const MaterialProperty<Real> & _N_A;
   /// Charge sign of the ions
   std::vector<const MaterialProperty<Real> *> _sgnip;
   /// Diffusion coefficient of the ions
   std::vector<const ADMaterialProperty<Real> *> _Dip;
   /// Mobility coefficient of electrons
   const ADMaterialProperty<Real> & _muem;
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
   /// Mass of electrons
   const MaterialProperty<Real> & _massem;
   /// Temperature of ions
   std::vector<const ADMaterialProperty<Real> *> _T_heavy;
-  /// Boltzmann constant
-  const MaterialProperty<Real> & _kb;
   /// Mass of ions
   std::vector<const MaterialProperty<Real> *> _mass;
 

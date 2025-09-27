@@ -29,8 +29,6 @@ protected:
   const Real _r_units;
   /// Reflection coefficient
   const Real & _r;
-  /// Boltzmann constant
-  const MaterialProperty<Real> & _kb;
   /// Ion temperature
   const ADMaterialProperty<Real> & _T;
   /// Mass of ions

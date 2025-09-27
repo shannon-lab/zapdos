@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "SchottkyEmissionBC.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", SchottkyEmissionBC);
 
@@ -48,7 +49,6 @@ SchottkyEmissionBC::SchottkyEmissionBC(const InputParameters & parameters)
     _mean_en(adCoupledValue("electron_energy")),
 
     _massem(getMaterialProperty<Real>("massem")),
-    _e(getMaterialProperty<Real>("e")),
     _work_function(getMaterialProperty<Real>("work_function")),
     _field_enhancement(getMaterialProperty<Real>("field_enhancement")),
     _Richardson_coefficient(getMaterialProperty<Real>("Richardson_coefficient")),
@@ -103,8 +103,8 @@ SchottkyEmissionBC::SchottkyEmissionBC(const InputParameters & parameters)
 ADReal
 SchottkyEmissionBC::computeQpResidual()
 {
-  _v_thermal =
-      std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
+  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
+                         (M_PI * _massem[_qp]));
 
   if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
@@ -135,7 +135,7 @@ SchottkyEmissionBC::computeQpResidual()
 
     jRD = _Richardson_coefficient[_qp] * std::pow(_cathode_temperature[_qp], 2) *
           std::exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
-    jSE = _e[_qp] * 6.02E23 * _ion_flux * _normals[_qp];
+    jSE = ZAPDOS_CONSTANTS::e * ZAPDOS_CONSTANTS::N_A * _ion_flux * _normals[_qp];
 
     if (_relax)
     {
@@ -147,6 +147,6 @@ SchottkyEmissionBC::computeQpResidual()
     }
 
     return _relaxation_Expr * _test[_i][_qp] * _r_units * 2. / (1. + _r) * (1 - _a) * (-jRD - jSE) /
-           (_e[_qp] * 6.02E23);
+           (ZAPDOS_CONSTANTS::e * ZAPDOS_CONSTANTS::N_A);
   }
 }

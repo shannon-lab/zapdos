@@ -34,8 +34,6 @@ protected:
   const ADVariableValue & _em;
   /// Mass of electrons
   const MaterialProperty<Real> & _massem;
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
   /// Mobility coefficient of electron mean energy density
   const ADMaterialProperty<Real> & _mumean_en;
 

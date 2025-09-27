@@ -29,10 +29,6 @@ protected:
   const Real _omega;
   /// Relative permittivity
   const ADMaterialProperty<Real> & _eps_r;
-  /// Permeability of free space
-  const Real _mu0;
-  /// Permittivity of free space
-  const Real _eps0;
   /// Azimuthal component of the magnetic field
   const ADVariableValue & _Hphi;
   /// Gradient of azimuthal component of the magnetic field

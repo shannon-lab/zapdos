@@ -29,7 +29,4 @@ protected:
 
   /// True if molar density is used
   const bool _convert_moles;
-
-  /// Avogadro's number
-  const MaterialProperty<Real> & _N_A;
 };

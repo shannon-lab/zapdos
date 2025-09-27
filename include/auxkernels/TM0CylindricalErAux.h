@@ -32,6 +32,4 @@ private:
   const Real _omega;
   /// Relative permittivity of the medium
   const Real _eps_r;
-  /// Permittivity of free space
-  const Real _eps0;
 };

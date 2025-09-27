@@ -30,12 +30,8 @@ protected:
   /// Coupled charge density value
   const ADVariableValue & _charged;
 
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
   /// Charge sign of the species
   const MaterialProperty<Real> & _sgn;
-  /// Avogadro's number
-  const MaterialProperty<Real> & _N_A;
 
   /// Scaling units for the potential (V or kV)
   const std::string & _potential_units;

@@ -358,7 +358,6 @@ dom1Scale = 1e-4
     neighbor_position_units = ${dom1Scale}
     boundary = plasma_right
   []
-
 []
 
 [BCs]
@@ -486,8 +485,8 @@ dom1Scale = 1e-4
   [gas_constants]
     type = GenericConstantMaterial
     block = 0
-    prop_names = ' e       N_A      k_boltz  eps         se_energy T_gas  massem   p_gas'
-    prop_values = '1.6e-19 6.022e23 1.38e-23 8.854e-12   1.        400    9.11e-31 1.01e5'
+    prop_names = ' se_energy T_gas  massem   p_gas'
+    prop_values = '1.        400    9.11e-31 1.01e5'
   []
 
   #

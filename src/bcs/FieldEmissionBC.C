@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "FieldEmissionBC.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", FieldEmissionBC);
 
@@ -43,7 +44,6 @@ FieldEmissionBC::FieldEmissionBC(const InputParameters & parameters)
 
     _muem(getADMaterialProperty<Real>("muem")),
     _massem(getMaterialProperty<Real>("massem")),
-    _e(getMaterialProperty<Real>("e")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     _work_function(getMaterialProperty<Real>("work_function")),
     _field_enhancement(getMaterialProperty<Real>("field_enhancement")),
@@ -114,7 +114,8 @@ FieldEmissionBC::computeQpResidual()
       _ion_flux = (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * _electric_field[_qp] * _r_units *
                       std::exp((*_ip[i])[_qp]) -
                   (*_Dip[i])[_qp] * std::exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units;
-      jSE += _e[_qp] * 6.02E23 * _normals[_qp] * (*_se_coeff[i])[_qp] * _ion_flux;
+      jSE += ZAPDOS_CONSTANTS::e * ZAPDOS_CONSTANTS::N_A * _normals[_qp] * (*_se_coeff[i])[_qp] *
+             _ion_flux;
     }
 
     // Fowler-Nordheim
@@ -139,6 +140,6 @@ FieldEmissionBC::computeQpResidual()
       _relaxation_Expr = 1.0;
 
     return _relaxation_Expr * _test[_i][_qp] * _r_units * 2. / (1. + _r) * (1 - _a) * (-jFE - jSE) /
-           (_e[_qp] * 6.02E23);
+           (ZAPDOS_CONSTANTS::e * ZAPDOS_CONSTANTS::N_A);
   }
 }

@@ -59,7 +59,7 @@ Real
 EFieldAdvAuxTempl<is_ad>::computeValue()
 {
   return _sgn[_qp] * raw_value(_mu[_qp]) * std::exp(_density_log[_qp]) *
-         raw_value(_electric_field[_qp](_component)) * _r_units * 6.02e23;
+         raw_value(_electric_field[_qp](_component)) * _r_units * ZAPDOS_CONSTANTS::N_A;
 }
 
 template class EFieldAdvAuxTempl<false>;
