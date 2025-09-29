@@ -57,7 +57,7 @@ DielectricBCWithEffEfield::DielectricBCWithEffEfield(const InputParameters & par
     _Ez(isCoupled("Ez") ? adCoupledValue("Ez") : _ad_zero),
     _Ez_old(isCoupled("Ez") ? (*getVar("Ez", 0)).slnOld() : _zero),
 
-    _epsilon_0(getADMaterialProperty<Real>("diff" + _var.name())),
+    _epsilon_p(getADMaterialProperty<Real>("diff" + _var.name())),
 
     _massem(getMaterialProperty<Real>("massem")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
@@ -157,6 +157,6 @@ DielectricBCWithEffEfield::computeQpResidual()
                            (0.5 * (_ion_flux - _em_flux) + 0.5 * (_ion_flux_old - _em_flux_old));
 
   return _test[_i][_qp] * _r_units *
-         (-_epsilon_0[_qp] * _grad_u_old[_qp] * _normals[_qp] +
+         (-_epsilon_p[_qp] * _grad_u_old[_qp] * _normals[_qp] +
           (_epsilon_d / _thickness) * (_u[_qp] - _u_old[_qp]) - _int * _normals[_qp]);
 }
