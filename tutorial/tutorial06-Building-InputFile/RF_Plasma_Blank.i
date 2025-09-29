@@ -220,11 +220,9 @@ dom0Scale=25.4e-3
   #The material properties for electrons.
   #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
   [GasBasics]
-    type = GasElectronMoments
+    type = ElectronTransportCoefficients
     #False means constant electron coeff, defined by user
     interp_trans_coeffs = false
-    #Leave as false (CRANE accounts of elastic coeff.)
-    interp_elastic_coeff = false
     #Leave as false, unless computational error is due to rapid coeff. changes
     ramp_trans_coeffs = false
     #User difine pressure in pa

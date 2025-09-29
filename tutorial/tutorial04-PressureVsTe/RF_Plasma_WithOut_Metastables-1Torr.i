@@ -223,11 +223,9 @@ dom0Scale = 1.0
   #The material properties for electrons.
   #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
   [GasBasics]
-    type = GasElectronMoments
+    type = ElectronTransportCoefficients
     #True means variable electron coeff, defined by user
     interp_trans_coeffs = true
-    #Leave as false (CRANE accounts of elastic coeff.)
-    interp_elastic_coeff = false
     #Leave as false, unless computational error is due to rapid coeff. changes
     ramp_trans_coeffs = false
     #Name for electrons (usually 'em')
@@ -251,7 +249,7 @@ dom0Scale = 1.0
     diffusivity = 6.428571e-3
   []
   [gas_species_2]
-  #The material properties of the background gas
+    #The material properties of the background gas
     type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26

@@ -1,4 +1,4 @@
-dom0Scale=25.4e-3
+dom0Scale = 25.4e-3
 
 [GlobalParams]
   potential_units = kV
@@ -57,7 +57,7 @@ dom0Scale=25.4e-3
 []
 
 [Kernels]
-#Electron Equations
+  #Electron Equations
   #Time Derivative term of electron
   [em_time_deriv]
     type = TimeDerivativeLog
@@ -103,7 +103,7 @@ dom0Scale=25.4e-3
     coefficient = 1
   []
 
-#Argon Ion Equations
+  #Argon Ion Equations
   #Time Derivative term of the ions
   [Ar+_time_deriv]
     type = TimeDerivativeLog
@@ -148,7 +148,7 @@ dom0Scale=25.4e-3
     coefficient = 1
   []
 
-#Argon Excited Equations
+  #Argon Excited Equations
   #Time Derivative term of excited Argon
   [Ar*_time_deriv]
     type = TimeDerivativeLog
@@ -230,7 +230,7 @@ dom0Scale=25.4e-3
     _v_eq_u = true
   []
 
-#Voltage Equations
+  #Voltage Equations
   #Voltage term in Poissons Eqaution
   [potential_diffusion_dom0]
     type = CoeffDiffusionLin
@@ -238,7 +238,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   []
   #Ion term in Poissons Equation
-    [Ar+_charge_source]
+  [Ar+_charge_source]
     type = ChargeSourceMoles_KV
     variable = potential
     charged = Ar+
@@ -250,7 +250,7 @@ dom0Scale=25.4e-3
     charged = em
   []
 
-#Electron Energy Equations
+  #Electron Energy Equations
   #Time Derivative term of electron energy
   [mean_en_time_deriv]
     type = TimeDerivativeLog
@@ -319,9 +319,9 @@ dom0Scale=25.4e-3
     threshold_energy = 11.56
   []
 
-###################################################################################
+  ###################################################################################
 
-#Argon Excited Equations
+  #Argon Excited Equations
   #Time Derivative term of excited Argon
   [SM_Ar*_time_deriv]
     type = MassLumpedTimeDerivative
@@ -330,11 +330,11 @@ dom0Scale=25.4e-3
   []
   #Diffusion term of excited Argon
   [SM_Ar*_diffusion]
-   type = CoeffDiffusionForShootMethod
-   variable = SM_Ar*
-   density = Ar*
-   position_units = ${dom0Scale}
-   enable = false
+    type = CoeffDiffusionForShootMethod
+    variable = SM_Ar*
+    density = Ar*
+    position_units = ${dom0Scale}
+    enable = false
   []
   #Net excited Argon loss from step-wise ionization
   [SM_Ar*_stepwise_ionization]
@@ -445,20 +445,20 @@ dom0Scale=25.4e-3
 #Kernels that define the scaled nodes and background gas
 [AuxKernels]
   [Ar*S_for_Shooting]
-  type = QuotientAux
-  variable = Ar*S
-  numerator = Ar*
-  denominator = 1.0
-  enable = false
-  execute_on = 'TIMESTEP_END'
-[]
+    type = QuotientAux
+    variable = Ar*S
+    numerator = Ar*
+    denominator = 1.0
+    enable = false
+    execute_on = 'TIMESTEP_END'
+  []
 
-[Constant_SM_Ar*Reset]
-  type = ConstantAux
-  variable = SM_Ar*Reset
-  value = 1.0
-  execute_on = INITIAL
-[]
+  [Constant_SM_Ar*Reset]
+    type = ConstantAux
+    variable = SM_Ar*Reset
+    value = 1.0
+    execute_on = INITIAL
+  []
 
   [x_ng]
     type = Position
@@ -504,7 +504,7 @@ dom0Scale=25.4e-3
 []
 
 [BCs]
-#Voltage Boundary Condition
+  #Voltage Boundary Condition
   [potential_left]
     type = FunctionDirichletBC
     variable = potential
@@ -520,7 +520,7 @@ dom0Scale=25.4e-3
     preset = false
   []
 
-#Boundary conditions for electons
+  #Boundary conditions for electons
   [em_physical_right]
     type = LymberopoulosElectronBC
     variable = em
@@ -540,7 +540,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   []
 
-#Boundary conditions for ions
+  #Boundary conditions for ions
   [Ar+_physical_right_advection]
     type = LymberopoulosIonBC
     variable = Ar+
@@ -554,7 +554,7 @@ dom0Scale=25.4e-3
     position_units = ${dom0Scale}
   []
 
-#Boundary conditions for mean energy
+  #Boundary conditions for mean energy
   [mean_en_physical_right]
     type = ElectronTemperatureDirichletBC
     variable = mean_en
@@ -609,12 +609,11 @@ dom0Scale=25.4e-3
   []
   [GasBasics]
     #If elecron mobility and diffusion are NOT constant, set
-    #"interp_elastic_coeff = true". This lets the mobility and
+    #"interp_trans_coeffs = true". This lets the mobility and
     #diffusivity to be energy dependent, as dictated by the txt file
-    type = GasElectronMoments
+    type = ElectronTransportCoefficients
     em = em
     mean_en = mean_en
-    interp_elastic_coeff = false
     interp_trans_coeffs = false
     ramp_trans_coeffs = false
     user_p_gas = 133.33
@@ -721,7 +720,6 @@ dom0Scale=25.4e-3
     enable = false
   []
 []
-
 
 [Transfers]
   #MultiApp Transfers for Acceleration by Shooting Method

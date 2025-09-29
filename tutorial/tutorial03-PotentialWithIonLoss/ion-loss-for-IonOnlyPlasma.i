@@ -121,9 +121,8 @@ dom0Scale = 1.0
   #The material properties for electrons.
   #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
   [GasBasics]
-    type = GasElectronMoments
+    type = ElectronTransportCoefficients
     interp_trans_coeffs = false
-    interp_elastic_coeff = false
     ramp_trans_coeffs = false
     user_p_gas = 13.3322
     #user_p_gas = 1.33322

@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "TM0CylindricalErAux.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", TM0CylindricalErAux);
 
@@ -28,13 +29,12 @@ TM0CylindricalErAux::TM0CylindricalErAux(const InputParameters & parameters)
   : AuxKernel(parameters),
     _grad_Hphi(coupledGradient("Hphi")),
     _omega(2. * libMesh::pi * getParam<Real>("f")),
-    _eps_r(getParam<Real>("eps_r")),
-    _eps0(8.85e-12)
+    _eps_r(getParam<Real>("eps_r"))
 {
 }
 
 Real
 TM0CylindricalErAux::computeValue()
 {
-  return _grad_Hphi[_qp](1) / (-_omega * _eps0 * _eps_r);
+  return _grad_Hphi[_qp](1) / (-_omega * ZAPDOS_CONSTANTS::eps_0 * _eps_r);
 }

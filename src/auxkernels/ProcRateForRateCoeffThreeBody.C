@@ -50,8 +50,8 @@ Real
 ProcRateForRateCoeffThreeBodyTempl<is_ad>::computeValue()
 {
 
-  return 6.02e23 * raw_value(_reaction_coeff[_qp]) * std::exp(_v[_qp]) * std::exp(_w[_qp]) *
-         std::exp(_x[_qp]);
+  return ZAPDOS_CONSTANTS::N_A * raw_value(_reaction_coeff[_qp]) * std::exp(_v[_qp]) *
+         std::exp(_w[_qp]) * std::exp(_x[_qp]);
 }
 
 typedef ProcRateForRateCoeffThreeBodyTempl<false> ProcRateForRateCoeffThreeBody;

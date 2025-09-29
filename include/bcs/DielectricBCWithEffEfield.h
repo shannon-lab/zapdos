@@ -60,12 +60,8 @@ protected:
   /// z-component of the electric field value during previous time step
   const VariableValue & _Ez_old;
 
-  /// Elementary charge
-  const MaterialProperty<Real> & _e;
-  /// Permittivity of free space
-  const ADMaterialProperty<Real> & _epsilon_0;
-  /// Avogadro's number
-  const MaterialProperty<Real> & _N_A;
+  /// Permittivity of the plasma
+  const ADMaterialProperty<Real> & _epsilon_p;
 
   /// Charge sign of the ions
   std::vector<const MaterialProperty<Real> *> _sgnip;

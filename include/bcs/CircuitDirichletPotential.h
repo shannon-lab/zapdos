@@ -34,10 +34,6 @@ protected:
   const std::string _surface;
   /// The ballast resistance
   const Real _resist;
-  /// Elementary charge being 1.6e-19 C
-  const Real _coulomb_charge;
-  /// Avogadro's number
-  const Real _N_A;
   /// Scaling units for the potential (V or kV)
   const std::string _potential_units;
   /// Scaling units for the position

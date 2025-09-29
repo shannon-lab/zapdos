@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "SecondaryElectronBC.h"
+#include "Zapdos.h"
 
 registerADMooseObject("ZapdosApp", SecondaryElectronBC);
 
@@ -35,7 +36,6 @@ SecondaryElectronBC::SecondaryElectronBC(const InputParameters & parameters)
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
     _r_ion(getParam<Real>("r_ion")),
-    _kb(getMaterialProperty<Real>("k_boltz")),
     _num_ions(coupledComponents("ions")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     // Coupled Variables
@@ -43,7 +43,6 @@ SecondaryElectronBC::SecondaryElectronBC(const InputParameters & parameters)
 
     _muem(getADMaterialProperty<Real>("muem")),
     _massem(getMaterialProperty<Real>("massem")),
-    _e(getMaterialProperty<Real>("e")),
 
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
@@ -105,7 +104,8 @@ SecondaryElectronBC::computeQpResidual()
     else
       _b = 0.0;
     _ion_flux += (*_se_coeff[i])[_qp] * std::exp((*_ip[i])[_qp]) *
-                 (0.5 * std::sqrt(8 * _kb[_qp] * (*_Tip[i])[_qp] / (M_PI * (*_massip[i])[_qp])) +
+                 (0.5 * std::sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * (*_Tip[i])[_qp] /
+                                  (libMesh::pi * (*_massip[i])[_qp])) +
                   (2 * _b - 1) * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * _electric_field[_qp] *
                       _r_units * _normals[_qp]);
   }
@@ -114,8 +114,8 @@ SecondaryElectronBC::computeQpResidual()
   _n_gamma = (1. - _a) * _ion_flux /
              (_muem[_qp] * _electric_field[_qp] * _r_units * _normals[_qp] +
               std::numeric_limits<double>::epsilon());
-  _v_thermal =
-      std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
+  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
+                         (libMesh::pi * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units *
          ((1. - _r) / (1. + _r) * (-0.5 * _v_thermal * _n_gamma) -

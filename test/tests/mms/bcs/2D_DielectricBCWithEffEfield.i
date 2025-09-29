@@ -88,7 +88,8 @@
     variable = ion
     u = Ex
     v = Ey
-    position_units = 1.0
+    # position_units = 1.0
+    position_units = '${fparse sqrt(1/(1.6e-19 * 6.02e23))}' # e * N_A / 2
   []
   [ion_source]
     type = BodyForce
@@ -221,6 +222,14 @@
     type = ConstantFunction
     value = 2.0
   []
+
+  [massem_mat]
+    type = ParsedFunction
+    vars = massem
+    vals = massem
+    value = 'massem * 1.6e-19 * (1.6e-19 * 6.02e23)^2'
+  []
+
   #Electron diffusion coeff.
   [diffem]
     type = ConstantFunction
@@ -248,6 +257,14 @@
     vals = muem
     value = muem
   []
+
+  [muion_mat]
+    type = ParsedFunction
+    vars = muion
+    vals = muion
+    value = 'muion / (1.6e-19 * 6.02e23)'
+  []
+
   [N_A]
     type = ConstantFunction
     value = 1.0
@@ -453,13 +470,13 @@
   []
   [Material_Coeff]
     type = GenericFunctionMaterial
-    prop_names = 'e  N_A  massem NonAD_muion  NonAD_diffpotential  diffEx         diffEy'
-    prop_values = 'ee N_A  massem muion        diffpotential        diffpotential  diffpotential '
+    prop_names = 'e  N_A  massem  NonAD_diffpotential  diffEx         diffEy'
+    prop_values = 'ee N_A  massem_mat        diffpotential        diffpotential  diffpotential '
   []
   [ADMaterial_Coeff_Set1]
     type = ADGenericFunctionMaterial
-    prop_names = 'diffion  muion  diffem  muem  diffmean_en  diffpotential'
-    prop_values = 'diffion  muion  diffem  muem  diffmean_en  diffpotential'
+    prop_names = 'diffion diffem muion  muem  diffmean_en  diffpotential'
+    prop_values = 'diffion  diffem muion_mat  muem  diffmean_en  diffpotential'
   []
   [Charge_Signs]
     type = GenericConstantMaterial
