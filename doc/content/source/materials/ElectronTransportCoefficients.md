@@ -27,7 +27,6 @@ Where:
 
 In addition to the transport and material properties of electrons and the electron mean energy density, `ElectronTransportCoefficients` also defines the following:
 
-- the electron mean energy, defined as $\varepsilon = n_{\varepsilon}/n_{e}$ and labeled as `actual_mean_energy`,
 - the permittivity of free space defined as a diffusion coefficient for the electrostatic potential, labeled as `diffpotential`,
 
   - used when defining Poisson's equation as a diffusion equation (i.e., $\nabla \cdot \left( -\varepsilon \nabla V \right) = \rho$)
