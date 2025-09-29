@@ -130,16 +130,16 @@ NeumannCircuitVoltageMoles_KV::computeQpResidual()
     _secondary_ion +=
         (-1. + (-1. + _a) * (*_se_coeff[i])[_qp]) * std::exp((*_ip[i])[_qp]) * (*_muip[i])[_qp];
 
-    _ion_drift +=
-        (-1. + (-1. + _a) * (*_se_coeff[i])[_qp]) *
-        std::sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * (*_T_heavy[i])[_qp] / (M_PI * (*_mass[i])[_qp])) *
-        std::exp((*_ip[i])[_qp]);
+    _ion_drift += (-1. + (-1. + _a) * (*_se_coeff[i])[_qp]) *
+                  std::sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * (*_T_heavy[i])[_qp] /
+                            (libMesh::pi * (*_mass[i])[_qp])) *
+                  std::exp((*_ip[i])[_qp]);
   }
   _n_gamma = (1. - _a) * _ion_flux * _normals[_qp] /
              (_muem[_qp] * -_grad_u[_qp] * _r_units * _normals[_qp]);
 
   _v_e_th = std::sqrt(8 * _data.coulomb_charge() * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
-                      (M_PI * _massem[_qp]));
+                      (libMesh::pi * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * ZAPDOS_CONSTANTS::eps_0 *
          (-2. * (1. + _r) * _u[_qp] - 2. * (1. + _r) * -_V_bat.value(_t, _q_point[_qp]) +

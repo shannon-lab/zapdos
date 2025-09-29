@@ -42,7 +42,7 @@ SakiyamaElectronDiffusionBC::computeQpResidual()
 {
 
   _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
-                         (M_PI * _massem[_qp]));
+                         (libMesh::pi * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * (0.25 * _v_thermal * std::exp(_u[_qp]));
 }

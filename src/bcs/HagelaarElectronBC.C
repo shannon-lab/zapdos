@@ -60,7 +60,7 @@ HagelaarElectronBC::computeQpResidual()
   }
 
   _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
-                         (M_PI * _massem[_qp]));
+                         (libMesh::pi * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) *
          (-(2 * _a - 1) * _muem[_qp] * _electric_field[_qp] * _r_units * std::exp(_u[_qp]) *

@@ -104,7 +104,7 @@ ADReal
 SchottkyEmissionBC::computeQpResidual()
 {
   _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
-                         (M_PI * _massem[_qp]));
+                         (libMesh::pi * _massem[_qp]));
 
   if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {

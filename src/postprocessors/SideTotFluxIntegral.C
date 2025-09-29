@@ -63,7 +63,8 @@ SideTotFluxIntegral::computeQpIntegral()
   if (_user_velocity > 0.)
     _v_thermal = _user_velocity;
   else
-    _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * _T_heavy[_qp] / (M_PI * _mass[_qp]));
+    _v_thermal =
+        std::sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * _T_heavy[_qp] / (libMesh::pi * _mass[_qp]));
 
   if (_normals[_qp] * _sgn[_qp] * _electric_field[_qp] > 0.0)
     _a = 1.0;

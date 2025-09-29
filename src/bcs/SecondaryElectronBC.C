@@ -105,7 +105,7 @@ SecondaryElectronBC::computeQpResidual()
       _b = 0.0;
     _ion_flux += (*_se_coeff[i])[_qp] * std::exp((*_ip[i])[_qp]) *
                  (0.5 * std::sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * (*_Tip[i])[_qp] /
-                                  (M_PI * (*_massip[i])[_qp])) +
+                                  (libMesh::pi * (*_massip[i])[_qp])) +
                   (2 * _b - 1) * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * _electric_field[_qp] *
                       _r_units * _normals[_qp]);
   }
@@ -115,7 +115,7 @@ SecondaryElectronBC::computeQpResidual()
              (_muem[_qp] * _electric_field[_qp] * _r_units * _normals[_qp] +
               std::numeric_limits<double>::epsilon());
   _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
-                         (M_PI * _massem[_qp]));
+                         (libMesh::pi * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units *
          ((1. - _r) / (1. + _r) * (-0.5 * _v_thermal * _n_gamma) -

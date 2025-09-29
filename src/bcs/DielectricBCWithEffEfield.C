@@ -143,12 +143,13 @@ DielectricBCWithEffEfield::computeQpResidual()
   }
 
   _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
-                         (M_PI * _massem[_qp]));
+                         (libMesh::pi * _massem[_qp]));
 
   _em_flux += (0.25 * _v_thermal * std::exp(_em[_qp]) * _normals[_qp]);
 
-  _v_thermal_old = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 *
-                             std::exp(_mean_en_old[_qp] - _em_old[_qp]) / (M_PI * _massem[_qp]));
+  _v_thermal_old =
+      std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en_old[_qp] - _em_old[_qp]) /
+                (libMesh::pi * _massem[_qp]));
 
   _em_flux_old += (0.25 * _v_thermal_old * std::exp(_em_old[_qp]) * _normals[_qp]);
 
