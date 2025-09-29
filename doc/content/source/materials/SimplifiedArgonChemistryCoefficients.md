@@ -15,6 +15,14 @@ In addition to the argon chemistry, `SimplifiedArgonChemistryCoefficients` also 
 - argon mass, labeled as `massGas`, and
 - neutral argon gas density, labeled as `n_gas`.
 
+!alert! note title=Citation
+The coefficients used in this object can be found in the following:
+
+- the rate coefficients can be found in [!cite](lieberman1994principles)
+- the Townsend coefficients are supplied using a Boltzmann solver and the [Phelps database](https://nl.lxcat.net/home/)
+!alert-end!
+
+
 ## Example Input File Syntax
 
 !listing test/tests/1d_dc/mean_en_multi.i block=Materials/gas_block

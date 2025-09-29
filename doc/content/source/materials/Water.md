@@ -64,6 +64,10 @@
 - HO$_2$ + H$_2$O $\rightarrow$ H$_3$O$^+$ + O$_2$$^-$
 - H$_3$O$^+$ + O$_2$$^-$ $\rightarrow$ HO$_2$ + H$_2$O
 
+!alert! note title=Citation
+The transport and rate coefficients used in this object can be found in [!cite](tian2014atmospheric).
+!alert-end!
+
 ## Example Input File Syntax
 
 !listing test/tests/1d_dc/mean_en.i block=Materials/water_block
