@@ -78,7 +78,6 @@ ElectronTransportCoefficients::ElectronTransportCoefficients(const InputParamete
     _sgnem(declareProperty<Real>("sgnem")),
     _sgnmean_en(declareProperty<Real>("sgnmean_en")),
     _diffpotential(declareADProperty<Real>("diffpotential")),
-    _actual_mean_energy(declareADProperty<Real>("actual_mean_energy")),
     _T_gas(declareProperty<Real>("T_gas")),
     _p_gas(declareProperty<Real>("p_gas")),
 

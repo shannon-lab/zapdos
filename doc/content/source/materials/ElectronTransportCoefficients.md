@@ -7,7 +7,7 @@
 `ElectronTransportCoefficients` defines the transport and material properties of electrons and the electron mean energy density. The following are the properties and naming scheme that `ElectronTransportCoefficients` provides:
 
 - electron mass, labeled as `massem`,
-- electron and electron mean energy density charge, labeled as `sgnem` and `sgnmean_en`,
+- electron and electron mean energy density charge sign, labeled as `sgnem` and `sgnmean_en`,
 - electron and electron mean energy density mobility coefficient, labeled as `muem` and `mumean_en`,
 - electron and electron mean energy density diffusion coefficient, labeled as `diffem` and `diffmean_en`,
 
@@ -20,8 +20,8 @@ D_{\varepsilon} = \frac{5}{3} D_{e}  \\[10pt]
 
 Where:
 
-- the subscript $\varepsilon$ is the electron mean energy density properties,
-- the subscript $e$ is the electron properties,
+- the subscript $\varepsilon$ denotes mean electron energy density properties,
+- the subscript $e$ denotes electron properties,
 - $\mu$ is the mobility coefficient, and
 - $D$ is the diffusion coefficient.
 

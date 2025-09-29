@@ -74,8 +74,6 @@ protected:
   MaterialProperty<Real> & _sgnmean_en;
   /// Potential diffusion coefficient (material permittivity)
   ADMaterialProperty<Real> & _diffpotential;
-  /// Electron energy
-  ADMaterialProperty<Real> & _actual_mean_energy;
   /// Argon neutral gas temperature
   MaterialProperty<Real> & _T_gas;
   /// Argon neutral gas pressure
