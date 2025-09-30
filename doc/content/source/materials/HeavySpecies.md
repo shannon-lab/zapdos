@@ -1,20 +1,22 @@
 # HeavySpecies
 
-!alert construction title=Undocumented Class
-The HeavySpecies has not been documented. The content listed below should be used as a starting point for
-documenting the class, which includes the typical automatic documentation associated with a
-MooseObject; however, what is contained is ultimately determined by what is necessary to make the
-documentation clear for users.
-
 !syntax description /Materials/HeavySpecies
 
 ## Overview
 
-!! Replace these lines with information regarding the HeavySpecies object.
+`HeavySpecies` defines the transport and material properties of ions and neutral species. The following are the properties and naming scheme that `HeavySpecies` provides:
+
+- species mass, labeled as "mass'variable name'" (e.g., `massargon_ion`),
+- species temperature, labeled as "T'variable name'" (e.g., `Targon_ion`),
+- species charge, labeled as "sgn'variable name'" (e.g., `sgnargon_ion`),
+- species mobility coefficient, labeled as "mu'variable name'" (e.g., `muargon_ion`), and
+- species diffusion coefficient, labeled as "diff'variable name'" (e.g., `diffargon_ion`)
+
+To declare species properties as AD materials, please use `type = ADHeavySpecies`.
 
 ## Example Input File Syntax
 
-!! Describe and include an example of how to use the HeavySpecies object.
+!listing test/tests/DriftDiffusionAction/RF_Plasma_actions.i block=Materials/gas_species_0
 
 !syntax parameters /Materials/HeavySpecies
 

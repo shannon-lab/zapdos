@@ -209,6 +209,12 @@
     type = ConstantFunction
     value = 0.01
   []
+  [diffpotential_mat]
+    type = ParsedFunction
+    symbol_names = 'diffpotential'
+    symbol_values = 'diffpotential'
+    expression = 'diffpotential * (1.6e-19 * 6.02e23)'
+  []
 
 
 #Manufactured Solutions
@@ -434,8 +440,8 @@
   []
   [ADMaterial_Coeff_Set1]
     type = ADGenericFunctionMaterial
-    prop_names =  'diffpotential diffion muion'
-    prop_values = 'diffpotential diffion muion'
+    prop_names =  'diffpotential     diffion muion'
+    prop_values = 'diffpotential_mat diffion muion'
   []
   [Material_Coeff_Set2]
     type = ADMMSEEDFRates

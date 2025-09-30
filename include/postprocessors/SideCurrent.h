@@ -36,12 +36,8 @@ protected:
   const Real _r_units;
   /// Reflection coefficient
   const Real _r;
-  /// Boltzmann constant
-  const MaterialProperty<Real> & _kb;
   /// Thermal velocity of the electrons
   Real _ve_thermal;
-  /// elementary charge
-  const MaterialProperty<Real> & _e;
   /*
    *  Charge sign of the ions
    *  TODO: This variable calls the material property labeled

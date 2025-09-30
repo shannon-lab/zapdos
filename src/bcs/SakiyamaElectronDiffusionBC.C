@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "SakiyamaElectronDiffusionBC.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", SakiyamaElectronDiffusionBC);
 
@@ -32,7 +33,6 @@ SakiyamaElectronDiffusionBC::SakiyamaElectronDiffusionBC(const InputParameters &
     _mean_en(adCoupledValue("electron_energy")),
 
     _massem(getMaterialProperty<Real>("massem")),
-    _e(getMaterialProperty<Real>("e")),
     _v_thermal(0)
 {
 }
@@ -41,8 +41,8 @@ ADReal
 SakiyamaElectronDiffusionBC::computeQpResidual()
 {
 
-  _v_thermal =
-      std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * _massem[_qp]));
+  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
+                         (libMesh::pi * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * (0.25 * _v_thermal * std::exp(_u[_qp]));
 }

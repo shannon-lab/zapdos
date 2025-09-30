@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "TM0AntennaVertBC.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", TM0AntennaVertBC);
 
@@ -38,9 +39,10 @@ ADReal
 TM0AntennaVertBC::computeQpResidual()
 {
   if (_time_dependent)
-    return _test[_i][_qp] *
-           (-_u[_qp] / _q_point[_qp](0) + _omega * _eps_r * _eps0 * std::cos(_omega * _t));
+    return _test[_i][_qp] * (-_u[_qp] / _q_point[_qp](0) +
+                             _omega * _eps_r * ZAPDOS_CONSTANTS::eps_0 * std::cos(_omega * _t));
 
   else
-    return _test[_i][_qp] * (-_u[_qp] / _q_point[_qp](0) + _omega * _eps_r * _eps0);
+    return _test[_i][_qp] *
+           (-_u[_qp] / _q_point[_qp](0) + _omega * _eps_r * ZAPDOS_CONSTANTS::eps_0);
 }

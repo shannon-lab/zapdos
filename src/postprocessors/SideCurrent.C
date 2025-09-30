@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "SideCurrent.h"
+#include "Zapdos.h"
 
 // MOOSE includes
 #include "MooseVariable.h"
@@ -41,8 +42,6 @@ SideCurrent::SideCurrent(const InputParameters & parameters)
     _mobility_coef(getMaterialProperty<Real>(_mobility)),
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
-    _kb(getMaterialProperty<Real>("k_boltz")),
-    _e(getMaterialProperty<Real>("e")),
     _sgn(getMaterialProperty<Real>("sgnArp")),
     _a(0.5),
     _electric_field(
@@ -86,17 +85,19 @@ SideCurrent::computeQpIntegral()
     _b = 1.0;
   }
 
-  _ve_thermal =
-      std::sqrt(8 * 1.602e-19 * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) / (M_PI * 9.11e-31));
+  _ve_thermal = std::sqrt(8 * 1.602e-19 * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
+                          (libMesh::pi * 9.11e-31));
 
   _ion_flux = 0.0;
 
   for (unsigned int i = 0; i < _num_ions; ++i)
-    _ion_flux +=
-        0.5 * std::sqrt(8 * _kb[_qp] * (*_T_ions[i])[_qp] / (M_PI * (*_mass_ions[i])[_qp])) *
-            std::exp((*_ions[i])[_qp]) +
-        (2 * _a - 1) * (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] *
-            raw_value(_electric_field[_qp]) * _r_units * std::exp((*_ions[i])[_qp]) * _normals[_qp];
+    _ion_flux += 0.5 *
+                     std::sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * (*_T_ions[i])[_qp] /
+                               (libMesh::pi * (*_mass_ions[i])[_qp])) *
+                     std::exp((*_ions[i])[_qp]) +
+                 (2 * _a - 1) * (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] *
+                     raw_value(_electric_field[_qp]) * _r_units * std::exp((*_ions[i])[_qp]) *
+                     _normals[_qp];
 
   return ((1. - _r) / (1. + _r) * _ion_flux +
           (1. - _r) / (1. + _r) *

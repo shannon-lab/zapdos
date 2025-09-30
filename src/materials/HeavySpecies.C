@@ -30,7 +30,7 @@ HeavySpeciesTempl<is_ad>::validParams()
   params.addParam<Real>("time_units", 1, "Units of time");
   params.addParam<Real>("mobility", "The species mobility (if applicable).");
   params.addParam<Real>("diffusivity", "The species diffusivity (if applicable).");
-  params.addClassDescription("Material properties of ions");
+  params.addClassDescription("Material properties of ions and neutral species");
   return params;
 }
 

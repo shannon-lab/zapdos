@@ -26,9 +26,7 @@ TM0Cylindrical::TM0Cylindrical(const InputParameters & parameters)
   : ADKernel(parameters),
 
     _omega(2. * libMesh::pi * getParam<Real>("f")),
-    _eps_r(getADMaterialProperty<Real>("eps_r")),
-    _mu0(4. * libMesh::pi * 1e-7),
-    _eps0(8.85e-12)
+    _eps_r(getADMaterialProperty<Real>("eps_r"))
 {
 }
 
@@ -37,5 +35,6 @@ TM0Cylindrical::computeQpResidual()
 {
   return -_grad_test[_i][_qp] * _grad_u[_qp] -
          _test[_i][_qp] * _u[_qp] / std::pow(_q_point[_qp](0), 2) +
-         _test[_i][_qp] * std::pow(_omega, 2) * _mu0 * _eps_r[_qp] * _eps0 * _u[_qp];
+         _test[_i][_qp] * std::pow(_omega, 2) * ZAPDOS_CONSTANTS::mu_0 * _eps_r[_qp] *
+             ZAPDOS_CONSTANTS::eps_0 * _u[_qp];
 }

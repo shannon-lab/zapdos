@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "Water.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", Water);
 
@@ -58,11 +59,7 @@ Water::Water(const InputParameters & parameters)
     _cw(declareProperty<Real>("cw")),
     _electron_mult(declareProperty<Real>("electron_mult")),
     _potential_mult(declareProperty<Real>("potential_mult")),
-    _N_A(declareProperty<Real>("N_A")),
     _eps_r(declareProperty<Real>("eps_r")),
-    _eps_0(declareProperty<Real>("eps_0")),
-    _e(declareProperty<Real>("e")),
-    _k(declareProperty<Real>("k")),
     _T(declareProperty<Real>("T")),
     _kemliq(declareADProperty<Real>("kemliq")),
     _kem(declareADProperty<Real>("kem")),
@@ -207,17 +204,14 @@ Water::computeQpProperties()
   _cw[_qp] = 56;
   _electron_mult[_qp] = _user_electron_mult;
   _potential_mult[_qp] = _user_potential_mult;
-  _N_A[_qp] = 6.02e23;
   _eps_r[_qp] = 80.;
   // _eps_r[_qp] = 1.;
-  _eps_0[_qp] = 8.85e-12;
-  _eps[_qp] = _eps_r[_qp] * _eps_0[_qp];
-  _e[_qp] = 1.6e-19;               // coulombic charge
-  _k[_qp] = 1.38e-23;              // Boltzmanns constant
+  _eps[_qp] = _eps_r[_qp] * ZAPDOS_CONSTANTS::eps_0;
   _T[_qp] = 300;                   // Simulation temperature
   _kemliq[_qp] = 1.9e1 * _cw[_qp]; // e + H2O-->H + OH-
   _kem[_qp] = _kemliq[_qp];
-  // _kemliqemliq[_qp]  = 6e11 * _cw[_qp] * _cw[_qp] / (_N_A[_qp] * 1000.);     // e + H2Op-->H + OH
+  // _kemliqemliq[_qp]  = 6e11 * _cw[_qp] * _cw[_qp] / (ZAPDOS_CONSTANTS::N_A * 1000.);     // e +
+  // H2Op-->H + OH
   _kemliqemliq[_qp] =
       1e8 * _cw[_qp] * _cw[_qp] / 1000.; // 2e + 2H2O-->H2 + 2OH-. Now has units of m^3 / (mol * s)
   _kemem[_qp] = _kemliqemliq[_qp];
@@ -304,30 +298,45 @@ Water::computeQpProperties()
   _sgnH3Op[_qp] = 1;
   _sgnClm[_qp] = -1;
   _sgnNap[_qp] = 1;
-  _muemliq[_qp] =
-      _e[_qp] * _diffemliq[_qp] / _k[_qp] / _T[_qp] * 1000.; // mobility of hydrated electron
+  _muemliq[_qp] = ZAPDOS_CONSTANTS::e * _diffemliq[_qp] / ZAPDOS_CONSTANTS::k_boltz / _T[_qp] *
+                  1000.; // mobility of hydrated electron
   _muem[_qp] = _muemliq[_qp];
   // _muem[_qp] = 0.0352103411399 * 1000.; // units of m^2/(kV*s)
   // _muemliq[_qp] = 0.0352103411399/4;
-  _muH[_qp] = _zH[_qp] * _e[_qp] * _DH[_qp] / _k[_qp] / _T[_qp];     // H radical
-  _muOHm[_qp] = _e[_qp] * _diffOHm[_qp] / _k[_qp] / _T[_qp] * 1000.; // OH- ion
+  _muH[_qp] =
+      _zH[_qp] * ZAPDOS_CONSTANTS::e * _DH[_qp] / ZAPDOS_CONSTANTS::k_boltz / _T[_qp]; // H radical
+  _muOHm[_qp] =
+      ZAPDOS_CONSTANTS::e * _diffOHm[_qp] / ZAPDOS_CONSTANTS::k_boltz / _T[_qp] * 1000.; // OH- ion
   _muClm[_qp] = _muOHm[_qp];
   // _muOHm[_qp] = 3.52e-4;
-  _muH2Op[_qp] = _zH2Op[_qp] * _e[_qp] * _DH2Op[_qp] / _k[_qp] / _T[_qp]; // H2O+ ion
-  _muOH[_qp] = _zOH[_qp] * _e[_qp] * _DOH[_qp] / _k[_qp] / _T[_qp];       // OH radical
-  _muH2[_qp] = _zH2[_qp] * _e[_qp] * _DH2[_qp] / _k[_qp] / _T[_qp];       // H2 molecule
-  _muOm[_qp] = _zOm[_qp] * _e[_qp] * _DOm[_qp] / _k[_qp] / _T[_qp];       // O- ion
-  _muH3Op[_qp] = _e[_qp] * _diffH3Op[_qp] / _k[_qp] / _T[_qp] * 1000.;    // H3O+ ion
+  _muH2Op[_qp] = _zH2Op[_qp] * ZAPDOS_CONSTANTS::e * _DH2Op[_qp] / ZAPDOS_CONSTANTS::k_boltz /
+                 _T[_qp]; // H2O+ ion
+  _muOH[_qp] = _zOH[_qp] * ZAPDOS_CONSTANTS::e * _DOH[_qp] / ZAPDOS_CONSTANTS::k_boltz /
+               _T[_qp]; // OH radical
+  _muH2[_qp] = _zH2[_qp] * ZAPDOS_CONSTANTS::e * _DH2[_qp] / ZAPDOS_CONSTANTS::k_boltz /
+               _T[_qp]; // H2 molecule
+  _muOm[_qp] =
+      _zOm[_qp] * ZAPDOS_CONSTANTS::e * _DOm[_qp] / ZAPDOS_CONSTANTS::k_boltz / _T[_qp]; // O- ion
+  _muH3Op[_qp] = ZAPDOS_CONSTANTS::e * _diffH3Op[_qp] / ZAPDOS_CONSTANTS::k_boltz / _T[_qp] *
+                 1000.; // H3O+ ion
   _muNap[_qp] = _muH3Op[_qp];
   // _muH3Op[_qp] = 3.52e-4;
-  _muH2O2[_qp] = _zH2O2[_qp] * _e[_qp] * _DH2O2[_qp] / _k[_qp] / _T[_qp]; // H2O2 molecule
-  _muHO2m[_qp] = _zHO2m[_qp] * _e[_qp] * _DHO2m[_qp] / _k[_qp] / _T[_qp]; // HO2- ion
-  _muO2[_qp] = _zO2[_qp] * _e[_qp] * _DO2[_qp] / _k[_qp] / _T[_qp];       // O2 molecule
-  _muO2m[_qp] = _zO2m[_qp] * _e[_qp] * _DO2m[_qp] / _k[_qp] / _T[_qp];    // O2- ion
-  _muO[_qp] = _zO[_qp] * _e[_qp] * _DO[_qp] / _k[_qp] / _T[_qp];          // O radical
-  _muHO2[_qp] = _zHO2[_qp] * _e[_qp] * _DHO2[_qp] / _k[_qp] / _T[_qp];    // HO2 radical
-  _muO3[_qp] = _zO3[_qp] * _e[_qp] * _DO3[_qp] / _k[_qp] / _T[_qp];       // O3 molecule
-  _muO3m[_qp] = _zO3m[_qp] * _e[_qp] * _DO3m[_qp] / _k[_qp] / _T[_qp];    // O3- ion
+  _muH2O2[_qp] = _zH2O2[_qp] * ZAPDOS_CONSTANTS::e * _DH2O2[_qp] / ZAPDOS_CONSTANTS::k_boltz /
+                 _T[_qp]; // H2O2 molecule
+  _muHO2m[_qp] = _zHO2m[_qp] * ZAPDOS_CONSTANTS::e * _DHO2m[_qp] / ZAPDOS_CONSTANTS::k_boltz /
+                 _T[_qp]; // HO2- ion
+  _muO2[_qp] = _zO2[_qp] * ZAPDOS_CONSTANTS::e * _DO2[_qp] / ZAPDOS_CONSTANTS::k_boltz /
+               _T[_qp]; // O2 molecule
+  _muO2m[_qp] = _zO2m[_qp] * ZAPDOS_CONSTANTS::e * _DO2m[_qp] / ZAPDOS_CONSTANTS::k_boltz /
+                _T[_qp]; // O2- ion
+  _muO[_qp] =
+      _zO[_qp] * ZAPDOS_CONSTANTS::e * _DO[_qp] / ZAPDOS_CONSTANTS::k_boltz / _T[_qp]; // O radical
+  _muHO2[_qp] = _zHO2[_qp] * ZAPDOS_CONSTANTS::e * _DHO2[_qp] / ZAPDOS_CONSTANTS::k_boltz /
+                _T[_qp]; // HO2 radical
+  _muO3[_qp] = _zO3[_qp] * ZAPDOS_CONSTANTS::e * _DO3[_qp] / ZAPDOS_CONSTANTS::k_boltz /
+               _T[_qp]; // O3 molecule
+  _muO3m[_qp] = _zO3m[_qp] * ZAPDOS_CONSTANTS::e * _DO3m[_qp] / ZAPDOS_CONSTANTS::k_boltz /
+                _T[_qp]; // O3- ion
   _Dunity[_qp] = 1.0;
   _muunity[_qp] = 1.0;
   _munegunity[_qp] = -1.0;

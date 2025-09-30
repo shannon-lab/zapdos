@@ -9,6 +9,7 @@
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "EconomouDielectricBC.h"
+#include "Zapdos.h"
 
 registerMooseObject("ZapdosApp", EconomouDielectricBC);
 
@@ -43,7 +44,6 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
     _grad_u_dot(_var.gradSlnDot()), // TODO: make an AD version of this in MOOSE
     _u_dot(_var.adUDot()),
 
-    _e(getMaterialProperty<Real>("e")),
     _massem(getMaterialProperty<Real>("massem")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
 
@@ -145,14 +145,14 @@ EconomouDielectricBC::computeQpResidual()
     _em_flux -= (*_user_se_coeff[i])[_qp] * _temp_flux;
   }
 
-  _v_thermal =
-      std::sqrt(8 * _e[_qp] * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) / (M_PI * _massem[_qp]));
+  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
+                         (libMesh::pi * _massem[_qp]));
 
   _em_flux += (0.25 * _v_thermal * std::exp(_em[_qp]) * _normals[_qp]);
 
   return _test[_i][_qp] * _r_units *
-         ((_thickness / _epsilon_d) * _e[_qp] * 6.022e23 * (_ion_flux - _em_flux) * _normals[_qp] /
-              _voltage_scaling +
+         ((_thickness / _epsilon_d) * ZAPDOS_CONSTANTS::e * 6.022e23 * (_ion_flux - _em_flux) *
+              _normals[_qp] / _voltage_scaling +
           (_thickness / _epsilon_d) * 8.8542e-12 * -_grad_u_dot[_qp] * _r_units * _normals[_qp] -
           _u_dot[_qp]);
 }
