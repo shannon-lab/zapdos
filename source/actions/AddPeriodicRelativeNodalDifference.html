@@ -1,0 +1,157 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>AddPeriodicRelativeNodalDifference | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="fb0bb564-d873-4783-8036-0335e95436ba" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="de84d644-f6d9-4425-a61b-acacbc0d43d0" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="22057129-f067-4c39-8f53-9897b2f5cc8c" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="f402a806-9045-4588-a65d-096d71db1c59"><i class="material-icons">menu</i></a><ul class="sidenav" id="f402a806-9045-4588-a65d-096d71db1c59"><li><a href="#!" class="dropdown-trigger" data-target="d65b17b3-6b3f-404f-99f2-4bd505ad0907" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c38f8e31-c648-4b1c-968a-686161c8f2e1" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="51f86246-d2ec-47dc-b138-cf79a8952c01" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="fb0bb564-d873-4783-8036-0335e95436ba"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="de84d644-f6d9-4425-a61b-acacbc0d43d0"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="22057129-f067-4c39-8f53-9897b2f5cc8c"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="d65b17b3-6b3f-404f-99f2-4bd505ad0907"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="c38f8e31-c648-4b1c-968a-686161c8f2e1"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="51f86246-d2ec-47dc-b138-cf79a8952c01"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">actions</span><a href="#" class="breadcrumb">AddPeriodicRelativeNodalDifference</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="273f3f5e-b6f4-48a5-bb47-b805a41c6d90" data-section-level="1" data-section-text="AddPeriodicRelativeNodalDifference"><h1 id="addperiodicrelativenodaldifference">AddPeriodicRelativeNodalDifference</h1><p>This Action automatically adds the necessary objects to calculate the relative periodic difference. Relative Difference will be outputted as a Postprocessor named: &#x27;var&#x27;_periodic_difference</p><section class="scrollspy" id="4bd30b70-cc4c-4e7c-bcc5-7e8e29649b1b" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p>The <code>PeriodicRelativeNodalDifference</code> provides the objects necessary to calculate the relative periodic difference of a variable (either in logarithmic or non-logarithmic form).</p><p>The relative periodic difference is defined as:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-4e5246e3-2251-4f08-996b-71282d2cdb0c"></span><script>var element = document.getElementById("moose-equation-4e5246e3-2251-4f08-996b-71282d2cdb0c");katex.render("\\epsilon = \\sqrt{ \\frac{\\sum_{i=1}^{K}{\\left[ \\left( \\frac{u_{i}}{u_{\\text{avg}}} \\right)_{P} - \\left( \\frac{u_{i}}{u_{\\text{avg}}} \\right)_{P-1} \\right]^{2}} }{K^{2}} }", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where:</p><ul class="browser-default"><li><p><span class="moose-katex-inline-equation" id="moose-equation-8dccd62a-e5e6-4339-b1da-486f9dc1bf07"><script>var element = document.getElementById("moose-equation-8dccd62a-e5e6-4339-b1da-486f9dc1bf07");katex.render("u", element, {displayMode:false,throwOnError:false});</script></span> is the variable of interest, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-e499ddb4-4443-4858-82cc-75510f2ac1c7"><script>var element = document.getElementById("moose-equation-e499ddb4-4443-4858-82cc-75510f2ac1c7");katex.render("u_{\\text{avg}}", element, {displayMode:false,throwOnError:false});</script></span> is the spatial average of the variable, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-eb9cb216-5c4f-45da-81ec-af4afb556a5e"><script>var element = document.getElementById("moose-equation-eb9cb216-5c4f-45da-81ec-af4afb556a5e");katex.render("P", element, {displayMode:false,throwOnError:false});</script></span> is the beginning of the current cycle, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-c6f9d479-389b-4a55-a92b-4a1ab1e46834"><script>var element = document.getElementById("moose-equation-c6f9d479-389b-4a55-a92b-4a1ab1e46834");katex.render("P-1", element, {displayMode:false,throwOnError:false});</script></span> is the beginning of the previous cycle, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-d32b1880-cc18-4a2a-bb49-e25c1d9cb94b"><script>var element = document.getElementById("moose-equation-d32b1880-cc18-4a2a-bb49-e25c1d9cb94b");katex.render("i", element, {displayMode:false,throwOnError:false});</script></span> is the nodal index, and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-91494dd1-d571-4749-b9a7-007d2afc7dad"><script>var element = document.getElementById("moose-equation-91494dd1-d571-4749-b9a7-007d2afc7dad");katex.render("K", element, {displayMode:false,throwOnError:false});</script></span> is the total number of nodes.</p></li></ul></section><section class="scrollspy" id="fcdee6ad-1e9a-4c07-933b-45ba0fc8896f" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[PeriodicRelativeNodalDifference&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/PeriodicRelativeNodalDifference/index.html&quot;}&gt;&gt;&gt;]
+  [Periodic_Y_Diff]
+    periodic_variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The periodic variables (Not in log form).&quot;}&gt;&gt;&gt; = y
+    cycle_frequency&lt;&lt;&lt;{&quot;description&quot;: &quot;The cycle&#x27;s frequency in Hz&quot;}&gt;&gt;&gt; = 1.0
+    num_cycles&lt;&lt;&lt;{&quot;description&quot;: &quot;The number of cycles this object is active.&quot;}&gt;&gt;&gt; = 75
+    starting_cycle&lt;&lt;&lt;{&quot;description&quot;: &quot;The number of the cycles before starting the difference calculation&quot;}&gt;&gt;&gt; = 25
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#a1590729-70f2-4a77-bf07-3d28470cab88">(test/tests/PeriodicRelativeNodalDifference/Sample_Periodic_Diffusion.i)</a></section><section class="scrollspy" id="a58391c1-2ee2-485f-b32b-a2671f8b136b" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="02e62830-e04a-4990-b106-aec3a155a689" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">cycle_frequency</span><span class="moose-parameter-header-description">The cycle's frequency in Hz</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The cycle's frequency in Hz</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="7f22dcaa-500e-4ad5-a0f3-68fdffd55223" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">active</span><span class="moose-parameter-header-default">__all__ </span><span class="moose-parameter-header-description">If specified only the blocks named will be visited and made active</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>__all__ </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>If specified only the blocks named will be visited and made active</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The subdomain that this action applies to.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The subdomain that this action applies to.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">family</span><span class="moose-parameter-header-default">LAGRANGE</span><span class="moose-parameter-header-description">Specifies the family of FE shape functions to use for this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>LAGRANGE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>LAGRANGE, MONOMIAL, HERMITE, SCALAR, HIERARCHIC, CLOUGH, XYZ, SZABAB, BERNSTEIN, L2_LAGRANGE, L2_HIERARCHIC, NEDELEC_ONE, LAGRANGE_VEC, MONOMIAL_VEC, RAVIART_THOMAS, RATIONAL_BERNSTEIN, SIDE_HIERARCHIC, L2_HIERARCHIC_VEC, L2_LAGRANGE_VEC, L2_RAVIART_THOMAS</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies the family of FE shape functions to use for this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">inactive</span><span class="moose-parameter-header-description">If specified blocks matching these identifiers will be skipped.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>If specified blocks matching these identifiers will be skipped.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">initial_condition</span><span class="moose-parameter-header-description">Specifies a constant initial condition for this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies a constant initial condition for this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">initial_from_file_var</span><span class="moose-parameter-header-description">Gives the name of a variable for which to read an initial condition from a mesh file</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Gives the name of a variable for which to read an initial condition from a mesh file</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">num_cycles</span><span class="moose-parameter-header-default">2000</span><span class="moose-parameter-header-description">The number of cycles this object is active.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>2000</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The number of cycles this object is active.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">order</span><span class="moose-parameter-header-default">FIRST</span><span class="moose-parameter-header-description">Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>FIRST</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>CONSTANT, FIRST, SECOND, THIRD, FOURTH</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">periodic_variable</span><span class="moose-parameter-header-description">The periodic variables (Not in log form).</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;NonlinearVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The periodic variables (Not in log form).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">periodic_variable_log</span><span class="moose-parameter-header-description">The periodic variables that are in log form.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;NonlinearVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The periodic variables that are in log form.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">scaling</span><span class="moose-parameter-header-description">Specifies a scaling factor to apply to this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies a scaling factor to apply to this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">starting_cycle</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The number of the cycles before starting the difference calculation</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The number of the cycles before starting the difference calculation</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="9a702368-79bb-4cef-a03f-1a40c8037878" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="a1590729-70f2-4a77-bf07-3d28470cab88"><div class="modal-content"><h4>(test/tests/PeriodicRelativeNodalDifference/Sample_Periodic_Diffusion.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [file]
+    type = FileMeshGenerator
+    file = &#x27;Sample_Periodic_Diffusion.msh&#x27;
+  []
+  [left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = file
+  []
+  [right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [y]
+  []
+[]
+
+[Kernels]
+  [Time_Deriv]
+    type = TimeDerivative
+    variable = y
+  []
+  [Diff]
+    type = ADMatDiffusion
+    variable = y
+    diffusivity = &#x27;diffy&#x27;
+  []
+  [First_Term]
+    type = BodyForce
+    variable = y
+    function = &#x27;0.25 * sin(2.0*pi * t) * sin(2.0*pi * t)&#x27;
+  []
+  [Second_Term]
+    type = ReactionFirstOrder
+    variable = y
+    v = y
+    coefficient = -1
+    reaction = &#x27;firstorder&#x27;
+    _v_eq_u = true
+  []
+  [Thrid_Term]
+    type = ReactionSecondOrder
+    variable = y
+    v = y
+    w = y
+    coefficient = -1
+    reaction = &#x27;secondorder&#x27;
+    _v_eq_u = true
+    _w_eq_u = true
+  []
+[]
+
+[BCs]
+  [Walls]
+    type = DirichletBC
+    variable = y
+    value = 0
+    boundary = &#x27;left right&#x27;
+  []
+[]
+
+[Materials]
+  [gas_species_0]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;diffy&#x27;
+    prop_values = 0.001
+  []
+  [firstorder_coefficient]
+    type = GenericRateConstant
+    reaction = &#x27;firstorder&#x27;
+    reaction_rate_value = 0.05
+  []
+  [secondorder_coefficient]
+    type = GenericRateConstant
+    reaction = &#x27;secondorder&#x27;
+    reaction_rate_value = 0.015
+  []
+[]
+
+[PeriodicRelativeNodalDifference]
+  [Periodic_Y_Diff]
+    periodic_variable = y
+    cycle_frequency = 1.0
+    num_cycles = 75
+    starting_cycle = 25
+  []
+[]
+
+[Postprocessors]
+  [diff_counter]
+    type = PeriodicComparisonCounter
+    value1 = y_periodic_difference
+    value2 = 1e-5
+    frequency = 1
+    comparison_type = less_than
+  []
+[]
+
+[UserObjects]
+  [End]
+    type = Terminator
+    expression = &#x27;(if(diff_counter&gt;=10,1,0)) = 1&#x27;
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 100
+
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -ksp_type&#x27;
+  petsc_options_value = &#x27;lu gmres&#x27;
+
+  dtmin = 1e-14
+  scheme = bdf2
+  dt = 0.01
+
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#4bd30b70-cc4c-4e7c-bcc5-7e8e29649b1b" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#fcdee6ad-1e9a-4c07-933b-45ba0fc8896f" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#a58391c1-2ee2-485f-b32b-a2671f8b136b" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
