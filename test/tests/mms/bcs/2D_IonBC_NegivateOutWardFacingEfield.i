@@ -139,20 +139,20 @@
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
-    value = 'log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)'
+    expression = 'log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)'
   []
   #The manufactured eff. Efield solution
   [Ex_fun]
     type = ParsedFunction
     vars = 'ee N_A diffpotential diffion muion'
     vals = 'ee N_A diffpotential diffion muion'
-    value = '(diffion*pi*cos(pi*x))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))'
+    expression = '(diffion*pi*cos(pi*x))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))'
   []
   [Ey_fun]
     type = ParsedFunction
     vars = 'ee N_A diffpotential diffion muion'
     vals = 'ee N_A diffpotential diffion muion'
-    value = '(diffion*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))'
+    expression = '(diffion*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))'
   []
 
 #Source Terms in moles
@@ -161,7 +161,7 @@
     type = ParsedFunction
     vars = 'ee N_A diffpotential diffion muion'
     vals = 'ee N_A diffpotential diffion muion'
-    value = '((2*pi*cos(2*pi*t)*cos(pi*y))/5) / N_A'
+    expression = '((2*pi*cos(2*pi*t)*cos(pi*y))/5) / N_A'
   []
 
   #The Ex source term.
@@ -169,13 +169,13 @@
     type = ParsedFunction
     vars = 'ee N_A diffpotential diffion muion'
     vals = 'ee N_A diffpotential diffion muion'
-    value = '-diffpotential*((2*diffion*pi^3*cos(pi*x)^3)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (diffion*pi^3*cos(pi*x))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) + (3*diffion*pi^3*cos(pi*x)*sin(pi*x))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) - (2*diffion*diffpotential*pi*cos(pi*x)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^2)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (2*diffion*pi^2*cos(2*pi*t)*cos(pi*x)*cos(pi*y))/(5*muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) - (diffion*diffpotential*pi*cos(pi*x)*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)'
+    expression = '-diffpotential*((2*diffion*pi^3*cos(pi*x)^3)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (diffion*pi^3*cos(pi*x))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) + (3*diffion*pi^3*cos(pi*x)*sin(pi*x))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) - (2*diffion*diffpotential*pi*cos(pi*x)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^2)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (2*diffion*pi^2*cos(2*pi*t)*cos(pi*x)*cos(pi*y))/(5*muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) - (diffion*diffpotential*pi*cos(pi*x)*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)'
   []
   [Ey_source]
     type = ParsedFunction
     vars = 'ee N_A diffpotential diffion muion'
     vals = 'ee N_A diffpotential diffion muion'
-    value = '-diffpotential*((2*diffion*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^3)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (diffion*(pi^3*cos(pi*y) - (pi^3*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) + (3*diffion*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) - (2*diffion*pi^2*cos(2*pi*t)*sin(pi*y))/(5*muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) - (diffion*diffpotential*pi^2*sin(pi*x)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) - (2*diffion*diffpotential*pi^2*cos(pi*x)^2*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (2*diffion*pi*cos(2*pi*t)*cos(pi*y)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(5*muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)'
+    expression = '-diffpotential*((2*diffion*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^3)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (diffion*(pi^3*cos(pi*y) - (pi^3*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) + (3*diffion*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) - (2*diffion*pi^2*cos(2*pi*t)*sin(pi*y))/(5*muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) - (diffion*diffpotential*pi^2*sin(pi*x)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) - (2*diffion*diffpotential*pi^2*cos(pi*x)^2*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (2*diffion*pi*cos(2*pi*t)*cos(pi*y)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(5*muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)'
   []
 
 
@@ -183,20 +183,20 @@
     type = ParsedFunction
     vars = 'N_A'
     vals = 'N_A'
-    value = 'log((3.0 + sin(pi/2*x)) / N_A)'
+    expression = 'log((3.0 + sin(pi/2*x)) / N_A)'
   []
 
   [ion_left_Flux_BC]
     type = ParsedFunction
     vars = 'ee N_A diffpotential diffion muion'
     vals = 'ee N_A diffpotential diffion muion'
-    value = '(0) / N_A'
+    expression = '(0) / N_A'
   []
   [ion_down_Flux_BC]
     type = ParsedFunction
     vars = 'ee N_A diffpotential diffion muion'
     vals = 'ee N_A diffpotential diffion muion'
-    value = '(0) / N_A'
+    expression = '(0) / N_A'
   []
 []
 
