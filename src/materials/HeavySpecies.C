@@ -31,8 +31,8 @@ HeavySpeciesTempl<is_ad>::validParams()
   params.addParam<Real>("mobility", "The species mobility (if applicable).");
   params.addParam<Real>("diffusivity", "The species diffusivity (if applicable).");
 
-  params.addCoupledVar("T_gas", 300, "The species temperature in Kelvin.");
-  params.addCoupledVar("p_gas", 1.01e5, "The species pressure in Pascals.");
+  params.addCoupledVar("heavy_species_T", 300, "The species temperature in Kelvin.");
+  params.addCoupledVar("heavy_species_p", 1.01e5, "The species pressure in Pascals.");
 
   params.addClassDescription("Material properties of ions and neutral species");
   return params;
@@ -46,17 +46,14 @@ HeavySpeciesTempl<is_ad>::HeavySpeciesTempl(const InputParameters & parameters)
     _potential_units(getParam<std::string>("potential_units")),
     _massHeavy(declareProperty<Real>("mass" + getParam<std::string>("heavy_species_name"))),
 
-    _temperatureHeavy(
-        declareGenericProperty<Real, is_ad>("T" + getParam<std::string>("heavy_species_name"))),
-
     _sgnHeavy(declareProperty<Real>("sgn" + getParam<std::string>("heavy_species_name"))),
     _muHeavy(
         declareGenericProperty<Real, is_ad>("mu" + getParam<std::string>("heavy_species_name"))),
     _diffHeavy(
         declareGenericProperty<Real, is_ad>("diff" + getParam<std::string>("heavy_species_name"))),
 
-    _T_gas(coupledValue("T_gas")),
-    _p_gas(coupledValue("p_gas")),
+    _temperatureHeavy(coupledGenericValue<is_ad>("heavy_species_T")),
+    _pressureHeavy(coupledGenericValue<is_ad>("heavy_species_p")),
 
     _time_units(getParam<Real>("time_units"))
 
@@ -95,8 +92,6 @@ HeavySpeciesTempl<is_ad>::computeQpProperties()
   _massHeavy[_qp] = _user_massHeavy;
   _sgnHeavy[_qp] = _user_sgnHeavy;
 
-  _temperatureHeavy[_qp] = _T_gas[_qp]; // Needs to be changed.
-
   if (!_calc_mobility && !_calc_diffusivity)
   {
     _diffHeavy[_qp] = getParam<Real>("diffusivity") * _time_units;
@@ -118,12 +113,12 @@ HeavySpeciesTempl<is_ad>::computeQpProperties()
   {
     // If no mobility or diffusivity values are given, values are computed for Argon based on
     // Richards and Sawin paper
-    _muHeavy[_qp] =
-        1444. * _voltage_scaling * _time_units /
-        (10000. * 760. * _p_gas[_qp] / 1.01E5); // units of m^2/(kV*s) if _voltage_scaling = 1000
+    _muHeavy[_qp] = 1444. * _voltage_scaling * _time_units /
+                    (10000. * 760. * _pressureHeavy[_qp] /
+                     1.01E5); // units of m^2/(kV*s) if _voltage_scaling = 1000
 
-    _diffHeavy[_qp] =
-        0.004 * _time_units / (760. * _p_gas[_qp] / 1.01E5); // covert to m^2 and include press
+    _diffHeavy[_qp] = 0.004 * _time_units /
+                      (760. * _pressureHeavy[_qp] / 1.01E5); // covert to m^2 and include press
   }
 }
 

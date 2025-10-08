@@ -36,7 +36,7 @@ protected:
   /// Reflection coefficient
   const Real _r;
   /// Temperature of ions
-  const MaterialProperty<Real> & _T_heavy;
+  const VariableValue & _T_heavy;
   /// Mass of ions
   const MaterialProperty<Real> & _mass;
   /// Thermal velocity of ions

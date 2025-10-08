@@ -500,6 +500,7 @@ vhigh = -400E-3 #kV
     tau = 100E-9
     relax = true
     emission_coeffs = 0.02
+    cathode_temperature = 1273
   []
 
   # [em_physical_left]
@@ -624,7 +625,6 @@ vhigh = -400E-3 #kV
     user_work_function = 4.55 # eV
     user_field_enhancement = 55
     user_Richardson_coefficient = 80E4
-    user_cathode_temperature = 1273
     block = 0
   []
   [gas_block_electrons]

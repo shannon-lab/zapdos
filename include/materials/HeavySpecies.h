@@ -38,8 +38,6 @@ protected:
 
   /// Ion mass
   MaterialProperty<Real> & _massHeavy;
-  /// Ion temperature
-  GenericMaterialProperty<Real, is_ad> & _temperatureHeavy;
   /// Charge sign of ion
   MaterialProperty<Real> & _sgnHeavy;
   /// Ion mobility coefficient
@@ -48,9 +46,9 @@ protected:
   GenericMaterialProperty<Real, is_ad> & _diffHeavy;
 
   /// Coupled species temperature variable
-  const VariableValue & _T_gas;
+  const GenericVariableValue<is_ad> & _temperatureHeavy;
   /// Coupled species pressure variable
-  const VariableValue & _p_gas;
+  const GenericVariableValue<is_ad> & _pressureHeavy;
 
   /// Time units
   const Real _time_units;

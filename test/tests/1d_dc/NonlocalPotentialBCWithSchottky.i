@@ -529,6 +529,7 @@ area = 5.02e-7 # Formerly 3.14e-6
     tau = ${relaxTime}
     relax = true
     emission_coeffs = 0.02
+    cathode_temperature = 1273
   []
 
   # [em_physical_left]
@@ -676,7 +677,6 @@ area = 5.02e-7 # Formerly 3.14e-6
     user_work_function = 4.55 # eV
     user_field_enhancement = 55
     user_Richardson_coefficient = 80E4
-    user_cathode_temperature = 1273
     block = 0
   []
   [field_solver]

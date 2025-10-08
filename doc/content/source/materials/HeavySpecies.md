@@ -7,7 +7,6 @@
 `HeavySpecies` defines the transport and material properties of ions and neutral species. The following are the properties and naming scheme that `HeavySpecies` provides:
 
 - species mass, labeled as "mass'variable name'" (e.g., `massargon_ion`),
-- species temperature, labeled as "T'variable name'" (e.g., `Targon_ion`),
 - species charge, labeled as "sgn'variable name'" (e.g., `sgnargon_ion`),
 - species mobility coefficient, labeled as "mu'variable name'" (e.g., `muargon_ion`), and
 - species diffusion coefficient, labeled as "diff'variable name'" (e.g., `diffargon_ion`)

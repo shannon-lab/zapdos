@@ -139,7 +139,7 @@ dom0Scale = 1.0
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
-    p_gas = 13.3322
+    heavy_species_p = 13.3322
   []
 []
 

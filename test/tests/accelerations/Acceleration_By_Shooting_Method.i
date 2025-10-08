@@ -633,16 +633,16 @@ dom0Scale = 25.4e-3
     heavy_species_charge = 1.0
     mobility = 0.144409938
     diffusivity = 6.428571e-3
-    p_gas = 133.33
-    T_gas = 300
+    heavy_species_p = 133.33
+    heavy_species_T = 300
   []
   [gas_species_2]
     type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
-    p_gas = 133.33
-    T_gas = 300
+    heavy_species_p = 133.33
+    heavy_species_T = 300
   []
   [gas_species_1]
     type = ADHeavySpecies
@@ -650,8 +650,8 @@ dom0Scale = 25.4e-3
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
     diffusivity = 7.515528e-3
-    p_gas = 133.33
-    T_gas = 300
+    heavy_species_p = 133.33
+    heavy_species_T = 300
   []
   [reaction_0]
     #type = ADZapdosEEDFRateLinearInterpolation
