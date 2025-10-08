@@ -56,7 +56,7 @@ protected:
   /// Mass of electrons
   const MaterialProperty<Real> & _massem;
   /// Temperature of ions
-  std::vector<const ADMaterialProperty<Real> *> _T_heavy;
+  std::vector<const ADVariableValue *> _T_heavy;
   /// Mass of ions
   std::vector<const MaterialProperty<Real> *> _mass;
 

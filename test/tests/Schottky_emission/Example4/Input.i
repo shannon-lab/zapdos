@@ -531,6 +531,7 @@ area = 5.02e-7 # Formerly 3.14e-6
     tau = ${relaxTime}
     relax = true
     emission_coeffs = 0.02
+    cathode_temperature = 1273
   []
 
   # [em_physical_left]
@@ -653,7 +654,6 @@ area = 5.02e-7 # Formerly 3.14e-6
     user_work_function = 4.55 # eV
     user_field_enhancement = 55
     user_Richardson_coefficient = 80E4
-    user_cathode_temperature = 1273
     block = 0
   []
   [gas_block_electrons]
@@ -665,7 +665,7 @@ area = 5.02e-7 # Formerly 3.14e-6
     mean_en = mean_en
     block = 0
     property_tables_file = td_argon_electrons.txt
-    user_p_gas = 1.01e5
+    p_gas = 1.01e5
   []
   [gas_block]
     type = SimplifiedArgonChemistryCoefficients
