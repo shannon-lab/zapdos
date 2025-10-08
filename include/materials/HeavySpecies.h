@@ -47,10 +47,10 @@ protected:
   /// Ion diffusion coefficient
   GenericMaterialProperty<Real, is_ad> & _diffHeavy;
 
-  /// Neutal gas temperature
-  const MaterialProperty<Real> & _T_gas;
-  /// Neutal gas density
-  const MaterialProperty<Real> & _p_gas;
+  /// Coupled species temperature variable
+  const VariableValue & _T_gas;
+  /// Coupled species pressure variable
+  const VariableValue & _p_gas;
 
   /// Time units
   const Real _time_units;

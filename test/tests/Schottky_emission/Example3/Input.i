@@ -638,7 +638,7 @@ threeTimesRelaxTime = 150E-6 #s
     mean_en = mean_en
     block = 0
     property_tables_file = td_argon_electrons.txt
-    user_p_gas = 1.01e5
+    p_gas = 1.01e5
   []
   [gas_block]
     type = SimplifiedArgonChemistryCoefficients
