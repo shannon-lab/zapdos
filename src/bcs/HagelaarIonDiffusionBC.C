@@ -19,6 +19,7 @@ HagelaarIonDiffusionBC::validParams()
   InputParameters params = ADIntegratedBC::validParams();
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addCoupledVar("T_ion", 300, "The ion temperature in Kelvin.");
   params.addParam<Real>(
       "user_velocity", -1., "Optional parameter if user wants to specify the thermal velocity.");
   params.addClassDescription("Kinetic electron boundary condition"
@@ -31,7 +32,7 @@ HagelaarIonDiffusionBC::HagelaarIonDiffusionBC(const InputParameters & parameter
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
 
-    _T(getADMaterialProperty<Real>("T" + _var.name())),
+    _T(adCoupledValue("T_ion")),
     _mass(getMaterialProperty<Real>("mass" + _var.name())),
     _user_velocity(getParam<Real>("user_velocity"))
 {

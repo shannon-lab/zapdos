@@ -62,7 +62,7 @@ protected:
   /// Richardson coefficient
   const MaterialProperty<Real> & _Richardson_coefficient;
   /// Temperature of surface
-  const MaterialProperty<Real> & _cathode_temperature;
+  const ADVariableValue & _cathode_temperature;
 
   /// Equal to 1 when the drift velocity is direct towards the wall and zero otherwise
   Real _a;

@@ -41,9 +41,7 @@ protected:
   /// Relative permittivity of the medium
   MaterialProperty<Real> & _eps_r;
   /// Coupled water temperature variable (defaulted to 300k)
-  const VariableValue & _T_water;
-  /// Water temperature
-  MaterialProperty<Real> & _T;
+  const ADVariableValue & _T;
   /*
    * Reaction coefficient for:
    * e + H2O-->H + OH-

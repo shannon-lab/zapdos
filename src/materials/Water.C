@@ -61,8 +61,7 @@ Water::Water(const InputParameters & parameters)
     _electron_mult(declareProperty<Real>("electron_mult")),
     _potential_mult(declareProperty<Real>("potential_mult")),
     _eps_r(declareProperty<Real>("eps_r")),
-    _T_water(coupledValue("T_water")),
-    _T(declareProperty<Real>("T")),
+    _T(adCoupledValue("T_water")),
     _kemliq(declareADProperty<Real>("kemliq")),
     _kem(declareADProperty<Real>("kem")),
     _kemliqemliq(declareADProperty<Real>("kemliqemliq")),
@@ -209,7 +208,6 @@ Water::computeQpProperties()
   _eps_r[_qp] = 80.;
   // _eps_r[_qp] = 1.;
   _eps[_qp] = _eps_r[_qp] * ZAPDOS_CONSTANTS::eps_0;
-  _T[_qp] = _T_water[_qp];         // Simulation temperature
   _kemliq[_qp] = 1.9e1 * _cw[_qp]; // e + H2O-->H + OH-
   _kem[_qp] = _kemliq[_qp];
   // _kemliqemliq[_qp]  = 6e11 * _cw[_qp] * _cw[_qp] / (ZAPDOS_CONSTANTS::N_A * 1000.);     // e +

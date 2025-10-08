@@ -504,6 +504,7 @@ threeTimesRelaxTime = 150E-6 #s
     # tau = ${relaxTime}
     relax = true
     emission_coeffs = 0.02
+    cathode_temperature = 1273
   []
 
   # [em_physical_left]
@@ -626,7 +627,6 @@ threeTimesRelaxTime = 150E-6 #s
     user_work_function = 4.55 # eV
     user_field_enhancement = 55
     user_Richardson_coefficient = 80E4
-    user_cathode_temperature = 1273
     block = 0
   []
   [gas_block_electrons]

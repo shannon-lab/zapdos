@@ -30,7 +30,7 @@ protected:
   /// Reflection coefficient
   const Real & _r;
   /// Ion temperature
-  const ADMaterialProperty<Real> & _T;
+  const ADVariableValue & _T;
   /// Mass of ions
   const MaterialProperty<Real> & _mass;
   /// Ion thermal velocity
