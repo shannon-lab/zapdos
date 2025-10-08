@@ -30,6 +30,10 @@ HeavySpeciesTempl<is_ad>::validParams()
   params.addParam<Real>("time_units", 1, "Units of time");
   params.addParam<Real>("mobility", "The species mobility (if applicable).");
   params.addParam<Real>("diffusivity", "The species diffusivity (if applicable).");
+
+  params.addCoupledVar("T_gas", 300, "The species temperature in Kelvin.");
+  params.addCoupledVar("p_gas", 1.01e5, "The species pressure in Pascals.");
+
   params.addClassDescription("Material properties of ions and neutral species");
   return params;
 }
@@ -41,15 +45,19 @@ HeavySpeciesTempl<is_ad>::HeavySpeciesTempl(const InputParameters & parameters)
     _user_sgnHeavy(getParam<Real>("heavy_species_charge")),
     _potential_units(getParam<std::string>("potential_units")),
     _massHeavy(declareProperty<Real>("mass" + getParam<std::string>("heavy_species_name"))),
+
     _temperatureHeavy(
         declareGenericProperty<Real, is_ad>("T" + getParam<std::string>("heavy_species_name"))),
+
     _sgnHeavy(declareProperty<Real>("sgn" + getParam<std::string>("heavy_species_name"))),
     _muHeavy(
         declareGenericProperty<Real, is_ad>("mu" + getParam<std::string>("heavy_species_name"))),
     _diffHeavy(
         declareGenericProperty<Real, is_ad>("diff" + getParam<std::string>("heavy_species_name"))),
-    _T_gas(getMaterialProperty<Real>("T_gas")),
-    _p_gas(getMaterialProperty<Real>("p_gas")),
+
+    _T_gas(coupledValue("T_gas")),
+    _p_gas(coupledValue("p_gas")),
+
     _time_units(getParam<Real>("time_units"))
 
 {

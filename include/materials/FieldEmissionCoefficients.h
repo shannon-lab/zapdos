@@ -33,8 +33,8 @@ protected:
   const Real _user_field_enhancement;
   /// User defined Richardson coefficient
   const Real _user_Richardson_coefficient;
-  /// User defined cathode temperature
-  const Real _user_cathode_temperature;
+  /// Coupled cathode temperature variable
+  const VariableValue & _user_cathode_temperature;
 
   /// Work function
   MaterialProperty<Real> & _work_function;

@@ -140,16 +140,6 @@ dom0Scale = 1.0
 []
 
 [Materials]
-  #The material properties for electrons.
-  #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
-  [GasBasics]
-    type = ElectronTransportCoefficients
-    interp_trans_coeffs = false
-    ramp_trans_coeffs = false
-    user_p_gas = 133.3322
-    user_electron_diffusion_coeff = 1.0
-    property_tables_file = rate_coefficients/electron_moments.txt
-  []
   #The material properties of the ion
   [gas_species_0]
     type = ADHeavySpecies

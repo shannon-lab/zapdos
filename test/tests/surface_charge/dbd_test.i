@@ -518,6 +518,7 @@ dom1Scale = 1e-4
     heavy_species_mass = 6.64e-26
     heavy_species_charge = -1.0
     diffusivity = 1.6897e-5
+    T_gas = 400
     block = 0
   []
   [gas_species_2]
@@ -526,6 +527,7 @@ dom1Scale = 1e-4
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
     diffusivity = 1.6897e-5
+    T_gas = 400
     block = 0
   []
 

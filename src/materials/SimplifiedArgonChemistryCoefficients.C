@@ -31,8 +31,8 @@ SimplifiedArgonChemistryCoefficients::validParams()
   params.addRequiredParam<FileName>(
       "property_tables_file", "The file containing interpolation tables for material properties.");
 
-  params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
-  params.addParam<Real>("user_p_gas", 1.01e5, "The gas pressure in Pascals.");
+  params.addCoupledVar("T_gas", 300, "The background gas temperature in Kelvin.");
+  params.addCoupledVar("p_gas", 1.01e5, "The background gas pressure in Pascals.");
 
   params.addCoupledVar("electrons", "The electron density in log form");
   params.addCoupledVar("electron_energy", "The mean electron energy density in log form");
@@ -47,8 +47,8 @@ SimplifiedArgonChemistryCoefficients::SimplifiedArgonChemistryCoefficients(
   : ADMaterial(parameters),
     _interp_elastic_coeff(getParam<bool>("interp_elastic_coeff")),
 
-    _user_T_gas(getParam<Real>("user_T_gas")),
-    _user_p_gas(getParam<Real>("user_p_gas")),
+    _T_gas(coupledValue("T_gas")),
+    _p_gas(coupledValue("p_gas")),
     _use_moles(getParam<bool>("use_moles")),
 
     _Eiz(declareProperty<Real>("Eiz")),
@@ -120,9 +120,9 @@ SimplifiedArgonChemistryCoefficients::computeQpProperties()
   _massGas[_qp] = 40.0 * 1.66e-27;
 
   if (_use_moles)
-    _n_gas[_qp] = _user_p_gas / (8.3145 * _user_T_gas);
+    _n_gas[_qp] = _p_gas[_qp] / (8.3145 * _T_gas[_qp]);
   else
-    _n_gas[_qp] = _user_p_gas / (ZAPDOS_CONSTANTS::k_boltz * _user_T_gas);
+    _n_gas[_qp] = _p_gas[_qp] / (ZAPDOS_CONSTANTS::k_boltz * _T_gas[_qp]);
 
   // With the exception of temperature/energy (generally in eV), all properties are in standard SI
   // units unless otherwise indicated

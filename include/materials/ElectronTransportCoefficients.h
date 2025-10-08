@@ -43,10 +43,10 @@ protected:
   /// Time units
   const Real _time_units;
 
-  /// User defined neutral gas and ion temperature
-  const Real _user_T_gas;
-  /// Coupled pressure variable
-  const VariableValue & _user_p_gas;
+  /// Coupled background gas temperature variable
+  const VariableValue & _T_gas;
+  /// Coupled background gas pressure variable
+  const VariableValue & _p_gas;
   /// True if molar density is used
   const bool _use_moles;
 
@@ -72,10 +72,6 @@ protected:
   MaterialProperty<Real> & _sgnem;
   /// Charge sign of electron energy density
   MaterialProperty<Real> & _sgnmean_en;
-  /// Argon neutral gas temperature
-  MaterialProperty<Real> & _T_gas;
-  /// Argon neutral gas pressure
-  MaterialProperty<Real> & _p_gas;
 
   /// Coupled electron density
   const ADVariableValue & _em;
