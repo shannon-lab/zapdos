@@ -4,7 +4,7 @@
 
 ## Overview
 
-`FieldEmissionCoefficients` defines the coefficients needed for the field emission boundary conditions (i.e., [FieldEmissionBC.md] and [SchottkyEmissionBC.md]). The following are the properties and naming scheme that `ElectronTransportCoefficients` provides:
+`FieldEmissionCoefficients` defines the coefficients needed for the field emission boundary conditions (i.e., [FieldEmissionBC.md] and [SchottkyEmissionBC.md]). The following are the properties and naming scheme that `FieldEmissionCoefficients` provides:
 
 - the work function, labeled as `work_function`,
 - the field enhancement factor, labeled as `field_enhancement`,
