@@ -24,7 +24,7 @@ PowerDepTempl<is_ad>::validParams()
 {
   InputParameters params = AuxKernel::validParams();
 
-  params.addRequiredCoupledVar("density_log", "The electron density");
+  params.addRequiredCoupledVar("density_log", "The species density in log form.");
   params.addParam<bool>(
       "art_diff", false, "Whether there is a current contribution from artificial diffusion.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");

@@ -22,7 +22,7 @@ InputParameters
 EFieldAdvAuxTempl<is_ad>::validParams()
 {
   InputParameters params = AuxKernel::validParams();
-  params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
+  params.addRequiredCoupledVar("density_log", "The species density in log form.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<std::string>("field_property_name",
                                "field_solver_interface_property",
