@@ -17,6 +17,8 @@ JouleHeating::validParams()
 {
   InputParameters params = ADKernel::validParams();
   params.addRequiredCoupledVar("em", "The electron density.");
+  params.deprecateParam("em", "electrons", "04/01/2026");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<std::string>("field_property_name",
@@ -36,8 +38,8 @@ JouleHeating::JouleHeating(const InputParameters & parameters)
     _mu(getADMaterialProperty<Real>("muem")),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
-    _em(adCoupledValue("em")),
-    _grad_em(adCoupledGradient("em"))
+    _em(adCoupledValue("electrons")),
+    _grad_em(adCoupledGradient("electrons"))
 {
   if (_potential_units.compare("V") == 0)
     _voltage_scaling = 1.;
