@@ -77,7 +77,6 @@ ElectronTransportCoefficients::ElectronTransportCoefficients(const InputParamete
 
     _sgnem(declareProperty<Real>("sgnem")),
     _sgnmean_en(declareProperty<Real>("sgnmean_en")),
-    _diffpotential(declareADProperty<Real>("diffpotential")),
     _T_gas(declareProperty<Real>("T_gas")),
     _p_gas(declareProperty<Real>("p_gas")),
 
@@ -129,7 +128,6 @@ ElectronTransportCoefficients::computeQpProperties()
 
   _sgnem[_qp] = -1.;
   _sgnmean_en[_qp] = -1.;
-  _diffpotential[_qp] = ZAPDOS_CONSTANTS::eps_0;
 
   // With the exception of temperature/energy (generally in eV), all properties are in standard SI
   // units unless otherwise indicated

@@ -631,6 +631,10 @@ vhigh = -175E-3 #kV
     property_tables_file = td_argon_electrons.txt
     user_p_gas = 1.01e5
   []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
   [gas_block]
     type = SimplifiedArgonChemistryCoefficients
     interp_elastic_coeff = true

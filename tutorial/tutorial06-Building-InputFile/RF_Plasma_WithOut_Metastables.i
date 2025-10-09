@@ -207,6 +207,10 @@ dom0Scale = 25.4e-3
     user_electron_diffusion_coeff = 119.8757763975
     property_tables_file = rate_coefficients/electron_moments.txt
   []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
   [gas_species_0]
     type = ADHeavySpecies
     heavy_species_name = Ar+

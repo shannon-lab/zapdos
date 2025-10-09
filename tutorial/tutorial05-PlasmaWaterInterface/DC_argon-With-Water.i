@@ -406,6 +406,12 @@ dom1Scale = 1e-7
     block = 0
     property_tables_file = 'townsend_coefficients/moments.txt'
   []
+  # The dielectric coefficient of the gas (defaulted to the permittivity of free space)
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+    block = 0
+  []
 
   #Sets the pressure and temperature in the water
   [water_block1]
