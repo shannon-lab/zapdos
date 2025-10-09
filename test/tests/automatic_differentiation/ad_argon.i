@@ -635,6 +635,10 @@ dom0Scale = 1e-3
     ramp_trans_coeffs = false
     user_p_gas = 1.01e5
   []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
 
   # [gas_constants]
   #   type = GenericConstantMaterial

@@ -238,6 +238,11 @@ dom0Scale=25.4e-3
     #Name of text file with electron properties
     property_tables_file = rate_coefficients/electron_moments.txt
   []
+  # The dielectric coefficient of the gas (defaulted to the permittivity of free space)
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
   #The material properties of the ion
   [gas_species_0]
     type = ADHeavySpecies
