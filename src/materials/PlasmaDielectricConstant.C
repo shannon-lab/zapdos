@@ -10,6 +10,8 @@ PlasmaDielectricConstant::validParams()
                                 "The electron-neutral collision frequency (in Hz).");
   params.addRequiredParam<Real>("driving_frequency", "Driving frequency of plasma (in Hz).");
   params.addRequiredCoupledVar("em", "Electron density coupled variable.");
+  params.deprecateCoupledVar("em", "electrons", "04/01/2026");
+  params.addCoupledVar("electrons", "The electron density in log form");
   params.addClassDescription("Provides the real and complex components, the spatial gradient and "
                              "the first time derivative of the plasma dielectric.");
   return params;
@@ -31,9 +33,9 @@ PlasmaDielectricConstant::PlasmaDielectricConstant(const InputParameters & param
     _pi(libMesh::pi),
     _nu(getParam<Real>("electron_neutral_collision_frequency")),
     _frequency(getParam<Real>("driving_frequency")),
-    _em(adCoupledValue("em")),
-    _em_grad(adCoupledGradient("em")),
-    _em_var(getVar("em", 0)),
+    _em(adCoupledValue("electrons")),
+    _em_grad(adCoupledGradient("electrons")),
+    _em_var(getVar("electrons", 0)),
     _em_dot(_fe_problem.isTransient() ? _em_var->adUDot() : _ad_zero),
     _em_dot_dot(_fe_problem.isTransient() ? _em_var->adUDotDot() : _ad_zero)
 {

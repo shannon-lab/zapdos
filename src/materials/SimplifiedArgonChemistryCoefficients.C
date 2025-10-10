@@ -35,7 +35,11 @@ SimplifiedArgonChemistryCoefficients::validParams()
   params.addParam<Real>("user_p_gas", 1.01e5, "The gas pressure in Pascals.");
 
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
+  params.deprecateCoupledVar("em", "electrons", "04/01/2026");
+  params.addCoupledVar("electrons", "The electron density in log form");
   params.addCoupledVar("mean_en", "The electron mean energy in log form.");
+  params.deprecateCoupledVar("mean_en", "electron_energy", "04/01/2026");
+  params.addCoupledVar("electron_energy", "The mean electron energy density in log form");
 
   params.addClassDescription("Rate and Townsend coefficients for a simplified argon chemistry "
                              "network (includes elastic collision, ionization, and excitation).");
@@ -77,8 +81,8 @@ SimplifiedArgonChemistryCoefficients::SimplifiedArgonChemistryCoefficients(
     _kel(declareADProperty<Real>("kel")),
     _TemVolts(declareADProperty<Real>("TemVolts")),
 
-    _em(isCoupled("em") ? adCoupledValue("em") : _ad_zero),
-    _mean_en(isCoupled("mean_en") ? adCoupledValue("mean_en") : _ad_zero)
+    _em(isCoupled("electrons") ? adCoupledValue("electrons") : _ad_zero),
+    _mean_en(isCoupled("electron_energy") ? adCoupledValue("electron_energy") : _ad_zero)
 {
   std::vector<Real> actual_mean_energy;
   std::vector<Real> alpha;
