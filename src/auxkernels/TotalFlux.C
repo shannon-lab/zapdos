@@ -25,7 +25,7 @@ TotalFluxTempl<is_ad>::validParams()
   params.addParam<std::string>("field_property_name",
                                "field_solver_interface_property",
                                "Name of the solver interface material property.");
-  params.addRequiredCoupledVar("density_log", "The electron density");
+  params.addRequiredCoupledVar("density_log", "The species density in log form.");
   params.addParam<int>(
       "component", 0, "The component of the TotalFlux vector. (0 = x, 1 = y, 2 = z)");
   params.addClassDescription("Returns the total flux of the specified species");

@@ -24,6 +24,8 @@ ProcRateTempl<is_ad>::validParams()
   InputParameters params = AuxKernel::validParams();
 
   params.addRequiredCoupledVar("em", "The electron density");
+  params.deprecateParam("em", "electrons", "04/01/2026");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<std::string>(
       "proc",
       "The process that we want to get the townsend coefficient for. Options are iz, ex, and el.");
@@ -42,8 +44,8 @@ ProcRateTempl<is_ad>::ProcRateTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
-    _em(coupledValue("em")),
-    _grad_em(coupledGradient("em")),
+    _em(coupledValue("electrons")),
+    _grad_em(coupledGradient("electrons")),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
     _muem(getGenericMaterialProperty<Real, is_ad>("muem")),
