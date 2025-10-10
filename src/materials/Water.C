@@ -23,6 +23,8 @@ Water::validParams()
   params.addParam<Real>("user_potential_mult", 1, "Scaling for the potential.");
   params.addParam<Real>("user_electron_mult", 1, "Scaling for the electrons.");
   params.addCoupledVar("emliq", "electrons");
+  params.deprecateCoupledVar("emliq", "aqueous_electrons", "04/01/2026");
+  params.addCoupledVar("aqueous_electrons", "The aqueous electron density in log form");
   params.addCoupledVar("H", "hydrogen atoms");
   params.addCoupledVar("OHm", "hydroxide ions");
   params.addCoupledVar("H2Op", "positive water ions");
@@ -175,7 +177,7 @@ Water::Water(const InputParameters & parameters)
 
     // Coupled Variables
 
-    _emliq(isCoupled("emliq") ? adCoupledValue("emliq") : _ad_zero),
+    _emliq(isCoupled("aqueous_electrons") ? adCoupledValue("aqueous_electrons") : _ad_zero),
     _H(isCoupled("H") ? adCoupledValue("H") : _ad_zero),
     _OHm(isCoupled("OHm") ? adCoupledValue("OHm") : _ad_zero),
     _H2Op(isCoupled("H2Op") ? adCoupledValue("H2Op") : _ad_zero),
