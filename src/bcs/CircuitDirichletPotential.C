@@ -36,6 +36,11 @@ CircuitDirichletPotential::validParams()
                         1.,
                         "For 1D calculations, an area has to be passed. This area also must "
                         "match the units convention of position_units.");
+  params.deprecateParam("A", "area", "04/01/2026");
+  params.addParam<Real>("area",
+                        1.,
+                        "For 1D calculations, an area has to be passed. This area also must "
+                        "match the units convention of position_units.");
   params.addClassDescription("Dirichlet circuit boundary condition for potential"
                              " (The current is given through a UserObject)");
   return params;
@@ -50,7 +55,7 @@ CircuitDirichletPotential::CircuitDirichletPotential(const InputParameters & par
     _potential_units(getParam<std::string>("potential_units")),
     _r_units(1. / getParam<Real>("position_units")),
     _convert_moles(getParam<bool>("use_moles")),
-    _A(getParam<Real>("A"))
+    _A(getParam<Real>("area"))
 {
   if (_surface.compare("anode") == 0)
     _current_sign = -1.;
