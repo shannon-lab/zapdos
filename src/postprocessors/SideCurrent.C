@@ -27,8 +27,6 @@ SideCurrent::validParams()
       "The name of the mobility material property that will be used in the flux computation.");
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addRequiredCoupledVar("mean_en", "Electron energy.");
-  params.deprecateParam("mean_en", "electron_energy", "04/01/2026");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form.");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form.");
   params.addClassDescription("Computes a side integral of current density");
