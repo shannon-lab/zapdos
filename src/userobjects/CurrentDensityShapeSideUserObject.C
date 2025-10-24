@@ -18,10 +18,10 @@ InputParameters
 CurrentDensityShapeSideUserObject::validParams()
 {
   InputParameters params = ShapeSideUserObject::validParams();
-  params.addRequiredCoupledVar("em", "The electron  density.");
-  params.addRequiredCoupledVar("ip", "The ion density density.");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
+  params.addRequiredCoupledVar("ions", "The ion density in log form.");
   params.addRequiredCoupledVar("potential", "The electrical potential.");
-  params.addRequiredCoupledVar("mean_en", "The mean energy variable.");
+  params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addRequiredParam<bool>("use_moles", "Whether the densities are in molar units.");
   params.addClassDescription("Calculates the total current at a boundary");
   return params;
@@ -30,17 +30,17 @@ CurrentDensityShapeSideUserObject::validParams()
 CurrentDensityShapeSideUserObject::CurrentDensityShapeSideUserObject(
     const InputParameters & parameters)
   : ShapeSideUserObject(parameters),
-    _em(coupledValue("em")),
-    _em_id(coupled("em")),
-    _grad_em(coupledGradient("em")),
-    _ip_var(*getVar("ip", 0)),
-    _ip(coupledValue("ip")),
-    _ip_id(coupled("ip")),
-    _grad_ip(coupledGradient("ip")),
+    _em(coupledValue("electrons")),
+    _em_id(coupled("electrons")),
+    _grad_em(coupledGradient("electrons")),
+    _ip_var(*getVar("ions", 0)),
+    _ip(coupledValue("ions")),
+    _ip_id(coupled("ions")),
+    _grad_ip(coupledGradient("ions")),
     _grad_potential(coupledGradient("potential")),
     _potential_id(coupled("potential")),
-    _mean_en(coupledValue("mean_en")),
-    _mean_en_id(coupled("mean_en")),
+    _mean_en(coupledValue("electron_energy")),
+    _mean_en_id(coupled("electron_energy")),
     _muip(getADMaterialProperty<Real>("mu" + _ip_var.name())),
     _diffip(getADMaterialProperty<Real>("diff" + _ip_var.name())),
     _muem(getADMaterialProperty<Real>("muem")),
