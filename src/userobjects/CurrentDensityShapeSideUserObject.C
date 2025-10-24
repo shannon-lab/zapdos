@@ -18,15 +18,9 @@ InputParameters
 CurrentDensityShapeSideUserObject::validParams()
 {
   InputParameters params = ShapeSideUserObject::validParams();
-  params.addRequiredCoupledVar("em", "The electron  density.");
-  params.deprecateParam("em", "electrons", "04/01/2026");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
-  params.addRequiredCoupledVar("ip", "The ion density density.");
-  params.deprecateParam("ip", "ions", "04/01/2026");
   params.addRequiredCoupledVar("ions", "The ion density in log form.");
   params.addRequiredCoupledVar("potential", "The electrical potential.");
-  params.addRequiredCoupledVar("mean_en", "The mean energy variable.");
-  params.deprecateParam("mean_en", "electron_energy", "04/01/2026");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addRequiredParam<bool>("use_moles", "Whether the densities are in molar units.");
   params.addClassDescription("Calculates the total current at a boundary");
