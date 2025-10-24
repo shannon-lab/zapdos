@@ -24,7 +24,7 @@ CurrentTempl<is_ad>::validParams()
 {
   InputParameters params = AuxKernel::validParams();
 
-  params.addRequiredCoupledVar("density_log", "The log of the species density");
+  params.addRequiredCoupledVar("density_log", "The species density in log form.");
   params.addParam<int>(
       "component", 0, "The component of the Current vector. (0 = x, 1 = y, 2 = z)");
   params.addParam<bool>(

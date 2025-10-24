@@ -22,7 +22,7 @@ InputParameters
 DiffusiveFluxTempl<is_ad>::validParams()
 {
   InputParameters params = AuxKernel::validParams();
-  params.addRequiredCoupledVar("density_log", "The variable representing the log of the density.");
+  params.addRequiredCoupledVar("density_log", "The species density in log form.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<int>("component", 0, "The component of position. (0 = x, 1 = y, 2 = z)");
   params.addClassDescription("Returns the diffusive flux of the specified species");
