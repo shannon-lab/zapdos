@@ -16,7 +16,7 @@ InputParameters
 ThermalConductivityDiffusion::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("em", "The log of the electron density.");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Electron energy diffusion term "
                              "that assumes a thermal conductivity of "
@@ -31,8 +31,8 @@ ThermalConductivityDiffusion::ThermalConductivityDiffusion(const InputParameters
 
     _diffem(getADMaterialProperty<Real>("diffem")),
 
-    _em(adCoupledValue("em")),
-    _grad_em(adCoupledGradient("em"))
+    _em(adCoupledValue("electrons")),
+    _grad_em(adCoupledGradient("electrons"))
 {
 }
 

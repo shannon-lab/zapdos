@@ -16,8 +16,8 @@ InputParameters
 IonsFromIonization::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("mean_en", "The electron mean energy.");
-  params.addRequiredCoupledVar("em", "The electron density.");
+  params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<std::string>("field_property_name",
                                "field_solver_interface_property",
@@ -39,9 +39,9 @@ IonsFromIonization::IonsFromIonization(const InputParameters & parameters)
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
 
-    _mean_en(adCoupledValue("mean_en")),
-    _em(adCoupledValue("em")),
-    _grad_em(adCoupledGradient("em"))
+    _mean_en(adCoupledValue("electron_energy")),
+    _em(adCoupledValue("electrons")),
+    _grad_em(adCoupledGradient("electrons"))
 {
 }
 

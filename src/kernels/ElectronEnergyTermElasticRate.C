@@ -16,8 +16,8 @@ InputParameters
 ElectronEnergyTermElasticRate::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("electron_species", "The impacting (electron) species.");
-  params.addRequiredCoupledVar("target_species", "The target species in this elasic reaction.");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
+  params.addRequiredCoupledVar("target_species", "The target species in this elastic reaction.");
   params.addRequiredParam<std::string>("reaction", "The reaction that is adding/removing energy.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
@@ -30,9 +30,9 @@ ElectronEnergyTermElasticRate::ElectronEnergyTermElasticRate(const InputParamete
   : ADKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _rate_coefficient(getADMaterialProperty<Real>("k_" + getParam<std::string>("reaction"))),
-    _electron(adCoupledValue("electron_species")),
+    _electron(adCoupledValue("electrons")),
     _target(adCoupledValue("target_species")),
-    _massIncident(getADMaterialProperty<Real>("mass" + (*getVar("electron_species", 0)).name())),
+    _massIncident(getADMaterialProperty<Real>("mass" + (*getVar("electrons", 0)).name())),
     _massTarget(getADMaterialProperty<Real>("mass" + (*getVar("target_species", 0)).name()))
 {
 }

@@ -16,7 +16,7 @@ InputParameters
 EEDFReactionLogForShootMethod::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("electron", "The electron species variable.");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredCoupledVar("density", "The accelerated density variable.");
   params.addRequiredParam<std::string>("reaction", "The full reaction equation.");
   params.addRequiredParam<Real>("coefficient", "The stoichiometric coefficient.");
@@ -35,7 +35,7 @@ EEDFReactionLogForShootMethod::validParams()
 
 EEDFReactionLogForShootMethod::EEDFReactionLogForShootMethod(const InputParameters & parameters)
   : ADKernel(parameters),
-    _electron(adCoupledValue("electron")),
+    _electron(adCoupledValue("electrons")),
     _density(adCoupledValue("density")),
     _reaction_coeff(getADMaterialProperty<Real>("k" + getParam<std::string>("number") + "_" +
                                                 getParam<std::string>("reaction"))),
