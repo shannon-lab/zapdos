@@ -16,8 +16,6 @@ InputParameters
 ElectronEnergyTermRate::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("em", "The electron density.");
-  params.deprecateParam("em", "electrons", "04/01/2026");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addCoupledVar("v", "The second reactant species.");
   params.addParam<bool>("elastic_collision", false, "If the collision is elastic.");
