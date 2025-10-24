@@ -16,9 +16,13 @@ InputParameters
 SakiyamaIonAdvectionWithEffEfieldBC::validParams()
 {
   InputParameters params = ADIntegratedBC::validParams();
-  params.addRequiredCoupledVar("Ex", "The EField in the x-direction");
-  params.addCoupledVar("Ey", 0, "The EField in the y-direction"); // only required in 2D and 3D
-  params.addCoupledVar("Ez", 0, "The EField in the z-direction"); // only required in 3D
+  params.addRequiredCoupledVar("electric_field_x", "The electric field in the x-direction");
+  params.addCoupledVar("electric_field_y",
+                       0,
+                       "The electric field in the y-direction"); // only required in 2D and 3D
+  params.addCoupledVar("electric_field_z",
+                       0,
+                       "The electric field in the z-direction"); // only required in 3D
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription("Kinetic advective ion boundary condition"
                              " (Based on [!cite](sakiyama2006corona))");
@@ -31,9 +35,9 @@ SakiyamaIonAdvectionWithEffEfieldBC::SakiyamaIonAdvectionWithEffEfieldBC(
 
     _r_units(1. / getParam<Real>("position_units")),
 
-    _Ex(adCoupledValue("Ex")),
-    _Ey(adCoupledValue("Ey")),
-    _Ez(adCoupledValue("Ez")),
+    _Ex(adCoupledValue("electric_field_x")),
+    _Ey(adCoupledValue("electric_field_y")),
+    _Ez(adCoupledValue("electric_field_z")),
 
     _mu(getADMaterialProperty<Real>("mu" + _var.name())),
     _sgn(getMaterialProperty<Real>("sgn" + _var.name())),

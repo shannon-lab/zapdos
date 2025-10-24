@@ -19,13 +19,15 @@ DielectricBCWithEffEfield::validParams()
   params.addRequiredParam<Real>("dielectric_constant", "The dielectric constant of the material.");
   params.addRequiredParam<Real>("thickness", "The thickness of the material.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addRequiredCoupledVar("electron_energy", "The mean energy.");
-  params.addRequiredCoupledVar("electrons", "The electron density.");
+  params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form.");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form.");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
 
-  params.addRequiredCoupledVar("Ex", "The EField in the x-direction");
-  params.addCoupledVar("Ey", "The EField in the y-direction"); // only required in 2D and 3D
-  params.addCoupledVar("Ez", "The EField in the z-direction"); // only required in 3D
+  params.addRequiredCoupledVar("electric_field_x", "The electric field in the x-direction");
+  params.addCoupledVar("electric_field_y",
+                       "The electric field in the y-direction"); // only required in 2D and 3D
+  params.addCoupledVar("electric_field_z",
+                       "The electric field in the z-direction"); // only required in 3D
 
   params.addParam<std::vector<std::string>>(
       "emission_coeffs",
@@ -48,14 +50,14 @@ DielectricBCWithEffEfield::DielectricBCWithEffEfield(const InputParameters & par
     _em(adCoupledValue("electrons")),
     _em_old((*getVar("electrons", 0)).slnOld()),
 
-    _Ex(adCoupledValue("Ex")),
-    _Ex_old((*getVar("Ex", 0)).slnOld()),
+    _Ex(adCoupledValue("electric_field_x")),
+    _Ex_old((*getVar("electric_field_x", 0)).slnOld()),
 
-    _Ey(isCoupled("Ey") ? adCoupledValue("Ey") : _ad_zero),
-    _Ey_old(isCoupled("Ey") ? (*getVar("Ey", 0)).slnOld() : _zero),
+    _Ey(isCoupled("electric_field_y") ? adCoupledValue("electric_field_y") : _ad_zero),
+    _Ey_old(isCoupled("electric_field_y") ? (*getVar("electric_field_y", 0)).slnOld() : _zero),
 
-    _Ez(isCoupled("Ez") ? adCoupledValue("Ez") : _ad_zero),
-    _Ez_old(isCoupled("Ez") ? (*getVar("Ez", 0)).slnOld() : _zero),
+    _Ez(isCoupled("electric_field_z") ? adCoupledValue("electric_field_z") : _ad_zero),
+    _Ez_old(isCoupled("electric_field_z") ? (*getVar("electric_field_z", 0)).slnOld() : _zero),
 
     _epsilon_p(getADMaterialProperty<Real>("diff" + _var.name())),
 
