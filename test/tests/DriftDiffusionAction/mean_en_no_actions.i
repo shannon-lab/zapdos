@@ -963,6 +963,11 @@ dom1Scale = 1e-7
     property_tables_file = td_argon_electrons.txt
     user_p_gas = 1.01e5
   []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+    block = 0
+  []
   [gas_block]
     type = SimplifiedArgonChemistryCoefficients
     interp_elastic_coeff = true

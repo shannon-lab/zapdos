@@ -851,6 +851,11 @@ dom1Scale = 1e-7
     block = 0
     property_tables_file = 'townsend_coefficients/moments.txt'
   []
+  [test_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+    block = 0
+  []
 
   [test_block1]
     type = GenericConstantMaterial
