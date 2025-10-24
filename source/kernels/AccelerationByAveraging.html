@@ -1,0 +1,300 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>AccelerationByAveraging | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="3f7f649e-0761-492c-956e-77cb4dadaa0d" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="1b2ec4ae-0bf4-4173-8437-dd104de99337" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="4b956d8f-eef2-4022-b902-dbad287f62af" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="fbb871d4-339a-4b68-b78d-d1ac5cd12bb0"><i class="material-icons">menu</i></a><ul class="sidenav" id="fbb871d4-339a-4b68-b78d-d1ac5cd12bb0"><li><a href="#!" class="dropdown-trigger" data-target="7c9de8b9-fadc-49b7-8efd-3d6947bddacc" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="5a2b25b9-82e7-4d91-a36c-6e8ebeb50974" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="8844205a-0cc5-4af8-ae56-8fc9724d81c2" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="3f7f649e-0761-492c-956e-77cb4dadaa0d"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="1b2ec4ae-0bf4-4173-8437-dd104de99337"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="4b956d8f-eef2-4022-b902-dbad287f62af"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="7c9de8b9-fadc-49b7-8efd-3d6947bddacc"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="5a2b25b9-82e7-4d91-a36c-6e8ebeb50974"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="8844205a-0cc5-4af8-ae56-8fc9724d81c2"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">kernels</span><a href="#" class="breadcrumb">AccelerationByAveraging</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="9a273867-c932-4672-b4a4-2ad10f4ccddd" data-section-level="1" data-section-text="AccelerationByAveraging"><h1 id="accelerationbyaveraging">AccelerationByAveraging</h1><p>An acceleration scheme based on averaging a density over a periodic cycle</p><section class="scrollspy" id="1ce835f6-bcce-4dcd-bca7-004d774d69f8" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p><code>AccelerationByAveraging</code> is an acceleration method that makes a growth prediction for a species based on the average rate of change for a given time period.</p><p>The growth of a species for a constant rate of change for a given time period is:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-75a7a566-f70f-4520-af24-03ad176cb3c6"></span><script>var element = document.getElementById("moose-equation-75a7a566-f70f-4520-af24-03ad176cb3c6");katex.render("n_{T} - n_{0} = \\frac{\\text{d}n}{\\text{d}t} \\ T", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-fb8fe3fa-8eda-425c-8f4d-64d1cb437305"><script>var element = document.getElementById("moose-equation-fb8fe3fa-8eda-425c-8f4d-64d1cb437305");katex.render("n_{0}", element, {displayMode:false,throwOnError:false});</script></span> is the species&#x27; density at the start of the acceleration, <span class="moose-katex-inline-equation" id="moose-equation-cf22afe3-990f-4f75-adb9-59f5b25e3020"><script>var element = document.getElementById("moose-equation-cf22afe3-990f-4f75-adb9-59f5b25e3020");katex.render("n_{T}", element, {displayMode:false,throwOnError:false});</script></span> is the density at the end of the acceleration, and <span class="moose-katex-inline-equation" id="moose-equation-a85505d6-4c8d-4203-b0e8-e97baf1b8bc8"><script>var element = document.getElementById("moose-equation-a85505d6-4c8d-4203-b0e8-e97baf1b8bc8");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span> is the time period of the acceleration.</p><p>If the rate of change is assumed to linear, then <span class="moose-katex-inline-equation" id="moose-equation-c560fef0-ff71-4608-ac52-16d4c3d5058f"><script>var element = document.getElementById("moose-equation-c560fef0-ff71-4608-ac52-16d4c3d5058f");katex.render("\\frac{\\text{d}n}{\\text{d}t}", element, {displayMode:false,throwOnError:false});</script></span> an be estimated by:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-33ecc3ad-010e-4626-b706-f2b5db99f508"></span><script>var element = document.getElementById("moose-equation-33ecc3ad-010e-4626-b706-f2b5db99f508");katex.render("\\frac{\\text{d}n}{\\text{d}t} = \\frac{n_{Ts} - n_{0s}}{t_{s}}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-947102c1-66be-4b02-8af8-978e893aeae0"><script>var element = document.getElementById("moose-equation-947102c1-66be-4b02-8af8-978e893aeae0");katex.render("t_{s}", element, {displayMode:false,throwOnError:false});</script></span> is some sample period of time less than <span class="moose-katex-inline-equation" id="moose-equation-da6c77ba-82e1-45b5-ad65-41263a587c1a"><script>var element = document.getElementById("moose-equation-da6c77ba-82e1-45b5-ad65-41263a587c1a");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span>. The subscripts <span class="moose-katex-inline-equation" id="moose-equation-8e35adbb-583b-4656-a2ca-e62587ae087a"><script>var element = document.getElementById("moose-equation-8e35adbb-583b-4656-a2ca-e62587ae087a");katex.render("0s", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-497736cf-4f4f-4662-8ef4-70389c779602"><script>var element = document.getElementById("moose-equation-497736cf-4f4f-4662-8ef4-70389c779602");katex.render("Ts", element, {displayMode:false,throwOnError:false});</script></span> denote the beginning and end of the sample period of time, <span class="moose-katex-inline-equation" id="moose-equation-7e205130-e302-4539-a3d1-b5d2b8efed84"><script>var element = document.getElementById("moose-equation-7e205130-e302-4539-a3d1-b5d2b8efed84");katex.render("t_{s}", element, {displayMode:false,throwOnError:false});</script></span> , respectively. When converting the density to logarithmic form, <code>AccelerationByAveraging</code> is defined as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-a0b56bc3-ed2e-439d-bad5-0b914d8746ea"></span><script>var element = document.getElementById("moose-equation-a0b56bc3-ed2e-439d-bad5-0b914d8746ea");katex.render("\\exp(N_{j, T}) - \\exp(N_{j, 0}) = \\frac{\\text{d}n}{\\text{d}t} \\ T  \\\\[10pt] \\frac{\\text{d}n}{\\text{d}t} = \\frac{\\exp(N_{j, Ts}) - \\exp(N_{j, 0s})}{t_{s}}", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where <span class="moose-katex-inline-equation" id="moose-equation-54f5cf5b-9af7-4af8-8a15-32fdcdb1c128"><script>var element = document.getElementById("moose-equation-54f5cf5b-9af7-4af8-8a15-32fdcdb1c128");katex.render("N_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the molar density of the species in logarithmic form.</p></section><section class="scrollspy" id="3f4395dc-c45f-4e90-8923-611cb277196f" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><p>An example of how to use <code>AccelerationByAveraging</code> can be found in the test file <code>Acceleration_By_Averaging_acceleration.i</code>.</p><pre style="max-height:350px;"><code class="language-moose">[Kernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Kernels/index.html&quot;}&gt;&gt;&gt;]
+  [Ar*_AcclerationByAveraging]
+    type = AccelerationByAveraging&lt;&lt;&lt;{&quot;description&quot;: &quot;An acceleration scheme based on averaging a density over a periodic cycle&quot;, &quot;href&quot;: &quot;AccelerationByAveraging.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this residual object operates on&quot;}&gt;&gt;&gt; = Ar*
+    density_at_start_cycle&lt;&lt;&lt;{&quot;description&quot;: &quot;The accelerated density at the start of the cycle in logarithmic form&quot;}&gt;&gt;&gt; = Ar*S
+    density_at_end_cycle&lt;&lt;&lt;{&quot;description&quot;: &quot;The accelerated density at the end of the cycle in logarithmic form&quot;}&gt;&gt;&gt; = Ar*T
+    time_of_averaging&lt;&lt;&lt;{&quot;description&quot;: &quot;The time difference of the averaging&quot;}&gt;&gt;&gt; = 73.74631268e-9
+    time_of_acceleration&lt;&lt;&lt;{&quot;description&quot;: &quot;The time of acceleration&quot;}&gt;&gt;&gt; = 2e-6
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#27697caf-4249-4da2-93cd-db65c34f4e3f">(test/tests/accelerations/Acceleration_By_Averaging_acceleration.i)</a></section><section class="scrollspy" id="03059ac1-fa4e-4e67-a80d-c430f54d7416" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="559725d7-8b96-405a-9d6b-116515da4e98" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">density_at_end_cycle</span><span class="moose-parameter-header-description">The accelerated density at the end of the cycle in logarithmic form</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The accelerated density at the end of the cycle in logarithmic form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">density_at_start_cycle</span><span class="moose-parameter-header-description">The accelerated density at the start of the cycle in logarithmic form</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The accelerated density at the start of the cycle in logarithmic form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">time_of_acceleration</span><span class="moose-parameter-header-description">The time of acceleration</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The time of acceleration</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">time_of_averaging</span><span class="moose-parameter-header-description">The time difference of the averaging</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The time difference of the averaging</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this residual object operates on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this residual object operates on</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="13f1bf4c-7774-452d-ab4a-f8f51bdcceb1" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">displacements</span><span class="moose-parameter-header-description">The displacements</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The displacements</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_only</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether this object is only doing assembly to matrices (no vectors)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether this object is only doing assembly to matrices (no vectors)</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="6316dc37-bb3b-4d61-8bf2-2f8ba9045966" data-section-level="3" data-section-text="Contribution To Tagged Field Data Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">absolute_value_vector_tags</span><span class="moose-parameter-header-description">The tags for the vectors this residual object should fill with the absolute value of the residual contribution</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tags for the vectors this residual object should fill with the absolute value of the residual contribution</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, system</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">nontime</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nontime</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, time</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Contribution To Tagged Field Data Parameters</h3></summary></details></section><section id="dfdeeda7-58b4-4353-88a3-b1c4dd3a2a9b" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diag_save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">search_method</span><span class="moose-parameter-header-default">nearest_node_connected_sides</span><span class="moose-parameter-header-description">Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nearest_node_connected_sides</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nearest_node_connected_sides, all_proximate_sides</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="635aff2c-8a37-49d0-a65a-384553fa1885" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="8f924a76-f6ae-405a-ad6a-ab6c858f17e7" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#ce65f097-cbad-4ad2-8cad-708418677af4">(test/tests/accelerations/Acceleration_By_Averaging_acceleration.i)</a></li></ul></section></section><div class="moose-modal modal" id="27697caf-4249-4da2-93cd-db65c34f4e3f"><div class="modal-content"><h4>(test/tests/accelerations/Acceleration_By_Averaging_acceleration.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [file]
+    type = FileMeshGenerator
+    file = &#x27;Lymberopoulos_paper.msh&#x27;
+  []
+  [left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = file
+  []
+  [right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [Ar*]
+  []
+[]
+
+[AuxVariables]
+  [em]
+  []
+  [Ar+]
+  []
+  [mean_en]
+  []
+  [potential]
+  []
+  [Ar*S]
+  []
+  [Ar*T]
+  []
+[]
+
+[Kernels]
+  [Ar*_AcclerationByAveraging]
+    type = AccelerationByAveraging
+    variable = Ar*
+    density_at_start_cycle = Ar*S
+    density_at_end_cycle = Ar*T
+    time_of_averaging = 73.74631268e-9
+    time_of_acceleration = 2e-6
+  []
+[]
+
+[BCs]
+  [Ar*_physical_right_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;right&#x27;
+    value = 1e-5
+  []
+  [Ar*_physical_left_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;left&#x27;
+    value = 1e-5
+  []
+[]
+
+#MultiApp used to calculate the non-accelerated density for 1RF cycle.
+#This is used to get A*T (density at end of cycle)
+[MultiApps]
+  [Sub]
+    type = FullSolveMultiApp
+    input_files = &#x27;Acceleration_By_Averaging_acceleration_sub.i&#x27;
+  []
+[]
+
+[Transfers]
+  [em_to_sub]
+    type = MultiAppCopyTransfer
+    to_multi_app = Sub
+    source_variable = em
+    variable = em
+  []
+  [Ar+_to_sub]
+    type = MultiAppCopyTransfer
+    to_multi_app = Sub
+    source_variable = Ar+
+    variable = Ar+
+  []
+  [mean_en_to_sub]
+    type = MultiAppCopyTransfer
+    to_multi_app = Sub
+    source_variable = mean_en
+    variable = mean_en
+  []
+  [potential_to_sub]
+    type = MultiAppCopyTransfer
+    to_multi_app = Sub
+    source_variable = potential
+    variable = potential
+  []
+  [Ar*_to_sub]
+    type = MultiAppCopyTransfer
+    to_multi_app = Sub
+    source_variable = Ar*
+    variable = Ar*
+  []
+
+  [Ar*T_from_sub]
+    type = MultiAppCopyTransfer
+    from_multi_app = Sub
+    source_variable = Ar*
+    variable = Ar*T
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 fgmres&#x27;
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="ce65f097-cbad-4ad2-8cad-708418677af4"><div class="modal-content"><h4>(test/tests/accelerations/Acceleration_By_Averaging_acceleration.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [file]
+    type = FileMeshGenerator
+    file = &#x27;Lymberopoulos_paper.msh&#x27;
+  []
+  [left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = file
+  []
+  [right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [Ar*]
+  []
+[]
+
+[AuxVariables]
+  [em]
+  []
+  [Ar+]
+  []
+  [mean_en]
+  []
+  [potential]
+  []
+  [Ar*S]
+  []
+  [Ar*T]
+  []
+[]
+
+[Kernels]
+  [Ar*_AcclerationByAveraging]
+    type = AccelerationByAveraging
+    variable = Ar*
+    density_at_start_cycle = Ar*S
+    density_at_end_cycle = Ar*T
+    time_of_averaging = 73.74631268e-9
+    time_of_acceleration = 2e-6
+  []
+[]
+
+[BCs]
+  [Ar*_physical_right_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;right&#x27;
+    value = 1e-5
+  []
+  [Ar*_physical_left_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;left&#x27;
+    value = 1e-5
+  []
+[]
+
+#MultiApp used to calculate the non-accelerated density for 1RF cycle.
+#This is used to get A*T (density at end of cycle)
+[MultiApps]
+  [Sub]
+    type = FullSolveMultiApp
+    input_files = &#x27;Acceleration_By_Averaging_acceleration_sub.i&#x27;
+  []
+[]
+
+[Transfers]
+  [em_to_sub]
+    type = MultiAppCopyTransfer
+    to_multi_app = Sub
+    source_variable = em
+    variable = em
+  []
+  [Ar+_to_sub]
+    type = MultiAppCopyTransfer
+    to_multi_app = Sub
+    source_variable = Ar+
+    variable = Ar+
+  []
+  [mean_en_to_sub]
+    type = MultiAppCopyTransfer
+    to_multi_app = Sub
+    source_variable = mean_en
+    variable = mean_en
+  []
+  [potential_to_sub]
+    type = MultiAppCopyTransfer
+    to_multi_app = Sub
+    source_variable = potential
+    variable = potential
+  []
+  [Ar*_to_sub]
+    type = MultiAppCopyTransfer
+    to_multi_app = Sub
+    source_variable = Ar*
+    variable = Ar*
+  []
+
+  [Ar*T_from_sub]
+    type = MultiAppCopyTransfer
+    from_multi_app = Sub
+    source_variable = Ar*
+    variable = Ar*T
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 fgmres&#x27;
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#1ce835f6-bcce-4dcd-bca7-004d774d69f8" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#3f4395dc-c45f-4e90-8923-611cb277196f" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#03059ac1-fa4e-4e67-a80d-c430f54d7416" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#8f924a76-f6ae-405a-ad6a-ab6c858f17e7" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
