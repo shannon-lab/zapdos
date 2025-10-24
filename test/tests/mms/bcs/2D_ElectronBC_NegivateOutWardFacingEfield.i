@@ -641,6 +641,6 @@
   perf_graph = true
   [out]
     type = Exodus
-    interval = 10
+    time_step_interval = 10
   []
 []
