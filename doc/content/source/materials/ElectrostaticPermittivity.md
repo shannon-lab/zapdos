@@ -4,11 +4,11 @@
 
 ## Overview
 
-`ElectrostaticPermittivity` declares the permittivity for the electrostatic potential as a material property. By default, `ElectrostaticPermittivity` defines this values using the permittivity of free space, but custom material and plasma dielectric coefficients can be supplied.
+`ElectrostaticPermittivity` declares the permittivity for the electrostatic potential as a material property. By default, `ElectrostaticPermittivity` defines this value using the [permittivity of free space](https://en.wikipedia.org/wiki/Vacuum_permittivity), but custom material and plasma dielectric coefficients can be supplied.
 
 The naming scheme of the electrostatic permittivity that `ElectrostaticPermittivity` provides is:
 
-- "diff'electrostatic potential variable name'" (e.g., `diffpotential`)
+- "diff + 'electrostatic potential variable name'" (e.g., `diffpotential`)
 
 This nomenclature is to reflect that the Poisson's equation is a diffusion-type problem, where the permittivity acts as the diffusion coefficient of the potential (i.e., $\nabla \cdot \left( -\varepsilon \nabla V \right) = \rho$).
 

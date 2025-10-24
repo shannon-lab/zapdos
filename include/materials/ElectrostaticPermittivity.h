@@ -13,7 +13,7 @@
 #include "ADMaterial.h"
 
 /*
- *  Material properties of electrostatic permittivity
+ *  Material properties representing electrostatic permittivity
  */
 class ElectrostaticPermittivity : public ADMaterial
 {
