@@ -21,7 +21,7 @@ SecondaryElectronBC::validParams()
   params.addParam<Real>("r_ion", 0, "The reflection coefficient of the ions.");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
-  params.addCoupledVar("ion_temperatures", 300.0, "A list of ion temperatures");
+  params.addCoupledVar("ion_temperatures", 300, "A list of ion temperatures in Kelvin.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<std::string>("field_property_name",
                                "field_solver_interface_property",

@@ -32,7 +32,7 @@ HeavySpeciesTempl<is_ad>::validParams()
   params.addParam<Real>("diffusivity", "The species diffusivity (if applicable).");
 
   params.addCoupledVar("heavy_species_T", 300, "The species temperature in Kelvin.");
-  params.addCoupledVar("heavy_species_p", 1.01e5, "The species pressure in Pascals.");
+  params.addCoupledVar("heavy_species_p", 1.01e5, "The species pressure in Pascals (defaulted to 1 standard atmosphere).");
 
   params.addClassDescription("Material properties of ions and neutral species");
   return params;

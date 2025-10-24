@@ -26,7 +26,7 @@ NeumannCircuitVoltageMoles_KV::validParams()
       "The name of the UserObject that can provide some data to materials, bcs, etc.");
 
   params.addRequiredCoupledVar("ions", "A list of ion densities in log-molar form");
-  params.addCoupledVar("ion_temperatures", 300.0, "A list of ion temperatures");
+  params.addCoupledVar("ion_temperatures", 300, "A list of ion temperatures in Kelvin.");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addRequiredParam<std::vector<std::string>>(
