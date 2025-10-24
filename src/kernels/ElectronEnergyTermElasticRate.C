@@ -16,8 +16,6 @@ InputParameters
 ElectronEnergyTermElasticRate::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("electron_species", "The impacting (electron) species.");
-  params.deprecateParam("electron_species", "electrons", "04/01/2026");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredCoupledVar("target_species", "The target species in this elastic reaction.");
   params.addRequiredParam<std::string>("reaction", "The reaction that is adding/removing energy.");

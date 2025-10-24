@@ -16,8 +16,6 @@ InputParameters
 EEDFReactionLogForShootMethod::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("electron", "The electron species variable.");
-  params.deprecateParam("electron", "electrons", "04/01/2026");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredCoupledVar("density", "The accelerated density variable.");
   params.addRequiredParam<std::string>("reaction", "The full reaction equation.");

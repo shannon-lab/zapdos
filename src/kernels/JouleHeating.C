@@ -16,8 +16,6 @@ InputParameters
 JouleHeating::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("em", "The electron density.");
-  params.deprecateParam("em", "electrons", "04/01/2026");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<Real>("position_units", "Units of position.");

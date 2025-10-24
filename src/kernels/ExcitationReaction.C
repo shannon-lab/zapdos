@@ -16,11 +16,7 @@ InputParameters
 ExcitationReaction::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("mean_en", "The electron mean energy.");
-  params.deprecateParam("mean_en", "electron_energy", "04/01/2026");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
-  params.addRequiredCoupledVar("em", "The electron density.");
-  params.deprecateParam("em", "electrons", "04/01/2026");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addRequiredParam<bool>("reactant", "Checks if the variable is the reactant.");

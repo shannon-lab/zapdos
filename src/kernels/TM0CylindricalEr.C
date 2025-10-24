@@ -18,8 +18,6 @@ TM0CylindricalEr::validParams()
 {
   InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("f", "The drive frequency.");
-  params.addRequiredCoupledVar("Hphi", "The phi component of the magnetic field.");
-  params.deprecateParam("Hphi", "azimuthal_magnetic_field", "04/01/2026");
   params.addRequiredCoupledVar("azimuthal_magnetic_field",
                                "The azimuthal component of the magnetic field, Hphi.");
   params.addClassDescription(
