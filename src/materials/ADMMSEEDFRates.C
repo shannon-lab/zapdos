@@ -22,8 +22,6 @@ ADMMSEEDFRates::validParams()
                                              "functions that are going to provide "
                                              "the derivative values wrt the"
                                              "actual mean energy for the variables");
-  params.addCoupledVar("mean_energy", "The electron mean energy in log form.");
-  params.deprecateCoupledVar("mean_energy", "electron_energy", "04/01/2026");
   params.addCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addCoupledVar("electrons", "The electron density in log form.");
   params.addClassDescription("Add material properties used for MMS verifications involving "

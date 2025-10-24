@@ -9,8 +9,6 @@ PlasmaDielectricConstant::validParams()
   params.addRequiredParam<Real>("electron_neutral_collision_frequency",
                                 "The electron-neutral collision frequency (in Hz).");
   params.addRequiredParam<Real>("driving_frequency", "Driving frequency of plasma (in Hz).");
-  params.addRequiredCoupledVar("em", "Electron density coupled variable.");
-  params.deprecateCoupledVar("em", "electrons", "04/01/2026");
   params.addCoupledVar("electrons", "The electron density in log form");
   params.addClassDescription("Provides the real and complex components, the spatial gradient and "
                              "the first time derivative of the plasma dielectric.");

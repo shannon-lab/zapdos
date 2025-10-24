@@ -38,11 +38,7 @@ ElectronTransportCoefficients::validParams()
   params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
   params.addCoupledVar("user_p_gas", "The gas pressure in Pascals.");
 
-  params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
-  params.deprecateCoupledVar("em", "electrons", "04/01/2026");
   params.addCoupledVar("electrons", "The electron density in log form");
-  params.addCoupledVar("mean_en", "The electron mean energy in log form.");
-  params.deprecateCoupledVar("mean_en", "electron_energy", "04/01/2026");
   params.addCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addCoupledVar("ip", "The ion density.");
 

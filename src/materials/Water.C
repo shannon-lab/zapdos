@@ -22,8 +22,6 @@ Water::validParams()
       "user_relative_permittivity", 78.5, "The relative permittivity of the medium.");
   params.addParam<Real>("user_potential_mult", 1, "Scaling for the potential.");
   params.addParam<Real>("user_electron_mult", 1, "Scaling for the electrons.");
-  params.addCoupledVar("emliq", "electrons");
-  params.deprecateCoupledVar("emliq", "aqueous_electrons", "04/01/2026");
   params.addCoupledVar("aqueous_electrons", "The aqueous electron density in log form");
   params.addCoupledVar("H", "hydrogen atoms");
   params.addCoupledVar("OHm", "hydroxide ions");
