@@ -36,7 +36,7 @@ ElectronTransportCoefficients::validParams()
   params.addParam<Real>("time_units", 1, "Units of time");
 
   params.addCoupledVar("T_gas", 300, "The background gas temperature in Kelvin.");
-  params.addCoupledVar("p_gas", 1.01e5, "The background gas pressure in Pascals.");
+  params.addCoupledVar("p_gas", 1.01e5, "The background gas pressure in Pascals (defaulted to 1 standard atmosphere).");
 
   params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
   params.addCoupledVar("mean_en", "The electron mean energy in log form.");
