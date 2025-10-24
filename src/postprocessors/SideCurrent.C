@@ -27,8 +27,8 @@ SideCurrent::validParams()
       "The name of the mobility material property that will be used in the flux computation.");
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredParam<Real>("position_units", "Units of position.");
-  params.addRequiredCoupledVar("mean_en", "Electron energy.");
-  params.addRequiredCoupledVar("ions", "All of the ions that can interact with this boundary.");
+  params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form.");
+  params.addRequiredCoupledVar("ions", "A list of ion densities in log form.");
   params.addClassDescription("Computes a side integral of current density");
   params.addParam<std::string>("field_property_name",
                                "field_solver_interface_property",
@@ -46,7 +46,7 @@ SideCurrent::SideCurrent(const InputParameters & parameters)
     _a(0.5),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
-    _mean_en(coupledValue("mean_en"))
+    _mean_en(coupledValue("electron_energy"))
 {
   _num_ions = coupledComponents("ions");
 
