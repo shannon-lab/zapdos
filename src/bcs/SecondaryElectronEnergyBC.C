@@ -21,6 +21,7 @@ SecondaryElectronEnergyBC::validParams()
   params.addParam<Real>("r_ion", 0, "The reflection coefficient of the ions.");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
+  params.addCoupledVar("ion_temperatures", 300, "A list of ion temperatures in Kelvin.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<std::string>("field_property_name",
                                "field_solver_interface_property",
@@ -81,7 +82,7 @@ SecondaryElectronEnergyBC::SecondaryElectronEnergyBC(const InputParameters & par
     _ip[i] = &adCoupledValue("ions", i);
     _grad_ip[i] = &adCoupledGradient("ions", i);
     _muip[i] = &getADMaterialProperty<Real>("mu" + (*getVar("ions", i)).name());
-    _Tip[i] = &getADMaterialProperty<Real>("T" + (*getVar("ions", i)).name());
+    _Tip[i] = &adCoupledValue("ion_temperatures", i);
     _massip[i] = &getMaterialProperty<Real>("mass" + (*getVar("ions", i)).name());
     _sgnip[i] = &getMaterialProperty<Real>("sgn" + (*getVar("ions", i)).name());
     _se_coeff[i] = &getADMaterialProperty<Real>(_se_coeff_names[i]);

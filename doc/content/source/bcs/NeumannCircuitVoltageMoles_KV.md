@@ -33,12 +33,12 @@ a_{i} =
  \cdot \textbf{n} \ \left( n_{e} - n_{\gamma} \right) + \frac{1}{2}v_{\text{th},e} \left( n_{e} - n_{\gamma} \right) \right] - (1 - a_{e}) \gamma \Gamma_{i} \cdot \textbf{n} \\[10pt]
 \Gamma_{i} \cdot \textbf{n} = \frac{1-r_{i}}{1+r_{i}} \left[ (2 a_{i}-1) \ \mu_{i} \left( \text{-} \nabla V \right) \cdot \textbf{n} \ n_{i} + \frac{1}{2}v_{\text{th},i}n_{i} \right] \\[10pt]
 v_{\text{th},e} = \sqrt{\frac{8e}{\pi m_{e}} \frac{2}{3} \frac{n_{\varepsilon}}{n_{e}}} \\[10pt]
-v_{\text{th},i} = \sqrt{\frac{8k_{B}T}{\pi m_{i}}} \\[10pt]
+v_{\text{th},i} = \sqrt{\frac{8k_{B}T_{i}}{\pi m_{i}}} \\[10pt]
 n_{\gamma} = (1 - a_{e}) \frac{\gamma \Gamma_{i} \cdot \textbf{n}}{\mu_{e} (\text{-}\nabla V) \cdot \textbf{n}}
 \end{equation}
 
 Where the subscripts $e$, $j$ and $\varepsilon$ represents properties of electrons, ions and electron energy respectively, $\textbf{n}$ is the normal vector of the boundary,
-$\mu$ is the mobility coefficient, $n$ is the species density, $v_\text{th}$ is the thermal velocity of the species, $n_{\varepsilon}$ is the mean energy density of electrons, $k_{B}$ is the Boltzmann constant, $T$ is the gas temperature, and $n_{\gamma}$ is electron density emitted by the surface. $a$ is defined such that the outflow is non-zero when the drift velocity is directed towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface.
+$\mu$ is the mobility coefficient, $n$ is the species density, $v_\text{th}$ is the thermal velocity of the species, $n_{\varepsilon}$ is the mean energy density of electrons, $k_{B}$ is the Boltzmann constant, $T_{i}$ is the ion temperature, and $n_{\gamma}$ is electron density emitted by the surface. $a$ is defined such that the outflow is non-zero when the drift velocity is directed towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface.
 
 To convert Kirchoff’s voltage law into a Neumann type BC, the set of equations are rearranged, so that this boundary condition solves for the potential flux normal for the boundary, such that:
 

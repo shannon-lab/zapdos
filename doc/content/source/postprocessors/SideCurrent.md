@@ -20,7 +20,7 @@ a_{i} =
 0, & \mu_{i} \vec{E} \cdot \textbf{n} \leq 0\\
 \end{cases} \\[10pt]
 v_{\text{th},e} = \sqrt{\frac{8e}{\pi m_{e}} \frac{2}{3} \frac{n_{\varepsilon}}{n_{e}}} \\[10pt]
-v_{\text{th},i} = \sqrt{\frac{8k_{B}T}{\pi m_{i}}} \\[10pt]
+v_{\text{th},i} = \sqrt{\frac{8k_{B}T_{i}}{\pi m_{i}}} \\[10pt]
 \Gamma_{e} \cdot \textbf{n} = \frac{1-r}{1+r} \left[ -(2 a_{e}-1) \ \mu_{e}
 \vec{E}
  \cdot \textbf{n} \ n_{e} + \frac{1}{2}v_{\text{th},e} n_{e} \right] \\[10pt]
@@ -43,7 +43,7 @@ Where:
 - $k_{B}$ is the Boltzmann constant,
 - $e$ is the elemental charge,
 - $m$ is the species mass,
-- $T$ is the gas temperature,
+- $T_{i}$ is the ion temperature,
 - $a$ is defined such that the outflow is non-zero when the drift velocity is directed towards the wall and zero otherwise, and
 - $r$ is defined as the fraction of particles reflected by the surface.
 

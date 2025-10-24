@@ -22,12 +22,12 @@ a_{i} =
 \vec{E}
 \cdot \textbf{n} \ n_{j} + \frac{1}{2}v_{\text{th},j}n_{j} \right] \\[10pt]
 v_{\text{th},e} = \sqrt{\frac{8e}{\pi m_{e}} \frac{2}{3} \frac{n_{\varepsilon}}{n_{e}}} \\[10pt]
-v_{\text{th},j} = \sqrt{\frac{8k_{B}T}{\pi m_{j}}} \\[10pt]
+v_{\text{th},j} = \sqrt{\frac{8k_{B}T_{j}}{\pi m_{j}}} \\[10pt]
 n_{\gamma} = (1 - a_{e}) \frac{\gamma \Gamma_{i} \cdot \textbf{n}}{\mu_{e} (\text{-}\nabla V) \cdot \textbf{n}}
 \end{equation}
 
 Where the subscripts $e$, $j$ and $\varepsilon$ represents properties of electrons, ions and electron energy respectively, $\Gamma_i$ is the flux of the $i^\text{th}$ type (electrons, ions, or electrons energy), $\textbf{n}$ is the normal vector of the boundary,
-$\mu$ is the mobility coefficient, $n$ is the species density, $v_\text{th}$ is the thermal velocity of the species, $k_{B}$ is the Boltzmann constant, $T$ is the gas temperature, $\vec{E}$ is the electric field, $n_{\gamma}$ is electron density emitted by the surface, and $\varepsilon_{\gamma}$ is the energy of the secondary electrons. $a$ is defined such that the outflow is non-zero when the drift velocity is directed towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `SecondaryElectronEnergyBC` is defined as
+$\mu$ is the mobility coefficient, $n$ is the species density, $v_\text{th}$ is the thermal velocity of the species, $k_{B}$ is the Boltzmann constant, $T_{j}$ is the ion temperature, $\vec{E}$ is the electric field, $n_{\gamma}$ is electron density emitted by the surface, and $\varepsilon_{\gamma}$ is the energy of the secondary electrons. $a$ is defined such that the outflow is non-zero when the drift velocity is directed towards the wall and zero otherwise. $r$ is defined as the fraction of particles reflected by the surface. When converting the density to log form and applying a scaling factor of the mesh, the strong form for `SecondaryElectronEnergyBC` is defined as
 
 \begin{equation}
 v_{\text{th},e} = \sqrt{\frac{8e}{\pi m_{e}} \frac{2}{3} \exp (N_{\varepsilon} - N_{e})} \\[10pt]
