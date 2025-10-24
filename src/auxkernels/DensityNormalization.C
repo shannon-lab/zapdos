@@ -16,8 +16,6 @@ InputParameters
 DensityNormalization::validParams()
 {
   InputParameters params = AuxKernel::validParams();
-  params.addRequiredCoupledVar("Density", "The variable to be normalized in log form");
-  params.deprecateParam("Density", "density", "04/01/2026");
   params.addRequiredCoupledVar("density", "The variable to be normalized in log form");
   params.addRequiredParam<PostprocessorName>("normalization",
                                              "The postprocessor to be the denominator");

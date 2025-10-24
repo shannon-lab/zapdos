@@ -17,11 +17,7 @@ ElectronTemperature::validParams()
 {
   InputParameters params = AuxKernel::validParams();
 
-  params.addRequiredCoupledVar("electron_density", "The electron density");
-  params.deprecateParam("electron_density", "electrons", "04/01/2026");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
-  params.addRequiredCoupledVar("mean_en", "The logarathmic representation of the mean energy.");
-  params.deprecateParam("mean_en", "electron_energy", "04/01/2026");
   params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
   params.addClassDescription("Returns the electron temperature");
 

@@ -17,8 +17,6 @@ InputParameters
 TM0CylindricalEzAux::validParams()
 {
   InputParameters params = AuxKernel::validParams();
-  params.addRequiredCoupledVar("Hphi", "Magnetic field component Hphi.");
-  params.deprecateParam("Hphi", "azimuthal_magnetic_field", "04/01/2026");
   params.addRequiredCoupledVar("azimuthal_magnetic_field",
                                "The azimuthal component of the magnetic field, Hphi.");
   params.addRequiredParam<Real>("f", "The drive frequency.");
