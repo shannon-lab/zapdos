@@ -24,8 +24,6 @@ ArbitrarilyTiedValueConstraint::validParams()
 {
   InputParameters params = NodeFaceConstraint::validParams();
   params.addParam<Real>("scaling", 1, "scaling factor to be applied to constraint equations");
-  params.addRequiredParam<Real>("H", "The value of u_secondary/u_primary.");
-  params.deprecateParam("H", "ratio", "04/01/2026");
   params.addRequiredParam<Real>("ratio", "The value of u_secondary/u_primary.");
   params.set<bool>("use_displaced_mesh") = true;
   params.addClassDescription("Constraint that forces the value of a variable on one side of an "

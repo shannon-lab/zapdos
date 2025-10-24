@@ -16,8 +16,6 @@ InputParameters
 MatchedValueLogBC::validParams()
 {
   InputParameters params = ADNodalBC::validParams();
-  params.addRequiredParam<Real>("H", "The ratio of liquid phase density to gas phase density");
-  params.deprecateParam("H", "henry_solubility", "04/01/2026");
   params.addRequiredParam<Real>("henry_solubility",
                                 "The ratio of liquid phase density to gas phase density");
   params.addRequiredCoupledVar("v", "The variable whose value we are to match.");

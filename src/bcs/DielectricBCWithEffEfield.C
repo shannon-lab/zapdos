@@ -23,15 +23,9 @@ DielectricBCWithEffEfield::validParams()
   params.addRequiredCoupledVar("electrons", "The electron density in log form.");
   params.addRequiredCoupledVar("ions", "A list of ion densities in log form");
 
-  params.addRequiredCoupledVar("Ex", "The EField in the x-direction");
-  params.deprecateParam("Ex", "electric_field_x", "04/01/2026");
   params.addRequiredCoupledVar("electric_field_x", "The electric field in the x-direction");
-  params.addCoupledVar("Ey", "The EField in the y-direction");
-  params.deprecateCoupledVar("Ey", "electric_field_y", "04/01/2026");
   params.addCoupledVar("electric_field_y",
                        "The electric field in the y-direction"); // only required in 2D and 3D
-  params.addCoupledVar("Ez", "The EField in the z-direction");
-  params.deprecateCoupledVar("Ez", "electric_field_z", "04/01/2026");
   params.addCoupledVar("electric_field_z",
                        "The electric field in the z-direction"); // only required in 3D
 
