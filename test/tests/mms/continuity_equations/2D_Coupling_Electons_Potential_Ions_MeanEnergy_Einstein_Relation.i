@@ -25,7 +25,7 @@
 []
 
 [Kernels]
-#Electron Equations
+  #Electron Equations
   [em_time_derivative]
     type = TimeDerivativeLog
     variable = em
@@ -46,7 +46,7 @@
     function = 'em_source'
   []
 
-#Ion Equations
+  #Ion Equations
   [ion_time_derivative]
     type = TimeDerivativeLog
     variable = ion
@@ -67,7 +67,7 @@
     function = 'ion_source'
   []
 
-#Potential Equations
+  #Potential Equations
   [potential_diffusion]
     type = CoeffDiffusionLin
     variable = potential
@@ -86,7 +86,7 @@
     potential_units = V
   []
 
-#Electron Energy Equations
+  #Electron Energy Equations
   [mean_en_time_deriv]
     type = TimeDerivativeLog
     variable = mean_en
@@ -162,7 +162,7 @@
 []
 
 [Functions]
-#Material Variables
+  #Material Variables
   #Electron diffusion coeff.
   [diffem_coeff]
     type = ConstantFunction
@@ -216,8 +216,7 @@
     expression = 'diffpotential * (1.6e-19 * 6.02e23)'
   []
 
-
-#Manufactured Solutions
+  #Manufactured Solutions
   #The manufactured electron density solution
   [em_fun]
     type = ParsedFunction
@@ -282,7 +281,7 @@
     expression = 'mumean_en_coeff * energy_fun'
   []
 
-#Source Terms in moles
+  #Source Terms in moles
   #The electron source term.
   [em_source]
     type = ParsedFunction
@@ -435,25 +434,25 @@
   []
   [Material_Coeff]
     type = GenericFunctionMaterial
-    prop_names =  'e N_A'
+    prop_names = 'e N_A'
     prop_values = 'ee N_A'
   []
   [ADMaterial_Coeff_Set1]
     type = ADGenericFunctionMaterial
-    prop_names =  'diffpotential     diffion muion'
+    prop_names = 'diffpotential     diffion muion'
     prop_values = 'diffpotential_mat diffion muion'
   []
   [Material_Coeff_Set2]
     type = ADMMSEEDFRates
     electrons = em
-    mean_energy = mean_en
-    prop_names =              'diffem        muem        diffmean_en        mumean_en'
-    prop_values =             'diffem        muem        diffmean_en        mumean_en'
+    electron_energy = mean_en
+    prop_names = 'diffem        muem        diffmean_en        mumean_en'
+    prop_values = 'diffem        muem        diffmean_en        mumean_en'
     d_prop_d_actual_mean_en = 'diffem_coeff  muem_coeff  diffmean_en_coeff  mumean_en_coeff'
   []
   [Charge_Signs]
     type = GenericConstantMaterial
-    prop_names =  'sgnem  sgnion  sgnmean_en'
+    prop_names = 'sgnem  sgnion  sgnmean_en'
     prop_values = '-1.0   1.0     -1.0'
   []
 []
@@ -505,7 +504,6 @@
 
   # dt = 0.008
   dt = 0.02
-
 
   automatic_scaling = true
   compute_scaling_once = false

@@ -646,9 +646,8 @@ area = 5.02e-7 # Formerly 3.14e-6
     type = ElectronTransportCoefficients
     interp_trans_coeffs = true
     ramp_trans_coeffs = false
-    em = em
-    ip = Arp
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     block = 0
     property_tables_file = td_argon_electrons.txt
     user_p_gas = 1.01e5
@@ -656,8 +655,8 @@ area = 5.02e-7 # Formerly 3.14e-6
   [gas_block]
     type = SimplifiedArgonChemistryCoefficients
     interp_elastic_coeff = true
-    em = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     block = 0
     property_tables_file = td_argon_chemistry.txt
   []
