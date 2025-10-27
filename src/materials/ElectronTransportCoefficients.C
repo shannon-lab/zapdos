@@ -40,7 +40,6 @@ ElectronTransportCoefficients::validParams()
 
   params.addCoupledVar("electrons", "The electron density in log form");
   params.addCoupledVar("electron_energy", "The mean electron energy density in log form");
-  params.addCoupledVar("ip", "The ion density.");
 
   params.addParam<Real>("user_electron_mobility", 0, "The electron mobility coefficient.");
   params.addParam<Real>("user_electron_diffusion_coeff", 0, "The electron diffusion coefficient.");
