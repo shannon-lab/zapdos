@@ -32,11 +32,6 @@ CircuitDirichletPotential::validParams()
   params.addRequiredParam<Real>("position_units", "Units of position");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to \\#.");
-  params.addParam<Real>("A",
-                        1.,
-                        "For 1D calculations, an area has to be passed. This area also must "
-                        "match the units convention of position_units.");
-  params.deprecateParam("A", "area", "04/01/2026");
   params.addParam<Real>("area",
                         1.,
                         "For 1D calculations, an area has to be passed. This area also must "

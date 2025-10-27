@@ -24,7 +24,7 @@
 []
 
 [Kernels]
-#Ion Equations
+  #Ion Equations
   [ion_time_derivative]
     type = TimeDerivativeLog
     variable = ion
@@ -47,8 +47,7 @@
     function = 'ion_source'
   []
 
-
-#Eff. Efield
+  #Eff. Efield
   [EffEfield_X_time_deriv]
     type = TimeDerivative
     variable = Ex
@@ -109,7 +108,7 @@
 []
 
 [Functions]
-#Material Variables
+  #Material Variables
   #Ion diffusion coeff.
   [diffion]
     type = ConstantFunction
@@ -132,8 +131,7 @@
     value = 0.25
   []
 
-
-#Manufactured Solutions
+  #Manufactured Solutions
   #The manufactured ion density solution
   [ion_fun]
     type = ParsedFunction
@@ -155,7 +153,7 @@
     expression = '-pi*cos(pi*y)*(sin(pi*t) + 1)'
   []
 
-#Source Terms in moles
+  #Source Terms in moles
   #The ion source term.
   [ion_source]
     type = ParsedFunction
@@ -216,8 +214,8 @@
   [ion_left_physical_advection]
     type = SakiyamaIonAdvectionWithEffEfieldBC
     variable = ion
-    Ex = Ex
-    Ey = Ey
+    electric_field_x = Ex
+    electric_field_y = Ey
     boundary = 3
     position_units = 1.0
   []
@@ -240,8 +238,8 @@
   [ion_down_physical_advection]
     type = SakiyamaIonAdvectionWithEffEfieldBC
     variable = ion
-    Ex = Ex
-    Ey = Ey
+    electric_field_x = Ex
+    electric_field_y = Ey
     boundary = 0
     position_units = 1.0
   []
@@ -274,17 +272,17 @@
 [Materials]
   [Material_Coeff]
     type = GenericFunctionMaterial
-    prop_names =  'e  N_A  diffEx         diffEy'
+    prop_names = 'e  N_A  diffEx         diffEy'
     prop_values = 'ee N_A  diffpotential  diffpotential '
   []
   [ADMaterial_Coeff_Set1]
     type = ADGenericFunctionMaterial
-    prop_names =  'diffion  muion'
+    prop_names = 'diffion  muion'
     prop_values = 'diffion  muion'
   []
   [Charge_Signs]
     type = GenericConstantMaterial
-    prop_names =  'sgnion'
+    prop_names = 'sgnion'
     prop_values = '1.0'
   []
 []
