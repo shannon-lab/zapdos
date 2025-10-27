@@ -19,7 +19,7 @@ TM0CylindricalEz::validParams()
   InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("f", "The drive frequency.");
   params.addRequiredCoupledVar("azimuthal_magnetic_field",
-                               "The azimuthal component of the magnetic field, Hphi.");
+                               "The azimuthal component of the magnetic field, $H_{\\phi}$.");
   params.addClassDescription(
       "The axisymmetric wave equation for the axial component of the electric field.");
   return params;
