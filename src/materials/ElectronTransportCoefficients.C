@@ -36,7 +36,10 @@ ElectronTransportCoefficients::validParams()
   params.addParam<Real>("time_units", 1, "Units of time");
 
   params.addCoupledVar("T_gas", 300, "The background gas temperature in Kelvin.");
-  params.addCoupledVar("p_gas", 1.01e5, "The background gas pressure in Pascals (defaulted to 1 standard atmosphere).");
+  params.addCoupledVar(
+      "p_gas",
+      1.01e5,
+      "The background gas pressure in Pascals (defaulted to 1 standard atmosphere).");
 
   params.addCoupledVar("electrons", "The electron density in log form");
   params.addCoupledVar("electron_energy", "The mean electron energy density in log form");
