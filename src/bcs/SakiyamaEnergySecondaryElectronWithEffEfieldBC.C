@@ -22,8 +22,9 @@ SakiyamaEnergySecondaryElectronWithEffEfieldBC::validParams()
   params.addRequiredParam<bool>(
       "secondary_electron_temperature_equal_to_bulk",
       "Whether the secondary electron temperature equals the electron temperature in eV");
-  params.addParam<Real>(
-      "user_se_energy", 1.0, "The user's value of the secondary electron temperature in eV");
+  params.addParam<Real>("secondary_electron_energy",
+                        1.0,
+                        "The user's value of the secondary electron temperature in eV");
   params.addRequiredCoupledVar("electric_field_x", "The electric field in the x-direction");
   params.addCoupledVar("electric_field_y",
                        0,
@@ -54,7 +55,7 @@ SakiyamaEnergySecondaryElectronWithEffEfieldBC::SakiyamaEnergySecondaryElectronW
     _em(adCoupledValue("electrons")),
 
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
-    _user_se_energy(getParam<Real>("user_se_energy")),
+    _user_se_energy(getParam<Real>("secondary_electron_energy")),
     _a(0.5),
     _se_energy(0),
     _ion_flux(0, 0, 0)
