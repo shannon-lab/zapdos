@@ -104,13 +104,13 @@
   [mean_en_diffusion_correction]
     type = ThermalConductivityDiffusion
     variable = mean_en
-    em = em
+    electrons = em
     position_units = 1.0
   []
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    em = em
+    electrons = em
     position_units = 1.0
     potential_units = V
   []

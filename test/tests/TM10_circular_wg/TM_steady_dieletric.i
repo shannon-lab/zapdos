@@ -86,24 +86,24 @@
     type = TM0CylindricalEz
     variable = Ez_dielectric
     block = 1
-    Hphi = Hphi_dielectric
+    azimuthal_magnetic_field = Hphi_dielectric
   []
   [Ez_vacuum_kern]
     type = TM0CylindricalEz
     variable = Ez_vacuum
     block = 0
-    Hphi = Hphi_vacuum
+    azimuthal_magnetic_field = Hphi_vacuum
   []
   [Er_dielectric]
     type = TM0CylindricalEr
     variable = Er_dielectric
-    Hphi = Hphi_dielectric
+    azimuthal_magnetic_field = Hphi_dielectric
     block = 1
   []
   [Er_vacuum]
     type = TM0CylindricalEr
     variable = Er_vacuum
-    Hphi = Hphi_vacuum
+    azimuthal_magnetic_field = Hphi_vacuum
     block = 0
   []
 []
@@ -184,28 +184,28 @@
 #   []
 #   [Er_dielectric]
 #     type = TM0CylindricalEr
-#     Hphi = Hphi
+#     azimuthal_magnetic_field =Hphi
 #     variable = Er
 #     block = 1
 #     eps_r = 16
 #   []
 #   [Er_vacuum]
 #     type = TM0CylindricalEr
-#     Hphi = Hphi
+#     azimuthal_magnetic_field =Hphi
 #     block = 0
 #     eps_r = 1
 #     variable = Er
 #   []
 #   # [Electric_z_dielectric]
 #   #   type = TM0CylindricalEz
-#   #   Hphi = Hphi
+#   #   azimuthal_magnetic_field =Hphi
 #   #   variable = Electric_z
 #   #   block = 1
 #   #   eps_r = 16
 #   # []
 #   # [Electric_z_vacuum]
 #   #   type = TM0CylindricalEz
-#   #   Hphi = Hphi
+#   #   azimuthal_magnetic_field =Hphi
 #   #   variable = Electric_z
 #   #   block = 0
 #   #   eps_r = 1

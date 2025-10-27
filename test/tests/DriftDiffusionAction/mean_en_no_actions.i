@@ -133,8 +133,8 @@ dom1Scale = 1e-7
   [em_ionization]
     type = ElectronsFromIonization
     variable = em
-    mean_en = mean_en
-    em = em
+    electron_energy = mean_en
+    electrons = em
     block = 0
     position_units = ${dom0Scale}
   []
@@ -244,8 +244,8 @@ dom1Scale = 1e-7
   [Arp_ionization]
     type = IonsFromIonization
     variable = Arp
-    em = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     block = 0
     position_units = ${dom0Scale}
   []
@@ -320,28 +320,28 @@ dom1Scale = 1e-7
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    em = em
+    electrons = em
     block = 0
     position_units = ${dom0Scale}
   []
   [mean_en_ionization]
     type = ElectronEnergyLossFromIonization
     variable = mean_en
-    em = em
+    electrons = em
     block = 0
     position_units = ${dom0Scale}
   []
   [mean_en_elastic]
     type = ElectronEnergyLossFromElastic
     variable = mean_en
-    em = em
+    electrons = em
     block = 0
     position_units = ${dom0Scale}
   []
   [mean_en_excitation]
     type = ElectronEnergyLossFromExcitation
     variable = mean_en
-    em = em
+    electrons = em
     block = 0
     position_units = ${dom0Scale}
   []

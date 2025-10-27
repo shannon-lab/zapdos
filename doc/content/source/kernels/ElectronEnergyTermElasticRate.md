@@ -40,7 +40,7 @@ please refer to the [MOOSE Contributing page](framework/contributing.md).
   [mean_en_elastic]
     type = ElectronEnergyTermElasticRate
     variable = mean_en
-    electron_species = electrons
+    electrons = electrons
     target_species = Ar
     reaction = elastic
     position_units = 1
