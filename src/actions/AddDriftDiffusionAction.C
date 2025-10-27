@@ -505,8 +505,8 @@ AddDriftDiffusionAction::act()
       {
         InputParameters params = _factory.getValidParams("ElectronTemperature");
         params.set<AuxVariableName>("variable") = "e_temp";
-        params.set<std::vector<VariableName>>("electron_density") = {em_name};
-        params.set<std::vector<VariableName>>("mean_en") = {mean_en_name};
+        params.set<std::vector<VariableName>>("electrons") = {em_name};
+        params.set<std::vector<VariableName>>("electron_energy") = {mean_en_name};
         params.set<std::vector<SubdomainName>>("block") =
             getParam<std::vector<SubdomainName>>("block");
         _problem->addAuxKernel("ElectronTemperature", "e_temp", params);
@@ -655,7 +655,7 @@ AddDriftDiffusionAction::addCurrent(const std::string & particle_name,
   InputParameters params = _factory.getValidParams("ADCurrent");
   params.set<AuxVariableName>("variable") = {"Current_" + particle_name};
   params.set<std::string>("field_property_name") = {field_property_name};
-  params.set<std::vector<VariableName>>("density_log") = {particle_name};
+  params.set<std::vector<VariableName>>("density") = {particle_name};
   params.set<Real>("position_units") = getParam<Real>("position_units");
   params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   _problem->addAuxKernel("ADCurrent", "Current_" + particle_name, params);
