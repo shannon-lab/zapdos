@@ -22,7 +22,7 @@ InputParameters
 EFieldAdvAuxTempl<is_ad>::validParams()
 {
   InputParameters params = AuxKernel::validParams();
-  params.addRequiredCoupledVar("density_log", "The species density in log form.");
+  params.addRequiredCoupledVar("density", "The species density in log form.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<std::string>("field_property_name",
                                "field_solver_interface_property",
@@ -41,8 +41,8 @@ EFieldAdvAuxTempl<is_ad>::EFieldAdvAuxTempl(const InputParameters & parameters)
 
     // Coupled variables
 
-    _density_var(*getVar("density_log", 0)),
-    _density_log(coupledValue("density_log")),
+    _density_var(*getVar("density", 0)),
+    _density_log(coupledValue("density")),
 
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),

@@ -477,8 +477,8 @@ dom0Scale = 25.4e-3
   [Te]
     type = ElectronTemperature
     variable = Te
-    electron_density = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
   []
   [x_g]
     type = Position

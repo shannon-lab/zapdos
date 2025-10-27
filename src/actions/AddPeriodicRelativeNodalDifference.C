@@ -67,7 +67,8 @@ AddPeriodicRelativeNodalDifference::validParams()
   return params;
 }
 
-AddPeriodicRelativeNodalDifference::AddPeriodicRelativeNodalDifference(const InputParameters & params)
+AddPeriodicRelativeNodalDifference::AddPeriodicRelativeNodalDifference(
+    const InputParameters & params)
   : Action(params),
 
     _start_time((1. / getParam<Real>("cycle_frequency")) * getParam<Real>("starting_cycle")),
@@ -356,7 +357,7 @@ AddPeriodicRelativeNodalDifference::addNormalizationKernels(const std::string & 
   {
     InputParameters params = _factory.getValidParams("DensityNormalization");
     params.set<AuxVariableName>("variable") = {variable_name};
-    params.set<std::vector<VariableName>>("Density") = {source};
+    params.set<std::vector<VariableName>>("density") = {source};
     params.set<PostprocessorName>("normalization") = {averaged};
     params.set<bool>("enable") = false;
     params.set<ExecFlagEnum>("execute_on", true) = {EXEC_TIMESTEP_BEGIN};

@@ -222,32 +222,32 @@ dom1Scale = 1e-7
   []
   [Current_emliq]
     type = ADCurrent
-    density_log = emliq
+    density = emliq
     variable = Current_emliq
     art_diff = false
     position_units = ${dom1Scale}
   []
   [Current_OHm]
     type = ADCurrent
-    density_log = OHm
+    density = OHm
     variable = Current_OHm
     art_diff = false
     position_units = ${dom1Scale}
   []
   [tot_flux_OHm]
     type = ADTotalFlux
-    density_log = OHm
+    density = OHm
     variable = tot_flux_OHm
   []
   [EFieldAdvAux_emliq]
     type = ADEFieldAdvAux
-    density_log = emliq
+    density = emliq
     variable = EFieldAdvAux_emliq
     position_units = ${dom1Scale}
   []
   [DiffusiveFlux_emliq]
     type = ADDiffusiveFlux
-    density_log = emliq
+    density = emliq
     variable = DiffusiveFlux_emliq
     position_units = ${dom1Scale}
   []
@@ -300,11 +300,11 @@ dom1Scale = 1e-7
 []
 
 [Materials]
- [water_block]
-   type = Water
- []
- [field_solver]
-   type = FieldSolverMaterial
-   potential = potential
- []
+  [water_block]
+    type = Water
+  []
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
 []

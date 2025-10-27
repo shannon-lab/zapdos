@@ -286,7 +286,7 @@ dom1Scale = 1e-7
 [AuxKernels]
   [PowerDep_em]
     type = ADPowerDep
-    density_log = em
+    density = em
     art_diff = false
     potential_units = kV
     variable = PowerDep_em
@@ -295,7 +295,7 @@ dom1Scale = 1e-7
   []
   [PowerDep_Arp]
     type = ADPowerDep
-    density_log = Arp
+    density = Arp
     art_diff = false
     potential_units = kV
     variable = PowerDep_Arp
@@ -304,7 +304,7 @@ dom1Scale = 1e-7
   []
   [ProcRate_el]
     type = ADProcRate
-    em = em
+    electrons = em
     proc = el
     variable = ProcRate_el
     position_units = ${dom0Scale}
@@ -312,7 +312,7 @@ dom1Scale = 1e-7
   []
   [ProcRate_ex]
     type = ADProcRate
-    em = em
+    electrons = em
     proc = ex
     variable = ProcRate_ex
     position_units = ${dom0Scale}
@@ -320,7 +320,7 @@ dom1Scale = 1e-7
   []
   [ProcRate_iz]
     type = ADProcRate
-    em = em
+    electrons = em
     proc = iz
     variable = ProcRate_iz
     position_units = ${dom0Scale}
@@ -373,33 +373,33 @@ dom1Scale = 1e-7
   [tot_flux_OHm]
     block = 1
     type = ADTotalFlux
-    density_log = OHm
+    density = OHm
     variable = tot_flux_OHm
   []
   [EFieldAdvAux_em]
     type = ADEFieldAdvAux
-    density_log = em
+    density = em
     variable = EFieldAdvAux_em
     block = 0
     position_units = ${dom0Scale}
   []
   [DiffusiveFlux_em]
     type = ADDiffusiveFlux
-    density_log = em
+    density = em
     variable = DiffusiveFlux_em
     block = 0
     position_units = ${dom0Scale}
   []
   [EFieldAdvAux_emliq]
     type = ADEFieldAdvAux
-    density_log = emliq
+    density = emliq
     variable = EFieldAdvAux_emliq
     block = 1
     position_units = ${dom1Scale}
   []
   [DiffusiveFlux_emliq]
     type = ADDiffusiveFlux
-    density_log = emliq
+    density = emliq
     variable = DiffusiveFlux_emliq
     block = 1
     position_units = ${dom1Scale}

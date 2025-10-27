@@ -460,8 +460,8 @@ dom0Scale = 25.4e-3
   [e_temp]
     type = ElectronTemperature
     variable = e_temp
-    electron_density = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
   []
   [x_g]
     type = Position
@@ -507,14 +507,14 @@ dom0Scale = 25.4e-3
   []
   [Current_em]
     type = ADCurrent
-    density_log = em
+    density = em
     variable = Current_em
     art_diff = false
     position_units = ${dom0Scale}
   []
   [Current_Ar+]
     type = ADCurrent
-    density_log = Ar+
+    density = Ar+
     variable = Current_Ar+
     art_diff = false
     position_units = ${dom0Scale}

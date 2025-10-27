@@ -29,7 +29,7 @@ please refer to the [MOOSE Contributing page](framework/contributing.md).
   [Normalized_Electrons]
     type = DensityNormalization
     variable = norm_electrons
-    Density = electrons
+    density = electrons
     normalization = max_electron
   []
 []

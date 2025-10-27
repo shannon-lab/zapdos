@@ -24,7 +24,7 @@ PowerDepTempl<is_ad>::validParams()
 {
   InputParameters params = AuxKernel::validParams();
 
-  params.addRequiredCoupledVar("density_log", "The species density in log form.");
+  params.addRequiredCoupledVar("density", "The species density in log form.");
   params.addParam<bool>(
       "art_diff", false, "Whether there is a current contribution from artificial diffusion.");
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
@@ -42,9 +42,9 @@ PowerDepTempl<is_ad>::PowerDepTempl(const InputParameters & parameters)
   : AuxKernel(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
-    _density_var(*getVar("density_log", 0)),
-    _density_log(coupledValue("density_log")),
-    _grad_density_log(coupledGradient("density_log")),
+    _density_var(*getVar("density", 0)),
+    _density_log(coupledValue("density")),
+    _grad_density_log(coupledGradient("density")),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
     _mu(getGenericMaterialProperty<Real, is_ad>("mu" + _density_var.name())),
