@@ -25,16 +25,16 @@ dom0Scale = 25.4e-3
 [DriftDiffusionAction]
   [Plasma]
     electrons = em
-    secondary_charged_particles = Ar+
-    Neutrals = Ar*
-    mean_energy = mean_en
+    secondary_ions = Ar+
+    neutrals = Ar*
+    electron_energy = mean_en
     field = potential
     eff_fields = potential_ion
     eff_fields_property_names = potential_ion_property
-    Is_field_unique = true
+    is_field_unique = true
     using_offset = false
     position_units = ${dom0Scale}
-    Additional_Outputs = 'ElectronTemperature Current EField'
+    additional_outputs = 'ElectronTemperature Current EField'
   []
 []
 
