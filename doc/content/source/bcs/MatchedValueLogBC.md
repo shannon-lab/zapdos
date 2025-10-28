@@ -30,7 +30,7 @@ please refer to the [MOOSE Contributing page](framework/contributing.md).
     type = MatchedValueLogBC
     variable = O2_gas
     v = O2_water
-    H = 1.3e-3
+    henry_solubility = 1.3e-3
     boundary = 'water'
   []
 []

@@ -444,8 +444,8 @@
     electrons = em
     electron_energy = mean_en
     ions = 'ion'
-    Ex = Ex
-    Ey = Ey
+    electric_field_x = Ex
+    electric_field_y = Ey
     dielectric_constant = 1.0
     thickness = 1.0
     emission_coeffs = 'users_gamma'

@@ -20,14 +20,20 @@ SakiyamaEnergySecondaryElectronWithEffEfieldBC::validParams()
       "emission_coeffs",
       "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<bool>(
-      "Tse_equal_Te", "The secondary electron temperature equal the electron temperature in eV");
-  params.addParam<Real>(
-      "user_se_energy", 1.0, "The user's value of the secondary electron temperature in eV");
-  params.addRequiredCoupledVar("Ex", "The EField in the x-direction");
-  params.addCoupledVar("Ey", 0, "The EField in the y-direction"); // only required in 2D and 3D
-  params.addCoupledVar("Ez", 0, "The EField in the z-direction"); // only required in 3D
-  params.addRequiredCoupledVar("em", "The electron density.");
-  params.addRequiredCoupledVar("ions", "The ion density.");
+      "secondary_electron_temperature_equal_to_bulk",
+      "Whether the secondary electron temperature equals the electron temperature in eV");
+  params.addParam<Real>("secondary_electron_energy",
+                        1.0,
+                        "The user's value of the secondary electron temperature in eV");
+  params.addRequiredCoupledVar("electric_field_x", "The electric field in the x-direction");
+  params.addCoupledVar("electric_field_y",
+                       0,
+                       "The electric field in the y-direction"); // only required in 2D and 3D
+  params.addCoupledVar("electric_field_z",
+                       0,
+                       "The electric field in the z-direction"); // only required in 3D
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
+  params.addRequiredCoupledVar("ions", "A list of ion densities in log form.");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addClassDescription(
       "Kinetic secondary electron for mean electron energy boundary condition"
@@ -40,16 +46,16 @@ SakiyamaEnergySecondaryElectronWithEffEfieldBC::SakiyamaEnergySecondaryElectronW
   : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
-    Te_dependent(getParam<bool>("Tse_equal_Te")),
+    Te_dependent(getParam<bool>("secondary_electron_temperature_equal_to_bulk")),
 
-    _Ex(adCoupledValue("Ex")),
-    _Ey(adCoupledValue("Ey")),
-    _Ez(adCoupledValue("Ez")),
+    _Ex(adCoupledValue("electric_field_x")),
+    _Ey(adCoupledValue("electric_field_y")),
+    _Ez(adCoupledValue("electric_field_z")),
 
-    _em(adCoupledValue("em")),
+    _em(adCoupledValue("electrons")),
 
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
-    _user_se_energy(getParam<Real>("user_se_energy")),
+    _user_se_energy(getParam<Real>("secondary_electron_energy")),
     _a(0.5),
     _se_energy(0),
     _ion_flux(0, 0, 0)

@@ -25,7 +25,7 @@ please refer to the [MOOSE Contributing page](framework/contributing.md).
     secondary = water
     primary = plasma
     primary_variable = electrons
-    H = 0.1
+    ratio = 0.1
   []
 []
 ```

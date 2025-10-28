@@ -20,7 +20,8 @@ SakiyamaEnergySecondaryElectronBC::validParams()
       "emission_coeffs",
       "The secondary electron emission coefficient for each ion provided in `ions`");
   params.addRequiredParam<bool>(
-      "Tse_equal_Te", "The secondary electron temperature equal the electron temperature in eV");
+      "secondary_electron_temperature_equal_to_bulk",
+      "Whether the secondary electron temperature equals the electron temperature in eV");
   params.addParam<Real>(
       "secondary_electron_energy", 1.0, "The secondary electron temperature in eV");
   params.addRequiredCoupledVar("electrons", "The electron density in log form");
@@ -40,7 +41,7 @@ SakiyamaEnergySecondaryElectronBC::SakiyamaEnergySecondaryElectronBC(
   : ADIntegratedBC(parameters),
 
     _r_units(1. / getParam<Real>("position_units")),
-    Te_dependent(getParam<bool>("Tse_equal_Te")),
+    Te_dependent(getParam<bool>("secondary_electron_temperature_equal_to_bulk")),
     _num_ions(coupledComponents("ions")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     // Coupled Variables
