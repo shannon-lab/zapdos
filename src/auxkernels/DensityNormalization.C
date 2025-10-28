@@ -16,7 +16,7 @@ InputParameters
 DensityNormalization::validParams()
 {
   InputParameters params = AuxKernel::validParams();
-  params.addRequiredCoupledVar("Density", "The variable to be normalized in log form");
+  params.addRequiredCoupledVar("density", "The variable to be normalized in log form");
   params.addRequiredParam<PostprocessorName>("normalization",
                                              "The postprocessor to be the denominator");
   params.addParam<PostprocessorName>("shift", "The postprocessor to shift the source");
@@ -28,7 +28,7 @@ DensityNormalization::validParams()
 
 DensityNormalization::DensityNormalization(const InputParameters & parameters)
   : AuxKernel(parameters),
-    _density(coupledValue("Density")),
+    _density(coupledValue("density")),
     _pp_on_source(&getPostprocessorValue("normalization")),
     _shift(isParamValid("shift") ? &getPostprocessorValue("shift") : NULL),
     _normal_factor(getParam<Real>("normal_factor"))

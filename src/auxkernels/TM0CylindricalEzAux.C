@@ -17,7 +17,8 @@ InputParameters
 TM0CylindricalEzAux::validParams()
 {
   InputParameters params = AuxKernel::validParams();
-  params.addRequiredCoupledVar("Hphi", "Magnetic field component Hphi.");
+  params.addRequiredCoupledVar("azimuthal_magnetic_field",
+                               "The azimuthal component of the magnetic field, $H_{\\phi}$.");
   params.addRequiredParam<Real>("f", "The drive frequency.");
   params.addParam<Real>("eps_r", 1., "The relative permittivity of the medium.");
   params.addClassDescription("Calculates the axial E-field for an axisymmetric "
@@ -27,8 +28,8 @@ TM0CylindricalEzAux::validParams()
 
 TM0CylindricalEzAux::TM0CylindricalEzAux(const InputParameters & parameters)
   : AuxKernel(parameters),
-    _grad_Hphi(coupledGradient("Hphi")),
-    _Hphi(coupledValue("Hphi")),
+    _grad_Hphi(coupledGradient("azimuthal_magnetic_field")),
+    _Hphi(coupledValue("azimuthal_magnetic_field")),
     _omega(2. * libMesh::pi * getParam<Real>("f")),
     _eps_r(getParam<Real>("eps_r"))
 {

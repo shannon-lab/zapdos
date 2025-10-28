@@ -93,12 +93,12 @@
   []
   [Er]
     type = TM0CylindricalErAux
-    Hphi = Hphi
+    azimuthal_magnetic_field = Hphi
     variable = Er
   []
   [Electric_z]
     type = TM0CylindricalEzAux
-    Hphi = Hphi
+    azimuthal_magnetic_field = Hphi
     variable = Electric_z
   []
 []

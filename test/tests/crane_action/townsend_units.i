@@ -432,7 +432,7 @@ dom1Scale = 1e-7
 [AuxKernels]
   [PowerDep_em]
     type = ADPowerDep
-    density_log = em
+    density = em
     art_diff = false
     potential_units = kV
     variable = PowerDep_em
@@ -441,7 +441,7 @@ dom1Scale = 1e-7
   []
   [PowerDep_Arp]
     type = ADPowerDep
-    density_log = Arp
+    density = Arp
     art_diff = false
     potential_units = kV
     variable = PowerDep_Arp
@@ -450,7 +450,7 @@ dom1Scale = 1e-7
   []
   #[ProcRate_el]
   #  type = ProcRate
-  #  em = em
+  #  electrons = em
   #  proc = el
   #  variable = ProcRate_el
   #  position_units = ${dom0Scale}
@@ -458,7 +458,7 @@ dom1Scale = 1e-7
   #[]
   #[ProcRate_ex]
   #  type = ProcRate
-  #  em = em
+  #  electrons = em
   #  proc = ex
   #  variable = ProcRate_ex
   #  position_units = ${dom0Scale}
@@ -466,7 +466,7 @@ dom1Scale = 1e-7
   #[]
   #[ProcRate_iz]
   #  type = ProcRate
-  #  em = em
+  #  electrons = em
   #  proc = iz
   #  variable = ProcRate_iz
   #  position_units = ${dom0Scale}
@@ -475,8 +475,8 @@ dom1Scale = 1e-7
   [e_temp]
     type = ElectronTemperature
     variable = e_temp
-    electron_density = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     block = 0
   []
   [x_g]
@@ -538,25 +538,25 @@ dom1Scale = 1e-7
   [em_lin]
     type = DensityMoles
     variable = em_lin
-    density_log = em
+    density = em
     block = 0
   []
   [emliq_lin]
     type = DensityMoles
     variable = emliq_lin
-    density_log = emliq
+    density = emliq
     block = 1
   []
   [Arp_lin]
     type = DensityMoles
     variable = Arp_lin
-    density_log = Arp
+    density = Arp
     block = 0
   []
   [OHm_lin]
     type = DensityMoles
     variable = OHm_lin
-    density_log = OHm
+    density = OHm
     block = 1
   []
   [Efield_g]
@@ -575,7 +575,7 @@ dom1Scale = 1e-7
   []
   [Current_em]
     type = ADCurrent
-    density_log = em
+    density = em
     variable = Current_em
     art_diff = false
     block = 0
@@ -583,7 +583,7 @@ dom1Scale = 1e-7
   []
   [Current_emliq]
     type = ADCurrent
-    density_log = emliq
+    density = emliq
     variable = Current_emliq
     art_diff = false
     block = 1
@@ -591,7 +591,7 @@ dom1Scale = 1e-7
   []
   [Current_Arp]
     type = ADCurrent
-    density_log = Arp
+    density = Arp
     variable = Current_Arp
     art_diff = false
     block = 0
@@ -600,7 +600,7 @@ dom1Scale = 1e-7
   [Current_OHm]
     block = 1
     type = ADCurrent
-    density_log = OHm
+    density = OHm
     variable = Current_OHm
     art_diff = false
     position_units = ${dom1Scale}
@@ -608,33 +608,33 @@ dom1Scale = 1e-7
   [tot_flux_OHm]
     block = 1
     type = ADTotalFlux
-    density_log = OHm
+    density = OHm
     variable = tot_flux_OHm
   []
   [EFieldAdvAux_em]
     type = ADEFieldAdvAux
-    density_log = em
+    density = em
     variable = EFieldAdvAux_em
     block = 0
     position_units = ${dom0Scale}
   []
   [DiffusiveFlux_em]
     type = ADDiffusiveFlux
-    density_log = em
+    density = em
     variable = DiffusiveFlux_em
     block = 0
     position_units = ${dom0Scale}
   []
   [EFieldAdvAux_emliq]
     type = ADEFieldAdvAux
-    density_log = emliq
+    density = emliq
     variable = EFieldAdvAux_emliq
     block = 1
     position_units = ${dom1Scale}
   []
   [DiffusiveFlux_emliq]
     type = ADDiffusiveFlux
-    density_log = emliq
+    density = emliq
     variable = DiffusiveFlux_emliq
     block = 1
     position_units = ${dom1Scale}
