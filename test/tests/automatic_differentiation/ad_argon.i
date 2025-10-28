@@ -350,18 +350,18 @@ dom0Scale = 1e-3
   [Arex_lin]
     type = DensityMoles
     variable = Arex_lin
-    density_log = Ar*
+    density = Ar*
     block = 0
   []
   [Ar2p_lin]
     type = DensityMoles
     variable = Ar2p_lin
-    density_log = Ar2p
+    density = Ar2p
     block = 0
   []
   [PowerDep_em]
     type = ADPowerDep
-    density_log = em
+    density = em
     art_diff = false
     potential_units = kV
     variable = PowerDep_em
@@ -370,7 +370,7 @@ dom0Scale = 1e-3
   []
   [PowerDep_Arp]
     type = ADPowerDep
-    density_log = Arp
+    density = Arp
     art_diff = false
     potential_units = kV
     variable = PowerDep_Arp
@@ -380,8 +380,8 @@ dom0Scale = 1e-3
   [e_temp]
     type = ElectronTemperature
     variable = e_temp
-    electron_density = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     block = 0
   []
   [x_g]
@@ -415,13 +415,13 @@ dom0Scale = 1e-3
   [em_lin]
     type = DensityMoles
     variable = em_lin
-    density_log = em
+    density = em
     block = 0
   []
   [Arp_lin]
     type = DensityMoles
     variable = Arp_lin
-    density_log = Arp
+    density = Arp
     block = 0
   []
   [Efield_g]
@@ -433,7 +433,7 @@ dom0Scale = 1e-3
   []
   [Current_em]
     type = ADCurrent
-    density_log = em
+    density = em
     variable = Current_em
     art_diff = false
     block = 0
@@ -441,7 +441,7 @@ dom0Scale = 1e-3
   []
   [Current_Arp]
     type = ADCurrent
-    density_log = Arp
+    density = Arp
     variable = Current_Arp
     art_diff = false
     block = 0
@@ -449,7 +449,7 @@ dom0Scale = 1e-3
   []
   [Current_Ar2p]
     type = ADCurrent
-    density_log = Ar2p
+    density = Ar2p
     variable = Current_Ar2p
     art_diff = false
     block = 0
@@ -457,14 +457,14 @@ dom0Scale = 1e-3
   []
   [EFieldAdvAux_em]
     type = ADEFieldAdvAux
-    density_log = em
+    density = em
     variable = EFieldAdvAux_em
     block = 0
     position_units = ${dom0Scale}
   []
   [DiffusiveFlux_em]
     type = ADDiffusiveFlux
-    density_log = em
+    density = em
     variable = DiffusiveFlux_em
     block = 0
     position_units = ${dom0Scale}

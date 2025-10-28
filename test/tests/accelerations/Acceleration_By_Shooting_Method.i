@@ -477,8 +477,8 @@ dom0Scale = 25.4e-3
   [Te]
     type = ElectronTemperature
     variable = Te
-    electron_density = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
   []
   [x_g]
     type = Position
@@ -489,17 +489,17 @@ dom0Scale = 25.4e-3
   [em_lin]
     type = DensityMoles
     variable = em_lin
-    density_log = em
+    density = em
   []
   [Ar+_lin]
     type = DensityMoles
     variable = Ar+_lin
-    density_log = Ar+
+    density = Ar+
   []
   [Ar*_lin]
     type = DensityMoles
     variable = Ar*_lin
-    density_log = Ar*
+    density = Ar*
   []
 []
 

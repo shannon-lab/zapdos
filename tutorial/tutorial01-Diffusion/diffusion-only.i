@@ -107,7 +107,7 @@ dom0Scale = 1.0
   [Ar+_density]
     type = DensityMoles
     variable = Ar+_density
-    density_log = Ar+
+    density = Ar+
     execute_on = 'LINEAR TIMESTEP_END'
   []
   #The know solution for this diffusion problem

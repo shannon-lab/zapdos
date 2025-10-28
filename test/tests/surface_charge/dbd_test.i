@@ -147,21 +147,21 @@ dom1Scale = 1e-4
   [neg_calc]
     type = DensityMoles
     variable = neg_density
-    density_log = neg
+    density = neg
     execute_on = 'initial timestep_end'
     block = 0
   []
   [pos_calc]
     type = DensityMoles
     variable = pos_density
-    density_log = pos
+    density = pos
     execute_on = 'initial timestep_end'
     block = 0
   []
   #[Arp_calc]
   #  type = DensityMoles
   #  variable = Arp_density
-  #  density_log = Arp
+  #  density = Arp
   #  execute_on = 'initial timestep_end'
   #  block = 0
   #[]

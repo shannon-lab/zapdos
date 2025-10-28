@@ -17,8 +17,8 @@ InputParameters
 DensityMoles::validParams()
 {
   InputParameters params = Density::validParams();
-
   params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to \\#.");
+  params.renameCoupledVar("density_log", "density", "The species density in log form.");
   params.addClassDescription("Returns physical densities in units of #/m$^3$");
   return params;
 }

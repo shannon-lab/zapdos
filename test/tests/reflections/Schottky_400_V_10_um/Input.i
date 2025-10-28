@@ -333,7 +333,7 @@ vhigh = -175E-3 #kV
 [AuxKernels]
   [PowerDep_em]
     type = ADPowerDep
-    density_log = em
+    density = em
     art_diff = false
     potential_units = kV
     variable = PowerDep_em
@@ -342,7 +342,7 @@ vhigh = -175E-3 #kV
   []
   [PowerDep_Arp]
     type = ADPowerDep
-    density_log = Arp
+    density = Arp
     art_diff = false
     potential_units = kV
     variable = PowerDep_Arp
@@ -351,7 +351,7 @@ vhigh = -175E-3 #kV
   []
   [ProcRate_el]
     type = ADProcRate
-    em = em
+    electrons = em
     proc = el
     variable = ProcRate_el
     position_units = ${dom0Scale}
@@ -359,7 +359,7 @@ vhigh = -175E-3 #kV
   []
   [ProcRate_ex]
     type = ADProcRate
-    em = em
+    electrons = em
     proc = ex
     variable = ProcRate_ex
     position_units = ${dom0Scale}
@@ -367,7 +367,7 @@ vhigh = -175E-3 #kV
   []
   [ProcRate_iz]
     type = ADProcRate
-    em = em
+    electrons = em
     proc = iz
     variable = ProcRate_iz
     position_units = ${dom0Scale}
@@ -376,8 +376,8 @@ vhigh = -175E-3 #kV
   [e_temp]
     type = ElectronTemperature
     variable = e_temp
-    electron_density = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     block = 0
   []
   [x_g]
@@ -431,7 +431,7 @@ vhigh = -175E-3 #kV
   []
   [Current_em]
     type = ADCurrent
-    density_log = em
+    density = em
     variable = Current_em
     art_diff = false
     block = 0
@@ -439,7 +439,7 @@ vhigh = -175E-3 #kV
   []
   [Current_Arp]
     type = ADCurrent
-    density_log = Arp
+    density = Arp
     variable = Current_Arp
     art_diff = false
     block = 0
@@ -447,14 +447,14 @@ vhigh = -175E-3 #kV
   []
   [EFieldAdvAux_em]
     type = ADEFieldAdvAux
-    density_log = em
+    density = em
     variable = EFieldAdvAux_em
     block = 0
     position_units = ${dom0Scale}
   []
   [DiffusiveFlux_em]
     type = ADDiffusiveFlux
-    density_log = em
+    density = em
     variable = DiffusiveFlux_em
     block = 0
     position_units = ${dom0Scale}

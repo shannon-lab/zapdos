@@ -493,8 +493,8 @@ dom0Scale = 25.4e-3
   [e_temp]
     type = ElectronTemperature
     variable = e_temp
-    electron_density = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
   []
   [x_g]
     type = Position
@@ -525,17 +525,17 @@ dom0Scale = 25.4e-3
   [em_density]
     type = DensityMoles
     variable = em_density
-    density_log = em
+    density = em
   []
   [Ar+_density]
     type = DensityMoles
     variable = Ar+_density
-    density_log = Ar+
+    density = Ar+
   []
   [Ar*_density]
     type = DensityMoles
     variable = Ar*_density
-    density_log = Ar*
+    density = Ar*
   []
 
   [Ar_val]
@@ -561,7 +561,7 @@ dom0Scale = 25.4e-3
 
   [Current_em]
     type = ADCurrent
-    density_log = em
+    density = em
     variable = Current_em
     art_diff = false
     block = 'plasma'
@@ -570,7 +570,7 @@ dom0Scale = 25.4e-3
   [Current_Ar]
     type = ADCurrent
     field_property_name = field_solver_interface_property_eff
-    density_log = Ar+
+    density = Ar+
     variable = Current_Ar+
     art_diff = false
     block = 'plasma'
