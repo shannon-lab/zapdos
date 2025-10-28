@@ -478,17 +478,17 @@ dom0Scale = 25.4e-3
   [em_density]
     type = DensityMoles
     variable = em_density
-    density_log = em
+    density = em
   []
   [Ar+_density]
     type = DensityMoles
     variable = Ar+_density
-    density_log = Ar+
+    density = Ar+
   []
   [Ar*_density]
     type = DensityMoles
     variable = Ar*_density
-    density_log = Ar*
+    density = Ar*
   []
 
   [Ar_val]

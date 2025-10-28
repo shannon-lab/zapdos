@@ -207,12 +207,12 @@ dom1Scale = 1e-7
   [emliq_lin]
     type = DensityMoles
     variable = emliq_lin
-    density_log = emliq
+    density = emliq
   []
   [OHm_lin]
     type = DensityMoles
     variable = OHm_lin
-    density_log = OHm
+    density = OHm
   []
   [Efield_l]
     type = Efield

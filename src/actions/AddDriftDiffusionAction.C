@@ -641,7 +641,7 @@ AddDriftDiffusionAction::addDensityLog(const std::string & particle_name)
 {
   InputParameters params = _factory.getValidParams("DensityMoles");
   params.set<AuxVariableName>("variable") = particle_name + "_density";
-  params.set<std::vector<VariableName>>("density_log") = {particle_name};
+  params.set<std::vector<VariableName>>("density") = {particle_name};
   params.set<bool>("use_moles") = getParam<bool>("use_moles");
   params.set<std::vector<SubdomainName>>("block") = getParam<std::vector<SubdomainName>>("block");
   _problem->addAuxKernel("DensityMoles", particle_name + "_density", params);

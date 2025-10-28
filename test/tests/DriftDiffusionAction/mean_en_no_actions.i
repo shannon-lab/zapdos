@@ -661,25 +661,25 @@ dom1Scale = 1e-7
   [em_lin]
     type = DensityMoles
     variable = em_density
-    density_log = em
+    density = em
     block = 0
   []
   [emliq_lin]
     type = DensityMoles
     variable = emliq_density
-    density_log = emliq
+    density = emliq
     block = 1
   []
   [Arp_lin]
     type = DensityMoles
     variable = Arp_density
-    density_log = Arp
+    density = Arp
     block = 0
   []
   [OHm_lin]
     type = DensityMoles
     variable = OHm_density
-    density_log = OHm
+    density = OHm
     block = 1
   []
   [Efield_g]

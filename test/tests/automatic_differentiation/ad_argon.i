@@ -350,13 +350,13 @@ dom0Scale = 1e-3
   [Arex_lin]
     type = DensityMoles
     variable = Arex_lin
-    density_log = Ar*
+    density = Ar*
     block = 0
   []
   [Ar2p_lin]
     type = DensityMoles
     variable = Ar2p_lin
-    density_log = Ar2p
+    density = Ar2p
     block = 0
   []
   [PowerDep_em]
@@ -415,13 +415,13 @@ dom0Scale = 1e-3
   [em_lin]
     type = DensityMoles
     variable = em_lin
-    density_log = em
+    density = em
     block = 0
   []
   [Arp_lin]
     type = DensityMoles
     variable = Arp_lin
-    density_log = Arp
+    density = Arp
     block = 0
   []
   [Efield_g]
