@@ -69,7 +69,7 @@ protected:
   /// Mass of ions
   std::vector<const MaterialProperty<Real> *> _mass_ions;
   /// Temperature of ions
-  std::vector<const MaterialProperty<Real> *> _T_ions;
+  std::vector<const VariableValue *> _T_ions;
 
   /// Ion flux
   Real _ion_flux;

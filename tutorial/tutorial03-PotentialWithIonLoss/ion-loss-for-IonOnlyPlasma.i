@@ -124,8 +124,8 @@ dom0Scale = 1.0
     type = ElectronTransportCoefficients
     interp_trans_coeffs = false
     ramp_trans_coeffs = false
-    user_p_gas = 13.3322
-    #user_p_gas = 1.33322
+    p_gas = 13.3322
+    #p_gas = 1.33322
     property_tables_file = rate_coefficients/electron_moments.txt
   []
   # The dielectric coefficient of the gas (defaulted to the permittivity of free space)
@@ -139,6 +139,7 @@ dom0Scale = 1.0
     heavy_species_name = Ar+
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
+    heavy_species_p = 13.3322
   []
 []
 

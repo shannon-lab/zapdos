@@ -400,7 +400,7 @@ dom1Scale = 1e-7
     type = ElectronTransportCoefficients
     interp_trans_coeffs = true
     ramp_trans_coeffs = false
-    user_p_gas = 101325
+    p_gas = 101325
     electrons = em
     electron_energy = mean_en
     block = 0
@@ -427,6 +427,7 @@ dom1Scale = 1e-7
     heavy_species_name = Arp
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 1.0
+    heavy_species_p = 101325
     block = 0
   []
 
@@ -436,6 +437,7 @@ dom1Scale = 1e-7
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
+    heavy_species_p = 101325
     block = 0
   []
 []

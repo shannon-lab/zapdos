@@ -39,6 +39,7 @@ Water::validParams()
   params.addCoupledVar("O3", "ozone molecules");
   params.addCoupledVar("O3m", "ozone anions");
   params.addCoupledVar("potential", "The potential");
+  params.addCoupledVar("T_water", 300, "The water temperature in Kelvin.");
   params.addParam<std::string>("field_property_name",
                                "field_solver_interface_property",
                                "Name of the solver interface material property.");
@@ -60,7 +61,7 @@ Water::Water(const InputParameters & parameters)
     _electron_mult(declareProperty<Real>("electron_mult")),
     _potential_mult(declareProperty<Real>("potential_mult")),
     _eps_r(declareProperty<Real>("eps_r")),
-    _T(declareProperty<Real>("T")),
+    _T(adCoupledValue("T_water")),
     _kemliq(declareADProperty<Real>("kemliq")),
     _kem(declareADProperty<Real>("kem")),
     _kemliqemliq(declareADProperty<Real>("kemliqemliq")),
@@ -207,7 +208,6 @@ Water::computeQpProperties()
   _eps_r[_qp] = 80.;
   // _eps_r[_qp] = 1.;
   _eps[_qp] = _eps_r[_qp] * ZAPDOS_CONSTANTS::eps_0;
-  _T[_qp] = 300;                   // Simulation temperature
   _kemliq[_qp] = 1.9e1 * _cw[_qp]; // e + H2O-->H + OH-
   _kem[_qp] = _kemliq[_qp];
   // _kemliqemliq[_qp]  = 6e11 * _cw[_qp] * _cw[_qp] / (ZAPDOS_CONSTANTS::N_A * 1000.);     // e +

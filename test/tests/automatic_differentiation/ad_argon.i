@@ -633,7 +633,7 @@ dom0Scale = 1e-3
     property_tables_file = 'argon_chemistry_rates/electron_moments.txt'
     interp_trans_coeffs = true
     ramp_trans_coeffs = false
-    user_p_gas = 1.01e5
+    p_gas = 1.01e5
   []
   [gas_permittivity]
     type = ElectrostaticPermittivity

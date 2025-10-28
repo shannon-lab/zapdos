@@ -616,8 +616,8 @@ dom0Scale = 25.4e-3
     electron_energy = mean_en
     interp_trans_coeffs = false
     ramp_trans_coeffs = false
-    user_p_gas = 133.33
-    user_T_gas = 300
+    p_gas = 133.33
+    T_gas = 300
     user_electron_mobility = 30.0
     user_electron_diffusion_coeff = 119.8757763975
     property_tables_file = Argon_reactions_RateCoefficients/electron_moments.txt
@@ -633,12 +633,16 @@ dom0Scale = 25.4e-3
     heavy_species_charge = 1.0
     mobility = 0.144409938
     diffusivity = 6.428571e-3
+    heavy_species_p = 133.33
+    heavy_species_T = 300
   []
   [gas_species_2]
     type = ADHeavySpecies
     heavy_species_name = Ar
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
+    heavy_species_p = 133.33
+    heavy_species_T = 300
   []
   [gas_species_1]
     type = ADHeavySpecies
@@ -646,6 +650,8 @@ dom0Scale = 25.4e-3
     heavy_species_mass = 6.64e-26
     heavy_species_charge = 0.0
     diffusivity = 7.515528e-3
+    heavy_species_p = 133.33
+    heavy_species_T = 300
   []
   [reaction_0]
     #type = ADZapdosEEDFRateLinearInterpolation

@@ -28,6 +28,7 @@ SchottkyEmissionBC::validParams()
   params.addRequiredParam<std::string>("potential_units", "The potential units.");
   params.addParam<Real>("tau", 1e-9, "The time constant for ramping the boundary condition.");
   params.addParam<bool>("relax", false, "Use relaxation for emission.");
+  params.addCoupledVar("cathode_temperature", 300, "The cathode temperature in Kelvin.");
   params.addParam<std::string>("field_property_name",
                                "field_solver_interface_property",
                                "Name of the solver interface material property.");
@@ -52,7 +53,7 @@ SchottkyEmissionBC::SchottkyEmissionBC(const InputParameters & parameters)
     _work_function(getMaterialProperty<Real>("work_function")),
     _field_enhancement(getMaterialProperty<Real>("field_enhancement")),
     _Richardson_coefficient(getMaterialProperty<Real>("Richardson_coefficient")),
-    _cathode_temperature(getMaterialProperty<Real>("cathode_temperature")),
+    _cathode_temperature(adCoupledValue("cathode_temperature")),
     _a(0.5),
     _v_thermal(0),
     _ion_flux(0, 0, 0),
