@@ -771,8 +771,8 @@ dom0Scale = 25.4e-3
     interp_trans_coeffs = true
     ramp_trans_coeffs = false
     user_p_gas = 133.322
-    em = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
   []
   [gas_species_0]

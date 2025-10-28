@@ -846,8 +846,8 @@ dom1Scale = 1e-7
     interp_trans_coeffs = true
     ramp_trans_coeffs = false
     user_p_gas = 101325
-    em = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     block = 0
     property_tables_file = 'townsend_coefficients/moments.txt'
   []

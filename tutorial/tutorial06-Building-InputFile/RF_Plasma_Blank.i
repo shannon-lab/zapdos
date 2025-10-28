@@ -228,9 +228,9 @@ dom0Scale=25.4e-3
     #User difine pressure in pa
     user_p_gas = 133.322
     #Name for electrons (usually 'em')
-    em = em
+    electrons = em
     #Name for the electron mean energy density (usually 'mean_en')
-    mean_en = mean_en
+    electron_energy = mean_en
     #User define electron mobility coeff. (define as 0.0 if not used)
     user_electron_mobility = 30.0
     #User define electron diffusion coeff. (define as 0.0 if not used)
