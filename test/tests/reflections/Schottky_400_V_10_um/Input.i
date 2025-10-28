@@ -495,6 +495,7 @@ vhigh = -175E-3 #kV
     r = 1
     position_units = ${dom0Scale}
     emission_coeffs = 0.02
+    cathode_temperature = 1273
   []
 
   # [em_physical_left]
@@ -617,7 +618,6 @@ vhigh = -175E-3 #kV
     user_work_function = 4.55 # eV
     user_field_enhancement = 55
     user_Richardson_coefficient = 80E4
-    user_cathode_temperature = 1273
     block = 0
   []
   [gas_block_electrons]
@@ -628,7 +628,7 @@ vhigh = -175E-3 #kV
     electron_energy = mean_en
     block = 0
     property_tables_file = td_argon_electrons.txt
-    user_p_gas = 1.01e5
+    p_gas = 1.01e5
   []
   [gas_permittivity]
     type = ElectrostaticPermittivity

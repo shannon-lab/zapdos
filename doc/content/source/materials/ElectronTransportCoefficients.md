@@ -25,11 +25,6 @@ Where:
 - $\mu$ is the mobility coefficient, and
 - $D$ is the diffusion coefficient.
 
-In addition to the transport and material properties of electrons and the electron mean energy density, `ElectronTransportCoefficients` also defines the following:
-
-- the background gas temperature, labeled as `T_gas`, and
-- the background gas pressure, labeled as `p_gas`.
-
 ## Example Input File Syntax
 
 !listing test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i block=Materials/GasBasics

@@ -23,7 +23,6 @@ FieldEmissionCoefficients::validParams()
   params.addParam<Real>("user_field_enhancement", 1, "The field enhancement factor.");
 
   params.addParam<Real>("user_Richardson_coefficient", 1.20173E6, "The Richardson coefficient.");
-  params.addParam<Real>("user_cathode_temperature", 300, "The cathode temperature in Kelvin.");
 
   params.addClassDescription("The material coefficients for field emission");
   return params;
@@ -35,13 +34,11 @@ FieldEmissionCoefficients::FieldEmissionCoefficients(const InputParameters & par
     _user_field_enhancement(getParam<Real>("user_field_enhancement")),
 
     _user_Richardson_coefficient(getParam<Real>("user_Richardson_coefficient")),
-    _user_cathode_temperature(getParam<Real>("user_cathode_temperature")),
 
     _work_function(declareProperty<Real>("work_function")),
     _field_enhancement(declareProperty<Real>("field_enhancement")),
 
-    _Richardson_coefficient(declareProperty<Real>("Richardson_coefficient")),
-    _cathode_temperature(declareProperty<Real>("cathode_temperature"))
+    _Richardson_coefficient(declareProperty<Real>("Richardson_coefficient"))
 {
 }
 
@@ -52,5 +49,4 @@ FieldEmissionCoefficients::computeQpProperties()
   _field_enhancement[_qp] = _user_field_enhancement;
 
   _Richardson_coefficient[_qp] = _user_Richardson_coefficient;
-  _cathode_temperature[_qp] = _user_cathode_temperature;
 }

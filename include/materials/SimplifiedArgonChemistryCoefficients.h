@@ -33,10 +33,10 @@ protected:
   /// True if interpolating the elastic collision townsend coefficient as a function of the mean energy
   const bool _interp_elastic_coeff;
 
-  /// User defined neutral gas and ion temperature
-  const Real _user_T_gas;
-  /// User defined neutral gas pressure
-  const Real _user_p_gas;
+  /// Coupled background argon temperature variable
+  const VariableValue & _T_gas;
+  /// Coupled background argon pressure variable
+  const VariableValue & _p_gas;
   /// True if molar density is used
   const bool _use_moles;
 

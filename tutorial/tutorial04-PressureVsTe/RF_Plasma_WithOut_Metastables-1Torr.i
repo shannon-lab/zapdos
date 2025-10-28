@@ -233,7 +233,7 @@ dom0Scale = 1.0
     #Name for the electron mean energy density (usually 'mean_en')
     electron_energy = mean_en
     #User difine pressure in pa
-    user_p_gas = 133.322
+    p_gas = 133.322
     #True if pressure dependent coeff.
     pressure_dependent_electron_coeff = true
     #Name of text file with electron properties

@@ -35,8 +35,11 @@ ElectronTransportCoefficients::validParams()
 
   params.addParam<Real>("time_units", 1, "Units of time");
 
-  params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
-  params.addCoupledVar("user_p_gas", "The gas pressure in Pascals.");
+  params.addCoupledVar("T_gas", 300, "The background gas temperature in Kelvin.");
+  params.addCoupledVar(
+      "p_gas",
+      1.01e5,
+      "The background gas pressure in Pascals (defaulted to 1 standard atmosphere).");
 
   params.addCoupledVar("electrons", "The electron density in log form");
   params.addCoupledVar("electron_energy", "The mean electron energy density in log form");
@@ -60,8 +63,8 @@ ElectronTransportCoefficients::ElectronTransportCoefficients(const InputParamete
     _potential_units(getParam<std::string>("potential_units")),
     _time_units(getParam<Real>("time_units")),
 
-    _user_T_gas(getParam<Real>("user_T_gas")),
-    _user_p_gas(coupledValue("user_p_gas")),
+    _T_gas(coupledValue("T_gas")),
+    _p_gas(coupledValue("p_gas")),
     _use_moles(getParam<bool>("use_moles")),
 
     _user_muem(getParam<Real>("user_electron_mobility")),
@@ -76,8 +79,6 @@ ElectronTransportCoefficients::ElectronTransportCoefficients(const InputParamete
 
     _sgnem(declareProperty<Real>("sgnem")),
     _sgnmean_en(declareProperty<Real>("sgnmean_en")),
-    _T_gas(declareProperty<Real>("T_gas")),
-    _p_gas(declareProperty<Real>("p_gas")),
 
     _em(isCoupled("electrons") ? adCoupledValue("electrons") : _ad_zero),
     _mean_en(isCoupled("electron_energy") ? adCoupledValue("electron_energy") : _ad_zero)
@@ -121,8 +122,6 @@ void
 ElectronTransportCoefficients::computeQpProperties()
 {
   _massem[_qp] = 9.11e-31;
-  _T_gas[_qp] = _user_T_gas;
-  _p_gas[_qp] = _user_p_gas[_qp];
   Real N_inverse = (ZAPDOS_CONSTANTS::k_boltz * _T_gas[_qp]) / _p_gas[_qp];
 
   _sgnem[_qp] = -1.;

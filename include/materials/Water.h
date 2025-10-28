@@ -40,8 +40,8 @@ protected:
   MaterialProperty<Real> & _potential_mult;
   /// Relative permittivity of the medium
   MaterialProperty<Real> & _eps_r;
-  /// Room temperature (300 K)
-  MaterialProperty<Real> & _T;
+  /// Coupled water temperature variable (defaulted to 300 K)
+  const ADVariableValue & _T;
   /*
    * Reaction coefficient for:
    * e + H2O-->H + OH-

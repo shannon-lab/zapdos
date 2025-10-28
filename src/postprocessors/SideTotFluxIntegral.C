@@ -27,6 +27,7 @@ SideTotFluxIntegral::validParams()
       "The name of the mobility material property that will be used in the flux computation.");
   params.addRequiredParam<Real>("r", "The reflection coefficient");
   params.addRequiredParam<Real>("position_units", "Units of position.");
+  params.addCoupledVar("T_ion", 300, "The ion temperature in Kelvin.");
   params.addParam<Real>(
       "user_velocity", -1., "Optional parameter if user wants to specify the thermal velocity");
   params.addParam<std::string>("field_property_name",
@@ -43,7 +44,7 @@ SideTotFluxIntegral::SideTotFluxIntegral(const InputParameters & parameters)
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
 
-    _T_heavy(getMaterialProperty<Real>("T_heavy")),
+    _T_heavy(coupledValue("T_ion")),
     _mass(getMaterialProperty<Real>("mass" + _variable->name())),
     _v_thermal(0),
     _user_velocity(getParam<Real>("user_velocity")),

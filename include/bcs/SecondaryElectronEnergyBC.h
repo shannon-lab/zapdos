@@ -54,7 +54,7 @@ protected:
   /// Mobility coefficient of the ions
   std::vector<const ADMaterialProperty<Real> *> _muip;
   /// Temperature of ions
-  std::vector<const ADMaterialProperty<Real> *> _Tip;
+  std::vector<const ADVariableValue *> _Tip;
   /// Mass of ions
   std::vector<const MaterialProperty<Real> *> _massip;
   /// Secondary electron energy

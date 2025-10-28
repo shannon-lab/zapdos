@@ -226,7 +226,7 @@ dom0Scale=25.4e-3
     #Leave as false, unless computational error is due to rapid coeff. changes
     ramp_trans_coeffs = false
     #User difine pressure in pa
-    user_p_gas = 133.322
+    p_gas = 133.322
     #Name for electrons (usually 'em')
     electrons = em
     #Name for the electron mean energy density (usually 'mean_en')
