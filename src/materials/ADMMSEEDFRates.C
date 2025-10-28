@@ -22,8 +22,8 @@ ADMMSEEDFRates::validParams()
                                              "functions that are going to provide "
                                              "the derivative values wrt the"
                                              "actual mean energy for the variables");
-  params.addCoupledVar("mean_energy", "The electron mean energy in log form.");
-  params.addCoupledVar("electrons", "The electron density.");
+  params.addCoupledVar("electron_energy", "The mean electron energy density in log form");
+  params.addCoupledVar("electrons", "The electron density in log form.");
   params.addClassDescription("Add material properties used for MMS verifications involving "
                              "properties as a function of electron mean energy.");
   return params;
@@ -32,7 +32,7 @@ ADMMSEEDFRates::validParams()
 ADMMSEEDFRates::ADMMSEEDFRates(const InputParameters & parameters)
   : ADMaterial(parameters),
     _em(adCoupledValue("electrons")),
-    _mean_en(adCoupledValue("mean_energy")),
+    _mean_en(adCoupledValue("electron_energy")),
     _prop_names(getParam<std::vector<std::string>>("prop_names")),
     _prop_values(getParam<std::vector<FunctionName>>("prop_values")),
     _d_prop_values_actual_mean_en(getParam<std::vector<FunctionName>>("d_prop_d_actual_mean_en"))

@@ -628,8 +628,8 @@ dom0Scale = 1e-3
   [electron_moments]
     type = ElectronTransportCoefficients
     block = 0
-    em = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     property_tables_file = 'argon_chemistry_rates/electron_moments.txt'
     interp_trans_coeffs = true
     ramp_trans_coeffs = false

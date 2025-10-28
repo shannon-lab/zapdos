@@ -38,9 +38,8 @@ ElectronTransportCoefficients::validParams()
   params.addParam<Real>("user_T_gas", 300, "The gas temperature in Kelvin.");
   params.addCoupledVar("user_p_gas", "The gas pressure in Pascals.");
 
-  params.addCoupledVar("em", "Species concentration needed to calculate the poisson source");
-  params.addCoupledVar("mean_en", "The electron mean energy in log form.");
-  params.addCoupledVar("ip", "The ion density.");
+  params.addCoupledVar("electrons", "The electron density in log form");
+  params.addCoupledVar("electron_energy", "The mean electron energy density in log form");
 
   params.addParam<Real>("user_electron_mobility", 0, "The electron mobility coefficient.");
   params.addParam<Real>("user_electron_diffusion_coeff", 0, "The electron diffusion coefficient.");
@@ -81,8 +80,8 @@ ElectronTransportCoefficients::ElectronTransportCoefficients(const InputParamete
     _T_gas(declareProperty<Real>("T_gas")),
     _p_gas(declareProperty<Real>("p_gas")),
 
-    _em(isCoupled("em") ? adCoupledValue("em") : _ad_zero),
-    _mean_en(isCoupled("mean_en") ? adCoupledValue("mean_en") : _ad_zero)
+    _em(isCoupled("electrons") ? adCoupledValue("electrons") : _ad_zero),
+    _mean_en(isCoupled("electron_energy") ? adCoupledValue("electron_energy") : _ad_zero)
 {
   if (_potential_units.compare("V") == 0)
     _voltage_scaling = 1.;

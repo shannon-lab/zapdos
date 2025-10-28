@@ -283,7 +283,7 @@
     type = PlasmaDielectricConstant
     driving_frequency = 6.207
     electron_neutral_collision_frequency = 6.525
-    em = em
+    electrons = em
   []
   [field_solver]
     type = FieldSolverMaterial

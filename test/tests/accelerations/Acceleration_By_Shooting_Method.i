@@ -612,8 +612,8 @@ dom0Scale = 25.4e-3
     #"interp_trans_coeffs = true". This lets the mobility and
     #diffusivity to be energy dependent, as dictated by the txt file
     type = ElectronTransportCoefficients
-    em = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     interp_trans_coeffs = false
     ramp_trans_coeffs = false
     user_p_gas = 133.33
