@@ -304,7 +304,7 @@ dom1Scale = 1e-4
   #[mean_en_joule_heating]
   #  type = ADJouleHeating
   #  variable = mean_en
-  #  em = em
+  #  electrons = em
   #  potential = potential_dom0
   #  position_units = ${dom0Scale}
   #  block = 0

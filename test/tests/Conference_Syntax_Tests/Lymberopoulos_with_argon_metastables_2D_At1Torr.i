@@ -257,7 +257,7 @@ dom0Scale = 25.4e-3
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    em = em
+    electrons = em
     position_units = ${dom0Scale}
   []
   #Energy loss from ionization

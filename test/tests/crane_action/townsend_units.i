@@ -252,7 +252,7 @@ dom1Scale = 1e-7
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    em = em
+    electrons = em
     block = 0
     position_units = ${dom0Scale}
   []
