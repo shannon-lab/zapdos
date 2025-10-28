@@ -40,7 +40,7 @@ please refer to the [MOOSE Contributing page](framework/contributing.md).
   [mean_en_ionization]
     type = ElectronEnergyTermRate
     variable = mean_en
-    em = electrons
+    electrons = electrons
     v = Ar
     reaction = ionization
     threshold_energy = -15.7

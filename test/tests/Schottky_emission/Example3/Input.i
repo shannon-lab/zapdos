@@ -140,9 +140,9 @@ threeTimesRelaxTime = 150E-6 #s
   []
   [em_ionization]
     type = ElectronsFromIonization
-    em = em
+    electrons = em
     variable = em
-    mean_en = mean_en
+    electron_energy = mean_en
     block = 0
     position_units = ${dom0Scale}
   []
@@ -187,8 +187,8 @@ threeTimesRelaxTime = 150E-6 #s
   [Arp_ionization]
     type = IonsFromIonization
     variable = Arp
-    em = em
-    mean_en = mean_en
+    electrons = em
+    electron_energy = mean_en
     block = 0
     position_units = ${dom0Scale}
   []
@@ -213,28 +213,28 @@ threeTimesRelaxTime = 150E-6 #s
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    em = em
+    electrons = em
     block = 0
     position_units = ${dom0Scale}
   []
   [mean_en_ionization]
     type = ElectronEnergyLossFromIonization
     variable = mean_en
-    em = em
+    electrons = em
     block = 0
     position_units = ${dom0Scale}
   []
   [mean_en_elastic]
     type = ElectronEnergyLossFromElastic
     variable = mean_en
-    em = em
+    electrons = em
     block = 0
     position_units = ${dom0Scale}
   []
   [mean_en_excitation]
     type = ElectronEnergyLossFromExcitation
     variable = mean_en
-    em = em
+    electrons = em
     block = 0
     position_units = ${dom0Scale}
   []

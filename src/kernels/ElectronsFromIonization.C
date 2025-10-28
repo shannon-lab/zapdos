@@ -17,8 +17,8 @@ InputParameters
 ElectronsFromIonization::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addCoupledVar("mean_en", 3, "The electron mean energy.");
-  params.addRequiredCoupledVar("em", "The electron density in logarithmic form.");
+  params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addRequiredParam<Real>("position_units", "Units of position.");
   params.addParam<bool>("use_material_props", true, "Whether to use a material for properties.");
   params.addParam<Real>("muem", "The mobility.");
@@ -45,9 +45,9 @@ ElectronsFromIonization::ElectronsFromIonization(const InputParameters & paramet
                                                    : _user_alpha_iz),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
-    _mean_en(adCoupledValue("mean_en")),
-    _em(adCoupledValue("em")),
-    _grad_em(adCoupledGradient("em"))
+    _mean_en(adCoupledValue("electron_energy")),
+    _em(adCoupledValue("electrons")),
+    _grad_em(adCoupledGradient("electrons"))
 {
   if (!(getParam<bool>("use_material_props")))
   {

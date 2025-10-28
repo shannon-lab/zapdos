@@ -16,7 +16,7 @@ InputParameters
 ElectronEnergyTermRate::validParams()
 {
   InputParameters params = ADKernel::validParams();
-  params.addRequiredCoupledVar("em", "The electron density.");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
   params.addCoupledVar("v", "The second reactant species.");
   params.addParam<bool>("elastic_collision", false, "If the collision is elastic.");
   params.addRequiredParam<std::string>("reaction", "The reaction that is adding/removing energy.");
@@ -36,9 +36,9 @@ ElectronEnergyTermRate::ElectronEnergyTermRate(const InputParameters & parameter
     _threshold_energy(getParam<Real>("threshold_energy")),
     _n_gas(getADMaterialProperty<Real>("n_gas")),
     _rate_coefficient(getADMaterialProperty<Real>("k_" + getParam<std::string>("reaction"))),
-    _em(adCoupledValue("em")),
+    _em(adCoupledValue("electrons")),
     _v(isCoupled("v") ? adCoupledValue("v") : _ad_zero),
-    _grad_em(adCoupledGradient("em"))
+    _grad_em(adCoupledGradient("electrons"))
 {
   if (!_elastic && !isParamValid("threshold_energy"))
     mooseError("ElectronEnergyTerm: Elastic collision set to false, but no threshold energy for "

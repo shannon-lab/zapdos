@@ -18,7 +18,8 @@ TM0CylindricalEr::validParams()
 {
   InputParameters params = ADKernel::validParams();
   params.addRequiredParam<Real>("f", "The drive frequency.");
-  params.addRequiredCoupledVar("Hphi", "The phi component of the magnetic field.");
+  params.addRequiredCoupledVar("azimuthal_magnetic_field",
+                               "The azimuthal component of the magnetic field, $H_{\\phi}$.");
   params.addClassDescription(
       "The axisymmetric wave equation for the radial component of the electric field.");
   return params;
@@ -29,8 +30,8 @@ TM0CylindricalEr::TM0CylindricalEr(const InputParameters & parameters)
 
     _omega(2. * libMesh::pi * getParam<Real>("f")),
     _eps_r(getADMaterialProperty<Real>("eps_r")),
-    _Hphi(adCoupledValue("Hphi")),
-    _grad_Hphi(adCoupledGradient("Hphi"))
+    _Hphi(adCoupledValue("azimuthal_magnetic_field")),
+    _grad_Hphi(adCoupledGradient("azimuthal_magnetic_field"))
 {
 }
 

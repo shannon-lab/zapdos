@@ -272,14 +272,14 @@ dom0Scale = 25.4e-3
   [mean_en_diffusion_correction]
     type = ThermalConductivityDiffusion
     variable = mean_en
-    em = em
+    electrons = em
     position_units = ${dom0Scale}
   []
   #Joule Heating term
   [mean_en_joule_heating]
     type = JouleHeating
     variable = mean_en
-    em = em
+    electrons = em
     position_units = ${dom0Scale}
   []
   #Energy loss from ionization
@@ -340,7 +340,7 @@ dom0Scale = 25.4e-3
   [SM_Ar*_stepwise_ionization]
     type = EEDFReactionLogForShootMethod
     variable = SM_Ar*
-    electron = em
+    electrons = em
     density = Ar*
     reaction = 'em + Ar* -> em + em + Ar+'
     coefficient = -1
@@ -350,7 +350,7 @@ dom0Scale = 25.4e-3
   [SM_Ar*_collisions]
     type = EEDFReactionLogForShootMethod
     variable = SM_Ar*
-    electron = em
+    electrons = em
     density = Ar*
     reaction = 'em + Ar* -> em + Ar'
     coefficient = -1

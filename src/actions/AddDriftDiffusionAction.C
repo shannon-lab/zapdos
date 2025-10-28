@@ -596,7 +596,8 @@ AddDriftDiffusionAction::addADKernels(const std::string & name,
     InputParameters params4 = _factory.getValidParams("JouleHeating");
     params4.set<NonlinearVariableName>("variable") = {name};
     params4.set<std::string>("field_property_name") = {field_property_name};
-    params4.set<std::vector<VariableName>>("em") = {getParam<NonlinearVariableName>("electrons")};
+    params4.set<std::vector<VariableName>>("electrons") = {
+        getParam<NonlinearVariableName>("electrons")};
     params4.set<std::string>("potential_units") = getParam<std::string>("potential_units");
     params4.set<Real>("position_units") = getParam<Real>("position_units");
     params4.set<std::vector<SubdomainName>>("block") =
