@@ -16,7 +16,8 @@ InputParameters
 MatchedValueLogBC::validParams()
 {
   InputParameters params = ADNodalBC::validParams();
-  params.addRequiredParam<Real>("H", "The ratio of liquid phase density to gas phase density");
+  params.addRequiredParam<Real>("henry_solubility",
+                                "The ratio of liquid phase density to gas phase density");
   params.addRequiredCoupledVar("v", "The variable whose value we are to match.");
   params.addClassDescription(
       "Henry’s Law like thermodynamic boundary condition for specifying a species"
@@ -25,7 +26,7 @@ MatchedValueLogBC::validParams()
 }
 
 MatchedValueLogBC::MatchedValueLogBC(const InputParameters & parameters)
-  : ADNodalBC(parameters), _v(adCoupledValue("v")), _H(getParam<Real>("H"))
+  : ADNodalBC(parameters), _v(adCoupledValue("v")), _H(getParam<Real>("henry_solubility"))
 {
 }
 

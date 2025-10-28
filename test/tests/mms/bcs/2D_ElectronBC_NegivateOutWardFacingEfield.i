@@ -440,8 +440,8 @@
   [em_Ar+_second_emissions_left]
     type = SakiyamaSecondaryElectronWithEffEfieldBC
     variable = em
-    Ex = Ex
-    Ey = Ey
+    electric_field_x = Ex
+    electric_field_y = Ey
     ions = ion
     emission_coeffs = 'users_gamma'
     boundary = 3
@@ -480,8 +480,8 @@
   [em_Ar+_second_emissions_down]
     type = SakiyamaSecondaryElectronWithEffEfieldBC
     variable = em
-    Ex = Ex
-    Ey = Ey
+    electric_field_x = Ex
+    electric_field_y = Ey
     ions = ion
     emission_coeffs = 'users_gamma'
     boundary = 0

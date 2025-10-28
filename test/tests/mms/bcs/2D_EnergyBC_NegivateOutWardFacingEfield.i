@@ -448,12 +448,12 @@
   [energy_left_second_emissions]
     type = SakiyamaEnergySecondaryElectronWithEffEfieldBC
     variable = mean_en
-    em = em
+    electrons = em
     ions = ion
-    Ex = Ex
-    Ey = Ey
-    Tse_equal_Te = false
-    user_se_energy = 1.0
+    electric_field_x = Ex
+    electric_field_y = Ey
+    secondary_electron_temperature_equal_to_bulk = false
+    secondary_electron_energy = 1.0
     emission_coeffs = 'users_gamma'
     boundary = 3
     position_units = 1.0
@@ -484,12 +484,12 @@
   [energy_down_second_emissions]
     type = SakiyamaEnergySecondaryElectronWithEffEfieldBC
     variable = mean_en
-    em = em
+    electrons = em
     ions = ion
-    Ex = Ex
-    Ey = Ey
-    Tse_equal_Te = false
-    user_se_energy = 1.0
+    electric_field_x = Ex
+    electric_field_y = Ey
+    secondary_electron_temperature_equal_to_bulk = false
+    secondary_electron_energy = 1.0
     emission_coeffs = 'users_gamma'
     boundary = 0
     position_units = 1.0

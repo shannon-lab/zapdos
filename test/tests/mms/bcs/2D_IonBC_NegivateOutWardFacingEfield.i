@@ -24,7 +24,7 @@
 []
 
 [Kernels]
-#Ion Equations
+  #Ion Equations
   [ion_time_derivative]
     type = TimeDerivativeLog
     variable = ion
@@ -47,8 +47,7 @@
     function = 'ion_source'
   []
 
-
-#Eff. Efield
+  #Eff. Efield
   [EffEfield_X_time_deriv]
     type = TimeDerivative
     variable = Ex
@@ -109,7 +108,7 @@
 []
 
 [Functions]
-#Material Variables
+  #Material Variables
   #Ion diffusion coeff.
   [diffion]
     type = ConstantFunction
@@ -132,8 +131,7 @@
     value = 0.25
   []
 
-
-#Manufactured Solutions
+  #Manufactured Solutions
   #The manufactured ion density solution
   [ion_fun]
     type = ParsedFunction
@@ -155,7 +153,7 @@
     expression = '(diffion*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))'
   []
 
-#Source Terms in moles
+  #Source Terms in moles
   #The ion source term.
   [ion_source]
     type = ParsedFunction
@@ -177,7 +175,6 @@
     vals = 'ee N_A diffpotential diffion muion'
     expression = '-diffpotential*((2*diffion*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^3)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (diffion*(pi^3*cos(pi*y) - (pi^3*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) + (3*diffion*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) - (2*diffion*pi^2*cos(2*pi*t)*sin(pi*y))/(5*muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) - (diffion*diffpotential*pi^2*sin(pi*x)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) - (2*diffion*diffpotential*pi^2*cos(pi*x)^2*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (2*diffion*pi*cos(2*pi*t)*cos(pi*y)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(5*muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)'
   []
-
 
   [ion_ICs]
     type = ParsedFunction
@@ -211,8 +208,8 @@
   [ion_left_physical_advection]
     type = SakiyamaIonAdvectionWithEffEfieldBC
     variable = ion
-    Ex = Ex
-    Ey = Ey
+    electric_field_x = Ex
+    electric_field_y = Ey
     boundary = 3
     position_units = 1.0
   []
@@ -235,8 +232,8 @@
   [ion_down_physical_advection]
     type = SakiyamaIonAdvectionWithEffEfieldBC
     variable = ion
-    Ex = Ex
-    Ey = Ey
+    electric_field_x = Ex
+    electric_field_y = Ey
     boundary = 0
     position_units = 1.0
   []
@@ -269,17 +266,17 @@
 [Materials]
   [Material_Coeff]
     type = GenericFunctionMaterial
-    prop_names =  'e  N_A  diffEx         diffEy'
+    prop_names = 'e  N_A  diffEx         diffEy'
     prop_values = 'ee N_A  diffpotential  diffpotential '
   []
   [ADMaterial_Coeff_Set1]
     type = ADGenericFunctionMaterial
-    prop_names =  'diffion  muion'
+    prop_names = 'diffion  muion'
     prop_values = 'diffion  muion'
   []
   [Charge_Signs]
     type = GenericConstantMaterial
-    prop_names =  'sgnion'
+    prop_names = 'sgnion'
     prop_values = '1.0'
   []
 []
@@ -327,7 +324,6 @@
 
   # dt = 0.008
   dt = 0.02
-
 
   automatic_scaling = true
   compute_scaling_once = false
