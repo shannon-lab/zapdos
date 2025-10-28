@@ -84,9 +84,9 @@ area = 5.02e-7 # Formerly 3.14e-6
     type = CurrentDensityShapeSideUserObject
     boundary = left
     potential = potential
-    em = em
-    ip = Arp
-    mean_en = mean_en
+    electrons = em
+    ions = Arp
+    electron_energy = mean_en
     execute_on = 'linear nonlinear'
   []
   [data_provider]
