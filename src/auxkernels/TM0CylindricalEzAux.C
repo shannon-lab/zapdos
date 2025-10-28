@@ -18,7 +18,7 @@ TM0CylindricalEzAux::validParams()
 {
   InputParameters params = AuxKernel::validParams();
   params.addRequiredCoupledVar("azimuthal_magnetic_field",
-                               "The azimuthal component of the magnetic field, $H_{phi}$.");
+                               "The azimuthal component of the magnetic field, $H_{\\phi}$.");
   params.addRequiredParam<Real>("f", "The drive frequency.");
   params.addParam<Real>("eps_r", 1., "The relative permittivity of the medium.");
   params.addClassDescription("Calculates the axial E-field for an axisymmetric "
