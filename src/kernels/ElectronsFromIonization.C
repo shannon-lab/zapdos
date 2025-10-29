@@ -38,9 +38,12 @@ ElectronsFromIonization::ElectronsFromIonization(const InputParameters & paramet
 
     _r_units(1. / getParam<Real>("position_units")),
 
-    _diffem(getParam<bool>("use_material_props") ? getADMaterialProperty<Real>("diffem")
-                                                 : _user_diffem),
-    _muem(getParam<bool>("use_material_props") ? getADMaterialProperty<Real>("muem") : _user_muem),
+    _diffem(getParam<bool>("use_material_props")
+                ? getADMaterialProperty<Real>("diff" + (*getVar("electrons", 0)).name())
+                : _user_diffem),
+    _muem(getParam<bool>("use_material_props")
+              ? getADMaterialProperty<Real>("mu" + (*getVar("electrons", 0)).name())
+              : _user_muem),
     _alpha_iz(getParam<bool>("use_material_props") ? getADMaterialProperty<Real>("alpha_iz")
                                                    : _user_alpha_iz),
     _electric_field(

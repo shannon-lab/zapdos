@@ -44,11 +44,11 @@ SecondaryElectronEnergyBC::SecondaryElectronEnergyBC(const InputParameters & par
     // Coupled Variables
     _em(adCoupledValue("electrons")),
 
-    _muem(getADMaterialProperty<Real>("muem")),
-    _massem(getMaterialProperty<Real>("massem")),
+    _muem(getADMaterialProperty<Real>("mu" + (*getVar("electrons", 0)).name())),
+    _massem(getMaterialProperty<Real>("mass" + (*getVar("electrons", 0)).name())),
 
     _se_energy(getParam<Real>("secondary_electron_energy")),
-    _mumean_en(getADMaterialProperty<Real>("mumean_en")),
+    _mumean_en(getADMaterialProperty<Real>("mu" + _var.name())),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {

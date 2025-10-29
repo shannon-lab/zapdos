@@ -6,10 +6,10 @@
 
 `ElectronTransportCoefficients` defines the transport and material properties of electrons and the electron mean energy density. The following are the properties and naming scheme that `ElectronTransportCoefficients` provides:
 
-- electron mass, labeled as `massem`,
-- electron and electron mean energy density charge sign, labeled as `sgnem` and `sgnmean_en`,
-- electron and electron mean energy density mobility coefficient, labeled as `muem` and `mumean_en`,
-- electron and electron mean energy density diffusion coefficient, labeled as `diffem` and `diffmean_en`,
+- electron mass, labeled as "mass + 'electrons variable name'" (e.g., `massem`),
+- electron and electron mean energy density charge sign, labeled as "sgn + 'variable name'" (e.g., `sgnem` and `sgnmean_en`),
+- electron and electron mean energy density mobility coefficient, labeled as "mu + 'variable name'" (e.g., `muem` and `mumean_en`), and
+- electron and electron mean energy density diffusion coefficient, labeled as "diff + 'variable name'" (e.g., `diffem` and `diffmean_en`).
 
 For the electron transport coefficients, they can either be defined as a user-supplied constant or be a function of the mean energy by supplying the output of a Boltzmann solver as a lookup table (such as the outputs from [BOLSIG+](https://www.bolsig.laplace.univ-tlse.fr/)). The electron mean energy density transport coefficients are defined based on the electron coefficients, such that:
 

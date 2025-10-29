@@ -302,6 +302,7 @@ dom1Scale = 1e-7
 [Materials]
   [water_block]
     type = Water
+    aqueous_electrons = emliq
   []
   [field_solver]
     type = FieldSolverMaterial

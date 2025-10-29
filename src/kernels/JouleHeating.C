@@ -32,8 +32,8 @@ JouleHeating::JouleHeating(const InputParameters & parameters)
   : ADKernel(parameters),
     _r_units(1. / getParam<Real>("position_units")),
     _potential_units(getParam<std::string>("potential_units")),
-    _diff(getADMaterialProperty<Real>("diffem")),
-    _mu(getADMaterialProperty<Real>("muem")),
+    _diff(getADMaterialProperty<Real>("diff" + (*getVar("electrons", 0)).name())),
+    _mu(getADMaterialProperty<Real>("mu" + (*getVar("electrons", 0)).name())),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
     _em(adCoupledValue("electrons")),

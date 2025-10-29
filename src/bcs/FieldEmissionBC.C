@@ -42,8 +42,8 @@ FieldEmissionBC::FieldEmissionBC(const InputParameters & parameters)
     _r(getParam<Real>("r")),
     _num_ions(coupledComponents("ions")),
 
-    _muem(getADMaterialProperty<Real>("muem")),
-    _massem(getMaterialProperty<Real>("massem")),
+    _muem(getADMaterialProperty<Real>("mu" + _var.name())),
+    _massem(getMaterialProperty<Real>("mass" + _var.name())),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     _work_function(getMaterialProperty<Real>("work_function")),
     _field_enhancement(getMaterialProperty<Real>("field_enhancement")),

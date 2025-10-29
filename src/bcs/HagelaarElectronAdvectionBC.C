@@ -32,7 +32,7 @@ HagelaarElectronAdvectionBC::HagelaarElectronAdvectionBC(const InputParameters &
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
 
-    _muem(getADMaterialProperty<Real>("muem")),
+    _muem(getADMaterialProperty<Real>("mu" + _var.name())),
     _a(0.5),
 
     _electric_field(

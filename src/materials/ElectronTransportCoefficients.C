@@ -41,8 +41,8 @@ ElectronTransportCoefficients::validParams()
       1.01e5,
       "The background gas pressure in Pascals (defaulted to 1 standard atmosphere).");
 
-  params.addCoupledVar("electrons", "The electron density in log form");
-  params.addCoupledVar("electron_energy", "The mean electron energy density in log form");
+  params.addRequiredCoupledVar("electrons", "The electron density in log form");
+  params.addRequiredCoupledVar("electron_energy", "The mean electron energy density in log form");
 
   params.addParam<Real>("user_electron_mobility", 0, "The electron mobility coefficient.");
   params.addParam<Real>("user_electron_diffusion_coeff", 0, "The electron diffusion coefficient.");
@@ -71,17 +71,17 @@ ElectronTransportCoefficients::ElectronTransportCoefficients(const InputParamete
     _user_diffem(getParam<Real>("user_electron_diffusion_coeff")),
     _pressure_dependent(getParam<bool>("pressure_dependent_electron_coeff")),
 
-    _muem(declareADProperty<Real>("muem")),
-    _diffem(declareADProperty<Real>("diffem")),
-    _mumean_en(declareADProperty<Real>("mumean_en")),
-    _diffmean_en(declareADProperty<Real>("diffmean_en")),
-    _massem(declareProperty<Real>("massem")),
+    _muem(declareADProperty<Real>("mu" + (*getVar("electrons", 0)).name())),
+    _diffem(declareADProperty<Real>("diff" + (*getVar("electrons", 0)).name())),
+    _mumean_en(declareADProperty<Real>("mu" + (*getVar("electron_energy", 0)).name())),
+    _diffmean_en(declareADProperty<Real>("diff" + (*getVar("electron_energy", 0)).name())),
+    _massem(declareProperty<Real>("mass" + (*getVar("electrons", 0)).name())),
 
-    _sgnem(declareProperty<Real>("sgnem")),
-    _sgnmean_en(declareProperty<Real>("sgnmean_en")),
+    _sgnem(declareProperty<Real>("sgn" + (*getVar("electrons", 0)).name())),
+    _sgnmean_en(declareProperty<Real>("sgn" + (*getVar("electron_energy", 0)).name())),
 
-    _em(isCoupled("electrons") ? adCoupledValue("electrons") : _ad_zero),
-    _mean_en(isCoupled("electron_energy") ? adCoupledValue("electron_energy") : _ad_zero)
+    _em(adCoupledValue("electrons")),
+    _mean_en(adCoupledValue("electron_energy"))
 {
   if (_potential_units.compare("V") == 0)
     _voltage_scaling = 1.;

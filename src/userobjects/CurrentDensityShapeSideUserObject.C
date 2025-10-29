@@ -43,8 +43,8 @@ CurrentDensityShapeSideUserObject::CurrentDensityShapeSideUserObject(
     _mean_en_id(coupled("electron_energy")),
     _muip(getADMaterialProperty<Real>("mu" + _ip_var.name())),
     _diffip(getADMaterialProperty<Real>("diff" + _ip_var.name())),
-    _muem(getADMaterialProperty<Real>("muem")),
-    _diffem(getADMaterialProperty<Real>("diffem")),
+    _muem(getADMaterialProperty<Real>("mu" + (*getVar("electrons", 0)).name())),
+    _diffem(getADMaterialProperty<Real>("diff" + (*getVar("electrons", 0)).name())),
     _use_moles(getParam<bool>("use_moles"))
 {
 }
