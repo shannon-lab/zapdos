@@ -30,7 +30,7 @@ InterfaceLogDiffusionElectrons::InterfaceLogDiffusionElectrons(const InputParame
     _r_units(1. / getParam<Real>("position_units")),
     _r_neighbor_units(1. / getParam<Real>("neighbor_position_units")),
 
-    _diffem(getNeighborADMaterialProperty<Real>("diffem"))
+    _diffem(getNeighborADMaterialProperty<Real>("diff" + _neighbor_var.name()))
 {
   if (!parameters.isParamValid("boundary"))
   {

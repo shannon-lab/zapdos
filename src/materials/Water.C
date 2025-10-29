@@ -22,7 +22,7 @@ Water::validParams()
       "user_relative_permittivity", 78.5, "The relative permittivity of the medium.");
   params.addParam<Real>("user_potential_mult", 1, "Scaling for the potential.");
   params.addParam<Real>("user_electron_mult", 1, "Scaling for the electrons.");
-  params.addCoupledVar("aqueous_electrons", "The aqueous electron density in log form");
+  params.addRequiredCoupledVar("aqueous_electrons", "The aqueous electron density in log form");
   params.addCoupledVar("H", "hydrogen atoms");
   params.addCoupledVar("OHm", "hydroxide ions");
   params.addCoupledVar("H2Op", "positive water ions");
@@ -62,10 +62,9 @@ Water::Water(const InputParameters & parameters)
     _potential_mult(declareProperty<Real>("potential_mult")),
     _eps_r(declareProperty<Real>("eps_r")),
     _T(adCoupledValue("T_water")),
-    _kemliq(declareADProperty<Real>("kemliq")),
-    _kem(declareADProperty<Real>("kem")),
-    _kemliqemliq(declareADProperty<Real>("kemliqemliq")),
-    _kemem(declareADProperty<Real>("kemem")),
+    _kemliq(declareADProperty<Real>("k" + (*getVar("aqueous_electrons", 0)).name())),
+    _kemliqemliq(declareADProperty<Real>("k" + (*getVar("aqueous_electrons", 0)).name() +
+                                         (*getVar("aqueous_electrons", 0)).name())),
     _k4(declareProperty<Real>("k4")),
     _k5(declareProperty<Real>("k5")),
     _k6(declareProperty<Real>("k6")),
@@ -102,8 +101,7 @@ Water::Water(const InputParameters & parameters)
     _k37(declareProperty<Real>("k37")),
     _k38(declareProperty<Real>("k38")),
     _k39(declareProperty<Real>("k39")),
-    _diffemliq(declareADProperty<Real>("diffemliq")),
-    _diffem(declareADProperty<Real>("diffem")),
+    _diffemliq(declareADProperty<Real>("diff" + (*getVar("aqueous_electrons", 0)).name())),
     _diffpotentialliq(declareADProperty<Real>("diffpotentialliq")),
     _diffpotential(declareADProperty<Real>("diffpotential")),
     _DH(declareProperty<Real>("DH")),
@@ -137,8 +135,7 @@ Water::Water(const InputParameters & parameters)
     _zHO2(declareProperty<Real>("zHO2")),
     _zO3(declareProperty<Real>("zO3")),
     _zO3m(declareProperty<Real>("zO3m")),
-    _muemliq(declareADProperty<Real>("muemliq")),
-    _muem(declareADProperty<Real>("muem")),
+    _muemliq(declareADProperty<Real>("mu" + (*getVar("aqueous_electrons", 0)).name())),
     _muH(declareADProperty<Real>("muH")),
     _muOHm(declareADProperty<Real>("muOHm")),
     _muH2Op(declareADProperty<Real>("muH2Op")),
@@ -158,8 +155,7 @@ Water::Water(const InputParameters & parameters)
     _muunity(declareProperty<Real>("muunity")),
     _munegunity(declareProperty<Real>("munegunity")),
     _eps(declareProperty<Real>("eps")),
-    _sgnemliq(declareProperty<Real>("sgnemliq")),
-    _sgnem(declareProperty<Real>("sgnem")),
+    _sgnemliq(declareProperty<Real>("sgn" + (*getVar("aqueous_electrons", 0)).name())),
     _sgnOHm(declareProperty<Real>("sgnOHm")),
     _sgnH3Op(declareProperty<Real>("sgnH3Op")),
     _sgnNap(declareProperty<Real>("sgnNap")),
@@ -176,7 +172,7 @@ Water::Water(const InputParameters & parameters)
 
     // Coupled Variables
 
-    _emliq(isCoupled("aqueous_electrons") ? adCoupledValue("aqueous_electrons") : _ad_zero),
+    _emliq(adCoupledValue("aqueous_electrons")),
     _H(isCoupled("H") ? adCoupledValue("H") : _ad_zero),
     _OHm(isCoupled("OHm") ? adCoupledValue("OHm") : _ad_zero),
     _H2Op(isCoupled("H2Op") ? adCoupledValue("H2Op") : _ad_zero),
@@ -209,54 +205,49 @@ Water::computeQpProperties()
   // _eps_r[_qp] = 1.;
   _eps[_qp] = _eps_r[_qp] * ZAPDOS_CONSTANTS::eps_0;
   _kemliq[_qp] = 1.9e1 * _cw[_qp]; // e + H2O-->H + OH-
-  _kem[_qp] = _kemliq[_qp];
   // _kemliqemliq[_qp]  = 6e11 * _cw[_qp] * _cw[_qp] / (ZAPDOS_CONSTANTS::N_A * 1000.);     // e +
   // H2Op-->H + OH
   _kemliqemliq[_qp] =
       1e8 * _cw[_qp] * _cw[_qp] / 1000.; // 2e + 2H2O-->H2 + 2OH-. Now has units of m^3 / (mol * s)
-  _kemem[_qp] = _kemliqemliq[_qp];
-  _k4[_qp] = 2.5e10;        // e + H + H2O-->H2 + OH-
-  _k5[_qp] = 3e10;          // e + OH-->OH-
-  _k6[_qp] = 2.2e10;        // e + O- + H2O --> 2OH-
-  _k7[_qp] = 2.3e10;        // e + H3O+ --> H2 + H2O
-  _k8[_qp] = 1.1e10;        // e + H2O2 --> OH + OH-
-  _k9[_qp] = 3.5e9;         // e + HO2- + H2O --> OH + 2OH-
-  _k10[_qp] = 1.9e10;       // e + O2 --> O2-
-  _k11[_qp] = 1.9e10;       // e + O --> O-
-  _k12[_qp] = 1.0e1;        // H + H2O --> H2 + OH
-  _k13[_qp] = 7.5e9;        // 2H --> H2
-  _k14[_qp] = 7.0e9;        // H + OH --> H2O
-  _k15[_qp] = 2.2e7;        // H + OH- --> H2O + e
-  _k16[_qp] = 9.0e7;        // H + H2O2 --> OH + H2O
-  _k17[_qp] = 6.0e6;        // H2 + H2O2 --> H + OH + H2O
-  _k18[_qp] = 2.1e10;       // H + O2 --> HO2
-  _k19[_qp] = 1.0e10;       // H + HO2 --> H2O2
-  _k20[_qp] = 1.3e4;        // O + H2O --> 2OH
-  _k21[_qp] = 3.0e9;        // O + O2 --> O3
-  _k22[_qp] = 5.5e9;        // 2OH --> H2O2
-  _k23[_qp] = 2.0e10;       // OH + O- --> HO2-
-  _k24[_qp] = 4.2e7;        // OH + H2 --> H + H2O
-  _k25[_qp] = 1.3e10;       // OH + OH- --> O- + H2O
-  _k26[_qp] = 6.0e9;        // OH + HO2 --> H2O + O2
-  _k27[_qp] = 8.0e9;        // OH + O2- --> OH- + O2
-  _k28[_qp] = 1.8e6;        // O- + H2O --> OH- + OH
-  _k29[_qp] = 8.0e7;        // O- + H2 --> OH- + H
-  _k30[_qp] = 5.0e8;        // O- + H2O2 --> O2- + H2O
-  _k31[_qp] = 4.0e8;        // O- + HO2- --> O2- + OH-
-  _k32[_qp] = 3.6e9;        // O- + O2- --> O3-
-  _k33[_qp] = 6.0e8;        // O- + O2- + H2O --> 2OH- + O2
-  _k34[_qp] = 2.7e7;        // OH + H2O2 --> H2O + HO2
-  _k35[_qp] = 7.5e9;        // OH + HO2- --> OH- + HO2
-  _k36[_qp] = 6.0e3;        // H2O+ + H2O --> H3O+ + OH
-  _k37[_qp] = 6.0e10;       // H3O+ + OH- --> H + OH + H2O
-  _k38[_qp] = 2.0e3;        // HO2 + H2O --> H3O+ + O2-
-  _k39[_qp] = 6.0e1;        // H3O+ O2- --> HO2 + H2O
+  _k4[_qp] = 2.5e10;                     // e + H + H2O-->H2 + OH-
+  _k5[_qp] = 3e10;                       // e + OH-->OH-
+  _k6[_qp] = 2.2e10;                     // e + O- + H2O --> 2OH-
+  _k7[_qp] = 2.3e10;                     // e + H3O+ --> H2 + H2O
+  _k8[_qp] = 1.1e10;                     // e + H2O2 --> OH + OH-
+  _k9[_qp] = 3.5e9;                      // e + HO2- + H2O --> OH + 2OH-
+  _k10[_qp] = 1.9e10;                    // e + O2 --> O2-
+  _k11[_qp] = 1.9e10;                    // e + O --> O-
+  _k12[_qp] = 1.0e1;                     // H + H2O --> H2 + OH
+  _k13[_qp] = 7.5e9;                     // 2H --> H2
+  _k14[_qp] = 7.0e9;                     // H + OH --> H2O
+  _k15[_qp] = 2.2e7;                     // H + OH- --> H2O + e
+  _k16[_qp] = 9.0e7;                     // H + H2O2 --> OH + H2O
+  _k17[_qp] = 6.0e6;                     // H2 + H2O2 --> H + OH + H2O
+  _k18[_qp] = 2.1e10;                    // H + O2 --> HO2
+  _k19[_qp] = 1.0e10;                    // H + HO2 --> H2O2
+  _k20[_qp] = 1.3e4;                     // O + H2O --> 2OH
+  _k21[_qp] = 3.0e9;                     // O + O2 --> O3
+  _k22[_qp] = 5.5e9;                     // 2OH --> H2O2
+  _k23[_qp] = 2.0e10;                    // OH + O- --> HO2-
+  _k24[_qp] = 4.2e7;                     // OH + H2 --> H + H2O
+  _k25[_qp] = 1.3e10;                    // OH + OH- --> O- + H2O
+  _k26[_qp] = 6.0e9;                     // OH + HO2 --> H2O + O2
+  _k27[_qp] = 8.0e9;                     // OH + O2- --> OH- + O2
+  _k28[_qp] = 1.8e6;                     // O- + H2O --> OH- + OH
+  _k29[_qp] = 8.0e7;                     // O- + H2 --> OH- + H
+  _k30[_qp] = 5.0e8;                     // O- + H2O2 --> O2- + H2O
+  _k31[_qp] = 4.0e8;                     // O- + HO2- --> O2- + OH-
+  _k32[_qp] = 3.6e9;                     // O- + O2- --> O3-
+  _k33[_qp] = 6.0e8;                     // O- + O2- + H2O --> 2OH- + O2
+  _k34[_qp] = 2.7e7;                     // OH + H2O2 --> H2O + HO2
+  _k35[_qp] = 7.5e9;                     // OH + HO2- --> OH- + HO2
+  _k36[_qp] = 6.0e3;                     // H2O+ + H2O --> H3O+ + OH
+  _k37[_qp] = 6.0e10;                    // H3O+ + OH- --> H + OH + H2O
+  _k38[_qp] = 2.0e3;                     // HO2 + H2O --> H3O+ + O2-
+  _k39[_qp] = 6.0e1;                     // H3O+ O2- --> HO2 + H2O
   _diffemliq[_qp] = 4.5e-9; // diffusivity of hydrated electron. Anbar (1965) from Ranga paper
-  _diffem[_qp] = _diffemliq[_qp];
-  // _diffem[_qp] = 0.297951680159;
   _diffpotentialliq[_qp] = _eps[_qp];
   _diffpotential[_qp] = _diffpotentialliq[_qp];
-  // _diffemliq[_qp] = 0.297951680159/4;
   _DH[_qp] = 5e-9;         // H radical
   _diffOHm[_qp] = 5.27e-9; // OH- ion
   // _diffOHm[_qp] = 2.98e-3; // Temporary high diffusivity taken from gas phase argon
@@ -293,16 +284,12 @@ Water::computeQpProperties()
   _zO3[_qp] = 0;      // O3 molecule
   _zO3m[_qp] = -1;    // O3- ion
   _sgnemliq[_qp] = -1;
-  _sgnem[_qp] = _sgnemliq[_qp];
   _sgnOHm[_qp] = -1;
   _sgnH3Op[_qp] = 1;
   _sgnClm[_qp] = -1;
   _sgnNap[_qp] = 1;
   _muemliq[_qp] = ZAPDOS_CONSTANTS::e * _diffemliq[_qp] / ZAPDOS_CONSTANTS::k_boltz / _T[_qp] *
                   1000.; // mobility of hydrated electron
-  _muem[_qp] = _muemliq[_qp];
-  // _muem[_qp] = 0.0352103411399 * 1000.; // units of m^2/(kV*s)
-  // _muemliq[_qp] = 0.0352103411399/4;
   _muH[_qp] =
       _zH[_qp] * ZAPDOS_CONSTANTS::e * _DH[_qp] / ZAPDOS_CONSTANTS::k_boltz / _T[_qp]; // H radical
   _muOHm[_qp] =

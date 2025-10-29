@@ -61,7 +61,7 @@ DielectricBCWithEffEfield::DielectricBCWithEffEfield(const InputParameters & par
 
     _epsilon_p(getADMaterialProperty<Real>("diff" + _var.name())),
 
-    _massem(getMaterialProperty<Real>("massem")),
+    _massem(getMaterialProperty<Real>("mass" + (*getVar("electrons", 0)).name())),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
 
     _epsilon_d(getParam<Real>("dielectric_constant")),

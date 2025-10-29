@@ -36,8 +36,8 @@ HagelaarEnergyBC::HagelaarEnergyBC(const InputParameters & parameters)
     // Coupled Variables
     _em(adCoupledValue("electrons")),
 
-    _massem(getMaterialProperty<Real>("massem")),
-    _mumean_en(getADMaterialProperty<Real>("mumean_en")),
+    _massem(getMaterialProperty<Real>("mass" + (*getVar("electrons", 0)).name())),
+    _mumean_en(getADMaterialProperty<Real>("mu" + _var.name())),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
 {

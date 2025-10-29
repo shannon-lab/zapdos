@@ -118,16 +118,6 @@ dom0Scale = 1.0
 []
 
 [Materials]
-  #The material properties for electrons.
-  #Also hold universal constant, such as Avogadro's number, elementary charge, etc.
-  [GasBasics]
-    type = ElectronTransportCoefficients
-    interp_trans_coeffs = false
-    ramp_trans_coeffs = false
-    p_gas = 13.3322
-    #p_gas = 1.33322
-    property_tables_file = rate_coefficients/electron_moments.txt
-  []
   # The dielectric coefficient of the gas (defaulted to the permittivity of free space)
   [gas_permittivity]
     type = ElectrostaticPermittivity

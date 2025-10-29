@@ -49,7 +49,7 @@ SchottkyEmissionBC::SchottkyEmissionBC(const InputParameters & parameters)
     // Coupled Variables
     _mean_en(adCoupledValue("electron_energy")),
 
-    _massem(getMaterialProperty<Real>("massem")),
+    _massem(getMaterialProperty<Real>("mass" + _var.name())),
     _work_function(getMaterialProperty<Real>("work_function")),
     _field_enhancement(getMaterialProperty<Real>("field_enhancement")),
     _Richardson_coefficient(getMaterialProperty<Real>("Richardson_coefficient")),

@@ -47,15 +47,11 @@ protected:
    * e + H2O-->H + OH-
    */
   ADMaterialProperty<Real> & _kemliq;
-  /// Defined the same as _kemliq
-  ADMaterialProperty<Real> & _kem;
   /*
    * Reaction coefficient for:
    * 2e + 2H2O-->H2 + 2OH-
    */
   ADMaterialProperty<Real> & _kemliqemliq;
-  /// Defined the same as _kemliqemliq
-  ADMaterialProperty<Real> & _kemem;
   /*
    * Reaction coefficient for:
    * e + H + H2O-->H2 + OH-
@@ -238,8 +234,6 @@ protected:
   MaterialProperty<Real> & _k39;
   /// Diffusion coefficient for hydrated electron
   ADMaterialProperty<Real> & _diffemliq;
-  /// Diffusion coefficient for electron (defined the same as _diffemliq)
-  ADMaterialProperty<Real> & _diffem;
   /// Diffusion coefficient for potential in water (defined as the permittivity of the medium)
   ADMaterialProperty<Real> & _diffpotentialliq;
   /// Diffusion coefficient for potential (defined the same as _diffpotentialliq)
@@ -308,8 +302,6 @@ protected:
   MaterialProperty<Real> & _zO3m;
   /// Mobility coefficient for hydrated electron
   ADMaterialProperty<Real> & _muemliq;
-  /// Mobility coefficient for electron (defined the same as _diffemliq)
-  ADMaterialProperty<Real> & _muem;
   /// Mobility coefficient for H radical
   ADMaterialProperty<Real> & _muH;
   /// Mobility coefficient for OH- ion
@@ -350,8 +342,6 @@ protected:
   MaterialProperty<Real> & _eps;
   /// Charge of hydrated electron
   MaterialProperty<Real> & _sgnemliq;
-  /// Charge of electrons
-  MaterialProperty<Real> & _sgnem;
   /// Charge of OH- ion
   MaterialProperty<Real> & _sgnOHm;
   /// Charge of H3O+ ion

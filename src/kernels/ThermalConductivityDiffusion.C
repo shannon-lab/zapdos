@@ -29,7 +29,7 @@ ThermalConductivityDiffusion::ThermalConductivityDiffusion(const InputParameters
     _r_units(1. / getParam<Real>("position_units")),
     _coeff(2.0 / 3.0),
 
-    _diffem(getADMaterialProperty<Real>("diffem")),
+    _diffem(getADMaterialProperty<Real>("diff" + (*getVar("electrons", 0)).name())),
 
     _em(adCoupledValue("electrons")),
     _grad_em(adCoupledGradient("electrons"))

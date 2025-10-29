@@ -37,8 +37,8 @@ HagelaarElectronBC::HagelaarElectronBC(const InputParameters & parameters)
     // Coupled Variables
     _mean_en(adCoupledValue("electron_energy")),
 
-    _muem(getADMaterialProperty<Real>("muem")),
-    _massem(getMaterialProperty<Real>("massem")),
+    _muem(getADMaterialProperty<Real>("mu" + _var.name())),
+    _massem(getMaterialProperty<Real>("mass" + _var.name())),
 
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))

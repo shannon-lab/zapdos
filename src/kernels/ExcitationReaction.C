@@ -34,8 +34,8 @@ ExcitationReaction::ExcitationReaction(const InputParameters & parameters)
 
     _r_units(1. / getParam<Real>("position_units")),
     _n_gas(getMaterialProperty<Real>("n_gas")),
-    _diffem(getADMaterialProperty<Real>("diffem")),
-    _muem(getADMaterialProperty<Real>("muem")),
+    _diffem(getADMaterialProperty<Real>("diff" + (*getVar("electrons", 0)).name())),
+    _muem(getADMaterialProperty<Real>("mu" + (*getVar("electrons", 0)).name())),
     _alpha_source(getADMaterialProperty<Real>("alpha_ex")),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),

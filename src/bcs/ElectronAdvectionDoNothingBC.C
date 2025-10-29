@@ -30,8 +30,8 @@ ElectronAdvectionDoNothingBC::ElectronAdvectionDoNothingBC(const InputParameters
 
     _position_units(1. / getParam<Real>("position_units")),
 
-    _muem(getADMaterialProperty<Real>("muem")),
-    _sign(getMaterialProperty<Real>("sgnem")),
+    _muem(getADMaterialProperty<Real>("mu" + _var.name())),
+    _sign(getMaterialProperty<Real>("sgn" + _var.name())),
 
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name")))
