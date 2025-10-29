@@ -74,13 +74,13 @@ dom1Scale = 1e-7
     #User define name for electrons (usually 'em')
     electrons = em
     #User define name for ions
-    charged_particle = Arp
+    ions = Arp
     #User define name for potential (usually 'potential')
     field = potential
     #Set False becuase both areas use the same potential
-    Is_field_unique = false
+    is_field_unique = false
     #User define name for the electron mean energy density (usually 'mean_en')
-    mean_energy = mean_en
+    electron_energy = mean_en
     #Helps prevent the log(0)
     using_offset = true #helps prevent the log(0)
     #The position scaling for the mesh, define at top of input file
@@ -88,18 +88,18 @@ dom1Scale = 1e-7
     #Name of material block for plasma
     block = 0
     #Additional outputs, such as ElectronTemperature, Current, and EField.
-    Additional_Outputs = 'ElectronTemperature Current EField'
+    additional_outputs = 'ElectronTemperature Current EField'
   []
   # treats water as a dense plasma
   [Water]
-    charged_particle = 'emliq OHm'
+    ions = 'emliq OHm'
     field = potential
-    Is_field_unique = false
+    is_field_unique = false
     using_offset = true
     position_units = ${dom1Scale}
     #Name of material block for water
     block = 1
-    Additional_Outputs = 'Current EField'
+    additional_outputs = 'Current EField'
   []
 []
 

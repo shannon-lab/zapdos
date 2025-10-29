@@ -59,19 +59,15 @@ AddDriftDiffusionAction::validParams()
   InputParameters params = AddVariableAction::validParams();
 
   params.addParam<std::vector<NonlinearVariableName>>(
-      "charged_particle", {}, "User given variable name for energy independent charged particle");
+      "ions", {}, "List of user given variable names for ions");
   params.addParam<std::vector<NonlinearVariableName>>(
-      "secondary_charged_particles",
+      "secondary_ions",
       {},
-      "These are charged particles whose advection term in determined by"
+      "These are ions whose advection term in determined by"
       " an effective field.");
   params.addParam<std::vector<NonlinearVariableName>>(
-      "eff_fields",
-      {},
-      "The effective fields that only affect their respective secondary"
-      " charged particle.");
-  params.addParam<NonlinearVariableName>("electrons",
-                                         "User given variable name for energy dependent electrons");
+      "eff_fields", {}, "The effective fields that only affect their respective secondary ions.");
+  params.addParam<NonlinearVariableName>("electrons", "User given variable name for electrons");
   params.addParam<std::string>("field", "The gives the field a variable name");
   MooseEnum field_solver("electrostatic electromagnetic", "electrostatic");
   params.addParam<MooseEnum>(
@@ -85,19 +81,19 @@ AddDriftDiffusionAction::validParams()
       "eff_fields_property_names",
       {},
       "Name of the solver interface material property for the effective fields.");
-  params.addParam<bool>("Is_field_unique",
+  params.addParam<bool>("is_field_unique",
                         false,
                         "Is the field unique to this block?"
                         "If not, then the field variable should be defined in the Variable Block.");
-  params.addParam<bool>("First_DriftDiffusionAction_in_block",
+  params.addParam<bool>("first_drift_diffusion_action_in_block",
                         true,
                         "Is this the first DriftDiffusionAction for this block?"
                         "If not, then the field solver kernels and Position auxkernel will "
                         "NOT be supplied by this action.");
-  params.addParam<NonlinearVariableName>("mean_energy",
-                                         "The gives the mean energy a variable name");
+  params.addParam<NonlinearVariableName>(
+      "electron_energy", "User given variable name for the mean electron energy density");
   params.addParam<std::vector<NonlinearVariableName>>(
-      "Neutrals", {}, "The names of the neutrals that should be added");
+      "neutrals", {}, "The names of the neutrals that should be added");
   params.addParam<std::vector<SubdomainName>>(
       "block", {}, "The subdomain that this action applies to.");
   params.addRequiredParam<Real>("position_units", "Units of position");
@@ -107,7 +103,7 @@ AddDriftDiffusionAction::validParams()
   params.addRequiredParam<std::string>("potential_units", "Units of potential (V or kV)");
   params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to \\#.");
   params.addParam<std::vector<std::string>>(
-      "Additional_Outputs",
+      "additional_outputs",
       {},
       "Current list of available ouputs options in this action: Current, ElectronTemperature,"
       " EField");
@@ -137,33 +133,31 @@ AddDriftDiffusionAction::act()
   MooseEnum field_solver = getParam<MooseEnum>("field_solver");
 
   bool em_present = (isParamValid("electrons") ? true : false);
-  bool mean_en_present = (isParamValid("mean_energy") ? true : false);
+  bool mean_en_present = (isParamValid("electron_energy") ? true : false);
   bool field_present = (isParamValid("field") ? true : false);
   if (em_present)
     em_name = getParam<NonlinearVariableName>("electrons");
   if (mean_en_present)
-    mean_en_name = getParam<NonlinearVariableName>("mean_energy");
+    mean_en_name = getParam<NonlinearVariableName>("electron_energy");
   if (field_present)
     field_name = getParam<std::string>("field");
 
   std::string field_property_name = getParam<std::string>("field_property_name");
 
-  std::vector<NonlinearVariableName> Ions =
-      getParam<std::vector<NonlinearVariableName>>("charged_particle");
+  std::vector<NonlinearVariableName> Ions = getParam<std::vector<NonlinearVariableName>>("ions");
   std::vector<NonlinearVariableName> Neutrals =
-      getParam<std::vector<NonlinearVariableName>>("Neutrals");
+      getParam<std::vector<NonlinearVariableName>>("neutrals");
 
   unsigned int number_ions = Ions.size();
   unsigned int number_neutrals = Neutrals.size();
 
   if (!field_present && (em_present || (number_ions > 0)))
-    paramError(
-        "field",
-        "There are electrons or charged_particles that are missing their electric field! Please "
-        "check your input.");
+    paramError("field",
+               "There are electrons or ions that are missing their electric field! Please "
+               "check your input.");
 
   std::vector<NonlinearVariableName> sec_particle =
-      getParam<std::vector<NonlinearVariableName>>("secondary_charged_particles");
+      getParam<std::vector<NonlinearVariableName>>("secondary_ions");
   std::vector<NonlinearVariableName> eff_fields =
       getParam<std::vector<NonlinearVariableName>>("eff_fields");
 
@@ -175,19 +169,19 @@ AddDriftDiffusionAction::act()
 
   // TODO: add another != for this for the property names list
   if (number_sec_particle != number_eff_fields)
-    paramError("secondary_charged_particles",
-               "There are secondary_charged_particles that are missing their corresponding "
+    paramError("secondary_ions",
+               "There are secondary_ions that are missing their corresponding "
                "effective fields (eff_fields)! Please check your input.");
 
   // Converting the given additional outputs
-  std::vector<std::string> Outputs = getParam<std::vector<std::string>>("Additional_Outputs");
+  std::vector<std::string> Outputs = getParam<std::vector<std::string>>("additional_outputs");
 
   unsigned int number_outputs = Outputs.size();
 
   // Converting the boolean statements
   bool Using_offset = getParam<bool>("using_offset");
-  bool New_field = getParam<bool>("Is_field_unique");
-  bool First_Action = getParam<bool>("First_DriftDiffusionAction_in_block");
+  bool New_field = getParam<bool>("is_field_unique");
+  bool First_Action = getParam<bool>("first_drift_diffusion_action_in_block");
 
   // The variable type for the nonlinear scalar variables
   auto fe_type = AddVariableAction::feType(_pars);

@@ -45,20 +45,20 @@ dom0Scale=25.4e-3
 
 [DriftDiffusionAction]
   [Plasma]
-    #User define name for electrons (usually 'em')
+    #User defined name for electrons (usually 'em')
     electrons =
-    #User define name for ions
-    charged_particle =
-    #User define name for potential (usually 'potential')
+    #User defined name for ions
+    ions =
+    #User defined name for potential (usually 'potential')
     potential =
-    #Defines if this potential exist in only one block/material (set 'true' for single gases)
-    Is_potential_unique =
-    #User define name for the electron mean energy density (usually 'mean_en')
-    mean_energy =
-    #The position scaling for the mesh, define at top of input file
+    #Defines if this potential exists in only one block/material (set 'true' for single gases)
+    is_potential_unique =
+    #User defined name for the electron mean energy density (usually 'mean_en')
+    electron_energy =
+    #The position scaling for the mesh, defined at top of input file
     position_units = ${dom0Scale}
     #Additional outputs, such as ElectronTemperature, Current, and EField.
-    Additional_Outputs =
+    additional_outputs =
   []
 []
 
