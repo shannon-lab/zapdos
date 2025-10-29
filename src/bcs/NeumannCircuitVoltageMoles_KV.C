@@ -48,8 +48,8 @@ NeumannCircuitVoltageMoles_KV::NeumannCircuitVoltageMoles_KV(const InputParamete
     _mean_en(adCoupledValue("electron_energy")),
     _em(adCoupledValue("electrons")),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
-    _muem(getADMaterialProperty<Real>("muem")),
-    _massem(getMaterialProperty<Real>("massem")),
+    _muem(getADMaterialProperty<Real>("mu" + (*getVar("electrons", 0)).name())),
+    _massem(getMaterialProperty<Real>("mass" + (*getVar("electrons", 0)).name())),
 
     _potential_units(getParam<std::string>("potential_units")),
     _r(getParam<Real>("r")),

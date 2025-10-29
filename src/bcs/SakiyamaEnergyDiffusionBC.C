@@ -32,7 +32,7 @@ SakiyamaEnergyDiffusionBC::SakiyamaEnergyDiffusionBC(const InputParameters & par
     // Coupled Variables
     _em(adCoupledValue("electrons")),
 
-    _massem(getMaterialProperty<Real>("massem")),
+    _massem(getMaterialProperty<Real>("mass" + (*getVar("electrons", 0)).name())),
     _v_thermal(0)
 {
 }

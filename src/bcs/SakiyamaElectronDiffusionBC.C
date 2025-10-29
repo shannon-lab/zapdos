@@ -32,7 +32,7 @@ SakiyamaElectronDiffusionBC::SakiyamaElectronDiffusionBC(const InputParameters &
     // Coupled Variables
     _mean_en(adCoupledValue("electron_energy")),
 
-    _massem(getMaterialProperty<Real>("massem")),
+    _massem(getMaterialProperty<Real>("mass" + _var.name())),
     _v_thermal(0)
 {
 }

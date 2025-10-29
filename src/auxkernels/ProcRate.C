@@ -46,9 +46,9 @@ ProcRateTempl<is_ad>::ProcRateTempl(const InputParameters & parameters)
     _grad_em(coupledGradient("electrons")),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
-    _muem(getGenericMaterialProperty<Real, is_ad>("muem")),
-    _sgnem(getMaterialProperty<Real>("sgnem")),
-    _diffem(getGenericMaterialProperty<Real, is_ad>("diffem")),
+    _muem(getGenericMaterialProperty<Real, is_ad>("mu" + (*getVar("electrons", 0)).name())),
+    _sgnem(getMaterialProperty<Real>("sgn" + (*getVar("electrons", 0)).name())),
+    _diffem(getGenericMaterialProperty<Real, is_ad>("diff" + (*getVar("electrons", 0)).name())),
     _alpha(getGenericMaterialProperty<Real, is_ad>("alpha_" + getParam<std::string>("proc"))),
     _em_current(0, 0, 0)
 {

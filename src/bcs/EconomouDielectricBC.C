@@ -44,7 +44,7 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
     _grad_u_dot(_var.gradSlnDot()), // TODO: make an AD version of this in MOOSE
     _u_dot(_var.adUDot()),
 
-    _massem(getMaterialProperty<Real>("massem")),
+    _massem(getMaterialProperty<Real>("mass" + (*getVar("electrons", 0)).name())),
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
 
     _epsilon_d(getParam<Real>("dielectric_constant")),

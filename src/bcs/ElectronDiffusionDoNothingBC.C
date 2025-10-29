@@ -29,7 +29,7 @@ ElectronDiffusionDoNothingBC::ElectronDiffusionDoNothingBC(const InputParameters
 
     _r_units(1. / getParam<Real>("position_units")),
 
-    _diffem(getADMaterialProperty<Real>("diffem"))
+    _diffem(getADMaterialProperty<Real>("diff" + _var.name()))
 {
 }
 

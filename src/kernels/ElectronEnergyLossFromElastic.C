@@ -32,10 +32,10 @@ ElectronEnergyLossFromElastic::ElectronEnergyLossFromElastic(const InputParamete
 
     _r_units(1. / getParam<Real>("position_units")),
 
-    _diffem(getADMaterialProperty<Real>("diffem")),
-    _muem(getADMaterialProperty<Real>("muem")),
+    _diffem(getADMaterialProperty<Real>("diff" + (*getVar("electrons", 0)).name())),
+    _muem(getADMaterialProperty<Real>("mu" + (*getVar("electrons", 0)).name())),
     _alpha_iz(getADMaterialProperty<Real>("alpha_iz")),
-    _massem(getMaterialProperty<Real>("massem")),
+    _massem(getMaterialProperty<Real>("mass" + (*getVar("electrons", 0)).name())),
     _massGas(getMaterialProperty<Real>("massGas")),
     _alpha_el(getADMaterialProperty<Real>("alpha_el")),
     _electric_field(

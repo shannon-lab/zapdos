@@ -40,7 +40,7 @@ HagelaarEnergyAdvectionBC::HagelaarEnergyAdvectionBC(const InputParameters & par
     // Coupled Variables
     _se_coeff_names(getParam<std::vector<std::string>>("emission_coeffs")),
     _se_energy(getParam<Real>("secondary_electron_energy")),
-    _mumean_en(getADMaterialProperty<Real>("mumean_en")),
+    _mumean_en(getADMaterialProperty<Real>("mu" + _var.name())),
 
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),

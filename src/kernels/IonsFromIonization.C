@@ -33,8 +33,8 @@ IonsFromIonization::IonsFromIonization(const InputParameters & parameters)
 
     _r_units(1. / getParam<Real>("position_units")),
 
-    _diffem(getADMaterialProperty<Real>("diffem")),
-    _muem(getADMaterialProperty<Real>("muem")),
+    _diffem(getADMaterialProperty<Real>("diff" + (*getVar("electrons", 0)).name())),
+    _muem(getADMaterialProperty<Real>("mu" + (*getVar("electrons", 0)).name())),
     _alpha_iz(getADMaterialProperty<Real>("alpha_iz")),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
