@@ -806,13 +806,13 @@ dom0Scale = 25.4e-3
 #The Action the add the TimePeriod Controls to turn off and on the MultiApps
 [PeriodicControllers]
   [Shooting]
-    Enable_at_cycle_start = '*::Ar*S_for_Shooting'
+    enable_at_cycle_start = '*::Ar*S_for_Shooting'
 
-    Enable_during_cycle = '*::SM_Ar*_time_deriv *::SM_Ar*_diffusion *::SM_Ar*_stepwise_ionization
+    enable_during_cycle = '*::SM_Ar*_time_deriv *::SM_Ar*_diffusion *::SM_Ar*_stepwise_ionization
                            *::SM_Ar*_collisions *::SM_Ar*_quenching *::SM_Ar*_pooling
                            *::SM_Ar*_2B_quenching *::SM_Ar*_3B_quenching'
 
-    Enable_at_cycle_end = 'MultiApps::Shooting
+    enable_at_cycle_end = 'MultiApps::Shooting
                            *::SM_Ar*Reset_to_Shooting *::Ar*_to_Shooting
                            *::Ar*S_to_Shooting *::Ar*T_to_Shooting
                            *::SMDeriv_to_Shooting *::Ar*New_from_Shooting

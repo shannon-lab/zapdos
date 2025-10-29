@@ -66,17 +66,17 @@ dom0Scale = 1.0
     #User define name for electrons (usually 'em')
     electrons = em
     #User define name for ions
-    charged_particle = Ar+
+    ions = Ar+
     #User define name for potential (usually 'potential')
     field = potential
     #Defines if this potential exist in only one block/material (set 'true' for single gases)
-    Is_field_unique = true
+    is_field_unique = true
     #User define name for the electron mean energy density (usually 'mean_en')
-    mean_energy = mean_en
+    electron_energy = mean_en
     #The position scaling for the mesh, define at top of input file
     position_units = ${dom0Scale}
     #Additional outputs, such as ElectronTemperature, Current, and EField.
-    Additional_Outputs = 'ElectronTemperature Current EField'
+    additional_outputs = 'ElectronTemperature Current EField'
   []
 []
 

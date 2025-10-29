@@ -120,24 +120,24 @@ dom1Scale = 1e-7
 [DriftDiffusionAction]
   [Plasma]
     electrons = em
-    charged_particle = Arp
+    ions = Arp
     field = potential
-    Is_field_unique = false
-    mean_energy = mean_en
+    is_field_unique = false
+    electron_energy = mean_en
     using_offset = true
     position_units = ${dom0Scale}
     block = 0
-    Additional_Outputs = 'ElectronTemperature Current EField'
+    additional_outputs = 'ElectronTemperature Current EField'
   []
   [Water]
     electrons = emliq
-    charged_particle = OHm
+    ions = OHm
     field = potential
-    Is_field_unique = false
+    is_field_unique = false
     using_offset = true
     position_units = ${dom1Scale}
     block = 1
-    Additional_Outputs = 'Current EField'
+    additional_outputs = 'Current EField'
   []
 []
 

@@ -45,29 +45,27 @@ AddPeriodicControllers::validParams()
   InputParameters params = AddVariableAction::validParams();
 
   params.addParam<std::vector<std::string>>(
-      "Enable_at_cycle_start",
+      "enable_at_cycle_start",
       std::vector<std::string>(),
       "A list of objects names to enable at the start of the cycle.");
-  params.addParam<std::vector<std::string>>("Enable_during_cycle",
+  params.addParam<std::vector<std::string>>("enable_during_cycle",
                                             std::vector<std::string>(),
                                             "A list of objects names to enable during the cycle.");
   params.addParam<std::vector<std::string>>(
-      "Enable_at_cycle_end",
+      "enable_at_cycle_end",
       std::vector<std::string>(),
       "A list of objects names to enable at the end of the cycle.");
-
   params.addParam<std::vector<std::string>>(
-      "Disable_at_cycle_start",
+      "disable_at_cycle_start",
       std::vector<std::string>(),
       "A list of objects names to disable at the start of the cycle.");
-  params.addParam<std::vector<std::string>>("Disable_during_cycle",
+  params.addParam<std::vector<std::string>>("disable_during_cycle",
                                             std::vector<std::string>(),
                                             "A list of objects names to disable during the cycle.");
   params.addParam<std::vector<std::string>>(
-      "Disable_at_cycle_end",
+      "disable_at_cycle_end",
       std::vector<std::string>(),
       "A list of objects names to disable at the end of the cycle.");
-
   params.addParam<Real>(
       "starting_cycle", 0.0, "The number of the cycles before starting the control scheme");
   params.addRequiredParam<Real>("cycle_frequency", "The cycle's frequency in Hz");
@@ -94,13 +92,13 @@ AddPeriodicControllers::validParams()
 
 AddPeriodicControllers::AddPeriodicControllers(const InputParameters & params)
   : Action(params),
-    _enable_start(getParam<std::vector<std::string>>("Enable_at_cycle_start")),
-    _enable_during(getParam<std::vector<std::string>>("Enable_during_cycle")),
-    _enable_end(getParam<std::vector<std::string>>("Enable_at_cycle_end")),
+    _enable_start(getParam<std::vector<std::string>>("enable_at_cycle_start")),
+    _enable_during(getParam<std::vector<std::string>>("enable_during_cycle")),
+    _enable_end(getParam<std::vector<std::string>>("enable_at_cycle_end")),
 
-    _disable_start(getParam<std::vector<std::string>>("Disable_at_cycle_start")),
-    _disable_during(getParam<std::vector<std::string>>("Disable_during_cycle")),
-    _disable_end(getParam<std::vector<std::string>>("Disable_at_cycle_end")),
+    _disable_start(getParam<std::vector<std::string>>("disable_at_cycle_start")),
+    _disable_during(getParam<std::vector<std::string>>("disable_during_cycle")),
+    _disable_end(getParam<std::vector<std::string>>("disable_at_cycle_end")),
 
     _start_time((1. / getParam<Real>("cycle_frequency")) * getParam<Real>("starting_cycle")),
     _period(1. / getParam<Real>("cycle_frequency")),

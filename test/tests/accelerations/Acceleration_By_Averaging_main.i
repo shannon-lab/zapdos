@@ -811,7 +811,7 @@ dom0Scale = 25.4e-3
 #The Action the add the TimePeriod Controls to turn off and on the MultiApps
 [PeriodicControllers]
   [Averaging_Acceleration]
-    Enable_at_cycle_start = 'MultiApps::Averaging_Acceleration
+    enable_at_cycle_start = 'MultiApps::Averaging_Acceleration
                               Transfers::em_to_Averaging *::Ar+_to_Averaging *::mean_en_to_Averaging
                               *::potential_to_Averaging *::Ar*_to_Averaging *::Ar*S_to_Averaging
                               Transfers::Ar*New_from_Averaging'
