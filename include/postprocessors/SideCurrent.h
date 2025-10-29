@@ -38,13 +38,6 @@ protected:
   const Real _r;
   /// Thermal velocity of the electrons
   Real _ve_thermal;
-  /*
-   *  Charge sign of the ions
-   *  TODO: This variable calls the material property labeled
-   *        "sgnArp". This term is outdated as Zapdos no longer
-   *        assumes only argon plasmas
-   */
-  const MaterialProperty<Real> & _sgn;
   /// Equal to 1 when the electron drift velocity is direct towards the wall and zero otherwise
   Real _a;
   /// Equal to 1 when the ion drift velocity is direct towards the wall and zero otherwise

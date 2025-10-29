@@ -43,7 +43,6 @@ SideCurrent::SideCurrent(const InputParameters & parameters)
     _mobility_coef(getMaterialProperty<Real>(_mobility)),
     _r_units(1. / getParam<Real>("position_units")),
     _r(getParam<Real>("r")),
-    _sgn(getMaterialProperty<Real>("sgnArp")),
     _a(0.5),
     _electric_field(
         getADMaterialProperty<RealVectorValue>(getParam<std::string>("field_property_name"))),
@@ -75,14 +74,12 @@ SideCurrent::computeQpIntegral()
 {
   // Output units for base case are: mol / (m^2 * s)
 
-  if (_normals[_qp] * _sgn[_qp] * _electric_field[_qp] > 0.0)
+  if (_normals[_qp] * _electric_field[_qp] > 0.0)
   {
-    _a = 1.0;
     _b = 0.0;
   }
   else
   {
-    _a = 0.0;
     _b = 1.0;
   }
 
@@ -92,6 +89,16 @@ SideCurrent::computeQpIntegral()
   _ion_flux = 0.0;
 
   for (unsigned int i = 0; i < _num_ions; ++i)
+  {
+    if (_normals[_qp] * (*_sgn_ions[i])[_qp] * _electric_field[_qp] > 0.0)
+    {
+      _a = 1.0;
+    }
+    else
+    {
+      _a = 0.0;
+    }
+
     _ion_flux += 0.5 *
                      std::sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * (*_T_ions[i])[_qp] /
                                (libMesh::pi * (*_mass_ions[i])[_qp])) *
@@ -99,6 +106,7 @@ SideCurrent::computeQpIntegral()
                  (2 * _a - 1) * (*_sgn_ions[i])[_qp] * (*_mu_ions[i])[_qp] *
                      raw_value(_electric_field[_qp]) * _r_units * std::exp((*_ions[i])[_qp]) *
                      _normals[_qp];
+  }
 
   return ((1. - _r) / (1. + _r) * _ion_flux +
           (1. - _r) / (1. + _r) *
