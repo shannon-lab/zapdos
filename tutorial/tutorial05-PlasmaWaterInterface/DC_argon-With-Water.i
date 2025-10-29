@@ -391,6 +391,7 @@ dom1Scale = 1e-7
   #The material properties for electrons and ions in water
   [water_block]
     type = Water
+    aqueous_electrons = emliq
     block = 1
   []
 

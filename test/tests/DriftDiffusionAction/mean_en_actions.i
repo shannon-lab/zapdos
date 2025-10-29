@@ -627,6 +627,7 @@ dom1Scale = 1e-7
 
   [water_block]
     type = Water
+    aqueous_electrons = emliq
     block = 1
   []
 []
