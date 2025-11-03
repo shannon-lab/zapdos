@@ -104,7 +104,7 @@
   []
   [EffEfield_X_diffusion]
     type = MatDiffusion
-    D_name = diffEx
+    diffusivity = diffEx
     variable = Ex
   []
   [EffEfield_X_source]
@@ -118,7 +118,7 @@
   []
   [EffEfield_Y_diffusion]
     type = MatDiffusion
-    D_name = diffEy
+    diffusivity = diffEy
     variable = Ey
   []
   [EffEfield_Y_source]
