@@ -422,14 +422,14 @@ area = 5.02e-7 # Formerly 3.14e-6
     block = 0
   []
   [em_lin]
-    type = Density
+    type = DensityFromLog
     #               convert_moles = true
     variable = em_lin
     density_log = em
     block = 0
   []
   [Arp_lin]
-    type = Density
+    type = DensityFromLog
     #               convert_moles = true
     variable = Arp_lin
     density_log = Arp
