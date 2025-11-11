@@ -406,14 +406,14 @@ vhigh = -175E-3 #kV
     block = 0
   []
   [em_lin]
-    type = Density
+    type = DensityFromLog
     #               convert_moles = true
     variable = em_lin
     density_log = em
     block = 0
   []
   [Arp_lin]
-    type = Density
+    type = DensityFromLog
     #               convert_moles = true
     variable = Arp_lin
     density_log = Arp
