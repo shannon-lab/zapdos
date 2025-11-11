@@ -10,12 +10,12 @@
 
 #pragma once
 
-#include "Density.h"
+#include "DensityFromLog.h"
 
 /**
  *  Returns physical densities in units of #/m^3
  */
-class DensityMoles : public Density
+class DensityMoles : public DensityFromLog
 {
 public:
   DensityMoles(const InputParameters & parameters);

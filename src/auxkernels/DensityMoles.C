@@ -16,7 +16,7 @@ registerMooseObject("ZapdosApp", DensityMoles);
 InputParameters
 DensityMoles::validParams()
 {
-  InputParameters params = Density::validParams();
+  InputParameters params = DensityFromLog::validParams();
   params.addRequiredParam<bool>("use_moles", "Whether to convert from units of moles to \\#.");
   params.renameCoupledVar("density_log", "density", "The species density in log form.");
   params.addClassDescription("Returns physical densities in units of #/m$^3$");
@@ -24,7 +24,7 @@ DensityMoles::validParams()
 }
 
 DensityMoles::DensityMoles(const InputParameters & parameters)
-  : Density(parameters),
+  : DensityFromLog(parameters),
 
     _convert_moles(getParam<bool>("use_moles"))
 {
@@ -34,8 +34,8 @@ Real
 DensityMoles::computeValue()
 {
   if (_convert_moles)
-    return Density::computeValue() * ZAPDOS_CONSTANTS::N_A;
+    return DensityFromLog::computeValue() * ZAPDOS_CONSTANTS::N_A;
 
   else
-    return Density::computeValue();
+    return DensityFromLog::computeValue();
 }
