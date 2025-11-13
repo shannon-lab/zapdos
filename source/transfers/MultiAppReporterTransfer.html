@@ -1,0 +1,2048 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>MultiAppReporterTransfer | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="e64731f3-a87d-4ee7-9fa6-99122075cd9a" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="f9187958-80f3-4c52-9346-14145d2c0f80" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="0bfbf27d-b1c0-4517-a628-6b05fb46b7d9" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="4d009cf3-074e-4cfb-bcce-e86279528707"><i class="material-icons">menu</i></a><ul class="sidenav" id="4d009cf3-074e-4cfb-bcce-e86279528707"><li><a href="#!" class="dropdown-trigger" data-target="6dff97fd-a75f-4c36-bea9-39f634e88f85" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="7218c437-4cd4-441f-9d66-23f4044f7c5f" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="cb3d88a4-2b37-4ff4-a924-ab37eb2705d4" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="e64731f3-a87d-4ee7-9fa6-99122075cd9a"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="f9187958-80f3-4c52-9346-14145d2c0f80"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="0bfbf27d-b1c0-4517-a628-6b05fb46b7d9"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="6dff97fd-a75f-4c36-bea9-39f634e88f85"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="7218c437-4cd4-441f-9d66-23f4044f7c5f"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="cb3d88a4-2b37-4ff4-a924-ab37eb2705d4"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">transfers</span><a href="#" class="breadcrumb">MultiAppReporterTransfer</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="7679eab1-369c-488c-afd4-18630eba7d63" data-section-level="1" data-section-text="MultiAppReporterTransfer"><h1 id="multiappreportertransfer">MultiAppReporterTransfer</h1><p>Transfers reporter data between two applications.</p><section class="scrollspy" id="8535f8e9-72f1-45cc-816f-5b2907c36334" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p>This MultiAppReporterTransfer provides a method to transfer a reporter value (see <a href="../../syntax/Reporters/index.html">reporters</a>) of any type between the main application and the sub-application(s).  This includes vectors of real numbers from <a href="../../syntax/VectorPostprocessors/index.html">vectorpostprocessors</a> as well as real numbers from <a href="../../syntax/Postprocessors/index.html">postprocessors</a>.</p><p><a href="#7cd75f5f-57c0-4b1c-a98d-5d8adbd015c4" class="moose-modal-link modal-trigger">&quot;from_reporters&quot;</a> specifies where the data is coming from, and <a href="#951ddc8b-2d37-47b7-b9fd-c0f0de1301a0" class="moose-modal-link modal-trigger">&quot;to_reporters&quot;</a> specifies where the data going to. These are a list of reporter names that must be the same length, as they directly correspond to each other. For <a href="../../syntax/VectorPostprocessors/index.html">vectorpostprocessors</a> the syntax is &quot;vpp_name&quot;/&quot;vector_name&quot; and for <a href="../../syntax/Reporters/index.html">reporters</a> the syntax is &quot;reporter_name&quot;/&quot;value_name&quot;.</p><p>When transferring data from the main application the data from the main is copied to each sub-application. If the <a href="#5d766d9e-fb78-4bf6-9ac4-3994bcd476c7" class="moose-modal-link modal-trigger">&quot;subapp_index&quot;</a> is used then data is only transferred to the specified sub-application. When transferring data to the main application the <a href="#dbed8884-75e1-46d2-8ecc-3a7cb27c20c4" class="moose-modal-link modal-trigger">&quot;subapp_index&quot;</a> must be supplied if there is more than one sub-application.</p></section><section class="scrollspy" id="a742db2c-e14f-4c8d-853e-cea3b0acbc9b" data-section-level="2" data-section-text="Siblings transfer behavior"><h2 id="siblings-transfer-behavior">Siblings transfer behavior</h2><p>This transfer supports sending data from a MultiApp to a MultiApp if and only if the number of subapps in the source MultiApp matches the number of subapps in the target MultiApp, and they are distributed the same way on the parallel processes. Each source app is then matched to the target app with the same subapp index.</p></section><section class="scrollspy" id="e7746666-d7a0-4775-8486-c38a6bddfb67" data-section-level="2" data-section-text="Distributed Vector Transfer"><h2 id="distributed-vector-transfer">Distributed Vector Transfer</h2><p>The MultiAppReporterTransfer also supports transferring reporter vectors in a distributed fashion using the <a href="#c031fe14-8d6a-4209-adb2-7511df702f2c" class="moose-modal-link modal-trigger">&quot;distribute_reporter_vector&quot;</a> parameter. In this mode, the transfer assumes a one-to-many or many-to-one relationship between the reporter values in the main application and the sub-applications. The reporter value in the main application is expected to be a vector with a size matching the number of sub-applications. Each sub-application will send/receive its respective component of the vector based on its index. The main app reporter is assumed to be replicated while the subapp reporters are assumed to be root or replicated.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Distributed Transfer Examples</span></p><div recursive form="['center', 'center', 'center', 'center', 'center']" class="moose-table-div"><table><thead><tr><th style=";text-align:center">Main App</th><th style=";text-align:center">Sub App 1</th><th style=";text-align:center">Sub App 2</th><th style=";text-align:center">Sub App 3</th><th style=";text-align:center">Sub App 4</th></tr></thead><tbody><tr><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-26b3d197-a3e0-4c90-bac9-561f9a16e072"><script>var element = document.getElementById("moose-equation-26b3d197-a3e0-4c90-bac9-561f9a16e072");katex.render("\\begin{pmatrix}1\\\\2\\\\3\\\\4\\end{pmatrix}", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center">1</td><td style=";text-align:center">2</td><td style=";text-align:center">3</td><td style=";text-align:center">4</td></tr></tbody><tbody><tr></tr></tbody><tbody><tr><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-ea1b13c5-9f42-49ed-86a5-2303064a4392"><script>var element = document.getElementById("moose-equation-ea1b13c5-9f42-49ed-86a5-2303064a4392");katex.render("\\begin{pmatrix}1\\\\2\\end{pmatrix}", element, {displayMode:false,throwOnError:false});</script></span> <span class="moose-katex-inline-equation" id="moose-equation-16c187fe-a4b1-42b7-9243-7ad66aecf3ff"><script>var element = document.getElementById("moose-equation-16c187fe-a4b1-42b7-9243-7ad66aecf3ff");katex.render("\\begin{pmatrix}3\\\\4\\\\5\\end{pmatrix}", element, {displayMode:false,throwOnError:false});</script></span> <span class="moose-katex-inline-equation" id="moose-equation-707c21ca-dbbf-49c3-97c5-cd8e33bbcb18"><script>var element = document.getElementById("moose-equation-707c21ca-dbbf-49c3-97c5-cd8e33bbcb18");katex.render("\\begin{pmatrix}6\\\\7\\\\8\\\\9\\end{pmatrix}", element, {displayMode:false,throwOnError:false});</script></span> <span class="moose-katex-inline-equation" id="moose-equation-b2fcf8e6-10e8-4ffd-933d-b1f36f1b1b56"><script>var element = document.getElementById("moose-equation-b2fcf8e6-10e8-4ffd-933d-b1f36f1b1b56");katex.render("\\begin{pmatrix}10\\\\11\\\\12\\end{pmatrix}", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-068264bd-3413-47d7-8569-9b11d35f2931"><script>var element = document.getElementById("moose-equation-068264bd-3413-47d7-8569-9b11d35f2931");katex.render("\\begin{pmatrix}1\\\\2\\end{pmatrix}", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-fe0c8e77-beb4-45bb-9c64-ee8dec02074b"><script>var element = document.getElementById("moose-equation-fe0c8e77-beb4-45bb-9c64-ee8dec02074b");katex.render("\\begin{pmatrix}3\\\\4\\\\5\\end{pmatrix}", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-ae6472e1-00aa-47d9-853e-d0f67d864ce2"><script>var element = document.getElementById("moose-equation-ae6472e1-00aa-47d9-853e-d0f67d864ce2");katex.render("\\begin{pmatrix}6\\\\7\\\\8\\\\9\\end{pmatrix}", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-0f2bfeab-0ee8-4537-866e-5e9bd344aced"><script>var element = document.getElementById("moose-equation-0f2bfeab-0ee8-4537-866e-5e9bd344aced");katex.render("\\begin{pmatrix}10\\\\11\\\\12\\end{pmatrix}", element, {displayMode:false,throwOnError:false});</script></span></td></tr></tbody></table></div></div></div><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note:</span><a href="#6f6e9b5c-1bce-4181-8c3a-6be4498ae39f" class="moose-modal-link modal-trigger">&quot;distribute_reporter_vector&quot;</a>  is only implemented for certain reporter modes.</div><div class="card-content"><div class="moose-alert-content"><p>The main app reporter is assumed to be <code>REPORTER_MODE_REPLICATED</code> while the subapp reporters are assumed to be <code>REPORTER_MODE_ROOT</code> or <code>REPORTER_MODE_REPLICATED</code>. This operation will error out with any reporter that are <code>REPORTER_MODE_DISTRIBUTED</code>.</p></div></div></div></section><section class="scrollspy" id="b505b821-2a5d-4b67-a962-4c078fc2728c" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><div class="card moose-alert moose-alert-tip"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">school</i><span class="moose-alert-title-brand">tip</span></div><div class="card-content"><div class="moose-alert-content"><p>You can initialize arbitrary data containers for <a href="#2d6de2af-f684-4ab7-93c0-2284e107dd0c" class="moose-modal-link modal-trigger">&quot;to_reporters&quot;</a> with the following objects:</p><ul class="browser-default"><li><p>Postprocessor: <a href="../postprocessors/Receiver.html">Receiver</a> </p></li><li><p>VectorPostprocessor: <a href="../vectorpostprocessors/ConstantVectorPostprocessor.html">ConstantVectorPostprocessor</a> </p></li><li><p>Reporter: <a href="../reporters/ConstantReporter.html">ConstantReporter</a></p></li></ul><p></p></div></div></div><section id="ecb979a1-0060-4ba5-bc57-df9a595fca6a" data-section-level="3" data-section-text="Transferring VectorPostprocessors"><h3 id="transferring-vectorpostprocessors">Transferring VectorPostprocessors</h3><p>Here, we are transferring data between vectorpostprocessors:</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application VPPs</span></p><pre style="max-height:350px;"><code class="language-moose">[VectorPostprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/VectorPostprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [from_main_vpp]
+    type = ConstantVectorPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Populate constant VectorPostprocessorValue directly from input file.&quot;, &quot;href&quot;: &quot;../vectorpostprocessors/ConstantVectorPostprocessor.html&quot;}&gt;&gt;&gt;
+    vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names of the column vectors in this object&quot;}&gt;&gt;&gt; = &#x27;a b c&#x27;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector values this object will have. Leading dimension must be equal to leading dimension of vector_names parameter.&quot;}&gt;&gt;&gt; = &#x27;1 1 1; 2 2 2; 3 3 3&#x27;
+    execute_on&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.&quot;}&gt;&gt;&gt; = initial
+    #outputs = none
+  []
+  [to_main_vpp]
+    type = ConstantVectorPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Populate constant VectorPostprocessorValue directly from input file.&quot;, &quot;href&quot;: &quot;../vectorpostprocessors/ConstantVectorPostprocessor.html&quot;}&gt;&gt;&gt;
+    vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names of the column vectors in this object&quot;}&gt;&gt;&gt; = &#x27;a b c&#x27;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector values this object will have. Leading dimension must be equal to leading dimension of vector_names parameter.&quot;}&gt;&gt;&gt; = &#x27;4 4 4; 5 5 5; 6 6 6&#x27;
+    #outputs = none
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#009ecf12-c506-4382-87d7-a0a744853798">(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Sub-application VPPs</span></p><pre style="max-height:350px;"><code class="language-moose">[VectorPostprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/VectorPostprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [to_sub_vpp]
+    type = ConstantVectorPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Populate constant VectorPostprocessorValue directly from input file.&quot;, &quot;href&quot;: &quot;../vectorpostprocessors/ConstantVectorPostprocessor.html&quot;}&gt;&gt;&gt;
+    vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names of the column vectors in this object&quot;}&gt;&gt;&gt; = &#x27;a b&#x27;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector values this object will have. Leading dimension must be equal to leading dimension of vector_names parameter.&quot;}&gt;&gt;&gt; = &#x27;10 10 10 ; 20 20 20&#x27;
+  []
+  [from_sub_vpp]
+    type = ConstantVectorPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Populate constant VectorPostprocessorValue directly from input file.&quot;, &quot;href&quot;: &quot;../vectorpostprocessors/ConstantVectorPostprocessor.html&quot;}&gt;&gt;&gt;
+    vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names of the column vectors in this object&quot;}&gt;&gt;&gt; = &#x27;a b&#x27;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector values this object will have. Leading dimension must be equal to leading dimension of vector_names parameter.&quot;}&gt;&gt;&gt; = &#x27;30 30 30; 40 40 40&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#01533809-a99f-4dcc-9783-7d77f15d2d75">(moose/test/tests/transfers/multiapp_reporter_transfer/sub0.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application VPP transfers</span></p><pre style="max-height:350px;"><code class="language-moose">[Transfers&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Transfers/index.html&quot;}&gt;&gt;&gt;]
+  [Transfers]
+    [vpp_to_vpp]
+      type = MultiAppReporterTransfer
+      to_reporters = &#x27;to_sub_vpp/a to_sub_vpp/b&#x27;
+      from_reporters = &#x27;from_main_vpp/a from_main_vpp/b&#x27;
+      to_multi_app = sub
+    []
+  
+    [vpp_from_vpp]
+      type = MultiAppReporterTransfer
+      to_reporters = &#x27;to_main_vpp/a to_main_vpp/b&#x27;
+      from_reporters = &#x27;from_sub_vpp/a from_sub_vpp/b&#x27;
+      from_multi_app = sub
+      subapp_index = 0
+    []
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#190516ae-9ec5-4e18-8230-dbd9e3fb6b42">(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</a></div></div></section><section id="472c690d-72ac-49d2-afe2-6f38c688cc00" data-section-level="3" data-section-text="Transferring Reporter Vectors"><h3 id="transferring-reporter-vectors">Transferring Reporter Vectors</h3><p>Here, we are transferring data between a reporter vector and vectorpostprocessors:</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application reporters</span></p><pre style="max-height:350px;"><code class="language-moose">[Reporters&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Reporters/index.html&quot;}&gt;&gt;&gt;]
+  [from_main_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    integer_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each integer value.&quot;}&gt;&gt;&gt; = int
+    integer_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for integers.&quot;}&gt;&gt;&gt; = 1
+    real_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each real value.&quot;}&gt;&gt;&gt; = num
+    real_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for reals.&quot;}&gt;&gt;&gt; = 2.0
+    real_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of reals value.&quot;}&gt;&gt;&gt; = vec
+    real_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of reals.&quot;}&gt;&gt;&gt; = &#x27;3 4&#x27;
+    string_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each string value.&quot;}&gt;&gt;&gt; = str
+    string_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for strings.&quot;}&gt;&gt;&gt; = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    integer_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each integer value.&quot;}&gt;&gt;&gt; = int
+    integer_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for integers.&quot;}&gt;&gt;&gt; = 0
+    real_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each real value.&quot;}&gt;&gt;&gt; = num
+    real_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for reals.&quot;}&gt;&gt;&gt; = 0.0
+    real_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of reals value.&quot;}&gt;&gt;&gt; = vec
+    real_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of reals.&quot;}&gt;&gt;&gt; = &#x27;0&#x27;
+    string_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each string value.&quot;}&gt;&gt;&gt; = str
+    string_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for strings.&quot;}&gt;&gt;&gt; = &#x27;foo&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#3371ba20-41d6-44df-ba68-be53caefe54d">(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Sub-application VPPs</span></p><pre style="max-height:350px;"><code class="language-moose">[VectorPostprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/VectorPostprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [to_sub_vpp]
+    type = ConstantVectorPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Populate constant VectorPostprocessorValue directly from input file.&quot;, &quot;href&quot;: &quot;../vectorpostprocessors/ConstantVectorPostprocessor.html&quot;}&gt;&gt;&gt;
+    vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names of the column vectors in this object&quot;}&gt;&gt;&gt; = &#x27;a b&#x27;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector values this object will have. Leading dimension must be equal to leading dimension of vector_names parameter.&quot;}&gt;&gt;&gt; = &#x27;10 10 10 ; 20 20 20&#x27;
+  []
+  [from_sub_vpp]
+    type = ConstantVectorPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Populate constant VectorPostprocessorValue directly from input file.&quot;, &quot;href&quot;: &quot;../vectorpostprocessors/ConstantVectorPostprocessor.html&quot;}&gt;&gt;&gt;
+    vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names of the column vectors in this object&quot;}&gt;&gt;&gt; = &#x27;a b&#x27;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector values this object will have. Leading dimension must be equal to leading dimension of vector_names parameter.&quot;}&gt;&gt;&gt; = &#x27;30 30 30; 40 40 40&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#c34d094f-b9af-486e-b4e8-a1dfe3907009">(moose/test/tests/transfers/multiapp_reporter_transfer/sub0.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application vector transfers</span></p><pre style="max-height:350px;"><code class="language-moose">[Transfers&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Transfers/index.html&quot;}&gt;&gt;&gt;]
+  [Transfers]
+    [vector_to_vpp]
+      type = MultiAppReporterTransfer
+      to_reporters = &#x27;to_sub_vpp/a&#x27;
+      from_reporters = &#x27;from_main_rep/vec&#x27;
+      to_multi_app = sub
+      subapp_index = 0
+    []
+  
+    [vector_from_vpp]
+      type = MultiAppReporterTransfer
+      to_reporters = &#x27;to_main_rep/vec&#x27;
+      from_reporters = &#x27;from_sub_vpp/a&#x27;
+      from_multi_app = sub
+      subapp_index = 0
+    []
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#83b79168-2121-4cca-84dc-7f0ba24df695">(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</a></div></div></section><section id="e22675f5-67ca-4243-8a27-d5c84e60631a" data-section-level="3" data-section-text="Transferring Reporter Real Numbers"><h3 id="transferring-reporter-real-numbers">Transferring Reporter Real Numbers</h3><p>Here, we are transferring data between a reporter real number and postprocessors:</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application reporters</span></p><pre style="max-height:350px;"><code class="language-moose">[Reporters&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Reporters/index.html&quot;}&gt;&gt;&gt;]
+  [from_main_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    integer_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each integer value.&quot;}&gt;&gt;&gt; = int
+    integer_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for integers.&quot;}&gt;&gt;&gt; = 1
+    real_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each real value.&quot;}&gt;&gt;&gt; = num
+    real_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for reals.&quot;}&gt;&gt;&gt; = 2.0
+    real_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of reals value.&quot;}&gt;&gt;&gt; = vec
+    real_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of reals.&quot;}&gt;&gt;&gt; = &#x27;3 4&#x27;
+    string_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each string value.&quot;}&gt;&gt;&gt; = str
+    string_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for strings.&quot;}&gt;&gt;&gt; = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    integer_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each integer value.&quot;}&gt;&gt;&gt; = int
+    integer_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for integers.&quot;}&gt;&gt;&gt; = 0
+    real_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each real value.&quot;}&gt;&gt;&gt; = num
+    real_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for reals.&quot;}&gt;&gt;&gt; = 0.0
+    real_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of reals value.&quot;}&gt;&gt;&gt; = vec
+    real_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of reals.&quot;}&gt;&gt;&gt; = &#x27;0&#x27;
+    string_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each string value.&quot;}&gt;&gt;&gt; = str
+    string_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for strings.&quot;}&gt;&gt;&gt; = &#x27;foo&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#839c454d-1b3a-4e21-a874-5e94f3ed9ca3">(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Sub-application Postprocessors</span></p><pre style="max-height:350px;"><code class="language-moose">[Postprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Postprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [to_sub_pp]
+    type = Receiver&lt;&lt;&lt;{&quot;description&quot;: &quot;Reports the value stored in this processor, which is usually filled in by another object. The Receiver does not compute its own value.&quot;, &quot;href&quot;: &quot;../postprocessors/Receiver.html&quot;}&gt;&gt;&gt;
+  []
+  [from_sub_pp]
+    type = Receiver&lt;&lt;&lt;{&quot;description&quot;: &quot;Reports the value stored in this processor, which is usually filled in by another object. The Receiver does not compute its own value.&quot;, &quot;href&quot;: &quot;../postprocessors/Receiver.html&quot;}&gt;&gt;&gt;
+    default&lt;&lt;&lt;{&quot;description&quot;: &quot;The default value&quot;}&gt;&gt;&gt; = 3.1415926
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#986eae31-8e3e-4033-9308-cb410b627087">(moose/test/tests/transfers/multiapp_reporter_transfer/sub0.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application real transfers</span></p><pre style="max-height:350px;"><code class="language-moose">[Transfers&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Transfers/index.html&quot;}&gt;&gt;&gt;]
+  [Transfers]
+    [real_from_pp]
+      type = MultiAppReporterTransfer
+      to_reporters = &#x27;to_main_rep/num&#x27;
+      from_reporters = &#x27;from_sub_pp/value&#x27;
+      from_multi_app = sub
+      subapp_index = 0
+    []
+  
+    [real_to_pp]
+      type = MultiAppReporterTransfer
+      to_reporters = &#x27;to_sub_pp/value&#x27;
+      from_reporters = &#x27;from_main_rep/num&#x27;
+      to_multi_app = sub
+      subapp_index = 0
+    []
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#aa33bcee-d555-4ab7-a3e3-8770540bebf3">(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</a></div></div></section><section id="7d07f2b7-f35e-4445-84cf-820d05e8576d" data-section-level="3" data-section-text="Transferring Reporter Integers and Strings"><h3 id="transferring-reporter-integers-and-strings">Transferring Reporter Integers and Strings</h3><p>Here, we are transferring integer and string data between reporters:</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application reporters</span></p><pre style="max-height:350px;"><code class="language-moose">[Reporters&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Reporters/index.html&quot;}&gt;&gt;&gt;]
+  [from_main_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    integer_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each integer value.&quot;}&gt;&gt;&gt; = int
+    integer_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for integers.&quot;}&gt;&gt;&gt; = 1
+    real_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each real value.&quot;}&gt;&gt;&gt; = num
+    real_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for reals.&quot;}&gt;&gt;&gt; = 2.0
+    real_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of reals value.&quot;}&gt;&gt;&gt; = vec
+    real_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of reals.&quot;}&gt;&gt;&gt; = &#x27;3 4&#x27;
+    string_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each string value.&quot;}&gt;&gt;&gt; = str
+    string_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for strings.&quot;}&gt;&gt;&gt; = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    integer_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each integer value.&quot;}&gt;&gt;&gt; = int
+    integer_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for integers.&quot;}&gt;&gt;&gt; = 0
+    real_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each real value.&quot;}&gt;&gt;&gt; = num
+    real_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for reals.&quot;}&gt;&gt;&gt; = 0.0
+    real_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of reals value.&quot;}&gt;&gt;&gt; = vec
+    real_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of reals.&quot;}&gt;&gt;&gt; = &#x27;0&#x27;
+    string_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each string value.&quot;}&gt;&gt;&gt; = str
+    string_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for strings.&quot;}&gt;&gt;&gt; = &#x27;foo&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#09db12e2-d2cc-44dc-9aee-5363a4201420">(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Sub-application reporters</span></p><pre style="max-height:350px;"><code class="language-moose">[Reporters&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Reporters/index.html&quot;}&gt;&gt;&gt;]
+  [to_sub_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    integer_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each integer value.&quot;}&gt;&gt;&gt; = int
+    integer_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for integers.&quot;}&gt;&gt;&gt; = 0
+    string_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each string value.&quot;}&gt;&gt;&gt; = str
+    string_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for strings.&quot;}&gt;&gt;&gt; = &#x27;foo&#x27;
+  []
+  [from_sub_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    integer_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each integer value.&quot;}&gt;&gt;&gt; = int
+    integer_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for integers.&quot;}&gt;&gt;&gt; = 10
+    string_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each string value.&quot;}&gt;&gt;&gt; = str
+    string_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for strings.&quot;}&gt;&gt;&gt; = &#x27;twenty&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#857b7e5c-c7fe-4ee2-8402-d5edf69a7fac">(moose/test/tests/transfers/multiapp_reporter_transfer/sub0.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application reporter transfers</span></p><pre style="max-height:350px;"><code class="language-moose">[Transfers&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Transfers/index.html&quot;}&gt;&gt;&gt;]
+  [Transfers]
+    [int_to_int]
+      type = MultiAppReporterTransfer
+      to_reporters = &#x27;to_sub_rep/int&#x27;
+      from_reporters = &#x27;from_main_rep/int&#x27;
+      to_multi_app = sub
+      subapp_index = 0
+    []
+  
+    [int_from_int]
+      type = MultiAppReporterTransfer
+      to_reporters = &#x27;to_main_rep/int&#x27;
+      from_reporters = &#x27;from_sub_rep/int&#x27;
+      from_multi_app = sub
+      subapp_index = 0
+    []
+  
+    [string_from_string]
+      type = MultiAppReporterTransfer
+      to_reporters = &#x27;to_main_rep/str&#x27;
+      from_reporters = &#x27;from_sub_rep/str&#x27;
+      from_multi_app = sub
+      subapp_index = 0
+    []
+  
+    [string_to_string]
+      type = MultiAppReporterTransfer
+      to_reporters = &#x27;to_sub_rep/str&#x27;
+      from_reporters = &#x27;from_main_rep/str&#x27;
+      to_multi_app = sub
+      subapp_index = 0
+    []
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#11b8c807-be3f-479e-a91b-c4150d910763">(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</a></div></div></section><section id="f8216256-d70d-446b-8af1-e460fed3a88f" data-section-level="3" data-section-text="Distribution of a vector Reporter"><h3 id="distribution-of-a-vector-reporter">Distribution of a vector Reporter</h3><section id="ec91d518-1daf-43a7-bc06-ef71d003ff84" data-section-level="4" data-section-text="Scatter vector Reporter"><h4 id="scatter-vector-reporter">Scatter vector Reporter</h4><p>Here we are transferring a vector reporter and a vector of vectors reporter in a scatter fashion. The main application holds a vector of vectors and a single vector, while each subapp has a vector and a Real (scalar) reporter. During the transfer the subapp&#x27;s reporters are populated from the scattering of the main app&#x27;s vector reporter. The main app can also use a vector of vectors reporter, in which case those vectors are distributed to the subapps.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application reporters</span></p><pre style="max-height:350px;"><code class="language-moose">[Reporters&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Reporters/index.html&quot;}&gt;&gt;&gt;]
+  [to_sub_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    real_vector_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of vectors of reals value.&quot;}&gt;&gt;&gt; = &#x27;sent_vec&#x27;
+    real_vector_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of vectors of reals.&quot;}&gt;&gt;&gt; = &#x27;1.; 2. 1003.;-5.0 -10 1000;3.3&#x27;
+    real_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of reals value.&quot;}&gt;&gt;&gt; = &#x27;sent_real&#x27;
+    real_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of reals.&quot;}&gt;&gt;&gt; = &quot;1. 2. 3. 4.&quot;
+    execute_on&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.&quot;}&gt;&gt;&gt; = INITIAL
+    outputs&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of output names where you would like to restrict the output of variables(s) associated with this object&quot;}&gt;&gt;&gt; = out
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#1fb97f44-b921-44a9-8454-b69b8126b295">(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/main_send.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Sub-application reporters</span></p><pre style="max-height:350px;"><code class="language-moose">[Reporters&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Reporters/index.html&quot;}&gt;&gt;&gt;]
+  [from_main_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    real_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of reals value.&quot;}&gt;&gt;&gt; = &#x27;rec_vec&#x27;
+    real_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of reals.&quot;}&gt;&gt;&gt; = &#x27;0.&#x27;
+    real_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each real value.&quot;}&gt;&gt;&gt; = &#x27;rec_real&#x27;
+    real_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for reals.&quot;}&gt;&gt;&gt; = &#x27;-1.&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#30165635-4f33-4aba-a59c-10b6cc67ba8d">(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/sub.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application reporter transfers</span></p><pre style="max-height:350px;"><code class="language-moose">[Transfers&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Transfers/index.html&quot;}&gt;&gt;&gt;]
+  [Transfers]
+    [to_sub]
+      type = MultiAppReporterTransfer
+      to_multi_app = sub
+      from_reporters = &#x27;to_sub_rep/sent_vec to_sub_rep/sent_real&#x27;
+      to_reporters = &#x27;from_main_rep/rec_vec from_main_rep/rec_real&#x27;
+      distribute_reporter_vector = true
+    []
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#0ea9a2d1-4764-4ef3-a377-33a0e9619caf">(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/main_send.i)</a></div></div></section><section id="b1a97941-0e7d-416e-a9a6-2b792df73ba4" data-section-level="4" data-section-text="Gather vector Reporter"><h4 id="gather-vector-reporter">Gather vector Reporter</h4><p>Here we are transferring a vector reporter and a vector of vectors reporter in a gather fashion. The main application holds a vector of vectors and a single vector, while each subapp has a vector and a Real (scalar) reporter. This test shows the gather operation by aggregating the same values from each subapp into a vector of reporters in the main application.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application reporters</span></p><pre style="max-height:350px;"><code class="language-moose">[Reporters&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Reporters/index.html&quot;}&gt;&gt;&gt;]
+  [from_sub_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    real_vector_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of vectors of reals value.&quot;}&gt;&gt;&gt; = &#x27;rec_vec_vec&#x27;
+    real_vector_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of vectors of reals.&quot;}&gt;&gt;&gt; = &#x27;10000000.&#x27;
+    real_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of reals value.&quot;}&gt;&gt;&gt; = &#x27;rec_vec&#x27;
+    real_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of reals.&quot;}&gt;&gt;&gt; = &quot;0.&quot;
+    execute_on&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.&quot;}&gt;&gt;&gt; = INITIAL
+    outputs&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of output names where you would like to restrict the output of variables(s) associated with this object&quot;}&gt;&gt;&gt; = out
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#a3d2e46d-7c8f-45a3-beef-9ac195ef9580">(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/main_rec.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Sub-application reporters</span></p><pre style="max-height:350px;"><code class="language-moose">[Reporters&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Reporters/index.html&quot;}&gt;&gt;&gt;]
+  [from_main_rep]
+    type = ConstantReporter&lt;&lt;&lt;{&quot;description&quot;: &quot;Reporter with constant values to be accessed by other objects, can be modified using transfers.&quot;, &quot;href&quot;: &quot;../reporters/ConstantReporter.html&quot;}&gt;&gt;&gt;
+    real_vector_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each vector of reals value.&quot;}&gt;&gt;&gt; = &#x27;rec_vec&#x27;
+    real_vector_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for vectors of reals.&quot;}&gt;&gt;&gt; = &#x27;0.&#x27;
+    real_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Names for each real value.&quot;}&gt;&gt;&gt; = &#x27;rec_real&#x27;
+    real_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Values for reals.&quot;}&gt;&gt;&gt; = &#x27;-1.&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#e45f8be7-7be5-4e1b-a8e2-8972c163888e">(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/sub.i)</a></div></div><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Main application reporter transfers</span></p><pre style="max-height:350px;"><code class="language-moose">[Transfers&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Transfers/index.html&quot;}&gt;&gt;&gt;]
+  [Transfers]
+    [from_sub]
+      type = MultiAppReporterTransfer
+      from_multi_app = sub
+      from_reporters = &#x27;from_main_rep/rec_vec from_main_rep/rec_real&#x27;
+      to_reporters = &#x27;from_sub_rep/rec_vec_vec from_sub_rep/rec_vec&#x27;
+      distribute_reporter_vector = true
+    []
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#ff169e6e-9d9b-4bf7-b01b-142545301c5b">(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/main_rec.i)</a></div></div></section></section><section class="scrollspy" id="0c6bcf54-154c-4218-ac6b-dbe4ea385a57" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="a81bada7-fecb-43b0-a7d8-3ef3e244eab4" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">from_reporters</span><span class="moose-parameter-header-description">List of the reporter names (object_name/value_name) to transfer the value from.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;ReporterName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of the reporter names (object_name/value_name) to transfer the value from.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">to_reporters</span><span class="moose-parameter-header-description">List of the reporter names (object_name/value_name) to transfer the value to.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;ReporterName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of the reporter names (object_name/value_name) to transfer the value to.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="99c3d26a-b29f-42da-ad3f-b3d7f0424003" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">check_multiapp_execute_on</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">When false the check between the multiapp and transfer execute on flags is not performed.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>When false the check between the multiapp and transfer execute on flags is not performed.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">displaced_source_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to use the displaced mesh for the source mesh.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not to use the displaced mesh for the source mesh.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">displaced_target_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to use the displaced mesh for the target mesh.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not to use the displaced mesh for the target mesh.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">distribute_reporter_vector</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Transfer to/from a vector reporter from/to reporters on child applications. N to 1 or 1 to N type of transfer. The number of child applications must match the size of the vector reporter</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Transfer to/from a vector reporter from/to reporters on child applications. N to 1 or 1 to N type of transfer. The number of child applications must match the size of the vector reporter</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">SAME_AS_MULTIAPP</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>SAME_AS_MULTIAPP</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, INITIAL, LINEAR, LINEAR_CONVERGENCE, NONLINEAR, NONLINEAR_CONVERGENCE, POSTCHECK, TIMESTEP_END, TIMESTEP_BEGIN, MULTIAPP_FIXED_POINT_END, MULTIAPP_FIXED_POINT_BEGIN, MULTIAPP_FIXED_POINT_CONVERGENCE, FINAL, CUSTOM, SAME_AS_MULTIAPP, POST_ADAPTIVITY</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">from_multi_app</span><span class="moose-parameter-header-description">The name of the MultiApp to receive data from</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiAppName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the MultiApp to receive data from</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">subapp_index</span><span class="moose-parameter-header-default">4294967295</span><span class="moose-parameter-header-description">The MultiApp object sub-application index to use when transferring to/from the sub-application. If unset and transferring to the sub-applications then all sub-applications will receive data. The value must be set when transferring from a sub-application.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>4294967295</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The MultiApp object sub-application index to use when transferring to/from the sub-application. If unset and transferring to the sub-applications then all sub-applications will receive data. The value must be set when transferring from a sub-application.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">to_multi_app</span><span class="moose-parameter-header-description">The name of the MultiApp to transfer the data to</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiAppName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the MultiApp to transfer the data to</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="706cc3d6-1f6c-4fce-9351-af73f43e7eb9" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">_called_legacy_params</span><span class="moose-parameter-header-default">True</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"></p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">skip_coordinate_collapsing</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Whether to skip coordinate collapsing (translation and rotation are still performed, only XYZ, RZ etc collapsing is skipped) when performing mapping and inverse mapping coordinate transformation operations. This parameter should only be set by users who really know what they're doing.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to skip coordinate collapsing (translation and rotation are still performed, only XYZ, RZ etc collapsing is skipped) when performing mapping and inverse mapping coordinate transformation operations. This parameter should only be set by users who really know what they're doing.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section></section><div class="moose-modal modal" id="7cd75f5f-57c0-4b1c-a98d-5d8adbd015c4"><div class="modal-content"><h4>from_reporters</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;ReporterName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of the reporter names (object_name/value_name) to transfer the value from.</p></div></div><div class="moose-modal modal" id="951ddc8b-2d37-47b7-b9fd-c0f0de1301a0"><div class="modal-content"><h4>to_reporters</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;ReporterName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of the reporter names (object_name/value_name) to transfer the value to.</p></div></div><div class="moose-modal modal" id="5d766d9e-fb78-4bf6-9ac4-3994bcd476c7"><div class="modal-content"><h4>subapp_index</h4><p class="moose-parameter-description-default"><span>Default:</span>4294967295</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The MultiApp object sub-application index to use when transferring to/from the sub-application. If unset and transferring to the sub-applications then all sub-applications will receive data. The value must be set when transferring from a sub-application.</p></div></div><div class="moose-modal modal" id="dbed8884-75e1-46d2-8ecc-3a7cb27c20c4"><div class="modal-content"><h4>subapp_index</h4><p class="moose-parameter-description-default"><span>Default:</span>4294967295</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The MultiApp object sub-application index to use when transferring to/from the sub-application. If unset and transferring to the sub-applications then all sub-applications will receive data. The value must be set when transferring from a sub-application.</p></div></div><div class="moose-modal modal" id="c031fe14-8d6a-4209-adb2-7511df702f2c"><div class="modal-content"><h4>distribute_reporter_vector</h4><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Transfer to/from a vector reporter from/to reporters on child applications. N to 1 or 1 to N type of transfer. The number of child applications must match the size of the vector reporter</p></div></div><div class="moose-modal modal" id="6f6e9b5c-1bce-4181-8c3a-6be4498ae39f"><div class="modal-content"><h4>distribute_reporter_vector</h4><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Transfer to/from a vector reporter from/to reporters on child applications. N to 1 or 1 to N type of transfer. The number of child applications must match the size of the vector reporter</p></div></div><div class="moose-modal modal" id="2d6de2af-f684-4ab7-93c0-2284e107dd0c"><div class="modal-content"><h4>to_reporters</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;ReporterName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of the reporter names (object_name/value_name) to transfer the value to.</p></div></div><div class="moose-modal modal" id="009ecf12-c506-4382-87d7-a0a744853798"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[VectorPostprocessors]
+  [from_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;1 1 1; 2 2 2; 3 3 3&#x27;
+    execute_on = initial
+    #outputs = none
+  []
+  [to_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;4 4 4; 5 5 5; 6 6 6&#x27;
+    #outputs = none
+  []
+[]
+
+[Reporters]
+  [from_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 1
+    real_names = num
+    real_values = 2.0
+    real_vector_names = vec
+    real_vector_values = &#x27;3 4&#x27;
+    string_names = str
+    string_values = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    real_names = num
+    real_values = 0.0
+    real_vector_names = vec
+    real_vector_values = &#x27;0&#x27;
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+[]
+
+[MultiApps/sub]
+  type = TransientMultiApp
+  input_files = &#x27;sub0.i sub1.i&#x27;
+  positions = &#x27;0 0 0 0 0 0&#x27;
+[]
+
+[Transfers]
+  # VPP transfers
+  [vpp_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a to_sub_vpp/b&#x27;
+    from_reporters = &#x27;from_main_vpp/a from_main_vpp/b&#x27;
+    to_multi_app = sub
+  []
+  [vpp_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_vpp/a to_main_vpp/b&#x27;
+    from_reporters = &#x27;from_sub_vpp/a from_sub_vpp/b&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Vector-VPP transfers
+  [vector_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a&#x27;
+    from_reporters = &#x27;from_main_rep/vec&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [vector_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/vec&#x27;
+    from_reporters = &#x27;from_sub_vpp/a&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Real-PP transfers
+  [real_to_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_pp/value&#x27;
+    from_reporters = &#x27;from_main_rep/num&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [real_from_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/num&#x27;
+    from_reporters = &#x27;from_sub_pp/value&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Int-Int transfers
+  [int_to_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/int&#x27;
+    from_reporters = &#x27;from_main_rep/int&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [int_from_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/int&#x27;
+    from_reporters = &#x27;from_sub_rep/int&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # String-String transfers
+  [string_to_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/str&#x27;
+    from_reporters = &#x27;from_main_rep/str&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [string_from_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/str&#x27;
+    from_reporters = &#x27;from_sub_rep/str&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="01533809-a99f-4dcc-9783-7d77f15d2d75"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/sub0.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[Postprocessors]
+  [to_sub_pp]
+    type = Receiver
+  []
+  [from_sub_pp]
+    type = Receiver
+    default = 3.1415926
+  []
+[]
+
+[VectorPostprocessors]
+  [to_sub_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b&#x27;
+    value = &#x27;10 10 10 ; 20 20 20&#x27;
+  []
+  [from_sub_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b&#x27;
+    value = &#x27;30 30 30; 40 40 40&#x27;
+  []
+[]
+
+[Reporters]
+  [to_sub_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+  [from_sub_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 10
+    string_names = str
+    string_values = &#x27;twenty&#x27;
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 0
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+    postprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="190516ae-9ec5-4e18-8230-dbd9e3fb6b42"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[VectorPostprocessors]
+  [from_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;1 1 1; 2 2 2; 3 3 3&#x27;
+    execute_on = initial
+    #outputs = none
+  []
+  [to_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;4 4 4; 5 5 5; 6 6 6&#x27;
+    #outputs = none
+  []
+[]
+
+[Reporters]
+  [from_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 1
+    real_names = num
+    real_values = 2.0
+    real_vector_names = vec
+    real_vector_values = &#x27;3 4&#x27;
+    string_names = str
+    string_values = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    real_names = num
+    real_values = 0.0
+    real_vector_names = vec
+    real_vector_values = &#x27;0&#x27;
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+[]
+
+[MultiApps/sub]
+  type = TransientMultiApp
+  input_files = &#x27;sub0.i sub1.i&#x27;
+  positions = &#x27;0 0 0 0 0 0&#x27;
+[]
+
+[Transfers]
+  # VPP transfers
+  [vpp_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a to_sub_vpp/b&#x27;
+    from_reporters = &#x27;from_main_vpp/a from_main_vpp/b&#x27;
+    to_multi_app = sub
+  []
+  [vpp_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_vpp/a to_main_vpp/b&#x27;
+    from_reporters = &#x27;from_sub_vpp/a from_sub_vpp/b&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Vector-VPP transfers
+  [vector_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a&#x27;
+    from_reporters = &#x27;from_main_rep/vec&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [vector_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/vec&#x27;
+    from_reporters = &#x27;from_sub_vpp/a&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Real-PP transfers
+  [real_to_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_pp/value&#x27;
+    from_reporters = &#x27;from_main_rep/num&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [real_from_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/num&#x27;
+    from_reporters = &#x27;from_sub_pp/value&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Int-Int transfers
+  [int_to_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/int&#x27;
+    from_reporters = &#x27;from_main_rep/int&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [int_from_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/int&#x27;
+    from_reporters = &#x27;from_sub_rep/int&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # String-String transfers
+  [string_to_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/str&#x27;
+    from_reporters = &#x27;from_main_rep/str&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [string_from_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/str&#x27;
+    from_reporters = &#x27;from_sub_rep/str&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="3371ba20-41d6-44df-ba68-be53caefe54d"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[VectorPostprocessors]
+  [from_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;1 1 1; 2 2 2; 3 3 3&#x27;
+    execute_on = initial
+    #outputs = none
+  []
+  [to_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;4 4 4; 5 5 5; 6 6 6&#x27;
+    #outputs = none
+  []
+[]
+
+[Reporters]
+  [from_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 1
+    real_names = num
+    real_values = 2.0
+    real_vector_names = vec
+    real_vector_values = &#x27;3 4&#x27;
+    string_names = str
+    string_values = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    real_names = num
+    real_values = 0.0
+    real_vector_names = vec
+    real_vector_values = &#x27;0&#x27;
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+[]
+
+[MultiApps/sub]
+  type = TransientMultiApp
+  input_files = &#x27;sub0.i sub1.i&#x27;
+  positions = &#x27;0 0 0 0 0 0&#x27;
+[]
+
+[Transfers]
+  # VPP transfers
+  [vpp_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a to_sub_vpp/b&#x27;
+    from_reporters = &#x27;from_main_vpp/a from_main_vpp/b&#x27;
+    to_multi_app = sub
+  []
+  [vpp_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_vpp/a to_main_vpp/b&#x27;
+    from_reporters = &#x27;from_sub_vpp/a from_sub_vpp/b&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Vector-VPP transfers
+  [vector_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a&#x27;
+    from_reporters = &#x27;from_main_rep/vec&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [vector_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/vec&#x27;
+    from_reporters = &#x27;from_sub_vpp/a&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Real-PP transfers
+  [real_to_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_pp/value&#x27;
+    from_reporters = &#x27;from_main_rep/num&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [real_from_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/num&#x27;
+    from_reporters = &#x27;from_sub_pp/value&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Int-Int transfers
+  [int_to_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/int&#x27;
+    from_reporters = &#x27;from_main_rep/int&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [int_from_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/int&#x27;
+    from_reporters = &#x27;from_sub_rep/int&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # String-String transfers
+  [string_to_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/str&#x27;
+    from_reporters = &#x27;from_main_rep/str&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [string_from_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/str&#x27;
+    from_reporters = &#x27;from_sub_rep/str&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="c34d094f-b9af-486e-b4e8-a1dfe3907009"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/sub0.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[Postprocessors]
+  [to_sub_pp]
+    type = Receiver
+  []
+  [from_sub_pp]
+    type = Receiver
+    default = 3.1415926
+  []
+[]
+
+[VectorPostprocessors]
+  [to_sub_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b&#x27;
+    value = &#x27;10 10 10 ; 20 20 20&#x27;
+  []
+  [from_sub_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b&#x27;
+    value = &#x27;30 30 30; 40 40 40&#x27;
+  []
+[]
+
+[Reporters]
+  [to_sub_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+  [from_sub_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 10
+    string_names = str
+    string_values = &#x27;twenty&#x27;
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 0
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+    postprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="83b79168-2121-4cca-84dc-7f0ba24df695"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[VectorPostprocessors]
+  [from_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;1 1 1; 2 2 2; 3 3 3&#x27;
+    execute_on = initial
+    #outputs = none
+  []
+  [to_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;4 4 4; 5 5 5; 6 6 6&#x27;
+    #outputs = none
+  []
+[]
+
+[Reporters]
+  [from_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 1
+    real_names = num
+    real_values = 2.0
+    real_vector_names = vec
+    real_vector_values = &#x27;3 4&#x27;
+    string_names = str
+    string_values = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    real_names = num
+    real_values = 0.0
+    real_vector_names = vec
+    real_vector_values = &#x27;0&#x27;
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+[]
+
+[MultiApps/sub]
+  type = TransientMultiApp
+  input_files = &#x27;sub0.i sub1.i&#x27;
+  positions = &#x27;0 0 0 0 0 0&#x27;
+[]
+
+[Transfers]
+  # VPP transfers
+  [vpp_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a to_sub_vpp/b&#x27;
+    from_reporters = &#x27;from_main_vpp/a from_main_vpp/b&#x27;
+    to_multi_app = sub
+  []
+  [vpp_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_vpp/a to_main_vpp/b&#x27;
+    from_reporters = &#x27;from_sub_vpp/a from_sub_vpp/b&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Vector-VPP transfers
+  [vector_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a&#x27;
+    from_reporters = &#x27;from_main_rep/vec&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [vector_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/vec&#x27;
+    from_reporters = &#x27;from_sub_vpp/a&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Real-PP transfers
+  [real_to_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_pp/value&#x27;
+    from_reporters = &#x27;from_main_rep/num&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [real_from_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/num&#x27;
+    from_reporters = &#x27;from_sub_pp/value&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Int-Int transfers
+  [int_to_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/int&#x27;
+    from_reporters = &#x27;from_main_rep/int&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [int_from_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/int&#x27;
+    from_reporters = &#x27;from_sub_rep/int&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # String-String transfers
+  [string_to_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/str&#x27;
+    from_reporters = &#x27;from_main_rep/str&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [string_from_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/str&#x27;
+    from_reporters = &#x27;from_sub_rep/str&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="839c454d-1b3a-4e21-a874-5e94f3ed9ca3"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[VectorPostprocessors]
+  [from_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;1 1 1; 2 2 2; 3 3 3&#x27;
+    execute_on = initial
+    #outputs = none
+  []
+  [to_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;4 4 4; 5 5 5; 6 6 6&#x27;
+    #outputs = none
+  []
+[]
+
+[Reporters]
+  [from_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 1
+    real_names = num
+    real_values = 2.0
+    real_vector_names = vec
+    real_vector_values = &#x27;3 4&#x27;
+    string_names = str
+    string_values = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    real_names = num
+    real_values = 0.0
+    real_vector_names = vec
+    real_vector_values = &#x27;0&#x27;
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+[]
+
+[MultiApps/sub]
+  type = TransientMultiApp
+  input_files = &#x27;sub0.i sub1.i&#x27;
+  positions = &#x27;0 0 0 0 0 0&#x27;
+[]
+
+[Transfers]
+  # VPP transfers
+  [vpp_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a to_sub_vpp/b&#x27;
+    from_reporters = &#x27;from_main_vpp/a from_main_vpp/b&#x27;
+    to_multi_app = sub
+  []
+  [vpp_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_vpp/a to_main_vpp/b&#x27;
+    from_reporters = &#x27;from_sub_vpp/a from_sub_vpp/b&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Vector-VPP transfers
+  [vector_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a&#x27;
+    from_reporters = &#x27;from_main_rep/vec&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [vector_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/vec&#x27;
+    from_reporters = &#x27;from_sub_vpp/a&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Real-PP transfers
+  [real_to_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_pp/value&#x27;
+    from_reporters = &#x27;from_main_rep/num&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [real_from_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/num&#x27;
+    from_reporters = &#x27;from_sub_pp/value&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Int-Int transfers
+  [int_to_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/int&#x27;
+    from_reporters = &#x27;from_main_rep/int&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [int_from_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/int&#x27;
+    from_reporters = &#x27;from_sub_rep/int&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # String-String transfers
+  [string_to_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/str&#x27;
+    from_reporters = &#x27;from_main_rep/str&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [string_from_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/str&#x27;
+    from_reporters = &#x27;from_sub_rep/str&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="986eae31-8e3e-4033-9308-cb410b627087"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/sub0.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[Postprocessors]
+  [to_sub_pp]
+    type = Receiver
+  []
+  [from_sub_pp]
+    type = Receiver
+    default = 3.1415926
+  []
+[]
+
+[VectorPostprocessors]
+  [to_sub_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b&#x27;
+    value = &#x27;10 10 10 ; 20 20 20&#x27;
+  []
+  [from_sub_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b&#x27;
+    value = &#x27;30 30 30; 40 40 40&#x27;
+  []
+[]
+
+[Reporters]
+  [to_sub_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+  [from_sub_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 10
+    string_names = str
+    string_values = &#x27;twenty&#x27;
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 0
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+    postprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="aa33bcee-d555-4ab7-a3e3-8770540bebf3"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[VectorPostprocessors]
+  [from_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;1 1 1; 2 2 2; 3 3 3&#x27;
+    execute_on = initial
+    #outputs = none
+  []
+  [to_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;4 4 4; 5 5 5; 6 6 6&#x27;
+    #outputs = none
+  []
+[]
+
+[Reporters]
+  [from_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 1
+    real_names = num
+    real_values = 2.0
+    real_vector_names = vec
+    real_vector_values = &#x27;3 4&#x27;
+    string_names = str
+    string_values = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    real_names = num
+    real_values = 0.0
+    real_vector_names = vec
+    real_vector_values = &#x27;0&#x27;
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+[]
+
+[MultiApps/sub]
+  type = TransientMultiApp
+  input_files = &#x27;sub0.i sub1.i&#x27;
+  positions = &#x27;0 0 0 0 0 0&#x27;
+[]
+
+[Transfers]
+  # VPP transfers
+  [vpp_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a to_sub_vpp/b&#x27;
+    from_reporters = &#x27;from_main_vpp/a from_main_vpp/b&#x27;
+    to_multi_app = sub
+  []
+  [vpp_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_vpp/a to_main_vpp/b&#x27;
+    from_reporters = &#x27;from_sub_vpp/a from_sub_vpp/b&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Vector-VPP transfers
+  [vector_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a&#x27;
+    from_reporters = &#x27;from_main_rep/vec&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [vector_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/vec&#x27;
+    from_reporters = &#x27;from_sub_vpp/a&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Real-PP transfers
+  [real_to_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_pp/value&#x27;
+    from_reporters = &#x27;from_main_rep/num&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [real_from_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/num&#x27;
+    from_reporters = &#x27;from_sub_pp/value&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Int-Int transfers
+  [int_to_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/int&#x27;
+    from_reporters = &#x27;from_main_rep/int&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [int_from_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/int&#x27;
+    from_reporters = &#x27;from_sub_rep/int&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # String-String transfers
+  [string_to_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/str&#x27;
+    from_reporters = &#x27;from_main_rep/str&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [string_from_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/str&#x27;
+    from_reporters = &#x27;from_sub_rep/str&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="09db12e2-d2cc-44dc-9aee-5363a4201420"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[VectorPostprocessors]
+  [from_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;1 1 1; 2 2 2; 3 3 3&#x27;
+    execute_on = initial
+    #outputs = none
+  []
+  [to_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;4 4 4; 5 5 5; 6 6 6&#x27;
+    #outputs = none
+  []
+[]
+
+[Reporters]
+  [from_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 1
+    real_names = num
+    real_values = 2.0
+    real_vector_names = vec
+    real_vector_values = &#x27;3 4&#x27;
+    string_names = str
+    string_values = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    real_names = num
+    real_values = 0.0
+    real_vector_names = vec
+    real_vector_values = &#x27;0&#x27;
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+[]
+
+[MultiApps/sub]
+  type = TransientMultiApp
+  input_files = &#x27;sub0.i sub1.i&#x27;
+  positions = &#x27;0 0 0 0 0 0&#x27;
+[]
+
+[Transfers]
+  # VPP transfers
+  [vpp_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a to_sub_vpp/b&#x27;
+    from_reporters = &#x27;from_main_vpp/a from_main_vpp/b&#x27;
+    to_multi_app = sub
+  []
+  [vpp_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_vpp/a to_main_vpp/b&#x27;
+    from_reporters = &#x27;from_sub_vpp/a from_sub_vpp/b&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Vector-VPP transfers
+  [vector_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a&#x27;
+    from_reporters = &#x27;from_main_rep/vec&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [vector_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/vec&#x27;
+    from_reporters = &#x27;from_sub_vpp/a&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Real-PP transfers
+  [real_to_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_pp/value&#x27;
+    from_reporters = &#x27;from_main_rep/num&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [real_from_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/num&#x27;
+    from_reporters = &#x27;from_sub_pp/value&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Int-Int transfers
+  [int_to_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/int&#x27;
+    from_reporters = &#x27;from_main_rep/int&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [int_from_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/int&#x27;
+    from_reporters = &#x27;from_sub_rep/int&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # String-String transfers
+  [string_to_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/str&#x27;
+    from_reporters = &#x27;from_main_rep/str&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [string_from_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/str&#x27;
+    from_reporters = &#x27;from_sub_rep/str&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="857b7e5c-c7fe-4ee2-8402-d5edf69a7fac"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/sub0.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[Postprocessors]
+  [to_sub_pp]
+    type = Receiver
+  []
+  [from_sub_pp]
+    type = Receiver
+    default = 3.1415926
+  []
+[]
+
+[VectorPostprocessors]
+  [to_sub_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b&#x27;
+    value = &#x27;10 10 10 ; 20 20 20&#x27;
+  []
+  [from_sub_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b&#x27;
+    value = &#x27;30 30 30; 40 40 40&#x27;
+  []
+[]
+
+[Reporters]
+  [to_sub_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+  [from_sub_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 10
+    string_names = str
+    string_values = &#x27;twenty&#x27;
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 0
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+    postprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="11b8c807-be3f-479e-a91b-c4150d910763"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/main.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[VectorPostprocessors]
+  [from_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;1 1 1; 2 2 2; 3 3 3&#x27;
+    execute_on = initial
+    #outputs = none
+  []
+  [to_main_vpp]
+    type = ConstantVectorPostprocessor
+    vector_names = &#x27;a b c&#x27;
+    value = &#x27;4 4 4; 5 5 5; 6 6 6&#x27;
+    #outputs = none
+  []
+[]
+
+[Reporters]
+  [from_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 1
+    real_names = num
+    real_values = 2.0
+    real_vector_names = vec
+    real_vector_values = &#x27;3 4&#x27;
+    string_names = str
+    string_values = &#x27;five&#x27;
+  []
+  [to_main_rep]
+    type = ConstantReporter
+    integer_names = int
+    integer_values = 0
+    real_names = num
+    real_values = 0.0
+    real_vector_names = vec
+    real_vector_values = &#x27;0&#x27;
+    string_names = str
+    string_values = &#x27;foo&#x27;
+  []
+[]
+
+[MultiApps/sub]
+  type = TransientMultiApp
+  input_files = &#x27;sub0.i sub1.i&#x27;
+  positions = &#x27;0 0 0 0 0 0&#x27;
+[]
+
+[Transfers]
+  # VPP transfers
+  [vpp_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a to_sub_vpp/b&#x27;
+    from_reporters = &#x27;from_main_vpp/a from_main_vpp/b&#x27;
+    to_multi_app = sub
+  []
+  [vpp_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_vpp/a to_main_vpp/b&#x27;
+    from_reporters = &#x27;from_sub_vpp/a from_sub_vpp/b&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Vector-VPP transfers
+  [vector_to_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_vpp/a&#x27;
+    from_reporters = &#x27;from_main_rep/vec&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [vector_from_vpp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/vec&#x27;
+    from_reporters = &#x27;from_sub_vpp/a&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Real-PP transfers
+  [real_to_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_pp/value&#x27;
+    from_reporters = &#x27;from_main_rep/num&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [real_from_pp]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/num&#x27;
+    from_reporters = &#x27;from_sub_pp/value&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # Int-Int transfers
+  [int_to_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/int&#x27;
+    from_reporters = &#x27;from_main_rep/int&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [int_from_int]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/int&#x27;
+    from_reporters = &#x27;from_sub_rep/int&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+
+  # String-String transfers
+  [string_to_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_sub_rep/str&#x27;
+    from_reporters = &#x27;from_main_rep/str&#x27;
+    to_multi_app = sub
+    subapp_index = 0
+  []
+  [string_from_string]
+    type = MultiAppReporterTransfer
+    to_reporters = &#x27;to_main_rep/str&#x27;
+    from_reporters = &#x27;from_sub_rep/str&#x27;
+    from_multi_app = sub
+    subapp_index = 0
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    vectorpostprocessors_as_reporters = true
+  []
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="1fb97f44-b921-44a9-8454-b69b8126b295"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/main_send.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generate]
+    type = GeneratedMeshGenerator
+    nx = 4
+    dim = 1
+  []
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[Reporters]
+  [to_sub_rep]
+    type = ConstantReporter
+    real_vector_vector_names = &#x27;sent_vec&#x27;
+    real_vector_vector_values = &#x27;1.; 2. 1003.;-5.0 -10 1000;3.3&#x27;
+    real_vector_names = &#x27;sent_real&#x27;
+    real_vector_values = &quot;1. 2. 3. 4.&quot;
+    execute_on = INITIAL
+    outputs = out
+  []
+[]
+
+[Positions]
+  [elem]
+    type = ElementCentroidPositions
+    auto_sort = true
+    outputs = none
+  []
+[]
+
+[MultiApps]
+  [sub]
+    type = FullSolveMultiApp
+    input_files = &#x27;sub.i&#x27;
+    positions_objects = elem
+    execute_on = TIMESTEP_END
+  []
+[]
+[Transfers]
+  [to_sub]
+    type = MultiAppReporterTransfer
+    to_multi_app = sub
+    from_reporters = &#x27;to_sub_rep/sent_vec to_sub_rep/sent_real&#x27;
+    to_reporters = &#x27;from_main_rep/rec_vec from_main_rep/rec_real&#x27;
+    distribute_reporter_vector = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+[]
+
+[Outputs]
+  file_base = 1_to_N
+  [out]
+    type = JSON
+    execute_system_information_on = NONE
+    execute_on = TIMESTEP_END
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="30165635-4f33-4aba-a59c-10b6cc67ba8d"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/sub.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[Reporters]
+  [from_main_rep]
+    type = ConstantReporter
+    real_vector_names = &#x27;rec_vec&#x27;
+    real_vector_values = &#x27;0.&#x27;
+    real_names = &#x27;rec_real&#x27;
+    real_values = &#x27;-1.&#x27;
+  []
+[]
+
+[Executioner]
+  type = Steady
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    execute_system_information_on = NONE
+    execute_on = TIMESTEP_END
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="0ea9a2d1-4764-4ef3-a377-33a0e9619caf"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/main_send.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generate]
+    type = GeneratedMeshGenerator
+    nx = 4
+    dim = 1
+  []
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[Reporters]
+  [to_sub_rep]
+    type = ConstantReporter
+    real_vector_vector_names = &#x27;sent_vec&#x27;
+    real_vector_vector_values = &#x27;1.; 2. 1003.;-5.0 -10 1000;3.3&#x27;
+    real_vector_names = &#x27;sent_real&#x27;
+    real_vector_values = &quot;1. 2. 3. 4.&quot;
+    execute_on = INITIAL
+    outputs = out
+  []
+[]
+
+[Positions]
+  [elem]
+    type = ElementCentroidPositions
+    auto_sort = true
+    outputs = none
+  []
+[]
+
+[MultiApps]
+  [sub]
+    type = FullSolveMultiApp
+    input_files = &#x27;sub.i&#x27;
+    positions_objects = elem
+    execute_on = TIMESTEP_END
+  []
+[]
+[Transfers]
+  [to_sub]
+    type = MultiAppReporterTransfer
+    to_multi_app = sub
+    from_reporters = &#x27;to_sub_rep/sent_vec to_sub_rep/sent_real&#x27;
+    to_reporters = &#x27;from_main_rep/rec_vec from_main_rep/rec_real&#x27;
+    distribute_reporter_vector = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+[]
+
+[Outputs]
+  file_base = 1_to_N
+  [out]
+    type = JSON
+    execute_system_information_on = NONE
+    execute_on = TIMESTEP_END
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="a3d2e46d-7c8f-45a3-beef-9ac195ef9580"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/main_rec.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generate]
+    type = GeneratedMeshGenerator
+    nx = 4
+    dim = 1
+  []
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[Reporters]
+  [from_sub_rep]
+    type = ConstantReporter
+    real_vector_vector_names = &#x27;rec_vec_vec&#x27;
+    real_vector_vector_values = &#x27;10000000.&#x27;
+    real_vector_names = &#x27;rec_vec&#x27;
+    real_vector_values = &quot;0.&quot;
+    execute_on = INITIAL
+    outputs = out
+  []
+[]
+
+[Positions]
+  [elem]
+    type = ElementCentroidPositions
+    auto_sort = true
+    outputs = none
+  []
+[]
+
+[MultiApps]
+  [sub]
+    type = FullSolveMultiApp
+    input_files = &#x27;sub.i&#x27;
+    positions_objects = elem
+    execute_on = TIMESTEP_END
+    cli_args = &#x27;Reporters/from_main_rep/real_vector_values=&quot;0 1&quot;;Reporters/from_main_rep/real_values=0
+    Reporters/from_main_rep/real_vector_values=&quot;-10&quot;;Reporters/from_main_rep/real_values=-5
+    Reporters/from_main_rep/real_vector_values=&quot;100 -100 -200&quot;;Reporters/from_main_rep/real_values=3.33
+    Reporters/from_main_rep/real_vector_values=&quot;5.55 5.55 5.55 5.55&quot;;Reporters/from_main_rep/real_values=7&#x27;
+
+  []
+[]
+[Transfers]
+  [from_sub]
+    type = MultiAppReporterTransfer
+    from_multi_app = sub
+    from_reporters = &#x27;from_main_rep/rec_vec from_main_rep/rec_real&#x27;
+    to_reporters = &#x27;from_sub_rep/rec_vec_vec from_sub_rep/rec_vec&#x27;
+    distribute_reporter_vector = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+[]
+
+[Outputs]
+  file_base = N_to_1
+  [out]
+    type = JSON
+    execute_system_information_on = NONE
+    execute_on = TIMESTEP_END
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="e45f8be7-7be5-4e1b-a8e2-8972c163888e"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/sub.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh/generate]
+  type = GeneratedMeshGenerator
+  dim = 1
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[Reporters]
+  [from_main_rep]
+    type = ConstantReporter
+    real_vector_names = &#x27;rec_vec&#x27;
+    real_vector_values = &#x27;0.&#x27;
+    real_names = &#x27;rec_real&#x27;
+    real_values = &#x27;-1.&#x27;
+  []
+[]
+
+[Executioner]
+  type = Steady
+[]
+
+[Outputs]
+  [out]
+    type = JSON
+    execute_system_information_on = NONE
+    execute_on = TIMESTEP_END
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="ff169e6e-9d9b-4bf7-b01b-142545301c5b"><div class="modal-content"><h4>(moose/test/tests/transfers/multiapp_reporter_transfer/dist_vector/main_rec.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generate]
+    type = GeneratedMeshGenerator
+    nx = 4
+    dim = 1
+  []
+[]
+
+[Problem]
+  kernel_coverage_check = false
+  solve = false
+[]
+
+[Reporters]
+  [from_sub_rep]
+    type = ConstantReporter
+    real_vector_vector_names = &#x27;rec_vec_vec&#x27;
+    real_vector_vector_values = &#x27;10000000.&#x27;
+    real_vector_names = &#x27;rec_vec&#x27;
+    real_vector_values = &quot;0.&quot;
+    execute_on = INITIAL
+    outputs = out
+  []
+[]
+
+[Positions]
+  [elem]
+    type = ElementCentroidPositions
+    auto_sort = true
+    outputs = none
+  []
+[]
+
+[MultiApps]
+  [sub]
+    type = FullSolveMultiApp
+    input_files = &#x27;sub.i&#x27;
+    positions_objects = elem
+    execute_on = TIMESTEP_END
+    cli_args = &#x27;Reporters/from_main_rep/real_vector_values=&quot;0 1&quot;;Reporters/from_main_rep/real_values=0
+    Reporters/from_main_rep/real_vector_values=&quot;-10&quot;;Reporters/from_main_rep/real_values=-5
+    Reporters/from_main_rep/real_vector_values=&quot;100 -100 -200&quot;;Reporters/from_main_rep/real_values=3.33
+    Reporters/from_main_rep/real_vector_values=&quot;5.55 5.55 5.55 5.55&quot;;Reporters/from_main_rep/real_values=7&#x27;
+
+  []
+[]
+[Transfers]
+  [from_sub]
+    type = MultiAppReporterTransfer
+    from_multi_app = sub
+    from_reporters = &#x27;from_main_rep/rec_vec from_main_rep/rec_real&#x27;
+    to_reporters = &#x27;from_sub_rep/rec_vec_vec from_sub_rep/rec_vec&#x27;
+    distribute_reporter_vector = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+[]
+
+[Outputs]
+  file_base = N_to_1
+  [out]
+    type = JSON
+    execute_system_information_on = NONE
+    execute_on = TIMESTEP_END
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#8535f8e9-72f1-45cc-816f-5b2907c36334" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#a742db2c-e14f-4c8d-853e-cea3b0acbc9b" class="tooltipped" data-position="left" data-tooltip="Siblings transfer behavior">Siblings transfer behavior</a></li><li><a href="#e7746666-d7a0-4775-8486-c38a6bddfb67" class="tooltipped" data-position="left" data-tooltip="Distributed Vector Transfer">Distributed Vector Transfer</a></li><li><a href="#b505b821-2a5d-4b67-a962-4c078fc2728c" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#0c6bcf54-154c-4218-ac6b-dbe4ea385a57" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
