@@ -49,10 +49,10 @@ InterfaceAdvection::computeQpResidual(Moose::DGResidualType type)
 
   switch (type)
   {
+    using std::exp;
     case Moose::Element:
       r = _mu_neighbor[_qp] * _sgn_neighbor[_qp] * _electric_field_neighbor[_qp] *
-          _r_neighbor_units * std::exp(_neighbor_value[_qp]) * _normals[_qp] * _test[_i][_qp] *
-          _r_units;
+          _r_neighbor_units * exp(_neighbor_value[_qp]) * _normals[_qp] * _test[_i][_qp] * _r_units;
       break;
 
     case Moose::Neighbor:

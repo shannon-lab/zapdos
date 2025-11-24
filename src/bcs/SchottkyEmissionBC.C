@@ -104,8 +104,8 @@ SchottkyEmissionBC::SchottkyEmissionBC(const InputParameters & parameters)
 ADReal
 SchottkyEmissionBC::computeQpResidual()
 {
-  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
-                         (libMesh::pi * _massem[_qp]));
+  _v_thermal = sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * exp(_mean_en[_qp] - _u[_qp]) /
+                    (libMesh::pi * _massem[_qp]));
 
   if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
@@ -114,15 +114,20 @@ SchottkyEmissionBC::computeQpResidual()
   }
   else
   {
+    using std::exp;
+    using std::pow;
+    using std::sqrt;
+    using std::tanh;
     _a = 0.0;
 
     _ion_flux.zero();
     for (unsigned int i = 0; i < _num_ions; ++i)
     {
+      using std::exp;
       _ion_flux += (*_se_coeff[i])[_qp] *
                    ((*_sgnip[i])[_qp] * (*_muip[i])[_qp] * _electric_field[_qp] * _r_units *
-                        std::exp((*_ip[i])[_qp]) -
-                    (*_Dip[i])[_qp] * std::exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units);
+                        exp((*_ip[i])[_qp]) -
+                    (*_Dip[i])[_qp] * exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units);
     }
 
     // Schottky emission
@@ -132,15 +137,15 @@ SchottkyEmissionBC::computeQpResidual()
     F = -(1 - _a) * _field_enhancement[_qp] * _normals[_qp] * -_electric_field[_qp] * _r_units;
 
     kB = 8.617385E-5; // eV/K
-    dPhi = _dPhi_over_F * std::sqrt(F);
+    dPhi = _dPhi_over_F * sqrt(F);
 
-    jRD = _Richardson_coefficient[_qp] * std::pow(_cathode_temperature[_qp], 2) *
-          std::exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
+    jRD = _Richardson_coefficient[_qp] * pow(_cathode_temperature[_qp], 2) *
+          exp(-(_work_function[_qp] - dPhi) / (kB * _cathode_temperature[_qp]));
     jSE = ZAPDOS_CONSTANTS::e * ZAPDOS_CONSTANTS::N_A * _ion_flux * _normals[_qp];
 
     if (_relax)
     {
-      _relaxation_Expr = std::tanh(_t / _tau);
+      _relaxation_Expr = tanh(_t / _tau);
     }
     else
     {

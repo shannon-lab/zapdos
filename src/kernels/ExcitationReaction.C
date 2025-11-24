@@ -49,8 +49,8 @@ ExcitationReaction::ExcitationReaction(const InputParameters & parameters)
 ADReal
 ExcitationReaction::computeQpResidual()
 {
-  ADReal electron_flux_mag = (-_muem[_qp] * _electric_field[_qp] * _r_units * std::exp(_em[_qp]) -
-                              _diffem[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units)
+  ADReal electron_flux_mag = (-_muem[_qp] * _electric_field[_qp] * _r_units * exp(_em[_qp]) -
+                              _diffem[_qp] * exp(_em[_qp]) * _grad_em[_qp] * _r_units)
                                  .norm();
 
   // Determines if the impacted species is the reactant or a product,
@@ -62,7 +62,8 @@ ExcitationReaction::computeQpResidual()
   // generic electron-impact reaction.
   if (_reactant)
   {
-    ADReal alpha = _alpha_source[_qp] / _n_gas[_qp] * std::exp(_u[_qp]);
+    using std::exp;
+    ADReal alpha = _alpha_source[_qp] / _n_gas[_qp] * exp(_u[_qp]);
     ADReal iz_term = alpha * electron_flux_mag;
     return _test[_i][_qp] * iz_term;
   }

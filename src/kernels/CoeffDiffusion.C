@@ -33,6 +33,7 @@ CoeffDiffusion::CoeffDiffusion(const InputParameters & parameters)
 ADReal
 CoeffDiffusion::computeQpResidual()
 {
-  return -_diffusivity[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _r_units * -_grad_test[_i][_qp] *
+  using std::exp;
+  return -_diffusivity[_qp] * exp(_u[_qp]) * _grad_u[_qp] * _r_units * -_grad_test[_i][_qp] *
          _r_units;
 }

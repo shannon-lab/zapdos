@@ -120,6 +120,8 @@ SimplifiedArgonChemistryCoefficients::SimplifiedArgonChemistryCoefficients(
 void
 SimplifiedArgonChemistryCoefficients::computeQpProperties()
 {
+  using std::exp;
+  using std::pow;
   _massGas[_qp] = 40.0 * 1.66e-27;
 
   if (_use_moles)
@@ -140,25 +142,25 @@ SimplifiedArgonChemistryCoefficients::computeQpProperties()
   _iz_coeff_energy_c[_qp] = 5.51972192e+1;
 
   _alpha_iz[_qp].value() =
-      _alpha_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value()));
+      _alpha_interpolation.sample(exp(_mean_en[_qp].value() - _em[_qp].value()));
   _alpha_iz[_qp].derivatives() =
-      _alpha_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-      std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+      _alpha_interpolation.sampleDerivative(exp(_mean_en[_qp].value() - _em[_qp].value())) *
+      exp(_mean_en[_qp].value() - _em[_qp].value()) *
       (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
   _alpha_ex[_qp].value() =
-      _alphaEx_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value()));
+      _alphaEx_interpolation.sample(exp(_mean_en[_qp].value() - _em[_qp].value()));
   _alpha_ex[_qp].derivatives() =
-      _alphaEx_interpolation.sampleDerivative(std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-      std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
+      _alphaEx_interpolation.sampleDerivative(exp(_mean_en[_qp].value() - _em[_qp].value())) *
+      exp(_mean_en[_qp].value() - _em[_qp].value()) *
       (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
   if (_interp_elastic_coeff)
   {
     _alpha_el[_qp].value() =
-        _alphaEl_interpolation.sample(std::exp(_mean_en[_qp].value() - _em[_qp].value()));
-    _alpha_el[_qp].derivatives() = _alphaEl_interpolation.sampleDerivative(
-                                       std::exp(_mean_en[_qp].value() - _em[_qp].value())) *
-                                   std::exp(_mean_en[_qp].value() - _em[_qp].value()) *
-                                   (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
+        _alphaEl_interpolation.sample(exp(_mean_en[_qp].value() - _em[_qp].value()));
+    _alpha_el[_qp].derivatives() =
+        _alphaEl_interpolation.sampleDerivative(exp(_mean_en[_qp].value() - _em[_qp].value())) *
+        exp(_mean_en[_qp].value() - _em[_qp].value()) *
+        (_mean_en[_qp].derivatives() - _em[_qp].derivatives());
   }
   else
   {
@@ -175,12 +177,12 @@ SimplifiedArgonChemistryCoefficients::computeQpProperties()
 
   _rate_coeff_elastic[_qp] = 1e-13;
 
-  _TemVolts[_qp] = 2. / 3. * std::exp(_mean_en[_qp] - _em[_qp]);
+  _TemVolts[_qp] = 2. / 3. * exp(_mean_en[_qp] - _em[_qp]);
   _Tem[_qp] = ZAPDOS_CONSTANTS::e * _TemVolts[_qp] / ZAPDOS_CONSTANTS::k_boltz;
 
-  _kiz[_qp] = 2.34e-14 * std::pow(_TemVolts[_qp], .59) * std::exp(-17.44 / _TemVolts[_qp]);
-  _kex[_qp] = 2.48e-14 * std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]);
-  _kArp[_qp] = 2.48e-14 * std::pow(_TemVolts[_qp], .33) * std::exp(-12.78 / _TemVolts[_qp]);
+  _kiz[_qp] = 2.34e-14 * pow(_TemVolts[_qp], .59) * exp(-17.44 / _TemVolts[_qp]);
+  _kex[_qp] = 2.48e-14 * pow(_TemVolts[_qp], .33) * exp(-12.78 / _TemVolts[_qp]);
+  _kArp[_qp] = 2.48e-14 * pow(_TemVolts[_qp], .33) * exp(-12.78 / _TemVolts[_qp]);
 
   _kel[_qp].value() = 1e-13; // Approximate elastic rate coefficient
   _kel[_qp].derivatives() = 0.;

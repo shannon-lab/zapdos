@@ -35,5 +35,6 @@ ProductAABBRxn::ProductAABBRxn(const InputParameters & parameters)
 ADReal
 ProductAABBRxn::computeQpResidual()
 {
-  return -_test[_i][_qp] * (2.) * _reaction_coeff[_qp] * std::exp(_v[_qp]) * std::exp(_v[_qp]);
+  using std::exp;
+  return -_test[_i][_qp] * (2.) * _reaction_coeff[_qp] * exp(_v[_qp]) * exp(_v[_qp]);
 }

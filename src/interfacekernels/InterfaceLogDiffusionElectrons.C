@@ -46,8 +46,9 @@ InterfaceLogDiffusionElectrons::computeQpResidual(Moose::DGResidualType type)
 
   switch (type)
   {
+    using std::exp;
     case Moose::Element:
-      r = -_diffem[_qp] * std::exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] *
+      r = -_diffem[_qp] * exp(_neighbor_value[_qp]) * _grad_neighbor_value[_qp] *
           _r_neighbor_units * _normals[_qp] * _test[_i][_qp] * _r_units;
       break;
 

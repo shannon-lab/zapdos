@@ -198,6 +198,7 @@ Water::Water(const InputParameters & parameters)
 void
 Water::computeQpProperties()
 {
+  using std::exp;
   _cw[_qp] = 56;
   _electron_mult[_qp] = _user_electron_mult;
   _potential_mult[_qp] = _user_potential_mult;
@@ -332,6 +333,6 @@ Water::computeQpProperties()
 
   _EField[_qp] = _electric_field[_qp](0); // TODO: does this need to be 0 component now? consider
                                           // fixing this up....1D will request the 0 by default
-  _OHm_lin[_qp] = std::exp(_OHm[_qp]);
-  _H3Op_lin[_qp] = std::exp(_H3Op[_qp]);
+  _OHm_lin[_qp] = exp(_OHm[_qp]);
+  _H3Op_lin[_qp] = exp(_H3Op[_qp]);
 }

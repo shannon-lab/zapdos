@@ -41,6 +41,7 @@ ElectronAdvectionDoNothingBC::ElectronAdvectionDoNothingBC(const InputParameters
 ADReal
 ElectronAdvectionDoNothingBC::computeQpResidual()
 {
-  return _muem[_qp] * _sign[_qp] * std::exp(_u[_qp]) * _electric_field[_qp] * _position_units *
+  using std::exp;
+  return _muem[_qp] * _sign[_qp] * exp(_u[_qp]) * _electric_field[_qp] * _position_units *
          _normals[_qp] * _test[_i][_qp] * _position_units;
 }

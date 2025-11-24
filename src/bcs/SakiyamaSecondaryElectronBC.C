@@ -65,6 +65,7 @@ SakiyamaSecondaryElectronBC::computeQpResidual()
   _ion_flux.zero();
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
+    using std::exp;
     if (_normals[_qp] * (*_sgnip[i])[_qp] * _electric_field[_qp] > 0.0)
     {
       _a = 1.0;
@@ -75,7 +76,7 @@ SakiyamaSecondaryElectronBC::computeQpResidual()
     }
 
     _ion_flux += (*_se_coeff[i])[_qp] * _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] *
-                 _electric_field[_qp] * _r_units * std::exp((*_ip[i])[_qp]);
+                 _electric_field[_qp] * _r_units * exp((*_ip[i])[_qp]);
   }
 
   return -_test[_i][_qp] * _r_units * _a * _ion_flux * _normals[_qp];

@@ -29,5 +29,6 @@ ElectronTimeDerivative::ElectronTimeDerivative(const InputParameters & parameter
 ADReal
 ElectronTimeDerivative::computeQpResidual()
 {
-  return _test[_i][_qp] * std::exp(_u[_qp]) * _u_dot[_qp];
+  using std::exp;
+  return _test[_i][_qp] * exp(_u[_qp]) * _u_dot[_qp];
 }

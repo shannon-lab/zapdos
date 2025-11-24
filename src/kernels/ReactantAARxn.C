@@ -32,5 +32,6 @@ ReactantAARxn::ReactantAARxn(const InputParameters & parameters)
 ADReal
 ReactantAARxn::computeQpResidual()
 {
-  return -_test[_i][_qp] * (-2.) * _reaction_coeff[_qp] * std::exp(_u[_qp]) * std::exp(_u[_qp]);
+  using std::exp;
+  return -_test[_i][_qp] * (-2.) * _reaction_coeff[_qp] * exp(_u[_qp]) * exp(_u[_qp]);
 }

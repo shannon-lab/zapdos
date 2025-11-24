@@ -51,12 +51,13 @@ ReactionSecondOrderLogForShootMethod::ReactionSecondOrderLogForShootMethod(
 ADReal
 ReactionSecondOrderLogForShootMethod::computeQpResidual()
 {
+  using std::exp;
   Real power;
 
   power = 1.;
   if (_v_id == _density_id)
     power += 1.;
 
-  return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * power *
-         std::exp(_v[_qp]) * _u[_qp];
+  return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * power * exp(_v[_qp]) *
+         _u[_qp];
 }

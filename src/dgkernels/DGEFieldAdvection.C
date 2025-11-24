@@ -56,19 +56,19 @@ DGEFieldAdvection::computeQpResidual(Moose::DGResidualType type)
 
   switch (type)
   {
+    using std::exp;
     case Moose::Element:
       if ((_velocity_average * _normals[_qp]) >= 0.0)
-        r += (_velocity_average * _normals[_qp]) * std::exp(_u[_qp]) * _test[_i][_qp];
+        r += (_velocity_average * _normals[_qp]) * exp(_u[_qp]) * _test[_i][_qp];
       else
-        r += (_velocity_average * _normals[_qp]) * std::exp(_u_neighbor[_qp]) * _test[_i][_qp];
+        r += (_velocity_average * _normals[_qp]) * exp(_u_neighbor[_qp]) * _test[_i][_qp];
       break;
 
     case Moose::Neighbor:
       if ((_velocity_average * _normals[_qp]) >= 0.0)
-        r += -(_velocity_average * _normals[_qp]) * std::exp(_u[_qp]) * _test_neighbor[_i][_qp];
+        r += -(_velocity_average * _normals[_qp]) * exp(_u[_qp]) * _test_neighbor[_i][_qp];
       else
-        r += -(_velocity_average * _normals[_qp]) * std::exp(_u_neighbor[_qp]) *
-             _test_neighbor[_i][_qp];
+        r += -(_velocity_average * _normals[_qp]) * exp(_u_neighbor[_qp]) * _test_neighbor[_i][_qp];
       break;
   }
   return r;

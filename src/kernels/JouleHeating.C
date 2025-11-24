@@ -50,7 +50,8 @@ JouleHeating::JouleHeating(const InputParameters & parameters)
 ADReal
 JouleHeating::computeQpResidual()
 {
+  using std::exp;
   return _test[_i][_qp] * _electric_field[_qp] * _r_units * _voltage_scaling *
-         (-_mu[_qp] * _electric_field[_qp] * _r_units * std::exp(_em[_qp]) -
-          _diff[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units);
+         (-_mu[_qp] * _electric_field[_qp] * _r_units * exp(_em[_qp]) -
+          _diff[_qp] * exp(_em[_qp]) * _grad_em[_qp] * _r_units);
 }

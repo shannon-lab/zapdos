@@ -42,10 +42,12 @@ HagelaarIonDiffusionBC::HagelaarIonDiffusionBC(const InputParameters & parameter
 ADReal
 HagelaarIonDiffusionBC::computeQpResidual()
 {
+  using std::exp;
+  using std::sqrt;
   if (_user_velocity > 0.)
     _v_thermal = _user_velocity;
   else
-    _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * _T[_qp] / (libMesh::pi * _mass[_qp]));
+    _v_thermal = sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * _T[_qp] / (libMesh::pi * _mass[_qp]));
 
-  return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) * 0.5 * _v_thermal * std::exp(_u[_qp]);
+  return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) * 0.5 * _v_thermal * exp(_u[_qp]);
 }
