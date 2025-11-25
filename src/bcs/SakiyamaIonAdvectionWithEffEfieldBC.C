@@ -48,6 +48,7 @@ SakiyamaIonAdvectionWithEffEfieldBC::SakiyamaIonAdvectionWithEffEfieldBC(
 ADReal
 SakiyamaIonAdvectionWithEffEfieldBC::computeQpResidual()
 {
+  using std::exp;
   ADRealVectorValue EField(_Ex[_qp], _Ey[_qp], _Ez[_qp]);
 
   if (_normals[_qp] * _sgn[_qp] * EField >= 0.0)
@@ -60,5 +61,5 @@ SakiyamaIonAdvectionWithEffEfieldBC::computeQpResidual()
   }
 
   return _test[_i][_qp] * _r_units *
-         (_a * _sgn[_qp] * _mu[_qp] * EField * _r_units * std::exp(_u[_qp]) * _normals[_qp]);
+         (_a * _sgn[_qp] * _mu[_qp] * EField * _r_units * exp(_u[_qp]) * _normals[_qp]);
 }

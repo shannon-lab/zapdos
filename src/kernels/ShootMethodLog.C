@@ -62,11 +62,11 @@ ShootMethodLog::ShootMethodLog(const InputParameters & parameters)
 ADReal
 ShootMethodLog::computeQpResidual()
 {
+  using std::exp;
 
   ADReal Scaling = 1.0 / ((1. - _sensitivity[_qp]) + (1. / _limit));
 
   return _test[_i][_qp] *
-         (std::exp(_u[_qp]) - std::exp(_density_at_start_cycle[_qp]) +
-          (std::exp(_density_at_start_cycle[_qp]) - std::exp(_density_at_end_cycle[_qp])) *
-              Scaling);
+         (exp(_u[_qp]) - exp(_density_at_start_cycle[_qp]) +
+          (exp(_density_at_start_cycle[_qp]) - exp(_density_at_end_cycle[_qp])) * Scaling);
 }

@@ -48,19 +48,22 @@ HagelaarEnergyBC::HagelaarEnergyBC(const InputParameters & parameters)
 ADReal
 HagelaarEnergyBC::computeQpResidual()
 {
+  using std::exp;
+  using std::sqrt;
   if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
   }
   else
   {
+    using std::exp;
     _a = 0.0;
   }
-  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) /
-                         (libMesh::pi * _massem[_qp]));
+  _v_thermal = sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * exp(_u[_qp] - _em[_qp]) /
+                    (libMesh::pi * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) *
          (-(2. * _a - 1.) * _mumean_en[_qp] * _electric_field[_qp] * _r_units * _normals[_qp] +
           5. / 6. * _v_thermal) *
-         std::exp(_u[_qp]);
+         exp(_u[_qp]);
 }

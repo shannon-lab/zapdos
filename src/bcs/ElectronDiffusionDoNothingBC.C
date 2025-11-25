@@ -36,6 +36,7 @@ ElectronDiffusionDoNothingBC::ElectronDiffusionDoNothingBC(const InputParameters
 ADReal
 ElectronDiffusionDoNothingBC::computeQpResidual()
 {
-  return -_diffem[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _r_units * _normals[_qp] *
-         _test[_i][_qp] * _r_units;
+  using std::exp;
+  return -_diffem[_qp] * exp(_u[_qp]) * _grad_u[_qp] * _r_units * _normals[_qp] * _test[_i][_qp] *
+         _r_units;
 }

@@ -41,6 +41,7 @@ ChargeSourceMoles_KV::ChargeSourceMoles_KV(const InputParameters & parameters)
 ADReal
 ChargeSourceMoles_KV::computeQpResidual()
 {
+  using std::exp;
   return -_test[_i][_qp] * ZAPDOS_CONSTANTS::e * _sgn[_qp] * ZAPDOS_CONSTANTS::N_A *
-         std::exp(_charged[_qp]) / _voltage_scaling;
+         exp(_charged[_qp]) / _voltage_scaling;
 }

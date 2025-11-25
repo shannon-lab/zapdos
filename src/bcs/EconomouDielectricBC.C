@@ -128,9 +128,12 @@ EconomouDielectricBC::EconomouDielectricBC(const InputParameters & parameters)
 ADReal
 EconomouDielectricBC::computeQpResidual()
 {
+  using std::exp;
+  using std::sqrt;
   _ion_flux.zero();
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
+    using std::exp;
     if (_normals[_qp] * (*_sgnip[i])[_qp] * -(*_grad_potential_ion[i])[_qp] > 0.0)
     {
       _a = 1.0;
@@ -140,15 +143,15 @@ EconomouDielectricBC::computeQpResidual()
       _a = 0.0;
     }
     _temp_flux = _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * -(*_grad_potential_ion[i])[_qp] *
-                 _r_units * std::exp((*_ip[i])[_qp]);
+                 _r_units * exp((*_ip[i])[_qp]);
     _ion_flux += _temp_flux;
     _em_flux -= (*_user_se_coeff[i])[_qp] * _temp_flux;
   }
 
-  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
-                         (libMesh::pi * _massem[_qp]));
+  _v_thermal = sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * exp(_mean_en[_qp] - _em[_qp]) /
+                    (libMesh::pi * _massem[_qp]));
 
-  _em_flux += (0.25 * _v_thermal * std::exp(_em[_qp]) * _normals[_qp]);
+  _em_flux += (0.25 * _v_thermal * exp(_em[_qp]) * _normals[_qp]);
 
   return _test[_i][_qp] * _r_units *
          ((_thickness / _epsilon_d) * ZAPDOS_CONSTANTS::e * 6.022e23 * (_ion_flux - _em_flux) *

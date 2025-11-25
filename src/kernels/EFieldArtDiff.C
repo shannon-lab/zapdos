@@ -42,9 +42,10 @@ EFieldArtDiff::EFieldArtDiff(const InputParameters & parameters)
 ADReal
 EFieldArtDiff::computeQpResidual()
 {
+  using std::exp;
   ADReal vd_mag = _mu[_qp] * (-_electric_field[_qp]).norm() * _r_units;
   ADReal delta = vd_mag * _current_elem->hmax() / (2.0 * _r_units);
 
-  return -_grad_test[_i][_qp] * _r_units * (-delta * std::exp(_u[_qp]) * _grad_u[_qp] * _r_units) *
+  return -_grad_test[_i][_qp] * _r_units * (-delta * exp(_u[_qp]) * _grad_u[_qp] * _r_units) *
          _scale;
 }

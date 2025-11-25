@@ -54,10 +54,10 @@ AccelerationByAveraging::AccelerationByAveraging(const InputParameters & paramet
 ADReal
 AccelerationByAveraging::computeQpResidual()
 {
+  using std::exp;
   ADReal _average_rate_of_change =
-      (std::exp(_density_at_end_cycle[_qp]) - std::exp(_density_at_start_cycle[_qp])) /
-      _time_average;
+      (exp(_density_at_end_cycle[_qp]) - exp(_density_at_start_cycle[_qp])) / _time_average;
 
-  return _test[_i][_qp] * (std::exp(_u[_qp]) - std::exp(_density_at_start_cycle[_qp]) -
+  return _test[_i][_qp] * (exp(_u[_qp]) - exp(_density_at_start_cycle[_qp]) -
                            _time_acceleration * _average_rate_of_change);
 }

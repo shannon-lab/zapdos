@@ -33,5 +33,6 @@ MatchedValueLogBC::MatchedValueLogBC(const InputParameters & parameters)
 ADReal
 MatchedValueLogBC::computeQpResidual()
 {
-  return _H * std::exp(_u) - std::exp(_v[_qp]);
+  using std::exp;
+  return _H * exp(_u) - exp(_v[_qp]);
 }

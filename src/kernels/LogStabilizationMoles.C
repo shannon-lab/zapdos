@@ -32,5 +32,6 @@ LogStabilizationMoles::LogStabilizationMoles(const InputParameters & parameters)
 ADReal
 LogStabilizationMoles::computeQpResidual()
 {
-  return -_test[_i][_qp] * std::exp(-(_offset + _u[_qp]));
+  using std::exp;
+  return -_test[_i][_qp] * exp(-(_offset + _u[_qp]));
 }

@@ -44,27 +44,26 @@ DGCoeffDiffusion::computeQpResidual(Moose::DGResidualType type)
 
   switch (type)
   {
+    using std::exp;
     case Moose::Element:
-      r += 0.5 * (-_diff[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _normals[_qp] * _test[_i][_qp] +
-                  _epsilon * _grad_test[_i][_qp] * _normals[_qp] * std::exp(_u[_qp]));
-      r += _sigma / h_elem * std::exp(_u[_qp]) * _test[_i][_qp];
+      r += 0.5 * (-_diff[_qp] * exp(_u[_qp]) * _grad_u[_qp] * _normals[_qp] * _test[_i][_qp] +
+                  _epsilon * _grad_test[_i][_qp] * _normals[_qp] * exp(_u[_qp]));
+      r += _sigma / h_elem * exp(_u[_qp]) * _test[_i][_qp];
 
-      r += 0.5 * (-_diff_neighbor[_qp] * std::exp(_u_neighbor[_qp]) * _grad_u_neighbor[_qp] *
+      r += 0.5 * (-_diff_neighbor[_qp] * exp(_u_neighbor[_qp]) * _grad_u_neighbor[_qp] *
                       _normals[_qp] * _test[_i][_qp] -
-                  _epsilon * _grad_test[_i][_qp] * _normals[_qp] * std::exp(_u_neighbor[_qp]));
-      r += -_sigma / h_elem * std::exp(_u_neighbor[_qp]) * _test[_i][_qp];
+                  _epsilon * _grad_test[_i][_qp] * _normals[_qp] * exp(_u_neighbor[_qp]));
+      r += -_sigma / h_elem * exp(_u_neighbor[_qp]) * _test[_i][_qp];
       break;
 
     case Moose::Neighbor:
       r += 0.5 *
-           (_diff[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _normals[_qp] +
-            _diff_neighbor[_qp] * std::exp(_u_neighbor[_qp]) * _grad_u_neighbor[_qp] *
-                _normals[_qp]) *
+           (_diff[_qp] * exp(_u[_qp]) * _grad_u[_qp] * _normals[_qp] +
+            _diff_neighbor[_qp] * exp(_u_neighbor[_qp]) * _grad_u_neighbor[_qp] * _normals[_qp]) *
            _test_neighbor[_i][_qp];
       r += _epsilon * 0.5 * _grad_test_neighbor[_i][_qp] * _normals[_qp] *
-           (std::exp(_u[_qp]) - std::exp(_u_neighbor[_qp]));
-      r -= _sigma / h_elem * (std::exp(_u[_qp]) - std::exp(_u_neighbor[_qp])) *
-           _test_neighbor[_i][_qp];
+           (exp(_u[_qp]) - exp(_u_neighbor[_qp]));
+      r -= _sigma / h_elem * (exp(_u[_qp]) - exp(_u_neighbor[_qp])) * _test_neighbor[_i][_qp];
       break;
   }
 

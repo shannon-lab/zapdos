@@ -106,14 +106,19 @@ FieldEmissionBC::computeQpResidual()
   }
   else
   {
+    using std::exp;
+    using std::log;
+    using std::pow;
+    using std::tanh;
     _a = 0.0;
 
     for (unsigned int i = 0; i < _num_ions; ++i)
     {
+      using std::exp;
 
       _ion_flux = (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * _electric_field[_qp] * _r_units *
-                      std::exp((*_ip[i])[_qp]) -
-                  (*_Dip[i])[_qp] * std::exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units;
+                      exp((*_ip[i])[_qp]) -
+                  (*_Dip[i])[_qp] * exp((*_ip[i])[_qp]) * (*_grad_ip[i])[_qp] * _r_units;
       jSE += ZAPDOS_CONSTANTS::e * ZAPDOS_CONSTANTS::N_A * _normals[_qp] * (*_se_coeff[i])[_qp] *
              _ion_flux;
     }
@@ -128,14 +133,14 @@ FieldEmissionBC::computeQpResidual()
 
     F = -(1 - _a) * _field_enhancement[_qp] * _normals[_qp] * -_electric_field[_qp] * _r_units;
 
-    f = FE_c * F / std::pow(_work_function[_qp], 2);
-    v = 1 - f + (f / 6) * std::log(f);
+    f = FE_c * F / pow(_work_function[_qp], 2);
+    v = 1 - f + (f / 6) * log(f);
 
-    jFE = (FE_a / (_work_function[_qp])) * std::pow(F, 2) *
-          std::exp(-v * FE_b * std::pow(_work_function[_qp], 1.5) / F);
+    jFE = (FE_a / (_work_function[_qp])) * pow(F, 2) *
+          exp(-v * FE_b * pow(_work_function[_qp], 1.5) / F);
 
     if (_relax == true)
-      _relaxation_Expr = std::tanh(_t / _tau);
+      _relaxation_Expr = tanh(_t / _tau);
     else
       _relaxation_Expr = 1.0;
 

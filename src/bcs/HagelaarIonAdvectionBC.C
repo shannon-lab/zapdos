@@ -44,6 +44,7 @@ HagelaarIonAdvectionBC::HagelaarIonAdvectionBC(const InputParameters & parameter
 ADReal
 HagelaarIonAdvectionBC::computeQpResidual()
 {
+  using std::exp;
   if (_normals[_qp] * _sgn[_qp] * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
@@ -54,6 +55,6 @@ HagelaarIonAdvectionBC::computeQpResidual()
   }
 
   return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) *
-         ((2 * _a - 1) * _sgn[_qp] * _mu[_qp] * _electric_field[_qp] * _r_units *
-          std::exp(_u[_qp]) * _normals[_qp]);
+         ((2 * _a - 1) * _sgn[_qp] * _mu[_qp] * _electric_field[_qp] * _r_units * exp(_u[_qp]) *
+          _normals[_qp]);
 }

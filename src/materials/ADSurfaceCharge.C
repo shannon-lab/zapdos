@@ -99,7 +99,8 @@ ADSurfaceCharge::computeQpProperties()
     _charge_flux = 0.0;
     for (unsigned int i = 0; i < _num_species; ++i)
     {
-      _charge_flux += (*_sgn[i])[_qp] * std::exp((*_species[i])[_qp]) *
+      using std::exp;
+      _charge_flux += (*_sgn[i])[_qp] * exp((*_species[i])[_qp]) *
                       ((*_sgn[i])[_qp] * (*_mu[i])[_qp] * _electric_field[_qp] * _r_units -
                        (*_diff[i])[_qp] * (*_grad_species[i])[_qp] * _r_units) *
                       _normals[_qp];

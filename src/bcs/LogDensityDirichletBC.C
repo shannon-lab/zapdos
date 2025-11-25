@@ -30,5 +30,6 @@ LogDensityDirichletBC::LogDensityDirichletBC(const InputParameters & parameters)
 ADReal
 LogDensityDirichletBC::computeQpResidual()
 {
-  return (std::exp(_u) * 6.022e23) - _value;
+  using std::exp;
+  return (exp(_u) * 6.022e23) - _value;
 }

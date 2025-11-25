@@ -50,6 +50,8 @@ HagelaarElectronBC::HagelaarElectronBC(const InputParameters & parameters)
 ADReal
 HagelaarElectronBC::computeQpResidual()
 {
+  using std::exp;
+  using std::sqrt;
   if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
@@ -59,11 +61,11 @@ HagelaarElectronBC::computeQpResidual()
     _a = 0.0;
   }
 
-  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _u[_qp]) /
-                         (libMesh::pi * _massem[_qp]));
+  _v_thermal = sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * exp(_mean_en[_qp] - _u[_qp]) /
+                    (libMesh::pi * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units * (1. - _r) / (1. + _r) *
-         (-(2 * _a - 1) * _muem[_qp] * _electric_field[_qp] * _r_units * std::exp(_u[_qp]) *
+         (-(2 * _a - 1) * _muem[_qp] * _electric_field[_qp] * _r_units * exp(_u[_qp]) *
               _normals[_qp] +
-          0.5 * _v_thermal * std::exp(_u[_qp]));
+          0.5 * _v_thermal * exp(_u[_qp]));
 }

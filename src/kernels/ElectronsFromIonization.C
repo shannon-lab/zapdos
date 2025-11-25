@@ -72,8 +72,9 @@ ElectronsFromIonization::ElectronsFromIonization(const InputParameters & paramet
 ADReal
 ElectronsFromIonization::computeQpResidual()
 {
-  ADReal electron_flux_mag = (-_muem[_qp] * _electric_field[_qp] * _r_units * std::exp(_em[_qp]) -
-                              _diffem[_qp] * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units)
+  using std::exp;
+  ADReal electron_flux_mag = (-_muem[_qp] * _electric_field[_qp] * _r_units * exp(_em[_qp]) -
+                              _diffem[_qp] * exp(_em[_qp]) * _grad_em[_qp] * _r_units)
                                  .norm();
   ADReal iz_term = _alpha_iz[_qp] * electron_flux_mag;
 

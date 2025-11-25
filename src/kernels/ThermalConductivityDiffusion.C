@@ -39,7 +39,8 @@ ThermalConductivityDiffusion::ThermalConductivityDiffusion(const InputParameters
 ADReal
 ThermalConductivityDiffusion::computeQpResidual()
 {
+  using std::exp;
   return -_grad_test[_i][_qp] * _r_units * _coeff * _diffem[_qp] *
-         (std::exp(_u[_qp]) * _grad_u[_qp] * _r_units -
-          std::exp(_u[_qp] - _em[_qp]) * std::exp(_em[_qp]) * _grad_em[_qp] * _r_units);
+         (exp(_u[_qp]) * _grad_u[_qp] * _r_units -
+          exp(_u[_qp] - _em[_qp]) * exp(_em[_qp]) * _grad_em[_qp] * _r_units);
 }
