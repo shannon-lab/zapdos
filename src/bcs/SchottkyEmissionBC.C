@@ -104,6 +104,8 @@ SchottkyEmissionBC::SchottkyEmissionBC(const InputParameters & parameters)
 ADReal
 SchottkyEmissionBC::computeQpResidual()
 {
+  using std::exp;
+  using std::sqrt;
   _v_thermal = sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * exp(_mean_en[_qp] - _u[_qp]) /
                     (libMesh::pi * _massem[_qp]));
 
@@ -114,9 +116,7 @@ SchottkyEmissionBC::computeQpResidual()
   }
   else
   {
-    using std::exp;
     using std::pow;
-    using std::sqrt;
     using std::tanh;
     _a = 0.0;
 

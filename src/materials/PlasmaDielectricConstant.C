@@ -42,6 +42,8 @@ PlasmaDielectricConstant::PlasmaDielectricConstant(const InputParameters & param
 void
 PlasmaDielectricConstant::computeQpProperties()
 {
+  using std::exp;
+  using std::pow;
   using std::sqrt;
   /// Calculate the plasma frequency
   Real omega_pe_const = sqrt(pow(_elementary_charge, 2) / (_eps_vacuum * _electron_mass));
@@ -60,8 +62,6 @@ PlasmaDielectricConstant::computeQpProperties()
 
   if (_fe_problem.isTransient())
   {
-    using std::exp;
-    using std::pow;
     // Calculate the first time derivative of the linear electron density
     ADReal lin_dot = _em_dot[_qp] * exp(_em[_qp]);
 
