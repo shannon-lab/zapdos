@@ -34,5 +34,6 @@ ProductFirstOrderRxn::ProductFirstOrderRxn(const InputParameters & parameters)
 ADReal
 ProductFirstOrderRxn::computeQpResidual()
 {
-  return -_test[_i][_qp] * (1.) * _reaction_coeff[_qp] * std::exp(_v[_qp]);
+  using std::exp;
+  return -_test[_i][_qp] * (1.) * _reaction_coeff[_qp] * exp(_v[_qp]);
 }

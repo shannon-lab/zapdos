@@ -63,13 +63,15 @@ LymberopoulosElectronBC::LymberopoulosElectronBC(const InputParameters & paramet
 ADReal
 LymberopoulosElectronBC::computeQpResidual()
 {
+  using std::exp;
   _ion_flux.zero();
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
+    using std::exp;
     _ion_flux += _gamma[i] * (*_sgnion[i])[_qp] * (*_muion[i])[_qp] * _electric_field[_qp] *
-                 _r_units * std::exp((*_ion[i])[_qp]);
+                 _r_units * exp((*_ion[i])[_qp]);
   }
 
   return _test[_i][_qp] * _r_units *
-         (_ks * std::exp(_u[_qp]) * _normals[_qp] * _normals[_qp] - _ion_flux * _normals[_qp]);
+         (_ks * exp(_u[_qp]) * _normals[_qp] * _normals[_qp] - _ion_flux * _normals[_qp]);
 }

@@ -50,10 +50,9 @@ ElectronEnergyTermRate::ElectronEnergyTermRate(const InputParameters & parameter
 ADReal
 ElectronEnergyTermRate::computeQpResidual()
 {
+  using std::exp;
   if (isCoupled("v"))
-    return -_test[_i][_qp] * _rate_coefficient[_qp] * std::exp(_v[_qp]) * std::exp(_em[_qp]) *
-           _energy_change;
+    return -_test[_i][_qp] * _rate_coefficient[_qp] * exp(_v[_qp]) * exp(_em[_qp]) * _energy_change;
   else
-    return -_test[_i][_qp] * _rate_coefficient[_qp] * _n_gas[_qp] * std::exp(_em[_qp]) *
-           _energy_change;
+    return -_test[_i][_qp] * _rate_coefficient[_qp] * _n_gas[_qp] * exp(_em[_qp]) * _energy_change;
 }

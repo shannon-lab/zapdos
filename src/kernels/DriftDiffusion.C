@@ -63,8 +63,9 @@ DriftDiffusion::DriftDiffusion(const InputParameters & parameters)
 ADReal
 DriftDiffusion::computeQpResidual()
 {
-  return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * _electric_field[_qp] * _r_units *
+  using std::exp;
+  return _mu[_qp] * _sign[_qp] * exp(_u[_qp]) * _electric_field[_qp] * _r_units *
              -_grad_test[_i][_qp] * _r_units -
-         _diffusivity[_qp] * std::exp(_u[_qp]) * _grad_u[_qp] * _r_units * -_grad_test[_i][_qp] *
+         _diffusivity[_qp] * exp(_u[_qp]) * _grad_u[_qp] * _r_units * -_grad_test[_i][_qp] *
              _r_units;
 }

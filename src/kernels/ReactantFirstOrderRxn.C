@@ -31,5 +31,6 @@ ReactantFirstOrderRxn::ReactantFirstOrderRxn(const InputParameters & parameters)
 ADReal
 ReactantFirstOrderRxn::computeQpResidual()
 {
-  return -_test[_i][_qp] * (-1.) * _reaction_coeff[_qp] * std::exp(_u[_qp]);
+  using std::exp;
+  return -_test[_i][_qp] * (-1.) * _reaction_coeff[_qp] * exp(_u[_qp]);
 }

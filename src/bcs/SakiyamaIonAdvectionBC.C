@@ -43,6 +43,7 @@ SakiyamaIonAdvectionBC::SakiyamaIonAdvectionBC(const InputParameters & parameter
 ADReal
 SakiyamaIonAdvectionBC::computeQpResidual()
 {
+  using std::exp;
   if (_normals[_qp] * _sgn[_qp] * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
@@ -53,6 +54,6 @@ SakiyamaIonAdvectionBC::computeQpResidual()
   }
 
   return _test[_i][_qp] * _r_units *
-         (_a * _sgn[_qp] * _mu[_qp] * _electric_field[_qp] * _r_units * std::exp(_u[_qp]) *
+         (_a * _sgn[_qp] * _mu[_qp] * _electric_field[_qp] * _r_units * exp(_u[_qp]) *
           _normals[_qp]);
 }

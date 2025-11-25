@@ -40,6 +40,7 @@ LymberopoulosIonBC::LymberopoulosIonBC(const InputParameters & parameters)
 ADReal
 LymberopoulosIonBC::computeQpResidual()
 {
-  return _test[_i][_qp] * _r_units * _mu[_qp] * _electric_field[_qp] * _r_units *
-         std::exp(_u[_qp]) * _normals[_qp];
+  using std::exp;
+  return _test[_i][_qp] * _r_units * _mu[_qp] * _electric_field[_qp] * _r_units * exp(_u[_qp]) *
+         _normals[_qp];
 }

@@ -54,6 +54,7 @@ ReactionThirdOrderLogForShootMethod::ReactionThirdOrderLogForShootMethod(
 ADReal
 ReactionThirdOrderLogForShootMethod::computeQpResidual()
 {
+  using std::exp;
   Real power;
 
   power = 1.;
@@ -63,6 +64,6 @@ ReactionThirdOrderLogForShootMethod::computeQpResidual()
   if (_w_id == _density_id)
     power += 1.;
 
-  return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * power *
-         std::exp(_v[_qp]) * std::exp(_w[_qp]) * _u[_qp];
+  return -_test[_i][_qp] * _stoichiometric_coeff * _reaction_coeff[_qp] * power * exp(_v[_qp]) *
+         exp(_w[_qp]) * _u[_qp];
 }

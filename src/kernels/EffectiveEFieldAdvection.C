@@ -40,8 +40,8 @@ EffectiveEFieldAdvection::EffectiveEFieldAdvection(const InputParameters & param
 ADReal
 EffectiveEFieldAdvection::computeQpResidual()
 {
+  using std::exp;
   ADRealVectorValue Efield(_u_Efield[_qp], _v_Efield[_qp], _w_Efield[_qp]);
 
-  return _mu[_qp] * _sign[_qp] * std::exp(_u[_qp]) * Efield * _r_units * -_grad_test[_i][_qp] *
-         _r_units;
+  return _mu[_qp] * _sign[_qp] * exp(_u[_qp]) * Efield * _r_units * -_grad_test[_i][_qp] * _r_units;
 }

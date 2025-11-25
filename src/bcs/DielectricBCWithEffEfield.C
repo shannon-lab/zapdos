@@ -101,6 +101,8 @@ DielectricBCWithEffEfield::DielectricBCWithEffEfield(const InputParameters & par
 ADReal
 DielectricBCWithEffEfield::computeQpResidual()
 {
+  using std::exp;
+  using std::sqrt;
 
   ADRealVectorValue EField(_Ex[_qp], _Ey[_qp], _Ez[_qp]);
   RealVectorValue EField_old(_Ex_old[_qp], _Ey_old[_qp], _Ez_old[_qp]);
@@ -111,6 +113,7 @@ DielectricBCWithEffEfield::computeQpResidual()
   _em_flux_old.zero();
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
+    using std::exp;
     if (_normals[_qp] * (*_sgnip[i])[_qp] * EField >= 0.0)
     {
       _a = 1.0;
@@ -121,7 +124,7 @@ DielectricBCWithEffEfield::computeQpResidual()
     }
 
     _temp_flux =
-        _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * EField * _r_units * std::exp((*_ip[i])[_qp]);
+        _a * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * EField * _r_units * exp((*_ip[i])[_qp]);
 
     _ion_flux += _temp_flux;
 
@@ -137,23 +140,22 @@ DielectricBCWithEffEfield::computeQpResidual()
     }
 
     _temp_flux = _a_old * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * EField_old * _r_units *
-                 std::exp((*_ip_old[i])[_qp]);
+                 exp((*_ip_old[i])[_qp]);
 
     _ion_flux_old += _temp_flux;
 
     _em_flux_old -= (*_user_se_coeff[i])[_qp] * _temp_flux;
   }
 
-  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en[_qp] - _em[_qp]) /
-                         (libMesh::pi * _massem[_qp]));
+  _v_thermal = sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * exp(_mean_en[_qp] - _em[_qp]) /
+                    (libMesh::pi * _massem[_qp]));
 
-  _em_flux += (0.25 * _v_thermal * std::exp(_em[_qp]) * _normals[_qp]);
+  _em_flux += (0.25 * _v_thermal * exp(_em[_qp]) * _normals[_qp]);
 
-  _v_thermal_old =
-      std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_mean_en_old[_qp] - _em_old[_qp]) /
-                (libMesh::pi * _massem[_qp]));
+  _v_thermal_old = sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * exp(_mean_en_old[_qp] - _em_old[_qp]) /
+                        (libMesh::pi * _massem[_qp]));
 
-  _em_flux_old += (0.25 * _v_thermal_old * std::exp(_em_old[_qp]) * _normals[_qp]);
+  _em_flux_old += (0.25 * _v_thermal_old * exp(_em_old[_qp]) * _normals[_qp]);
 
   ADRealVectorValue _int = (ZAPDOS_CONSTANTS::e * ZAPDOS_CONSTANTS::N_A / _voltage_scaling) * _dt *
                            (0.5 * (_ion_flux - _em_flux) + 0.5 * (_ion_flux_old - _em_flux_old));

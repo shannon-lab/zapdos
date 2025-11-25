@@ -34,5 +34,6 @@ ElectronTemperatureDirichletBC::ElectronTemperatureDirichletBC(const InputParame
 ADReal
 ElectronTemperatureDirichletBC::computeQpResidual()
 {
-  return _penalty_value * (2.0 / 3 * std::exp(_u - _em[_qp]) - _value);
+  using std::exp;
+  return _penalty_value * (2.0 / 3 * exp(_u - _em[_qp]) - _value);
 }

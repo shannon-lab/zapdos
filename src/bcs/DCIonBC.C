@@ -42,6 +42,7 @@ DCIonBC::DCIonBC(const InputParameters & parameters)
 ADReal
 DCIonBC::computeQpResidual()
 {
+  using std::exp;
   if (_normals[_qp] * _sgn[_qp] * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
@@ -52,6 +53,6 @@ DCIonBC::computeQpResidual()
   }
 
   return _test[_i][_qp] * _r_units *
-         (_a * _mu[_qp] * _sgn[_qp] * _electric_field[_qp] * _r_units * std::exp(_u[_qp]) *
+         (_a * _mu[_qp] * _sgn[_qp] * _electric_field[_qp] * _r_units * exp(_u[_qp]) *
           _normals[_qp]);
 }

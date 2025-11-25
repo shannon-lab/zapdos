@@ -92,6 +92,8 @@ SecondaryElectronEnergyBC::SecondaryElectronEnergyBC(const InputParameters & par
 ADReal
 SecondaryElectronEnergyBC::computeQpResidual()
 {
+  using std::exp;
+  using std::sqrt;
   if (_normals[_qp] * -1.0 * _electric_field[_qp] > 0.0)
   {
     _a = 1.0;
@@ -104,13 +106,15 @@ SecondaryElectronEnergyBC::computeQpResidual()
   _ion_flux = 0;
   for (unsigned int i = 0; i < _num_ions; ++i)
   {
+    using std::exp;
+    using std::sqrt;
     if (_normals[_qp] * (*_sgnip[i])[_qp] * _electric_field[_qp] > 0.0)
       _b = 1.0;
     else
       _b = 0.0;
-    _ion_flux += (*_se_coeff[i])[_qp] * std::exp((*_ip[i])[_qp]) *
-                 (0.5 * std::sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * (*_Tip[i])[_qp] /
-                                  (libMesh::pi * (*_massip[i])[_qp])) +
+    _ion_flux += (*_se_coeff[i])[_qp] * exp((*_ip[i])[_qp]) *
+                 (0.5 * sqrt(8 * ZAPDOS_CONSTANTS::k_boltz * (*_Tip[i])[_qp] /
+                             (libMesh::pi * (*_massip[i])[_qp])) +
                   (2 * _b - 1) * (*_sgnip[i])[_qp] * (*_muip[i])[_qp] * _electric_field[_qp] *
                       _r_units * _normals[_qp]);
   }
@@ -119,8 +123,8 @@ SecondaryElectronEnergyBC::computeQpResidual()
              (_muem[_qp] * _electric_field[_qp] * _r_units * _normals[_qp] +
               std::numeric_limits<double>::epsilon());
 
-  _v_thermal = std::sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * std::exp(_u[_qp] - _em[_qp]) /
-                         (libMesh::pi * _massem[_qp]));
+  _v_thermal = sqrt(8 * ZAPDOS_CONSTANTS::e * 2.0 / 3 * exp(_u[_qp] - _em[_qp]) /
+                    (libMesh::pi * _massem[_qp]));
 
   return _test[_i][_qp] * _r_units *
          ((1 - _r) / (1 + _r) * (-5. / 6. * _v_thermal * _n_gamma * _se_energy) -
