@@ -1,0 +1,194 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Linear Elasticity Problem | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="028cf57d-806a-4314-b38c-312d4314c919" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="ae6cd09d-9bc1-4151-a72c-d199c3e895d2" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="ffe05dd1-4392-45a8-89c1-9565dfa0a223" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="5bb62d34-60e2-459f-86f0-2f0d793c976c"><i class="material-icons">menu</i></a><ul class="sidenav" id="5bb62d34-60e2-459f-86f0-2f0d793c976c"><li><a href="#!" class="dropdown-trigger" data-target="5feaee88-3bce-470c-a4e2-d1bc22095484" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="9033eba1-2fdd-4e97-83b8-38e024f7e0e7" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d906be98-fbdc-4498-b907-4c22fd11f329" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="028cf57d-806a-4314-b38c-312d4314c919"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="ae6cd09d-9bc1-4151-a72c-d199c3e895d2"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="ffe05dd1-4392-45a8-89c1-9565dfa0a223"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="5feaee88-3bce-470c-a4e2-d1bc22095484"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="9033eba1-2fdd-4e97-83b8-38e024f7e0e7"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="d906be98-fbdc-4498-b907-4c22fd11f329"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">syntax</a><a href="." class="breadcrumb">MFEM</a><a href="#" class="breadcrumb">LinearElasticity</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="4d621f7f-79aa-4509-88d9-666bac7d1532" data-section-level="1" data-section-text="Linear Elasticity Problem"><h1 id="linear-elasticity-problem">Linear Elasticity Problem</h1><section class="scrollspy" id="13525cdd-94fc-4f27-9431-216e09f8b095" data-section-level="2" data-section-text="Summary"><h2 id="summary">Summary</h2><p>Solves a 3D linear elasticity problem for the deformation of a multi-material cantilever beam. This example is based on <a href="https://mfem.org/examples/">MFEM Example 2</a>.</p></section><section class="scrollspy" id="be3e2c7f-5b6c-49e1-94ea-bbf32b397043" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>This problem solves a linear elasticity problem for small deformations with strong form:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-382c103a-e095-436b-8bfb-3c62b6ff0580"></span><script>var element = document.getElementById("moose-equation-382c103a-e095-436b-8bfb-3c62b6ff0580");katex.render("\\begin{split} -\\partial_j \\sigma_{ij} =0 \\,\\,\\,&\\mathrm{on}\\,\\, \\Omega \\\\ u_i = 0 \\,\\,\\, &\\mathrm{on}\\,\\, \\Gamma_1 \\\\ \\sigma_{ij} \\hat n_j= f_i \\,\\,\\, &\\mathrm{on}\\,\\, \\Gamma_2 \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where Einstein notation for summation over repeated indices has been used, and the pull-down force <span class="moose-katex-inline-equation" id="moose-equation-4ecd6b87-8770-46d7-a72a-d7c579301161"><script>var element = document.getElementById("moose-equation-4ecd6b87-8770-46d7-a72a-d7c579301161");katex.render("\\vec f = f_i \\hat e_i", element, {displayMode:false,throwOnError:false});</script></span> is given by</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-c4f49271-75bd-49ff-bd9b-33d9ff6c55e5"></span><script>var element = document.getElementById("moose-equation-c4f49271-75bd-49ff-bd9b-33d9ff6c55e5");katex.render("\\vec f = \\begin{pmatrix}     0.0\\\\     0.0\\\\     -0.01 \\end{pmatrix}", element, {displayMode:true,throwOnError:false});</script></span></p><p>In this example, the stress/strain relation is taken to be isotropic, such that</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-a1ad8841-e6b7-4cc0-b4b5-dbf00b4ab257"></span><script>var element = document.getElementById("moose-equation-a1ad8841-e6b7-4cc0-b4b5-dbf00b4ab257");katex.render("\\begin{split} \\sigma_{ij} \\equiv C_{ijkl} \\varepsilon_{kl} = \\lambda \\delta_{ij} \\varepsilon_{kk} + 2 \\mu \\varepsilon_{ij} \\\\ \\varepsilon_{ij} = \\frac{1}{2} \\left(\\partial_i u_j + \\partial_j u_i\\right) \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p><p>In this example, we solve this using the weak form</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-8f7181e9-7d3a-48a6-a12f-de8679aa5d24"></span><script>var element = document.getElementById("moose-equation-8f7181e9-7d3a-48a6-a12f-de8679aa5d24");katex.render("(\\sigma_{ij}, \\partial_j v_i)_\\Omega - (\\sigma_{ij} \\hat n_j, v_i)_{\\partial \\Omega} = 0 \\,\\,\\,\\, \\forall v_i \\in V", element, {displayMode:true,throwOnError:false});</script></span></p><p>where</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-a7151ee5-3c71-48c8-8d80-e6f866da7fa2"></span><script>var element = document.getElementById("moose-equation-a7151ee5-3c71-48c8-8d80-e6f866da7fa2");katex.render("v_i \\in H^1(\\Omega) : v_i = 0 \\,\\,\\, \\mathrm{on} \\,\\, \\Gamma_1", element, {displayMode:true,throwOnError:false});</script></span></p></section><section class="scrollspy" id="6d14a5b1-20d6-4b60-9699-4788adc89f6b" data-section-level="2" data-section-text="Material Parameters"><h2 id="material-parameters">Material Parameters</h2><p>In this example, the cantilever beam is comprised of two materials; a stiffer material on the block with domain attribute 1, and a more flexible material defined on the block with domain attribute 2. These materials are parametrised with different  values for the Lamé parameters, <span class="moose-katex-inline-equation" id="moose-equation-a01f7e53-e265-4e5a-9d58-73c7b406fc40"><script>var element = document.getElementById("moose-equation-a01f7e53-e265-4e5a-9d58-73c7b406fc40");katex.render("\\lambda", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-cdcc34f1-7098-4c05-bd64-6a622fb91181"><script>var element = document.getElementById("moose-equation-cdcc34f1-7098-4c05-bd64-6a622fb91181");katex.render("\\mu", element, {displayMode:false,throwOnError:false});</script></span>, on the two domains.</p><p>The two Lamé parameters can be expressed in terms of the Young&#x27;s modulus <span class="moose-katex-inline-equation" id="moose-equation-1895cf41-bf0c-4335-a65e-651fec075a72"><script>var element = document.getElementById("moose-equation-1895cf41-bf0c-4335-a65e-651fec075a72");katex.render("E", element, {displayMode:false,throwOnError:false});</script></span> and the Poisson ratio <span class="moose-katex-inline-equation" id="moose-equation-97660fa7-4b90-4a83-aecd-77f2917568fb"><script>var element = document.getElementById("moose-equation-97660fa7-4b90-4a83-aecd-77f2917568fb");katex.render("\\nu", element, {displayMode:false,throwOnError:false});</script></span> in each material, using</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-10ad84f9-f40c-48a4-a290-566b91a88697"></span><script>var element = document.getElementById("moose-equation-10ad84f9-f40c-48a4-a290-566b91a88697");katex.render("\\begin{split} \\lambda &= \\frac{E\\nu}{(1-2\\nu)(1+\\nu)} \\\\ \\mu &= \\frac{E}{2(1+\\nu)} \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p></section><section class="scrollspy" id="d0d03210-19b0-47b0-ac5f-52b47fab74ee" data-section-level="2" data-section-text="Example File"><h2 id="example-file">Example File</h2><pre style="max-height:350px;"><code class="language-moose">[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../Mesh/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMMesh
+  file = ../mesh/beam-tet.mesh
+  dim = 3
+  uniform_refine&lt;&lt;&lt;{&quot;description&quot;: &quot;Specify the level of uniform refinement applied to the initial mesh&quot;}&gt;&gt;&gt; = 2
+  displacement = &quot;displacement&quot;
+[]
+
+[Problem&lt;&lt;&lt;{&quot;href&quot;: &quot;../Problem/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMProblem
+[]
+
+[FESpaces]
+  [H1FESpace]
+    type = MFEMVectorFESpace
+    fec_type = H1
+    fec_order = FIRST
+    range_dim = 3
+    ordering = &quot;vdim&quot;
+  []
+[]
+
+[Variables&lt;&lt;&lt;{&quot;href&quot;: &quot;../Variables/index.html&quot;}&gt;&gt;&gt;]
+  [displacement]
+    type = MFEMVariable
+    fespace = H1FESpace
+  []
+[]
+
+[BCs&lt;&lt;&lt;{&quot;href&quot;: &quot;../BCs/index.html&quot;}&gt;&gt;&gt;]
+  [dirichlet]
+    type = MFEMVectorDirichletBC
+    variable = displacement
+    boundary = &#x27;1&#x27;
+  []
+  [pull_down]
+    type = MFEMVectorBoundaryIntegratedBC
+    variable = displacement
+    boundary = &#x27;2&#x27;
+    vector_coefficient = &#x27;0.0 0.0 -0.01&#x27;
+  []
+[]
+
+[FunctorMaterials&lt;&lt;&lt;{&quot;href&quot;: &quot;../FunctorMaterials/index.html&quot;}&gt;&gt;&gt;]
+  [Rigidium]
+    type = MFEMGenericFunctorMaterial
+    prop_names = &#x27;lambda mu&#x27;
+    prop_values = &#x27;50.0 50.0&#x27;
+    block = 1
+  []
+  [Bendium]
+    type = MFEMGenericFunctorMaterial
+    prop_names = &#x27;lambda mu&#x27;
+    prop_values = &#x27;1.0 1.0&#x27;
+    block = 2
+  []
+[]
+
+[Kernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../Kernels/index.html&quot;}&gt;&gt;&gt;]
+  [diff]
+    type = MFEMLinearElasticityKernel
+    variable = displacement
+    lambda = lambda
+    mu = mu
+  []
+[]
+
+[Preconditioner]
+  [boomeramg]
+    type = MFEMHypreBoomerAMG
+    l_max_its = 500
+    l_tol = 1e-8
+    print_level = 2
+  []
+[]
+
+[Solver]
+  type = MFEMHyprePCG
+  #preconditioner = boomeramg
+  l_max_its = 5000
+  l_tol = 1e-8
+  l_abs_tol = 0.0
+  print_level = 2
+[]
+
+[Executioner&lt;&lt;&lt;{&quot;href&quot;: &quot;../Executioner/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMSteady
+  device = &quot;cpu&quot;
+[]
+
+[Outputs&lt;&lt;&lt;{&quot;href&quot;: &quot;../Outputs/index.html&quot;}&gt;&gt;&gt;]
+  [ParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/LinearElasticity
+    vtk_format = ASCII
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#a7a35888-054e-461b-bce3-30a285c2fafb">(moose/test/tests/mfem/kernels/linearelasticity.i)</a></section></section><div class="moose-modal modal" id="a7a35888-054e-461b-bce3-30a285c2fafb"><div class="modal-content"><h4>(moose/test/tests/mfem/kernels/linearelasticity.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  type = MFEMMesh
+  file = ../mesh/beam-tet.mesh
+  dim = 3
+  uniform_refine = 2
+  displacement = &quot;displacement&quot;
+[]
+
+[Problem]
+  type = MFEMProblem
+[]
+
+[FESpaces]
+  [H1FESpace]
+    type = MFEMVectorFESpace
+    fec_type = H1
+    fec_order = FIRST
+    range_dim = 3
+    ordering = &quot;vdim&quot;
+  []
+[]
+
+[Variables]
+  [displacement]
+    type = MFEMVariable
+    fespace = H1FESpace
+  []
+[]
+
+[BCs]
+  [dirichlet]
+    type = MFEMVectorDirichletBC
+    variable = displacement
+    boundary = &#x27;1&#x27;
+  []
+  [pull_down]
+    type = MFEMVectorBoundaryIntegratedBC
+    variable = displacement
+    boundary = &#x27;2&#x27;
+    vector_coefficient = &#x27;0.0 0.0 -0.01&#x27;
+  []
+[]
+
+[FunctorMaterials]
+  [Rigidium]
+    type = MFEMGenericFunctorMaterial
+    prop_names = &#x27;lambda mu&#x27;
+    prop_values = &#x27;50.0 50.0&#x27;
+    block = 1
+  []
+  [Bendium]
+    type = MFEMGenericFunctorMaterial
+    prop_names = &#x27;lambda mu&#x27;
+    prop_values = &#x27;1.0 1.0&#x27;
+    block = 2
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = MFEMLinearElasticityKernel
+    variable = displacement
+    lambda = lambda
+    mu = mu
+  []
+[]
+
+[Preconditioner]
+  [boomeramg]
+    type = MFEMHypreBoomerAMG
+    l_max_its = 500
+    l_tol = 1e-8
+    print_level = 2
+  []
+[]
+
+[Solver]
+  type = MFEMHyprePCG
+  #preconditioner = boomeramg
+  l_max_its = 5000
+  l_tol = 1e-8
+  l_abs_tol = 0.0
+  print_level = 2
+[]
+
+[Executioner]
+  type = MFEMSteady
+  device = &quot;cpu&quot;
+[]
+
+[Outputs]
+  [ParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/LinearElasticity
+    vtk_format = ASCII
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#13525cdd-94fc-4f27-9431-216e09f8b095" class="tooltipped" data-position="left" data-tooltip="Summary">Summary</a></li><li><a href="#be3e2c7f-5b6c-49e1-94ea-bbf32b397043" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#6d14a5b1-20d6-4b60-9699-4788adc89f6b" class="tooltipped" data-position="left" data-tooltip="Material Parameters">Material Parameters</a></li><li><a href="#d0d03210-19b0-47b0-ac5f-52b47fab74ee" class="tooltipped" data-position="left" data-tooltip="Example File">Example File</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
