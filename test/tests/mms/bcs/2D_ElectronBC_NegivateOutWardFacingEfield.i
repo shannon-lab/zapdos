@@ -205,8 +205,8 @@
   []
   [massem_mat]
     type = ParsedFunction
-    vars = massem
-    vals = massem
+    symbol_names = massem
+    symbol_values = massem
     value = 'massem*1.6e-19'
   []
   #Electron diffusion coeff.
@@ -226,14 +226,14 @@
   #Ion diffusion coeff.
   [diffion]
     type = ParsedFunction
-    vars = diffem
-    vals = diffem
+    symbol_names = diffem
+    symbol_values = diffem
     expression = diffem
   []
   [muion]
     type = ParsedFunction
-    vars = muem
-    vals = muem
+    symbol_names = muem
+    symbol_values = muem
     expression = muem
   []
   [N_A]
@@ -253,22 +253,22 @@
   #The manufactured electron density solution
   [em_fun]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)'
   []
   #The manufactured ion density solution
   [ion_fun]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)'
   []
   #The manufactured electron energy solution
   [mean_en_fun]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = 'log(((3*massem*pi*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
                       sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(16*ee*(sin(pi*x) +
                       sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))) / N_A)'
@@ -276,21 +276,21 @@
   #The manufactured eff. Efield solution
   [Ex_fun]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = 'pi*cos(pi*x)*(sin(pi*t) + 1)'
   []
   [Ey_fun]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = 'pi*cos(pi*y)*(sin(pi*t) + 1)'
   []
   #The manufactured potential solution
   [potential_fun]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = '-(sin(pi*t) + 1.0)*(sin(pi*y) + sin(pi*x))'
   []
 
@@ -298,8 +298,8 @@
   #The electron source term.
   [em_source]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = '(diffem*pi^2*sin(pi*x) + (diffem*pi^2*(5*sin(pi*y) +
                    cos(pi*y)*sin(2*pi*t)))/5 + (2*pi*cos(2*pi*t)*cos(pi*y))/5 +
                    (muem*pi^2*(sin(pi*t) + 1)*(5*sin(pi*x) + 5*sin(pi*y) +
@@ -309,8 +309,8 @@
   #The ion source term.
   [ion_source]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = '(diffion*pi^2*sin(pi*x) + (diffion*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 +
                   (2*pi*cos(2*pi*t)*cos(pi*y))/5 - (muion*pi^2*(sin(pi*t) + 1)*(5*sin(pi*x) +
                   5*sin(pi*y) + 10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 -
@@ -319,8 +319,8 @@
   []
   [energy_source]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = '((3*massem*pi*(4*muem*pi^2*cos(pi*t)*(sin(pi*x) + sin(pi*y) +
                    (cos(pi*y)*sin(2*pi*t))/5 + 1) + (8*muem*pi^2*cos(2*pi*t)*cos(pi*y)*(sin(pi*t) +
                    1))/5)*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
@@ -359,21 +359,21 @@
   #The Ex source term.
   [Ex_source]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = 'pi^2*cos(pi*t)*cos(pi*x) + diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)'
   []
   [Ey_source]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = 'pi^2*cos(pi*t)*cos(pi*y) + diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)'
   []
 
   [potential_source]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = '-pi*cos(pi*t)*(sin(pi*x) + sin(pi*y)) -
                   diffpotential*pi^2*sin(pi*x)*(sin(pi*t) + 1) -
                   diffpotential*pi^2*sin(pi*y)*(sin(pi*t) + 1)'
@@ -381,34 +381,34 @@
 
   [em_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((3.0 + sin(pi/2*x)) / N_A)'
   []
   [ion_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((3.0 + sin(pi/2*x)) / N_A)'
   []
   [mean_en_ICs]
     type = ParsedFunction
-    vars = 'em_ICs'
-    vals = 'em_ICs'
+    symbol_names = 'em_ICs'
+    symbol_values = 'em_ICs'
     expression = 'log(32.) + em_ICs'
   []
 
   [em_left_Flux_BC]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = '(-diffem*pi*cos(pi*x) - muem*pi*cos(pi*x)*(sin(pi*t) + 1)*(sin(pi*x) +
                    sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A'
   []
   [em_down_Flux_BC]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
-    vals = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_names = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
+    symbol_values = 'ee N_A diffpotential diffem muem massem diffmean_en diffion muion'
     expression = '(-(diffem*pi*(5*cos(pi*y) - sin(2*pi*t)*sin(pi*y)))/5 -
                    muem*pi*cos(pi*y)*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
                    (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A'
