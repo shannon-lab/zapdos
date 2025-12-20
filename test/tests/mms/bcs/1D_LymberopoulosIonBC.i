@@ -147,15 +147,15 @@
   #The manufactured ion density solution
   [ion_fun]
     type = ParsedFunction
-    vars = 'l N_A'
-    vals = 'l N_A'
+    symbol_names = 'l N_A'
+    symbol_values = 'l N_A'
     expression = 'log((1.0 + x^2*(1 - x/l)^2/l^2) / N_A)'
   []
   #The manufactured electron density solution
   [potential_fun]
     type = ParsedFunction
-    vars = 'l f ee diffpotential'
-    vals = 'l f ee diffpotential'
+    symbol_names = 'l f ee diffpotential'
+    symbol_values = 'l f ee diffpotential'
     expression = '-(ee*l^2*sin((pi*x)/l)*sin(2*pi*f*t))/(5*diffpotential*pi^2)'
   []
 
@@ -163,8 +163,8 @@
   #The ion source term.
   [ion_source]
     type = ParsedFunction
-    vars = 'l f ee diffpotential diffion muion N_A'
-    vals = 'l f ee diffpotential diffion muion N_A'
+    symbol_names = 'l f ee diffpotential diffion muion N_A'
+    symbol_values = 'l f ee diffpotential diffion muion N_A'
     expression = '(-2*diffion/l^2 +
                    12*diffion*x/l^3 -
                    12*diffion*x^2/l^4 -
@@ -178,30 +178,30 @@
   []
   [potential_source]
     type = ParsedFunction
-    vars = 'l f ee diffpotential'
-    vals = 'l f ee diffpotential'
+    symbol_names = 'l f ee diffpotential'
+    symbol_values = 'l f ee diffpotential'
     expression = '-ee*sin(2*pi*f*t)*sin(pi*x/l)/5 - 2*ee*f*l^2*sin(pi*x/l)*cos(2*pi*f*t)/(5*pi*diffpotential)'
   []
 
   #The left Flux BC function
   [ion_left_Flux_BC]
     type = ParsedFunction
-    vars = 'l f ee diffpotential muion N_A'
-    vals = 'l f ee diffpotential muion N_A'
+    symbol_names = 'l f ee diffpotential muion N_A'
+    symbol_values = 'l f ee diffpotential muion N_A'
     expression = '(0.2*ee*l*muion*sin(2*pi*f*t)/(pi*diffpotential)) / N_A'
   []
   #The right Flux BC function
   [ion_right_Flux_BC]
     type = ParsedFunction
-    vars = 'l f ee diffpotential muion N_A'
-    vals = 'l f ee diffpotential muion N_A'
+    symbol_names = 'l f ee diffpotential muion N_A'
+    symbol_values = 'l f ee diffpotential muion N_A'
     expression = '-1.0 * (-0.2*ee*l*muion*sin(2*pi*f*t)/(pi*diffpotential)) / N_A'
   []
 
   [ion_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = '(1.) / N_A'
   []
 []

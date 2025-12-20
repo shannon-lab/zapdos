@@ -162,22 +162,22 @@
   #The manufactured electron density solution
   [em_fun]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)'
   []
   #The manufactured ion density solution
   [ion_fun]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((sin(pi*y) + 1.0 + 0.9*cos(pi/2*x)) / N_A)'
   []
   #The manufactured electron density solution
   [potential_fun]
     type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
+    symbol_names = 'ee diffpotential'
+    symbol_values = 'ee diffpotential'
     expression = '-(ee*(2*cos((pi*x)/2) + cos(pi*y)*sin(2*pi*t)))/(5*diffpotential*pi^2)'
   []
 
@@ -185,8 +185,8 @@
   #The electron source term.
   [em_source]
     type = ParsedFunction
-    vars = 'ee diffpotential diffem_coeff muem_coeff N_A'
-    vals = 'ee diffpotential diffem_coeff muem_coeff N_A'
+    symbol_names = 'ee diffpotential diffem_coeff muem_coeff N_A'
+    symbol_values = 'ee diffpotential diffem_coeff muem_coeff N_A'
     expression = '(diffem_coeff*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5) +
                    (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (diffem_coeff*pi^2*cos((pi*x)/2))/4 +
                    (ee*muem_coeff*(5*cos((pi*x)/2) - 4*cos(2*pi*t)^2*cos(pi*y)^2 +
@@ -197,8 +197,8 @@
   #The ion source term.
   [ion_source]
     type = ParsedFunction
-    vars = 'ee diffpotential diffion muion N_A'
-    vals = 'ee diffpotential diffion muion N_A'
+    symbol_names = 'ee diffpotential diffion muion N_A'
+    symbol_values = 'ee diffpotential diffion muion N_A'
     expression = '((diffion*pi^2*(9*cos((pi*x)/2) + 40*sin(pi*y)))/40 +
                    (9*ee*muion*sin((pi*x)/2)^2)/(100*diffpotential) -
                    (ee*muion*cos((pi*x)/2)*((9*cos((pi*x)/2))/10 + sin(pi*y) + 1))/(10*diffpotential) -
@@ -209,14 +209,14 @@
 
   [em_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((3.0 + cos(pi/2*x)) / N_A)'
   []
   [ion_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((3.0 + 0.9*cos(pi/2*x)) / N_A)'
   []
 []

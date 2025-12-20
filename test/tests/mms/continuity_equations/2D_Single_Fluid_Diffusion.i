@@ -68,8 +68,8 @@
   #The manufactured electron density solution
   [em_fun]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)'
   []
 
@@ -77,8 +77,8 @@
   #The electron source term.
   [em_source]
     type = ParsedFunction
-    vars = 'ee diffem_coeff N_A'
-    vals = 'ee diffem_coeff N_A'
+    symbol_names = 'ee diffem_coeff N_A'
+    symbol_values = 'ee diffem_coeff N_A'
     expression = '(diffem_coeff*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5) +
                    (2*pi*cos(2*pi*t)*cos(pi*y))/5 +
                    (diffem_coeff*pi^2*cos((pi*x)/2))/4) / N_A'
@@ -87,15 +87,15 @@
   #The left BC dirichlet function
   [em_left_BC]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2) / N_A)'
   []
 
   [em_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((3.0 + cos(pi/2*x)) / N_A)'
   []
 []

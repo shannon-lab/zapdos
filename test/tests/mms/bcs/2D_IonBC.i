@@ -135,21 +135,21 @@
   #The manufactured ion density solution
   [ion_fun]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((cos(pi/2*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)'
   []
   #The manufactured eff. Efield solution
   [Ex_fun]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffion muion'
-    vals = 'ee N_A diffpotential diffion muion'
+    symbol_names = 'ee N_A diffpotential diffion muion'
+    symbol_values = 'ee N_A diffpotential diffion muion'
     expression = '-pi*cos(pi*x)*(sin(pi*t) + 1)'
   []
   [Ey_fun]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffion muion'
-    vals = 'ee N_A diffpotential diffion muion'
+    symbol_names = 'ee N_A diffpotential diffion muion'
+    symbol_values = 'ee N_A diffpotential diffion muion'
     expression = '-pi*cos(pi*y)*(sin(pi*t) + 1)'
   []
 
@@ -157,8 +157,8 @@
   #The ion source term.
   [ion_source]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffion muion'
-    vals = 'ee N_A diffpotential diffion muion'
+    symbol_names = 'ee N_A diffpotential diffion muion'
+    symbol_values = 'ee N_A diffpotential diffion muion'
     expression = '(diffion*((pi^2*cos((pi*y)/2))/4 + (pi^2*sin(2*pi*t)*(2*cos((pi*y)/2)^2 - 1))/5) +
                   (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (diffion*pi^2*cos((pi*x)/2))/4 + muion*pi^2*sin(pi*x)*(sin(pi*t) + 1)*(cos((pi*x)/2) +
                   cos((pi*y)/2) + (cos(pi*y)*sin(2*pi*t))/5 + 1) + muion*pi^2*sin(pi*y)*(sin(pi*t) + 1)*(cos((pi*x)/2) + cos((pi*y)/2) +
@@ -169,35 +169,35 @@
   #The Ex source term.
   [Ex_source]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffion muion'
-    vals = 'ee N_A diffpotential diffion muion'
+    symbol_names = 'ee N_A diffpotential diffion muion'
+    symbol_values = 'ee N_A diffpotential diffion muion'
     expression = '-pi^2*cos(pi*t)*cos(pi*x) - diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)'
   []
   [Ey_source]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffion muion'
-    vals = 'ee N_A diffpotential diffion muion'
+    symbol_names = 'ee N_A diffpotential diffion muion'
+    symbol_values = 'ee N_A diffpotential diffion muion'
     expression = '-pi^2*cos(pi*t)*cos(pi*y) - diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)'
   []
 
   [ion_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((3.0 + sin(pi/2*x)) / N_A)'
   []
 
   [ion_left_Flux_BC]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffion muion'
-    vals = 'ee N_A diffpotential diffion muion'
+    symbol_names = 'ee N_A diffpotential diffion muion'
+    symbol_values = 'ee N_A diffpotential diffion muion'
     expression = '((diffion*pi*sin((pi*x)/2))/2 - muion*pi*(2*cos((pi*x)/2)^2 - 1)*(sin(pi*t) + 1)*(cos((pi*x)/2) +
                    cos((pi*y)/2) + (2*cos(pi*t)*sin(pi*t)*(2*cos((pi*y)/2)^2 - 1))/5 + 1)) / N_A'
   []
   [ion_down_Flux_BC]
     type = ParsedFunction
-    vars = 'ee N_A diffpotential diffion muion'
-    vals = 'ee N_A diffpotential diffion muion'
+    symbol_names = 'ee N_A diffpotential diffion muion'
+    symbol_values = 'ee N_A diffpotential diffion muion'
     expression = '(diffion*((pi*sin((pi*y)/2))/2 + (pi*sin(2*pi*t)*sin(pi*y))/5) -
                    muion*pi*cos(pi*y)*(sin(pi*t) + 1)*(cos((pi*x)/2) + cos((pi*y)/2) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A'
   []

@@ -176,15 +176,15 @@
   #Electron energy diffusion coeff.
   [diffmean_en_coeff]
     type = ParsedFunction
-    vars = 'diffem_coeff'
-    vals = 'diffem_coeff'
+    symbol_names = 'diffem_coeff'
+    symbol_values = 'diffem_coeff'
     expression = '5.0 / 3.0 * diffem_coeff'
   []
   #Electron energy mobility coeff.
   [mumean_en_coeff]
     type = ParsedFunction
-    vars = 'muem_coeff'
-    vals = 'muem_coeff'
+    symbol_names = 'muem_coeff'
+    symbol_values = 'muem_coeff'
     expression = '5.0 / 3.0 * muem_coeff'
   []
   #Ion diffusion coeff.
@@ -220,64 +220,64 @@
   #The manufactured electron density solution
   [em_fun]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)'
   []
   #The manufactured ion density solution
   [ion_fun]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((sin(pi*y) + 1.0 + 0.9*cos(pi/2*x)) / N_A)'
   []
   #The manufactured electron density solution
   [potential_fun]
     type = ParsedFunction
-    vars = 'ee diffpotential'
-    vals = 'ee diffpotential'
+    symbol_names = 'ee diffpotential'
+    symbol_values = 'ee diffpotential'
     expression = '-(ee*(2*cos((pi*x)/2) + cos(pi*y)*sin(2*pi*t)))/(5*diffpotential*pi^2)'
   []
   #The manufactured electron energy solution
   [energy_fun]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'sin(pi*y) + sin(2*pi*t)*cos(pi*y)*sin(pi*y) + 0.75 + cos(pi/2*x)'
   []
   [mean_en_fun]
     type = ParsedFunction
-    vars = 'energy_fun em_fun'
-    vals = 'energy_fun em_fun'
+    symbol_names = 'energy_fun em_fun'
+    symbol_values = 'energy_fun em_fun'
     expression = 'log(energy_fun) + em_fun'
   []
 
   #Electron diffusion coeff.
   [diffem]
     type = ParsedFunction
-    vars = 'diffem_coeff energy_fun'
-    vals = 'diffem_coeff energy_fun'
+    symbol_names = 'diffem_coeff energy_fun'
+    symbol_values = 'diffem_coeff energy_fun'
     expression = 'diffem_coeff * energy_fun'
   []
   #Electron mobility coeff.
   [muem]
     type = ParsedFunction
-    vars = 'muem_coeff energy_fun'
-    vals = 'muem_coeff energy_fun'
+    symbol_names = 'muem_coeff energy_fun'
+    symbol_values = 'muem_coeff energy_fun'
     expression = 'muem_coeff * energy_fun'
   []
   #Electron energy diffusion coeff.
   [diffmean_en]
     type = ParsedFunction
-    vars = 'diffmean_en_coeff energy_fun'
-    vals = 'diffmean_en_coeff energy_fun'
+    symbol_names = 'diffmean_en_coeff energy_fun'
+    symbol_values = 'diffmean_en_coeff energy_fun'
     expression = 'diffmean_en_coeff * energy_fun'
   []
   #Electron energy mobility coeff.
   [mumean_en]
     type = ParsedFunction
-    vars = 'mumean_en_coeff energy_fun'
-    vals = 'mumean_en_coeff energy_fun'
+    symbol_names = 'mumean_en_coeff energy_fun'
+    symbol_values = 'mumean_en_coeff energy_fun'
     expression = 'mumean_en_coeff * energy_fun'
   []
 
@@ -285,8 +285,8 @@
   #The electron source term.
   [em_source]
     type = ParsedFunction
-    vars = 'ee diffpotential diffem_coeff muem_coeff N_A'
-    vals = 'ee diffpotential diffem_coeff muem_coeff N_A'
+    symbol_names = 'ee diffpotential diffem_coeff muem_coeff N_A'
+    symbol_values = 'ee diffpotential diffem_coeff muem_coeff N_A'
     expression = '((2*pi*cos(2*pi*t)*cos(pi*y))/5 - (diffem_coeff*pi^2*sin((pi*x)/2)^2)/4 -
                    diffem_coeff*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos(pi*y) -
                    sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t)) +
@@ -308,8 +308,8 @@
   #The ion source term.
   [ion_source]
     type = ParsedFunction
-    vars = 'ee diffpotential diffion muion N_A'
-    vals = 'ee diffpotential diffion muion N_A'
+    symbol_names = 'ee diffpotential diffion muion N_A'
+    symbol_values = 'ee diffpotential diffion muion N_A'
     expression = '((diffion*pi^2*(9*cos((pi*x)/2) + 40*sin(pi*y)))/40 +
                    (9*ee*muion*sin((pi*x)/2)^2)/(100*diffpotential) -
                    (ee*muion*cos((pi*x)/2)*((9*cos((pi*x)/2))/10 + sin(pi*y) + 1))/(10*diffpotential) -
@@ -318,8 +318,8 @@
   []
   [energy_source]
     type = ParsedFunction
-    vars = 'ee diffpotential diffem_coeff muem_coeff N_A'
-    vals = 'ee diffpotential diffem_coeff muem_coeff N_A'
+    symbol_names = 'ee diffpotential diffem_coeff muem_coeff N_A'
+    symbol_values = 'ee diffpotential diffem_coeff muem_coeff N_A'
     expression = '(((4*cos((pi*x)/2) + 4*sin(pi*y) + 4*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3)*(172*ee*muem_coeff*cos(2*pi*t)^2 -
                    282*ee*muem_coeff + 180*ee*muem_coeff*cos((pi*x)/2)^2 + 160*ee*muem_coeff*cos((pi*x)/2)^3 +
                    664*ee*muem_coeff*cos(pi*y)^2 - 480*ee*muem_coeff*cos(pi*y)^4 - 66*ee*muem_coeff*cos((pi*x)/2) -
@@ -375,20 +375,20 @@
 
   [em_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((3.0 + cos(pi/2*x)) / N_A)'
   []
   [ion_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((3.0 + 0.9*cos(pi/2*x)) / N_A)'
   []
   [mean_en_ICs]
     type = ParsedFunction
-    vars = 'em_ICs'
-    vals = 'em_ICs'
+    symbol_names = 'em_ICs'
+    symbol_values = 'em_ICs'
     expression = 'log(32. + cos(pi/2*x)) + em_ICs'
   []
 []

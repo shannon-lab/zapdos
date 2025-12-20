@@ -158,15 +158,15 @@
   #Ion diffusion coeff.
   [diffion]
     type = ParsedFunction
-    vars = 'diffem'
-    vals = 'diffem'
+    symbol_names = 'diffem'
+    symbol_values = 'diffem'
     expression = 'diffem'
   []
   #Ion mobility coeff.
   [muion]
     type = ParsedFunction
-    vars = 'muem'
-    vals = 'muem'
+    symbol_names = 'muem'
+    symbol_values = 'muem'
     expression = 'muem'
   []
   [N_A]
@@ -187,22 +187,22 @@
   #The manufactured electron density solution
   [em_fun]
     type = ParsedFunction
-    vars = 'l f N_A'
-    vals = 'l f N_A'
+    symbol_names = 'l f N_A'
+    symbol_values = 'l f N_A'
     expression = 'log(((sin(2.*pi*f*t) + 2.) * ((x/l)*(1. - x/l) + 1.)) / N_A)'
   []
   #The manufactured ion density solution
   [ion_fun]
     type = ParsedFunction
-    vars = 'em_fun'
-    vals = 'em_fun'
+    symbol_names = 'em_fun'
+    symbol_values = 'em_fun'
     expression = 'em_fun'
   []
   #The manufactured electron density solution
   [potential_fun]
     type = ParsedFunction
-    vars = 'l f'
-    vals = 'l f'
+    symbol_names = 'l f'
+    symbol_values = 'l f'
     expression = '-sin(2.*pi*f*t)*(x/l)^2. + (x/l)^2.'
   []
 
@@ -210,76 +210,76 @@
   #The electron source term.
   [em_source]
     type = ParsedFunction
-    vars = 'l f diffem muem N_A'
-    vals = 'l f diffem muem N_A'
+    symbol_names = 'l f diffem muem N_A'
+    symbol_values = 'l f diffem muem N_A'
     expression = '((2.*diffem*(sin(2.*pi*f*t) + 2.))/l^2. + (2.*f*pi*cos(2.*pi*f*t)*(l^2. + l*x - x^2.))/l^2. -
                    (2.*muem*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l^2. + l*x - x^2.))/l^4. -
                    (2.*muem*x*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l - 2.*x))/l^4.) / N_A'
   []
   [ion_source]
     type = ParsedFunction
-    vars = 'l f diffion muion N_A'
-    vals = 'l f diffion muion N_A'
+    symbol_names = 'l f diffion muion N_A'
+    symbol_values = 'l f diffion muion N_A'
     expression = '((2.*diffion*(sin(2.*pi*f*t) + 2.))/l^2. + (2.*f*pi*cos(2.*pi*f*t)*(l^2. + l*x - x^2.))/l^2. +
                    (2.*muion*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l^2. + l*x - x^2.))/l^4. +
                    (2.*muion*x*(sin(2.*pi*f*t) - 1.)*(sin(2.*pi*f*t) + 2.)*(l - 2.*x))/l^4.) / N_A'
   []
   [potential_source]
     type = ParsedFunction
-    vars = 'l f'
-    vals = 'l f'
+    symbol_names = 'l f'
+    symbol_values = 'l f'
     expression = 'sin(2.*pi*f*t)*(2./l^2.) - (2./l^2.)'
   []
 
   #The left BC dirichlet function
   [em_left_BC]
     type = ParsedFunction
-    vars = 'l f N_A'
-    vals = 'l f N_A'
+    symbol_names = 'l f N_A'
+    symbol_values = 'l f N_A'
     expression = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
   []
   [ion_left_BC]
     type = ParsedFunction
-    vars = 'l f N_A'
-    vals = 'l f N_A'
+    symbol_names = 'l f N_A'
+    symbol_values = 'l f N_A'
     expression = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
   []
   [potential_left_BC]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = '0.0'
   []
   #The right BC dirichlet function
   [em_right_BC]
     type = ParsedFunction
-    vars = 'l f N_A'
-    vals = 'l f N_A'
+    symbol_names = 'l f N_A'
+    symbol_values = 'l f N_A'
     expression = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
   []
   [ion_right_BC]
     type = ParsedFunction
-    vars = 'l f N_A'
-    vals = 'l f N_A'
+    symbol_names = 'l f N_A'
+    symbol_values = 'l f N_A'
     expression = 'log((sin(2.*pi*f*t) + 2.) / N_A)'
   []
   [potential_right_BC]
     type = ParsedFunction
-    vars = 'f N_A'
-    vals = 'f N_A'
+    symbol_names = 'f N_A'
+    symbol_values = 'f N_A'
     expression = '1. - sin(2.*pi*f*t)'
   []
 
   [em_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((1.) / N_A)'
   []
   [ion_ICs]
     type = ParsedFunction
-    vars = 'N_A'
-    vals = 'N_A'
+    symbol_names = 'N_A'
+    symbol_values = 'N_A'
     expression = 'log((1.) / N_A)'
   []
 []
