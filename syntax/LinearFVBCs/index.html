@@ -1,0 +1,260 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>LinearFVBCs System | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="4ed1bbfe-37de-4ade-8547-ddaacde34aad" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="07ecd6c9-0232-481f-aaec-4cd1e805946e" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="26d3127d-f41d-4585-836e-c8f2c210ff57" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="60f53ade-9b52-4c5a-ba6d-d3e231939b04"><i class="material-icons">menu</i></a><ul class="sidenav" id="60f53ade-9b52-4c5a-ba6d-d3e231939b04"><li><a href="#!" class="dropdown-trigger" data-target="1044295b-dae2-437e-851f-2847ce0cf3b8" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="2690d9c2-6def-4dc2-8d7b-41a7a3de3887" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="92cab2bc-ac99-46b3-8612-cd50c00cbded" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="4ed1bbfe-37de-4ade-8547-ddaacde34aad"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="07ecd6c9-0232-481f-aaec-4cd1e805946e"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="26d3127d-f41d-4585-836e-c8f2c210ff57"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="1044295b-dae2-437e-851f-2847ce0cf3b8"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="2690d9c2-6def-4dc2-8d7b-41a7a3de3887"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="92cab2bc-ac99-46b3-8612-cd50c00cbded"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">syntax</a><a href="." class="breadcrumb">LinearFVBCs</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="7dd6f567-51f0-487c-ac40-933c2372d7fd" data-section-level="1" data-section-text="LinearFVBCs System"><h1 id="linearfvbcs-system">LinearFVBCs System</h1><p>The difference between <code>LinearFVBCs</code> and <code>FVBCs</code> is that the boundary quantities computed by the former (boundary values, gradients, etc.) are used in routines within linear FV kernels. This is due to the fact that boundary conditions may need to be applied in different manners for different terms in the partial differential equation. This means that the <code>LinearFVBCs</code> only provide objects to specify these boundary quantities, and would not contribute to the system matrix and right hand side directly (only through kernels).</p><p>For more information on general design choices in this setting <a href="../../finite_volumes/linear_fv_design.html">click here</a></p><section class="scrollspy" id="8ce6315e-518b-456b-99fa-321141383dc7" data-section-level="2" data-section-text="LinearFVBCs block"><h2 id="linearfvbcs-block">LinearFVBCs block</h2><p>FVM boundary conditions are added to simulation input files in the <code>LinearFVBCs</code> as in the example below.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Example of the LinearFVBCs block in a MOOSE input file.</span></p><pre style="max-height:350px;"><code class="language-moose">[LinearFVBCs&lt;&lt;&lt;{&quot;href&quot;: &quot;index.html&quot;}&gt;&gt;&gt;]
+  [inflow]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC&lt;&lt;&lt;{&quot;description&quot;: &quot;Adds a dirichlet BC which can be used for the assembly of linear finite volume system and whose face values are determined using a functor. This kernel is only designed to work with advection-diffusion problems.&quot;, &quot;href&quot;: &quot;../../source/linearfvbcs/LinearFVAdvectionDiffusionFunctorDirichletBC.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this boundary condition applies to&quot;}&gt;&gt;&gt; = u
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = &quot;left&quot;
+    functor&lt;&lt;&lt;{&quot;description&quot;: &quot;The functor for this boundary condition. A functor is any of the following: a variable, a functor material property, a function, a postprocessor or a number.&quot;}&gt;&gt;&gt; = analytic_solution
+  []
+  [outflow]
+    type = LinearFVAdvectionDiffusionOutflowBC&lt;&lt;&lt;{&quot;description&quot;: &quot;Adds a boundary condition which represents a surface with outflowing material with a constant velocity. This kernel is only compatible with advection-diffusion problems.&quot;, &quot;href&quot;: &quot;../../source/linearfvbcs/LinearFVAdvectionDiffusionOutflowBC.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this boundary condition applies to&quot;}&gt;&gt;&gt; = u
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = &quot;right&quot;
+    use_two_term_expansion&lt;&lt;&lt;{&quot;description&quot;: &quot;If an approximate linear expansion should be used to compute the face value.&quot;}&gt;&gt;&gt; = false
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#4c76e85f-2550-4709-9dcf-70ecd8aa2510">(moose/test/tests/linearfvkernels/advection/advection-1d.i)</a></div></div><p>In this example input, an advection equation with Dirichlet boundary condition on the left and outflow boundary conditions on the right is solved. To understand the differences between these two boundary conditions, let&#x27;s start with the advection equation:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-e5b5ea09-705d-4888-837c-21281db75984"></span><script>var element = document.getElementById("moose-equation-e5b5ea09-705d-4888-837c-21281db75984");katex.render("  \\nabla \\cdot (\\vec{v} u) = S,", element, {displayMode:true,throwOnError:false});</script></span></p><p>with <span class="moose-katex-inline-equation" id="moose-equation-1804e502-bc69-4e5e-96b5-aaa5ddb19bb0"><script>var element = document.getElementById("moose-equation-1804e502-bc69-4e5e-96b5-aaa5ddb19bb0");katex.render("\\vec{v}", element, {displayMode:false,throwOnError:false});</script></span> denoting the velocity vector, <span class="moose-katex-inline-equation" id="moose-equation-db3675c0-fb67-4052-9d09-db7405bec0de"><script>var element = document.getElementById("moose-equation-db3675c0-fb67-4052-9d09-db7405bec0de");katex.render("u", element, {displayMode:false,throwOnError:false});</script></span> the solution, and <span class="moose-katex-inline-equation" id="moose-equation-a24b75bd-f8b2-4891-8cd6-45b8da2b4a80"><script>var element = document.getElementById("moose-equation-a24b75bd-f8b2-4891-8cd6-45b8da2b4a80");katex.render("S", element, {displayMode:false,throwOnError:false});</script></span> a potentially space-dependent source term. The boundary condition on the left can be expressed as:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-4c567274-c17e-474e-a26c-f824bc535b9e"></span><script>var element = document.getElementById("moose-equation-4c567274-c17e-474e-a26c-f824bc535b9e");katex.render("  u_b = f(x_b),", element, {displayMode:true,throwOnError:false});</script></span></p><p>while the outflow boundary expresses outward advection with the solution value on the boundary and a predefined velocity.</p><p>Both boundary conditions can be applied in an integral sense through the discretized advection term on the cell adjacent to the boundary:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-9f53cd07-81e3-439b-9386-8fa45b03261a"></span><script>var element = document.getElementById("moose-equation-9f53cd07-81e3-439b-9386-8fa45b03261a");katex.render("  \\int\\limits_{V_b} \\nabla \\cdot (\\vec{v} u) dV \\approx \\left(\\sum\\limits_i \\vec{n}_i   \\cdot \\vec{v}_i u_i|S_i|\\right) + \\vec{n}_b \\cdot \\vec{v}_b u_b |S_b|~,", element, {displayMode:true,throwOnError:false});</script></span></p><p>where the <span class="moose-katex-inline-equation" id="moose-equation-dabd50af-fe2a-4bf8-8f4c-107d95f9d15c"><script>var element = document.getElementById("moose-equation-dabd50af-fe2a-4bf8-8f4c-107d95f9d15c");katex.render("i", element, {displayMode:false,throwOnError:false});</script></span> index denotes internal faces of the cell, while <span class="moose-katex-inline-equation" id="moose-equation-8ee4ae57-030a-4802-a58c-5c14be7994f0"><script>var element = document.getElementById("moose-equation-8ee4ae57-030a-4802-a58c-5c14be7994f0");katex.render("b", element, {displayMode:false,throwOnError:false});</script></span> denotes the only face on the boundary. This means that the only thing we need to supply to this formula is a way to compute the contributions to the system matrix and right hand side from the boundary value <span class="moose-katex-inline-equation" id="moose-equation-11d17801-1f47-4db4-8c77-fb97b9fca2d9"><script>var element = document.getElementById("moose-equation-11d17801-1f47-4db4-8c77-fb97b9fca2d9");katex.render("u_b", element, {displayMode:false,throwOnError:false});</script></span>. For example for the Dirichlet boundary <span class="moose-katex-inline-equation" id="moose-equation-53b7e725-cd31-4d23-9e56-574874d534ba"><script>var element = document.getElementById("moose-equation-53b7e725-cd31-4d23-9e56-574874d534ba");katex.render("u_b = f(x)", element, {displayMode:false,throwOnError:false});</script></span>, while for the outflow boundary it can be either the cell centroid value (<span class="moose-katex-inline-equation" id="moose-equation-86c64be7-eb79-4a50-beb7-7182ad72c27e"><script>var element = document.getElementById("moose-equation-86c64be7-eb79-4a50-beb7-7182ad72c27e");katex.render("u_b = u_C", element, {displayMode:false,throwOnError:false});</script></span>) or an extrapolated value. This also means that the Dirichlet boundary contributes to the right hand side of the system only, whereas the outflow boundary condition can contribute to both.</p></section><section class="scrollspy" id="6f265da3-f1a9-41e1-82fe-4552cd6ff461" data-section-level="2" data-section-text="Functions to override :"><h2 id="functions-to-override">Functions to override:</h2><p>Different linear finite volume kernels might use the quantities provided by these boundary conditions differently, but these APIs should be implemented for boundary conditions of linear systems:</p><ul class="browser-default"><li><p><code>computeBoundaryValue</code> computes the boundary value of the field. </p></li><li><p><code>computeBoundaryNormalGradient</code> computes the normal gradient of the variable on this boundary.</p></li></ul><p>For derived classes of linear system boundary conditions, we recommend following the same design pattern as the <code>LinearAdvectionDiffusionBC</code> parent class. For all boundary conditions (Neumann and Dirichlet) for an advection-diffusion problem, we implemented the following four APIs:</p><ul class="browser-default"><li><p><code>computeBoundaryValueMatrixContribution</code> computes the matrix contribution that would come from the boundary value of the field, extensively used within advection kernels. For example, on an outflow boundary in an advection problem, without using linear extrapolation, one can use the cell value as an approximation for the boundary value: <span class="moose-katex-inline-equation" id="moose-equation-b0db9cf7-3d1f-4f89-b5bd-fbf8a77331cf"><script>var element = document.getElementById("moose-equation-b0db9cf7-3d1f-4f89-b5bd-fbf8a77331cf");katex.render("u_b = u_C", element, {displayMode:false,throwOnError:false});</script></span>. In this case, we can treat the outflow term implicitly by adding a <span class="moose-katex-inline-equation" id="moose-equation-6bfb8738-2294-40b3-91f4-f667070b0d36"><script>var element = document.getElementById("moose-equation-6bfb8738-2294-40b3-91f4-f667070b0d36");katex.render("\\vec{v} \\cdot \\vec{n} |S_b|", element, {displayMode:false,throwOnError:false});</script></span> term to the matrix which comes from <span class="moose-katex-inline-equation" id="moose-equation-459c14f4-8dac-4e3d-98b5-e751470431c9"><script>var element = document.getElementById("moose-equation-459c14f4-8dac-4e3d-98b5-e751470431c9");katex.render("\\vec{v} \\cdot \\vec{n} u_C |S_b|", element, {displayMode:false,throwOnError:false});</script></span> outward flux term. This function will return <span class="moose-katex-inline-equation" id="moose-equation-885fe35a-015f-4176-954b-c8964468d4e7"><script>var element = document.getElementById("moose-equation-885fe35a-015f-4176-954b-c8964468d4e7");katex.render("1", element, {displayMode:false,throwOnError:false});</script></span> (as it is just the cell value) and the <span class="moose-katex-inline-equation" id="moose-equation-ef5b7cd8-5a13-4b5a-aca5-70dbe966e5fb"><script>var element = document.getElementById("moose-equation-ef5b7cd8-5a13-4b5a-aca5-70dbe966e5fb");katex.render("\\vec{v} \\cdot \\vec{n} |S_b|", element, {displayMode:false,throwOnError:false});</script></span> multipliers are added in the advection kernel. </p></li><li><p><code>computeBoundaryValueRHSContribution</code> computes the right hand side contributions for terms that need the boundary value of the field, extensively used within advection kernels. Using the same example as above, by employing an extrapolation to the boundary face to determine the boundary value, we get the following expression: <span class="moose-katex-inline-equation" id="moose-equation-adb1a106-a709-48f9-a9a3-f39b26b371e9"><script>var element = document.getElementById("moose-equation-adb1a106-a709-48f9-a9a3-f39b26b371e9");katex.render("u_b = u_C+\\nabla u_C d_{Cf}", element, {displayMode:false,throwOnError:false});</script></span>, where <span class="moose-katex-inline-equation" id="moose-equation-d8e9eb8e-3d1b-4fee-8297-2cfde6792349"><script>var element = document.getElementById("moose-equation-d8e9eb8e-3d1b-4fee-8297-2cfde6792349");katex.render("d_{Cf}", element, {displayMode:false,throwOnError:false});</script></span> is the vector pointing to the face center from the cell center. In this case, besides the same matrix contribution as above, we need to add the following term to the right hand side: <span class="moose-katex-inline-equation" id="moose-equation-8c3fce8a-41d3-49c8-ae4a-185739a0bd35"><script>var element = document.getElementById("moose-equation-8c3fce8a-41d3-49c8-ae4a-185739a0bd35");katex.render("\\vec{v} \\cdot \\vec{n} \\nabla u_C d_{Cf} |S_b|", element, {displayMode:false,throwOnError:false});</script></span>. Therefore, this function returns <span class="moose-katex-inline-equation" id="moose-equation-d3fdce78-5e15-4f93-ba06-11d13b387b0d"><script>var element = document.getElementById("moose-equation-d3fdce78-5e15-4f93-ba06-11d13b387b0d");katex.render("\\nabla u_C d_{Cf}", element, {displayMode:false,throwOnError:false});</script></span> (as it is just the value contribution) and the other multipliers are added in the advection kernel. </p></li><li><p><code>computeBoundaryGradientMatrixContribution</code> computes the matrix contributions for terms that need the boundary gradient of the field, extensively used within diffusion kernels. Let us take a Dirichlet boundary condition and a diffusion kernel for example. The integral form of the diffusion term requires the computation of the surface normal gradient which can be approximated on an orthogonal grid as: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-df0296d1-a58f-40fd-ba11-bc7092b56956"></span><script>var element = document.getElementById("moose-equation-df0296d1-a58f-40fd-ba11-bc7092b56956");katex.render("  -\\int\\limits_{S_f}D\\nabla u \\vec{n}dS  \\approx -D\\frac{u_b - u_C}{|d_Cf|}|S_f|,", element, {displayMode:true,throwOnError:false});</script></span> which means that the term including <span class="moose-katex-inline-equation" id="moose-equation-4bbf96a7-385e-4dd5-8579-7a5bc90e55f3"><script>var element = document.getElementById("moose-equation-4bbf96a7-385e-4dd5-8579-7a5bc90e55f3");katex.render("u_C", element, {displayMode:false,throwOnError:false});</script></span> can go to the matrix of coefficients. Therefore, this function will return <span class="moose-katex-inline-equation" id="moose-equation-a4f9adca-d5fd-42d2-9141-ba21d8deaba1"><script>var element = document.getElementById("moose-equation-a4f9adca-d5fd-42d2-9141-ba21d8deaba1");katex.render("\\frac{1}{|d_Cf|}", element, {displayMode:false,throwOnError:false});</script></span> with additional multipliers added at the kernel level. </p></li><li><p><code>computeBoundaryGradientRHSContribution</code> computes the right hand side contributions for terms that need the boundary gradient of the field, extensively used within diffusion kernels. Using the same example as above, the remaining part of the expression belongs to the right hand side meaning that a <span class="moose-katex-inline-equation" id="moose-equation-2cc0973f-6275-4d52-80a2-22e79acddebf"><script>var element = document.getElementById("moose-equation-2cc0973f-6275-4d52-80a2-22e79acddebf");katex.render("\\frac{u_b}{|d_Cf|}", element, {displayMode:false,throwOnError:false});</script></span> term will be added with additional multipliers applied at the kernel level.</p></li></ul></section><section class="scrollspy" id="845a5c62-fb90-4a66-bc0d-f12d6040220a" data-section-level="2" data-section-text="LinearFVBCs source code : LinearFVAdvectionDiffusionFunctorDirichletBC"><h2 id="linearfvbcs-source-code-linearfvadvectiondiffusionfunctordirichletbc">LinearFVBCs source code: LinearFVAdvectionDiffusionFunctorDirichletBC</h2><p><code>LinearFVAdvectionDiffusionFunctorDirichletBC</code> object assigns a value on a boundary. This value is computed using a MOOSE functor. For more information on the functor system in MOOSE, see <a href="../Functors/index.html">Functor system</a>.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-text">Example source code for <code>LinearFVAdvectionDiffusionFunctorDirichletBC</code>.</span></p><pre style="max-height:350px;"><code class="language-cpp">#include &quot;LinearFVAdvectionDiffusionFunctorDirichletBC.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, LinearFVAdvectionDiffusionFunctorDirichletBC);
+
+InputParameters
+LinearFVAdvectionDiffusionFunctorDirichletBC::validParams()
+{
+  InputParameters params = LinearFVAdvectionDiffusionBC::validParams();
+  params.addClassDescription(
+      &quot;Adds a dirichlet BC which can be used for the assembly of linear &quot;
+      &quot;finite volume system and whose face values are determined using a functor. This kernel is &quot;
+      &quot;only designed to work with advection-diffusion problems.&quot;);
+  params.addRequiredParam&lt;MooseFunctorName&gt;(&quot;functor&quot;, &quot;The functor for this boundary condition.&quot;);
+  return params;
+}
+
+LinearFVAdvectionDiffusionFunctorDirichletBC::LinearFVAdvectionDiffusionFunctorDirichletBC(
+    const InputParameters &amp; parameters)
+  : LinearFVAdvectionDiffusionBC(parameters), _functor(getFunctor&lt;Real&gt;(&quot;functor&quot;))
+{
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryValue() const
+{
+  return _functor(singleSidedFaceArg(_current_face_info), determineState());
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryNormalGradient() const
+{
+  const auto elem_arg = makeElemArg(_current_face_type == FaceInfo::VarFaceNeighbors::ELEM
+                                        ? _current_face_info-&gt;elemPtr()
+                                        : _current_face_info-&gt;neighborPtr());
+  const Real distance = computeCellToFaceDistance();
+  return (_functor(singleSidedFaceArg(_current_face_info), determineState()) -
+          raw_value(_var(elem_arg, determineState()))) /
+         distance;
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryValueMatrixContribution() const
+{
+  // Ths will not contribute to the matrix from the value considering that
+  // the value is independent of the solution.
+  return 0.0;
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryValueRHSContribution() const
+{
+  // Fetch the boundary value from the provided functor.
+  return _functor(singleSidedFaceArg(_current_face_info), determineState());
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryGradientMatrixContribution() const
+{
+  // The implicit term from the central difference approximation of the normal
+  // gradient.
+  return 1.0 / computeCellToFaceDistance();
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryGradientRHSContribution() const
+{
+  // The boundary term from the central difference approximation of the
+  // normal gradient.
+  return _functor(singleSidedFaceArg(_current_face_info), determineState()) /
+         computeCellToFaceDistance();
+}
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#4b34659a-284b-47be-95a5-fae9aed4d876">(moose/framework/src/linearfvbcs/LinearFVAdvectionDiffusionFunctorDirichletBC.C)</a></div></div></section><section class="scrollspy" id="978dba1a-9cd2-43dc-a3e9-b04c0a0686d6" data-section-level="2" data-section-text="Available Objects"><h2 id="available-objects">Available Objects</h2><ul class="moose-syntax-list collection with-header"><li class="collection-header">Moose App</li><li class="collection-item"><a href="../../source/linearfvbcs/LinearFVAdvectionDiffusionExtrapolatedBC.html">LinearFVAdvectionDiffusionExtrapolatedBC</a>Adds a boundary condition which calculates the face values and face gradients assuming one or two term expansions from the cell centroid. This kernel is only compatible with advection-diffusion problems.</li><li class="collection-item"><a href="../../source/linearfvbcs/LinearFVAdvectionDiffusionFunctorDirichletBC.html">LinearFVAdvectionDiffusionFunctorDirichletBC</a>Adds a dirichlet BC which can be used for the assembly of linear finite volume system and whose face values are determined using a functor. This kernel is only designed to work with advection-diffusion problems.</li><li class="collection-item"><a href="../../source/linearfvbcs/LinearFVAdvectionDiffusionFunctorNeumannBC.html">LinearFVAdvectionDiffusionFunctorNeumannBC</a>Adds a fixed diffusive flux BC which can be used for the assembly of linear finite volume system and whose normal face gradient values are determined using a functor. This kernel is only designed to work with advection-diffusion problems.</li><li class="collection-item"><a href="../../source/linearfvbcs/LinearFVAdvectionDiffusionFunctorRobinBC.html">LinearFVAdvectionDiffusionFunctorRobinBC</a>Adds a Robin BC of the form \alpha * \nabla \phi*n + \beta * \phi = \gamma, which can be used for the assembly of linear finite volume system and whose face values are determined using three functors. This kernel is only designed to work with advection-diffusion problems.</li><li class="collection-item"><a href="../../source/linearfvbcs/LinearFVAdvectionDiffusionOutflowBC.html">LinearFVAdvectionDiffusionOutflowBC</a>Adds a boundary condition which represents a surface with outflowing material with a constant velocity. This kernel is only compatible with advection-diffusion problems.</li><li class="collection-item"><a href="../../source/linearfvbcs/LinearFVAdvectionDiffusionScalarSymmetryBC.html">LinearFVAdvectionDiffusionScalarSymmetryBC</a>Adds a symmetry boundary condition for a scalar quantity.</li></ul></section></section><div class="moose-modal modal" id="4c76e85f-2550-4709-9dcf-70ecd8aa2510"><div class="modal-content"><h4>(moose/test/tests/linearfvkernels/advection/advection-1d.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [gmg]
+    type = GeneratedMeshGenerator
+    dim = 1
+    nx = 2
+  []
+[]
+
+[Problem]
+  linear_sys_names = &#x27;u_sys&#x27;
+[]
+
+[Variables]
+  [u]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 1.0
+  []
+[]
+
+[LinearFVKernels]
+  [advection]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &quot;0.5 0 0&quot;
+    advected_interp_method = upwind
+  []
+  [source]
+    type = LinearFVSource
+    variable = u
+    source_density = source_func
+  []
+[]
+
+[LinearFVBCs]
+  [inflow]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = &quot;left&quot;
+    functor = analytic_solution
+  []
+  [outflow]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = u
+    boundary = &quot;right&quot;
+    use_two_term_expansion = false
+  []
+[]
+
+[Functions]
+  [source_func]
+    type = ParsedFunction
+    expression = &#x27;0.5*x&#x27;
+  []
+  [analytic_solution]
+    type = ParsedFunction
+    expression = &#x27;0.5+0.5*x*x&#x27;
+  []
+[]
+
+[Postprocessors]
+  [error]
+    type = ElementL2FunctorError
+    approximate = u
+    exact = analytic_solution
+    execute_on = FINAL
+  []
+  [h]
+    type = AverageElementSize
+    execute_on = FINAL
+  []
+[]
+
+[Convergence]
+  [linear]
+    type = IterationCountConvergence
+    max_iterations = 1
+    converge_at_max_iterations = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  system_names = u_sys
+  l_tol = 1e-10
+  multi_system_fixed_point=true
+  multi_system_fixed_point_convergence=linear
+[]
+
+[Outputs]
+  [csv]
+    type = CSV
+    execute_on = FINAL
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="4b34659a-284b-47be-95a5-fae9aed4d876"><div class="modal-content"><h4>(moose/framework/src/linearfvbcs/LinearFVAdvectionDiffusionFunctorDirichletBC.C)</h4><pre style="max-height:350px;"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;LinearFVAdvectionDiffusionFunctorDirichletBC.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, LinearFVAdvectionDiffusionFunctorDirichletBC);
+
+InputParameters
+LinearFVAdvectionDiffusionFunctorDirichletBC::validParams()
+{
+  InputParameters params = LinearFVAdvectionDiffusionBC::validParams();
+  params.addClassDescription(
+      &quot;Adds a dirichlet BC which can be used for the assembly of linear &quot;
+      &quot;finite volume system and whose face values are determined using a functor. This kernel is &quot;
+      &quot;only designed to work with advection-diffusion problems.&quot;);
+  params.addRequiredParam&lt;MooseFunctorName&gt;(&quot;functor&quot;, &quot;The functor for this boundary condition.&quot;);
+  return params;
+}
+
+LinearFVAdvectionDiffusionFunctorDirichletBC::LinearFVAdvectionDiffusionFunctorDirichletBC(
+    const InputParameters &amp; parameters)
+  : LinearFVAdvectionDiffusionBC(parameters), _functor(getFunctor&lt;Real&gt;(&quot;functor&quot;))
+{
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryValue() const
+{
+  return _functor(singleSidedFaceArg(_current_face_info), determineState());
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryNormalGradient() const
+{
+  const auto elem_arg = makeElemArg(_current_face_type == FaceInfo::VarFaceNeighbors::ELEM
+                                        ? _current_face_info-&gt;elemPtr()
+                                        : _current_face_info-&gt;neighborPtr());
+  const Real distance = computeCellToFaceDistance();
+  return (_functor(singleSidedFaceArg(_current_face_info), determineState()) -
+          raw_value(_var(elem_arg, determineState()))) /
+         distance;
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryValueMatrixContribution() const
+{
+  // Ths will not contribute to the matrix from the value considering that
+  // the value is independent of the solution.
+  return 0.0;
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryValueRHSContribution() const
+{
+  // Fetch the boundary value from the provided functor.
+  return _functor(singleSidedFaceArg(_current_face_info), determineState());
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryGradientMatrixContribution() const
+{
+  // The implicit term from the central difference approximation of the normal
+  // gradient.
+  return 1.0 / computeCellToFaceDistance();
+}
+
+Real
+LinearFVAdvectionDiffusionFunctorDirichletBC::computeBoundaryGradientRHSContribution() const
+{
+  // The boundary term from the central difference approximation of the
+  // normal gradient.
+  return _functor(singleSidedFaceArg(_current_face_info), determineState()) /
+         computeCellToFaceDistance();
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#8ce6315e-518b-456b-99fa-321141383dc7" class="tooltipped" data-position="left" data-tooltip="LinearFVBCs block">LinearFVBCs block</a></li><li><a href="#6f265da3-f1a9-41e1-82fe-4552cd6ff461" class="tooltipped" data-position="left" data-tooltip="Functions to override :">Functions to override :</a></li><li><a href="#845a5c62-fb90-4a66-bc0d-f12d6040220a" class="tooltipped" data-position="left" data-tooltip="LinearFVBCs source code : LinearFVAdvectionDiffusionFunctorDirichletBC">LinearFVBCs source code : LinearFVAdvectionDiffusionFunctorDirichletBC</a></li><li><a href="#978dba1a-9cd2-43dc-a3e9-b04c0a0686d6" class="tooltipped" data-position="left" data-tooltip="Available Objects">Available Objects</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
