@@ -1,0 +1,196 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Transient Heat Transfer Mixed Form | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="cf0db47f-dad5-4593-89b2-53af8be2314d" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="db49f41c-6f58-40d2-a448-c31b8e98367a" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="27ab7202-edeb-4ee1-ab3b-30e38c1b07d0" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="412e6bd2-8ca8-451d-9079-e22efb6f52f3"><i class="material-icons">menu</i></a><ul class="sidenav" id="412e6bd2-8ca8-451d-9079-e22efb6f52f3"><li><a href="#!" class="dropdown-trigger" data-target="5dc3372e-2162-40f1-9ad2-b74ebfb55e02" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="4fa1775b-a58a-4a7b-92a8-a8e66fb8e36a" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d03c1fe8-ec84-472f-9a14-3af0ae89d5b4" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="cf0db47f-dad5-4593-89b2-53af8be2314d"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="db49f41c-6f58-40d2-a448-c31b8e98367a"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="27ab7202-edeb-4ee1-ab3b-30e38c1b07d0"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="5dc3372e-2162-40f1-9ad2-b74ebfb55e02"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="4fa1775b-a58a-4a7b-92a8-a8e66fb8e36a"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="d03c1fe8-ec84-472f-9a14-3af0ae89d5b4"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">syntax</a><a href="." class="breadcrumb">MFEM</a><a href="#" class="breadcrumb">MixedHeatTransfer</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="a21079fd-8d11-4d3b-ae7f-974f667821d1" data-section-level="1" data-section-text="Transient Heat Transfer ( Mixed Form )"><h1 id="transient-heat-transfer-mixed-form">Transient Heat Transfer (Mixed Form)</h1><section class="scrollspy" id="5d2399e7-6011-496f-a82c-0cdf450aa8b4" data-section-level="2" data-section-text="Summary"><h2 id="summary">Summary</h2><p>Solves a transient heat conduction problem using a mixed weak form, representing temperature on piecewise constant <span class="moose-katex-inline-equation" id="moose-equation-4f3f0576-886e-4057-9455-fb35a9d02b18"><script>var element = document.getElementById("moose-equation-4f3f0576-886e-4057-9455-fb35a9d02b18");katex.render("L^2", element, {displayMode:false,throwOnError:false});</script></span> conforming finite elements, and heat fluxes on <span class="moose-katex-inline-equation" id="moose-equation-dd872f6f-e136-44d6-895f-d167e509bb86"><script>var element = document.getElementById("moose-equation-dd872f6f-e136-44d6-895f-d167e509bb86");katex.render("H(\\mathrm{div})", element, {displayMode:false,throwOnError:false});</script></span> conforming Raviart-Thomas elements.</p></section><section class="scrollspy" id="557934fe-02c5-44c3-95e2-09ccc45ef636" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>This problem solves the transient heat equation with strong form:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-fae23ffb-6464-4695-8040-cd4e1cdc922a"></span><script>var element = document.getElementById("moose-equation-fae23ffb-6464-4695-8040-cd4e1cdc922a");katex.render("\\begin{split} \\rho c_p \\frac{\\partial T}{\\partial t} - \\vec \\nabla \\cdot \\left(k\\vec\\nabla T\\right) = 0 \\,\\,\\,&\\mathrm{on}\\,\\, \\Omega \\\\ k \\vec \\nabla T \\cdot \\hat n = 0 \\,\\,\\, &\\mathrm{on}\\,\\, \\Gamma_\\mathrm{h} \\\\ T = T_0 \\,\\,\\, &\\mathrm{on}\\,\\, \\Gamma_\\mathrm{T} \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-8de921f3-0c9e-429f-a621-219821e5fc8d"><script>var element = document.getElementById("moose-equation-8de921f3-0c9e-429f-a621-219821e5fc8d");katex.render("\\rho c_p = 1.0", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-ae2528bf-97bb-4505-9b04-3a7ddd26e710"><script>var element = document.getElementById("moose-equation-ae2528bf-97bb-4505-9b04-3a7ddd26e710");katex.render("k^{-1} = 1.0", element, {displayMode:false,throwOnError:false});</script></span>, subject to the initial condition <span class="moose-katex-inline-equation" id="moose-equation-701f3c9c-c863-4fd1-b8ce-76ea7cc16d80"><script>var element = document.getElementById("moose-equation-701f3c9c-c863-4fd1-b8ce-76ea7cc16d80");katex.render("T(t=0)=0.0", element, {displayMode:false,throwOnError:false});</script></span>.</p><p>In this example, we solve this by introducing the heat flux <span class="moose-katex-inline-equation" id="moose-equation-50578c60-2616-4b03-a06d-5075f75c51f3"><script>var element = document.getElementById("moose-equation-50578c60-2616-4b03-a06d-5075f75c51f3");katex.render("\\vec h = -k \\vec \\nabla T", element, {displayMode:false,throwOnError:false});</script></span> to generate the mixed weak form of the transient heat equation</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-8e92ca5f-231b-491d-97b7-668253c2e2a5"></span><script>var element = document.getElementById("moose-equation-8e92ca5f-231b-491d-97b7-668253c2e2a5");katex.render("\\begin{split} \\left(\\rho c_p \\frac{\\partial T}{\\partial t}, T'\\right)_\\Omega + \\left(\\vec \\nabla \\cdot \\vec h, T'\\right)_\\Omega = 0 \\,\\,\\, \\forall T' \\in V_T \\\\ \\left(k^{-1} \\vec h, \\vec h'\\right)_\\Omega - (T, \\vec \\nabla \\cdot \\vec h')_\\Omega = (T , \\vec h' \\cdot \\hat n)_{\\partial \\Omega} \\,\\,\\, \\forall \\vec h' \\in V_h \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-3bcd83c3-9df2-4a57-98ee-a187e6fd3e99"></span><script>var element = document.getElementById("moose-equation-3bcd83c3-9df2-4a57-98ee-a187e6fd3e99");katex.render("\\begin{split} T, T' &\\in L_2(\\Omega)\\\\ \\vec h, \\vec h' &\\in H(\\mathrm{div})(\\Omega) : \\vec h \\cdot \\hat n = 0 \\,\\,\\, \\mathrm{on}\\,\\, \\Gamma_\\mathrm{h} \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p><p>and the polynomial order of the FEs used to represent <span class="moose-katex-inline-equation" id="moose-equation-004f77b3-3afa-4f06-9d78-5ec2e4a43f1d"><script>var element = document.getElementById("moose-equation-004f77b3-3afa-4f06-9d78-5ec2e4a43f1d");katex.render("\\vec h", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-5bb00f28-94ef-4cb2-ad8f-8b4c42d1aad6"><script>var element = document.getElementById("moose-equation-5bb00f28-94ef-4cb2-ad8f-8b4c42d1aad6");katex.render("\\vec h'", element, {displayMode:false,throwOnError:false});</script></span> is one order higher than <span class="moose-katex-inline-equation" id="moose-equation-001096b0-5b74-4be0-845b-f694a17a186c"><script>var element = document.getElementById("moose-equation-001096b0-5b74-4be0-845b-f694a17a186c");katex.render("T", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-cc0560a0-9a57-4273-aeb8-24305097aa5f"><script>var element = document.getElementById("moose-equation-cc0560a0-9a57-4273-aeb8-24305097aa5f");katex.render("T'", element, {displayMode:false,throwOnError:false});</script></span>.</p><p>Notably, in contrast to the primal weak form for the transient heat equation solved <a href="HeatTransfer.html">here</a>, the heat flux on <span class="moose-katex-inline-equation" id="moose-equation-724a171a-0227-4bfb-945b-de3a981121b6"><script>var element = document.getElementById("moose-equation-724a171a-0227-4bfb-945b-de3a981121b6");katex.render("\\Gamma_\\mathrm{h}", element, {displayMode:false,throwOnError:false});</script></span> is strongly imposed via a Dirichlet condition, and temperatures on boundaries <span class="moose-katex-inline-equation" id="moose-equation-0670b9bc-d6f5-41ef-910a-9d48bb6b9653"><script>var element = document.getElementById("moose-equation-0670b9bc-d6f5-41ef-910a-9d48bb6b9653");katex.render("\\Gamma_\\mathrm{T}", element, {displayMode:false,throwOnError:false});</script></span> are imposed weakly via boundary integrals.</p></section><section class="scrollspy" id="4c298c3b-6d66-4913-8aa9-e181cd688e33" data-section-level="2" data-section-text="Example File"><h2 id="example-file">Example File</h2><pre style="max-height:350px;"><code class="language-moose">[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../Mesh/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMMesh
+  file = ../mesh/square.e
+[]
+
+[Problem&lt;&lt;&lt;{&quot;href&quot;: &quot;../Problem/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMProblem
+[]
+
+[FESpaces]
+  [HDivFESpace]
+    type = MFEMVectorFESpace
+    fec_type = RT
+    fec_order = FIRST
+  []
+  [L2FESpace]
+    type = MFEMScalarFESpace
+    fec_type = L2
+    fec_order = CONSTANT
+  []
+[]
+
+[Variables&lt;&lt;&lt;{&quot;href&quot;: &quot;../Variables/index.html&quot;}&gt;&gt;&gt;]
+  [time_integrated_heat_flux]
+    type = MFEMVariable
+    fespace = HDivFESpace
+    time_derivative = heat_flux
+  []
+  [temperature]
+    type = MFEMVariable
+    fespace = L2FESpace
+  []
+[]
+
+[Kernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../Kernels/index.html&quot;}&gt;&gt;&gt;]
+  [dT_dt,T&#x27;]
+    type = MFEMTimeDerivativeMassKernel
+    variable = temperature
+  []
+  [divh,T&#x27;]
+    type = MFEMVectorFEDivergenceKernel
+    trial_variable = heat_flux
+    variable = temperature
+  []
+  [h,h&#x27;]
+    type = MFEMTimeDerivativeVectorFEMassKernel
+    variable = time_integrated_heat_flux
+  []
+  [-T,div.h&#x27;]
+    type = MFEMVectorFEDivergenceKernel
+    trial_variable = temperature
+    variable = time_integrated_heat_flux
+    coefficient = -1.0
+    transpose = true
+  []
+[]
+
+[BCs&lt;&lt;&lt;{&quot;href&quot;: &quot;../BCs/index.html&quot;}&gt;&gt;&gt;]
+  [right]
+    type = MFEMVectorFEBoundaryFluxIntegratedBC
+    variable = time_integrated_heat_flux
+    coefficient = 0.0
+    boundary = 2
+  []
+  [left]
+    type = MFEMVectorFEBoundaryFluxIntegratedBC
+    variable = time_integrated_heat_flux
+    coefficient = -1.0
+    boundary = 4
+  []
+  [topbottom]
+    type = MFEMVectorDirichletBC
+    variable = time_integrated_heat_flux
+    vector_coefficient = &#x27;0.0 0.0&#x27;
+    boundary = &#x27;1 3&#x27;
+  []
+[]
+
+[Solver]
+  type = MFEMSuperLU
+[]
+
+[Executioner&lt;&lt;&lt;{&quot;href&quot;: &quot;../Executioner/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMTransient
+  device = cpu
+  assembly_level = legacy
+  dt = 0.03
+  start_time = 0.0
+  end_time = 0.09
+[]
+
+[Outputs&lt;&lt;&lt;{&quot;href&quot;: &quot;../Outputs/index.html&quot;}&gt;&gt;&gt;]
+  [ParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/MixedHeatTransfer
+    vtk_format = ASCII
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#b4fed384-57e9-43a6-bc66-8f6f1ac791a7">(moose/test/tests/mfem/kernels/mixed_heattransfer.i)</a></section></section><div class="moose-modal modal" id="b4fed384-57e9-43a6-bc66-8f6f1ac791a7"><div class="modal-content"><h4>(moose/test/tests/mfem/kernels/mixed_heattransfer.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  type = MFEMMesh
+  file = ../mesh/square.e
+[]
+
+[Problem]
+  type = MFEMProblem
+[]
+
+[FESpaces]
+  [HDivFESpace]
+    type = MFEMVectorFESpace
+    fec_type = RT
+    fec_order = FIRST
+  []
+  [L2FESpace]
+    type = MFEMScalarFESpace
+    fec_type = L2
+    fec_order = CONSTANT
+  []
+[]
+
+[Variables]
+  [time_integrated_heat_flux]
+    type = MFEMVariable
+    fespace = HDivFESpace
+    time_derivative = heat_flux
+  []
+  [temperature]
+    type = MFEMVariable
+    fespace = L2FESpace
+  []
+[]
+
+[Kernels]
+  [dT_dt,T&#x27;]
+    type = MFEMTimeDerivativeMassKernel
+    variable = temperature
+  []
+  [divh,T&#x27;]
+    type = MFEMVectorFEDivergenceKernel
+    trial_variable = heat_flux
+    variable = temperature
+  []
+  [h,h&#x27;]
+    type = MFEMTimeDerivativeVectorFEMassKernel
+    variable = time_integrated_heat_flux
+  []
+  [-T,div.h&#x27;]
+    type = MFEMVectorFEDivergenceKernel
+    trial_variable = temperature
+    variable = time_integrated_heat_flux
+    coefficient = -1.0
+    transpose = true
+  []
+[]
+
+[BCs]
+  [right]
+    type = MFEMVectorFEBoundaryFluxIntegratedBC
+    variable = time_integrated_heat_flux
+    coefficient = 0.0
+    boundary = 2
+  []
+  [left]
+    type = MFEMVectorFEBoundaryFluxIntegratedBC
+    variable = time_integrated_heat_flux
+    coefficient = -1.0
+    boundary = 4
+  []
+  [topbottom]
+    type = MFEMVectorDirichletBC
+    variable = time_integrated_heat_flux
+    vector_coefficient = &#x27;0.0 0.0&#x27;
+    boundary = &#x27;1 3&#x27;
+  []
+[]
+
+[Solver]
+  type = MFEMSuperLU
+[]
+
+[Executioner]
+  type = MFEMTransient
+  device = cpu
+  assembly_level = legacy
+  dt = 0.03
+  start_time = 0.0
+  end_time = 0.09
+[]
+
+[Outputs]
+  [ParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/MixedHeatTransfer
+    vtk_format = ASCII
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#5d2399e7-6011-496f-a82c-0cdf450aa8b4" class="tooltipped" data-position="left" data-tooltip="Summary">Summary</a></li><li><a href="#557934fe-02c5-44c3-95e2-09ccc45ef636" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#4c298c3b-6d66-4913-8aa9-e181cd688e33" class="tooltipped" data-position="left" data-tooltip="Example File">Example File</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

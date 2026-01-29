@@ -1,0 +1,428 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Constructive Solid Geometry | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="51debc19-4c49-4b7d-87d5-36c7cc29a300" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="1973aec6-c11c-463b-be74-3a23118d27aa" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="3bbc9070-d87a-497e-a88b-34fdba9f8758" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="ff36ce16-7d09-4a73-8c31-4fe6183d4f82"><i class="material-icons">menu</i></a><ul class="sidenav" id="ff36ce16-7d09-4a73-8c31-4fe6183d4f82"><li><a href="#!" class="dropdown-trigger" data-target="22904c87-7cec-4ccb-901c-ac9af968b104" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="41a05c0b-31b1-474e-b0b9-7412ec177ebe" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="e4285b84-3c16-483d-b237-3133a1bedc27" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="51debc19-4c49-4b7d-87d5-36c7cc29a300"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="1973aec6-c11c-463b-be74-3a23118d27aa"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="3bbc9070-d87a-497e-a88b-34fdba9f8758"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="22904c87-7cec-4ccb-901c-ac9af968b104"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="41a05c0b-31b1-474e-b0b9-7412ec177ebe"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="e4285b84-3c16-483d-b237-3133a1bedc27"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">syntax</a><a href="." class="breadcrumb">CSG</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="129e5b16-a2a7-4964-b3d9-928302c4b254" data-section-level="1" data-section-text="Constructive Solid Geometry"><h1 id="constructive-solid-geometry">Constructive Solid Geometry</h1><p><span class="tooltipped" data-tooltip="Constructive Solid Geometry" data-position="top" data-delay="50">CSG</span> is a geometry representation in which models are created through boolean combinations of surfaces, cells, and universes. <span class="tooltipped" data-tooltip="Constructive Solid Geometry" data-position="top" data-delay="50">CSG</span> models are most commonly used for <span>Monte Carlo (MC)</span> neutronics simulations. While each <span class="tooltipped" data-tooltip="Monte Carlo" data-position="top" data-delay="50">MC</span> code has their own syntax for defining the <span class="tooltipped" data-tooltip="Constructive Solid Geometry" data-position="top" data-delay="50">CSG</span> model, the underlying theory for creating <span class="tooltipped" data-tooltip="Constructive Solid Geometry" data-position="top" data-delay="50">CSG</span> representations is the same throughout. The <code>CSGBase</code> class provides the framework in MOOSE for creating these generic <span class="tooltipped" data-tooltip="Constructive Solid Geometry" data-position="top" data-delay="50">CSG</span> representations of geometries through MOOSE mesh generators. These can then be used by <span class="tooltipped" data-tooltip="Monte Carlo" data-position="top" data-delay="50">MC</span> codes.</p><section class="scrollspy" id="15dd55d2-af59-4c79-9ccf-fbbca10e2fd5" data-section-level="2" data-section-text="Theory"><h2 id="theory">Theory</h2><p>As stated, a <span class="tooltipped" data-tooltip="Constructive Solid Geometry" data-position="top" data-delay="50">CSG</span> representation is defined minimally as a series of surfaces, cells, and universes.</p><p><a href="../../source/csg/CSGBase.html#surfaces">Surfaces</a> are defined explicitly through surface equations (such as equations of a plane, sphere, etc.). Each surface inherently separates two half-space <a href="../../source/csg/CSGBase.html#regions">regions</a>: positive and negative half-spaces. For example, for a plane with the equation <span class="moose-katex-inline-equation" id="moose-equation-cd506aa4-afb9-4939-bbca-415ac9d52340"><script>var element = document.getElementById("moose-equation-cd506aa4-afb9-4939-bbca-415ac9d52340");katex.render("ax + by + cz = d", element, {displayMode:false,throwOnError:false});</script></span> the positive half-space represents the region <span class="moose-katex-inline-equation" id="moose-equation-a5d46ce8-5148-42d9-9d41-f50c049c2043"><script>var element = document.getElementById("moose-equation-a5d46ce8-5148-42d9-9d41-f50c049c2043");katex.render("ax + by + cz > d", element, {displayMode:false,throwOnError:false});</script></span>, while the negative half-space represents the region <span class="moose-katex-inline-equation" id="moose-equation-83e14d09-c3e8-4c7f-8feb-8d0fae406497"><script>var element = document.getElementById("moose-equation-83e14d09-c3e8-4c7f-8feb-8d0fae406497");katex.render("ax + by + cz < d", element, {displayMode:false,throwOnError:false});</script></span>. Similarly, for a spherical surface defined by the equation <span class="moose-katex-inline-equation" id="moose-equation-85bd04f5-1476-4b49-bd01-494bdd47753e"><script>var element = document.getElementById("moose-equation-85bd04f5-1476-4b49-bd01-494bdd47753e");katex.render("x^2 + y^2 + z^2 = r^2", element, {displayMode:false,throwOnError:false});</script></span>, the negative half-space represents the region <span class="moose-katex-inline-equation" id="moose-equation-4311903e-4873-47ab-a781-6c824b1e1b35"><script>var element = document.getElementById("moose-equation-4311903e-4873-47ab-a781-6c824b1e1b35");katex.render("x^2 + y^2 + z^2 < r^2", element, {displayMode:false,throwOnError:false});</script></span> within the sphere while the positive half-space represents the region <span class="moose-katex-inline-equation" id="moose-equation-defde506-7398-483f-aa96-e2c77cfc172b"><script>var element = document.getElementById("moose-equation-defde506-7398-483f-aa96-e2c77cfc172b");katex.render("x^2 + y^2 + z^2 > r^2", element, {displayMode:false,throwOnError:false});</script></span> outside the sphere. Example half-spaces are shown in <a class="moose-float-reference" href="#fig:halfspaces">Figure 1</a>.</p><div class="card moose-float" id="fig:halfspaces"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/csg/halfspaces.png" alt="Example depiction of the positive and negative half-spaces defined by a plane (left) and sphere (right)."></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 1: </span><span class="moose-caption-text" id="fig:halfspaces">Example depiction of the positive and negative half-spaces defined by a plane (left) and sphere (right).</span></p></div></div><p>These half-space regions defined by the surfaces can be combined further as series of boolean operators for unions, intersections, and complements to further define more complex regions. For example, if we wanted to use the surfaces from <a class="moose-float-reference" href="#fig:halfspaces">Figure 1</a> to define just the left hemisphere, we would define the cell region as the intersection of the negative half-space of the plane and the negative half-space of the sphere (<a class="moose-float-reference" href="#fig:intersection">Figure 2</a>).</p><div class="card moose-float" id="fig:intersection"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/csg/region_intersection.png" alt="Example depiction of a closed region defined by an intersection of two half-spaces."></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 2: </span><span class="moose-caption-text" id="fig:intersection">Example depiction of a closed region defined by an intersection of two half-spaces.</span></p></div></div><p><a href="../../source/csg/CSGBase.html#cells">Cells</a> are defined by two main characteristics: a region and a fill. The region is defined as described above and defines the domain of the cell. The fill can typically be set as void (i.e., nothing), a material (placeholder type for now, this will be expanded in future works), a <a href="../../source/csg/CSGBase.html#universes">universe</a>, or a <a href="../../source/csg/CSGBase.html#lattices">lattice</a>.</p><p><a href="../../source/csg/CSGBase.html#universes">Universes</a> can then be optionally defined as a collection of cells, which can then be used to either fill other cells, or used repeatedly throughout a geometry (such as in a repeated lattice). By default, every model will have a <a href="../../source/csg/CSGBase.html#root-universe">root universe</a>, which is the singular overarching universe that all other universes can be traced back to through the tree defined by universes containing cells and cells filled with universes.</p><p><a href="../../source/csg/CSGBase.html#lattices">Lattices</a> are another optional component. A lattice is the arrangement of repeated universes in a defined structure. Some common types are regular Cartesian or hexagonal lattices (examples can be seen <a href="../../source/csg/CSGBase.html#lattice-indexing">here</a>). Lattices will sometimes contain universes in the elements of the lattice that do not fill the full spatial domain of that element. Therefore, lattices also often rely on a definition of an &quot;outer&quot; fill, usually a single material or another universe, which fills the undefined spatial domain within the lattice. A visual depiction of a lattice with an outer fill is shown in <a class="moose-float-reference" href="#fig:lat_outer">Figure 3</a>.</p><div class="card moose-float" id="fig:lat_outer"><div class="card-content"><picture class="materialboxed moose-image"><img src="../../large_media/csg/hex_lat_outer.png" alt="A visual of a regular hexagonal lattice where the red lines represent the boundary of each of the lattice elements, the yellow circles are the spatial extent of the universe that fills each lattice element, and the blue is the "outer" that fills the remaining spatial domain around the lattice element universes."></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 3: </span><span class="moose-caption-text" id="fig:lat_outer">A visual of a regular hexagonal lattice where the red lines represent the boundary of each of the lattice elements, the yellow circles are the spatial extent of the universe that fills each lattice element, and the blue is the &quot;outer&quot; that fills the remaining spatial domain around the lattice element universes.</span></p></div></div><p>For a more detailed description of how surfaces, cells, universes, and lattices are represented within the MOOSE mesh generator system, please refer to <a href="../../source/csg/CSGBase.html">CSGBase</a>.</p></section><section class="scrollspy" id="fb517900-8513-4b5e-86fb-61358f580eca" data-section-level="2" data-section-text="How to Generate a CSG Model"><h2 id="how-to-generate-a-csg-model">How to Generate a CSG Model</h2><p>The <span class="tooltipped" data-tooltip="Constructive Solid Geometry" data-position="top" data-delay="50">CSG</span> model generation can be invoked on the command line using the <code>--csg-only</code> option with any MOOSE mesh input file. The <span>JavaScript Object Notation (JSON)</span> file that is generated will be called the name of the input file with <code>_csg</code> appended by default. An optional output file name can be provided on the command line (<code>--csg-only &lt;output_file_name.json&gt;</code>).</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note:</span>Code requirements</div><div class="card-content"><div class="moose-alert-content"><p>A <span class="tooltipped" data-tooltip="Constructive Solid Geometry" data-position="top" data-delay="50">CSG</span> <span class="tooltipped" data-tooltip="JavaScript Object Notation" data-position="top" data-delay="50">JSON</span> file will be produced if and only if all mesh generators in the input file have the <code>generateCSG</code> method implemented. If any mesh generators do not have the <code>generateCSG</code> method implemented, an error will be returned explaining as such. This process is run as a <a href="../../source/meshgenerators/MeshGenerator.html#using-data-driven-generation">data-only mode</a> so no finite element mesh is produced.</p></div></div></div></section><section class="scrollspy" id="e4c84f78-8011-4a5a-acb6-26bb5c9d6868" data-section-level="2" data-section-text="Output"><h2 id="output">Output</h2><p>Calling <code>--csg-only</code> will produce a <span class="tooltipped" data-tooltip="JavaScript Object Notation" data-position="top" data-delay="50">JSON</span> file containing the complete geometric description of the mesh generator input. There are four main sections in the file:</p><ul class="browser-default"><li><p><a href="index.html#surfaces"><code>surfaces</code></a> </p></li><li><p><a href="index.html#cells"><code>cells</code></a> </p></li><li><p><a href="index.html#universes"><code>universes</code></a> </p></li><li><p><a href="index.html#lattices"><code>lattices</code></a> (if any)</p></li></ul><p>Each item within each section is keyed (a <span class="tooltipped" data-tooltip="JavaScript Object Notation" data-position="top" data-delay="50">JSON</span> is a dictionary) by its unique name identifier, and the value is the corresponding definition for that item. Detailed description of each type of item in the section follows.</p><section id="ae2109cc-e9a8-4f09-80f4-e7ff582df67f" data-section-level="3" data-section-text="Surfaces"><h3 id="surfaces">Surfaces</h3><p>Surfaces contain the following information:</p><ul class="browser-default"><li><p><code>type</code>: the type of surface as defined by the class name that was used to create the surface </p></li><li><p><code>coefficients</code>: the values for each coefficient in the equation defining the surface type (shown in the table below)</p></li></ul><div recursive form="['center', 'center', 'center']" class="moose-table-div"><table><thead><tr><th style=";text-align:center"><code>type</code></th><th style=";text-align:center">Equation</th><th style=";text-align:center"><code>coefficients</code></th></tr></thead><tbody><tr><td style=";text-align:center"><code>CSG::CSGPlane</code></td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-b6561c2d-a14b-4ab6-913f-617bf8dc74e2"><script>var element = document.getElementById("moose-equation-b6561c2d-a14b-4ab6-913f-617bf8dc74e2");katex.render("ax + by + cz = d", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><code>a</code>, <code>b</code>, <code>c</code>, <code>d</code></td></tr></tbody><tbody><tr><td style=";text-align:center"><code>CSG::CSGSphere</code></td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-8007b5f8-f7f6-4ffa-9d3c-1fcfb6f1b042"><script>var element = document.getElementById("moose-equation-8007b5f8-f7f6-4ffa-9d3c-1fcfb6f1b042");katex.render("(x - x_0)^2 + (y - y_0)^2 + (z - z_0)^2 = r^2", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><code>x0</code>, <code>y0</code>, <code>z0</code>, <code>r</code></td></tr></tbody><tbody><tr><td style=";text-align:center"><code>CSG::CSGXCylinder</code></td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-c8dd6bcf-8d29-4557-bf91-8bc486c437c4"><script>var element = document.getElementById("moose-equation-c8dd6bcf-8d29-4557-bf91-8bc486c437c4");katex.render("(y - y_0)^2 + (z - z_0)^2 = r^2", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><code>y0</code>, <code>z0</code>, <code>r</code></td></tr></tbody><tbody><tr><td style=";text-align:center"><code>CSG::CSGYCylinder</code></td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-cc204840-2fc1-4da7-9766-271edac05af2"><script>var element = document.getElementById("moose-equation-cc204840-2fc1-4da7-9766-271edac05af2");katex.render("(x - x_0)^2 + (z - z_0)^2 = r^2", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><code>x0</code>, <code>z0</code>, <code>r</code></td></tr></tbody><tbody><tr><td style=";text-align:center"><code>CSG::CSGZCylinder</code></td><td style=";text-align:center"><span class="moose-katex-inline-equation" id="moose-equation-03f495f8-6138-4460-90ea-36ab60c922a6"><script>var element = document.getElementById("moose-equation-03f495f8-6138-4460-90ea-36ab60c922a6");katex.render("(x - x_0)^2 + (y - y_0)^2 = r^2", element, {displayMode:false,throwOnError:false});</script></span></td><td style=";text-align:center"><code>x0</code>, <code>y0</code>, <code>r</code></td></tr></tbody></table></div><p>Below is an example <span class="tooltipped" data-tooltip="JavaScript Object Notation" data-position="top" data-delay="50">JSON</span> surface output for a model with a <code>CSG::CSGPlane</code> at <span class="moose-katex-inline-equation" id="moose-equation-26ca227c-5528-4917-b3ea-0214fe267c56"><script>var element = document.getElementById("moose-equation-26ca227c-5528-4917-b3ea-0214fe267c56");katex.render("x=-2.0", element, {displayMode:false,throwOnError:false});</script></span> and a <code>CSG::CSGPlane</code> at <span class="moose-katex-inline-equation" id="moose-equation-8befddfd-ba61-4e83-9970-7e72c88b32bf"><script>var element = document.getElementById("moose-equation-8befddfd-ba61-4e83-9970-7e72c88b32bf");katex.render("y=-2.0", element, {displayMode:false,throwOnError:false});</script></span>.</p><pre style="max-height:350px;"><code class="language-text">  &quot;surfaces&quot;: {
+    &quot;inf_square_surf_minus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;inf_square_surf_minus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#a85f2fe8-71b6-4aa2-bbdf-073a58702365">(moose/test/tests/csg/gold/csg_only_inf_planes_out_csg.json)</a></section><section id="73e79c4c-7912-45da-8178-360623581b33" data-section-level="3" data-section-text="Cells"><h3 id="cells">Cells</h3><p>The cells output contains the following information:</p><ul class="browser-default"><li><p><code>region</code>: the string representation of the equation of boolean operators (listed below) and surface names that defines the cell region </p></li><li><p><code>filltype</code>: type of fill in the cell (<code>&quot;VOID&quot;</code>, <code>&quot;CSG_MATERIAL&quot;</code>, <code>&quot;UNIVERSE&quot;</code>, or <code>&quot;LATTICE&quot;</code>) </p></li><li><p><code>fill</code>: for <code>&quot;CSG_MATERIAL&quot;</code>, <code>&quot;UNIVERSE&quot;</code>, or <code>&quot;LATTICE&quot;</code> <code>filltype</code>, the name of the fill object (if <code>&quot;VOID&quot;</code> type, then name is an empty string <code>&quot;&quot;</code>)</p></li></ul><div recursive form="['center', 'center']" class="moose-table-div"><table><thead><tr><th style=";text-align:center">Boolean Operator</th><th style=";text-align:center">String Representation</th></tr></thead><tbody><tr><td style=";text-align:center">positive half-space</td><td style=";text-align:center"><code>+</code></td></tr></tbody><tbody><tr><td style=";text-align:center">negative half-space</td><td style=";text-align:center"><code>-</code></td></tr></tbody><tbody><tr><td style=";text-align:center">union</td><td style=";text-align:center"><code>|</code></td></tr></tbody><tbody><tr><td style=";text-align:center">intersection</td><td style=";text-align:center"><code>&amp;</code></td></tr></tbody><tbody><tr><td style=";text-align:center">complement</td><td style=";text-align:center"><code>~</code></td></tr></tbody></table></div><p>An example of a cell defined as the space inside a box made of six planes and filled with a solid material is below:</p><pre style="max-height:350px;"><code class="language-text">  &quot;cells&quot;: {
+    &quot;cube_box_cell&quot;: {
+      &quot;fill&quot;: &quot;square_material&quot;,
+      &quot;filltype&quot;: &quot;CSG_MATERIAL&quot;,
+      &quot;region&quot;:
+          &quot;(+inf_square_surf_plus_x &amp; -inf_square_surf_minus_x &amp; -inf_square_surf_plus_y &amp; +inf_square_surf_minus_y &amp; -cube_surf_plus_z &amp; +cube_surf_minus_z)&quot;
+    }
+  },
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#bc2eaf19-b58f-41f5-b1d8-11dda63174e4">(moose/test/tests/csg/gold/csg_only_chained_out_csg.json)</a></section><section id="04498523-cfe8-463f-a046-527d334afcaf" data-section-level="3" data-section-text="Universes"><h3 id="universes">Universes</h3><p>Universes are simply defined by the list of the names of the <code>cells</code> that are contained in that universe. If the universe is also the root universe, it will have the designator <code>&quot;root&quot;: true</code>. An example of universe output for multiple universes containing various concentric cylinder cells is below. In this example, there is one universe, the default <code>&quot;ROOT_UNIVERSE&quot;</code>, which contains one cell and is labeled as being the root universe.</p><pre style="max-height:350px;"><code class="language-text">  &quot;universes&quot;: {
+    &quot;ROOT_UNIVERSE&quot;: {
+      &quot;cells&quot;: [
+        &quot;cube_box_cell&quot;
+      ],
+      &quot;root&quot;: true
+    }
+  }
+}
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#b9ccedd3-08a2-4485-ac27-3f466910d6e7">(moose/test/tests/csg/gold/csg_only_chained_out_csg.json)</a></section><section id="a44cb147-478e-453c-aad0-076aa5fe02ae" data-section-level="3" data-section-text="Lattices"><h3 id="lattices">Lattices</h3><p>Lattice output contains the following information:</p><ul class="browser-default"><li><p><code>type</code>: the type of lattice as defined by the class name that was used to create the lattice </p></li><li><p><code>universes</code>: the array of universe names that define the lattice arrangement </p></li><li><p><code>outertype</code>: the type of outer fill in the undefined space of the lattice elements (<code>&quot;VOID&quot;</code>, <code>&quot;CSG_MATERIAL&quot;</code>, or <code>&quot;UNIVERSE&quot;</code>) </p></li><li><p><code>outer</code>: for <code>&quot;CSG_MATERIAL&quot;</code> or <code>&quot;UNIVERSE&quot;</code> <code>outertype</code>, the name of the outer fill object </p></li><li><p>any other attributes associated with the specific lattice type (e.g., pitch, number of rows, etc.)</p></li></ul><p>Two types of lattices are directly supported in the <a href="../../source/csg/CSGBase.html">CSGBase</a> class: <code>CSG::CSGCartesianLattice</code> and <code>CSG::CSGHexagonalLattice</code>. The additional attributes that are provided for each of these types are:</p><ul class="browser-default"><li><p><code>CSGCartesianLattice</code>:</p><ul class="browser-default"><li><p><code>nrow</code>: the number of rows </p></li><li><p><code>ncol</code>: the number of columns </p></li><li><p><code>pitch</code>: the flat-to-flat distance of a single lattice element</p></li></ul><p></p></li><li><p><code>CSGHexagonalLattice</code>:</p><ul class="browser-default"><li><p><code>nring</code>: number of rings (consistent with the number of rows) </p></li><li><p><code>nrow</code>: the number of rows (consistent with the number of rings) </p></li><li><p><code>pitch</code>: the flat-to-flat distance of a single lattice element</p></li></ul></li></ul><p>Below is example output for a <span class="moose-katex-inline-equation" id="moose-equation-fcf82712-a6c3-405b-adcf-bf8a860d3d43"><script>var element = document.getElementById("moose-equation-fcf82712-a6c3-405b-adcf-bf8a860d3d43");katex.render("2 \\times 2", element, {displayMode:false,throwOnError:false});</script></span> Cartesian lattice filled with two different universes called <code>sq1_univ</code> and <code>sq2_univ</code>.</p><pre style="max-height:350px;"><code class="language-text">  &quot;lattices&quot;: {
+    &quot;cart_lat_lattice&quot;: {
+      &quot;attributes&quot;: {
+        &quot;ncol&quot;: 2,
+        &quot;nrow&quot;: 2,
+        &quot;pitch&quot;: 5.0
+      },
+      &quot;outertype&quot;: &quot;VOID&quot;,
+      &quot;type&quot;: &quot;CSG::CSGCartesianLattice&quot;,
+      &quot;universes&quot;: [
+        [
+          &quot;sq1_univ&quot;,
+          &quot;sq1_univ&quot;
+        ],
+        [
+          &quot;sq1_univ&quot;,
+          &quot;sq2_univ&quot;
+        ]
+      ]
+    }
+  },
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#2d592e7e-b79f-4954-a661-d9d75c91b598">(moose/test/tests/csg/gold/csg_lattice_cart_out_csg.json)</a></section></section></section><div class="moose-modal modal" id="a85f2fe8-71b6-4aa2-bbdf-073a58702365"><div class="modal-content"><h4>(moose/test/tests/csg/gold/csg_only_inf_planes_out_csg.json)</h4><pre style="max-height:350px;"><code class="language-text">{
+  &quot;cells&quot;: {
+    &quot;inf_square_square_cell&quot;: {
+      &quot;fill&quot;: &quot;square_material&quot;,
+      &quot;filltype&quot;: &quot;CSG_MATERIAL&quot;,
+      &quot;region&quot;:
+          &quot;(+inf_square_surf_plus_x &amp; -inf_square_surf_minus_x &amp; -inf_square_surf_plus_y &amp; +inf_square_surf_minus_y)&quot;
+    }
+  },
+  &quot;surfaces&quot;: {
+    &quot;inf_square_surf_minus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;inf_square_surf_minus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;inf_square_surf_plus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;inf_square_surf_plus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    }
+  },
+  &quot;universes&quot;: {
+    &quot;ROOT_UNIVERSE&quot;: {
+      &quot;cells&quot;: [
+        &quot;inf_square_square_cell&quot;
+      ],
+      &quot;root&quot;: true
+    }
+  }
+}</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="bc2eaf19-b58f-41f5-b1d8-11dda63174e4"><div class="modal-content"><h4>(moose/test/tests/csg/gold/csg_only_chained_out_csg.json)</h4><pre style="max-height:350px;"><code class="language-text">{
+  &quot;cells&quot;: {
+    &quot;cube_box_cell&quot;: {
+      &quot;fill&quot;: &quot;square_material&quot;,
+      &quot;filltype&quot;: &quot;CSG_MATERIAL&quot;,
+      &quot;region&quot;:
+          &quot;(+inf_square_surf_plus_x &amp; -inf_square_surf_minus_x &amp; -inf_square_surf_plus_y &amp; +inf_square_surf_minus_y &amp; -cube_surf_plus_z &amp; +cube_surf_minus_z)&quot;
+    }
+  },
+  &quot;surfaces&quot;: {
+    &quot;inf_square_surf_minus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;inf_square_surf_minus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;cube_surf_minus_z&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 1.0,
+        &quot;d&quot;: -2.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;inf_square_surf_plus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;inf_square_surf_plus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;cube_surf_plus_z&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 1.0,
+        &quot;d&quot;: 2.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    }
+  },
+  &quot;universes&quot;: {
+    &quot;ROOT_UNIVERSE&quot;: {
+      &quot;cells&quot;: [
+        &quot;cube_box_cell&quot;
+      ],
+      &quot;root&quot;: true
+    }
+  }
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="b9ccedd3-08a2-4485-ac27-3f466910d6e7"><div class="modal-content"><h4>(moose/test/tests/csg/gold/csg_only_chained_out_csg.json)</h4><pre style="max-height:350px;"><code class="language-text">{
+  &quot;cells&quot;: {
+    &quot;cube_box_cell&quot;: {
+      &quot;fill&quot;: &quot;square_material&quot;,
+      &quot;filltype&quot;: &quot;CSG_MATERIAL&quot;,
+      &quot;region&quot;:
+          &quot;(+inf_square_surf_plus_x &amp; -inf_square_surf_minus_x &amp; -inf_square_surf_plus_y &amp; +inf_square_surf_minus_y &amp; -cube_surf_plus_z &amp; +cube_surf_minus_z)&quot;
+    }
+  },
+  &quot;surfaces&quot;: {
+    &quot;inf_square_surf_minus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;inf_square_surf_minus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;cube_surf_minus_z&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 1.0,
+        &quot;d&quot;: -2.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;inf_square_surf_plus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;inf_square_surf_plus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;cube_surf_plus_z&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 1.0,
+        &quot;d&quot;: 2.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    }
+  },
+  &quot;universes&quot;: {
+    &quot;ROOT_UNIVERSE&quot;: {
+      &quot;cells&quot;: [
+        &quot;cube_box_cell&quot;
+      ],
+      &quot;root&quot;: true
+    }
+  }
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="2d592e7e-b79f-4954-a661-d9d75c91b598"><div class="modal-content"><h4>(moose/test/tests/csg/gold/csg_lattice_cart_out_csg.json)</h4><pre style="max-height:350px;"><code class="language-text">{
+  &quot;cells&quot;: {
+    &quot;sq1_square_cell&quot;: {
+      &quot;fill&quot;: &quot;square_material&quot;,
+      &quot;filltype&quot;: &quot;CSG_MATERIAL&quot;,
+      &quot;region&quot;: &quot;(+sq1_surf_plus_x &amp; -sq1_surf_minus_x &amp; -sq1_surf_plus_y &amp; +sq1_surf_minus_y)&quot;
+    },
+    &quot;sq2_square_cell&quot;: {
+      &quot;fill&quot;: &quot;square_material&quot;,
+      &quot;filltype&quot;: &quot;CSG_MATERIAL&quot;,
+      &quot;region&quot;: &quot;(+sq2_surf_plus_x &amp; -sq2_surf_minus_x &amp; -sq2_surf_plus_y &amp; +sq2_surf_minus_y)&quot;
+    },
+    &quot;sq3_square_cell&quot;: {
+      &quot;fill&quot;: &quot;cart_lat_lattice&quot;,
+      &quot;filltype&quot;: &quot;LATTICE&quot;,
+      &quot;region&quot;: &quot;(+sq3_surf_plus_x &amp; -sq3_surf_minus_x &amp; -sq3_surf_plus_y &amp; +sq3_surf_minus_y)&quot;
+    }
+  },
+  &quot;lattices&quot;: {
+    &quot;cart_lat_lattice&quot;: {
+      &quot;attributes&quot;: {
+        &quot;ncol&quot;: 2,
+        &quot;nrow&quot;: 2,
+        &quot;pitch&quot;: 5.0
+      },
+      &quot;outertype&quot;: &quot;VOID&quot;,
+      &quot;type&quot;: &quot;CSG::CSGCartesianLattice&quot;,
+      &quot;universes&quot;: [
+        [
+          &quot;sq1_univ&quot;,
+          &quot;sq1_univ&quot;
+        ],
+        [
+          &quot;sq1_univ&quot;,
+          &quot;sq2_univ&quot;
+        ]
+      ]
+    }
+  },
+  &quot;surfaces&quot;: {
+    &quot;sq1_surf_minus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq1_surf_minus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq1_surf_plus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq1_surf_plus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 2.0
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq2_surf_minus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 1.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq2_surf_minus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -1.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq2_surf_plus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -1.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq2_surf_plus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 1.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq3_surf_minus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 7.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq3_surf_minus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -7.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq3_surf_plus_x&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: -1.0,
+        &quot;b&quot;: 0.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: -7.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    },
+    &quot;sq3_surf_plus_y&quot;: {
+      &quot;coefficients&quot;: {
+        &quot;a&quot;: 0.0,
+        &quot;b&quot;: 1.0,
+        &quot;c&quot;: 0.0,
+        &quot;d&quot;: 7.5
+      },
+      &quot;type&quot;: &quot;CSG::CSGPlane&quot;
+    }
+  },
+  &quot;universes&quot;: {
+    &quot;ROOT_UNIVERSE&quot;: {
+      &quot;cells&quot;: [
+        &quot;sq3_square_cell&quot;
+      ],
+      &quot;root&quot;: true
+    },
+    &quot;sq1_univ&quot;: {
+      &quot;cells&quot;: [
+        &quot;sq1_square_cell&quot;
+      ]
+    },
+    &quot;sq2_univ&quot;: {
+      &quot;cells&quot;: [
+        &quot;sq2_square_cell&quot;
+      ]
+    }
+  }
+}</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#15dd55d2-af59-4c79-9ccf-fbbca10e2fd5" class="tooltipped" data-position="left" data-tooltip="Theory">Theory</a></li><li><a href="#fb517900-8513-4b5e-86fb-61358f580eca" class="tooltipped" data-position="left" data-tooltip="How to Generate a CSG Model">How to Generate a CSG Model</a></li><li><a href="#e4c84f78-8011-4a5a-acb6-26bb5c9d6868" class="tooltipped" data-position="left" data-tooltip="Output">Output</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
