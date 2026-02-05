@@ -735,8 +735,7 @@ dom0Scale = 25.4e-3
   #MultiApp Transfers for Acceleration by Shooting Method
   [SM_Ar*Reset_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = SM_Ar*Reset
     variable = SM_Ar*Reset
     enable = false
@@ -744,32 +743,28 @@ dom0Scale = 25.4e-3
 
   [Ar*_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = Ar*
     variable = Ar*
     enable = false
   []
   [Ar*S_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = Ar*S
     variable = Ar*S
     enable = false
   []
   [Ar*T_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = Ar*
     variable = Ar*T
     enable = false
   []
   [SMDeriv_to_Shooting]
     type = MultiAppCopyTransfer
-    direction = to_multiapp
-    multi_app = Shooting
+    to_multi_app = Shooting
     source_variable = SM_Ar*
     variable = SM_Ar*
     enable = false
@@ -777,16 +772,14 @@ dom0Scale = 25.4e-3
 
   [Ar*New_from_Shooting]
     type = MultiAppCopyTransfer
-    direction = from_multiapp
-    multi_app = Shooting
+    from_multi_app = Shooting
     source_variable = Ar*
     variable = Ar*
     enable = false
   []
   [SM_Ar*Reset_from_Shooting]
     type = MultiAppCopyTransfer
-    direction = from_multiapp
-    multi_app = Shooting
+    from_multi_app = Shooting
     source_variable = SM_Ar*Reset
     variable = SM_Ar*
     enable = false
@@ -794,8 +787,7 @@ dom0Scale = 25.4e-3
 
   [Ar*Relative_Diff]
     type = MultiAppPostprocessorTransfer
-    direction = from_multiapp
-    multi_app = Shooting
+    from_multi_app = Shooting
     from_postprocessor = Meta_Relative_Diff
     to_postprocessor = Meta_Relative_Diff
     reduction_type = minimum
