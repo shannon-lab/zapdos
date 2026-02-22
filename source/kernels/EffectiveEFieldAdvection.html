@@ -1,0 +1,5055 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>EffectiveEFieldAdvection | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="92460011-24cb-45ad-83d2-4d1ba0950d26" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d5aaaa5b-7d32-4c25-b7f1-3f9989d82063" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d3fd0024-d931-4e94-9435-824ff4260d82" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="f7d223c5-e021-453d-ae7e-8d82d8b77772"><i class="material-icons">menu</i></a><ul class="sidenav" id="f7d223c5-e021-453d-ae7e-8d82d8b77772"><li><a href="#!" class="dropdown-trigger" data-target="83ca23d3-973b-4244-ba27-cc4c6aa4e857" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="e3ddaedb-438c-4494-803b-883bedbb1054" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="41ed5e2d-494b-488a-9b11-ee011df538f8" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="92460011-24cb-45ad-83d2-4d1ba0950d26"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="d5aaaa5b-7d32-4c25-b7f1-3f9989d82063"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="d3fd0024-d931-4e94-9435-824ff4260d82"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="83ca23d3-973b-4244-ba27-cc4c6aa4e857"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="e3ddaedb-438c-4494-803b-883bedbb1054"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="41ed5e2d-494b-488a-9b11-ee011df538f8"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">kernels</span><a href="#" class="breadcrumb">EffectiveEFieldAdvection</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="98bda2a2-d474-4292-ba91-401326ea35bd" data-section-level="1" data-section-text="EffectiveEFieldAdvection"><h1 id="effectiveefieldadvection">EffectiveEFieldAdvection</h1><p>Effective electric field driven advection term. The effective electric field is supplied as scalar components of the field. (Densities must be in logarithmic form.)</p><section class="scrollspy" id="bfe7f7b3-5e28-4042-8d58-4da4a141886f" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p><code>EffectiveEFieldAdvection</code> is the effective electric field driven advection term used for variables in logarithmic form. The effective electric field is supplied as scalar componets of the field.</p><p>The strong form for an advection term is usually defined as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-72b47188-c24c-40dc-a577-2b0c6e773690"></span><script>var element = document.getElementById("moose-equation-72b47188-c24c-40dc-a577-2b0c6e773690");katex.render("\\nabla \\cdot \\Gamma_{\\text{adv}} = \\nabla \\cdot \\left[ \\text{sign}_{j} \\mu_{j} n_{j} \\ \\vec{E}_{\\text{Eff.}} \\right]", element, {displayMode:true,throwOnError:false});</script></span></p><p>where</p><ul class="browser-default"><li><p><span class="moose-katex-inline-equation" id="moose-equation-213474ad-d16e-407d-b4f7-f278eab1e7e9"><script>var element = document.getElementById("moose-equation-213474ad-d16e-407d-b4f7-f278eab1e7e9");katex.render("\\Gamma_{\\text{adv}}", element, {displayMode:false,throwOnError:false});</script></span> is the advection component of a species&#x27; flux, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-de5c24d9-43d5-43cd-b650-c229d493566c"><script>var element = document.getElementById("moose-equation-de5c24d9-43d5-43cd-b650-c229d493566c");katex.render("\\text{sign}_{j}", element, {displayMode:false,throwOnError:false});</script></span> indicates the advection behavior (<span class="moose-katex-inline-equation" id="moose-equation-6be65fa0-2ed9-4f33-ac0b-719b30b69099"><script>var element = document.getElementById("moose-equation-6be65fa0-2ed9-4f33-ac0b-719b30b69099");katex.render("\\text{+}1", element, {displayMode:false,throwOnError:false});</script></span> for positively charged species and <span class="moose-katex-inline-equation" id="moose-equation-4efa7e30-843a-44ad-883f-5513b4e7e6d4"><script>var element = document.getElementById("moose-equation-4efa7e30-843a-44ad-883f-5513b4e7e6d4");katex.render("\\text{-}1", element, {displayMode:false,throwOnError:false});</script></span> for negatively charged species) </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-7ce65f87-3fef-4f32-9976-6b6784cf94c9"><script>var element = document.getElementById("moose-equation-7ce65f87-3fef-4f32-9976-6b6784cf94c9");katex.render("\\mu_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the mobility coefficient, <span class="moose-katex-inline-equation" id="moose-equation-839294c9-91c2-4348-973a-5970f72c7b4d"><script>var element = document.getElementById("moose-equation-839294c9-91c2-4348-973a-5970f72c7b4d");katex.render("n_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the density, and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-fc096936-903f-4890-8916-99e1d70f6e30"><script>var element = document.getElementById("moose-equation-fc096936-903f-4890-8916-99e1d70f6e30");katex.render("\\vec{E}_{\\text{Eff.}}", element, {displayMode:false,throwOnError:false});</script></span> is the effective electric field acting on the ions.</p></li></ul><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-7482650d-cd5c-4be8-b405-78e57f7d62ea"></span><script>var element = document.getElementById("moose-equation-7482650d-cd5c-4be8-b405-78e57f7d62ea");katex.render("\\nabla \\cdot \\Gamma_{\\text{adv}} = \\nabla \\cdot \\left[ \\text{sign}_{j} \\mu_{j} \\exp(N_{j}) \\ (\\vec{E}_{\\text{Eff.}} / l_{c}) \\right]", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where <span class="moose-katex-inline-equation" id="moose-equation-0a32e37a-a104-40e0-ba8b-938efa85c5c5"><script>var element = document.getElementById("moose-equation-0a32e37a-a104-40e0-ba8b-938efa85c5c5");katex.render("N_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the molar density of the species in logarithmic form and <span class="moose-katex-inline-equation" id="moose-equation-19b52395-6588-4cd1-a971-945f949a57d0"><script>var element = document.getElementById("moose-equation-19b52395-6588-4cd1-a971-945f949a57d0");katex.render("l_{c}", element, {displayMode:false,throwOnError:false});</script></span> is the scaling factor of the mesh.</p></section><section class="scrollspy" id="65dfe4fe-df3b-4dde-916f-1163e4097341" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[Kernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Kernels/index.html&quot;}&gt;&gt;&gt;]
+  [ion_advection]
+    type = EffectiveEFieldAdvection&lt;&lt;&lt;{&quot;description&quot;: &quot;Effective electric field driven advection term. The effective electric field is supplied as scalar components of the field. (Densities must be in logarithmic form.)&quot;, &quot;href&quot;: &quot;EffectiveEFieldAdvection.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this residual object operates on&quot;}&gt;&gt;&gt; = ion
+    u&lt;&lt;&lt;{&quot;description&quot;: &quot;x-Effective Efield&quot;}&gt;&gt;&gt; = Ex
+    v&lt;&lt;&lt;{&quot;description&quot;: &quot;y-Effective Efield&quot;}&gt;&gt;&gt; = Ey
+    position_units&lt;&lt;&lt;{&quot;description&quot;: &quot;Units of position.&quot;}&gt;&gt;&gt; = 1.0
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#2497c87a-dd54-4741-8924-f662f4753fc5">(test/tests/mms/continuity_equations/2D_Coupling_Electons_Potential_Ions_MeanEnergy_Einstein_Relation_EffEfield.i)</a></section><section class="scrollspy" id="e8ffce1e-be02-4774-ad9f-298ce1c11bdd" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="51e5723f-6504-46e3-9fb6-1d5b97b72811" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">position_units</span><span class="moose-parameter-header-description">Units of position.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Units of position.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">u</span><span class="moose-parameter-header-description">x-Effective Efield</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>x-Effective Efield</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this residual object operates on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this residual object operates on</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="b332d06e-06cf-400f-a34f-124c5d0d23af" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">displacements</span><span class="moose-parameter-header-description">The displacements</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The displacements</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">v</span><span class="moose-parameter-header-description">y-Effective Efield</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>y-Effective Efield</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">w</span><span class="moose-parameter-header-description">z-Effective Efield</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>z-Effective Efield</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="7971ae3f-57b5-4a13-944e-7d33538dd395" data-section-level="3" data-section-text="Contribution To Tagged Field Data Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">absolute_value_vector_tags</span><span class="moose-parameter-header-description">The tags for the vectors this residual object should fill with the absolute value of the residual contribution</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tags for the vectors this residual object should fill with the absolute value of the residual contribution</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_only</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether this object is only doing assembly to matrices (no vectors)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether this object is only doing assembly to matrices (no vectors)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, system</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">nontime</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nontime</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, time</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Contribution To Tagged Field Data Parameters</h3></summary></details></section><section id="cc02f0da-4e33-4933-af0e-4201651b62ef" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diag_save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">search_method</span><span class="moose-parameter-header-default">nearest_node_connected_sides</span><span class="moose-parameter-header-description">Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nearest_node_connected_sides</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nearest_node_connected_sides, all_proximate_sides</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="a4369073-c370-4f37-aaec-9e272e2e3554" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="a26b9fce-7593-4917-ae37-253b2ed27bea" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#2e522ce5-d090-4b62-b09f-6712fe2683a4">(test/tests/mms/bcs/2D_EnergyBC.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#234d5b94-6fd2-41a5-af53-ecc1b46a545c">(test/tests/mms/bcs/2D_IonBC_NegivateOutWardFacingEfield.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#8cd6c3aa-2138-481a-a255-029be37de2d4">(test/tests/mms/bcs/2D_EnergyBC_NegivateOutWardFacingEfield.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#b3a39177-38b2-4a5e-80bf-50f0ffb05ff1">(test/tests/mms/continuity_equations/2D_Coupling_Electons_Potential_Ions_MeanEnergy_Einstein_Relation_EffEfield.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#86fc8b98-f378-48db-ab46-9fa25b6aea2e">(test/tests/mms/bcs/2D_ElectronBC.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#fd2a6d69-f0fc-45b5-8d49-3855565b28d2">(test/tests/mms/bcs/2D_ElectronBC_NegivateOutWardFacingEfield.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#dd50e509-095b-46a0-a3c7-04c77c8ec8c1">(test/tests/mms/bcs/2D_DielectricBCWithEffEfield.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#c36d179d-1e02-49f9-87df-fc27671ec468">(test/tests/mms/bcs/2D_IonBC.i)</a></li></ul></section></section><div class="moose-modal modal" id="2497c87a-dd54-4741-8924-f662f4753fc5"><div class="modal-content"><h4>(test/tests/mms/continuity_equations/2D_Coupling_Electons_Potential_Ions_MeanEnergy_Einstein_Relation_EffEfield.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_Coupling_Electons_Potential_Ions_MeanEnergy_Einstein_Relation_EffEfield_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+  [potential]
+    initial_from_file_var = potential
+  []
+  [ion]
+    initial_from_file_var = ion
+  []
+  [mean_en]
+    initial_from_file_var = mean_en
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+[]
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = TimeDerivativeLog
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Potential Equations
+  [potential_diffusion]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = 1.0
+  []
+  [ion_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = ion
+    potential_units = V
+  []
+  [em_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = em
+    potential_units = V
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_ForceBody]
+    type = EffectiveEField
+    variable = Ex
+    nu = 5.0
+    component = 0
+    position_units = 1.0
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_ForceBody]
+    type = EffectiveEField
+    variable = Ey
+    nu = 5.0
+    component = 1
+    position_units = 1.0
+  []
+
+  #Electron Energy Equations
+  [mean_en_time_deriv]
+    type = TimeDerivativeLog
+    variable = mean_en
+  []
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_diffusion_correction]
+    type = ThermalConductivityDiffusion
+    variable = mean_en
+    electrons = em
+    position_units = 1.0
+  []
+  [mean_en_joule_heating]
+    type = JouleHeating
+    variable = mean_en
+    electrons = em
+    position_units = 1.0
+    potential_units = V
+  []
+  [mean_en_source]
+    type = BodyForce
+    variable = mean_en
+    function = &#x27;energy_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [potential_sol]
+  []
+
+  [mean_en_sol]
+  []
+
+  [em_sol]
+  []
+
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+[]
+
+[AuxKernels]
+  [potential_sol]
+    type = FunctionAux
+    variable = potential_sol
+    function = potential_fun
+  []
+
+  [mean_en_sol]
+    type = FunctionAux
+    variable = mean_en_sol
+    function = mean_en_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  #Electron diffusion coeff.
+  [diffem_coeff]
+    type = ConstantFunction
+    value = 0.05
+  []
+  #Electron mobility coeff.
+  [muem_coeff]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Electron energy diffusion coeff.
+  [diffmean_en_coeff]
+    type = ParsedFunction
+    symbol_names = &#x27;diffem_coeff&#x27;
+    symbol_values = &#x27;diffem_coeff&#x27;
+    expression = &#x27;5.0 / 3.0 * diffem_coeff&#x27;
+  []
+  #Electron energy mobility coeff.
+  [mumean_en_coeff]
+    type = ParsedFunction
+    symbol_names = &#x27;muem_coeff&#x27;
+    symbol_values = &#x27;muem_coeff&#x27;
+    expression = &#x27;5.0 / 3.0 * muem_coeff&#x27;
+  []
+  #Ion diffusion coeff.
+  [diffion]
+    type = ConstantFunction
+    value = 0.1
+  []
+  #Ion mobility coeff.
+  [muion]
+    type = ConstantFunction
+    value = 0.025
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.01
+  []
+  [diffpotential_mat]
+    type = ParsedFunction
+    symbol_names = &#x27;diffpotential&#x27;
+    symbol_values = &#x27;diffpotential&#x27;
+    expression = &#x27;diffpotential * (1.6e-19 * 6.02e23)&#x27;
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 1.0 + 0.9*cos(pi/2*x)) / N_A)&#x27;
+  []
+  #The manufactured electron density solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential&#x27;
+    symbol_values = &#x27;ee diffpotential&#x27;
+    expression = &#x27;-(ee*(2*cos((pi*x)/2) + cos(pi*y)*sin(2*pi*t)))/(5*diffpotential*pi^2)&#x27;
+  []
+  #The manufactured electron energy solution
+  [energy_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;sin(pi*y) + sin(2*pi*t)*cos(pi*y)*sin(pi*y) + 0.75 + cos(pi/2*x)&#x27;
+  []
+  [mean_en_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;energy_fun em_fun&#x27;
+    symbol_values = &#x27;energy_fun em_fun&#x27;
+    expression = &#x27;log(energy_fun) + em_fun&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential&#x27;
+    symbol_values = &#x27;ee diffpotential&#x27;
+    expression = &#x27;-(ee*exp(-5*t)*sin((pi*x)/2)*(exp(5*t) - 1))/(5*diffpotential*pi)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential&#x27;
+    symbol_values = &#x27;ee diffpotential&#x27;
+    expression = &#x27;-(2*ee*exp(-5*t)*sin(pi*y))/(4*diffpotential*pi^2 + 25*diffpotential) -
+                  (ee*sin(pi*y)*(5*sin(2*pi*t) - 2*pi*cos(2*pi*t)))/(diffpotential*pi*(4*pi^2 + 25))&#x27;
+  []
+
+  #Electron diffusion coeff.
+  [diffem]
+    type = ParsedFunction
+    symbol_names = &#x27;diffem_coeff energy_fun&#x27;
+    symbol_values = &#x27;diffem_coeff energy_fun&#x27;
+    expression = &#x27;diffem_coeff * energy_fun&#x27;
+  []
+  #Electron mobility coeff.
+  [muem]
+    type = ParsedFunction
+    symbol_names = &#x27;muem_coeff energy_fun&#x27;
+    symbol_values = &#x27;muem_coeff energy_fun&#x27;
+    expression = &#x27;muem_coeff * energy_fun&#x27;
+  []
+  #Electron energy diffusion coeff.
+  [diffmean_en]
+    type = ParsedFunction
+    symbol_names = &#x27;diffmean_en_coeff energy_fun&#x27;
+    symbol_values = &#x27;diffmean_en_coeff energy_fun&#x27;
+    expression = &#x27;diffmean_en_coeff * energy_fun&#x27;
+  []
+  #Electron energy mobility coeff.
+  [mumean_en]
+    type = ParsedFunction
+    symbol_names = &#x27;mumean_en_coeff energy_fun&#x27;
+    symbol_values = &#x27;mumean_en_coeff energy_fun&#x27;
+    expression = &#x27;mumean_en_coeff * energy_fun&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential diffem_coeff muem_coeff N_A&#x27;
+    symbol_values = &#x27;ee diffpotential diffem_coeff muem_coeff N_A&#x27;
+    expression = &#x27;((2*pi*cos(2*pi*t)*cos(pi*y))/5 - (diffem_coeff*pi^2*sin((pi*x)/2)^2)/4 -
+                   diffem_coeff*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos(pi*y) -
+                   sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t)) + (diffem_coeff*pi^2*cos((pi*x)/2)*(cos((pi*x)/2) +
+                   sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/4 + (diffem_coeff*pi^2*(5*sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t))*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/5 -
+                   (ee*muem_coeff*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(10*diffpotential) -
+                   (ee*muem_coeff*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))/(10*diffpotential) +
+                   (ee*muem_coeff*cos((pi*x)/2)*(cos((pi*x)/2) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(10*diffpotential) +
+                   (ee*muem_coeff*cos(pi*y)*sin(2*pi*t)*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) +
+                   sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential) + (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(cos(pi*y) -
+                   sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t))*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))/(5*diffpotential) +
+                   (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos((pi*x)/2) + sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential*pi)) / N_A&#x27;
+  []
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential diffion muion N_A&#x27;
+    symbol_values = &#x27;ee diffpotential diffion muion N_A&#x27;
+    expression = &#x27;((diffion*pi^2*(9*cos((pi*x)/2) + 40*sin(pi*y)))/40 +
+                   (9*ee*muion*exp(-5*t)*sin((pi*x)/2)^2*(exp(5*t) - 1))/(100*diffpotential) -
+                   (ee*muion*exp(-5*t)*cos((pi*x)/2)*(exp(5*t) - 1)*((9*cos((pi*x)/2))/10 + sin(pi*y) + 1))/(10*diffpotential) -
+                   (ee*muion*exp(-5*t)*cos(pi*y)*(2*pi + 5*exp(5*t)*sin(2*pi*t) -
+                   2*pi*exp(5*t)*cos(2*pi*t))*((9*cos((pi*x)/2))/10 + sin(pi*y) + 1))/(diffpotential*(4*pi^2 + 25)) -
+                   (ee*muion*exp(-5*t)*cos(pi*y)*sin(pi*y)*(2*pi + 5*exp(5*t)*sin(2*pi*t) -
+                   2*pi*exp(5*t)*cos(2*pi*t)))/(diffpotential*(4*pi^2 + 25))) / N_A&#x27;
+  []
+  [energy_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential diffem_coeff muem_coeff N_A&#x27;
+    symbol_values = &#x27;ee diffpotential diffem_coeff muem_coeff N_A&#x27;
+    expression = &#x27;(((4*cos((pi*x)/2) + 4*sin(pi*y) + 4*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3)*(172*ee*muem_coeff*cos(2*pi*t)^2 -
+                   282*ee*muem_coeff + 180*ee*muem_coeff*cos((pi*x)/2)^2 + 160*ee*muem_coeff*cos((pi*x)/2)^3 +
+                   664*ee*muem_coeff*cos(pi*y)^2 - 480*ee*muem_coeff*cos(pi*y)^4 -
+                   66*ee*muem_coeff*cos((pi*x)/2) - 296*ee*muem_coeff*sin(pi*y) +
+                   200*diffem_coeff*diffpotential*pi^2 - 664*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^2 +
+                   480*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^4 + 364*ee*muem_coeff*cos(pi*y)*sin(2*pi*t) -
+                   90*ee*muem_coeff*cos((pi*x)/2)*sin(pi*y) + 75*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2) +
+                   140*diffem_coeff*diffpotential*pi^2*sin(pi*y) + 16*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2) -
+                   8*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^2 + 176*ee*muem_coeff*cos(2*pi*t)^2*sin(pi*y) -
+                   320*ee*muem_coeff*cos(pi*y)^3*sin(2*pi*t) + 200*ee*muem_coeff*cos((pi*x)/2)^2*sin(pi*y) +
+                   464*ee*muem_coeff*cos(pi*y)^2*sin(pi*y) + 300*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)^2 -
+                   1200*diffem_coeff*diffpotential*pi^2*cos(pi*y)^2 + 160*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*sin(pi*y) +
+                   104*ee*muem_coeff*cos((pi*x)/2)^2*cos(pi*y)*sin(2*pi*t) - 40*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^3*sin(2*pi*t) +
+                   408*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^2*sin(pi*y) + 96*ee*muem_coeff*cos(pi*y)^3*sin(2*pi*t)*sin(pi*y) +
+                   160*diffem_coeff*diffpotential*pi^2*cos(2*pi*t)^2*sin(pi*y) -
+                   2000*diffem_coeff*diffpotential*pi^2*cos(pi*y)^3*sin(2*pi*t) + 400*diffem_coeff*diffpotential*pi^2*cos(pi*y)^2*sin(pi*y) -
+                   32*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*cos(pi*y)^2 - 464*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^2*sin(pi*y) +
+                   186*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t) + 272*ee*muem_coeff*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
+                   1260*diffem_coeff*diffpotential*pi^2*cos(pi*y)*sin(2*pi*t) + 500*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)*sin(pi*y) -
+                   408*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*cos(pi*y)^2*sin(pi*y) -
+                   96*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^3*sin(2*pi*t)*sin(pi*y) -
+                   400*diffem_coeff*diffpotential*pi^2*cos(2*pi*t)^2*cos(pi*y)^2*sin(pi*y) +
+                   448*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
+                   80*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t) +
+                   240*diffem_coeff*diffpotential*pi^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
+                   48*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 80*ee*muem_coeff*cos((pi*x)/2)^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
+                   100*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t)*sin(pi*y)))/(960*diffpotential) +
+                   (pi*cos(2*pi*t)*cos(pi*y)*(4*cos((pi*x)/2) + 24*sin(pi*y) + 20*cos((pi*x)/2)*sin(pi*y) + 20*sin(pi*y)^2 +
+                   8*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3))/10 - (diffem_coeff*pi^2*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/4 - (diffem_coeff*pi^2*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1))/4 - diffem_coeff*pi^2*(cos(pi*y) - sin(2*pi*t) +
+                   2*cos(pi*y)^2*sin(2*pi*t))^2*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1) +
+                   (diffem_coeff*pi^2*cos((pi*x)/2)*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/4 - diffem_coeff*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos(pi*y) -
+                   sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t))*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4) +
+                   (ee*sin(2*pi*t)*sin(pi*y)*(diffem_coeff*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos((pi*x)/2) +
+                   sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4) - (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(cos((pi*x)/2) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential*pi)))/(5*diffpotential*pi) +
+                   diffem_coeff*pi^2*sin(pi*y)*(4*cos(pi*y)*sin(2*pi*t) + 1)*(cos((pi*x)/2) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4) -
+                   (ee*sin((pi*x)/2)^2*(4*cos((pi*x)/2) + 4*sin(pi*y) +
+                   4*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3)*(10*ee*muem_coeff + 10*ee*muem_coeff*cos((pi*x)/2) +
+                   10*ee*muem_coeff*sin(pi*y) + 25*diffem_coeff*diffpotential*pi^2 +
+                   2*ee*muem_coeff*cos(pi*y)*sin(2*pi*t)))/(1000*diffpotential^2*pi^2)) / N_A&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + 0.9*cos(pi/2*x)) / N_A)&#x27;
+  []
+  [mean_en_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;em_ICs&#x27;
+    symbol_values = &#x27;em_ICs&#x27;
+    expression = &#x27;log(32. + cos(pi/2*x)) + em_ICs&#x27;
+  []
+[]
+
+[BCs]
+  [potential_BC]
+    type = FunctionDirichletBC
+    variable = potential
+    function = &#x27;potential_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [em_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [ion_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [energy_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e N_A&#x27;
+    prop_values = &#x27;ee N_A&#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffpotential     diffion muion&#x27;
+    prop_values = &#x27;diffpotential_mat diffion muion&#x27;
+  []
+  [Material_Coeff_Set2]
+    type = ADMMSEEDFRates
+    electrons = em
+    electron_energy = mean_en
+    prop_names = &#x27;diffem        muem        diffmean_en        mumean_en&#x27;
+    prop_values = &#x27;diffem        muem        diffmean_en        mumean_en&#x27;
+    d_prop_d_actual_mean_en = &#x27;diffem_coeff  muem_coeff  diffmean_en_coeff  mumean_en_coeff&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem  sgnion  sgnmean_en&#x27;
+    prop_values = &#x27;-1.0   1.0     -1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+  [potential_l2Error]
+    type = ElementL2Error
+    variable = potential
+    function = potential_fun
+  []
+  [mean_en_l2Error]
+    type = ElementL2Error
+    variable = mean_en
+    function = mean_en_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="2e522ce5-d090-4b62-b09f-6712fe2683a4"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_EnergyBC.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_EnergyBC_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+  [ion]
+    initial_from_file_var = ion
+  []
+  [mean_en]
+    initial_from_file_var = mean_en
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+
+  [potential]
+    initial_from_file_var = potential
+  []
+[]
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = TimeDerivativeLog
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+
+  #Potential
+  [Potential_time_deriv]
+    type = TimeDerivative
+    variable = potential
+  []
+  [Potential_diffusion]
+    type = MatDiffusion
+    diffusivity = diffpotential
+    variable = potential
+  []
+  [Potential_source]
+    type = BodyForce
+    variable = potential
+    function = &#x27;potential_source&#x27;
+  []
+
+  #Electron Energy Equations
+  [mean_en_time_deriv]
+    type = TimeDerivativeLog
+    variable = mean_en
+  []
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_source]
+    type = BodyForce
+    variable = mean_en
+    function = &#x27;energy_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [mean_en_sol]
+  []
+
+  [em_sol]
+  []
+
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+
+  [potential_sol]
+  []
+[]
+
+[AuxKernels]
+  [mean_en_sol]
+    type = FunctionAux
+    variable = mean_en_sol
+    function = mean_en_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+
+  [potential_sol]
+    type = FunctionAux
+    variable = potential_sol
+    function = potential_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  [massem]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [massem_mat]
+    type = ParsedFunction
+    symbol_names = massem
+    symbol_values = massem
+    value = &#x27;massem*1.6e-19&#x27;
+  []
+  #Electron diffusion coeff.
+  [diffem]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muem]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Electron energy mobility coeff.
+  [diffmean_en]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [mumean_en]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Ion diffusion coeff.
+  [diffion]
+    type = ParsedFunction
+    symbol_names = diffmean_en
+    symbol_values = diffmean_en
+    expression = diffmean_en
+  []
+  [muion]
+    type = ParsedFunction
+    symbol_names = mumean_en
+    symbol_values = mumean_en
+    expression = mumean_en
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.25
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;log(((16*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)^3)/(3*massem*pi*((12*diffmean_en*pi)/5 +
+                      (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2)) / N_A)&#x27;
+  []
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured electron energy solution
+  [mean_en_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+  #The manufactured potential solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;-(sin(pi*t) + 1.0)*(sin(pi*y) + sin(pi*x))&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;((32*ee*cos(2*pi*t)*cos(pi*y)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)^2)/(5*massem*((12*diffmean_en*pi)/5 +
+                   (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2) -
+                   diffem*((32*ee*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1))/(massem*pi*((12*diffmean_en*pi)/5 +
+                   (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2) -
+                   (16*ee*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)^2)/(massem*pi*((12*diffmean_en*pi)/5 + (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) +
+                   sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2) - (2048*ee*mumean_en*(pi*cos(pi*y) -
+                   (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)^2)/(5*massem*((12*diffmean_en*pi)/5 +
+                   (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^3) + (1024*ee*mumean_en*(pi^2*sin(pi*y) +
+                   (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)^3)/(15*massem*((12*diffmean_en*pi)/5 +
+                   (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^3) + (32768*ee*mumean_en^2*pi*(pi*cos(pi*y) -
+                   (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(sin(pi*t) + 1)^2*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 +
+                   1)^3)/(25*massem*((12*diffmean_en*pi)/5 + (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^4)) -
+                   diffem*((32*ee*pi*cos(pi*x)^2*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))/(massem*((12*diffmean_en*pi)/5 +
+                   (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2) - (16*ee*pi*sin(pi*x)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)^2)/(massem*((12*diffmean_en*pi)/5 + (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) +
+                   sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2) - (2048*ee*mumean_en*pi^2*cos(pi*x)^2*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)^2)/(5*massem*((12*diffmean_en*pi)/5 + (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^3) + (1024*ee*mumean_en*pi^2*sin(pi*x)*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)^3)/(15*massem*((12*diffmean_en*pi)/5 + (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^3) + (32768*ee*mumean_en^2*pi^3*cos(pi*x)^2*(sin(pi*t) + 1)^2*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)^3)/(25*massem*((12*diffmean_en*pi)/5 + (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^4)) - (32*ee*((32*mumean_en*pi^2*cos(pi*t)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1))/5 + (64*mumean_en*pi^2*cos(2*pi*t)*cos(pi*y)*(sin(pi*t) + 1))/25)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)^3)/(3*massem*pi*((12*diffmean_en*pi)/5 + (32*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) +
+                   sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^3)) / N_A&#x27;
+  []
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;(diffion*pi^2*sin(pi*x) + (diffion*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 +
+                  (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (muion*pi^2*(sin(pi*t) + 1)*(5*sin(pi*x) + 5*sin(pi*y) +
+                  10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) +
+                  2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+  [energy_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;(diffmean_en*pi^2*sin(pi*x) + (diffmean_en*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 +
+                  (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (mumean_en*pi^2*(sin(pi*t) + 1)*(5*sin(pi*x) + 5*sin(pi*y) +
+                  10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) +
+                  2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*x) - diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*y) - diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [potential_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*t)*(sin(pi*x) + sin(pi*y)) -
+                  diffpotential*pi^2*sin(pi*x)*(sin(pi*t) + 1) -
+                  diffpotential*pi^2*sin(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;4.0&#x27;
+  []
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [mean_en_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;em_ICs&#x27;
+    symbol_values = &#x27;em_ICs&#x27;
+    expression = &#x27;1.0&#x27;
+  []
+
+  [em_left_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;(-diffmean_en*pi*cos(pi*x) - mumean_en*pi*cos(pi*x)*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+  [em_down_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;(-(diffmean_en*pi*(5*cos(pi*y) - sin(2*pi*t)*sin(pi*y)))/5 -
+                   mumean_en*pi*cos(pi*y)*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+[]
+
+[BCs]
+  [em_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [ion_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  #[energy_left_BC]
+  #  type = FunctionDirichletBC
+  #  variable = mean_en
+  #  function = &#x27;mean_en_fun&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  [energy_left_physical_diffusion]
+    type = SakiyamaEnergyDiffusionBC
+    variable = mean_en
+    electrons = em
+    boundary = 3
+    position_units = 1.0
+  []
+  [energy_left_second_emissions]
+    type = SakiyamaEnergySecondaryElectronWithEffEfieldBC
+    variable = mean_en
+    electrons = em
+    ions = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    secondary_electron_temperature_equal_to_bulk = false
+    secondary_electron_energy = 1.0
+    emission_coeffs = &#x27;users_gamma&#x27;
+    boundary = 3
+    position_units = 1.0
+  []
+
+  [energy_right_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = 1
+    preset = true
+  []
+
+  #[energy_down_BC]
+  #  type = FunctionDirichletBC
+  #  variable = mean_en
+  #  function = &#x27;mean_en_fun&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  [energy_down_physical_diffusion]
+    type = SakiyamaEnergyDiffusionBC
+    variable = mean_en
+    electrons = em
+    boundary = 0
+    position_units = 1.0
+  []
+  [energy_down_second_emissions]
+    type = SakiyamaEnergySecondaryElectronWithEffEfieldBC
+    variable = mean_en
+    electrons = em
+    ions = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    secondary_electron_temperature_equal_to_bulk = false
+    secondary_electron_energy = 1.0
+    emission_coeffs = &#x27;users_gamma&#x27;
+    boundary = 0
+    position_units = 1.0
+  []
+
+  [energy_up_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = 2
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [potentialt_BC]
+    type = FunctionDirichletBC
+    variable = potential
+    function = &#x27;potential_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  massem diffpotential  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  massem_mat diffpotential  diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion  muion  diffem  muem  diffmean_en mumean_en&#x27;
+    prop_values = &#x27;diffion  muion  diffem  muem  diffmean_en mumean_en&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem  sgnion  sgnmean_en&#x27;
+    prop_values = &#x27;-1.0   1.0     -1.0&#x27;
+  []
+  [emission_coeffs]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;users_gamma&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+  [mean_en_l2Error]
+    type = ElementL2Error
+    variable = mean_en
+    function = mean_en_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [potential_l2Error]
+    type = ElementL2Error
+    variable = potential
+    function = potential_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="234d5b94-6fd2-41a5-af53-ecc1b46a545c"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_IonBC_NegivateOutWardFacingEfield.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_IonBC_NegivateOutWardFacingEfield_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [ion]
+    initial_from_file_var = ion
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+[]
+
+[Kernels]
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+[]
+
+[AuxKernels]
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  #Ion diffusion coeff.
+  [diffion]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muion]
+    type = ConstantFunction
+    value = 0.01
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.25
+  []
+
+  #Manufactured Solutions
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(diffion*pi*cos(pi*x))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(diffion*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))&#x27;
+  []
+
+  #Source Terms in moles
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;((2*pi*cos(2*pi*t)*cos(pi*y))/5) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-diffpotential*((2*diffion*pi^3*cos(pi*x)^3)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (diffion*pi^3*cos(pi*x))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) + (3*diffion*pi^3*cos(pi*x)*sin(pi*x))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) - (2*diffion*diffpotential*pi*cos(pi*x)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^2)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (2*diffion*pi^2*cos(2*pi*t)*cos(pi*x)*cos(pi*y))/(5*muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) - (diffion*diffpotential*pi*cos(pi*x)*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-diffpotential*((2*diffion*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^3)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (diffion*(pi^3*cos(pi*y) - (pi^3*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) + (3*diffion*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) - (2*diffion*pi^2*cos(2*pi*t)*sin(pi*y))/(5*muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) - (diffion*diffpotential*pi^2*sin(pi*x)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) - (2*diffion*diffpotential*pi^2*cos(pi*x)^2*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (2*diffion*pi*cos(2*pi*t)*cos(pi*y)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(5*muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)&#x27;
+  []
+
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+
+  [ion_left_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(0) / N_A&#x27;
+  []
+  [ion_down_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(0) / N_A&#x27;
+  []
+[]
+
+[BCs]
+  #[ion_left_BC]
+  #  type = FunctionDirichletBC
+  #  variable = ion
+  #  function = &#x27;ion_fun&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  [ion_left_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC
+    variable = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    boundary = 3
+    position_units = 1.0
+  []
+
+  [ion_right_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = 1
+    preset = true
+  []
+
+  #[ion_down_BC]
+  #  type = FunctionDirichletBC
+  #  variable = ion
+  #  function = &#x27;ion_down_BC&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  [ion_down_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC
+    variable = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    boundary = 0
+    position_units = 1.0
+  []
+
+  [ion_up_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = 2
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion  muion&#x27;
+    prop_values = &#x27;diffion  muion&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnion&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="8cd6c3aa-2138-481a-a255-029be37de2d4"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_EnergyBC_NegivateOutWardFacingEfield.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_EnergyBC_NegivateOutWardFacingEfield_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+  [ion]
+    initial_from_file_var = ion
+  []
+  [mean_en]
+    initial_from_file_var = mean_en
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+
+  [potential]
+    initial_from_file_var = potential
+  []
+[]
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = TimeDerivativeLog
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+
+  #Potential
+  [Potential_time_deriv]
+    type = TimeDerivative
+    variable = potential
+  []
+  [Potential_diffusion]
+    type = MatDiffusion
+    diffusivity = diffpotential
+    variable = potential
+  []
+  [Potential_source]
+    type = BodyForce
+    variable = potential
+    function = &#x27;potential_source&#x27;
+  []
+
+  #Electron Energy Equations
+  [mean_en_time_deriv]
+    type = TimeDerivativeLog
+    variable = mean_en
+  []
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_source]
+    type = BodyForce
+    variable = mean_en
+    function = &#x27;energy_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [mean_en_sol]
+  []
+
+  [em_sol]
+  []
+
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+
+  [potential_sol]
+  []
+[]
+
+[AuxKernels]
+  [mean_en_sol]
+    type = FunctionAux
+    variable = mean_en_sol
+    function = mean_en_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+
+  [potential_sol]
+    type = FunctionAux
+    variable = potential_sol
+    function = potential_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  [massem]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [massem_mat]
+    type = ParsedFunction
+    symbol_names = massem
+    symbol_values = massem
+    value = &#x27;massem*1.6e-19&#x27;
+  []
+  #Electron diffusion coeff.
+  [diffem]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muem]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Electron energy mobility coeff.
+  [diffmean_en]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [mumean_en]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Ion diffusion coeff.
+  [diffion]
+    type = ParsedFunction
+    symbol_names = diffmean_en
+    symbol_values = diffmean_en
+    expression = diffmean_en
+  []
+  [muion]
+    type = ParsedFunction
+    symbol_names = mumean_en
+    symbol_values = mumean_en
+    expression = mumean_en
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.25
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;log(((16*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)^3)/(3*massem*pi*((12*diffmean_en*pi)/5 +
+                      (12*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2)) / N_A)&#x27;
+  []
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured electron energy solution
+  [mean_en_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;pi*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;pi*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+  #The manufactured potential solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;-(sin(pi*t) + 1.0)*(sin(pi*y) + sin(pi*x))&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;((32*ee*cos(2*pi*t)*cos(pi*y)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 +
+                   1)^2)/(5*massem*((12*diffmean_en*pi)/5 + (12*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) +
+                   sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2) - diffem*((32*ee*(pi*cos(pi*y) -
+                   (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 +
+                   1))/(massem*pi*((12*diffmean_en*pi)/5 + (12*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) +
+                   sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2) - (16*ee*(pi^2*sin(pi*y) +
+                   (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 +
+                   1)^2)/(massem*pi*((12*diffmean_en*pi)/5 + (12*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) +
+                   sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2) - (768*ee*mumean_en*(pi*cos(pi*y) -
+                   (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)^2)/(5*massem*((12*diffmean_en*pi)/5 + (12*mumean_en*pi*(sin(t*pi) +
+                   1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^3) + (128*ee*mumean_en*(pi^2*sin(pi*y) +
+                   (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 +
+                   1)^3)/(5*massem*((12*diffmean_en*pi)/5 + (12*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^3) + (4608*ee*mumean_en^2*pi*(pi*cos(pi*y) -
+                   (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(sin(pi*t) + 1)^2*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 +
+                   1)^3)/(25*massem*((12*diffmean_en*pi)/5 + (12*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^4)) - diffem*((32*ee*pi*cos(pi*x)^2*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1))/(massem*((12*diffmean_en*pi)/5 + (12*mumean_en*pi*(sin(t*pi) +
+                   1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2) - (16*ee*pi*sin(pi*x)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)^2)/(massem*((12*diffmean_en*pi)/5 + (12*mumean_en*pi*(sin(t*pi) +
+                   1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^2) - (768*ee*mumean_en*pi^2*cos(pi*x)^2*(sin(pi*t) +
+                   1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)^2)/(5*massem*((12*diffmean_en*pi)/5 +
+                   (12*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^3) +
+                   (128*ee*mumean_en*pi^2*sin(pi*x)*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 +
+                   1)^3)/(5*massem*((12*diffmean_en*pi)/5 + (12*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^3) + (4608*ee*mumean_en^2*pi^3*cos(pi*x)^2*(sin(pi*t) + 1)^2*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)^3)/(25*massem*((12*diffmean_en*pi)/5 +
+                   (12*mumean_en*pi*(sin(t*pi) + 1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^4)) -
+                   (32*ee*((12*mumean_en*pi^2*cos(pi*t)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))/5 +
+                   (24*mumean_en*pi^2*cos(2*pi*t)*cos(pi*y)*(sin(pi*t) + 1))/25)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)^3)/(3*massem*pi*((12*diffmean_en*pi)/5 + (12*mumean_en*pi*(sin(t*pi) +
+                   1)*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1))/5)^3)) / N_A&#x27;
+  []
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;(diffion*pi^2*sin(pi*x) + (diffion*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 +
+                  (2*pi*cos(2*pi*t)*cos(pi*y))/5 - (muion*pi^2*(sin(pi*t) + 1)*(5*sin(pi*x) + 5*sin(pi*y) +
+                  10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) +
+                  2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+  [energy_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;(diffmean_en*pi^2*sin(pi*x) + (diffmean_en*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 +
+                  (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (mumean_en*pi^2*(sin(pi*t) + 1)*(5*sin(pi*x) + 5*sin(pi*y) +
+                  10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) +
+                  2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;pi^2*cos(pi*t)*cos(pi*x) + diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;pi^2*cos(pi*t)*cos(pi*y) + diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [potential_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*t)*(sin(pi*x) + sin(pi*y)) - diffpotential*pi^2*sin(pi*x)*(sin(pi*t) + 1) -
+                  diffpotential*pi^2*sin(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;4.0&#x27;
+  []
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [mean_en_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;em_ICs&#x27;
+    symbol_values = &#x27;em_ICs&#x27;
+    expression = &#x27;1.0&#x27;
+  []
+
+  [em_left_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;(-diffmean_en*pi*cos(pi*x) - mumean_en*pi*cos(pi*x)*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+  [em_down_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en mumean_en diffion muion&#x27;
+    expression = &#x27;(-(diffmean_en*pi*(5*cos(pi*y) - sin(2*pi*t)*sin(pi*y)))/5 -
+                   mumean_en*pi*cos(pi*y)*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+[]
+
+[BCs]
+  [em_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [ion_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  #[energy_left_BC]
+  #  type = FunctionDirichletBC
+  #  variable = mean_en
+  #  function = &#x27;mean_en_fun&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  [energy_left_physical_diffusion]
+    type = SakiyamaEnergyDiffusionBC
+    variable = mean_en
+    electrons = em
+    boundary = 3
+    position_units = 1.0
+  []
+  [energy_left_second_emissions]
+    type = SakiyamaEnergySecondaryElectronWithEffEfieldBC
+    variable = mean_en
+    electrons = em
+    ions = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    secondary_electron_temperature_equal_to_bulk = false
+    secondary_electron_energy = 1.0
+    emission_coeffs = &#x27;users_gamma&#x27;
+    boundary = 3
+    position_units = 1.0
+  []
+
+  [energy_right_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = 1
+    preset = true
+  []
+
+  #[energy_down_BC]
+  #  type = FunctionDirichletBC
+  #  variable = mean_en
+  #  function = &#x27;mean_en_fun&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  [energy_down_physical_diffusion]
+    type = SakiyamaEnergyDiffusionBC
+    variable = mean_en
+    electrons = em
+    boundary = 0
+    position_units = 1.0
+  []
+  [energy_down_second_emissions]
+    type = SakiyamaEnergySecondaryElectronWithEffEfieldBC
+    variable = mean_en
+    electrons = em
+    ions = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    secondary_electron_temperature_equal_to_bulk = false
+    secondary_electron_energy = 1.0
+    emission_coeffs = &#x27;users_gamma&#x27;
+    boundary = 0
+    position_units = 1.0
+  []
+
+  [energy_up_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = 2
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [potential_BC]
+    type = FunctionDirichletBC
+    variable = potential
+    function = &#x27;potential_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  massem diffpotential  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  massem_mat diffpotential  diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion  muion  diffem  muem  diffmean_en mumean_en&#x27;
+    prop_values = &#x27;diffion  muion  diffem  muem  diffmean_en mumean_en&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem  sgnion  sgnmean_en&#x27;
+    prop_values = &#x27;-1.0   1.0     -1.0&#x27;
+  []
+  [emission_coeffs]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;users_gamma&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+  [mean_en_l2Error]
+    type = ElementL2Error
+    variable = mean_en
+    function = mean_en_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [potential_l2Error]
+    type = ElementL2Error
+    variable = potential
+    function = potential_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="b3a39177-38b2-4a5e-80bf-50f0ffb05ff1"><div class="modal-content"><h4>(test/tests/mms/continuity_equations/2D_Coupling_Electons_Potential_Ions_MeanEnergy_Einstein_Relation_EffEfield.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_Coupling_Electons_Potential_Ions_MeanEnergy_Einstein_Relation_EffEfield_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+  [potential]
+    initial_from_file_var = potential
+  []
+  [ion]
+    initial_from_file_var = ion
+  []
+  [mean_en]
+    initial_from_file_var = mean_en
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+[]
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = TimeDerivativeLog
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Potential Equations
+  [potential_diffusion]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = 1.0
+  []
+  [ion_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = ion
+    potential_units = V
+  []
+  [em_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = em
+    potential_units = V
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_ForceBody]
+    type = EffectiveEField
+    variable = Ex
+    nu = 5.0
+    component = 0
+    position_units = 1.0
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_ForceBody]
+    type = EffectiveEField
+    variable = Ey
+    nu = 5.0
+    component = 1
+    position_units = 1.0
+  []
+
+  #Electron Energy Equations
+  [mean_en_time_deriv]
+    type = TimeDerivativeLog
+    variable = mean_en
+  []
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_diffusion_correction]
+    type = ThermalConductivityDiffusion
+    variable = mean_en
+    electrons = em
+    position_units = 1.0
+  []
+  [mean_en_joule_heating]
+    type = JouleHeating
+    variable = mean_en
+    electrons = em
+    position_units = 1.0
+    potential_units = V
+  []
+  [mean_en_source]
+    type = BodyForce
+    variable = mean_en
+    function = &#x27;energy_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [potential_sol]
+  []
+
+  [mean_en_sol]
+  []
+
+  [em_sol]
+  []
+
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+[]
+
+[AuxKernels]
+  [potential_sol]
+    type = FunctionAux
+    variable = potential_sol
+    function = potential_fun
+  []
+
+  [mean_en_sol]
+    type = FunctionAux
+    variable = mean_en_sol
+    function = mean_en_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  #Electron diffusion coeff.
+  [diffem_coeff]
+    type = ConstantFunction
+    value = 0.05
+  []
+  #Electron mobility coeff.
+  [muem_coeff]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Electron energy diffusion coeff.
+  [diffmean_en_coeff]
+    type = ParsedFunction
+    symbol_names = &#x27;diffem_coeff&#x27;
+    symbol_values = &#x27;diffem_coeff&#x27;
+    expression = &#x27;5.0 / 3.0 * diffem_coeff&#x27;
+  []
+  #Electron energy mobility coeff.
+  [mumean_en_coeff]
+    type = ParsedFunction
+    symbol_names = &#x27;muem_coeff&#x27;
+    symbol_values = &#x27;muem_coeff&#x27;
+    expression = &#x27;5.0 / 3.0 * muem_coeff&#x27;
+  []
+  #Ion diffusion coeff.
+  [diffion]
+    type = ConstantFunction
+    value = 0.1
+  []
+  #Ion mobility coeff.
+  [muion]
+    type = ConstantFunction
+    value = 0.025
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.01
+  []
+  [diffpotential_mat]
+    type = ParsedFunction
+    symbol_names = &#x27;diffpotential&#x27;
+    symbol_values = &#x27;diffpotential&#x27;
+    expression = &#x27;diffpotential * (1.6e-19 * 6.02e23)&#x27;
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 1.0 + 0.9*cos(pi/2*x)) / N_A)&#x27;
+  []
+  #The manufactured electron density solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential&#x27;
+    symbol_values = &#x27;ee diffpotential&#x27;
+    expression = &#x27;-(ee*(2*cos((pi*x)/2) + cos(pi*y)*sin(2*pi*t)))/(5*diffpotential*pi^2)&#x27;
+  []
+  #The manufactured electron energy solution
+  [energy_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;sin(pi*y) + sin(2*pi*t)*cos(pi*y)*sin(pi*y) + 0.75 + cos(pi/2*x)&#x27;
+  []
+  [mean_en_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;energy_fun em_fun&#x27;
+    symbol_values = &#x27;energy_fun em_fun&#x27;
+    expression = &#x27;log(energy_fun) + em_fun&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential&#x27;
+    symbol_values = &#x27;ee diffpotential&#x27;
+    expression = &#x27;-(ee*exp(-5*t)*sin((pi*x)/2)*(exp(5*t) - 1))/(5*diffpotential*pi)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential&#x27;
+    symbol_values = &#x27;ee diffpotential&#x27;
+    expression = &#x27;-(2*ee*exp(-5*t)*sin(pi*y))/(4*diffpotential*pi^2 + 25*diffpotential) -
+                  (ee*sin(pi*y)*(5*sin(2*pi*t) - 2*pi*cos(2*pi*t)))/(diffpotential*pi*(4*pi^2 + 25))&#x27;
+  []
+
+  #Electron diffusion coeff.
+  [diffem]
+    type = ParsedFunction
+    symbol_names = &#x27;diffem_coeff energy_fun&#x27;
+    symbol_values = &#x27;diffem_coeff energy_fun&#x27;
+    expression = &#x27;diffem_coeff * energy_fun&#x27;
+  []
+  #Electron mobility coeff.
+  [muem]
+    type = ParsedFunction
+    symbol_names = &#x27;muem_coeff energy_fun&#x27;
+    symbol_values = &#x27;muem_coeff energy_fun&#x27;
+    expression = &#x27;muem_coeff * energy_fun&#x27;
+  []
+  #Electron energy diffusion coeff.
+  [diffmean_en]
+    type = ParsedFunction
+    symbol_names = &#x27;diffmean_en_coeff energy_fun&#x27;
+    symbol_values = &#x27;diffmean_en_coeff energy_fun&#x27;
+    expression = &#x27;diffmean_en_coeff * energy_fun&#x27;
+  []
+  #Electron energy mobility coeff.
+  [mumean_en]
+    type = ParsedFunction
+    symbol_names = &#x27;mumean_en_coeff energy_fun&#x27;
+    symbol_values = &#x27;mumean_en_coeff energy_fun&#x27;
+    expression = &#x27;mumean_en_coeff * energy_fun&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential diffem_coeff muem_coeff N_A&#x27;
+    symbol_values = &#x27;ee diffpotential diffem_coeff muem_coeff N_A&#x27;
+    expression = &#x27;((2*pi*cos(2*pi*t)*cos(pi*y))/5 - (diffem_coeff*pi^2*sin((pi*x)/2)^2)/4 -
+                   diffem_coeff*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos(pi*y) -
+                   sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t)) + (diffem_coeff*pi^2*cos((pi*x)/2)*(cos((pi*x)/2) +
+                   sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/4 + (diffem_coeff*pi^2*(5*sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t))*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/5 -
+                   (ee*muem_coeff*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(10*diffpotential) -
+                   (ee*muem_coeff*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))/(10*diffpotential) +
+                   (ee*muem_coeff*cos((pi*x)/2)*(cos((pi*x)/2) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(10*diffpotential) +
+                   (ee*muem_coeff*cos(pi*y)*sin(2*pi*t)*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) +
+                   sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential) + (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(cos(pi*y) -
+                   sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t))*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))/(5*diffpotential) +
+                   (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos((pi*x)/2) + sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential*pi)) / N_A&#x27;
+  []
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential diffion muion N_A&#x27;
+    symbol_values = &#x27;ee diffpotential diffion muion N_A&#x27;
+    expression = &#x27;((diffion*pi^2*(9*cos((pi*x)/2) + 40*sin(pi*y)))/40 +
+                   (9*ee*muion*exp(-5*t)*sin((pi*x)/2)^2*(exp(5*t) - 1))/(100*diffpotential) -
+                   (ee*muion*exp(-5*t)*cos((pi*x)/2)*(exp(5*t) - 1)*((9*cos((pi*x)/2))/10 + sin(pi*y) + 1))/(10*diffpotential) -
+                   (ee*muion*exp(-5*t)*cos(pi*y)*(2*pi + 5*exp(5*t)*sin(2*pi*t) -
+                   2*pi*exp(5*t)*cos(2*pi*t))*((9*cos((pi*x)/2))/10 + sin(pi*y) + 1))/(diffpotential*(4*pi^2 + 25)) -
+                   (ee*muion*exp(-5*t)*cos(pi*y)*sin(pi*y)*(2*pi + 5*exp(5*t)*sin(2*pi*t) -
+                   2*pi*exp(5*t)*cos(2*pi*t)))/(diffpotential*(4*pi^2 + 25))) / N_A&#x27;
+  []
+  [energy_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential diffem_coeff muem_coeff N_A&#x27;
+    symbol_values = &#x27;ee diffpotential diffem_coeff muem_coeff N_A&#x27;
+    expression = &#x27;(((4*cos((pi*x)/2) + 4*sin(pi*y) + 4*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3)*(172*ee*muem_coeff*cos(2*pi*t)^2 -
+                   282*ee*muem_coeff + 180*ee*muem_coeff*cos((pi*x)/2)^2 + 160*ee*muem_coeff*cos((pi*x)/2)^3 +
+                   664*ee*muem_coeff*cos(pi*y)^2 - 480*ee*muem_coeff*cos(pi*y)^4 -
+                   66*ee*muem_coeff*cos((pi*x)/2) - 296*ee*muem_coeff*sin(pi*y) +
+                   200*diffem_coeff*diffpotential*pi^2 - 664*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^2 +
+                   480*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^4 + 364*ee*muem_coeff*cos(pi*y)*sin(2*pi*t) -
+                   90*ee*muem_coeff*cos((pi*x)/2)*sin(pi*y) + 75*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2) +
+                   140*diffem_coeff*diffpotential*pi^2*sin(pi*y) + 16*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2) -
+                   8*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^2 + 176*ee*muem_coeff*cos(2*pi*t)^2*sin(pi*y) -
+                   320*ee*muem_coeff*cos(pi*y)^3*sin(2*pi*t) + 200*ee*muem_coeff*cos((pi*x)/2)^2*sin(pi*y) +
+                   464*ee*muem_coeff*cos(pi*y)^2*sin(pi*y) + 300*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)^2 -
+                   1200*diffem_coeff*diffpotential*pi^2*cos(pi*y)^2 + 160*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*sin(pi*y) +
+                   104*ee*muem_coeff*cos((pi*x)/2)^2*cos(pi*y)*sin(2*pi*t) - 40*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^3*sin(2*pi*t) +
+                   408*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)^2*sin(pi*y) + 96*ee*muem_coeff*cos(pi*y)^3*sin(2*pi*t)*sin(pi*y) +
+                   160*diffem_coeff*diffpotential*pi^2*cos(2*pi*t)^2*sin(pi*y) -
+                   2000*diffem_coeff*diffpotential*pi^2*cos(pi*y)^3*sin(2*pi*t) + 400*diffem_coeff*diffpotential*pi^2*cos(pi*y)^2*sin(pi*y) -
+                   32*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*cos(pi*y)^2 - 464*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^2*sin(pi*y) +
+                   186*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t) + 272*ee*muem_coeff*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
+                   1260*diffem_coeff*diffpotential*pi^2*cos(pi*y)*sin(2*pi*t) + 500*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)*sin(pi*y) -
+                   408*ee*muem_coeff*cos(2*pi*t)^2*cos((pi*x)/2)*cos(pi*y)^2*sin(pi*y) -
+                   96*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)^3*sin(2*pi*t)*sin(pi*y) -
+                   400*diffem_coeff*diffpotential*pi^2*cos(2*pi*t)^2*cos(pi*y)^2*sin(pi*y) +
+                   448*ee*muem_coeff*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
+                   80*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t) +
+                   240*diffem_coeff*diffpotential*pi^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
+                   48*ee*muem_coeff*cos(2*pi*t)^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 80*ee*muem_coeff*cos((pi*x)/2)^2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) +
+                   100*diffem_coeff*diffpotential*pi^2*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t)*sin(pi*y)))/(960*diffpotential) +
+                   (pi*cos(2*pi*t)*cos(pi*y)*(4*cos((pi*x)/2) + 24*sin(pi*y) + 20*cos((pi*x)/2)*sin(pi*y) + 20*sin(pi*y)^2 +
+                   8*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3))/10 - (diffem_coeff*pi^2*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/4 - (diffem_coeff*pi^2*sin((pi*x)/2)^2*(cos((pi*x)/2) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1))/4 - diffem_coeff*pi^2*(cos(pi*y) - sin(2*pi*t) +
+                   2*cos(pi*y)^2*sin(2*pi*t))^2*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1) +
+                   (diffem_coeff*pi^2*cos((pi*x)/2)*(cos((pi*x)/2) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/4 - diffem_coeff*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos(pi*y) -
+                   sin(2*pi*t) + 2*cos(pi*y)^2*sin(2*pi*t))*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4) +
+                   (ee*sin(2*pi*t)*sin(pi*y)*(diffem_coeff*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(cos((pi*x)/2) +
+                   sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4) - (ee*muem_coeff*sin(2*pi*t)*sin(pi*y)*(cos((pi*x)/2) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4))/(5*diffpotential*pi)))/(5*diffpotential*pi) +
+                   diffem_coeff*pi^2*sin(pi*y)*(4*cos(pi*y)*sin(2*pi*t) + 1)*(cos((pi*x)/2) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)*(cos((pi*x)/2) + sin(pi*y) + cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3/4) -
+                   (ee*sin((pi*x)/2)^2*(4*cos((pi*x)/2) + 4*sin(pi*y) +
+                   4*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 3)*(10*ee*muem_coeff + 10*ee*muem_coeff*cos((pi*x)/2) +
+                   10*ee*muem_coeff*sin(pi*y) + 25*diffem_coeff*diffpotential*pi^2 +
+                   2*ee*muem_coeff*cos(pi*y)*sin(2*pi*t)))/(1000*diffpotential^2*pi^2)) / N_A&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + 0.9*cos(pi/2*x)) / N_A)&#x27;
+  []
+  [mean_en_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;em_ICs&#x27;
+    symbol_values = &#x27;em_ICs&#x27;
+    expression = &#x27;log(32. + cos(pi/2*x)) + em_ICs&#x27;
+  []
+[]
+
+[BCs]
+  [potential_BC]
+    type = FunctionDirichletBC
+    variable = potential
+    function = &#x27;potential_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [em_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [ion_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [energy_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e N_A&#x27;
+    prop_values = &#x27;ee N_A&#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffpotential     diffion muion&#x27;
+    prop_values = &#x27;diffpotential_mat diffion muion&#x27;
+  []
+  [Material_Coeff_Set2]
+    type = ADMMSEEDFRates
+    electrons = em
+    electron_energy = mean_en
+    prop_names = &#x27;diffem        muem        diffmean_en        mumean_en&#x27;
+    prop_values = &#x27;diffem        muem        diffmean_en        mumean_en&#x27;
+    d_prop_d_actual_mean_en = &#x27;diffem_coeff  muem_coeff  diffmean_en_coeff  mumean_en_coeff&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem  sgnion  sgnmean_en&#x27;
+    prop_values = &#x27;-1.0   1.0     -1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+  [potential_l2Error]
+    type = ElementL2Error
+    variable = potential
+    function = potential_fun
+  []
+  [mean_en_l2Error]
+    type = ElementL2Error
+    variable = mean_en
+    function = mean_en_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="86fc8b98-f378-48db-ab46-9fa25b6aea2e"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_ElectronBC.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_ElectronBC_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+  [ion]
+    initial_from_file_var = ion
+  []
+  [mean_en]
+    initial_from_file_var = mean_en
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+
+  [potential]
+    initial_from_file_var = potential
+  []
+[]
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = TimeDerivativeLog
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+
+  #Potential
+  [Potential_time_deriv]
+    type = TimeDerivative
+    variable = potential
+  []
+  [Potential_diffusion]
+    type = MatDiffusion
+    diffusivity = diffpotential
+    variable = potential
+  []
+  [Potential_source]
+    type = BodyForce
+    variable = potential
+    function = &#x27;potential_source&#x27;
+  []
+
+  #Electron Energy Equations
+  [mean_en_time_deriv]
+    type = TimeDerivativeLog
+    variable = mean_en
+  []
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_source]
+    type = BodyForce
+    variable = mean_en
+    function = &#x27;energy_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [mean_en_sol]
+  []
+
+  [em_sol]
+  []
+
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+
+  [potential_sol]
+  []
+[]
+
+[AuxKernels]
+  [mean_en_sol]
+    type = FunctionAux
+    variable = mean_en_sol
+    function = mean_en_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+
+  [potential_sol]
+    type = FunctionAux
+    variable = potential_sol
+    function = potential_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  [massem]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [massem_mat]
+    type = ParsedFunction
+    symbol_names = massem
+    symbol_values = massem
+    value = &#x27;massem*1.6e-19&#x27;
+  []
+  #Electron diffusion coeff.
+  [diffem]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muem]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Electron energy mobility coeff.
+  [diffmean_en]
+    type = ConstantFunction
+    value = 0.05
+  []
+  #Ion diffusion coeff.
+  [diffion]
+    type = ParsedFunction
+    symbol_names = diffem
+    symbol_values = diffem
+    expression = diffem
+  []
+  [muion]
+    type = ParsedFunction
+    symbol_names = muem
+    symbol_values = muem
+    expression = muem
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.25
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured electron energy solution
+  [mean_en_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;log(((3*massem*pi*(4*pi*diffem + 8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                      (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(16*ee*(sin(pi*x) + sin(pi*y) +
+                      (cos(pi*y)*sin(2*pi*t))/5 + 1))) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+  #The manufactured potential solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-(sin(pi*t) + 1.0)*(sin(pi*y) + sin(pi*x))&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(diffem*pi^2*sin(pi*x) + (diffem*pi^2*(5*sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)))/5 + (2*pi*cos(2*pi*t)*cos(pi*y))/5 +
+                   (muem*pi^2*(sin(pi*t) + 1)*(5*sin(pi*x) + 5*sin(pi*y) + 10*sin(pi*x)*sin(pi*y) -
+                   10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) +
+                   2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(diffion*pi^2*sin(pi*x) + (diffion*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 +
+                   (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (muion*pi^2*(sin(pi*t) + 1)*(5*sin(pi*x) + 5*sin(pi*y) +
+                   10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) +
+                   2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+  [energy_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;((3*massem*pi*(8*muem*pi^2*cos(pi*t)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1) +
+                   (16*muem*pi^2*cos(2*pi*t)*cos(pi*y)*(sin(pi*t) + 1))/5)*(4*pi*diffem + 8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) -
+                   diffmean_en*((3*massem*pi^3*sin(pi*x)*(4*pi*diffem + 8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(16*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) +
+                   (3*massem*pi^3*cos(pi*x)^2*(4*pi*diffem + 8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(8*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) +
+                   (24*massem*muem^2*pi^5*cos(pi*x)^2*(sin(pi*t) + 1)^2)/(ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) -
+                   (3*massem*muem*pi^4*sin(pi*x)*(4*pi*diffem + 8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1))*(sin(pi*t) + 1))/(ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) -
+                   (6*massem*muem*pi^4*cos(pi*x)^2*(4*pi*diffem + 8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1))*(sin(pi*t) + 1))/(ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) -
+                   diffmean_en*((3*massem*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(4*pi*diffem +
+                   8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(8*ee*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) + (3*massem*pi*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(4*pi*diffem +
+                   8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(16*ee*(sin(x*pi) +
+                   sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) + (24*massem*muem^2*pi^3*(pi*cos(pi*y) -
+                   (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(sin(pi*t) + 1)^2)/(ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) -
+                   (6*massem*muem*pi^2*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(4*pi*diffem + 8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))*(sin(pi*t) + 1))/(ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) -
+                   (3*massem*muem*pi^2*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(4*pi*diffem +
+                   8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))*(sin(pi*t) + 1))/(ee*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1))) - (3*massem*pi^2*cos(2*pi*t)*cos(pi*y)*(4*pi*diffem + 8*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(40*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*x) - diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*y) - diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [potential_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*t)*(sin(pi*x) + sin(pi*y)) -
+                  diffpotential*pi^2*sin(pi*x)*(sin(pi*t) + 1) -
+                  diffpotential*pi^2*sin(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [mean_en_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;em_ICs&#x27;
+    symbol_values = &#x27;em_ICs&#x27;
+    expression = &#x27;log(3./2.) + em_ICs&#x27;
+  []
+
+  [em_left_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(-diffem*pi*cos(pi*x) - muem*pi*cos(pi*x)*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+  [em_down_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(-(diffem*pi*(5*cos(pi*y) - sin(2*pi*t)*sin(pi*y)))/5 -
+                   muem*pi*cos(pi*y)*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+[]
+
+[BCs]
+  #[em_left_BC]
+  #  type = FunctionDirichletBC
+  #  variable = em
+  #  function = &#x27;em_fun&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  #[em_left_BC]
+  #  type = FunctionNeumannBC
+  #  variable = em
+  #  function = &#x27;em_left_Flux_BC&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  [em_physical_diffusion_left]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    electron_energy = mean_en
+    boundary = 3
+    position_units = 1.0
+  []
+  [em_Ar+_second_emissions_left]
+    type = SakiyamaSecondaryElectronWithEffEfieldBC
+    variable = em
+    electric_field_x = Ex
+    electric_field_y = Ey
+    ions = ion
+    emission_coeffs = &#x27;users_gamma&#x27;
+    boundary = 3
+    position_units = 1.0
+  []
+
+  [em_right_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = 1
+    preset = true
+  []
+
+  #[em_down_BC]
+  #  type = FunctionDirichletBC
+  #  variable = em
+  #  function = &#x27;em_fun&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  #[em_down_BC]
+  #  type = FunctionNeumannBC
+  #  variable = em
+  #  function = &#x27;em_down_Flux_BC&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  [em_physical_diffusion_down]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    electron_energy = mean_en
+    boundary = 0
+    position_units = 1.0
+  []
+  [em_Ar+_second_emissions_down]
+    type = SakiyamaSecondaryElectronWithEffEfieldBC
+    variable = em
+    electric_field_x = Ex
+    electric_field_y = Ey
+    ions = ion
+    emission_coeffs = &#x27;users_gamma&#x27;
+    boundary = 0
+    position_units = 1.0
+  []
+
+  [em_up_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = 2
+    preset = true
+  []
+
+  [ion_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [energy_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [potential_BC]
+    type = FunctionDirichletBC
+    variable = potential
+    function = &#x27;potential_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  massem diffpotential  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  massem_mat diffpotential  diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion  muion  diffem  muem  diffmean_en&#x27;
+    prop_values = &#x27;diffion  muion  diffem  muem  diffmean_en&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem  sgnion  sgnmean_en&#x27;
+    prop_values = &#x27;-1.0   1.0     -1.0&#x27;
+  []
+  [emission_coeffs]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;users_gamma&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+  [mean_en_l2Error]
+    type = ElementL2Error
+    variable = mean_en
+    function = mean_en_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [potential_l2Error]
+    type = ElementL2Error
+    variable = potential
+    function = potential_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="fd2a6d69-f0fc-45b5-8d49-3855565b28d2"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_ElectronBC_NegivateOutWardFacingEfield.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_ElectronBC_NegivateOutWardFacingEfield_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+  [ion]
+    initial_from_file_var = ion
+  []
+  [mean_en]
+    initial_from_file_var = mean_en
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+
+  [potential]
+    initial_from_file_var = potential
+  []
+[]
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = TimeDerivativeLog
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+
+  #Potential
+  [Potential_time_deriv]
+    type = TimeDerivative
+    variable = potential
+  []
+  [Potential_diffusion]
+    type = MatDiffusion
+    diffusivity = diffpotential
+    variable = potential
+  []
+  [Potential_source]
+    type = BodyForce
+    variable = potential
+    function = &#x27;potential_source&#x27;
+  []
+
+  #Electron Energy Equations
+  [mean_en_time_deriv]
+    type = TimeDerivativeLog
+    variable = mean_en
+  []
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_source]
+    type = BodyForce
+    variable = mean_en
+    function = &#x27;energy_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [mean_en_sol]
+  []
+
+  [em_sol]
+  []
+
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+
+  [potential_sol]
+  []
+[]
+
+[AuxKernels]
+  [mean_en_sol]
+    type = FunctionAux
+    variable = mean_en_sol
+    function = mean_en_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+
+  [potential_sol]
+    type = FunctionAux
+    variable = potential_sol
+    function = potential_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  [massem]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [massem_mat]
+    type = ParsedFunction
+    symbol_names = massem
+    symbol_values = massem
+    value = &#x27;massem*1.6e-19&#x27;
+  []
+  #Electron diffusion coeff.
+  [diffem]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muem]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Electron energy mobility coeff.
+  [diffmean_en]
+    type = ConstantFunction
+    value = 0.05
+  []
+  #Ion diffusion coeff.
+  [diffion]
+    type = ParsedFunction
+    symbol_names = diffem
+    symbol_values = diffem
+    expression = diffem
+  []
+  [muion]
+    type = ParsedFunction
+    symbol_names = muem
+    symbol_values = muem
+    expression = muem
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.25
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured electron energy solution
+  [mean_en_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;log(((3*massem*pi*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                      sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(16*ee*(sin(pi*x) +
+                      sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;pi*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;pi*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+  #The manufactured potential solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-(sin(pi*t) + 1.0)*(sin(pi*y) + sin(pi*x))&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(diffem*pi^2*sin(pi*x) + (diffem*pi^2*(5*sin(pi*y) +
+                   cos(pi*y)*sin(2*pi*t)))/5 + (2*pi*cos(2*pi*t)*cos(pi*y))/5 +
+                   (muem*pi^2*(sin(pi*t) + 1)*(5*sin(pi*x) + 5*sin(pi*y) +
+                   10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 +
+                   cos(pi*y)*sin(2*pi*t)*sin(pi*x) + 2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(diffion*pi^2*sin(pi*x) + (diffion*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 +
+                  (2*pi*cos(2*pi*t)*cos(pi*y))/5 - (muion*pi^2*(sin(pi*t) + 1)*(5*sin(pi*x) +
+                  5*sin(pi*y) + 10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 -
+                  10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) +
+                  2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+  [energy_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;((3*massem*pi*(4*muem*pi^2*cos(pi*t)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1) + (8*muem*pi^2*cos(2*pi*t)*cos(pi*y)*(sin(pi*t) +
+                   1))/5)*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) -
+                   diffmean_en*((3*massem*pi^3*sin(pi*x)*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(16*ee*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) + (3*massem*pi^3*cos(pi*x)^2*(4*pi*diffem +
+                   4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 +
+                   1))^2)/(8*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) +
+                   (6*massem*muem^2*pi^5*cos(pi*x)^2*(sin(pi*t) + 1)^2)/(ee*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)) - (3*massem*muem*pi^4*sin(pi*x)*(4*pi*diffem +
+                   4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 +
+                   1))*(sin(pi*t) + 1))/(2*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) -
+                   (3*massem*muem*pi^4*cos(pi*x)^2*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))*(sin(pi*t) + 1))/(ee*(sin(x*pi) +
+                   sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) - diffmean_en*((3*massem*pi*(pi*cos(pi*y) -
+                   (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(8*ee*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) + (3*massem*pi*(pi^2*sin(pi*y) +
+                   (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(16*ee*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) + (6*massem*muem^2*pi^3*(pi*cos(pi*y) -
+                   (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(sin(pi*t) + 1)^2)/(ee*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)) - (3*massem*muem*pi^2*(pi*cos(pi*y) -
+                   (pi*sin(2*pi*t)*sin(pi*y))/5)^2*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))*(sin(pi*t) + 1))/(ee*(sin(x*pi) +
+                   sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) - (3*massem*muem*pi^2*(pi^2*sin(pi*y) +
+                   (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))*(sin(pi*t) + 1))/(2*ee*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))) -
+                   (3*massem*pi^2*cos(2*pi*t)*cos(pi*y)*(4*pi*diffem + 4*muem*pi*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))^2)/(40*ee*(sin(x*pi) + sin(y*pi) +
+                   (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;pi^2*cos(pi*t)*cos(pi*x) + diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;pi^2*cos(pi*t)*cos(pi*y) + diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [potential_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*t)*(sin(pi*x) + sin(pi*y)) -
+                  diffpotential*pi^2*sin(pi*x)*(sin(pi*t) + 1) -
+                  diffpotential*pi^2*sin(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [mean_en_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;em_ICs&#x27;
+    symbol_values = &#x27;em_ICs&#x27;
+    expression = &#x27;log(32.) + em_ICs&#x27;
+  []
+
+  [em_left_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(-diffem*pi*cos(pi*x) - muem*pi*cos(pi*x)*(sin(pi*t) + 1)*(sin(pi*x) +
+                   sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+  [em_down_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(-(diffem*pi*(5*cos(pi*y) - sin(2*pi*t)*sin(pi*y)))/5 -
+                   muem*pi*cos(pi*y)*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) +
+                   (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+[]
+
+[BCs]
+  #[em_left_BC]
+  #  type = FunctionDirichletBC
+  #  variable = em
+  #  function = &#x27;em_fun&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  #[em_left_BC]
+  #  type = FunctionNeumannBC
+  #  variable = em
+  #  function = &#x27;em_left_Flux_BC&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  [em_physical_diffusion_left]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    electron_energy = mean_en
+    boundary = 3
+    position_units = 1.0
+  []
+  [em_Ar+_second_emissions_left]
+    type = SakiyamaSecondaryElectronWithEffEfieldBC
+    variable = em
+    electric_field_x = Ex
+    electric_field_y = Ey
+    ions = ion
+    emission_coeffs = &#x27;users_gamma&#x27;
+    boundary = 3
+    position_units = 1.0
+  []
+
+  [em_right_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = 1
+    preset = true
+  []
+
+  #[em_down_BC]
+  #  type = FunctionDirichletBC
+  #  variable = em
+  #  function = &#x27;em_fun&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  #[em_down_BC]
+  #  type = FunctionNeumannBC
+  #  variable = em
+  #  function = &#x27;em_down_Flux_BC&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  [em_physical_diffusion_down]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    electron_energy = mean_en
+    boundary = 0
+    position_units = 1.0
+  []
+  [em_Ar+_second_emissions_down]
+    type = SakiyamaSecondaryElectronWithEffEfieldBC
+    variable = em
+    electric_field_x = Ex
+    electric_field_y = Ey
+    ions = ion
+    emission_coeffs = &#x27;users_gamma&#x27;
+    boundary = 0
+    position_units = 1.0
+  []
+
+  [em_up_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = 2
+    preset = true
+  []
+
+  [ion_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [energy_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [potential_BC]
+    type = FunctionDirichletBC
+    variable = potential
+    function = &#x27;potential_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  massem diffpotential  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  massem_mat diffpotential  diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion  muion  diffem  muem  diffmean_en&#x27;
+    prop_values = &#x27;diffion  muion  diffem  muem  diffmean_en&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem  sgnion  sgnmean_en&#x27;
+    prop_values = &#x27;-1.0   1.0     -1.0&#x27;
+  []
+  [emission_coeffs]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;users_gamma&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+  [mean_en_l2Error]
+    type = ElementL2Error
+    variable = mean_en
+    function = mean_en_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [potential_l2Error]
+    type = ElementL2Error
+    variable = potential
+    function = potential_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="dd50e509-095b-46a0-a3c7-04c77c8ec8c1"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_DielectricBCWithEffEfield.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_DielectricBCWithEffEfield_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+  [ion]
+    initial_from_file_var = ion
+  []
+  [mean_en]
+    initial_from_file_var = mean_en
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+
+  [potential]
+    initial_from_file_var = potential
+  []
+[]
+
+# [ICs]
+#   [em_IC]
+#     type = FunctionIC
+#     variable = em
+#     function = &#x27;em_ICs&#x27;
+#   []
+#   [ion_IC]
+#     type = FunctionIC
+#     variable = ion
+#     function = &#x27;ion_ICs&#x27;
+#   []
+#   [mean_en_IC]
+#     type = FunctionIC
+#     variable = mean_en
+#     function = &#x27;mean_en_ICs&#x27;
+#   []
+# []
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = ElectronTimeDerivative
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+
+  #Ion Equations
+  [ion_time_derivative]
+    type = ElectronTimeDerivative
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    # position_units = 1.0
+    position_units = &#x27;${fparse sqrt(1/(1.6e-19 * 6.02e23))}&#x27; # e * N_A / 2
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = ADTimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = ADTimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+
+  #Potential
+  [Potential_time_deriv]
+    type = ADTimeDerivative
+    variable = potential
+  []
+  [Potential_diffusion]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = 1.0
+  []
+  [Potential_source]
+    type = BodyForce
+    variable = potential
+    function = &#x27;potential_source&#x27;
+  []
+
+  #Electron Energy Equations
+  [mean_en_time_deriv]
+    type = ElectronTimeDerivative
+    variable = mean_en
+  []
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_source]
+    type = BodyForce
+    variable = mean_en
+    function = &#x27;energy_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [mean_en_sol]
+  []
+
+  [em_sol]
+  []
+
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+
+  [potential_sol]
+  []
+[]
+
+[AuxKernels]
+  [mean_en_sol]
+    type = FunctionAux
+    variable = mean_en_sol
+    function = mean_en_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+
+  [potential_sol]
+    type = FunctionAux
+    variable = potential_sol
+    function = potential_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  [massem]
+    type = ConstantFunction
+    value = 2.0
+  []
+
+  [massem_mat]
+    type = ParsedFunction
+    symbol_names = massem
+    symbol_values = massem
+    value = &#x27;massem * 1.6e-19 * (1.6e-19 * 6.02e23)^2&#x27;
+  []
+
+  #Electron diffusion coeff.
+  [diffem]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muem]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Electron energy mobility coeff.
+  [diffmean_en]
+    type = ConstantFunction
+    value = 0.05
+  []
+  #Ion diffusion coeff.
+  [diffion]
+    type = ParsedFunction
+    symbol_names = diffem
+    symbol_values = diffem
+    expression = diffem
+  []
+  [muion]
+    type = ParsedFunction
+    symbol_names = muem
+    symbol_values = muem
+    expression = muem
+  []
+
+  [muion_mat]
+    type = ParsedFunction
+    symbol_names = muion
+    symbol_values = muion
+    value = &#x27;muion / (1.6e-19 * 6.02e23)&#x27;
+  []
+
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.05
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 2.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 2.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured electron energy solution
+  [mean_en_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;log(((3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(16*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+  #The manufactured potential solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;0.25*(sin(pi*t)/pi + 1.0)*(sin(pi*y) + sin(pi*x)) - t&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(diffem*pi^2*sin(pi*x) + (diffem*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 + (2*pi*cos(2*pi*t)*cos(pi*y))/5 - (muem*pi*(pi + sin(pi*t))*(10*sin(pi*x) + 10*sin(pi*y) + 10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) + 2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/20) / N_A&#x27;
+  []
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(diffion*pi^2*sin(pi*x) + (diffion*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 + (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (muion*pi^2*(sin(pi*t) + 1)*(10*sin(pi*x) + 10*sin(pi*y) + 10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) + 2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+  [energy_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;((3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*(8*muion*pi^2*cos(pi*t)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2) - (diffpotential*pi^2*sin(pi*t) - pi*sin(pi*t)*(sin(pi*x) + sin(pi*y)))/ee + (16*muion*pi^2*cos(2*pi*t)*cos(pi*y)*(sin(pi*t) + 1))/5))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) - diffmean_en*((3*massem*pi*((pi*cos(pi*t)*cos(pi*y))/ee - 8*muion*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(sin(pi*t) + 1))^2)/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5))/(16*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2) - (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*(8*muion*pi*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(sin(pi*t) + 1) - (pi^2*cos(pi*t)*sin(pi*y))/ee))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^2)/(8*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^3) + (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*((pi*cos(pi*t)*cos(pi*y))/ee - 8*muion*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(sin(pi*t) + 1))*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(4*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2)) - diffmean_en*((3*massem*pi*((pi*cos(pi*t)*cos(pi*x))/ee - 8*muion*pi^2*cos(pi*x)*(sin(pi*t) + 1))^2)/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi^3*cos(pi*x)^2*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(8*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^3) + (3*massem*pi^3*sin(pi*x)*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(16*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2) - (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*(8*muion*pi^3*sin(pi*x)*(sin(pi*t) + 1) - (pi^2*cos(pi*t)*sin(pi*x))/ee))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi^2*cos(pi*x)*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*((pi*cos(pi*t)*cos(pi*x))/ee - 8*muion*pi^2*cos(pi*x)*(sin(pi*t) + 1)))/(4*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2)) - (3*massem*pi^2*cos(2*pi*t)*cos(pi*y)*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(40*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2)) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*x) - diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*y) - diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [potential_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(cos(pi*t)*(sin(pi*x) + sin(pi*y)))/4 + diffpotential*pi^2*sin(pi*x)*(sin(pi*t)/(4*pi) + 1/4) + diffpotential*pi^2*sin(pi*y)*(sin(pi*t)/(4*pi) + 1/4) - 1&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [mean_en_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;em_ICs&#x27;
+    symbol_values = &#x27;em_ICs&#x27;
+    expression = &#x27;log(1.0)&#x27;
+  []
+
+  [V_func_left_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-diffpotential*pi*cos(pi*x)*(sin(pi*t)/(4*pi) + 1/4)&#x27;
+  []
+  [V_func_down_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-diffpotential*pi*cos(pi*y)*(sin(pi*t)/(4*pi) + 1/4)&#x27;
+  []
+[]
+
+[BCs]
+  [em_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [ion_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [energy_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [potential_left_BC]
+    type = DielectricBCWithEffEfield
+    variable = potential
+    electrons = em
+    electron_energy = mean_en
+    ions = &#x27;ion&#x27;
+    electric_field_x = Ex
+    electric_field_y = Ey
+    dielectric_constant = 1.0
+    thickness = 1.0
+    emission_coeffs = &#x27;users_gamma&#x27;
+    potential_units = V
+    position_units = 1.0
+    boundary = 3
+  []
+
+  [potential_Dirichlet_BC]
+    type = FunctionDirichletBC
+    variable = potential
+    function = &#x27;potential_fun&#x27;
+    boundary = &#x27;0 1 2&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  massem  NonAD_diffpotential  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  massem_mat        diffpotential        diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion diffem muion  muem  diffmean_en  diffpotential&#x27;
+    prop_values = &#x27;diffion  diffem muion_mat  muem  diffmean_en  diffpotential&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem  sgnion  sgnmean_en&#x27;
+    prop_values = &#x27;-1.0   1.0     -1.0&#x27;
+  []
+  [emission_coeffs]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;users_gamma&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+  [mean_en_l2Error]
+    type = ElementL2Error
+    variable = mean_en
+    function = mean_en_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [potential_l2Error]
+    type = ElementL2Error
+    variable = potential
+    function = potential_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  # end_time = 50
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="c36d179d-1e02-49f9-87df-fc27671ec468"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_IonBC.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_IonBC_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [ion]
+    initial_from_file_var = ion
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+[]
+
+[Kernels]
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+[]
+
+[AuxKernels]
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  #Ion diffusion coeff.
+  [diffion]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muion]
+    type = ConstantFunction
+    value = 0.01
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.25
+  []
+
+  #Manufactured Solutions
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((cos(pi/2*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  #Source Terms in moles
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(diffion*((pi^2*cos((pi*y)/2))/4 + (pi^2*sin(2*pi*t)*(2*cos((pi*y)/2)^2 - 1))/5) +
+                  (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (diffion*pi^2*cos((pi*x)/2))/4 + muion*pi^2*sin(pi*x)*(sin(pi*t) + 1)*(cos((pi*x)/2) +
+                  cos((pi*y)/2) + (cos(pi*y)*sin(2*pi*t))/5 + 1) + muion*pi^2*sin(pi*y)*(sin(pi*t) + 1)*(cos((pi*x)/2) + cos((pi*y)/2) +
+                  (cos(pi*y)*sin(2*pi*t))/5 + 1) + muion*pi*cos(pi*y)*((pi*sin((pi*y)/2))/2 + (pi*sin(2*pi*t)*sin(pi*y))/5)*(sin(pi*t) + 1) +
+                  (muion*pi^2*cos(pi*x)*sin((pi*x)/2)*(sin(pi*t) + 1))/2) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*x) - diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*y) - diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+
+  [ion_left_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;((diffion*pi*sin((pi*x)/2))/2 - muion*pi*(2*cos((pi*x)/2)^2 - 1)*(sin(pi*t) + 1)*(cos((pi*x)/2) +
+                   cos((pi*y)/2) + (2*cos(pi*t)*sin(pi*t)*(2*cos((pi*y)/2)^2 - 1))/5 + 1)) / N_A&#x27;
+  []
+  [ion_down_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(diffion*((pi*sin((pi*y)/2))/2 + (pi*sin(2*pi*t)*sin(pi*y))/5) -
+                   muion*pi*cos(pi*y)*(sin(pi*t) + 1)*(cos((pi*x)/2) + cos((pi*y)/2) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+[]
+
+[BCs]
+  #[ion_left_BC]
+  #  type = FunctionDirichletBC
+  #  variable = ion
+  #  function = &#x27;ion_left_BC&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  [ion_left_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC
+    variable = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    boundary = 3
+    position_units = 1.0
+  []
+
+  [ion_right_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = 1
+    preset = true
+  []
+
+  #[ion_down_BC]
+  #  type = FunctionDirichletBC
+  #  variable = ion
+  #  function = &#x27;ion_down_BC&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  [ion_down_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC
+    variable = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    boundary = 0
+    position_units = 1.0
+  []
+
+  [ion_up_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = 2
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion  muion&#x27;
+    prop_values = &#x27;diffion  muion&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnion&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#bfe7f7b3-5e28-4042-8d58-4da4a141886f" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#65dfe4fe-df3b-4dde-916f-1163e4097341" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#e8ffce1e-be02-4774-ad9f-298ce1c11bdd" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#a26b9fce-7593-4917-ae37-253b2ed27bea" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

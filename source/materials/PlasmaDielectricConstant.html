@@ -1,0 +1,798 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>PlasmaDielectricConstant | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="6e4c6698-5a94-4e8a-bb73-759db5a5f81d" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="54a10ef0-3052-47d6-8072-9434ec1ea655" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="6b71488e-da08-4d02-a2ae-78223d6eb0d7" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="8a6271f4-3164-4c98-9c57-8abe2191014d"><i class="material-icons">menu</i></a><ul class="sidenav" id="8a6271f4-3164-4c98-9c57-8abe2191014d"><li><a href="#!" class="dropdown-trigger" data-target="3ccb9314-3363-4fa2-8d19-52d7a4246824" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d2077724-bafc-4731-a2fd-af1502fafea9" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="ec4af411-c248-48ca-8a74-483cc2496262" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="6e4c6698-5a94-4e8a-bb73-759db5a5f81d"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="54a10ef0-3052-47d6-8072-9434ec1ea655"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="6b71488e-da08-4d02-a2ae-78223d6eb0d7"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="3ccb9314-3363-4fa2-8d19-52d7a4246824"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="d2077724-bafc-4731-a2fd-af1502fafea9"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="ec4af411-c248-48ca-8a74-483cc2496262"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">materials</span><a href="#" class="breadcrumb">PlasmaDielectricConstant</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="aab27ec6-b5e4-4057-920d-9bedfe7c593a" data-section-level="1" data-section-text="PlasmaDielectricConstant"><h1 id="plasmadielectricconstant">PlasmaDielectricConstant</h1><p>Provides the real and complex components, the spatial gradient and the first time derivative of the plasma dielectric.</p><section class="scrollspy" id="0b0c7203-db0b-4836-9234-1b0ad0088768" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p><code>PlasmaDielectricConstant</code> provides the real and complex components of the plasma dielectric coefficient, along with the spatial gradient and the first time derivative of the plasma dielectric coefficient.</p><p>The plasma dielectic coefficient is defined as:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-8775dc54-290b-4ccf-837a-cf029a22ce10"></span><script>var element = document.getElementById("moose-equation-8775dc54-290b-4ccf-837a-cf029a22ce10");katex.render("\\varepsilon_{p} = \\varepsilon_{0} \\left[ 1 - \\frac{\\omega_{pe}^{2}}{\\omega \\left( \\omega - j \\nu_{m} \\right)} \\right] \\\\[10pt] \\omega_{pe} = \\sqrt{\\frac{e^{2} n_{e}}{\\varepsilon_{0} m_{e}}}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where</p><ul class="browser-default"><li><p><span class="moose-katex-inline-equation" id="moose-equation-f1c5cfcd-d26d-4779-aba7-3156cebfa929"><script>var element = document.getElementById("moose-equation-f1c5cfcd-d26d-4779-aba7-3156cebfa929");katex.render("\\varepsilon_{p}", element, {displayMode:false,throwOnError:false});</script></span> is the plasma dielectric coefficient, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-05212730-56d3-4465-b6ea-ecbaa9aca83a"><script>var element = document.getElementById("moose-equation-05212730-56d3-4465-b6ea-ecbaa9aca83a");katex.render("\\varepsilon_{0}", element, {displayMode:false,throwOnError:false});</script></span> is the permittivity of free space, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-f2b05586-486d-4e7e-94d7-ad0366578d47"><script>var element = document.getElementById("moose-equation-f2b05586-486d-4e7e-94d7-ad0366578d47");katex.render("\\omega_{pe}", element, {displayMode:false,throwOnError:false});</script></span> is the plasma frequency, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-ddbaf78d-4f09-4817-9c84-ae5853cdabb1"><script>var element = document.getElementById("moose-equation-ddbaf78d-4f09-4817-9c84-ae5853cdabb1");katex.render("\\omega", element, {displayMode:false,throwOnError:false});</script></span> is the drive frequency of the wave propagation, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-eda979b2-af2a-4682-b341-aa05f326480a"><script>var element = document.getElementById("moose-equation-eda979b2-af2a-4682-b341-aa05f326480a");katex.render("\\nu_{m}", element, {displayMode:false,throwOnError:false});</script></span> is the electron-neutral collision frequency, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-a539eece-df16-4721-bc83-2bd6799a7e5a"><script>var element = document.getElementById("moose-equation-a539eece-df16-4721-bc83-2bd6799a7e5a");katex.render("e", element, {displayMode:false,throwOnError:false});</script></span> is the elementary charge, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-3c24a78d-637f-457e-9a15-5702a95e4d70"><script>var element = document.getElementById("moose-equation-3c24a78d-637f-457e-9a15-5702a95e4d70");katex.render("n_{e}", element, {displayMode:false,throwOnError:false});</script></span> is the electron density, and  </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-4c1a9f4d-8e9f-4b88-a7ea-ace61f259a91"><script>var element = document.getElementById("moose-equation-4c1a9f4d-8e9f-4b88-a7ea-ace61f259a91");katex.render("m_{e}", element, {displayMode:false,throwOnError:false});</script></span> is the electron mass.</p></li></ul></section><section class="scrollspy" id="cc9e3827-1329-4e1f-886d-0a8f79473989" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[Materials&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Materials/index.html&quot;}&gt;&gt;&gt;]
+  [Plasma_dielectric]
+    type = PlasmaDielectricConstant&lt;&lt;&lt;{&quot;description&quot;: &quot;Provides the real and complex components, the spatial gradient and the first time derivative of the plasma dielectric.&quot;, &quot;href&quot;: &quot;PlasmaDielectricConstant.html&quot;}&gt;&gt;&gt;
+    driving_frequency&lt;&lt;&lt;{&quot;description&quot;: &quot;Driving frequency of plasma (in Hz).&quot;}&gt;&gt;&gt; = 6.207
+    electron_neutral_collision_frequency&lt;&lt;&lt;{&quot;description&quot;: &quot;The electron-neutral collision frequency (in Hz).&quot;}&gt;&gt;&gt; = 6.525
+    electrons&lt;&lt;&lt;{&quot;description&quot;: &quot;The electron density in log form&quot;}&gt;&gt;&gt; = em
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#668befde-c933-4fb2-bcf0-9c8582d9a86e">(test/tests/mms/materials/2D_PlasmaDielectricConstant.i)</a></section><section class="scrollspy" id="8159b60d-3a76-4ceb-87e2-51dd3090d3cb" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="96b21699-1352-4cef-a422-def19934d647" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">driving_frequency</span><span class="moose-parameter-header-description">Driving frequency of plasma (in Hz).</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Driving frequency of plasma (in Hz).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electron_neutral_collision_frequency</span><span class="moose-parameter-header-description">The electron-neutral collision frequency (in Hz).</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electron-neutral collision frequency (in Hz).</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="0d0293d6-f92c-47d8-b3b7-ae6e19f4de67" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundaries (ids or names) from the mesh where this object applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of boundaries (ids or names) from the mesh where this object applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">compute</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">constant_on</span><span class="moose-parameter-header-default">NONE</span><span class="moose-parameter-header-description">When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>NONE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, ELEMENT, SUBDOMAIN</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">declare_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electrons</span><span class="moose-parameter-header-description">The electron density in log form</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electron density in log form</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="483b8a31-86d3-4d37-9870-f0a2ca27d28d" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">search_method</span><span class="moose-parameter-header-default">nearest_node_connected_sides</span><span class="moose-parameter-header-description">Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nearest_node_connected_sides</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nearest_node_connected_sides, all_proximate_sides</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="5d813bb0-8477-4c8b-a858-5ba671c4a019" data-section-level="3" data-section-text="Outputs Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">output_properties</span><span class="moose-parameter-header-description">List of material properties, from this material, to output (outputs must also be defined to an output type)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of material properties, from this material, to output (outputs must also be defined to an output type)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-default">none </span><span class="moose-parameter-header-description">Vector of output names where you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>none </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Vector of output names where you would like to restrict the output of variables(s) associated with this object</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Outputs Parameters</h3></summary></details></section><section id="ca3a112d-a5cc-4364-9893-63dba49c0d46" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="f45ac5cf-a71b-4c15-a1a1-a02dac3f6a99" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#dbec59e7-09b1-466b-9d24-06dce0ca1f7c">(test/tests/mms/materials/2D_PlasmaDielectricConstant.i)</a></li></ul></section></section><div class="moose-modal modal" id="668befde-c933-4fb2-bcf0-9c8582d9a86e"><div class="modal-content"><h4>(test/tests/mms/materials/2D_PlasmaDielectricConstant.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_PlasmaDielectricConstant_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+[]
+
+# [ICs]
+#   [em_IC]
+#     type = FunctionIC
+#     function = em_ICs
+#     variable = em
+#   []
+# []
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = TimeDerivativeLog
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [potential]
+  []
+
+  [em_sol]
+  []
+
+  [dielectric_real]
+    family = MONOMIAL
+    order = FIRST
+  []
+  [dielectric_image]
+    family = MONOMIAL
+    order = FIRST
+  []
+
+  [dielectric_real_grad]
+    family = MONOMIAL_VEC
+    order = FIRST
+  []
+  [dielectric_image_grad]
+    family = MONOMIAL_VEC
+    order = FIRST
+  []
+
+  [d_dielectric_real_dt]
+    family = MONOMIAL
+    order = FIRST
+  []
+  [d_dielectric_image_dt]
+    family = MONOMIAL
+    order = FIRST
+  []
+[]
+
+[AuxKernels]
+  [potential_sol]
+    type = FunctionAux
+    variable = potential
+    function = potential_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [dielectric_real]
+    type = ADMaterialRealAux
+    variable = dielectric_real
+    property = plasma_dielectric_constant_real
+  []
+  [dielectric_image]
+    type = ADMaterialRealAux
+    variable = dielectric_image
+    property = plasma_dielectric_constant_imag
+  []
+
+  [dielectric_real_grad]
+    type = ADVectorMaterialRealVectorValueAux
+    variable = dielectric_real_grad
+    property = plasma_dielectric_constant_real_grad
+  []
+  [dielectric_image_grad]
+    type = ADVectorMaterialRealVectorValueAux
+    variable = dielectric_image_grad
+    property = plasma_dielectric_constant_imag_grad
+  []
+
+  [d_dielectric_real_dt]
+    type = ADMaterialRealAux
+    variable = d_dielectric_real_dt
+    property = plasma_dielectric_constant_real_dot
+  []
+  [d_dielectric_image_dt]
+    type = ADMaterialRealAux
+    variable = d_dielectric_image_dt
+    property = plasma_dielectric_constant_imag_dot
+  []
+[]
+
+[Functions]
+  #Material Variables
+  #Electron diffusion coeff.
+  [diffem_coeff]
+    type = ConstantFunction
+    value = 0.05
+  []
+  #Electron mobility coeff.
+  [muem_coeff]
+    type = ConstantFunction
+    value = 0.01
+  []
+
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.01
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+  #The manufactured electron density solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential&#x27;
+    symbol_values = &#x27;ee diffpotential&#x27;
+    expression = &#x27;-(ee*(2*cos((pi*x)/2) + cos(pi*y)*sin(2*pi*t)))/(5*diffpotential*pi^2)&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffem_coeff muem_coeff diffpotential N_A&#x27;
+    symbol_values = &#x27;ee diffem_coeff muem_coeff diffpotential N_A&#x27;
+    expression = &#x27;(diffem_coeff*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5) +
+                   (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (diffem_coeff*pi^2*cos((pi*x)/2))/4 +
+                   (ee*muem_coeff*(5*cos((pi*x)/2) - 4*cos(2*pi*t)^2*cos(pi*y)^2 +
+                   10*cos(pi*y)*sin(2*pi*t) + 5*cos((pi*x)/2)*sin(pi*y) + 2*cos(2*pi*t)^2 +
+                   10*cos((pi*x)/2)^2 + 4*cos(pi*y)^2 + 11*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t) +
+                   20*cos(pi*y)*sin(2*pi*t)*sin(pi*y) - 7))/(50*diffpotential)) / N_A&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+
+  [omega]
+    type = ParsedFunction
+    expression = &#x27;2*pi*6.207&#x27;
+  []
+  [nu]
+    type = ParsedFunction
+    expression = &#x27;2*pi*6.525&#x27;
+  []
+  [epsilon_0]
+    type = ParsedFunction
+    expression = &#x27;8.8542e-12&#x27;
+  []
+  [ec]
+    type = ParsedFunction
+    expression = &#x27;1.6022e-19&#x27;
+  []
+  [m_e]
+    type = ParsedFunction
+    expression = &#x27;9.1095e-31&#x27;
+  []
+
+  [dielectric_real_fun]
+    type = ParsedFunction
+    expression = &#x27;-ec^2*(sin(y*pi) + 0.2*sin(2*pi*t)*cos(y*pi) + cos((1/2)*x*pi) + 1.0)/(epsilon_0*m_e*(nu^2 + omega^2)) + 1&#x27;
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+  []
+  [dielectric_image_fun]
+    type = ParsedFunction
+    expression = &#x27;-1.0*ec^2*nu*(sin(y*pi) + 0.2*sin(2*pi*t)*cos(y*pi) + cos((1/2)*x*pi) + 1.0)/(epsilon_0*m_e*(nu^2*omega + omega^3))&#x27;
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+  []
+
+  [dielectric_real_grad_fun]
+    type = ParsedVectorFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression_x = &#x27;(1/2)*pi*ec^2*sin((1/2)*x*pi)/(epsilon_0*m_e*(nu^2 + omega^2))&#x27;
+    expression_y = &#x27;-ec^2*(-0.2*pi*sin(y*pi)*sin(2*pi*t) + pi*cos(y*pi))/(epsilon_0*m_e*(nu^2 + omega^2))&#x27;
+  []
+  [dielectric_image_grad_fun]
+    type = ParsedVectorFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression_x = &#x27;0.5*pi*ec^2*nu*sin((1/2)*x*pi)/(epsilon_0*m_e*(nu^2*omega + omega^3))&#x27;
+    expression_y = &#x27;-1.0*ec^2*nu*(-0.2*pi*sin(y*pi)*sin(2*pi*t) + pi*cos(y*pi))/(epsilon_0*m_e*(nu^2*omega + omega^3))&#x27;
+  []
+
+  [d_dielectric_real_dt_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression = &#x27;-0.4*pi*ec^2*cos(y*pi)*cos(2*pi*t)/(epsilon_0*m_e*(nu^2 + omega^2))&#x27;
+  []
+  [d_dielectric_image_dt_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression = &#x27;-0.4*pi*ec^2*nu*cos(y*pi)*cos(2*pi*t)/(epsilon_0*m_e*(nu^2*omega + omega^3))&#x27;
+  []
+
+  [d2_dielectric_real_dt2_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression = &#x27;0.8*pi^2*ec^2*sin(2*pi*t)*cos(y*pi)/(epsilon_0*m_e*(nu^2 + omega^2))&#x27;
+  []
+  [d2_dielectric_image_dt2_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression = &#x27;0.8*pi^2*ec^2*nu*sin(2*pi*t)*cos(y*pi)/(epsilon_0*m_e*(nu^2*omega + omega^3))&#x27;
+  []
+[]
+
+[BCs]
+  [em_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [Plasma_dielectric]
+    type = PlasmaDielectricConstant
+    driving_frequency = 6.207
+    electron_neutral_collision_frequency = 6.525
+    electrons = em
+  []
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e N_A&#x27;
+    prop_values = &#x27;ee N_A&#x27;
+  []
+  [ADMaterial_Coeff]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffem        muem        diffpotential&#x27;
+    prop_values = &#x27;diffem_coeff  muem_coeff  diffpotential&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem&#x27;
+    prop_values = &#x27;-1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+
+  [dielectric_real_Error]
+    type = ElementL2Error
+    variable = dielectric_real
+    function = dielectric_real_fun
+  []
+  [dielectric_image_Error]
+    type = ElementL2Error
+    variable = dielectric_image
+    function = dielectric_image_fun
+  []
+
+  [dielectric_real_grad_Error]
+    type = ElementVectorL2Error
+    variable = dielectric_real_grad
+    function = dielectric_real_grad_fun
+  []
+  [dielectric_image_grad_Error]
+    type = ElementVectorL2Error
+    variable = dielectric_image_grad
+    function = dielectric_image_grad_fun
+  []
+
+  [d_dielectric_real_dt_Error]
+    type = ElementL2Error
+    variable = d_dielectric_real_dt
+    function = d_dielectric_real_dt_fun
+  []
+  [d_dielectric_image_dt_Error]
+    type = ElementL2Error
+    variable = d_dielectric_image_dt
+    function = d_dielectric_image_dt_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  # start_time = 0
+  # end_time = 50
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="dbec59e7-09b1-466b-9d24-06dce0ca1f7c"><div class="modal-content"><h4>(test/tests/mms/materials/2D_PlasmaDielectricConstant.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_PlasmaDielectricConstant_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+[]
+
+# [ICs]
+#   [em_IC]
+#     type = FunctionIC
+#     function = em_ICs
+#     variable = em
+#   []
+# []
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = TimeDerivativeLog
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [potential]
+  []
+
+  [em_sol]
+  []
+
+  [dielectric_real]
+    family = MONOMIAL
+    order = FIRST
+  []
+  [dielectric_image]
+    family = MONOMIAL
+    order = FIRST
+  []
+
+  [dielectric_real_grad]
+    family = MONOMIAL_VEC
+    order = FIRST
+  []
+  [dielectric_image_grad]
+    family = MONOMIAL_VEC
+    order = FIRST
+  []
+
+  [d_dielectric_real_dt]
+    family = MONOMIAL
+    order = FIRST
+  []
+  [d_dielectric_image_dt]
+    family = MONOMIAL
+    order = FIRST
+  []
+[]
+
+[AuxKernels]
+  [potential_sol]
+    type = FunctionAux
+    variable = potential
+    function = potential_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [dielectric_real]
+    type = ADMaterialRealAux
+    variable = dielectric_real
+    property = plasma_dielectric_constant_real
+  []
+  [dielectric_image]
+    type = ADMaterialRealAux
+    variable = dielectric_image
+    property = plasma_dielectric_constant_imag
+  []
+
+  [dielectric_real_grad]
+    type = ADVectorMaterialRealVectorValueAux
+    variable = dielectric_real_grad
+    property = plasma_dielectric_constant_real_grad
+  []
+  [dielectric_image_grad]
+    type = ADVectorMaterialRealVectorValueAux
+    variable = dielectric_image_grad
+    property = plasma_dielectric_constant_imag_grad
+  []
+
+  [d_dielectric_real_dt]
+    type = ADMaterialRealAux
+    variable = d_dielectric_real_dt
+    property = plasma_dielectric_constant_real_dot
+  []
+  [d_dielectric_image_dt]
+    type = ADMaterialRealAux
+    variable = d_dielectric_image_dt
+    property = plasma_dielectric_constant_imag_dot
+  []
+[]
+
+[Functions]
+  #Material Variables
+  #Electron diffusion coeff.
+  [diffem_coeff]
+    type = ConstantFunction
+    value = 0.05
+  []
+  #Electron mobility coeff.
+  [muem_coeff]
+    type = ConstantFunction
+    value = 0.01
+  []
+
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.01
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+  #The manufactured electron density solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffpotential&#x27;
+    symbol_values = &#x27;ee diffpotential&#x27;
+    expression = &#x27;-(ee*(2*cos((pi*x)/2) + cos(pi*y)*sin(2*pi*t)))/(5*diffpotential*pi^2)&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee diffem_coeff muem_coeff diffpotential N_A&#x27;
+    symbol_values = &#x27;ee diffem_coeff muem_coeff diffpotential N_A&#x27;
+    expression = &#x27;(diffem_coeff*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5) +
+                   (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (diffem_coeff*pi^2*cos((pi*x)/2))/4 +
+                   (ee*muem_coeff*(5*cos((pi*x)/2) - 4*cos(2*pi*t)^2*cos(pi*y)^2 +
+                   10*cos(pi*y)*sin(2*pi*t) + 5*cos((pi*x)/2)*sin(pi*y) + 2*cos(2*pi*t)^2 +
+                   10*cos((pi*x)/2)^2 + 4*cos(pi*y)^2 + 11*cos((pi*x)/2)*cos(pi*y)*sin(2*pi*t) +
+                   20*cos(pi*y)*sin(2*pi*t)*sin(pi*y) - 7))/(50*diffpotential)) / N_A&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+
+  [omega]
+    type = ParsedFunction
+    expression = &#x27;2*pi*6.207&#x27;
+  []
+  [nu]
+    type = ParsedFunction
+    expression = &#x27;2*pi*6.525&#x27;
+  []
+  [epsilon_0]
+    type = ParsedFunction
+    expression = &#x27;8.8542e-12&#x27;
+  []
+  [ec]
+    type = ParsedFunction
+    expression = &#x27;1.6022e-19&#x27;
+  []
+  [m_e]
+    type = ParsedFunction
+    expression = &#x27;9.1095e-31&#x27;
+  []
+
+  [dielectric_real_fun]
+    type = ParsedFunction
+    expression = &#x27;-ec^2*(sin(y*pi) + 0.2*sin(2*pi*t)*cos(y*pi) + cos((1/2)*x*pi) + 1.0)/(epsilon_0*m_e*(nu^2 + omega^2)) + 1&#x27;
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+  []
+  [dielectric_image_fun]
+    type = ParsedFunction
+    expression = &#x27;-1.0*ec^2*nu*(sin(y*pi) + 0.2*sin(2*pi*t)*cos(y*pi) + cos((1/2)*x*pi) + 1.0)/(epsilon_0*m_e*(nu^2*omega + omega^3))&#x27;
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+  []
+
+  [dielectric_real_grad_fun]
+    type = ParsedVectorFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression_x = &#x27;(1/2)*pi*ec^2*sin((1/2)*x*pi)/(epsilon_0*m_e*(nu^2 + omega^2))&#x27;
+    expression_y = &#x27;-ec^2*(-0.2*pi*sin(y*pi)*sin(2*pi*t) + pi*cos(y*pi))/(epsilon_0*m_e*(nu^2 + omega^2))&#x27;
+  []
+  [dielectric_image_grad_fun]
+    type = ParsedVectorFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression_x = &#x27;0.5*pi*ec^2*nu*sin((1/2)*x*pi)/(epsilon_0*m_e*(nu^2*omega + omega^3))&#x27;
+    expression_y = &#x27;-1.0*ec^2*nu*(-0.2*pi*sin(y*pi)*sin(2*pi*t) + pi*cos(y*pi))/(epsilon_0*m_e*(nu^2*omega + omega^3))&#x27;
+  []
+
+  [d_dielectric_real_dt_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression = &#x27;-0.4*pi*ec^2*cos(y*pi)*cos(2*pi*t)/(epsilon_0*m_e*(nu^2 + omega^2))&#x27;
+  []
+  [d_dielectric_image_dt_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression = &#x27;-0.4*pi*ec^2*nu*cos(y*pi)*cos(2*pi*t)/(epsilon_0*m_e*(nu^2*omega + omega^3))&#x27;
+  []
+
+  [d2_dielectric_real_dt2_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression = &#x27;0.8*pi^2*ec^2*sin(2*pi*t)*cos(y*pi)/(epsilon_0*m_e*(nu^2 + omega^2))&#x27;
+  []
+  [d2_dielectric_image_dt2_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;omega m_e ec nu epsilon_0&#x27;
+    symbol_values = &#x27;omega m_e ec nu epsilon_0&#x27;
+    expression = &#x27;0.8*pi^2*ec^2*nu*sin(2*pi*t)*cos(y*pi)/(epsilon_0*m_e*(nu^2*omega + omega^3))&#x27;
+  []
+[]
+
+[BCs]
+  [em_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [Plasma_dielectric]
+    type = PlasmaDielectricConstant
+    driving_frequency = 6.207
+    electron_neutral_collision_frequency = 6.525
+    electrons = em
+  []
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e N_A&#x27;
+    prop_values = &#x27;ee N_A&#x27;
+  []
+  [ADMaterial_Coeff]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffem        muem        diffpotential&#x27;
+    prop_values = &#x27;diffem_coeff  muem_coeff  diffpotential&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem&#x27;
+    prop_values = &#x27;-1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+
+  [dielectric_real_Error]
+    type = ElementL2Error
+    variable = dielectric_real
+    function = dielectric_real_fun
+  []
+  [dielectric_image_Error]
+    type = ElementL2Error
+    variable = dielectric_image
+    function = dielectric_image_fun
+  []
+
+  [dielectric_real_grad_Error]
+    type = ElementVectorL2Error
+    variable = dielectric_real_grad
+    function = dielectric_real_grad_fun
+  []
+  [dielectric_image_grad_Error]
+    type = ElementVectorL2Error
+    variable = dielectric_image_grad
+    function = dielectric_image_grad_fun
+  []
+
+  [d_dielectric_real_dt_Error]
+    type = ElementL2Error
+    variable = d_dielectric_real_dt
+    function = d_dielectric_real_dt_fun
+  []
+  [d_dielectric_image_dt_Error]
+    type = ElementL2Error
+    variable = d_dielectric_image_dt
+    function = d_dielectric_image_dt_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  # start_time = 0
+  # end_time = 50
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#0b0c7203-db0b-4836-9234-1b0ad0088768" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#cc9e3827-1329-4e1f-886d-0a8f79473989" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#8159b60d-3a76-4ceb-87e2-51dd3090d3cb" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#f45ac5cf-a71b-4c15-a1a1-a02dac3f6a99" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

@@ -1,0 +1,269 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>MultiPeriodAverager | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="422328d8-b00f-4543-96b3-9dc512d426ed" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="68abe1c5-019b-4e91-99eb-62bf4e79b8bd" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="03ec0f85-1e23-4f56-b95f-de13c268bb1d" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="86174f72-9798-4ba5-a502-a134119cd8f7"><i class="material-icons">menu</i></a><ul class="sidenav" id="86174f72-9798-4ba5-a502-a134119cd8f7"><li><a href="#!" class="dropdown-trigger" data-target="6d295b14-0009-4a33-89b1-8799a849ee5f" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="2f48fac2-bb84-4dbb-a12b-78c8300f0e87" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="f0320747-191f-47c8-afa7-4803fa85b277" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="422328d8-b00f-4543-96b3-9dc512d426ed"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="68abe1c5-019b-4e91-99eb-62bf4e79b8bd"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="03ec0f85-1e23-4f56-b95f-de13c268bb1d"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="6d295b14-0009-4a33-89b1-8799a849ee5f"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="2f48fac2-bb84-4dbb-a12b-78c8300f0e87"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="f0320747-191f-47c8-afa7-4803fa85b277"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">postprocessors</span><a href="#" class="breadcrumb">MultiPeriodAverager</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="3ba4357f-4515-4c7e-9057-b6bd2c95c721" data-section-level="1" data-section-text="MultiPeriodAverager"><h1 id="multiperiodaverager">MultiPeriodAverager</h1><p><code>MultiPeriodAverager</code> calculates the the period average of values of periodic fuctions at the end of each period, such that: <span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-021033d9-6731-4b40-bddb-693114c4038c"></span><script>var element = document.getElementById("moose-equation-021033d9-6731-4b40-bddb-693114c4038c");katex.render("P = \\frac{\\sum_i^{N_\\text{T}} f(\\text{T})_i }{N_\\text{T}}", element, {displayMode:true,throwOnError:false});</script></span> Where <span class="moose-katex-inline-equation" id="moose-equation-58104ddc-6e2e-4aa9-8f9c-95e66cbeab76"><script>var element = document.getElementById("moose-equation-58104ddc-6e2e-4aa9-8f9c-95e66cbeab76");katex.render("P", element, {displayMode:false,throwOnError:false});</script></span> is the value of <code>MultiPeriodAverager</code>, <span class="moose-katex-inline-equation" id="moose-equation-9d40e699-5b5a-4c7b-ad7b-f1e36fc9d7be"><script>var element = document.getElementById("moose-equation-9d40e699-5b5a-4c7b-ad7b-f1e36fc9d7be");katex.render("N_\\text{T}", element, {displayMode:false,throwOnError:false});</script></span> is the number of periods to average over, and <span class="moose-katex-inline-equation" id="moose-equation-3c35e120-f0fb-4fe8-bb75-1e2b0dc5e069"><script>var element = document.getElementById("moose-equation-3c35e120-f0fb-4fe8-bb75-1e2b0dc5e069");katex.render("f(\\text{T})_i", element, {displayMode:false,throwOnError:false});</script></span> is the value of the periodic value at the end of a period.  Until the number of periods over which you are averaging has passed the value of the Postprocessor will reflect the previously calculated average.</p><div class="card moose-alert moose-alert-warning"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">warning</i><span class="moose-alert-title-brand">warning</span></div><div class="card-content"><div class="moose-alert-content"><p>Before the first average is calculated the value of this post processor will be 0.</p></div></div></div><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note:</span>Proper Usage Hint</div><div class="card-content"><div class="moose-alert-content"><p><code>MultiPeriodAverager</code> is intended to be used with the <a href="PeriodicTimeIntegratedPostprocessor.html">PeriodicTimeIntegratedPostprocessor</a>.</p></div></div></div><section class="scrollspy" id="fd97249d-ce82-4672-bdf4-b621b3d9762e" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[Postprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Postprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [a]
+    type = ElementIntegralVariablePostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes a volume integral of the specified variable&quot;, &quot;href&quot;: &quot;ElementIntegralVariablePostprocessor.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this object operates on&quot;}&gt;&gt;&gt; = v
+    execute_on&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.&quot;}&gt;&gt;&gt; = &#x27;initial timestep_end&#x27;
+  []
+
+  [periodic]
+    type = PeriodicTimeIntegratedPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Integrate a Postprocessor value over a period in time using trapezoidal rule.&quot;, &quot;href&quot;: &quot;PeriodicTimeIntegratedPostprocessor.html&quot;}&gt;&gt;&gt;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the postprocessor you are integrating over time&quot;}&gt;&gt;&gt; = a
+    execute_on&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.&quot;}&gt;&gt;&gt; = &#x27;initial timestep_end&#x27;
+  []
+
+  [multi_period]
+    type = MultiPeriodAverager&lt;&lt;&lt;{&quot;description&quot;: &quot;Calculate the average value of a post processor over multiple periods&quot;, &quot;href&quot;: &quot;MultiPeriodAverager.html&quot;}&gt;&gt;&gt;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the postprocessor you would like to average over multiple periods&quot;}&gt;&gt;&gt; = periodic
+    number_of_periods&lt;&lt;&lt;{&quot;description&quot;: &quot;The number of periods over which you are averaging&quot;}&gt;&gt;&gt; = 2
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#edbc3738-a0a8-46f3-bd3b-f3bdbf7c4dcf">(test/tests/postprocessors/multi_period_averaging/multi_period_averager.i)</a></section><section class="scrollspy" id="5c8ef1a5-9a67-4559-963d-90b2639bc179" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="7a7c64c1-e35f-40d9-984e-c26566181891" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">cycle_frequency</span><span class="moose-parameter-header-description">The frequency of the process. Used to calculate the period over which you are integrating.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-doc-range"><span>Range:</span>cycle_frequency > 0</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The frequency of the process. Used to calculate the period over which you are integrating.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="579d09a2-95bf-4575-a81d-398fb5d4eb53" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">number_of_periods</span><span class="moose-parameter-header-description">The number of periods over which you are averaging</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-doc-range"><span>Range:</span>number_of_periods > 0</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The number of periods over which you are averaging</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">value</span><span class="moose-parameter-header-description">The name of the postprocessor you would like to average over multiple periods</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>PostprocessorName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the postprocessor you would like to average over multiple periods</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="023f4a1b-4035-41a5-b53d-99a0bc6395e3" data-section-level="3" data-section-text="Execution Scheduling Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">allow_duplicate_execution_on_initial</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">TIMESTEP_END</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>TIMESTEP_END</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, INITIAL, LINEAR, LINEAR_CONVERGENCE, NONLINEAR, NONLINEAR_CONVERGENCE, POSTCHECK, TIMESTEP_END, TIMESTEP_BEGIN, MULTIAPP_FIXED_POINT_END, MULTIAPP_FIXED_POINT_BEGIN, MULTIAPP_FIXED_POINT_CONVERGENCE, FINAL, CUSTOM, TRANSFER</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execution_order_group</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">Execution order groups are executed in increasing order (e.g., the lowest number is executed first). Note that negative group numbers may be used to execute groups before the default (0) group. Please refer to the user object documentation for ordering of user object execution within a group.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Execution order groups are executed in increasing order (e.g., the lowest number is executed first). Note that negative group numbers may be used to execute groups before the default (0) group. Please refer to the user object documentation for ordering of user object execution within a group.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_postaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in POSTAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in POSTAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preic</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREIC during initial setup</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREIC during initial setup</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Execution Scheduling Parameters</h3></summary></details></section><section id="3b8caf7d-969a-4ee9-b26d-bf28afd9b195" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-description">Vector of output names where you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Vector of output names where you would like to restrict the output of variables(s) associated with this object</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="a1655893-168b-457b-a28e-67ef4bb145c7" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="db542c77-ef81-4aba-a193-082bed59b504" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#03c6b710-856e-4516-b06e-a8f66c492064">(test/tests/postprocessors/periodic_amplitude_regulator/periodic_modifier.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#8aa9a3fd-40fe-4316-9520-887300a3ffb9">(test/tests/postprocessors/multi_period_averaging/multi_period_averager.i)</a></li></ul></section></section><div class="moose-modal modal" id="edbc3738-a0a8-46f3-bd3b-f3bdbf7c4dcf"><div class="modal-content"><h4>(test/tests/postprocessors/multi_period_averaging/multi_period_averager.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generator]
+    type = GeneratedMeshGenerator
+    dim = 1
+    xmax = 1
+    nx = 100
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [null_kernel]
+    type = NullKernel
+    variable = u
+  []
+[]
+
+[AuxVariables]
+  [v]
+  []
+[]
+
+[AuxKernels]
+  [func_kernel]
+    type = FunctionAux
+    variable = v
+    function = ic
+  []
+[]
+
+[Functions]
+  [ic]
+    type = ParsedFunction
+    expression = &#x27;-4 * x * (x-1) * t&#x27;
+  []
+[]
+
+[GlobalParams]
+  cycle_frequency = 0.1
+[]
+
+[Postprocessors]
+  [a]
+    type = ElementIntegralVariablePostprocessor
+    variable = v
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [periodic]
+    type = PeriodicTimeIntegratedPostprocessor
+    value = a
+    execute_on =  &#x27;initial timestep_end&#x27;
+  []
+
+  [multi_period]
+    type = MultiPeriodAverager
+    value = periodic
+    number_of_periods = 2
+  []
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 41
+  dt = 0.5
+[]
+
+[Outputs]
+  exodus = false
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="03c6b710-856e-4516-b06e-a8f66c492064"><div class="modal-content"><h4>(test/tests/postprocessors/periodic_amplitude_regulator/periodic_modifier.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generator]
+    type = GeneratedMeshGenerator
+    dim = 1
+    xmax = 1
+    nx = 100
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [null_kernel]
+    type = NullKernel
+    variable = u
+  []
+[]
+
+[AuxVariables]
+  [v]
+  []
+[]
+
+[AuxKernels]
+  [func_kernel]
+    type = FunctionAux
+    variable = v
+    function = func
+  []
+[]
+
+[Functions]
+  [func]
+    type = ParsedFunction
+    symbol_names = &#x27;mag&#x27;
+    symbol_values = &#x27;mag&#x27;
+    expression = &#x27;mag * x * (x-1)&#x27;
+  []
+[]
+
+[Postprocessors]
+  [a]
+    type = ElementIntegralVariablePostprocessor
+    variable = v
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [periodic_a]
+    type = PeriodicTimeIntegratedPostprocessor
+    value = a
+    cycle_frequency = 0.1
+    coefficient = 0.1
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [multi_period]
+    type = MultiPeriodAverager
+    value = periodic_a
+    cycle_frequency = 0.1
+    number_of_periods = 2
+    execute_on = &#x27;initial timestep_begin&#x27;
+  []
+
+  [mag]
+    type = PeriodicAmplitudeRegulator
+    value = multi_period
+    cycle_frequency = 0.1
+    initial_value = -4
+    reference_value = 10
+    start_cycle = 2
+    cycles_between_modification = 2
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 200
+  dt = 0.5
+[]
+
+[Outputs]
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="8aa9a3fd-40fe-4316-9520-887300a3ffb9"><div class="modal-content"><h4>(test/tests/postprocessors/multi_period_averaging/multi_period_averager.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generator]
+    type = GeneratedMeshGenerator
+    dim = 1
+    xmax = 1
+    nx = 100
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [null_kernel]
+    type = NullKernel
+    variable = u
+  []
+[]
+
+[AuxVariables]
+  [v]
+  []
+[]
+
+[AuxKernels]
+  [func_kernel]
+    type = FunctionAux
+    variable = v
+    function = ic
+  []
+[]
+
+[Functions]
+  [ic]
+    type = ParsedFunction
+    expression = &#x27;-4 * x * (x-1) * t&#x27;
+  []
+[]
+
+[GlobalParams]
+  cycle_frequency = 0.1
+[]
+
+[Postprocessors]
+  [a]
+    type = ElementIntegralVariablePostprocessor
+    variable = v
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [periodic]
+    type = PeriodicTimeIntegratedPostprocessor
+    value = a
+    execute_on =  &#x27;initial timestep_end&#x27;
+  []
+
+  [multi_period]
+    type = MultiPeriodAverager
+    value = periodic
+    number_of_periods = 2
+  []
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 41
+  dt = 0.5
+[]
+
+[Outputs]
+  exodus = false
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#fd97249d-ce82-4672-bdf4-b621b3d9762e" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#5c8ef1a5-9a67-4559-963d-90b2639bc179" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#db542c77-ef81-4aba-a193-082bed59b504" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

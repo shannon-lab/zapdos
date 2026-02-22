@@ -1,0 +1,4994 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>EconomouDielectricBC | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="523829c4-1ea1-429c-aca9-f4c5d1499eae" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="138dfb03-5e58-46c9-8f5c-0a2a967b4618" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="ae3b30e7-78ae-40ae-8c9b-36c6080f9adc" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="cce50a41-60c6-42b8-9516-520b81adf075"><i class="material-icons">menu</i></a><ul class="sidenav" id="cce50a41-60c6-42b8-9516-520b81adf075"><li><a href="#!" class="dropdown-trigger" data-target="1aa2d716-d9de-4214-9132-dbba8595d8c5" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="41bc20be-ad78-4a6e-995a-d1646937323c" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c31ee569-bc80-469f-8248-89745c652627" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="523829c4-1ea1-429c-aca9-f4c5d1499eae"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="138dfb03-5e58-46c9-8f5c-0a2a967b4618"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="ae3b30e7-78ae-40ae-8c9b-36c6080f9adc"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="1aa2d716-d9de-4214-9132-dbba8595d8c5"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="41bc20be-ad78-4a6e-995a-d1646937323c"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="c31ee569-bc80-469f-8248-89745c652627"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">bcs</span><a href="#" class="breadcrumb">EconomouDielectricBC</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="f744d838-b9b6-49b0-9874-653796a98682" data-section-level="1" data-section-text="EconomouDielectricBC"><h1 id="economoudielectricbc">EconomouDielectricBC</h1><p>Dielectric boundary condition (Based on <a href="#lymberopoulos1994modeling">Lymberopoulos and Economou (1994)</a>)</p><section class="scrollspy" id="a89f9126-b705-4373-b2ca-ab14d24c506b" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p><code>EconomouDielectricBC</code> is a type of <a href="ADPenaltyDirichletBC.html"><code>PenaltyDirichletBC</code></a> for the potential on the boundary of a grounded ideal dielectric.</p><p>The potential at the boundary of a grounded ideal dielectric is defined as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-ed91972b-7108-4cea-8a6e-b9c197e64201"></span><script>var element = document.getElementById("moose-equation-ed91972b-7108-4cea-8a6e-b9c197e64201");katex.render("\\frac{\\varepsilon_{i}}{d_{i}}\\frac{\\partial V_{i}}{\\partial t} = e(\\Gamma_{+} \\cdot \\textbf{n} -\\Gamma_{e} \\cdot \\textbf{n})+\\varepsilon_{0}\\frac{\\partial (E \\cdot \\textbf{n}) }{\\partial t} \\\\[10pt] E = \\text{-} \\nabla (V)\\\\[10pt] \\Gamma_{e} \\cdot \\textbf{n}  = \\frac{1}{4}\\sqrt{\\frac{8 k T_{e}}{\\pi m_{e}}} \\ n_e - \\gamma \\Gamma_{+} \\cdot \\textbf{n} \\\\[10pt] \\Gamma_{+} \\cdot \\textbf{n}  = a \\ \\mu_{+} \\ \\text{-} \\nabla (V) \\cdot \\textbf{n} \\ n_{+} \\\\[10pt] a = \\begin{cases} 1, & \\mu_{j} \\ \\text{-} \\nabla (V) \\cdot \\textbf{n} > 0\\\\ 0, & \\mu_{j} \\ \\text{-} \\nabla (V) \\cdot \\textbf{n} \\leq 0\\\\ \\end{cases}", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where <span class="moose-katex-inline-equation" id="moose-equation-74d12ddb-6fec-4649-85c3-66100be62619"><script>var element = document.getElementById("moose-equation-74d12ddb-6fec-4649-85c3-66100be62619");katex.render("\\varepsilon_{i}", element, {displayMode:false,throwOnError:false});</script></span> is the permittivity of the dielectric, <span class="moose-katex-inline-equation" id="moose-equation-05344c2b-309e-4f43-a6ae-2513797d6d43"><script>var element = document.getElementById("moose-equation-05344c2b-309e-4f43-a6ae-2513797d6d43");katex.render("d_{i}", element, {displayMode:false,throwOnError:false});</script></span> is the thickness of the dielectric, <span class="moose-katex-inline-equation" id="moose-equation-2285c7d1-2277-4fd1-a8fe-86c45dec3dee"><script>var element = document.getElementById("moose-equation-2285c7d1-2277-4fd1-a8fe-86c45dec3dee");katex.render("V_{i}", element, {displayMode:false,throwOnError:false});</script></span> is the voltage on the dielectric, <span class="moose-katex-inline-equation" id="moose-equation-76a4af4b-63d7-436f-b94b-bd08e893fa0b"><script>var element = document.getElementById("moose-equation-76a4af4b-63d7-436f-b94b-bd08e893fa0b");katex.render("\\textbf{n}", element, {displayMode:false,throwOnError:false});</script></span> is the normal to the boundary, <span class="moose-katex-inline-equation" id="moose-equation-bb02133f-bf24-4d18-868c-7f53c8000da1"><script>var element = document.getElementById("moose-equation-bb02133f-bf24-4d18-868c-7f53c8000da1");katex.render("e", element, {displayMode:false,throwOnError:false});</script></span> is the elemental charge, <span class="moose-katex-inline-equation" id="moose-equation-d839d001-67be-4558-b4ba-f7231e6827af"><script>var element = document.getElementById("moose-equation-d839d001-67be-4558-b4ba-f7231e6827af");katex.render("\\varepsilon_{0}", element, {displayMode:false,throwOnError:false});</script></span> is the permittivity of free space, and <span class="moose-katex-inline-equation" id="moose-equation-6c900fdb-eeee-42bd-bf66-b8a62d906dd4"><script>var element = document.getElementById("moose-equation-6c900fdb-eeee-42bd-bf66-b8a62d906dd4");katex.render("E", element, {displayMode:false,throwOnError:false});</script></span> is the E-field normal to the dielectric. <span class="moose-katex-inline-equation" id="moose-equation-ecacdcb4-1e69-487d-8ab1-d988797ba2ad"><script>var element = document.getElementById("moose-equation-ecacdcb4-1e69-487d-8ab1-d988797ba2ad");katex.render("\\Gamma_{e}", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-b3643706-d718-462c-9e44-73fd61711f5d"><script>var element = document.getElementById("moose-equation-b3643706-d718-462c-9e44-73fd61711f5d");katex.render("\\Gamma_{+}", element, {displayMode:false,throwOnError:false});</script></span> are the electron and ion outflow flux and are defined with the <a href="SakiyamaElectronDiffusionBC.html"><code>SakiyamaElectronDiffusionBC</code></a>, <a href="SakiyamaSecondaryElectronBC.html"><code>SakiyamaSecondaryElectronBC</code></a> and <a href="SakiyamaIonAdvectionBC.html"><code>SakiyamaIonAdvectionBC</code></a> (please refer to those BC&#x27;s for more information on the fluxes).</p></section><section class="scrollspy" id="37b38752-5999-408e-8294-b6b6284ab93e" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[BCs&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/BCs/index.html&quot;}&gt;&gt;&gt;]
+  [potential_Dielectric]
+    type = EconomouDielectricBC&lt;&lt;&lt;{&quot;description&quot;: &quot;Dielectric boundary condition (Based on [!cite](lymberopoulos1994modeling))&quot;, &quot;href&quot;: &quot;EconomouDielectricBC.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this residual object operates on&quot;}&gt;&gt;&gt; = potential
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = &#x27;Top_Insulator Bottom_Insulator&#x27;
+    electrons&lt;&lt;&lt;{&quot;description&quot;: &quot;The electron density in log form&quot;}&gt;&gt;&gt; = em
+    ions&lt;&lt;&lt;{&quot;description&quot;: &quot;A list of ion densities in log form&quot;}&gt;&gt;&gt; = Ar+
+    ion_potentials&lt;&lt;&lt;{&quot;description&quot;: &quot;The effective potential for each ion provided in &#x27;ions&#x27;&quot;}&gt;&gt;&gt; = potential_ion
+    electron_energy&lt;&lt;&lt;{&quot;description&quot;: &quot;The mean electron energy density. In log form&quot;}&gt;&gt;&gt; = mean_en
+    dielectric_constant&lt;&lt;&lt;{&quot;description&quot;: &quot;The dielectric constant of the material.&quot;}&gt;&gt;&gt; = 1.859382e-11
+    thickness&lt;&lt;&lt;{&quot;description&quot;: &quot;The thickness of the material.&quot;}&gt;&gt;&gt; = 0.0127
+    emission_coeffs&lt;&lt;&lt;{&quot;description&quot;: &quot;The secondary electron emission coefficient for each ion provided in `ions`&quot;}&gt;&gt;&gt; = 0.01
+    position_units&lt;&lt;&lt;{&quot;description&quot;: &quot;Units of position.&quot;}&gt;&gt;&gt; = ${dom0Scale}
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#d067f12c-6c97-4572-9502-ed72d598f942">(test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i)</a></section><section class="scrollspy" id="98a2af88-3e6f-4cfe-abde-82c68d528fde" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="70e844ce-b2f5-44f2-a861-01d22f5949ea" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundary IDs from the mesh where this object applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of boundary IDs from the mesh where this object applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">dielectric_constant</span><span class="moose-parameter-header-description">The dielectric constant of the material.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The dielectric constant of the material.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electron_energy</span><span class="moose-parameter-header-description">The mean electron energy density. In log form</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The mean electron energy density. In log form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electrons</span><span class="moose-parameter-header-description">The electron density in log form</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electron density in log form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">ion_potentials</span><span class="moose-parameter-header-description">The effective potential for each ion provided in 'ions'</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The effective potential for each ion provided in 'ions'</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">ions</span><span class="moose-parameter-header-description">A list of ion densities in log form</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>A list of ion densities in log form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">position_units</span><span class="moose-parameter-header-description">Units of position.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Units of position.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">potential_units</span><span class="moose-parameter-header-description">The potential units.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The potential units.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">thickness</span><span class="moose-parameter-header-description">The thickness of the material.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The thickness of the material.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this residual object operates on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this residual object operates on</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="f7cdbc93-df44-4e91-b9b1-db2e11fc12d9" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">displacements</span><span class="moose-parameter-header-description">The displacements</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The displacements</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">emission_coeffs</span><span class="moose-parameter-header-description">The secondary electron emission coefficient for each ion provided in `ions`</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The secondary electron emission coefficient for each ion provided in `ions`</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="9270f232-3c5f-4e7a-95e1-24f611061ada" data-section-level="3" data-section-text="Contribution To Tagged Field Data Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">absolute_value_vector_tags</span><span class="moose-parameter-header-description">The tags for the vectors this residual object should fill with the absolute value of the residual contribution</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tags for the vectors this residual object should fill with the absolute value of the residual contribution</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_only</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether this object is only doing assembly to matrices (no vectors)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether this object is only doing assembly to matrices (no vectors)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, system</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">nontime</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nontime</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, time</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Contribution To Tagged Field Data Parameters</h3></summary></details></section><section id="b534dcff-09bb-475f-82a9-0f464a41c905" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diag_save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this BC's diagonal jacobian contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this BC's diagonal jacobian contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this BC's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this BC's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">search_method</span><span class="moose-parameter-header-default">nearest_node_connected_sides</span><span class="moose-parameter-header-description">Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nearest_node_connected_sides</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nearest_node_connected_sides, all_proximate_sides</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">skip_execution_outside_variable_domain</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether to skip execution of this boundary condition when the variable it applies to is not defined on the boundary. This can facilitate setups with moving variable domains and fixed boundaries. Note that the FEProblem boundary-restricted integrity checks will also need to be turned off if using this option</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to skip execution of this boundary condition when the variable it applies to is not defined on the boundary. This can facilitate setups with moving variable domains and fixed boundaries. Note that the FEProblem boundary-restricted integrity checks will also need to be turned off if using this option</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="79be5465-c0d3-44a5-82e9-dca9c390daad" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="fae82be0-7884-4962-bd94-7fb8060279bf" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#8e68f0f6-b6ea-45c6-ad9c-104ccca9e094">(test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#4ea9b029-98b8-4f8a-b1f5-963b95512a67">(test/tests/Lymberopoulos_rf_discharge/Lymberopoulos_with_argon_metastables_2D_At100mTorr_CoarseMesh.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#7dbc03e7-7b60-4455-b086-771c5b8751b8">(test/tests/Conference_Syntax_Tests/Lymberopoulos_with_argon_metastables_2D_At100mTorr.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#7e3e5282-e6df-49ee-8e2b-56126c7cf5ec">(test/tests/Conference_Syntax_Tests/Lymberopoulos_with_argon_metastables_2D_At1Torr.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#bea6c432-944d-4460-b758-103006b4f16d">(test/tests/DriftDiffusionAction/2D_RF_Plasma_no_actions.i)</a></li></ul></section><section class="scrollspy" id="cb398e5a-965e-41bd-b3b0-cb994499d5ed" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="lymberopoulos1994modeling">Dimitris&nbsp;P Lymberopoulos and Demetre&nbsp;J Economou.
+Modeling and simulation of glow discharge plasma reactors.
+<em>Journal of Vacuum Science &amp; Technology A: Vacuum, Surfaces, and Films</em>, 12(4):1229–1236, 1994.
+<a href="https://doi.org/10.1116/1.579300">doi:10.1116/1.579300</a>.<a href="#acab3066-cb26-4cb9-b390-487c5fb8db29" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="acab3066-cb26-4cb9-b390-487c5fb8db29"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{lymberopoulos1994modeling,
+    author = "Lymberopoulos, Dimitris P and Economou, Demetre J",
+    title = "Modeling and simulation of glow discharge plasma reactors",
+    journal = "Journal of Vacuum Science \\& Technology A: Vacuum, Surfaces, and Films",
+    volume = "12",
+    number = "4",
+    pages = "1229--1236",
+    year = "1994",
+    publisher = "American Vacuum Society",
+    doi = "10.1116/1.579300"
+}
+</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="d067f12c-6c97-4572-9502-ed72d598f942"><div class="modal-content"><h4>(test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i)</h4><pre style="max-height:350px;"><code class="language-moose">dom0Scale = 25.4e-3
+
+[GlobalParams]
+  potential_units = V
+  use_moles = true
+[]
+
+[Mesh]
+  type = FileMesh
+  file = &#x27;GEC_mesh_coarse.msh&#x27;
+  coord_type = RZ
+  rz_coord_axis = Y
+[]
+
+#Effective potentials and their kernels are not defined by the
+#DriftDiffusionAction, but charged particles effective by
+#this potential can by defined by the action.
+[Variables]
+  [potential_ion]
+  []
+[]
+
+#Action the supplies the drift-diffusion equations
+#This action also adds JouleHeating and the ChargeSourceMoles_KV Kernels
+[DriftDiffusionAction]
+  [Plasma]
+    electrons = em
+    secondary_ions = Ar+
+    neutrals = Ar*
+    electron_energy = mean_en
+    field = potential
+    eff_fields = potential_ion
+    eff_fields_property_names = potential_ion_property
+    is_field_unique = true
+    using_offset = false
+    position_units = ${dom0Scale}
+    additional_outputs = &#x27;ElectronTemperature Current EField&#x27;
+  []
+[]
+
+#The Kernels supply the sources terms
+[Kernels]
+  #Net electron production from ionization
+  [em_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from step-wise ionization
+  [em_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from metastable pooling
+  [em_pooling]
+    type = ReactionSecondOrderLog
+    variable = em
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Net ion production from ionization
+  [Ar+_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from step-wise ionization
+  [Ar+_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from metastable pooling
+  [Ar+_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar+
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Net excited Argon production from excitation
+  [Ar*_excitation]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    coefficient = 1
+  []
+  #Net excited Argon loss from step-wise ionization
+  [Ar*_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from superelastic collisions
+  [Ar*_collisions]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from quenching to resonant
+  [Ar*_quenching]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from  metastable pooling
+  [Ar*_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = -2
+    _v_eq_u = true
+    _w_eq_u = true
+  []
+  #Net excited Argon loss from two-body quenching
+  [Ar*_2B_quenching]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+  #Net excited Argon loss from three-body quenching
+  [Ar*_3B_quenching]
+    type = ReactionThirdOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+
+  #Energy loss from ionization
+  [Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    threshold_energy = -15.7
+  []
+  #Energy loss from excitation
+  [Excitation_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    threshold_energy = -11.56
+  []
+  #Energy loss from step-wise ionization
+  [Stepwise_Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    threshold_energy = -4.14
+  []
+  #Energy gain from superelastic collisions
+  [Collisions_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    threshold_energy = 11.56
+  []
+  # Energy loss from elastic collisions
+  [Elastic_loss]
+    type = EEDFElasticLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+  []
+
+  #Effective potential for the Ions
+  [Ion_potential_time_deriv]
+    type = TimeDerivative
+    variable = potential_ion
+  []
+  [Ion_potential_reaction]
+    type = ScaledReaction
+    variable = potential_ion
+    collision_freq = 1283370.875
+  []
+  [Ion_potential_coupled_force]
+    type = CoupledForce
+    variable = potential_ion
+    v = potential
+    coef = 1283370.875
+  []
+[]
+
+[AuxVariables]
+  [x_node]
+  []
+
+  [y_node]
+  []
+
+  [rho]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar]
+  []
+
+  [emRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [exRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [swRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [deexRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [quRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [poolRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [TwoBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [ThreeBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+[]
+
+[AuxKernels]
+  [emRate]
+    type = ProcRateForRateCoeff
+    variable = emRate
+    v = em
+    w = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+  []
+  [exRate]
+    type = ProcRateForRateCoeff
+    variable = exRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+  []
+  [swRate]
+    type = ProcRateForRateCoeff
+    variable = swRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+  []
+  [deexRate]
+    type = ProcRateForRateCoeff
+    variable = deexRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+  []
+  [quRate]
+    type = ProcRateForRateCoeff
+    variable = quRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+  []
+  [poolRate]
+    type = ProcRateForRateCoeff
+    variable = poolRate
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+  []
+  [TwoBRate]
+    type = ProcRateForRateCoeff
+    variable = TwoBRate
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+  []
+  [ThreeBRate]
+    type = ProcRateForRateCoeffThreeBody
+    variable = ThreeBRate
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+  []
+
+  [x_ng]
+    type = Position
+    variable = x_node
+    component = 0
+    position_units = ${dom0Scale}
+  []
+
+  [y_ng]
+    type = Position
+    variable = y_node
+    component = 1
+    position_units = ${dom0Scale}
+  []
+
+  [Ar_val]
+    type = ConstantAux
+    variable = Ar
+    # value = 3.22e2
+    value = -5.231208
+    execute_on = INITIAL
+  []
+[]
+
+[BCs]
+  #Voltage Boundary Condition, same as in paper
+  [potential_top_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Top_Electrode&#x27;
+    function = potential_top_bc_func
+    preset = false
+  []
+  [potential_bottom_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Bottom_Electrode&#x27;
+    function = potential_bottom_bc_func
+    preset = false
+  []
+  [potential_dirichlet_bottom_plate]
+    type = DirichletBC
+    variable = potential
+    boundary = &#x27;Walls&#x27;
+    value = 0
+    preset = false
+  []
+  [potential_Dielectric]
+    type = EconomouDielectricBC
+    variable = potential
+    boundary = &#x27;Top_Insulator Bottom_Insulator&#x27;
+    electrons = em
+    ions = Ar+
+    ion_potentials = potential_ion
+    electron_energy = mean_en
+    dielectric_constant = 1.859382e-11
+    thickness = 0.0127
+    emission_coeffs = 0.01
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for electons, same as in paper
+  [em_physical_diffusion]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    electron_energy = mean_en
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [em_Ar+_second_emissions]
+    type = SakiyamaSecondaryElectronBC
+    variable = em
+    field_property_name = potential_ion_property
+    ions = Ar+
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  [Ar+_physical_advection]
+    type = SakiyamaIonAdvectionBC
+    variable = Ar+
+    field_property_name = potential_ion_property
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  #(except the metastables are not set to zero, since Zapdos uses log form)
+  [Ar*_physical_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    value = 100
+  []
+
+  #New Boundary conditions for mean energy, should be the same as in paper
+  [mean_en_physical_diffusion]
+    type = SakiyamaEnergyDiffusionBC
+    variable = mean_en
+    electrons = em
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [mean_en_Ar+_second_emissions]
+    type = SakiyamaEnergySecondaryElectronBC
+    variable = mean_en
+    electrons = em
+    ions = Ar+
+    field_property_name = potential_ion_property
+    secondary_electron_temperature_equal_to_bulk = true
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+[]
+
+[ICs]
+  [em_ic]
+    type = FunctionIC
+    variable = em
+    function = density_ic_func
+  []
+  [Ar+_ic]
+    type = FunctionIC
+    variable = Ar+
+    function = density_ic_func
+  []
+  [Ar*_ic]
+    type = FunctionIC
+    variable = Ar*
+    function = meta_density_ic_func
+  []
+  [mean_en_ic]
+    type = FunctionIC
+    variable = mean_en
+    function = energy_density_ic_func
+  []
+
+  [potential_ic]
+    type = FunctionIC
+    variable = potential
+    function = potential_ic_func
+  []
+[]
+
+[Functions]
+  [potential_top_bc_func]
+    type = ParsedFunction
+    expression = &#x27;50*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_bottom_bc_func]
+    type = ParsedFunction
+    expression = &#x27;-50*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_ic_func]
+    type = ParsedFunction
+    expression = 0
+  []
+  [density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e14)/6.022e23)&#x27;
+  []
+  [meta_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e16)/6.022e23)&#x27;
+  []
+  [energy_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((3./2.) * 4) + log((1e14)/6.022e23)&#x27;
+  []
+[]
+
+[Materials]
+  [GasBasics]
+    type = ElectronTransportCoefficients
+    interp_trans_coeffs = true
+    ramp_trans_coeffs = false
+    p_gas = 133.322
+    electrons = em
+    electron_energy = mean_en
+    property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
+  []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Ar+
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    mobility = 1.44409938
+    diffusivity = 6.428571e-2
+  []
+  [gas_species_1]
+    type = ADHeavySpecies
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    diffusivity = 7.515528e-2
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+  []
+  [reaction_00]
+    type = ZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_elastic.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+    electrons = em
+  []
+  [reaction_0]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excitation.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_1]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_ionization.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_2]
+    type = ZapdosEEDFRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_3]
+    type = ZapdosEEDFRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_4]
+    type = GenericRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    #reaction_rate_value = 2e-13
+    reaction_rate_value = 1.2044e11
+  []
+  [reaction_5]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    #reaction_rate_value = 6.2e-16
+    reaction_rate_value = 373364000
+  []
+  [reaction_6]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    #reaction_rate_value = 3e-21
+    reaction_rate_value = 1806.6
+  []
+  [reaction_7]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    #reaction_rate_value = 1.1e-42
+    reaction_rate_value = 398909.324
+  []
+[]
+
+#New postprocessor that calculates the inverse of the plasma frequency
+[Postprocessors]
+  [InversePlasmaFreq]
+    type = PlasmaFrequencyInverse
+    variable = em
+    use_moles = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  #end_time = 7.4e-3
+  end_time = 1e-7
+  dtmax = 1e-9
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 fgmres 1e-3&#x27;
+  nl_rel_tol = 1e-12
+  #nl_abs_tol = 7.6e-5
+  dtmin = 1e-14
+  l_max_its = 20
+
+  #Time steps based on the inverse of the plasma frequency
+  #[TimeSteppers]
+  #  [Postprocessor]
+  #    type = PostprocessorDT
+  #    postprocessor = InversePlasmaFreq
+  #    scale = 0.1
+  #  []
+  #[]
+[]
+
+[Outputs]
+  file_base = &#x27;2D_RF_out&#x27;
+  perf_graph = true
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="8e68f0f6-b6ea-45c6-ad9c-104ccca9e094"><div class="modal-content"><h4>(test/tests/DriftDiffusionAction/2D_RF_Plasma_actions.i)</h4><pre style="max-height:350px;"><code class="language-moose">dom0Scale = 25.4e-3
+
+[GlobalParams]
+  potential_units = V
+  use_moles = true
+[]
+
+[Mesh]
+  type = FileMesh
+  file = &#x27;GEC_mesh_coarse.msh&#x27;
+  coord_type = RZ
+  rz_coord_axis = Y
+[]
+
+#Effective potentials and their kernels are not defined by the
+#DriftDiffusionAction, but charged particles effective by
+#this potential can by defined by the action.
+[Variables]
+  [potential_ion]
+  []
+[]
+
+#Action the supplies the drift-diffusion equations
+#This action also adds JouleHeating and the ChargeSourceMoles_KV Kernels
+[DriftDiffusionAction]
+  [Plasma]
+    electrons = em
+    secondary_ions = Ar+
+    neutrals = Ar*
+    electron_energy = mean_en
+    field = potential
+    eff_fields = potential_ion
+    eff_fields_property_names = potential_ion_property
+    is_field_unique = true
+    using_offset = false
+    position_units = ${dom0Scale}
+    additional_outputs = &#x27;ElectronTemperature Current EField&#x27;
+  []
+[]
+
+#The Kernels supply the sources terms
+[Kernels]
+  #Net electron production from ionization
+  [em_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from step-wise ionization
+  [em_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from metastable pooling
+  [em_pooling]
+    type = ReactionSecondOrderLog
+    variable = em
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Net ion production from ionization
+  [Ar+_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from step-wise ionization
+  [Ar+_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from metastable pooling
+  [Ar+_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar+
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Net excited Argon production from excitation
+  [Ar*_excitation]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    coefficient = 1
+  []
+  #Net excited Argon loss from step-wise ionization
+  [Ar*_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from superelastic collisions
+  [Ar*_collisions]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from quenching to resonant
+  [Ar*_quenching]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from  metastable pooling
+  [Ar*_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = -2
+    _v_eq_u = true
+    _w_eq_u = true
+  []
+  #Net excited Argon loss from two-body quenching
+  [Ar*_2B_quenching]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+  #Net excited Argon loss from three-body quenching
+  [Ar*_3B_quenching]
+    type = ReactionThirdOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+
+  #Energy loss from ionization
+  [Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    threshold_energy = -15.7
+  []
+  #Energy loss from excitation
+  [Excitation_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    threshold_energy = -11.56
+  []
+  #Energy loss from step-wise ionization
+  [Stepwise_Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    threshold_energy = -4.14
+  []
+  #Energy gain from superelastic collisions
+  [Collisions_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    threshold_energy = 11.56
+  []
+  # Energy loss from elastic collisions
+  [Elastic_loss]
+    type = EEDFElasticLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+  []
+
+  #Effective potential for the Ions
+  [Ion_potential_time_deriv]
+    type = TimeDerivative
+    variable = potential_ion
+  []
+  [Ion_potential_reaction]
+    type = ScaledReaction
+    variable = potential_ion
+    collision_freq = 1283370.875
+  []
+  [Ion_potential_coupled_force]
+    type = CoupledForce
+    variable = potential_ion
+    v = potential
+    coef = 1283370.875
+  []
+[]
+
+[AuxVariables]
+  [x_node]
+  []
+
+  [y_node]
+  []
+
+  [rho]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar]
+  []
+
+  [emRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [exRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [swRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [deexRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [quRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [poolRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [TwoBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [ThreeBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+[]
+
+[AuxKernels]
+  [emRate]
+    type = ProcRateForRateCoeff
+    variable = emRate
+    v = em
+    w = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+  []
+  [exRate]
+    type = ProcRateForRateCoeff
+    variable = exRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+  []
+  [swRate]
+    type = ProcRateForRateCoeff
+    variable = swRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+  []
+  [deexRate]
+    type = ProcRateForRateCoeff
+    variable = deexRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+  []
+  [quRate]
+    type = ProcRateForRateCoeff
+    variable = quRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+  []
+  [poolRate]
+    type = ProcRateForRateCoeff
+    variable = poolRate
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+  []
+  [TwoBRate]
+    type = ProcRateForRateCoeff
+    variable = TwoBRate
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+  []
+  [ThreeBRate]
+    type = ProcRateForRateCoeffThreeBody
+    variable = ThreeBRate
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+  []
+
+  [x_ng]
+    type = Position
+    variable = x_node
+    component = 0
+    position_units = ${dom0Scale}
+  []
+
+  [y_ng]
+    type = Position
+    variable = y_node
+    component = 1
+    position_units = ${dom0Scale}
+  []
+
+  [Ar_val]
+    type = ConstantAux
+    variable = Ar
+    # value = 3.22e2
+    value = -5.231208
+    execute_on = INITIAL
+  []
+[]
+
+[BCs]
+  #Voltage Boundary Condition, same as in paper
+  [potential_top_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Top_Electrode&#x27;
+    function = potential_top_bc_func
+    preset = false
+  []
+  [potential_bottom_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Bottom_Electrode&#x27;
+    function = potential_bottom_bc_func
+    preset = false
+  []
+  [potential_dirichlet_bottom_plate]
+    type = DirichletBC
+    variable = potential
+    boundary = &#x27;Walls&#x27;
+    value = 0
+    preset = false
+  []
+  [potential_Dielectric]
+    type = EconomouDielectricBC
+    variable = potential
+    boundary = &#x27;Top_Insulator Bottom_Insulator&#x27;
+    electrons = em
+    ions = Ar+
+    ion_potentials = potential_ion
+    electron_energy = mean_en
+    dielectric_constant = 1.859382e-11
+    thickness = 0.0127
+    emission_coeffs = 0.01
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for electons, same as in paper
+  [em_physical_diffusion]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    electron_energy = mean_en
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [em_Ar+_second_emissions]
+    type = SakiyamaSecondaryElectronBC
+    variable = em
+    field_property_name = potential_ion_property
+    ions = Ar+
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  [Ar+_physical_advection]
+    type = SakiyamaIonAdvectionBC
+    variable = Ar+
+    field_property_name = potential_ion_property
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  #(except the metastables are not set to zero, since Zapdos uses log form)
+  [Ar*_physical_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    value = 100
+  []
+
+  #New Boundary conditions for mean energy, should be the same as in paper
+  [mean_en_physical_diffusion]
+    type = SakiyamaEnergyDiffusionBC
+    variable = mean_en
+    electrons = em
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [mean_en_Ar+_second_emissions]
+    type = SakiyamaEnergySecondaryElectronBC
+    variable = mean_en
+    electrons = em
+    ions = Ar+
+    field_property_name = potential_ion_property
+    secondary_electron_temperature_equal_to_bulk = true
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+[]
+
+[ICs]
+  [em_ic]
+    type = FunctionIC
+    variable = em
+    function = density_ic_func
+  []
+  [Ar+_ic]
+    type = FunctionIC
+    variable = Ar+
+    function = density_ic_func
+  []
+  [Ar*_ic]
+    type = FunctionIC
+    variable = Ar*
+    function = meta_density_ic_func
+  []
+  [mean_en_ic]
+    type = FunctionIC
+    variable = mean_en
+    function = energy_density_ic_func
+  []
+
+  [potential_ic]
+    type = FunctionIC
+    variable = potential
+    function = potential_ic_func
+  []
+[]
+
+[Functions]
+  [potential_top_bc_func]
+    type = ParsedFunction
+    expression = &#x27;50*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_bottom_bc_func]
+    type = ParsedFunction
+    expression = &#x27;-50*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_ic_func]
+    type = ParsedFunction
+    expression = 0
+  []
+  [density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e14)/6.022e23)&#x27;
+  []
+  [meta_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e16)/6.022e23)&#x27;
+  []
+  [energy_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((3./2.) * 4) + log((1e14)/6.022e23)&#x27;
+  []
+[]
+
+[Materials]
+  [GasBasics]
+    type = ElectronTransportCoefficients
+    interp_trans_coeffs = true
+    ramp_trans_coeffs = false
+    p_gas = 133.322
+    electrons = em
+    electron_energy = mean_en
+    property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
+  []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Ar+
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    mobility = 1.44409938
+    diffusivity = 6.428571e-2
+  []
+  [gas_species_1]
+    type = ADHeavySpecies
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    diffusivity = 7.515528e-2
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+  []
+  [reaction_00]
+    type = ZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_elastic.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+    electrons = em
+  []
+  [reaction_0]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excitation.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_1]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_ionization.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_2]
+    type = ZapdosEEDFRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_3]
+    type = ZapdosEEDFRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_4]
+    type = GenericRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    #reaction_rate_value = 2e-13
+    reaction_rate_value = 1.2044e11
+  []
+  [reaction_5]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    #reaction_rate_value = 6.2e-16
+    reaction_rate_value = 373364000
+  []
+  [reaction_6]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    #reaction_rate_value = 3e-21
+    reaction_rate_value = 1806.6
+  []
+  [reaction_7]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    #reaction_rate_value = 1.1e-42
+    reaction_rate_value = 398909.324
+  []
+[]
+
+#New postprocessor that calculates the inverse of the plasma frequency
+[Postprocessors]
+  [InversePlasmaFreq]
+    type = PlasmaFrequencyInverse
+    variable = em
+    use_moles = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  #end_time = 7.4e-3
+  end_time = 1e-7
+  dtmax = 1e-9
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 fgmres 1e-3&#x27;
+  nl_rel_tol = 1e-12
+  #nl_abs_tol = 7.6e-5
+  dtmin = 1e-14
+  l_max_its = 20
+
+  #Time steps based on the inverse of the plasma frequency
+  #[TimeSteppers]
+  #  [Postprocessor]
+  #    type = PostprocessorDT
+  #    postprocessor = InversePlasmaFreq
+  #    scale = 0.1
+  #  []
+  #[]
+[]
+
+[Outputs]
+  file_base = &#x27;2D_RF_out&#x27;
+  perf_graph = true
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="4ea9b029-98b8-4f8a-b1f5-963b95512a67"><div class="modal-content"><h4>(test/tests/Lymberopoulos_rf_discharge/Lymberopoulos_with_argon_metastables_2D_At100mTorr_CoarseMesh.i)</h4><pre style="max-height:350px;"><code class="language-moose">dom0Scale = 25.4e-3
+
+[GlobalParams]
+  potential_units = V
+  use_moles = true
+[]
+
+[Mesh]
+  type = FileMesh
+  file = &#x27;GEC_mesh_coarse.msh&#x27;
+  coord_type = RZ
+  rz_coord_axis = Y
+[]
+
+[Variables]
+  [em]
+  []
+
+  [Ar+]
+  []
+
+  [Ar*]
+  []
+
+  [mean_en]
+  []
+
+  [potential]
+  []
+
+  [potential_ion]
+  []
+[]
+
+[Kernels]
+  #Electron Equations (Same as in paper)
+  #Time Derivative term of electron
+  [em_time_deriv]
+    type = ElectronTimeDerivative
+    variable = em
+  []
+  #Advection term of electron
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Net electron production from ionization
+  [em_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from step-wise ionization
+  [em_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from metastable pooling
+  [em_pooling]
+    type = ReactionSecondOrderLog
+    variable = em
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Argon Ion Equations (Same as in paper)
+  #Time Derivative term of the ions
+  [Ar+_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar+
+  []
+  #Advection term of ions
+  [Ar+_advection]
+    type = EFieldAdvection
+    variable = Ar+
+    field_property_name = field_ion
+    position_units = ${dom0Scale}
+  []
+  [Ar+_diffusion]
+    type = CoeffDiffusion
+    variable = Ar+
+    position_units = ${dom0Scale}
+  []
+  #Net ion production from ionization
+  [Ar+_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from step-wise ionization
+  [Ar+_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from metastable pooling
+  [Ar+_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar+
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Argon Excited Equations (Same as in paper)
+  #Time Derivative term of excited Argon
+  [Ar*_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar*
+  []
+  #Diffusion term of excited Argon
+  [Ar*_diffusion]
+    type = CoeffDiffusion
+    variable = Ar*
+    position_units = ${dom0Scale}
+  []
+  #Net excited Argon production from excitation
+  [Ar*_excitation]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    coefficient = 1
+  []
+  #Net excited Argon loss from step-wise ionization
+  [Ar*_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from superelastic collisions
+  [Ar*_collisions]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from quenching to resonant
+  [Ar*_quenching]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from  metastable pooling
+  [Ar*_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = -2
+    _v_eq_u = true
+    _w_eq_u = true
+  []
+  #Net excited Argon loss from two-body quenching
+  [Ar*_2B_quenching]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+  #Net excited Argon loss from three-body quenching
+  [Ar*_3B_quenching]
+    type = ReactionThirdOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+
+  #Voltage Equations (Same as in paper)
+  #Voltage term in Poissons Eqaution
+  [potential_diffusion_dom0]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = ${dom0Scale}
+  []
+  #Ion term in Poissons Equation
+  [Ar+_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = Ar+
+  []
+  #Electron term in Poissons Equation
+  [em_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = em
+  []
+
+  #Since the paper uses electron temperature as a variable, the energy equation is in
+  #a different form but should be the same physics
+  #Time Derivative term of electron energy
+  [mean_en_time_deriv]
+    type = ElectronTimeDerivative
+    variable = mean_en
+  []
+  #Advection term of electron energy
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons energy
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Joule Heating term
+  [mean_en_joule_heating]
+    type = JouleHeating
+    variable = mean_en
+    electrons = em
+    position_units = ${dom0Scale}
+  []
+  #Energy loss from ionization
+  [Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    threshold_energy = -15.7
+  []
+  #Energy loss from excitation
+  [Excitation_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    threshold_energy = -11.56
+  []
+  #Energy loss from step-wise ionization
+  [Stepwise_Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    threshold_energy = -4.14
+  []
+  #Energy gain from superelastic collisions
+  [Collisions_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    threshold_energy = 11.56
+  []
+  # Energy loss from elastic collisions
+  [Elastic_loss]
+    type = EEDFElasticLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+  []
+
+  #Effective potential for the Ions
+  [Ion_potential_time_deriv]
+    type = TimeDerivative
+    variable = potential_ion
+  []
+  [Ion_potential_reaction]
+    type = ScaledReaction
+    variable = potential_ion
+    collision_freq = 1283370.875
+  []
+  [Ion_potential_coupled_force]
+    type = CoupledForce
+    variable = potential_ion
+    v = potential
+    coef = 1283370.875
+  []
+[]
+
+[AuxVariables]
+  [emDeBug]
+  []
+  [Ar+_DeBug]
+  []
+  [Ar*_DeBug]
+  []
+  [mean_enDeBug]
+  []
+  [potential_DeBug]
+  []
+
+  [Te]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [x]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [x_node]
+  []
+
+  [y]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [y_node]
+  []
+
+  [rho]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [em_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar+_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar*_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar]
+  []
+
+  [Efieldx]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Efieldy]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Current_em]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [Current_Ar]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [emRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [exRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [swRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [deexRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [quRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [poolRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [TwoBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [ThreeBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+[]
+
+[AuxKernels]
+  #[emDeBug]
+  #  type = DebugResidualAux
+  #  variable = emDeBug
+  #  debug_variable = em
+  #[]
+  #[Ar+_DeBug]
+  #  type = DebugResidualAux
+  #  variable = Ar+_DeBug
+  #  debug_variable = Ar+
+  #[]
+  #[mean_enDeBug]
+  #  type = DebugResidualAux
+  #  variable = mean_enDeBug
+  #  debug_variable = mean_en
+  #[]
+  #[Ar*_DeBug]
+  #  type = DebugResidualAux
+  #  variable = Ar*_DeBug
+  #  debug_variable = Ar*
+  #[]
+  #[Potential_DeBug]
+  #  type = DebugResidualAux
+  #  variable = potential_DeBug
+  #  debug_variable = potential
+  #[]
+
+  [emRate]
+    type = ProcRateForRateCoeff
+    variable = emRate
+    v = em
+    w = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+  []
+  [exRate]
+    type = ProcRateForRateCoeff
+    variable = exRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+  []
+  [swRate]
+    type = ProcRateForRateCoeff
+    variable = swRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+  []
+  [deexRate]
+    type = ProcRateForRateCoeff
+    variable = deexRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+  []
+  [quRate]
+    type = ProcRateForRateCoeff
+    variable = quRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+  []
+  [poolRate]
+    type = ProcRateForRateCoeff
+    variable = poolRate
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+  []
+  [TwoBRate]
+    type = ProcRateForRateCoeff
+    variable = TwoBRate
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+  []
+  [ThreeBRate]
+    type = ProcRateForRateCoeffThreeBody
+    variable = ThreeBRate
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+  []
+  [Te]
+    type = ElectronTemperature
+    variable = Te
+    electrons = em
+    electron_energy = mean_en
+  []
+  [x_g]
+    type = Position
+    variable = x
+    position_units = ${dom0Scale}
+  []
+  [x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
+  []
+
+  [y_g]
+    type = Position
+    variable = y
+    position_units = ${dom0Scale}
+  []
+  [y_ng]
+    type = Position
+    variable = y_node
+    position_units = ${dom0Scale}
+  []
+
+  [em_lin]
+    type = DensityMoles
+    variable = em_lin
+    density = em
+  []
+  [Ar+_lin]
+    type = DensityMoles
+    variable = Ar+_lin
+    density = Ar+
+  []
+  [Ar*_lin]
+    type = DensityMoles
+    variable = Ar*_lin
+    density = Ar*
+  []
+
+  [Ar_val]
+    type = ConstantAux
+    variable = Ar
+    # value = 3.22e2
+    value = -5.231208
+    execute_on = INITIAL
+  []
+
+  [Efieldx_calc]
+    type = Efield
+    component = 0
+    variable = Efieldx
+    position_units = ${dom0Scale}
+  []
+  [Efieldy_calc]
+    type = Efield
+    component = 1
+    variable = Efieldy
+    position_units = ${dom0Scale}
+  []
+
+  [Current_em]
+    type = ADCurrent
+    density = em
+    variable = Current_em
+    art_diff = false
+    block = &#x27;plasma&#x27;
+    position_units = ${dom0Scale}
+  []
+  [Current_Ar]
+    type = ADCurrent
+    field_property_name = field_ion
+    density = Ar+
+    variable = Current_Ar
+    art_diff = false
+    block = &#x27;plasma&#x27;
+    position_units = ${dom0Scale}
+  []
+[]
+
+[BCs]
+  #Voltage Boundary Condition, same as in paper
+  [potential_top_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Top_Electrode&#x27;
+    function = potential_top_bc_func
+    preset = false
+  []
+  [potential_bottom_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Bottom_Electrode&#x27;
+    function = potential_bottom_bc_func
+    preset = false
+  []
+  [potential_dirichlet_bottom_plate]
+    type = DirichletBC
+    variable = potential
+    boundary = &#x27;Walls&#x27;
+    value = 0
+    preset = false
+  []
+  [potential_Dielectric]
+    type = EconomouDielectricBC
+    variable = potential
+    boundary = &#x27;Top_Insulator Bottom_Insulator&#x27;
+    electrons = em
+    ions = Ar+
+    ion_potentials = potential_ion
+    electron_energy = mean_en
+    dielectric_constant = 1.859382e-11
+    thickness = 0.0127
+    emission_coeffs = 0.01
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for electons, same as in paper
+  [em_physical_diffusion]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    electron_energy = mean_en
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [em_Ar+_second_emissions]
+    type = SakiyamaSecondaryElectronBC
+    variable = em
+    field_property_name = field_ion
+    ions = Ar+
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  [Ar+_physical_advection]
+    type = SakiyamaIonAdvectionBC
+    variable = Ar+
+    field_property_name = field_ion
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  #(except the metastables are not set to zero, since Zapdos uses log form)
+  [Ar*_physical_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    value = 100
+  []
+
+  #New Boundary conditions for mean energy, should be the same as in paper
+  [mean_en_physical_diffusion]
+    type = SakiyamaEnergyDiffusionBC
+    variable = mean_en
+    electrons = em
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [mean_en_Ar+_second_emissions]
+    type = SakiyamaEnergySecondaryElectronBC
+    variable = mean_en
+    electrons = em
+    ions = Ar+
+    field_property_name = field_ion
+    secondary_electron_temperature_equal_to_bulk = true
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+[]
+
+[ICs]
+  [em_ic]
+    type = FunctionIC
+    variable = em
+    function = density_ic_func
+  []
+  [Ar+_ic]
+    type = FunctionIC
+    variable = Ar+
+    function = density_ic_func
+  []
+  [Ar*_ic]
+    type = FunctionIC
+    variable = Ar*
+    function = meta_density_ic_func
+  []
+  [mean_en_ic]
+    type = FunctionIC
+    variable = mean_en
+    function = energy_density_ic_func
+  []
+
+  [potential_ic]
+    type = FunctionIC
+    variable = potential
+    function = potential_ic_func
+  []
+[]
+
+[Functions]
+  [potential_top_bc_func]
+    type = ParsedFunction
+    expression = &#x27;50*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_bottom_bc_func]
+    type = ParsedFunction
+    expression = &#x27;-50*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_ic_func]
+    type = ParsedFunction
+    expression = 0
+  []
+  [density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e14)/6.022e23)&#x27;
+  []
+  [meta_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e16)/6.022e23)&#x27;
+  []
+  [energy_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((3./2.) * 4) + log((1e14)/6.022e23)&#x27;
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [field_solver_ion]
+    type = FieldSolverMaterial
+    potential = potential_ion
+    property_name = field_ion
+  []
+  [GasBasics]
+    type = ElectronTransportCoefficients
+    interp_trans_coeffs = true
+    ramp_trans_coeffs = false
+    p_gas = 133.322
+    electrons = em
+    electron_energy = mean_en
+    property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
+  []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Ar+
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    mobility = 1.44409938
+    diffusivity = 6.428571e-2
+  []
+  [gas_species_1]
+    type = ADHeavySpecies
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    diffusivity = 7.515528e-2
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+  []
+  [reaction_00]
+    type = ZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_elastic.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+    electrons = em
+  []
+  [reaction_0]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excitation.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_1]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_ionization.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_2]
+    type = ZapdosEEDFRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_3]
+    type = ZapdosEEDFRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_4]
+    type = GenericRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    #reaction_rate_value = 2e-13
+    reaction_rate_value = 1.2044e11
+  []
+  [reaction_5]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    #reaction_rate_value = 6.2e-16
+    reaction_rate_value = 373364000
+  []
+  [reaction_6]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    #reaction_rate_value = 3e-21
+    reaction_rate_value = 1806.6
+  []
+  [reaction_7]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    #reaction_rate_value = 1.1e-42
+    reaction_rate_value = 398909.324
+  []
+[]
+
+#New postprocessor that calculates the inverse of the plasma frequency
+[Postprocessors]
+  [InversePlasmaFreq]
+    type = PlasmaFrequencyInverse
+    variable = em
+    use_moles = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  #end_time = 7.4e-3
+  end_time = 1e-7
+  dtmax = 1e-9
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 fgmres 1e-3&#x27;
+  nl_rel_tol = 1e-12
+  #nl_abs_tol = 7.6e-5
+  dtmin = 1e-14
+  l_max_its = 20
+
+  #Time steps based on the inverse of the plasma frequency
+  #[TimeSteppers]
+  #  [Postprocessor]
+  #    type = PostprocessorDT
+  #    postprocessor = InversePlasmaFreq
+  #    scale = 0.1
+  #  []
+  #[]
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="7dbc03e7-7b60-4455-b086-771c5b8751b8"><div class="modal-content"><h4>(test/tests/Conference_Syntax_Tests/Lymberopoulos_with_argon_metastables_2D_At100mTorr.i)</h4><pre style="max-height:350px;"><code class="language-moose">dom0Scale = 25.4e-3
+
+[GlobalParams]
+  potential_units = V
+  use_moles = true
+[]
+
+[Mesh]
+  type = FileMesh
+  file = &#x27;GEC_mesh.msh&#x27;
+  coord_type = RZ
+  rz_coord_axis = Y
+[]
+
+[Variables]
+  [em]
+  []
+
+  [Ar+]
+  []
+
+  [Ar*]
+  []
+
+  [mean_en]
+  []
+
+  [potential]
+  []
+
+  [potential_ion]
+  []
+[]
+
+[Kernels]
+  #Electron Equations (Same as in paper)
+  #Time Derivative term of electron
+  [em_time_deriv]
+    type = ElectronTimeDerivative
+    variable = em
+  []
+  #Advection term of electron
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Net electron production from ionization
+  [em_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from step-wise ionization
+  [em_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from metastable pooling
+  [em_pooling]
+    type = ReactionSecondOrderLog
+    variable = em
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Argon Ion Equations (Same as in paper)
+  #Time Derivative term of the ions
+  [Ar+_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar+
+  []
+  #Advection term of ions
+  [Ar+_advection]
+    type = EFieldAdvection
+    variable = Ar+
+    position_units = ${dom0Scale}
+  []
+  [Ar+_diffusion]
+    type = CoeffDiffusion
+    variable = Ar+
+    position_units = ${dom0Scale}
+  []
+  #Net ion production from ionization
+  [Ar+_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from step-wise ionization
+  [Ar+_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from metastable pooling
+  [Ar+_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar+
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Argon Excited Equations (Same as in paper)
+  #Time Derivative term of excited Argon
+  [Ar*_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar*
+  []
+  #Diffusion term of excited Argon
+  [Ar*_diffusion]
+    type = CoeffDiffusion
+    variable = Ar*
+    position_units = ${dom0Scale}
+  []
+  #Net excited Argon production from excitation
+  [Ar*_excitation]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    coefficient = 1
+  []
+  #Net excited Argon loss from step-wise ionization
+  [Ar*_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from superelastic collisions
+  [Ar*_collisions]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from quenching to resonant
+  [Ar*_quenching]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from  metastable pooling
+  [Ar*_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = -2
+    _v_eq_u = true
+    _w_eq_u = true
+  []
+  #Net excited Argon loss from two-body quenching
+  [Ar*_2B_quenching]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+  #Net excited Argon loss from three-body quenching
+  [Ar*_3B_quenching]
+    type = ReactionThirdOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+
+  #Voltage Equations (Same as in paper)
+  #Voltage term in Poissons Eqaution
+  [potential_diffusion_dom0]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = ${dom0Scale}
+  []
+  #Ion term in Poissons Equation
+  [Ar+_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = Ar+
+  []
+  #Electron term in Poissons Equation
+  [em_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = em
+  []
+
+  #Since the paper uses electron temperature as a variable, the energy equation is in
+  #a different form but should be the same physics
+  #Time Derivative term of electron energy
+  [mean_en_time_deriv]
+    type = ElectronTimeDerivative
+    variable = mean_en
+  []
+  #Advection term of electron energy
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons energy
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Joule Heating term
+  [mean_en_joule_heating]
+    type = JouleHeating
+    variable = mean_en
+    electrons = em
+    position_units = ${dom0Scale}
+  []
+  #Energy loss from ionization
+  [Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    threshold_energy = -15.7
+  []
+  #Energy loss from excitation
+  [Excitation_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    threshold_energy = -11.56
+  []
+  #Energy loss from step-wise ionization
+  [Stepwise_Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    threshold_energy = -4.14
+  []
+  #Energy gain from superelastic collisions
+  [Collisions_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    threshold_energy = 11.56
+  []
+  # Energy loss from elastic collisions
+  [Elastic_loss]
+    type = EEDFElasticLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+  []
+
+  #Effective potential for the Ions
+  [Ion_potential_time_deriv]
+    type = TimeDerivative
+    variable = potential_ion
+  []
+  [Ion_potential_reaction]
+    type = ScaledReaction
+    variable = potential_ion
+    collision_freq = 1283370.875
+  []
+  [Ion_potential_coupled_force]
+    type = CoupledForce
+    variable = potential_ion
+    v = potential
+    coef = 1283370.875
+  []
+[]
+
+[AuxVariables]
+  [emDeBug]
+  []
+  [Ar+_DeBug]
+  []
+  [Ar*_DeBug]
+  []
+  [mean_enDeBug]
+  []
+  [potential_DeBug]
+  []
+
+  [Te]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [x]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [x_node]
+  []
+
+  [y]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [y_node]
+  []
+
+  [rho]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [em_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar+_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar*_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar]
+  []
+
+  [Efieldx]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Efieldy]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Current_em]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [Current_Ar]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [emRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [exRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [swRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [deexRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [quRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [poolRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [TwoBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [ThreeBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+[]
+
+[AuxKernels]
+  #[emDeBug]
+  #  type = DebugResidualAux
+  #  variable = emDeBug
+  #  debug_variable = em
+  #[]
+  #[Ar+_DeBug]
+  #  type = DebugResidualAux
+  #  variable = Ar+_DeBug
+  #  debug_variable = Ar+
+  #[]
+  #[mean_enDeBug]
+  #  type = DebugResidualAux
+  #  variable = mean_enDeBug
+  #  debug_variable = mean_en
+  #[]
+  #[Ar*_DeBug]
+  #  type = DebugResidualAux
+  #  variable = Ar*_DeBug
+  #  debug_variable = Ar*
+  #[]
+  #[Potential_DeBug]
+  #  type = DebugResidualAux
+  #  variable = potential_DeBug
+  #  debug_variable = potential
+  #[]
+
+  [emRate]
+    type = ProcRateForRateCoeff
+    variable = emRate
+    v = em
+    w = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+  []
+  [exRate]
+    type = ProcRateForRateCoeff
+    variable = exRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+  []
+  [swRate]
+    type = ProcRateForRateCoeff
+    variable = swRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+  []
+  [deexRate]
+    type = ProcRateForRateCoeff
+    variable = deexRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+  []
+  [quRate]
+    type = ProcRateForRateCoeff
+    variable = quRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+  []
+  [poolRate]
+    type = ProcRateForRateCoeff
+    variable = poolRate
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+  []
+  [TwoBRate]
+    type = ProcRateForRateCoeff
+    variable = TwoBRate
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+  []
+  [ThreeBRate]
+    type = ProcRateForRateCoeffThreeBody
+    variable = ThreeBRate
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+  []
+  [Te]
+    type = ElectronTemperature
+    variable = Te
+    electrons = em
+    electron_energy = mean_en
+  []
+  [x_g]
+    type = Position
+    variable = x
+    position_units = ${dom0Scale}
+  []
+  [x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
+  []
+
+  [y_g]
+    type = Position
+    variable = y
+    position_units = ${dom0Scale}
+  []
+  [y_ng]
+    type = Position
+    variable = y_node
+    position_units = ${dom0Scale}
+  []
+
+  [em_lin]
+    type = DensityMoles
+    variable = em_lin
+    density = em
+  []
+  [Ar+_lin]
+    type = DensityMoles
+    variable = Ar+_lin
+    density = Ar+
+  []
+  [Ar*_lin]
+    type = DensityMoles
+    variable = Ar*_lin
+    density = Ar*
+  []
+
+  [Ar_val]
+    type = ConstantAux
+    variable = Ar
+    # value = 3.22e2
+    value = -5.231208
+    execute_on = INITIAL
+  []
+
+  [Efieldx_calc]
+    type = Efield
+    component = 0
+    variable = Efieldx
+    position_units = ${dom0Scale}
+  []
+  [Efieldy_calc]
+    type = Efield
+    component = 1
+    variable = Efieldy
+    position_units = ${dom0Scale}
+  []
+
+  [Current_em]
+    type = ADCurrent
+    density = em
+    variable = Current_em
+    art_diff = false
+    block = &#x27;plasma&#x27;
+    position_units = ${dom0Scale}
+  []
+  [Current_Ar]
+    type = ADCurrent
+    density = Ar+
+    variable = Current_Ar
+    art_diff = false
+    block = &#x27;plasma&#x27;
+    position_units = ${dom0Scale}
+  []
+[]
+
+[BCs]
+  #Voltage Boundary Condition, same as in paper
+  [potential_top_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Top_Electrode&#x27;
+    function = potential_top_bc_func
+  []
+  [potential_bottom_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Bottom_Electrode&#x27;
+    function = potential_bottom_bc_func
+  []
+  [potential_dirichlet_bottom_plate]
+    type = DirichletBC
+    variable = potential
+    boundary = &#x27;Walls&#x27;
+    value = 0
+  []
+  [potential_Dielectric]
+    type = EconomouDielectricBC
+    variable = potential
+    boundary = &#x27;Top_Insulator Bottom_Insulator&#x27;
+    electrons = em
+    ions = Ar+
+    ion_potentials = potential_ion
+    electron_energy = mean_en
+    dielectric_constant = 1.859382e-11
+    thickness = 0.0127
+    emission_coeffs = 0.01
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for electons, same as in paper
+  [em_physical_diffusion]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    electron_energy = mean_en
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [em_Ar+_second_emissions]
+    type = SakiyamaSecondaryElectronBC
+    variable = em
+    ions = Ar+
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  [Ar+_physical_advection]
+    type = SakiyamaIonAdvectionBC
+    variable = Ar+
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  #(except the metastables are not set to zero, since Zapdos uses log form)
+  [Ar*_physical_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    value = 100
+  []
+
+  #New Boundary conditions for mean energy, should be the same as in paper
+  [mean_en_physical_diffusion]
+    type = SakiyamaEnergyDiffusionBC
+    variable = mean_en
+    electrons = em
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [mean_en_Ar+_second_emissions]
+    type = SakiyamaEnergySecondaryElectronBC
+    variable = mean_en
+    electrons = em
+    ions = Ar+
+    secondary_electron_temperature_equal_to_bulk = true
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+[]
+
+[ICs]
+  [em_ic]
+    type = FunctionIC
+    variable = em
+    function = density_ic_func
+  []
+  [Ar+_ic]
+    type = FunctionIC
+    variable = Ar+
+    function = density_ic_func
+  []
+  [Ar*_ic]
+    type = FunctionIC
+    variable = Ar*
+    function = meta_density_ic_func
+  []
+  [mean_en_ic]
+    type = FunctionIC
+    variable = mean_en
+    function = energy_density_ic_func
+  []
+
+  [potential_ic]
+    type = FunctionIC
+    variable = potential
+    function = potential_ic_func
+  []
+[]
+
+[Functions]
+  [potential_top_bc_func]
+    type = ParsedFunction
+    expression = &#x27;50*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_bottom_bc_func]
+    type = ParsedFunction
+    expression = &#x27;-50*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_ic_func]
+    type = ParsedFunction
+    expression = 0
+  []
+  [density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e14)/6.022e23)&#x27;
+  []
+  [meta_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e16)/6.022e23)&#x27;
+  []
+  [energy_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((3./2.) * 4) + log((1e14)/6.022e23)&#x27;
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [GasBasics]
+    type = ElectronTransportCoefficients
+    interp_trans_coeffs = true
+    ramp_trans_coeffs = false
+    p_gas = 133.322
+    electrons = em
+    electron_energy = mean_en
+    property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
+  []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Ar+
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    mobility = 1.44409938
+    diffusivity = 6.428571e-2
+  []
+  [gas_species_1]
+    type = ADHeavySpecies
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    diffusivity = 7.515528e-2
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+  []
+  [reaction_00]
+    type = ZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_elastic.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+    electrons = em
+  []
+  [reaction_0]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excitation.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_1]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_ionization.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_2]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt&#x27;
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_3]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt&#x27;
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_4]
+    type = GenericRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    #reaction_rate_value = 2e-13
+    reaction_rate_value = 1.2044e11
+  []
+  [reaction_5]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    #reaction_rate_value = 6.2e-16
+    reaction_rate_value = 373364000
+  []
+  [reaction_6]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    #reaction_rate_value = 3e-21
+    reaction_rate_value = 1806.6
+  []
+  [reaction_7]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    #reaction_rate_value = 1.1e-42
+    reaction_rate_value = 398909.324
+  []
+[]
+
+#New postprocessor that calculates the inverse of the plasma frequency
+[Postprocessors]
+  [InversePlasmaFreq]
+    type = PlasmaFrequencyInverse
+    variable = em
+    use_moles = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 7.4e-3
+  dtmax = 1e-9
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 fgmres 1e-3&#x27;
+  nl_rel_tol = 1e-8
+  #nl_abs_tol = 7.6e-5
+  dtmin = 1e-14
+  l_max_its = 20
+
+  #Time steps based on the inverse of the plasma frequency
+  #[TimeSteppers]
+  # [Postprocessor]
+  #    type = PostprocessorDT
+  #    postprocessor = InversePlasmaFreq
+  #    scale = 0.1
+  #  []
+  #[]
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="7e3e5282-e6df-49ee-8e2b-56126c7cf5ec"><div class="modal-content"><h4>(test/tests/Conference_Syntax_Tests/Lymberopoulos_with_argon_metastables_2D_At1Torr.i)</h4><pre style="max-height:350px;"><code class="language-moose">dom0Scale = 25.4e-3
+#dom0Scale=1.0
+
+[GlobalParams]
+  potential_units = V
+  use_moles = true
+[]
+
+[Mesh]
+  type = FileMesh
+  file = &#x27;GEC_mesh.msh&#x27;
+  coord_type = RZ
+  rz_coord_axis = Y
+[]
+
+[Variables]
+  [em]
+  []
+
+  [Ar+]
+  []
+
+  [Ar*]
+  []
+
+  [mean_en]
+  []
+
+  [potential]
+  []
+
+  [potential_ion]
+  []
+[]
+
+[Kernels]
+  #Electron Equations (Same as in paper)
+  #Time Derivative term of electron
+  [em_time_deriv]
+    type = ElectronTimeDerivative
+    variable = em
+  []
+  #Advection term of electron
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Net electron production from ionization
+  [em_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from step-wise ionization
+  [em_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from metastable pooling
+  [em_pooling]
+    type = ReactionSecondOrderLog
+    variable = em
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Argon Ion Equations (Same as in paper)
+  #Time Derivative term of the ions
+  [Ar+_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar+
+  []
+  #Advection term of ions
+  [Ar+_advection]
+    type = EFieldAdvection
+    variable = Ar+
+    position_units = ${dom0Scale}
+  []
+  [Ar+_diffusion]
+    type = CoeffDiffusion
+    variable = Ar+
+    position_units = ${dom0Scale}
+  []
+  #Net ion production from ionization
+  [Ar+_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from step-wise ionization
+  [Ar+_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from metastable pooling
+  [Ar+_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar+
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Argon Excited Equations (Same as in paper)
+  #Time Derivative term of excited Argon
+  [Ar*_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar*
+  []
+  #Diffusion term of excited Argon
+  [Ar*_diffusion]
+    type = CoeffDiffusion
+    variable = Ar*
+    position_units = ${dom0Scale}
+  []
+  #Net excited Argon production from excitation
+  [Ar*_excitation]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    coefficient = 1
+  []
+  #Net excited Argon loss from step-wise ionization
+  [Ar*_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from superelastic collisions
+  [Ar*_collisions]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from quenching to resonant
+  [Ar*_quenching]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from  metastable pooling
+  [Ar*_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = -2
+    _v_eq_u = true
+    _w_eq_u = true
+  []
+  #Net excited Argon loss from two-body quenching
+  [Ar*_2B_quenching]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+  #Net excited Argon loss from three-body quenching
+  [Ar*_3B_quenching]
+    type = ReactionThirdOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+
+  #Voltage Equations (Same as in paper)
+  #Voltage term in Poissons Eqaution
+  [potential_diffusion_dom0]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = ${dom0Scale}
+  []
+  #Ion term in Poissons Equation
+  [Ar+_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = Ar+
+  []
+  #Electron term in Poissons Equation
+  [em_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = em
+  []
+
+  #Since the paper uses electron temperature as a variable, the energy equation is in
+  #a different form but should be the same physics
+  #Time Derivative term of electron energy
+  [mean_en_time_deriv]
+    type = ElectronTimeDerivative
+    variable = mean_en
+  []
+  #Advection term of electron energy
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons energy
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Joule Heating term
+  [mean_en_joule_heating]
+    type = JouleHeating
+    variable = mean_en
+    electrons = em
+    position_units = ${dom0Scale}
+  []
+  #Energy loss from ionization
+  [Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    threshold_energy = -15.7
+  []
+  #Energy loss from excitation
+  [Excitation_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    threshold_energy = -11.56
+  []
+  #Energy loss from step-wise ionization
+  [Stepwise_Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    threshold_energy = -4.14
+  []
+  #Energy gain from superelastic collisions
+  [Collisions_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    threshold_energy = 11.56
+  []
+  # Energy loss from elastic collisions
+  [Elastic_loss]
+    type = EEDFElasticLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+  []
+
+  #Effective potential for the Ions
+  [Ion_potential_time_deriv]
+    type = TimeDerivative
+    variable = potential_ion
+  []
+  [Ion_potential_reaction]
+    type = ScaledReaction
+    variable = potential_ion
+    collision_freq = 1283370.875
+  []
+  [Ion_potential_coupled_force]
+    type = CoupledForce
+    variable = potential_ion
+    v = potential
+    coef = 1283370.875
+  []
+[]
+
+[AuxVariables]
+  [emDeBug]
+  []
+  [Ar+_DeBug]
+  []
+  [Ar*_DeBug]
+  []
+  [mean_enDeBug]
+  []
+  [potential_DeBug]
+  []
+
+  [Te]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [x]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [x_node]
+  []
+
+  [y]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [y_node]
+  []
+
+  [rho]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [em_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar+_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar*_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar]
+  []
+
+  [Efieldx]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Efieldy]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Current_em]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [Current_Ar]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [emRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [exRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [swRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [deexRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [quRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [poolRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [TwoBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [ThreeBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+[]
+
+[AuxKernels]
+  #[emDeBug]
+  #  type = DebugResidualAux
+  #  variable = emDeBug
+  #  debug_variable = em
+  #[]
+  #[Ar+_DeBug]
+  #  type = DebugResidualAux
+  #  variable = Ar+_DeBug
+  #  debug_variable = Ar+
+  #[]
+  #[mean_enDeBug]
+  #  type = DebugResidualAux
+  #  variable = mean_enDeBug
+  #  debug_variable = mean_en
+  #[]
+  #[Ar*_DeBug]
+  #  type = DebugResidualAux
+  #  variable = Ar*_DeBug
+  #  debug_variable = Ar*
+  #[]
+  #[Potential_DeBug]
+  #  type = DebugResidualAux
+  #  variable = potential_DeBug
+  #  debug_variable = potential
+  #[]
+
+  [emRate]
+    type = ProcRateForRateCoeff
+    variable = emRate
+    v = em
+    w = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+  []
+  [exRate]
+    type = ProcRateForRateCoeff
+    variable = exRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+  []
+  [swRate]
+    type = ProcRateForRateCoeff
+    variable = swRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+  []
+  [deexRate]
+    type = ProcRateForRateCoeff
+    variable = deexRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+  []
+  [quRate]
+    type = ProcRateForRateCoeff
+    variable = quRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+  []
+  [poolRate]
+    type = ProcRateForRateCoeff
+    variable = poolRate
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+  []
+  [TwoBRate]
+    type = ProcRateForRateCoeff
+    variable = TwoBRate
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+  []
+  [ThreeBRate]
+    type = ProcRateForRateCoeffThreeBody
+    variable = ThreeBRate
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+  []
+  [Te]
+    type = ElectronTemperature
+    variable = Te
+    electrons = em
+    electron_energy = mean_en
+  []
+  [x_g]
+    type = Position
+    variable = x
+    position_units = ${dom0Scale}
+  []
+  [x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
+  []
+
+  [y_g]
+    type = Position
+    variable = y
+    position_units = ${dom0Scale}
+  []
+  [y_ng]
+    type = Position
+    variable = y_node
+    position_units = ${dom0Scale}
+  []
+
+  [em_lin]
+    type = DensityMoles
+    variable = em_lin
+    density = em
+  []
+  [Ar+_lin]
+    type = DensityMoles
+    variable = Ar+_lin
+    density = Ar+
+  []
+  [Ar*_lin]
+    type = DensityMoles
+    variable = Ar*_lin
+    density = Ar*
+  []
+
+  [Ar_val]
+    type = ConstantAux
+    variable = Ar
+    # value = 3.22e22
+    value = -2.928623
+    execute_on = INITIAL
+  []
+
+  [Efieldx_calc]
+    type = Efield
+    component = 0
+    variable = Efieldx
+    position_units = ${dom0Scale}
+  []
+  [Efieldy_calc]
+    type = Efield
+    component = 1
+    variable = Efieldy
+    position_units = ${dom0Scale}
+  []
+
+  [Current_em]
+    type = ADCurrent
+    density = em
+    variable = Current_em
+    art_diff = false
+    block = &#x27;plasma&#x27;
+    position_units = ${dom0Scale}
+  []
+  [Current_Ar]
+    type = ADCurrent
+    density = Ar+
+    variable = Current_Ar
+    art_diff = false
+    block = &#x27;plasma&#x27;
+    position_units = ${dom0Scale}
+  []
+[]
+
+[BCs]
+  #Voltage Boundary Condition, same as in paper
+  [potential_top_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Top_Electrode&#x27;
+    function = potential_top_bc_func
+  []
+  [potential_bottom_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Bottom_Electrode&#x27;
+    function = potential_bottom_bc_func
+  []
+  [potential_dirichlet_bottom_plate]
+    type = DirichletBC
+    variable = potential
+    boundary = &#x27;Walls&#x27;
+    value = 0
+  []
+  [potential_Dielectric]
+    type = EconomouDielectricBC
+    variable = potential
+    boundary = &#x27;Top_Insulator Bottom_Insulator&#x27;
+    electrons = em
+    ions = Ar+
+    ion_potentials = potential_ion
+    electron_energy = mean_en
+    dielectric_constant = 1.859382e-11
+    thickness = 0.0127
+    emission_coeffs = 0.01
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for electons, same as in paper
+  [em_physical_diffusion]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    electron_energy = mean_en
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [em_Ar+_second_emissions]
+    type = SakiyamaSecondaryElectronBC
+    variable = em
+    ions = Ar+
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  [Ar+_physical_advection]
+    type = SakiyamaIonAdvectionBC
+    variable = Ar+
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  #(except the metastables are not set to zero, since Zapdos uses log form)
+  [Ar*_physical_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    value = 100
+  []
+
+  #New Boundary conditions for mean energy, should be the same as in paper
+  [mean_en_physical_diffusion]
+    type = SakiyamaEnergyDiffusionBC
+    variable = mean_en
+    electrons = em
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [mean_en_Ar+_second_emissions]
+    type = SakiyamaEnergySecondaryElectronBC
+    variable = mean_en
+    electrons = em
+    ions = Ar+
+    secondary_electron_temperature_equal_to_bulk = true
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+[]
+
+[ICs]
+  [em_ic]
+    type = FunctionIC
+    variable = em
+    function = density_ic_func
+  []
+  [Ar+_ic]
+    type = FunctionIC
+    variable = Ar+
+    function = density_ic_func
+  []
+  [Ar*_ic]
+    type = FunctionIC
+    variable = Ar*
+    function = meta_density_ic_func
+  []
+  [mean_en_ic]
+    type = FunctionIC
+    variable = mean_en
+    function = energy_density_ic_func
+  []
+
+  [potential_ic]
+    type = FunctionIC
+    variable = potential
+    function = potential_ic_func
+  []
+[]
+
+[Functions]
+  [potential_top_bc_func]
+    type = ParsedFunction
+    expression = &#x27;30*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_bottom_bc_func]
+    type = ParsedFunction
+    expression = &#x27;-30*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_ic_func]
+    type = ParsedFunction
+    expression = 0
+  []
+  [density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e14)/6.022e23)&#x27;
+  []
+  [meta_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e16)/6.022e23)&#x27;
+  []
+  [energy_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((3./2.)) + log((1e14)/6.022e23)&#x27;
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [GasBasics]
+    type = ElectronTransportCoefficients
+    interp_trans_coeffs = true
+    ramp_trans_coeffs = false
+    p_gas = 133.322
+    electrons = em
+    electron_energy = mean_en
+    property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
+  []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Ar+
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    mobility = 1.44409938
+    diffusivity = 6.428571e-2
+  []
+  [gas_species_1]
+    type = ADHeavySpecies
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    diffusivity = 7.515528e-2
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+  []
+  [reaction_00]
+    type = ZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_elastic.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+    electrons = em
+  []
+  [reaction_0]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excitation.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_1]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_ionization.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_2]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt&#x27;
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_3]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt&#x27;
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_4]
+    type = GenericRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    #reaction_rate_value = 2e-13
+    reaction_rate_value = 1.2044e11
+  []
+  [reaction_5]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    #reaction_rate_value = 6.2e-16
+    reaction_rate_value = 373364000
+  []
+  [reaction_6]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    #reaction_rate_value = 3e-21
+    reaction_rate_value = 1806.6
+  []
+  [reaction_7]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    #reaction_rate_value = 1.1e-42
+    reaction_rate_value = 398909.324
+  []
+[]
+
+#New postprocessor that calculates the inverse of the plasma frequency
+[Postprocessors]
+  [InversePlasmaFreq]
+    type = PlasmaFrequencyInverse
+    variable = em
+    use_moles = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 7.4e-3
+  automatic_scaling = true
+  dtmax = 1e-9
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 fgmres 1e-3&#x27;
+  nl_rel_tol = 1e-8
+  #nl_abs_tol = 7.6e-5
+  dtmin = 1e-14
+  l_max_its = 20
+
+  #Time steps based on the inverse of the plasma frequency
+  #[TimeSteppers]
+  #  [Postprocessor]
+  #    type = PostprocessorDT
+  #    postprocessor = InversePlasmaFreq
+  #    scale = 0.1
+  #  []
+  #[]
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="bea6c432-944d-4460-b758-103006b4f16d"><div class="modal-content"><h4>(test/tests/DriftDiffusionAction/2D_RF_Plasma_no_actions.i)</h4><pre style="max-height:350px;"><code class="language-moose">#This is the input file that supplied the gold output file.
+#It is the same as the input file in
+#tests/Lymberopoulos_rf_discharge/Lymberopoulos_with_argon_metastables_2D_At100mTorr_CoarseMesh.i,
+#execpt some of the Aux Variables are renamed for the Action test
+
+dom0Scale = 25.4e-3
+
+[GlobalParams]
+  potential_units = V
+  use_moles = true
+[]
+
+[Mesh]
+  type = FileMesh
+  file = &#x27;GEC_mesh_coarse.msh&#x27;
+  coord_type = RZ
+  rz_coord_axis = Y
+[]
+
+[Variables]
+  [em]
+  []
+
+  [Ar+]
+  []
+
+  [Ar*]
+  []
+
+  [mean_en]
+  []
+
+  [potential]
+  []
+
+  [potential_ion]
+  []
+[]
+
+[Kernels]
+  #Electron Equations (Same as in paper)
+  #Time Derivative term of electron
+  [em_time_deriv]
+    type = ElectronTimeDerivative
+    variable = em
+  []
+  #Advection term of electron
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Net electron production from ionization
+  [em_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from step-wise ionization
+  [em_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from metastable pooling
+  [em_pooling]
+    type = ReactionSecondOrderLog
+    variable = em
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Argon Ion Equations (Same as in paper)
+  #Time Derivative term of the ions
+  [Ar+_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar+
+  []
+  #Advection term of ions
+  [Ar+_advection]
+    type = EFieldAdvection
+    variable = Ar+
+    field_property_name = field_solver_interface_property_eff
+    position_units = ${dom0Scale}
+  []
+  [Ar+_diffusion]
+    type = CoeffDiffusion
+    variable = Ar+
+    position_units = ${dom0Scale}
+  []
+  #Net ion production from ionization
+  [Ar+_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from step-wise ionization
+  [Ar+_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from metastable pooling
+  [Ar+_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar+
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Argon Excited Equations (Same as in paper)
+  #Time Derivative term of excited Argon
+  [Ar*_time_deriv]
+    type = ElectronTimeDerivative
+    variable = Ar*
+  []
+  #Diffusion term of excited Argon
+  [Ar*_diffusion]
+    type = CoeffDiffusion
+    variable = Ar*
+    position_units = ${dom0Scale}
+  []
+  #Net excited Argon production from excitation
+  [Ar*_excitation]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    coefficient = 1
+  []
+  #Net excited Argon loss from step-wise ionization
+  [Ar*_stepwise_ionization]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from superelastic collisions
+  [Ar*_collisions]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from quenching to resonant
+  [Ar*_quenching]
+    type = EEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    mean_energy = mean_en
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from  metastable pooling
+  [Ar*_pooling]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = -2
+    _v_eq_u = true
+    _w_eq_u = true
+  []
+  #Net excited Argon loss from two-body quenching
+  [Ar*_2B_quenching]
+    type = ReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+  #Net excited Argon loss from three-body quenching
+  [Ar*_3B_quenching]
+    type = ReactionThirdOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+
+  #Voltage Equations (Same as in paper)
+  #Voltage term in Poissons Eqaution
+  [potential_diffusion_dom0]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = ${dom0Scale}
+  []
+  #Ion term in Poissons Equation
+  [Ar+_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = Ar+
+  []
+  #Electron term in Poissons Equation
+  [em_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = em
+  []
+
+  #Since the paper uses electron temperature as a variable, the energy equation is in
+  #a different form but should be the same physics
+  #Time Derivative term of electron energy
+  [mean_en_time_deriv]
+    type = ElectronTimeDerivative
+    variable = mean_en
+  []
+  #Advection term of electron energy
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons energy
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Joule Heating term
+  [mean_en_joule_heating]
+    type = JouleHeating
+    variable = mean_en
+    electrons = em
+    position_units = ${dom0Scale}
+  []
+  #Energy loss from ionization
+  [Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    threshold_energy = -15.7
+  []
+  #Energy loss from excitation
+  [Excitation_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    threshold_energy = -11.56
+  []
+  #Energy loss from step-wise ionization
+  [Stepwise_Ionization_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    threshold_energy = -4.14
+  []
+  #Energy gain from superelastic collisions
+  [Collisions_Loss]
+    type = EEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    threshold_energy = 11.56
+  []
+  # Energy loss from elastic collisions
+  [Elastic_loss]
+    type = EEDFElasticLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+  []
+
+  #Effective potential for the Ions
+  [Ion_potential_time_deriv]
+    type = TimeDerivative
+    variable = potential_ion
+  []
+  [Ion_potential_reaction]
+    type = ScaledReaction
+    variable = potential_ion
+    collision_freq = 1283370.875
+  []
+  [Ion_potential_coupled_force]
+    type = CoupledForce
+    variable = potential_ion
+    v = potential
+    coef = 1283370.875
+  []
+[]
+
+[AuxVariables]
+  [e_temp]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [x_position]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [x_node]
+  []
+
+  [y_position]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [y_node]
+  []
+
+  [rho]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [em_density]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar+_density]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar*_density]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Ar]
+  []
+
+  [Efieldx]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Efieldy]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [Current_em]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [Current_Ar+]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [emRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [exRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [swRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [deexRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [quRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [poolRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [TwoBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+  [ThreeBRate]
+    order = CONSTANT
+    family = MONOMIAL
+    block = &#x27;plasma&#x27;
+  []
+[]
+
+[AuxKernels]
+  [emRate]
+    type = ProcRateForRateCoeff
+    variable = emRate
+    v = em
+    w = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+  []
+  [exRate]
+    type = ProcRateForRateCoeff
+    variable = exRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+  []
+  [swRate]
+    type = ProcRateForRateCoeff
+    variable = swRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+  []
+  [deexRate]
+    type = ProcRateForRateCoeff
+    variable = deexRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+  []
+  [quRate]
+    type = ProcRateForRateCoeff
+    variable = quRate
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+  []
+  [poolRate]
+    type = ProcRateForRateCoeff
+    variable = poolRate
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+  []
+  [TwoBRate]
+    type = ProcRateForRateCoeff
+    variable = TwoBRate
+    v = Ar*
+    w = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+  []
+  [ThreeBRate]
+    type = ProcRateForRateCoeffThreeBody
+    variable = ThreeBRate
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+  []
+  [e_temp]
+    type = ElectronTemperature
+    variable = e_temp
+    electrons = em
+    electron_energy = mean_en
+  []
+  [x_g]
+    type = Position
+    variable = x_position
+    component = 0
+    position_units = ${dom0Scale}
+  []
+  [x_ng]
+    type = Position
+    variable = x_node
+    component = 0
+    position_units = ${dom0Scale}
+  []
+
+  [y_g]
+    type = Position
+    variable = y_position
+    component = 1
+    position_units = ${dom0Scale}
+  []
+  [y_ng]
+    type = Position
+    variable = y_node
+    component = 1
+    position_units = ${dom0Scale}
+  []
+
+  [em_density]
+    type = DensityMoles
+    variable = em_density
+    density = em
+  []
+  [Ar+_density]
+    type = DensityMoles
+    variable = Ar+_density
+    density = Ar+
+  []
+  [Ar*_density]
+    type = DensityMoles
+    variable = Ar*_density
+    density = Ar*
+  []
+
+  [Ar_val]
+    type = ConstantAux
+    variable = Ar
+    # value = 3.22e2
+    value = -5.231208
+    execute_on = INITIAL
+  []
+
+  [Efieldx_calc]
+    type = Efield
+    component = 0
+    variable = Efieldx
+    position_units = ${dom0Scale}
+  []
+  [Efieldy_calc]
+    type = Efield
+    component = 1
+    variable = Efieldy
+    position_units = ${dom0Scale}
+  []
+
+  [Current_em]
+    type = ADCurrent
+    density = em
+    variable = Current_em
+    art_diff = false
+    block = &#x27;plasma&#x27;
+    position_units = ${dom0Scale}
+  []
+  [Current_Ar]
+    type = ADCurrent
+    field_property_name = field_solver_interface_property_eff
+    density = Ar+
+    variable = Current_Ar+
+    art_diff = false
+    block = &#x27;plasma&#x27;
+    position_units = ${dom0Scale}
+  []
+[]
+
+[BCs]
+  #Voltage Boundary Condition, same as in paper
+  [potential_top_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Top_Electrode&#x27;
+    function = potential_top_bc_func
+    preset = false
+  []
+  [potential_bottom_plate]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;Bottom_Electrode&#x27;
+    function = potential_bottom_bc_func
+    preset = false
+  []
+  [potential_dirichlet_bottom_plate]
+    type = DirichletBC
+    variable = potential
+    boundary = &#x27;Walls&#x27;
+    value = 0
+    preset = false
+  []
+  [potential_Dielectric]
+    type = EconomouDielectricBC
+    variable = potential
+    boundary = &#x27;Top_Insulator Bottom_Insulator&#x27;
+    electrons = em
+    ions = Ar+
+    ion_potentials = potential_ion
+    electron_energy = mean_en
+    dielectric_constant = 1.859382e-11
+    thickness = 0.0127
+    emission_coeffs = 0.01
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for electons, same as in paper
+  [em_physical_diffusion]
+    type = SakiyamaElectronDiffusionBC
+    variable = em
+    electron_energy = mean_en
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [em_Ar+_second_emissions]
+    type = SakiyamaSecondaryElectronBC
+    variable = em
+    field_property_name = field_solver_interface_property_eff
+    ions = Ar+
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  [Ar+_physical_advection]
+    type = SakiyamaIonAdvectionBC
+    variable = Ar+
+    field_property_name = field_solver_interface_property_eff
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #New Boundary conditions for ions, should be the same as in paper
+  #(except the metastables are not set to zero, since Zapdos uses log form)
+  [Ar*_physical_diffusion]
+    type = LogDensityDirichletBC
+    variable = Ar*
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    value = 100
+  []
+
+  #New Boundary conditions for mean energy, should be the same as in paper
+  [mean_en_physical_diffusion]
+    type = SakiyamaEnergyDiffusionBC
+    variable = mean_en
+    electrons = em
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+  [mean_en_Ar+_second_emissions]
+    type = SakiyamaEnergySecondaryElectronBC
+    variable = mean_en
+    electrons = em
+    ions = Ar+
+    field_property_name = field_solver_interface_property_eff
+    secondary_electron_temperature_equal_to_bulk = true
+    emission_coeffs = 0.01
+    boundary = &#x27;Top_Electrode Bottom_Electrode Top_Insulator Bottom_Insulator Walls&#x27;
+    position_units = ${dom0Scale}
+  []
+[]
+
+[ICs]
+  [em_ic]
+    type = FunctionIC
+    variable = em
+    function = density_ic_func
+  []
+  [Ar+_ic]
+    type = FunctionIC
+    variable = Ar+
+    function = density_ic_func
+  []
+  [Ar*_ic]
+    type = FunctionIC
+    variable = Ar*
+    function = meta_density_ic_func
+  []
+  [mean_en_ic]
+    type = FunctionIC
+    variable = mean_en
+    function = energy_density_ic_func
+  []
+
+  [potential_ic]
+    type = FunctionIC
+    variable = potential
+    function = potential_ic_func
+  []
+[]
+
+[Functions]
+  [potential_top_bc_func]
+    type = ParsedFunction
+    expression = &#x27;50*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_bottom_bc_func]
+    type = ParsedFunction
+    expression = &#x27;-50*sin(2*3.1415926*13.56e6*t)&#x27;
+  []
+  [potential_ic_func]
+    type = ParsedFunction
+    expression = 0
+  []
+  [density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e14)/6.022e23)&#x27;
+  []
+  [meta_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e16)/6.022e23)&#x27;
+  []
+  [energy_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((3./2.) * 4) + log((1e14)/6.022e23)&#x27;
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [field_solver_eff]
+    type = FieldSolverMaterial
+    potential = potential_ion
+    property_name = field_solver_interface_property_eff
+  []
+  [GasBasics]
+    type = ElectronTransportCoefficients
+    interp_trans_coeffs = true
+    ramp_trans_coeffs = false
+    p_gas = 133.322
+    electrons = em
+    electron_energy = mean_en
+    property_tables_file = Argon_reactions_paper_RateCoefficients/electron_moments.txt
+  []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Ar+
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    mobility = 1.44409938
+    diffusivity = 6.428571e-2
+  []
+  [gas_species_1]
+    type = ADHeavySpecies
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    diffusivity = 7.515528e-2
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+  []
+  [reaction_00]
+    type = ZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_elastic.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar&#x27;
+    electrons = em
+  []
+  [reaction_0]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excitation.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_1]
+    type = ZapdosEEDFRateConstant
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_ionization.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_2]
+    type = ZapdosEEDFRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_deexcitation.txt&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_3]
+    type = ZapdosEEDFRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    property_file = &#x27;Argon_reactions_paper_RateCoefficients/ar_excited_ionization.txt&#x27;
+    mean_energy = mean_en
+    electrons = em
+  []
+  [reaction_4]
+    type = GenericRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    #reaction_rate_value = 2e-13
+    reaction_rate_value = 1.2044e11
+  []
+  [reaction_5]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    #reaction_rate_value = 6.2e-16
+    reaction_rate_value = 373364000
+  []
+  [reaction_6]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    #reaction_rate_value = 3e-21
+    reaction_rate_value = 1806.6
+  []
+  [reaction_7]
+    type = GenericRateConstant
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    #reaction_rate_value = 1.1e-42
+    reaction_rate_value = 398909.324
+  []
+[]
+
+#New postprocessor that calculates the inverse of the plasma frequency
+[Postprocessors]
+  [InversePlasmaFreq]
+    type = PlasmaFrequencyInverse
+    variable = em
+    use_moles = true
+    execute_on = &#x27;INITIAL TIMESTEP_BEGIN&#x27;
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  #end_time = 7.4e-3
+  end_time = 1e-7
+  dtmax = 1e-9
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -ksp_type -snes_linesearch_minlambda&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 fgmres 1e-3&#x27;
+  nl_rel_tol = 1e-12
+  #nl_abs_tol = 7.6e-5
+  dtmin = 1e-14
+  l_max_its = 20
+
+  #Time steps based on the inverse of the plasma frequency
+  #[TimeSteppers]
+  #  [Postprocessor]
+  #    type = PostprocessorDT
+  #    postprocessor = InversePlasmaFreq
+  #    scale = 0.1
+  #  []
+  #[]
+[]
+
+[Outputs]
+  file_base = &#x27;2D_RF_out&#x27;
+  perf_graph = true
+  [out]
+    type = Exodus
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#a89f9126-b705-4373-b2ca-ab14d24c506b" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#37b38752-5999-408e-8294-b6b6284ab93e" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#98a2af88-3e6f-4cfe-abde-82c68d528fde" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#fae82be0-7884-4962-bd94-7fb8060279bf" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li><li><a href="#cb398e5a-965e-41bd-b3b0-cb994499d5ed" class="tooltipped" data-position="left" data-tooltip="References">References</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

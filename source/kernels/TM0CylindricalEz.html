@@ -1,0 +1,494 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>TM 0 CylindricalEz | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="e72ae375-abbd-4f35-9227-027662e22b9f" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="e760bd8b-63dc-49c4-b553-28a519259230" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="7ae74cd6-08e4-4c4e-95af-ca9acc587183" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="60132f91-9ac8-40e4-9d87-a852c2309503"><i class="material-icons">menu</i></a><ul class="sidenav" id="60132f91-9ac8-40e4-9d87-a852c2309503"><li><a href="#!" class="dropdown-trigger" data-target="5796028a-e64e-40cf-ab63-76b76ca6a841" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="11462481-21de-4b44-869b-97d58ccfa70c" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c4ea94e9-891d-4557-9c76-edbce3bd4e31" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="e72ae375-abbd-4f35-9227-027662e22b9f"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="e760bd8b-63dc-49c4-b553-28a519259230"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="7ae74cd6-08e4-4c4e-95af-ca9acc587183"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="5796028a-e64e-40cf-ab63-76b76ca6a841"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="11462481-21de-4b44-869b-97d58ccfa70c"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="c4ea94e9-891d-4557-9c76-edbce3bd4e31"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">kernels</span><a href="#" class="breadcrumb">TM0CylindricalEz</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="e2c5eaef-27ea-407e-8546-52d7c3980e74" data-section-level="1" data-section-text="TM 0 CylindricalEz"><h1 id="tm-0-cylindricalez">TM0CylindricalEz</h1><p>The axisymmetric wave equation for the axial component of the electric field.</p><section class="scrollspy" id="4272a3c4-a888-4ff4-abc8-8794de62b40b" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p><code>TM0CylindricalEz</code> is the wave equation for the axial component of the electric field. <code>TM0CylindricalEz</code> assumes an axisymmetric transverse magnetic (TM) wave and negligible current density compared to the displacement current.</p><p>The wave equation for the electric field is defined as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-05ce71ac-5441-4b92-aa31-17f9b294908d"></span><script>var element = document.getElementById("moose-equation-05ce71ac-5441-4b92-aa31-17f9b294908d");katex.render("  \\nabla \\times \\textbf{H} = \\varepsilon \\omega \\textbf{E}", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where <span class="moose-katex-inline-equation" id="moose-equation-bb59fb36-9031-49a5-ac45-aa7aa08deefb"><script>var element = document.getElementById("moose-equation-bb59fb36-9031-49a5-ac45-aa7aa08deefb");katex.render("\\textbf{H}", element, {displayMode:false,throwOnError:false});</script></span> is the magnetizing field, <span class="moose-katex-inline-equation" id="moose-equation-add07c95-02dd-45f6-87a2-e62db30da294"><script>var element = document.getElementById("moose-equation-add07c95-02dd-45f6-87a2-e62db30da294");katex.render("\\varepsilon", element, {displayMode:false,throwOnError:false});</script></span> is the material permittivity, <span class="moose-katex-inline-equation" id="moose-equation-0063fa8c-6c83-4693-9e4b-b73cf6d80077"><script>var element = document.getElementById("moose-equation-0063fa8c-6c83-4693-9e4b-b73cf6d80077");katex.render("\\textbf{E}", element, {displayMode:false,throwOnError:false});</script></span> is the electric field, and <span class="moose-katex-inline-equation" id="moose-equation-c3a8a5b4-0d76-4fa8-80a6-e28954063717"><script>var element = document.getElementById("moose-equation-c3a8a5b4-0d76-4fa8-80a6-e28954063717");katex.render("\\omega", element, {displayMode:false,throwOnError:false});</script></span> is the frequency. By assuming an axisymmetric cylindrical geometry, the wave equation simplifies to</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-772243ae-d23c-46a2-8e39-37a2839ab544"></span><script>var element = document.getElementById("moose-equation-772243ae-d23c-46a2-8e39-37a2839ab544");katex.render("  \\frac{\\partial H_{\\phi}}{\\partial r} + \\frac{H_{\\phi}}{r}  = \\varepsilon \\omega \\text{E}_{z}", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where <span class="moose-katex-inline-equation" id="moose-equation-8c95258d-e67d-4240-afaf-4aba7ecb2d6d"><script>var element = document.getElementById("moose-equation-8c95258d-e67d-4240-afaf-4aba7ecb2d6d");katex.render("H_{\\phi}", element, {displayMode:false,throwOnError:false});</script></span> is the azimuthal component of the magnetizing field, <span class="moose-katex-inline-equation" id="moose-equation-f1ae0f40-14e0-4ce7-b5ad-5da9df960cb1"><script>var element = document.getElementById("moose-equation-f1ae0f40-14e0-4ce7-b5ad-5da9df960cb1");katex.render("\\text{E}_{z}", element, {displayMode:false,throwOnError:false});</script></span> is the axial component of the electric field, and <span class="moose-katex-inline-equation" id="moose-equation-0109721a-87dc-4ebe-b805-9be3443262f2"><script>var element = document.getElementById("moose-equation-0109721a-87dc-4ebe-b805-9be3443262f2");katex.render("r", element, {displayMode:false,throwOnError:false});</script></span> is the radial distance from the axial centerline.</p></section><section class="scrollspy" id="cc3bb83e-b17a-41e9-8e76-7d95d1ab2cc6" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><p>An example of how to use <code>TM0CylindricalEz</code> can be found in the test file <code>TM_steady_dieletric.i</code>.</p><pre style="max-height:350px;"><code class="language-moose">[Kernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Kernels/index.html&quot;}&gt;&gt;&gt;]
+  [Ez_vacuum_kern]
+    type = TM0CylindricalEz&lt;&lt;&lt;{&quot;description&quot;: &quot;The axisymmetric wave equation for the axial component of the electric field.&quot;, &quot;href&quot;: &quot;TM0CylindricalEz.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this residual object operates on&quot;}&gt;&gt;&gt; = Ez_vacuum
+    block&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of blocks (ids or names) that this object will be applied&quot;}&gt;&gt;&gt; = 0
+    azimuthal_magnetic_field&lt;&lt;&lt;{&quot;description&quot;: &quot;The azimuthal component of the magnetic field, $H_{\\phi}$.&quot;}&gt;&gt;&gt; = Hphi_vacuum
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#170736fd-3c75-4bc6-b939-6b936a4a5e03">(test/tests/TM10_circular_wg/TM_steady_dieletric.i)</a></section><section class="scrollspy" id="d164e92c-8095-4a41-85d4-7a6ff33be770" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="7e8462e3-fb83-46ab-aa57-7c1d7da97535" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">azimuthal_magnetic_field</span><span class="moose-parameter-header-description">The azimuthal component of the magnetic field, $H_{\phi}$.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The azimuthal component of the magnetic field, $H_{\phi}$.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">f</span><span class="moose-parameter-header-description">The drive frequency.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The drive frequency.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this residual object operates on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this residual object operates on</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="0568c138-01cd-4ec3-8ab1-288706108498" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">displacements</span><span class="moose-parameter-header-description">The displacements</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The displacements</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="e1436956-da2a-4341-984a-c98329adbd58" data-section-level="3" data-section-text="Contribution To Tagged Field Data Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">absolute_value_vector_tags</span><span class="moose-parameter-header-description">The tags for the vectors this residual object should fill with the absolute value of the residual contribution</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tags for the vectors this residual object should fill with the absolute value of the residual contribution</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_only</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether this object is only doing assembly to matrices (no vectors)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether this object is only doing assembly to matrices (no vectors)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, system</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">nontime</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nontime</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, time</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Contribution To Tagged Field Data Parameters</h3></summary></details></section><section id="de9a4d16-a0c2-4138-aa68-1a440d3efffc" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diag_save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">search_method</span><span class="moose-parameter-header-default">nearest_node_connected_sides</span><span class="moose-parameter-header-description">Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nearest_node_connected_sides</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nearest_node_connected_sides, all_proximate_sides</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="f2221aba-3813-4602-a87e-5107e6a679bd" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="e508409f-b231-475d-9f29-a5bdade8da0e" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#a38f79a3-6dee-4aab-919a-36699597f578">(test/tests/TM10_circular_wg/TM_steady_dieletric.i)</a></li></ul></section></section><div class="moose-modal modal" id="170736fd-3c75-4bc6-b939-6b936a4a5e03"><div class="modal-content"><h4>(test/tests/TM10_circular_wg/TM_steady_dieletric.i)</h4><pre style="max-height:350px;"><code class="language-moose">[GlobalParams]
+  f = 10e9
+[]
+
+[Mesh]
+  [file]
+    type = FileMeshGenerator
+    file = &#x27;TM_dieletric.msh&#x27;
+    # construct_side_list_from_node_list = 1
+  []
+  [interface_dielectric]
+    type = SideSetsBetweenSubdomainsGenerator
+    primary_block = &#x27;1&#x27;
+    paired_block = &#x27;0&#x27;
+    new_boundary = &#x27;interface_dielectric&#x27;
+    input = file
+  []
+  coord_type = RZ
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = NEWTON
+
+  petsc_options_iname = &#x27;-pc_type&#x27;
+  petsc_options_value = &#x27;lu&#x27;
+[]
+
+[Outputs]
+  perf_graph = true
+  print_linear_residuals = true
+  [out]
+    type = Exodus
+  []
+  [csv]
+    type = CSV
+  []
+[]
+
+[Variables]
+  [Hphi_dielectric]
+    block = 1
+    order = SECOND
+  []
+  [Hphi_vacuum]
+    block = 0
+    order = SECOND
+  []
+  [Ez_dielectric]
+    block = 1
+    order = SECOND
+  []
+  [Ez_vacuum]
+    block = 0
+    order = SECOND
+  []
+  [Er_dielectric]
+    block = 1
+    order = SECOND
+  []
+  [Er_vacuum]
+    block = 0
+    order = SECOND
+  []
+[]
+
+[Kernels]
+  [Hphi_dielectric]
+    type = TM0Cylindrical
+    variable = Hphi_dielectric
+    block = 1
+  []
+  [Hphi_vacuum]
+    type = TM0Cylindrical
+    variable = Hphi_vacuum
+    block = 0
+  []
+  [Ez_dielectric_kern]
+    type = TM0CylindricalEz
+    variable = Ez_dielectric
+    block = 1
+    azimuthal_magnetic_field = Hphi_dielectric
+  []
+  [Ez_vacuum_kern]
+    type = TM0CylindricalEz
+    variable = Ez_vacuum
+    block = 0
+    azimuthal_magnetic_field = Hphi_vacuum
+  []
+  [Er_dielectric]
+    type = TM0CylindricalEr
+    variable = Er_dielectric
+    azimuthal_magnetic_field = Hphi_dielectric
+    block = 1
+  []
+  [Er_vacuum]
+    type = TM0CylindricalEr
+    variable = Er_vacuum
+    azimuthal_magnetic_field = Hphi_vacuum
+    block = 0
+  []
+[]
+
+[BCs]
+  [launcher]
+    type = TM0AntennaVertBC
+    boundary = Antenna
+    variable = Hphi_vacuum
+  []
+  [vert_wall]
+    type = TM0PECVertBC
+    variable = Hphi_vacuum
+    boundary = vert_pec
+  []
+  [axis]
+    type = DirichletBC
+    variable = Hphi_dielectric
+    boundary = Axis
+    value = 0
+  []
+  [H_phi_interface]
+    type = MatchedValueBC
+    variable = Hphi_vacuum
+    v = Hphi_dielectric
+    boundary = interface
+  []
+  # [Ez_interface]
+  #   type = MatchedValueBC
+  #   variable = Ez_dielectric
+  #   v = Ez_vacuum
+  #   boundary = interface
+  # []
+[]
+
+[InterfaceKernels]
+  [Ez_continuous]
+    type = HphiRadialInterface
+    variable = Hphi_dielectric
+    neighbor_var = Hphi_vacuum
+    boundary = interface_dielectric
+  []
+[]
+
+[Materials]
+  [dielectric]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;eps_r&#x27;
+    prop_values = &#x27;3.8&#x27;
+    block = 1
+  []
+  [vacuum]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;eps_r&#x27;
+    prop_values = &#x27;1&#x27;
+    block = 0
+  []
+[]
+
+# [AuxVariables]
+#   [Hphi_mag]
+#   []
+#   [Er]
+#     order = FIRST
+#     family = MONOMIAL
+#   []
+#   # [Electric_z]
+#   #   order = FIRST
+#   #   family = MONOMIAL
+#   # []
+# []
+
+# [AuxKernels]
+#   [Hphi_mag]
+#     type = AbsValueAux
+#     u = Hphi
+#     variable = Hphi_mag
+#   []
+#   [Er_dielectric]
+#     type = TM0CylindricalEr
+#     azimuthal_magnetic_field =Hphi
+#     variable = Er
+#     block = 1
+#     eps_r = 16
+#   []
+#   [Er_vacuum]
+#     type = TM0CylindricalEr
+#     azimuthal_magnetic_field =Hphi
+#     block = 0
+#     eps_r = 1
+#     variable = Er
+#   []
+#   # [Electric_z_dielectric]
+#   #   type = TM0CylindricalEz
+#   #   azimuthal_magnetic_field =Hphi
+#   #   variable = Electric_z
+#   #   block = 1
+#   #   eps_r = 16
+#   # []
+#   # [Electric_z_vacuum]
+#   #   type = TM0CylindricalEz
+#   #   azimuthal_magnetic_field =Hphi
+#   #   variable = Electric_z
+#   #   block = 0
+#   #   eps_r = 1
+#   # []
+# []
+
+# [VectorPostprocessors]
+#   [line0]
+#     type = LineValueSampler
+#     start_point = &#x27;0 .045 0&#x27;
+#     end_point = &#x27;.015 .045 0&#x27;
+#     num_points = 1000
+#     sort_by = x
+#     variable = Hphi
+#     outputs = csv
+#   []
+#   [line1]
+#     type = LineValueSampler
+#     start_point = &#x27;0 .045 0&#x27;
+#     end_point = &#x27;.015 .045 0&#x27;
+#     num_points = 1000
+#     sort_by = x
+#     variable = Elec_z
+#     outputs = csv
+#   []
+#   [line2]
+#     type = LineValueSampler
+#     start_point = &#x27;0 .045 0&#x27;
+#     end_point = &#x27;.015 .045 0&#x27;
+#     num_points = 1000
+#     sort_by = x
+#     variable = Er
+#     outputs = csv
+#   []
+# []
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="a38f79a3-6dee-4aab-919a-36699597f578"><div class="modal-content"><h4>(test/tests/TM10_circular_wg/TM_steady_dieletric.i)</h4><pre style="max-height:350px;"><code class="language-moose">[GlobalParams]
+  f = 10e9
+[]
+
+[Mesh]
+  [file]
+    type = FileMeshGenerator
+    file = &#x27;TM_dieletric.msh&#x27;
+    # construct_side_list_from_node_list = 1
+  []
+  [interface_dielectric]
+    type = SideSetsBetweenSubdomainsGenerator
+    primary_block = &#x27;1&#x27;
+    paired_block = &#x27;0&#x27;
+    new_boundary = &#x27;interface_dielectric&#x27;
+    input = file
+  []
+  coord_type = RZ
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = NEWTON
+
+  petsc_options_iname = &#x27;-pc_type&#x27;
+  petsc_options_value = &#x27;lu&#x27;
+[]
+
+[Outputs]
+  perf_graph = true
+  print_linear_residuals = true
+  [out]
+    type = Exodus
+  []
+  [csv]
+    type = CSV
+  []
+[]
+
+[Variables]
+  [Hphi_dielectric]
+    block = 1
+    order = SECOND
+  []
+  [Hphi_vacuum]
+    block = 0
+    order = SECOND
+  []
+  [Ez_dielectric]
+    block = 1
+    order = SECOND
+  []
+  [Ez_vacuum]
+    block = 0
+    order = SECOND
+  []
+  [Er_dielectric]
+    block = 1
+    order = SECOND
+  []
+  [Er_vacuum]
+    block = 0
+    order = SECOND
+  []
+[]
+
+[Kernels]
+  [Hphi_dielectric]
+    type = TM0Cylindrical
+    variable = Hphi_dielectric
+    block = 1
+  []
+  [Hphi_vacuum]
+    type = TM0Cylindrical
+    variable = Hphi_vacuum
+    block = 0
+  []
+  [Ez_dielectric_kern]
+    type = TM0CylindricalEz
+    variable = Ez_dielectric
+    block = 1
+    azimuthal_magnetic_field = Hphi_dielectric
+  []
+  [Ez_vacuum_kern]
+    type = TM0CylindricalEz
+    variable = Ez_vacuum
+    block = 0
+    azimuthal_magnetic_field = Hphi_vacuum
+  []
+  [Er_dielectric]
+    type = TM0CylindricalEr
+    variable = Er_dielectric
+    azimuthal_magnetic_field = Hphi_dielectric
+    block = 1
+  []
+  [Er_vacuum]
+    type = TM0CylindricalEr
+    variable = Er_vacuum
+    azimuthal_magnetic_field = Hphi_vacuum
+    block = 0
+  []
+[]
+
+[BCs]
+  [launcher]
+    type = TM0AntennaVertBC
+    boundary = Antenna
+    variable = Hphi_vacuum
+  []
+  [vert_wall]
+    type = TM0PECVertBC
+    variable = Hphi_vacuum
+    boundary = vert_pec
+  []
+  [axis]
+    type = DirichletBC
+    variable = Hphi_dielectric
+    boundary = Axis
+    value = 0
+  []
+  [H_phi_interface]
+    type = MatchedValueBC
+    variable = Hphi_vacuum
+    v = Hphi_dielectric
+    boundary = interface
+  []
+  # [Ez_interface]
+  #   type = MatchedValueBC
+  #   variable = Ez_dielectric
+  #   v = Ez_vacuum
+  #   boundary = interface
+  # []
+[]
+
+[InterfaceKernels]
+  [Ez_continuous]
+    type = HphiRadialInterface
+    variable = Hphi_dielectric
+    neighbor_var = Hphi_vacuum
+    boundary = interface_dielectric
+  []
+[]
+
+[Materials]
+  [dielectric]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;eps_r&#x27;
+    prop_values = &#x27;3.8&#x27;
+    block = 1
+  []
+  [vacuum]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;eps_r&#x27;
+    prop_values = &#x27;1&#x27;
+    block = 0
+  []
+[]
+
+# [AuxVariables]
+#   [Hphi_mag]
+#   []
+#   [Er]
+#     order = FIRST
+#     family = MONOMIAL
+#   []
+#   # [Electric_z]
+#   #   order = FIRST
+#   #   family = MONOMIAL
+#   # []
+# []
+
+# [AuxKernels]
+#   [Hphi_mag]
+#     type = AbsValueAux
+#     u = Hphi
+#     variable = Hphi_mag
+#   []
+#   [Er_dielectric]
+#     type = TM0CylindricalEr
+#     azimuthal_magnetic_field =Hphi
+#     variable = Er
+#     block = 1
+#     eps_r = 16
+#   []
+#   [Er_vacuum]
+#     type = TM0CylindricalEr
+#     azimuthal_magnetic_field =Hphi
+#     block = 0
+#     eps_r = 1
+#     variable = Er
+#   []
+#   # [Electric_z_dielectric]
+#   #   type = TM0CylindricalEz
+#   #   azimuthal_magnetic_field =Hphi
+#   #   variable = Electric_z
+#   #   block = 1
+#   #   eps_r = 16
+#   # []
+#   # [Electric_z_vacuum]
+#   #   type = TM0CylindricalEz
+#   #   azimuthal_magnetic_field =Hphi
+#   #   variable = Electric_z
+#   #   block = 0
+#   #   eps_r = 1
+#   # []
+# []
+
+# [VectorPostprocessors]
+#   [line0]
+#     type = LineValueSampler
+#     start_point = &#x27;0 .045 0&#x27;
+#     end_point = &#x27;.015 .045 0&#x27;
+#     num_points = 1000
+#     sort_by = x
+#     variable = Hphi
+#     outputs = csv
+#   []
+#   [line1]
+#     type = LineValueSampler
+#     start_point = &#x27;0 .045 0&#x27;
+#     end_point = &#x27;.015 .045 0&#x27;
+#     num_points = 1000
+#     sort_by = x
+#     variable = Elec_z
+#     outputs = csv
+#   []
+#   [line2]
+#     type = LineValueSampler
+#     start_point = &#x27;0 .045 0&#x27;
+#     end_point = &#x27;.015 .045 0&#x27;
+#     num_points = 1000
+#     sort_by = x
+#     variable = Er
+#     outputs = csv
+#   []
+# []
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#4272a3c4-a888-4ff4-abc8-8794de62b40b" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#cc3bb83e-b17a-41e9-8e76-7d95d1ab2cc6" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#d164e92c-8095-4a41-85d4-7a6ff33be770" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#e508409f-b231-475d-9f29-a5bdade8da0e" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

@@ -1,0 +1,1077 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>SakiyamaIonAdvectionWithEffEfieldBC | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="4e61ed9a-b8ef-43f7-8808-bd3311c27ff3" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="98e93658-9a8b-48aa-8591-60b7d1bfd561" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="98383eea-174d-4f20-820f-abc83c0a1b20" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="62584634-faa9-4340-a110-391faf611aaf"><i class="material-icons">menu</i></a><ul class="sidenav" id="62584634-faa9-4340-a110-391faf611aaf"><li><a href="#!" class="dropdown-trigger" data-target="3f336d08-1580-4f7b-9179-96d364920469" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="b434506a-93cc-474e-a5a4-456f4ad86db0" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d1e42c8c-db63-47d6-82b0-d93622838c33" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="4e61ed9a-b8ef-43f7-8808-bd3311c27ff3"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="98e93658-9a8b-48aa-8591-60b7d1bfd561"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="98383eea-174d-4f20-820f-abc83c0a1b20"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="3f336d08-1580-4f7b-9179-96d364920469"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="b434506a-93cc-474e-a5a4-456f4ad86db0"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="d1e42c8c-db63-47d6-82b0-d93622838c33"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">bcs</span><a href="#" class="breadcrumb">SakiyamaIonAdvectionWithEffEfieldBC</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="a0bce685-232f-413d-8f8c-d0d8d6f6e8e5" data-section-level="1" data-section-text="SakiyamaIonAdvectionWithEffEfieldBC"><h1 id="sakiyamaionadvectionwitheffefieldbc">SakiyamaIonAdvectionWithEffEfieldBC</h1><p>Kinetic advective ion boundary condition (Based on <a href="#sakiyama2006corona">Sakiyama and Graves (2006)</a>)</p><section class="scrollspy" id="392579a2-26b3-4283-89ba-b17b423979f9" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p><code>SakiyamaIonAdvectionWithEffEfieldBC</code> is an electric field driven outflow boundary condition. The effective electric field is supplied as scalar componets of the field.</p><p>The ion outflow is defined as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-cdc6af55-d2b4-41f4-b7d5-e6a38486eaac"></span><script>var element = document.getElementById("moose-equation-cdc6af55-d2b4-41f4-b7d5-e6a38486eaac");katex.render("a = \\begin{cases} 1, & \\mu_{j} \\vec{E}_{\\text{Eff.}} \\cdot \\textbf{n} > 0\\\\ 0, & \\mu_{j} \\vec{E}_{\\text{Eff.}} \\cdot \\textbf{n} \\leq 0\\\\ \\end{cases} \\\\[10pt] \\Gamma_{j} \\cdot \\textbf{n} = a \\ \\mu_{j} \\vec{E}_{\\text{Eff.}} \\cdot \\textbf{n} \\ n_{j}", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where </p><ul class="browser-default"><li><p><span class="moose-katex-inline-equation" id="moose-equation-14e79b28-9b30-4094-a166-5e1c0d31367c"><script>var element = document.getElementById("moose-equation-14e79b28-9b30-4094-a166-5e1c0d31367c");katex.render("\\Gamma \\cdot \\textbf{n}", element, {displayMode:false,throwOnError:false});</script></span> is the outflow normal to the boundary,  </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-44c018cb-56d8-4823-8d47-f8cd269bf523"><script>var element = document.getElementById("moose-equation-44c018cb-56d8-4823-8d47-f8cd269bf523");katex.render("\\textbf{n}", element, {displayMode:false,throwOnError:false});</script></span> is the normal of the boundary, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-b0362a08-66e8-49ea-b062-ed41a22fdc9a"><script>var element = document.getElementById("moose-equation-b0362a08-66e8-49ea-b062-ed41a22fdc9a");katex.render("\\mu_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the mobility coefficient,  </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-5c02503c-e525-47c8-814d-17594afd1439"><script>var element = document.getElementById("moose-equation-5c02503c-e525-47c8-814d-17594afd1439");katex.render("n_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the species density,  </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-2bd894c2-1d40-4a22-bdef-84753c579082"><script>var element = document.getElementById("moose-equation-2bd894c2-1d40-4a22-bdef-84753c579082");katex.render("\\vec{E}_{\\text{Eff.}}", element, {displayMode:false,throwOnError:false});</script></span> is the electric field (supplied as scalar components), and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-69aa4095-db48-4301-9425-c7c901d0a790"><script>var element = document.getElementById("moose-equation-69aa4095-db48-4301-9425-c7c901d0a790");katex.render("a", element, {displayMode:false,throwOnError:false});</script></span> is defined such that the outflow is only non-zero when the drift velocity is directed towards the wall and zero otherwise. </p></li></ul><p>When converting the density to log form and applying a scaling factor of the mesh, the strong form for <code>SakiyamaIonAdvectionWithEffEfieldBC</code> is defined as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-c2c06289-a5a8-46a6-940b-219cfe36925b"></span><script>var element = document.getElementById("moose-equation-c2c06289-a5a8-46a6-940b-219cfe36925b");katex.render("\\Gamma_{j} \\cdot \\textbf{n} = a \\ \\mu_{j} \\left( \\vec{E}_{\\text{Eff.}} / l_{c} \\right) \\cdot \\textbf{n} \\ \\exp(N_{j})", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where <span class="moose-katex-inline-equation" id="moose-equation-90fe8bd2-9f78-4bfc-85c9-8e7b6a8092b7"><script>var element = document.getElementById("moose-equation-90fe8bd2-9f78-4bfc-85c9-8e7b6a8092b7");katex.render("N_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the molar density of the species in log form and <span class="moose-katex-inline-equation" id="moose-equation-0cd29136-1718-491a-90cf-92075c4f4a90"><script>var element = document.getElementById("moose-equation-0cd29136-1718-491a-90cf-92075c4f4a90");katex.render("l_{c}", element, {displayMode:false,throwOnError:false});</script></span> is the scaling factor of the mesh.</p></section><section class="scrollspy" id="92281019-bcae-48e1-8881-d45ce9407b0d" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[BCs&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/BCs/index.html&quot;}&gt;&gt;&gt;]
+  [ion_left_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC&lt;&lt;&lt;{&quot;description&quot;: &quot;Kinetic advective ion boundary condition (Based on [!cite](sakiyama2006corona))&quot;, &quot;href&quot;: &quot;SakiyamaIonAdvectionWithEffEfieldBC.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this residual object operates on&quot;}&gt;&gt;&gt; = ion
+    electric_field_x&lt;&lt;&lt;{&quot;description&quot;: &quot;The electric field in the x-direction&quot;}&gt;&gt;&gt; = Ex
+    electric_field_y&lt;&lt;&lt;{&quot;description&quot;: &quot;The electric field in the y-direction&quot;}&gt;&gt;&gt; = Ey
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = 3
+    position_units&lt;&lt;&lt;{&quot;description&quot;: &quot;Units of position.&quot;}&gt;&gt;&gt; = 1.0
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#595138ab-89c6-44d1-bd40-2bda1db312db">(test/tests/mms/bcs/2D_IonBC.i)</a></section><section class="scrollspy" id="b15bd2fb-53f6-44a7-a9af-a415eefbef98" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="efba3b16-85ca-48b3-99e1-5b0a80da070e" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundary IDs from the mesh where this object applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of boundary IDs from the mesh where this object applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electric_field_x</span><span class="moose-parameter-header-description">The electric field in the x-direction</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electric field in the x-direction</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">position_units</span><span class="moose-parameter-header-description">Units of position.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Units of position.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this residual object operates on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this residual object operates on</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="7969e73a-8116-4c4e-9cbb-f4efe0ca24cd" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">displacements</span><span class="moose-parameter-header-description">The displacements</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The displacements</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electric_field_y</span><span class="moose-parameter-header-description">The electric field in the y-direction</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electric field in the y-direction</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electric_field_z</span><span class="moose-parameter-header-description">The electric field in the z-direction</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electric field in the z-direction</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="08bde539-416b-4102-8987-1d70850ac536" data-section-level="3" data-section-text="Contribution To Tagged Field Data Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">absolute_value_vector_tags</span><span class="moose-parameter-header-description">The tags for the vectors this residual object should fill with the absolute value of the residual contribution</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tags for the vectors this residual object should fill with the absolute value of the residual contribution</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_only</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether this object is only doing assembly to matrices (no vectors)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether this object is only doing assembly to matrices (no vectors)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, system</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">nontime</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nontime</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, time</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Contribution To Tagged Field Data Parameters</h3></summary></details></section><section id="a71f4440-6d37-462a-be66-b508442cf75d" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diag_save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this BC's diagonal jacobian contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this BC's diagonal jacobian contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this BC's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this BC's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">search_method</span><span class="moose-parameter-header-default">nearest_node_connected_sides</span><span class="moose-parameter-header-description">Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nearest_node_connected_sides</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nearest_node_connected_sides, all_proximate_sides</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">skip_execution_outside_variable_domain</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether to skip execution of this boundary condition when the variable it applies to is not defined on the boundary. This can facilitate setups with moving variable domains and fixed boundaries. Note that the FEProblem boundary-restricted integrity checks will also need to be turned off if using this option</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to skip execution of this boundary condition when the variable it applies to is not defined on the boundary. This can facilitate setups with moving variable domains and fixed boundaries. Note that the FEProblem boundary-restricted integrity checks will also need to be turned off if using this option</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="9446cd2b-9320-4447-bb0d-312343974e15" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="b2711662-97b5-4b5f-b4d6-86aee46a0d17" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#1aae950c-de3a-4195-8c05-66d701c5e008">(test/tests/mms/bcs/2D_IonBC_NegivateOutWardFacingEfield.i)</a></li><li><a class="moose-source-filename tooltipped modal-trigger" href="#9e539b3e-27cd-4127-bc39-c36b8b66a9ee">(test/tests/mms/bcs/2D_IonBC.i)</a></li></ul></section><section class="scrollspy" id="67080036-cd52-4973-b113-079eac4b1911" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="sakiyama2006corona">Y&nbsp;Sakiyama and David&nbsp;B Graves.
+Corona-glow transition in the atmospheric pressure rf-excited plasma needle.
+<em>Journal of Physics D: Applied Physics</em>, 39(16):3644, 2006.
+<a href="https://doi.org/10.1088/0022-3727/39/16/018">doi:10.1088/0022-3727/39/16/018</a>.<a href="#5888274e-d49f-482a-8438-2cc8ae7b617b" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="5888274e-d49f-482a-8438-2cc8ae7b617b"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{sakiyama2006corona,
+    author = "Sakiyama, Y and Graves, David B",
+    title = "Corona-glow transition in the atmospheric pressure RF-excited plasma needle",
+    journal = "Journal of Physics D: Applied Physics",
+    volume = "39",
+    number = "16",
+    pages = "3644",
+    year = "2006",
+    publisher = "IOP Publishing",
+    doi = "10.1088/0022-3727/39/16/018"
+}
+</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="595138ab-89c6-44d1-bd40-2bda1db312db"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_IonBC.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_IonBC_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [ion]
+    initial_from_file_var = ion
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+[]
+
+[Kernels]
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+[]
+
+[AuxKernels]
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  #Ion diffusion coeff.
+  [diffion]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muion]
+    type = ConstantFunction
+    value = 0.01
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.25
+  []
+
+  #Manufactured Solutions
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((cos(pi/2*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  #Source Terms in moles
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(diffion*((pi^2*cos((pi*y)/2))/4 + (pi^2*sin(2*pi*t)*(2*cos((pi*y)/2)^2 - 1))/5) +
+                  (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (diffion*pi^2*cos((pi*x)/2))/4 + muion*pi^2*sin(pi*x)*(sin(pi*t) + 1)*(cos((pi*x)/2) +
+                  cos((pi*y)/2) + (cos(pi*y)*sin(2*pi*t))/5 + 1) + muion*pi^2*sin(pi*y)*(sin(pi*t) + 1)*(cos((pi*x)/2) + cos((pi*y)/2) +
+                  (cos(pi*y)*sin(2*pi*t))/5 + 1) + muion*pi*cos(pi*y)*((pi*sin((pi*y)/2))/2 + (pi*sin(2*pi*t)*sin(pi*y))/5)*(sin(pi*t) + 1) +
+                  (muion*pi^2*cos(pi*x)*sin((pi*x)/2)*(sin(pi*t) + 1))/2) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*x) - diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*y) - diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+
+  [ion_left_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;((diffion*pi*sin((pi*x)/2))/2 - muion*pi*(2*cos((pi*x)/2)^2 - 1)*(sin(pi*t) + 1)*(cos((pi*x)/2) +
+                   cos((pi*y)/2) + (2*cos(pi*t)*sin(pi*t)*(2*cos((pi*y)/2)^2 - 1))/5 + 1)) / N_A&#x27;
+  []
+  [ion_down_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(diffion*((pi*sin((pi*y)/2))/2 + (pi*sin(2*pi*t)*sin(pi*y))/5) -
+                   muion*pi*cos(pi*y)*(sin(pi*t) + 1)*(cos((pi*x)/2) + cos((pi*y)/2) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+[]
+
+[BCs]
+  #[ion_left_BC]
+  #  type = FunctionDirichletBC
+  #  variable = ion
+  #  function = &#x27;ion_left_BC&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  [ion_left_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC
+    variable = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    boundary = 3
+    position_units = 1.0
+  []
+
+  [ion_right_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = 1
+    preset = true
+  []
+
+  #[ion_down_BC]
+  #  type = FunctionDirichletBC
+  #  variable = ion
+  #  function = &#x27;ion_down_BC&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  [ion_down_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC
+    variable = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    boundary = 0
+    position_units = 1.0
+  []
+
+  [ion_up_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = 2
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion  muion&#x27;
+    prop_values = &#x27;diffion  muion&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnion&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="1aae950c-de3a-4195-8c05-66d701c5e008"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_IonBC_NegivateOutWardFacingEfield.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_IonBC_NegivateOutWardFacingEfield_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [ion]
+    initial_from_file_var = ion
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+[]
+
+[Kernels]
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+[]
+
+[AuxKernels]
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  #Ion diffusion coeff.
+  [diffion]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muion]
+    type = ConstantFunction
+    value = 0.01
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.25
+  []
+
+  #Manufactured Solutions
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(diffion*pi*cos(pi*x))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(diffion*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1))&#x27;
+  []
+
+  #Source Terms in moles
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;((2*pi*cos(2*pi*t)*cos(pi*y))/5) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-diffpotential*((2*diffion*pi^3*cos(pi*x)^3)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (diffion*pi^3*cos(pi*x))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) + (3*diffion*pi^3*cos(pi*x)*sin(pi*x))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) - (2*diffion*diffpotential*pi*cos(pi*x)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^2)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (2*diffion*pi^2*cos(2*pi*t)*cos(pi*x)*cos(pi*y))/(5*muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) - (diffion*diffpotential*pi*cos(pi*x)*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-diffpotential*((2*diffion*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^3)/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (diffion*(pi^3*cos(pi*y) - (pi^3*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) + (3*diffion*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)) - (2*diffion*pi^2*cos(2*pi*t)*sin(pi*y))/(5*muion*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) - (diffion*diffpotential*pi^2*sin(pi*x)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2) - (2*diffion*diffpotential*pi^2*cos(pi*x)^2*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^3) - (2*diffion*pi*cos(2*pi*t)*cos(pi*y)*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(5*muion*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 1)^2)&#x27;
+  []
+
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+
+  [ion_left_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(0) / N_A&#x27;
+  []
+  [ion_down_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(0) / N_A&#x27;
+  []
+[]
+
+[BCs]
+  #[ion_left_BC]
+  #  type = FunctionDirichletBC
+  #  variable = ion
+  #  function = &#x27;ion_fun&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  [ion_left_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC
+    variable = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    boundary = 3
+    position_units = 1.0
+  []
+
+  [ion_right_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = 1
+    preset = true
+  []
+
+  #[ion_down_BC]
+  #  type = FunctionDirichletBC
+  #  variable = ion
+  #  function = &#x27;ion_down_BC&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  [ion_down_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC
+    variable = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    boundary = 0
+    position_units = 1.0
+  []
+
+  [ion_up_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = 2
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion  muion&#x27;
+    prop_values = &#x27;diffion  muion&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnion&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="9e539b3e-27cd-4127-bc39-c36b8b66a9ee"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_IonBC.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_IonBC_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [ion]
+    initial_from_file_var = ion
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+[]
+
+[Kernels]
+  #Ion Equations
+  [ion_time_derivative]
+    type = TimeDerivativeLog
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    position_units = 1.0
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = TimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = TimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+[]
+
+[AuxKernels]
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  #Ion diffusion coeff.
+  [diffion]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muion]
+    type = ConstantFunction
+    value = 0.01
+  []
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.25
+  []
+
+  #Manufactured Solutions
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((cos(pi/2*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 1.0 + cos(pi/2*x)) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  #Source Terms in moles
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(diffion*((pi^2*cos((pi*y)/2))/4 + (pi^2*sin(2*pi*t)*(2*cos((pi*y)/2)^2 - 1))/5) +
+                  (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (diffion*pi^2*cos((pi*x)/2))/4 + muion*pi^2*sin(pi*x)*(sin(pi*t) + 1)*(cos((pi*x)/2) +
+                  cos((pi*y)/2) + (cos(pi*y)*sin(2*pi*t))/5 + 1) + muion*pi^2*sin(pi*y)*(sin(pi*t) + 1)*(cos((pi*x)/2) + cos((pi*y)/2) +
+                  (cos(pi*y)*sin(2*pi*t))/5 + 1) + muion*pi*cos(pi*y)*((pi*sin((pi*y)/2))/2 + (pi*sin(2*pi*t)*sin(pi*y))/5)*(sin(pi*t) + 1) +
+                  (muion*pi^2*cos(pi*x)*sin((pi*x)/2)*(sin(pi*t) + 1))/2) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*x) - diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*y) - diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+
+  [ion_left_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;((diffion*pi*sin((pi*x)/2))/2 - muion*pi*(2*cos((pi*x)/2)^2 - 1)*(sin(pi*t) + 1)*(cos((pi*x)/2) +
+                   cos((pi*y)/2) + (2*cos(pi*t)*sin(pi*t)*(2*cos((pi*y)/2)^2 - 1))/5 + 1)) / N_A&#x27;
+  []
+  [ion_down_Flux_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffion muion&#x27;
+    expression = &#x27;(diffion*((pi*sin((pi*y)/2))/2 + (pi*sin(2*pi*t)*sin(pi*y))/5) -
+                   muion*pi*cos(pi*y)*(sin(pi*t) + 1)*(cos((pi*x)/2) + cos((pi*y)/2) + (cos(pi*y)*sin(2*pi*t))/5 + 1)) / N_A&#x27;
+  []
+[]
+
+[BCs]
+  #[ion_left_BC]
+  #  type = FunctionDirichletBC
+  #  variable = ion
+  #  function = &#x27;ion_left_BC&#x27;
+  #  boundary = 3
+  #  preset = true
+  #[]
+  [ion_left_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC
+    variable = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    boundary = 3
+    position_units = 1.0
+  []
+
+  [ion_right_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = 1
+    preset = true
+  []
+
+  #[ion_down_BC]
+  #  type = FunctionDirichletBC
+  #  variable = ion
+  #  function = &#x27;ion_down_BC&#x27;
+  #  boundary = 0
+  #  preset = true
+  #[]
+  [ion_down_physical_advection]
+    type = SakiyamaIonAdvectionWithEffEfieldBC
+    variable = ion
+    electric_field_x = Ex
+    electric_field_y = Ey
+    boundary = 0
+    position_units = 1.0
+  []
+
+  [ion_up_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = 2
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion  muion&#x27;
+    prop_values = &#x27;diffion  muion&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnion&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#392579a2-26b3-4283-89ba-b17b423979f9" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#92281019-bcae-48e1-8881-d45ce9407b0d" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#b15bd2fb-53f6-44a7-a9af-a415eefbef98" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#b2711662-97b5-4b5f-b4d6-86aee46a0d17" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li><li><a href="#67080036-cd52-4973-b113-079eac4b1911" class="tooltipped" data-position="left" data-tooltip="References">References</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

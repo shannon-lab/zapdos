@@ -1,0 +1,1102 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>ADSurfaceCharge | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="bcfe6d95-4a33-4533-898c-9f9fc518c918" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c9009b0e-0327-4c0c-a37b-81e9259a0f8c" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="cdfd2a31-a510-4081-83fb-8b39c7f1b016" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="1e39683f-39ca-429b-8a72-9f2cc3e501c8"><i class="material-icons">menu</i></a><ul class="sidenav" id="1e39683f-39ca-429b-8a72-9f2cc3e501c8"><li><a href="#!" class="dropdown-trigger" data-target="d2296194-8b4a-4065-99ea-cc0db9e3ee02" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="4c19fb84-4a91-4bd2-94f4-6ad171fc3445" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="629955d3-fd4b-4ab7-bb2b-e54d1c128452" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="bcfe6d95-4a33-4533-898c-9f9fc518c918"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="c9009b0e-0327-4c0c-a37b-81e9259a0f8c"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="cdfd2a31-a510-4081-83fb-8b39c7f1b016"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="d2296194-8b4a-4065-99ea-cc0db9e3ee02"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="4c19fb84-4a91-4bd2-94f4-6ad171fc3445"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="629955d3-fd4b-4ab7-bb2b-e54d1c128452"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">materials</span><a href="#" class="breadcrumb">ADSurfaceCharge</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="cddf9e78-9530-4581-b7e2-8c6eeeea9dc1" data-section-level="1" data-section-text="ADSurfaceCharge"><h1 id="adsurfacecharge">ADSurfaceCharge</h1><p>Adds a surface charge material property based on the rate of change of the total charged flux to a boundary. (NOTE: this material is meant to be boundary-restricted.)</p><section class="scrollspy" id="d9b7efb9-f5e3-43bf-b13e-0bf274cd7dd6" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p><code>ADSurfaceCharge</code> calculates the surface charge at a boundary. The surface charge material property is labeled <code>surface_charge</code>.</p><p>The surface charge is defined as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-54221d91-52ef-4150-9f46-644ee27afb10"></span><script>var element = document.getElementById("moose-equation-54221d91-52ef-4150-9f46-644ee27afb10");katex.render("\\sigma = \\int \\vec{J} \\ \\text{d}t \\\\[10pt] \\vec{J} \\cdot \\textbf{n} = \\sum{\\left( q_{j} \\vec{\\Gamma}_{j} \\cdot \\textbf{n} \\right)}  \\\\[10pt] \\vec{\\Gamma}_{j} = \\text{sign}_{j} \\mu_{j} \\vec{E} n_{j} - D_{j} \\nabla (n_{j}) \\\\[10pt]", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where:</p><ul class="browser-default"><li><p><span class="moose-katex-inline-equation" id="moose-equation-3c659382-a5c6-4b59-b9b9-10bce91f6851"><script>var element = document.getElementById("moose-equation-3c659382-a5c6-4b59-b9b9-10bce91f6851");katex.render("\\sigma", element, {displayMode:false,throwOnError:false});</script></span> is the surface charge, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-21d3d807-6147-472a-aba3-702fb472db2f"><script>var element = document.getElementById("moose-equation-21d3d807-6147-472a-aba3-702fb472db2f");katex.render("\\vec{J}", element, {displayMode:false,throwOnError:false});</script></span> is the total current density, </p></li><li><p>the subscript <span class="moose-katex-inline-equation" id="moose-equation-fe1fba2e-e066-4319-8172-d8dffb1a0bff"><script>var element = document.getElementById("moose-equation-fe1fba2e-e066-4319-8172-d8dffb1a0bff");katex.render("j", element, {displayMode:false,throwOnError:false});</script></span> represents properties of a plasma species, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-0c849e0c-6bb9-48a9-ba9e-371c6d723eea"><script>var element = document.getElementById("moose-equation-0c849e0c-6bb9-48a9-ba9e-371c6d723eea");katex.render("q_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the charge of the species, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-549b986d-2f13-45c5-b50a-e06fa40ba193"><script>var element = document.getElementById("moose-equation-549b986d-2f13-45c5-b50a-e06fa40ba193");katex.render("\\vec{\\Gamma}", element, {displayMode:false,throwOnError:false});</script></span> is the drift-diffusion flux, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-3c32e90a-d5ed-49f9-a0c2-5ab3940d2b0e"><script>var element = document.getElementById("moose-equation-3c32e90a-d5ed-49f9-a0c2-5ab3940d2b0e");katex.render("\\textbf{n}", element, {displayMode:false,throwOnError:false});</script></span> is the outward pointing unit normal on the boundary, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-b49df1c3-dc8f-4e2b-9e51-1c6b4ed42aff"><script>var element = document.getElementById("moose-equation-b49df1c3-dc8f-4e2b-9e51-1c6b4ed42aff");katex.render("\\text{sign}_{j}", element, {displayMode:false,throwOnError:false});</script></span> indicates the advection behavior (<span class="moose-katex-inline-equation" id="moose-equation-b03bb352-1147-42af-aca3-08e8f30161fa"><script>var element = document.getElementById("moose-equation-b03bb352-1147-42af-aca3-08e8f30161fa");katex.render("\\text{+}1", element, {displayMode:false,throwOnError:false});</script></span> for positively charged species and <span class="moose-katex-inline-equation" id="moose-equation-a916dc3a-8d05-46eb-ad1c-11935577fbd5"><script>var element = document.getElementById("moose-equation-a916dc3a-8d05-46eb-ad1c-11935577fbd5");katex.render("\\text{-}1", element, {displayMode:false,throwOnError:false});</script></span> for negatively charged species), </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-b1d9c529-3aea-479a-94b0-ce325b9404af"><script>var element = document.getElementById("moose-equation-b1d9c529-3aea-479a-94b0-ce325b9404af");katex.render("\\mu_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the mobility coefficient, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-e233227d-25e0-403d-9acd-2ca9adf0de99"><script>var element = document.getElementById("moose-equation-e233227d-25e0-403d-9acd-2ca9adf0de99");katex.render("D_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the diffusion coefficient, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-2f6a3d25-5f99-4629-849b-b2c3dbb86515"><script>var element = document.getElementById("moose-equation-2f6a3d25-5f99-4629-849b-b2c3dbb86515");katex.render("\\vec{E}", element, {displayMode:false,throwOnError:false});</script></span> is the electric field, and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-d97e2b25-64a0-41a4-a391-2ee91dcb0a7a"><script>var element = document.getElementById("moose-equation-d97e2b25-64a0-41a4-a391-2ee91dcb0a7a");katex.render("n_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the species density.</p></li></ul><p>Using the midpoint method for integration, the surface charge calculation becomes</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-78ab84d4-cf72-41c1-93a9-9cef2dd9b785"></span><script>var element = document.getElementById("moose-equation-78ab84d4-cf72-41c1-93a9-9cef2dd9b785");katex.render("\\sigma_{t} = \\sigma_{t-1} + \\vec{J} \\cdot \\textbf{n} \\ \\text{d}t", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where:</p><ul class="browser-default"><li><p><span class="moose-katex-inline-equation" id="moose-equation-e5dbaa06-bf6f-4302-813e-60ae87f694b2"><script>var element = document.getElementById("moose-equation-e5dbaa06-bf6f-4302-813e-60ae87f694b2");katex.render("\\sigma_{t}", element, {displayMode:false,throwOnError:false});</script></span> is the surface charge of the current time step, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-f0eb4d9e-6618-4b27-bf51-4b5585be788f"><script>var element = document.getElementById("moose-equation-f0eb4d9e-6618-4b27-bf51-4b5585be788f");katex.render("\\sigma_{t-1}", element, {displayMode:false,throwOnError:false});</script></span> is the surface of the previous time step, and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-7c49e021-71e5-4c21-9e01-c85c91bbdbc0"><script>var element = document.getElementById("moose-equation-7c49e021-71e5-4c21-9e01-c85c91bbdbc0");katex.render("\\text{d}t", element, {displayMode:false,throwOnError:false});</script></span> is the difference between time steps.</p></li></ul><p>When converting the density to logarithmic form and applying a scaling factor of the mesh, the drift-diffusion flux of <code>ADSurfaceCharge</code> is redefined as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-0f44afb3-11db-4e83-8a3f-7bfc0692c1ad"></span><script>var element = document.getElementById("moose-equation-0f44afb3-11db-4e83-8a3f-7bfc0692c1ad");katex.render("\\vec{\\Gamma}_{j} = N_{A} \\left(\\text{sign}_{j} \\mu_{j} \\frac{\\vec{E}}{l_{c}} \\exp(N_{j}) - D_{j} \\exp(N_{j}) \\frac{\\nabla (N_{j})}{l_{c}} \\right)", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where:</p><ul class="browser-default"><li><p><span class="moose-katex-inline-equation" id="moose-equation-98e1921b-097d-4bc5-9bb9-326481e9c2aa"><script>var element = document.getElementById("moose-equation-98e1921b-097d-4bc5-9bb9-326481e9c2aa");katex.render("N_{j}", element, {displayMode:false,throwOnError:false});</script></span> is the molar density of the species in logarithmic form, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-53993472-2185-46a1-b473-a2af2cd29ca3"><script>var element = document.getElementById("moose-equation-53993472-2185-46a1-b473-a2af2cd29ca3");katex.render("N_{A}", element, {displayMode:false,throwOnError:false});</script></span> is Avogadro&#x27;s number, and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-da347c0b-6190-4f6c-9c4b-91290325db3e"><script>var element = document.getElementById("moose-equation-da347c0b-6190-4f6c-9c4b-91290325db3e");katex.render("l_{c}", element, {displayMode:false,throwOnError:false});</script></span> is the scaling factor of the mesh.</p></li></ul></section><section class="scrollspy" id="1d5ecb9a-e892-4297-8a18-4ead41ffe0b2" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[Materials&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Materials/index.html&quot;}&gt;&gt;&gt;]
+  [surface_charge_material]
+    type = ADSurfaceCharge&lt;&lt;&lt;{&quot;description&quot;: &quot;Adds a surface charge material property based on the rate of change of the total charged flux to a boundary. (NOTE: this material is meant to be boundary-restricted.)&quot;, &quot;href&quot;: &quot;ADSurfaceCharge.html&quot;}&gt;&gt;&gt;
+    species&lt;&lt;&lt;{&quot;description&quot;: &quot;All of the charged species that interact with this boundary.&quot;}&gt;&gt;&gt; = &#x27;neg pos&#x27;
+    position_units&lt;&lt;&lt;{&quot;description&quot;: &quot;Units of position.&quot;}&gt;&gt;&gt; = ${dom0Scale}
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundaries (ids or names) from the mesh where this object applies&quot;}&gt;&gt;&gt; = &#x27;plasma_right&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#bebec9a1-8be0-4dc7-8834-6ee6a47efc74">(test/tests/surface_charge/dbd_test.i)</a></section><section class="scrollspy" id="7aa97e93-5763-4829-acc8-017e081549b1" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="cc4b13c5-5a75-4a44-9e5b-530dfbfba5cb" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">position_units</span><span class="moose-parameter-header-description">Units of position.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Units of position.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">potential_units</span><span class="moose-parameter-header-description">The potential units.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The potential units.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">species</span><span class="moose-parameter-header-description">All of the charged species that interact with this boundary.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>All of the charged species that interact with this boundary.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="74bfbcb2-9fe4-4b88-b548-21d00265e511" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">bc_type</span><span class="moose-parameter-header-default">Hagelaar</span><span class="moose-parameter-header-description">The name of the family of BCs being used in this model. Options: Hagelaar (DEFAULT), Sakiyama, Lymberopoulos.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>Hagelaar</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the family of BCs being used in this model. Options: Hagelaar (DEFAULT), Sakiyama, Lymberopoulos.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundaries (ids or names) from the mesh where this object applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of boundaries (ids or names) from the mesh where this object applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">compute</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>When false, MOOSE will not call compute methods on this material. The user must call computeProperties() after retrieving the MaterialBase via MaterialBasePropertyInterface::getMaterialBase(). Non-computed MaterialBases are not sorted for dependencies.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">constant_on</span><span class="moose-parameter-header-default">NONE</span><span class="moose-parameter-header-description">When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>NONE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, ELEMENT, SUBDOMAIN</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>When ELEMENT, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps.When SUBDOMAIN, MOOSE will only call computeQpProperties() for the 0th quadrature point, and then copy that value to the other qps. Evaluations on element qps will be skipped</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">declare_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any declared properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">field_property_name</span><span class="moose-parameter-header-default">field_solver_interface_property</span><span class="moose-parameter-header-description">Name of the solver interface material property.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>field_solver_interface_property</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Name of the solver interface material property.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">ks</span><span class="moose-parameter-header-description">The recombination coefficient (for Lymberopoulos-type BC)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The recombination coefficient (for Lymberopoulos-type BC)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">r_electron</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The electron reflection coefficient on this boundary.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electron reflection coefficient on this boundary.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">r_ion</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The ion reflection coefficient on this boundary.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The ion reflection coefficient on this boundary.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">secondary_electrons</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Whether or not to include secondary electron emission in the surface charge calculation. Note that this should be consistent with the selected boundary conditions; if a secondary electron BC is used on this boundary, this should be true. DEFAULT: true.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not to include secondary electron emission in the surface charge calculation. Note that this should be consistent with the selected boundary conditions; if a secondary electron BC is used on this boundary, this should be true. DEFAULT: true.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="8cd124d7-ffd2-4fa9-9f90-96050fa2e90b" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">search_method</span><span class="moose-parameter-header-default">nearest_node_connected_sides</span><span class="moose-parameter-header-description">Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nearest_node_connected_sides</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nearest_node_connected_sides, all_proximate_sides</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="11eb88f0-e364-4fac-a01f-0630b33b5826" data-section-level="3" data-section-text="Outputs Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">output_properties</span><span class="moose-parameter-header-description">List of material properties, from this material, to output (outputs must also be defined to an output type)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of material properties, from this material, to output (outputs must also be defined to an output type)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-default">none </span><span class="moose-parameter-header-description">Vector of output names where you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>none </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Vector of output names where you would like to restrict the output of variables(s) associated with this object</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Outputs Parameters</h3></summary></details></section><section id="7a7f2fe4-b143-40e2-b820-336f6fc726f9" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="8560b0e7-5ea1-459c-b026-02a87ed45265" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#59238e74-d69e-49c4-8225-e9d5b0218c47">(test/tests/surface_charge/dbd_test.i)</a></li></ul></section></section><div class="moose-modal modal" id="bebec9a1-8be0-4dc7-8834-6ee6a47efc74"><div class="modal-content"><h4>(test/tests/surface_charge/dbd_test.i)</h4><pre style="max-height:350px;"><code class="language-moose"># This example sets up a simple varying-voltage discharge with a
+# dielectric at the right boundary.
+#
+# Two charged particle species are considered, creatively named &#x27;pos&#x27;
+# and &#x27;neg&#x27;. They both have the same initial conditions and boundary
+# conditions; the only difference is their charge.
+# As the voltage varies, the particle flux to the right boundary
+# (including both advection and diffusion) will switch polarity and
+# the surface charge will become increasingly negative or positive.
+#
+# The left boundary is a driven electrode with a sinusoidal waveform.
+# A dielectric boundary condition including surface charge accumulation
+# is included on the right boundary.
+#
+# Note that without surface charge the electric field across both
+# boundaries should be identical since their permittivities are
+# both set to the same value.
+# Surface charge shields the electric field in the gas region,
+# preventing strong field buildup.
+
+dom0Scale = 1e-4
+dom1Scale = 1e-4
+
+[GlobalParams]
+  #offset = 40
+  potential_units = kV
+  use_moles = true
+[]
+
+[Mesh]
+  # The mesh file generates the appropriate 1D mesh, but the interfaces
+  # needed for the potential and surface charge have not been defined.
+  # Here SideSetsBetweenSubdomainsGenerator is used to generate the
+  # appropriate interfaces at the dielectrics.
+  #
+  # Block 0 = plasma region
+  # Block 1 = dielectric
+  [file]
+    type = FileMeshGenerator
+    file = &#x27;dbd_mesh.msh&#x27;
+  []
+  [plasma_right]
+    # plasma master
+    type = SideSetsBetweenSubdomainsGenerator
+    primary_block = &#x27;0&#x27;
+    paired_block = &#x27;1&#x27;
+    new_boundary = &#x27;plasma_right&#x27;
+    input = file
+  []
+  [dielectric_left]
+    # left dielectric master
+    type = SideSetsBetweenSubdomainsGenerator
+    primary_block = &#x27;1&#x27;
+    paired_block = &#x27;0&#x27;
+    new_boundary = &#x27;dielectric_left&#x27;
+    input = plasma_right
+  []
+  [left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = dielectric_left
+  []
+  [right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  automatic_scaling = true
+  compute_scaling_once = false
+  end_time = 10e-5
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  #num_steps = 1
+  #petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor -snes_test_jacobian&#x27;
+  solve_type = NEWTON
+  line_search = &#x27;basic&#x27;
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -snes_stol&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 0&#x27;
+  nl_rel_tol = 1e-8
+  nl_div_tol = 1e4
+  l_max_its = 100
+  nl_max_its = 25
+
+  dtmin = 1e-22
+  dtmax = 1e-6
+  #dt = 1e-8
+  [TimeSteppers]
+    [Adaptive]
+      type = IterationAdaptiveDT
+      cutback_factor = 0.4
+      dt = 1e-9
+      growth_factor = 1.2
+      optimal_iterations = 30
+    []
+  []
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    output_material_properties = true
+    show_material_properties = &#x27;surface_charge&#x27;
+  []
+[]
+
+[AuxVariables]
+  [neg_density]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [pos_density]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+
+  [Efield]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [x]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+[]
+
+[AuxKernels]
+  [neg_calc]
+    type = DensityMoles
+    variable = neg_density
+    density = neg
+    execute_on = &#x27;initial timestep_end&#x27;
+    block = 0
+  []
+  [pos_calc]
+    type = DensityMoles
+    variable = pos_density
+    density = pos
+    execute_on = &#x27;initial timestep_end&#x27;
+    block = 0
+  []
+  #[Arp_calc]
+  #  type = DensityMoles
+  #  variable = Arp_density
+  #  density = Arp
+  #  execute_on = &#x27;initial timestep_end&#x27;
+  #  block = 0
+  #[]
+  [x_d0]
+    type = Position
+    variable = x
+    position_units = ${dom0Scale}
+    execute_on = &#x27;initial timestep_end&#x27;
+    block = 0
+  []
+  [x_d1]
+    type = Position
+    variable = x
+    position_units = ${dom1Scale}
+    execute_on = &#x27;initial timestep_end&#x27;
+    block = 1
+  []
+  [Efield_g]
+    type = Efield
+    component = 0
+    variable = Efield
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [Efield_l]
+    type = Efield
+    component = 0
+    variable = Efield
+    position_units = ${dom1Scale}
+    block = 1
+  []
+[]
+
+[Variables]
+  [potential_dom0]
+    block = 0
+  []
+  [potential_dom1]
+    block = 1
+  []
+
+  [neg]
+    block = 0
+  []
+  [pos]
+    block = 0
+  []
+  #[mean_en]
+  #  block = 0
+  #[]
+  #[Arp]
+  #  block = 0
+  #[]
+[]
+
+[Kernels]
+  [potential_diffusion_dom0]
+    type = CoeffDiffusionLin
+    variable = potential_dom0
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [potential_diffusion_dom1]
+    type = CoeffDiffusionLin
+    variable = potential_dom1
+    block = 1
+    position_units = ${dom1Scale}
+  []
+
+  # Potential source terms
+  #[em_source]
+  #  type = ChargeSourceMoles_KV
+  #  variable = potential_dom0
+  #  charged = em
+  #  block = 0
+  #[]
+  #[Arp_source]
+  #  type = ChargeSourceMoles_KV
+  #  variable = potential_dom0
+  #  charged = Arp
+  #  block = 0
+  #[]
+  #
+  # Electrons
+  #[d_em_dt]
+  #  type = TimeDerivativeLog
+  #  variable = em
+  #  block = 0
+  #[]
+  [neg_advection]
+    type = EFieldAdvection
+    variable = neg
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [neg_diffusion]
+    type = CoeffDiffusion
+    variable = neg
+    position_units = ${dom0Scale}
+    block = 0
+  []
+
+  [pos_advection]
+    type = EFieldAdvection
+    variable = pos
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [pos_diffusion]
+    type = CoeffDiffusion
+    variable = pos
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  #[em_offset]
+  #  type = LogStabilizationMoles
+  #  variable = em
+  #  block = 0
+  #[]
+  #
+  #[d_mean_en_dt]
+  #  type = TimeDerivativeLog
+  #  variable = mean_en
+  #  block = 0
+  #[]
+  #[mean_en_advection]
+  #  type = ADEFieldAdvection
+  #  em = em
+  #  variable = mean_en
+  #  potential = potential_dom0
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[]
+  #[mean_en_diffusion]
+  #  type = ADCoeffDiffusion
+  #  variable = mean_en
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[]
+  #[mean_en_joule_heating]
+  #  type = ADJouleHeating
+  #  variable = mean_en
+  #  electrons = em
+  #  potential = potential_dom0
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[]
+  #[mean_en_offset]
+  #  type = LogStabilizationMoles
+  #  variable = mean_en
+  #  block = 0
+  #[]
+  #
+  #[d_Arp_dt]
+  #  type = TimeDerivativeLog
+  #  variable = Arp
+  #  block = 0
+  #[]
+  #[Arp_advection]
+  #  type = ADEFieldAdvection
+  #  variable = Arp
+  #  potential = potential_dom0
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[]
+  #[Arp_diffusion]
+  #  type = ADCoeffDiffusion
+  #  variable = Arp
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[]
+  #[Arp_offset]
+  #  type = LogStabilizationMoles
+  #  variable = Arp
+  #  block = 0
+  #[]
+[]
+
+[InterfaceKernels]
+  # At the dielectric interfaces, the potential is required to be continuous
+  # in value but discontinuous in slope due to surface charge accumulation.
+  #
+  # The potential requires two different boundary conditions on each side:
+  #    (1) An InterfaceKernel to provide the Neumann boundary condition
+  #    (2) A MatchedValueBC to ensure that the potential remains continuous
+  #
+  # This interface kernel simply applies a dielectric BC with surface charge
+  # accumulation.
+  [potential_right]
+    type = PotentialSurfaceCharge
+    neighbor_var = potential_dom1
+    variable = potential_dom0
+    position_units = ${dom0Scale}
+    neighbor_position_units = ${dom1Scale}
+    boundary = plasma_right
+  []
+[]
+
+[BCs]
+  # Interface BCs:
+  [match_potential]
+    type = MatchedValueBC
+    variable = potential_dom1
+    v = potential_dom0
+    boundary = &#x27;dielectric_left&#x27;
+  []
+
+  # Electrode and ground BCs:
+  # Electrode is at x = 0, named &#x27;left&#x27;
+  [potential_left]
+    type = FunctionDirichletBC
+    variable = potential_dom0
+    function = potential_input
+    boundary = &#x27;left&#x27;
+  []
+
+  # Ground is at x = 0.3 mm, named &#x27;right&#x27;
+  [potential_dirichlet_right]
+    type = DirichletBC
+    variable = potential_dom1
+    boundary = right
+    value = 0
+  []
+
+  # Both charged species will have a specified dirichlet BC on the driven electrode
+  # and a diffusion BC on the right side.
+  # As the voltage varies with time, the charged particle flux on the right will
+  # switch between positive and negative, effectively changing the surface
+  # charge polarity.
+  [neg_left]
+    type = DirichletBC
+    variable = neg
+    value = -10
+    boundary = &#x27;left&#x27;
+  []
+  [neg_right]
+    type = HagelaarIonDiffusionBC
+    variable = neg
+    r = 0
+    T_ion = 400
+    position_units = ${dom0Scale}
+    boundary = &#x27;plasma_right&#x27;
+  []
+
+  [pos_left]
+    type = DirichletBC
+    variable = pos
+    value = -10
+    boundary = &#x27;left&#x27;
+  []
+  [pos_right]
+    type = HagelaarIonDiffusionBC
+    variable = pos
+    r = 0
+    T_ion = 400
+    position_units = ${dom0Scale}
+    boundary = &#x27;plasma_right&#x27;
+  []
+[]
+
+[ICs]
+  [potential_dom0_ic]
+    type = FunctionIC
+    variable = potential_dom0
+    function = potential_ic_func
+  []
+  [potential_dom1_ic]
+    type = FunctionIC
+    variable = potential_dom1
+    function = potential_ic_func
+  []
+
+  [neg_ic]
+    type = ConstantIC
+    variable = neg
+    value = -10
+    block = 0
+  []
+  [pos_ic]
+    type = ConstantIC
+    variable = pos
+    value = -10
+    block = 0
+  []
+[]
+
+[Functions]
+  # Define a sinusoidal voltage pulse with a frequency of 50 kHz
+  # Amplitude is set to 200 Volts
+  # (Note that here the amplitude is set to 0.2. Potential units are
+  # typically included as kV, not V. This option is set in the
+  # GlobalParams block.)
+  [potential_input]
+    type = ParsedFunction
+    symbol_names = &#x27;f0&#x27;
+    symbol_values = &#x27;50e3&#x27;
+    expression = &#x27;-0.2*sin(2*3.1415926*f0*t)&#x27;
+  []
+
+  # Set the initial condition to a line from -10 V on the left and
+  # 0 on the right.
+  # (Poisson solver tends to struggle with a uniformly zero potential IC.)
+  [potential_ic_func]
+    type = ParsedFunction
+    expression = &#x27;-0.001 * (2.000e-4 - x)&#x27;
+  []
+[]
+
+[Materials]
+  # This material creates a boundary-restricted material property called &quot;surface_charge&quot;
+  # The value of surface charge is based on the total charged particle flux impacting
+  # the specified boundary.
+  # In this case we have two charged species, &#x27;pos&#x27; (positively charged) and &#x27;neg&#x27;
+  # (negatively charged).
+  [surface_charge_material]
+    type = ADSurfaceCharge
+    species = &#x27;neg pos&#x27;
+    position_units = ${dom0Scale}
+    boundary = &#x27;plasma_right&#x27;
+  []
+
+  # This just defines some constants that Zapdos needs to run.
+  [gas_constants]
+    type = GenericConstantMaterial
+    block = 0
+    prop_names = &#x27; se_energy T_gas  massem   p_gas&#x27;
+    prop_values = &#x27;1.        400    9.11e-31 1.01e5&#x27;
+  []
+
+  #
+  [dielectric_left_side]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;diffpotential_dom0&#x27;
+    prop_values = &#x27;8.85e-12&#x27;
+    block = 0
+  []
+  [gas_phase]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;diffpotential_dom1&#x27;
+    prop_values = &#x27;8.85e-12&#x27;
+    block = 1
+  []
+
+  ######
+  # HeavySpeciesMaterial defines charge, mass, transport coefficients, and
+  # temperature for each species.
+  #
+  # Transport coefficients and temperature are defined as ADMaterialProperties.
+  # Although they currently (as of June 16, 2020) remain constant, future
+  # implementations may include mixture-averaged diffusion coefficients and
+  # effective ion temperatures with nonlinear dependence on other variables.
+  ######
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = neg
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = -1.0
+    diffusivity = 1.6897e-5
+    heavy_species_T = 400
+    block = 0
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = pos
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    diffusivity = 1.6897e-5
+    heavy_species_T = 400
+    block = 0
+  []
+
+  [field_solver0]
+    type = FieldSolverMaterial
+    potential = potential_dom0
+    block = 0
+  []
+
+  [field_solver1]
+    type = FieldSolverMaterial
+    potential = potential_dom1
+    block = 1
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="59238e74-d69e-49c4-8225-e9d5b0218c47"><div class="modal-content"><h4>(test/tests/surface_charge/dbd_test.i)</h4><pre style="max-height:350px;"><code class="language-moose"># This example sets up a simple varying-voltage discharge with a
+# dielectric at the right boundary.
+#
+# Two charged particle species are considered, creatively named &#x27;pos&#x27;
+# and &#x27;neg&#x27;. They both have the same initial conditions and boundary
+# conditions; the only difference is their charge.
+# As the voltage varies, the particle flux to the right boundary
+# (including both advection and diffusion) will switch polarity and
+# the surface charge will become increasingly negative or positive.
+#
+# The left boundary is a driven electrode with a sinusoidal waveform.
+# A dielectric boundary condition including surface charge accumulation
+# is included on the right boundary.
+#
+# Note that without surface charge the electric field across both
+# boundaries should be identical since their permittivities are
+# both set to the same value.
+# Surface charge shields the electric field in the gas region,
+# preventing strong field buildup.
+
+dom0Scale = 1e-4
+dom1Scale = 1e-4
+
+[GlobalParams]
+  #offset = 40
+  potential_units = kV
+  use_moles = true
+[]
+
+[Mesh]
+  # The mesh file generates the appropriate 1D mesh, but the interfaces
+  # needed for the potential and surface charge have not been defined.
+  # Here SideSetsBetweenSubdomainsGenerator is used to generate the
+  # appropriate interfaces at the dielectrics.
+  #
+  # Block 0 = plasma region
+  # Block 1 = dielectric
+  [file]
+    type = FileMeshGenerator
+    file = &#x27;dbd_mesh.msh&#x27;
+  []
+  [plasma_right]
+    # plasma master
+    type = SideSetsBetweenSubdomainsGenerator
+    primary_block = &#x27;0&#x27;
+    paired_block = &#x27;1&#x27;
+    new_boundary = &#x27;plasma_right&#x27;
+    input = file
+  []
+  [dielectric_left]
+    # left dielectric master
+    type = SideSetsBetweenSubdomainsGenerator
+    primary_block = &#x27;1&#x27;
+    paired_block = &#x27;0&#x27;
+    new_boundary = &#x27;dielectric_left&#x27;
+    input = plasma_right
+  []
+  [left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = dielectric_left
+  []
+  [right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Preconditioning]
+  [smp]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  automatic_scaling = true
+  compute_scaling_once = false
+  end_time = 10e-5
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  #num_steps = 1
+  #petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor -snes_test_jacobian&#x27;
+  solve_type = NEWTON
+  line_search = &#x27;basic&#x27;
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -snes_stol&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10 0&#x27;
+  nl_rel_tol = 1e-8
+  nl_div_tol = 1e4
+  l_max_its = 100
+  nl_max_its = 25
+
+  dtmin = 1e-22
+  dtmax = 1e-6
+  #dt = 1e-8
+  [TimeSteppers]
+    [Adaptive]
+      type = IterationAdaptiveDT
+      cutback_factor = 0.4
+      dt = 1e-9
+      growth_factor = 1.2
+      optimal_iterations = 30
+    []
+  []
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    output_material_properties = true
+    show_material_properties = &#x27;surface_charge&#x27;
+  []
+[]
+
+[AuxVariables]
+  [neg_density]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+  [pos_density]
+    order = CONSTANT
+    family = MONOMIAL
+    block = 0
+  []
+
+  [Efield]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [x]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+[]
+
+[AuxKernels]
+  [neg_calc]
+    type = DensityMoles
+    variable = neg_density
+    density = neg
+    execute_on = &#x27;initial timestep_end&#x27;
+    block = 0
+  []
+  [pos_calc]
+    type = DensityMoles
+    variable = pos_density
+    density = pos
+    execute_on = &#x27;initial timestep_end&#x27;
+    block = 0
+  []
+  #[Arp_calc]
+  #  type = DensityMoles
+  #  variable = Arp_density
+  #  density = Arp
+  #  execute_on = &#x27;initial timestep_end&#x27;
+  #  block = 0
+  #[]
+  [x_d0]
+    type = Position
+    variable = x
+    position_units = ${dom0Scale}
+    execute_on = &#x27;initial timestep_end&#x27;
+    block = 0
+  []
+  [x_d1]
+    type = Position
+    variable = x
+    position_units = ${dom1Scale}
+    execute_on = &#x27;initial timestep_end&#x27;
+    block = 1
+  []
+  [Efield_g]
+    type = Efield
+    component = 0
+    variable = Efield
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [Efield_l]
+    type = Efield
+    component = 0
+    variable = Efield
+    position_units = ${dom1Scale}
+    block = 1
+  []
+[]
+
+[Variables]
+  [potential_dom0]
+    block = 0
+  []
+  [potential_dom1]
+    block = 1
+  []
+
+  [neg]
+    block = 0
+  []
+  [pos]
+    block = 0
+  []
+  #[mean_en]
+  #  block = 0
+  #[]
+  #[Arp]
+  #  block = 0
+  #[]
+[]
+
+[Kernels]
+  [potential_diffusion_dom0]
+    type = CoeffDiffusionLin
+    variable = potential_dom0
+    block = 0
+    position_units = ${dom0Scale}
+  []
+  [potential_diffusion_dom1]
+    type = CoeffDiffusionLin
+    variable = potential_dom1
+    block = 1
+    position_units = ${dom1Scale}
+  []
+
+  # Potential source terms
+  #[em_source]
+  #  type = ChargeSourceMoles_KV
+  #  variable = potential_dom0
+  #  charged = em
+  #  block = 0
+  #[]
+  #[Arp_source]
+  #  type = ChargeSourceMoles_KV
+  #  variable = potential_dom0
+  #  charged = Arp
+  #  block = 0
+  #[]
+  #
+  # Electrons
+  #[d_em_dt]
+  #  type = TimeDerivativeLog
+  #  variable = em
+  #  block = 0
+  #[]
+  [neg_advection]
+    type = EFieldAdvection
+    variable = neg
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [neg_diffusion]
+    type = CoeffDiffusion
+    variable = neg
+    position_units = ${dom0Scale}
+    block = 0
+  []
+
+  [pos_advection]
+    type = EFieldAdvection
+    variable = pos
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  [pos_diffusion]
+    type = CoeffDiffusion
+    variable = pos
+    position_units = ${dom0Scale}
+    block = 0
+  []
+  #[em_offset]
+  #  type = LogStabilizationMoles
+  #  variable = em
+  #  block = 0
+  #[]
+  #
+  #[d_mean_en_dt]
+  #  type = TimeDerivativeLog
+  #  variable = mean_en
+  #  block = 0
+  #[]
+  #[mean_en_advection]
+  #  type = ADEFieldAdvection
+  #  em = em
+  #  variable = mean_en
+  #  potential = potential_dom0
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[]
+  #[mean_en_diffusion]
+  #  type = ADCoeffDiffusion
+  #  variable = mean_en
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[]
+  #[mean_en_joule_heating]
+  #  type = ADJouleHeating
+  #  variable = mean_en
+  #  electrons = em
+  #  potential = potential_dom0
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[]
+  #[mean_en_offset]
+  #  type = LogStabilizationMoles
+  #  variable = mean_en
+  #  block = 0
+  #[]
+  #
+  #[d_Arp_dt]
+  #  type = TimeDerivativeLog
+  #  variable = Arp
+  #  block = 0
+  #[]
+  #[Arp_advection]
+  #  type = ADEFieldAdvection
+  #  variable = Arp
+  #  potential = potential_dom0
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[]
+  #[Arp_diffusion]
+  #  type = ADCoeffDiffusion
+  #  variable = Arp
+  #  position_units = ${dom0Scale}
+  #  block = 0
+  #[]
+  #[Arp_offset]
+  #  type = LogStabilizationMoles
+  #  variable = Arp
+  #  block = 0
+  #[]
+[]
+
+[InterfaceKernels]
+  # At the dielectric interfaces, the potential is required to be continuous
+  # in value but discontinuous in slope due to surface charge accumulation.
+  #
+  # The potential requires two different boundary conditions on each side:
+  #    (1) An InterfaceKernel to provide the Neumann boundary condition
+  #    (2) A MatchedValueBC to ensure that the potential remains continuous
+  #
+  # This interface kernel simply applies a dielectric BC with surface charge
+  # accumulation.
+  [potential_right]
+    type = PotentialSurfaceCharge
+    neighbor_var = potential_dom1
+    variable = potential_dom0
+    position_units = ${dom0Scale}
+    neighbor_position_units = ${dom1Scale}
+    boundary = plasma_right
+  []
+[]
+
+[BCs]
+  # Interface BCs:
+  [match_potential]
+    type = MatchedValueBC
+    variable = potential_dom1
+    v = potential_dom0
+    boundary = &#x27;dielectric_left&#x27;
+  []
+
+  # Electrode and ground BCs:
+  # Electrode is at x = 0, named &#x27;left&#x27;
+  [potential_left]
+    type = FunctionDirichletBC
+    variable = potential_dom0
+    function = potential_input
+    boundary = &#x27;left&#x27;
+  []
+
+  # Ground is at x = 0.3 mm, named &#x27;right&#x27;
+  [potential_dirichlet_right]
+    type = DirichletBC
+    variable = potential_dom1
+    boundary = right
+    value = 0
+  []
+
+  # Both charged species will have a specified dirichlet BC on the driven electrode
+  # and a diffusion BC on the right side.
+  # As the voltage varies with time, the charged particle flux on the right will
+  # switch between positive and negative, effectively changing the surface
+  # charge polarity.
+  [neg_left]
+    type = DirichletBC
+    variable = neg
+    value = -10
+    boundary = &#x27;left&#x27;
+  []
+  [neg_right]
+    type = HagelaarIonDiffusionBC
+    variable = neg
+    r = 0
+    T_ion = 400
+    position_units = ${dom0Scale}
+    boundary = &#x27;plasma_right&#x27;
+  []
+
+  [pos_left]
+    type = DirichletBC
+    variable = pos
+    value = -10
+    boundary = &#x27;left&#x27;
+  []
+  [pos_right]
+    type = HagelaarIonDiffusionBC
+    variable = pos
+    r = 0
+    T_ion = 400
+    position_units = ${dom0Scale}
+    boundary = &#x27;plasma_right&#x27;
+  []
+[]
+
+[ICs]
+  [potential_dom0_ic]
+    type = FunctionIC
+    variable = potential_dom0
+    function = potential_ic_func
+  []
+  [potential_dom1_ic]
+    type = FunctionIC
+    variable = potential_dom1
+    function = potential_ic_func
+  []
+
+  [neg_ic]
+    type = ConstantIC
+    variable = neg
+    value = -10
+    block = 0
+  []
+  [pos_ic]
+    type = ConstantIC
+    variable = pos
+    value = -10
+    block = 0
+  []
+[]
+
+[Functions]
+  # Define a sinusoidal voltage pulse with a frequency of 50 kHz
+  # Amplitude is set to 200 Volts
+  # (Note that here the amplitude is set to 0.2. Potential units are
+  # typically included as kV, not V. This option is set in the
+  # GlobalParams block.)
+  [potential_input]
+    type = ParsedFunction
+    symbol_names = &#x27;f0&#x27;
+    symbol_values = &#x27;50e3&#x27;
+    expression = &#x27;-0.2*sin(2*3.1415926*f0*t)&#x27;
+  []
+
+  # Set the initial condition to a line from -10 V on the left and
+  # 0 on the right.
+  # (Poisson solver tends to struggle with a uniformly zero potential IC.)
+  [potential_ic_func]
+    type = ParsedFunction
+    expression = &#x27;-0.001 * (2.000e-4 - x)&#x27;
+  []
+[]
+
+[Materials]
+  # This material creates a boundary-restricted material property called &quot;surface_charge&quot;
+  # The value of surface charge is based on the total charged particle flux impacting
+  # the specified boundary.
+  # In this case we have two charged species, &#x27;pos&#x27; (positively charged) and &#x27;neg&#x27;
+  # (negatively charged).
+  [surface_charge_material]
+    type = ADSurfaceCharge
+    species = &#x27;neg pos&#x27;
+    position_units = ${dom0Scale}
+    boundary = &#x27;plasma_right&#x27;
+  []
+
+  # This just defines some constants that Zapdos needs to run.
+  [gas_constants]
+    type = GenericConstantMaterial
+    block = 0
+    prop_names = &#x27; se_energy T_gas  massem   p_gas&#x27;
+    prop_values = &#x27;1.        400    9.11e-31 1.01e5&#x27;
+  []
+
+  #
+  [dielectric_left_side]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;diffpotential_dom0&#x27;
+    prop_values = &#x27;8.85e-12&#x27;
+    block = 0
+  []
+  [gas_phase]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;diffpotential_dom1&#x27;
+    prop_values = &#x27;8.85e-12&#x27;
+    block = 1
+  []
+
+  ######
+  # HeavySpeciesMaterial defines charge, mass, transport coefficients, and
+  # temperature for each species.
+  #
+  # Transport coefficients and temperature are defined as ADMaterialProperties.
+  # Although they currently (as of June 16, 2020) remain constant, future
+  # implementations may include mixture-averaged diffusion coefficients and
+  # effective ion temperatures with nonlinear dependence on other variables.
+  ######
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = neg
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = -1.0
+    diffusivity = 1.6897e-5
+    heavy_species_T = 400
+    block = 0
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = pos
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    diffusivity = 1.6897e-5
+    heavy_species_T = 400
+    block = 0
+  []
+
+  [field_solver0]
+    type = FieldSolverMaterial
+    potential = potential_dom0
+    block = 0
+  []
+
+  [field_solver1]
+    type = FieldSolverMaterial
+    potential = potential_dom1
+    block = 1
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#d9b7efb9-f5e3-43bf-b13e-0bf274cd7dd6" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#1d5ecb9a-e892-4297-8a18-4ead41ffe0b2" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#7aa97e93-5763-4829-acc8-017e081549b1" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#8560b0e7-5ea1-459c-b026-02a87ed45265" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

@@ -1,0 +1,889 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>AddPeriodicControllers | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="2c762a6c-39b2-4add-86f5-332732c34fb4" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="91886f76-2b99-484b-b415-da59082a1616" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d232e8f9-1201-4c2e-9e91-95d715e2f509" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="1bc8965f-6bad-40a3-8393-f6156b465b1e"><i class="material-icons">menu</i></a><ul class="sidenav" id="1bc8965f-6bad-40a3-8393-f6156b465b1e"><li><a href="#!" class="dropdown-trigger" data-target="406b6292-8aa5-418a-a2fd-f02384a8ad19" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c6f13a6a-7c56-49b2-b512-e2b6a42a4dc0" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="e709a9b4-546c-4243-9049-e2ffb635d1db" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="2c762a6c-39b2-4add-86f5-332732c34fb4"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="91886f76-2b99-484b-b415-da59082a1616"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="d232e8f9-1201-4c2e-9e91-95d715e2f509"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="406b6292-8aa5-418a-a2fd-f02384a8ad19"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="c6f13a6a-7c56-49b2-b512-e2b6a42a4dc0"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="e709a9b4-546c-4243-9049-e2ffb635d1db"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">actions</span><a href="#" class="breadcrumb">AddPeriodicControllers</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="36025557-0abc-4827-898f-de4b6bdc1f28" data-section-level="1" data-section-text="AddPeriodicControllers"><h1 id="addperiodiccontrollers">AddPeriodicControllers</h1><p>This Action automatically adds multiple &#x27;TimePeriod&#x27; controllers for the purpose of enabling and disabling multiple objects during multiple cycles. (generally for periodic accelerations)</p><section class="scrollspy" id="b268c344-744e-45ee-a264-71f942f44c62" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p>The <code>PeriodicControllers</code> object automates the supply of <a href="../controls/TimePeriod.html">TimePeriod</a> controls to enable or disable objects at the beginning, during, or at the end of periodic cycles.</p></section><section class="scrollspy" id="14c5bcdc-d169-429f-9a7e-4a4c55a4aed1" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[PeriodicControllers&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/PeriodicControllers/index.html&quot;}&gt;&gt;&gt;]
+  [Shooting]
+    enable_at_cycle_start&lt;&lt;&lt;{&quot;description&quot;: &quot;A list of objects names to enable at the start of the cycle.&quot;}&gt;&gt;&gt; = &#x27;*::Ar*S_for_Shooting&#x27;
+
+    enable_during_cycle&lt;&lt;&lt;{&quot;description&quot;: &quot;A list of objects names to enable during the cycle.&quot;}&gt;&gt;&gt; = &#x27;*::SM_Ar*_time_deriv *::SM_Ar*_diffusion *::SM_Ar*_stepwise_ionization
+                           *::SM_Ar*_collisions *::SM_Ar*_quenching *::SM_Ar*_pooling
+                           *::SM_Ar*_2B_quenching *::SM_Ar*_3B_quenching&#x27;
+
+    enable_at_cycle_end&lt;&lt;&lt;{&quot;description&quot;: &quot;A list of objects names to enable at the end of the cycle.&quot;}&gt;&gt;&gt; = &#x27;MultiApps::Shooting
+                           *::SM_Ar*Reset_to_Shooting *::Ar*_to_Shooting
+                           *::Ar*S_to_Shooting *::Ar*T_to_Shooting
+                           *::SMDeriv_to_Shooting *::Ar*New_from_Shooting
+                           *::SM_Ar*Reset_from_Shooting *::Ar*Relative_Diff&#x27;
+    cycle_frequency&lt;&lt;&lt;{&quot;description&quot;: &quot;The cycle&#x27;s frequency in Hz&quot;}&gt;&gt;&gt; = 13.56e6
+    #starting_cycle = 25
+    #cycles_between_controls = 25
+    starting_cycle&lt;&lt;&lt;{&quot;description&quot;: &quot;The number of the cycles before starting the control scheme&quot;}&gt;&gt;&gt; = 50
+    cycles_between_controls&lt;&lt;&lt;{&quot;description&quot;: &quot;The number of cycles between controllers(e.g. the number of cycles between accelerations)&quot;}&gt;&gt;&gt; = 50
+    cycles_per_controls&lt;&lt;&lt;{&quot;description&quot;: &quot;The number of cycles that occur during the controllers(e.g. the number of cycles during the accelerations)&quot;}&gt;&gt;&gt; = 1
+    num_controller_set&lt;&lt;&lt;{&quot;description&quot;: &quot;The number of controller sets(e.g. the number of accelerations)&quot;}&gt;&gt;&gt; = 2
+    name&lt;&lt;&lt;{&quot;description&quot;: &quot;Custom name for the &#x27;PeriodicControllers&#x27;.&quot;}&gt;&gt;&gt; = Shooting
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#45bb133f-7da0-40e9-831f-faf1e99988c5">(test/tests/accelerations/Acceleration_By_Shooting_Method.i)</a></section><section class="scrollspy" id="7d9da23e-0fe8-4866-a8df-d73011c0b77f" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="01fb5b28-0fbe-476e-a452-5ee5abbd207e" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">cycle_frequency</span><span class="moose-parameter-header-description">The cycle's frequency in Hz</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The cycle's frequency in Hz</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">name</span><span class="moose-parameter-header-description">Custom name for the 'PeriodicControllers'.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Custom name for the 'PeriodicControllers'.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">num_controller_set</span><span class="moose-parameter-header-description">The number of controller sets(e.g. the number of accelerations)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The number of controller sets(e.g. the number of accelerations)</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="36a8228f-1c5b-46d0-aaf7-5f82fdc2facd" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">active</span><span class="moose-parameter-header-default">__all__ </span><span class="moose-parameter-header-description">If specified only the blocks named will be visited and made active</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>__all__ </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>If specified only the blocks named will be visited and made active</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">cycles_between_controls</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">The number of cycles between controllers(e.g. the number of cycles between accelerations)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The number of cycles between controllers(e.g. the number of cycles between accelerations)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">cycles_per_controls</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">The number of cycles that occur during the controllers(e.g. the number of cycles during the accelerations)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The number of cycles that occur during the controllers(e.g. the number of cycles during the accelerations)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">disable_at_cycle_end</span><span class="moose-parameter-header-description">A list of objects names to disable at the end of the cycle.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>A list of objects names to disable at the end of the cycle.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">disable_at_cycle_start</span><span class="moose-parameter-header-description">A list of objects names to disable at the start of the cycle.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>A list of objects names to disable at the start of the cycle.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">disable_during_cycle</span><span class="moose-parameter-header-description">A list of objects names to disable during the cycle.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>A list of objects names to disable during the cycle.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable_at_cycle_end</span><span class="moose-parameter-header-description">A list of objects names to enable at the end of the cycle.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>A list of objects names to enable at the end of the cycle.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable_at_cycle_start</span><span class="moose-parameter-header-description">A list of objects names to enable at the start of the cycle.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>A list of objects names to enable at the start of the cycle.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable_during_cycle</span><span class="moose-parameter-header-description">A list of objects names to enable during the cycle.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>A list of objects names to enable during the cycle.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">family</span><span class="moose-parameter-header-default">LAGRANGE</span><span class="moose-parameter-header-description">Specifies the family of FE shape functions to use for this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>LAGRANGE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>LAGRANGE, MONOMIAL, HERMITE, SCALAR, HIERARCHIC, CLOUGH, XYZ, SZABAB, BERNSTEIN, L2_LAGRANGE, L2_HIERARCHIC, NEDELEC_ONE, LAGRANGE_VEC, MONOMIAL_VEC, RAVIART_THOMAS, RATIONAL_BERNSTEIN, SIDE_HIERARCHIC, L2_HIERARCHIC_VEC, L2_LAGRANGE_VEC, L2_RAVIART_THOMAS</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies the family of FE shape functions to use for this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">inactive</span><span class="moose-parameter-header-description">If specified blocks matching these identifiers will be skipped.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>If specified blocks matching these identifiers will be skipped.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">initial_condition</span><span class="moose-parameter-header-description">Specifies a constant initial condition for this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies a constant initial condition for this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">initial_from_file_var</span><span class="moose-parameter-header-description">Gives the name of a variable for which to read an initial condition from a mesh file</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Gives the name of a variable for which to read an initial condition from a mesh file</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">order</span><span class="moose-parameter-header-default">FIRST</span><span class="moose-parameter-header-description">Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>FIRST</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>CONSTANT, FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHTH, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH, FIFTEENTH, SIXTEENTH, SEVENTEENTH, EIGHTTEENTH, NINETEENTH, TWENTIETH, TWENTYFIRST, TWENTYSECOND, TWENTYTHIRD, TWENTYFOURTH, TWENTYFIFTH, TWENTYSIXTH, TWENTYSEVENTH, TWENTYEIGHTH, TWENTYNINTH, THIRTIETH, THIRTYFIRST, THIRTYSECOND, THIRTYTHIRD, THIRTYFOURTH, THIRTYFIFTH, THIRTYSIXTH, THIRTYSEVENTH, THIRTYEIGHTH, THIRTYNINTH, FORTIETH, FORTYFIRST, FORTYSECOND, FORTYTHIRD</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">scaling</span><span class="moose-parameter-header-description">Specifies a scaling factor to apply to this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;double&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Specifies a scaling factor to apply to this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">starting_cycle</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The number of the cycles before starting the control scheme</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The number of the cycles before starting the control scheme</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="60593426-9157-43ca-8614-87ecdcd48e3c" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="45bb133f-7da0-40e9-831f-faf1e99988c5"><div class="modal-content"><h4>(test/tests/accelerations/Acceleration_By_Shooting_Method.i)</h4><pre style="max-height:350px;"><code class="language-moose">dom0Scale = 25.4e-3
+
+[GlobalParams]
+  potential_units = kV
+  use_moles = true
+[]
+
+[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;Acceleration_By_Shooting_Method_Initial_Conditions.e&#x27;
+    use_for_exodus_restart = true
+  []
+  [left]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;-1 0 0&#x27;
+    new_boundary = &#x27;left&#x27;
+    input = geo
+  []
+  [right]
+    type = SideSetsFromNormalsGenerator
+    normals = &#x27;1 0 0&#x27;
+    new_boundary = &#x27;right&#x27;
+    input = left
+  []
+[]
+
+[Problem]
+  type = FEProblem
+  allow_initial_conditions_with_restart = true
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+
+  [Ar+]
+    initial_from_file_var = Ar+
+  []
+
+  [Ar*]
+    initial_from_file_var = Ar*
+  []
+
+  [mean_en]
+    initial_from_file_var = mean_en
+  []
+
+  [potential]
+    initial_from_file_var = potential
+  []
+
+  [SM_Ar*]
+    initial_from_file_var = SM_Ar*
+  []
+[]
+
+[Kernels]
+  #Electron Equations
+  #Time Derivative term of electron
+  [em_time_deriv]
+    type = TimeDerivativeLog
+    variable = em
+  []
+  #Advection term of electron
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = ${dom0Scale}
+  []
+  #Net electron production from ionization
+  [em_ionization]
+    type = ADEEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from step-wise ionization
+  [em_stepwise_ionization]
+    type = ADEEDFReactionLog
+    variable = em
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net electron production from metastable pooling
+  [em_pooling]
+    type = ADReactionSecondOrderLog
+    variable = em
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Argon Ion Equations
+  #Time Derivative term of the ions
+  [Ar+_time_deriv]
+    type = TimeDerivativeLog
+    variable = Ar+
+  []
+  #Advection term of ions
+  [Ar+_advection]
+    type = EFieldAdvection
+    variable = Ar+
+    position_units = ${dom0Scale}
+  []
+  [Ar+_diffusion]
+    type = CoeffDiffusion
+    variable = Ar+
+    position_units = ${dom0Scale}
+  []
+  #Net ion production from ionization
+  [Ar+_ionization]
+    type = ADEEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from step-wise ionization
+  [Ar+_stepwise_ionization]
+    type = ADEEDFReactionLog
+    variable = Ar+
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = 1
+  []
+  #Net ion production from metastable pooling
+  [Ar+_pooling]
+    type = ADReactionSecondOrderLog
+    variable = Ar+
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = 1
+  []
+
+  #Argon Excited Equations
+  #Time Derivative term of excited Argon
+  [Ar*_time_deriv]
+    type = TimeDerivativeLog
+    variable = Ar*
+  []
+  #Diffusion term of excited Argon
+  [Ar*_diffusion]
+    type = CoeffDiffusion
+    variable = Ar*
+    position_units = ${dom0Scale}
+  []
+  #Net excited Argon production from excitation
+  [Ar*_excitation]
+    type = ADEEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    coefficient = 1
+  []
+  #Net excited Argon loss from step-wise ionization
+  [Ar*_stepwise_ionization]
+    type = ADEEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from superelastic collisions
+  [Ar*_collisions]
+    type = ADEEDFReactionLog
+    variable = Ar*
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    coefficient = -1
+  []
+  #Net excited Argon loss from quenching to resonant
+  [Ar*_quenching]
+    type = ADReactionSecondOrderLog
+    variable = Ar*
+    v = em
+    w = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    coefficient = -1
+    _w_eq_u = true
+  []
+  #Net excited Argon loss from  metastable pooling
+  [Ar*_pooling]
+    type = ADReactionSecondOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = -2
+    _v_eq_u = true
+    _w_eq_u = true
+  []
+  #Net excited Argon loss from two-body quenching
+  [Ar*_2B_quenching]
+    type = ADReactionSecondOrderLog
+    variable = Ar*
+    v = Ar
+    w = Ar*
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+  #Net excited Argon loss from three-body quenching
+  [Ar*_3B_quenching]
+    type = ADReactionThirdOrderLog
+    variable = Ar*
+    v = Ar*
+    w = Ar
+    x = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    coefficient = -1
+    _v_eq_u = true
+  []
+
+  #Voltage Equations
+  #Voltage term in Poissons Eqaution
+  [potential_diffusion_dom0]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = ${dom0Scale}
+  []
+  #Ion term in Poissons Equation
+  [Ar+_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = Ar+
+  []
+  #Electron term in Poissons Equation
+  [em_charge_source]
+    type = ChargeSourceMoles_KV
+    variable = potential
+    charged = em
+  []
+
+  #Electron Energy Equations
+  #Time Derivative term of electron energy
+  [mean_en_time_deriv]
+    type = TimeDerivativeLog
+    variable = mean_en
+  []
+  #Advection term of electron energy
+  [mean_en_advection]
+    type = EFieldAdvection
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #Diffusion term of electrons energy
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = ${dom0Scale}
+  []
+  #The correction for electrons energy&#x27;s diffusion term
+  [mean_en_diffusion_correction]
+    type = ThermalConductivityDiffusion
+    variable = mean_en
+    electrons = em
+    position_units = ${dom0Scale}
+  []
+  #Joule Heating term
+  [mean_en_joule_heating]
+    type = JouleHeating
+    variable = mean_en
+    electrons = em
+    position_units = ${dom0Scale}
+  []
+  #Energy loss from ionization
+  [Ionization_Loss]
+    type = ADEEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    threshold_energy = -15.7
+  []
+  #Energy loss from excitation
+  [Excitation_Loss]
+    type = ADEEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    threshold_energy = -11.56
+  []
+  #Energy loss from step-wise ionization
+  [Stepwise_Ionization_Loss]
+    type = ADEEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    threshold_energy = -4.14
+  []
+  #Energy gain from superelastic collisions
+  [Collisions_Loss]
+    type = ADEEDFEnergyLog
+    variable = mean_en
+    electrons = em
+    target = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    threshold_energy = 11.56
+  []
+
+  ###################################################################################
+
+  #Argon Excited Equations
+  #Time Derivative term of excited Argon
+  [SM_Ar*_time_deriv]
+    type = MassLumpedTimeDerivative
+    variable = SM_Ar*
+    enable = false
+  []
+  #Diffusion term of excited Argon
+  [SM_Ar*_diffusion]
+    type = CoeffDiffusionForShootMethod
+    variable = SM_Ar*
+    density = Ar*
+    position_units = ${dom0Scale}
+    enable = false
+  []
+  #Net excited Argon loss from step-wise ionization
+  [SM_Ar*_stepwise_ionization]
+    type = EEDFReactionLogForShootMethod
+    variable = SM_Ar*
+    electrons = em
+    density = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    coefficient = -1
+    enable = false
+  []
+  #Net excited Argon loss from superelastic collisions
+  [SM_Ar*_collisions]
+    type = EEDFReactionLogForShootMethod
+    variable = SM_Ar*
+    electrons = em
+    density = Ar*
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    coefficient = -1
+    enable = false
+  []
+  #Net excited Argon loss from quenching to resonant
+  [SM_Ar*_quenching]
+    type = ReactionSecondOrderLogForShootMethod
+    variable = SM_Ar*
+    density = Ar*
+    v = em
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    coefficient = -1
+    enable = false
+  []
+  #Net excited Argon loss from  metastable pooling
+  [SM_Ar*_pooling]
+    type = ReactionSecondOrderLogForShootMethod
+    variable = SM_Ar*
+    density = Ar*
+    v = Ar*
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    coefficient = -2
+    enable = false
+  []
+  #Net excited Argon loss from two-body quenching
+  [SM_Ar*_2B_quenching]
+    type = ReactionSecondOrderLogForShootMethod
+    variable = SM_Ar*
+    density = Ar*
+    v = Ar
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    coefficient = -1
+    enable = false
+  []
+  #Net excited Argon loss from three-body quenching
+  [SM_Ar*_3B_quenching]
+    type = ReactionThirdOrderLogForShootMethod
+    variable = SM_Ar*
+    density = Ar*
+    v = Ar
+    w = Ar
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    coefficient = -1
+    enable = false
+  []
+
+  [SM_Ar*_Null]
+    type = NullKernel
+    variable = SM_Ar*
+  []
+[]
+
+#Variables for scaled nodes and background gas
+[AuxVariables]
+  [SM_Ar*Reset]
+    initial_condition = 1.0
+  []
+  [Ar*S]
+  []
+
+  [x_node]
+  []
+
+  [Ar]
+  []
+
+  [Te]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [x]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+
+  [em_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Ar+_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+  [Ar*_lin]
+    order = CONSTANT
+    family = MONOMIAL
+  []
+[]
+
+#Kernels that define the scaled nodes and background gas
+[AuxKernels]
+  [Ar*S_for_Shooting]
+    type = QuotientAux
+    variable = Ar*S
+    numerator = Ar*
+    denominator = 1.0
+    enable = false
+    execute_on = &#x27;TIMESTEP_END&#x27;
+  []
+
+  [Constant_SM_Ar*Reset]
+    type = ConstantAux
+    variable = SM_Ar*Reset
+    value = 1.0
+    execute_on = INITIAL
+  []
+
+  [x_ng]
+    type = Position
+    variable = x_node
+    position_units = ${dom0Scale}
+  []
+
+  [Ar_val]
+    type = FunctionAux
+    variable = Ar
+    # value = 3.22e22
+    function = &#x27;log(3.22e22/6.02e23)&#x27;
+    execute_on = INITIAL
+  []
+
+  [Te]
+    type = ElectronTemperature
+    variable = Te
+    electrons = em
+    electron_energy = mean_en
+  []
+  [x_g]
+    type = Position
+    variable = x
+    position_units = ${dom0Scale}
+  []
+
+  [em_lin]
+    type = DensityMoles
+    variable = em_lin
+    density = em
+  []
+  [Ar+_lin]
+    type = DensityMoles
+    variable = Ar+_lin
+    density = Ar+
+  []
+  [Ar*_lin]
+    type = DensityMoles
+    variable = Ar*_lin
+    density = Ar*
+  []
+[]
+
+[BCs]
+  #Voltage Boundary Condition
+  [potential_left]
+    type = FunctionDirichletBC
+    variable = potential
+    boundary = &#x27;left&#x27;
+    function = potential_bc_func
+    preset = false
+  []
+  [potential_dirichlet_right]
+    type = DirichletBC
+    variable = potential
+    boundary = &#x27;right&#x27;
+    value = 0
+    preset = false
+  []
+
+  #Boundary conditions for electons
+  [em_physical_right]
+    type = LymberopoulosElectronBC
+    variable = em
+    boundary = &#x27;right&#x27;
+    emission_coeffs = 0.01
+    ks = 1.19e5
+    ions = Ar+
+    position_units = ${dom0Scale}
+  []
+  [em_physical_left]
+    type = LymberopoulosElectronBC
+    variable = em
+    boundary = &#x27;left&#x27;
+    emission_coeffs = 0.01
+    ks = 1.19e5
+    ions = Ar+
+    position_units = ${dom0Scale}
+  []
+
+  #Boundary conditions for ions
+  [Ar+_physical_right_advection]
+    type = LymberopoulosIonBC
+    variable = Ar+
+    boundary = &#x27;right&#x27;
+    position_units = ${dom0Scale}
+  []
+  [Ar+_physical_left_advection]
+    type = LymberopoulosIonBC
+    variable = Ar+
+    boundary = &#x27;left&#x27;
+    position_units = ${dom0Scale}
+  []
+
+  #Boundary conditions for mean energy
+  [mean_en_physical_right]
+    type = ElectronTemperatureDirichletBC
+    variable = mean_en
+    electrons = em
+    value = 0.5
+    boundary = &#x27;right&#x27;
+  []
+  [mean_en_physical_left]
+    type = ElectronTemperatureDirichletBC
+    variable = mean_en
+    electrons = em
+    value = 0.5
+    boundary = &#x27;left&#x27;
+  []
+
+  #Boundary conditions for ions
+  [Ar*_physical_right_diffusion]
+    type = ADDirichletBC
+    variable = Ar*
+    boundary = &#x27;right&#x27;
+    value = -50.0
+  []
+  [Ar*_physical_left_diffusion]
+    type = ADDirichletBC
+    variable = Ar*
+    boundary = &#x27;left&#x27;
+    value = -50.0
+  []
+[]
+
+#Functions for IC and Potential BC
+[Functions]
+  [potential_bc_func]
+    type = ParsedFunction
+    expression = &#x27;0.100*sin(2*pi*13.56e6*t)&#x27;
+  []
+  [density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log((1e13 + 1e15 * (1-x/(1.0))^2 * (x/(1.0))^2)/6.02e23)&#x27;
+  []
+  [energy_density_ic_func]
+    type = ParsedFunction
+    expression = &#x27;log(32.) + log((1e13 + 1e15 * (1-x/(1.0))^2 * (x/(1.0))^2)/6.02e23)&#x27;
+  []
+[]
+
+#Material properties of species and background gas
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [GasBasics]
+    #If elecron mobility and diffusion are NOT constant, set
+    #&quot;interp_trans_coeffs = true&quot;. This lets the mobility and
+    #diffusivity to be energy dependent, as dictated by the txt file
+    type = ElectronTransportCoefficients
+    electrons = em
+    electron_energy = mean_en
+    interp_trans_coeffs = false
+    ramp_trans_coeffs = false
+    p_gas = 133.33
+    T_gas = 300
+    user_electron_mobility = 30.0
+    user_electron_diffusion_coeff = 119.8757763975
+    property_tables_file = Argon_reactions_RateCoefficients/electron_moments.txt
+  []
+  [gas_permittivity]
+    type = ElectrostaticPermittivity
+    potential = potential
+  []
+  [gas_species_0]
+    type = ADHeavySpecies
+    heavy_species_name = Ar+
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 1.0
+    mobility = 0.144409938
+    diffusivity = 6.428571e-3
+    heavy_species_p = 133.33
+    heavy_species_T = 300
+  []
+  [gas_species_2]
+    type = ADHeavySpecies
+    heavy_species_name = Ar
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    heavy_species_p = 133.33
+    heavy_species_T = 300
+  []
+  [gas_species_1]
+    type = ADHeavySpecies
+    heavy_species_name = Ar*
+    heavy_species_mass = 6.64e-26
+    heavy_species_charge = 0.0
+    diffusivity = 7.515528e-3
+    heavy_species_p = 133.33
+    heavy_species_T = 300
+  []
+  [reaction_0]
+    #type = ADZapdosEEDFRateLinearInterpolation
+    type = InterpolatedCoefficientLinear
+    #type = ADZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_RateCoefficients/reaction_em + Ar -&gt; em + Ar*.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + Ar*&#x27;
+    file_location = &#x27;.&#x27;
+    electrons = em
+  []
+  [reaction_1]
+    #type = ADZapdosEEDFRateLinearInterpolation
+    type = InterpolatedCoefficientLinear
+    #type = ADZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_RateCoefficients/reaction_em + Ar -&gt; em + em + Ar+.txt&#x27;
+    reaction = &#x27;em + Ar -&gt; em + em + Ar+&#x27;
+    file_location = &#x27;.&#x27;
+    electrons = em
+  []
+  [reaction_2]
+    #type = ADZapdosEEDFRateLinearInterpolation
+    type = InterpolatedCoefficientLinear
+    #type = ADZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_RateCoefficients/reaction_em + Ar* -&gt; em + Ar.txt&#x27;
+    reaction = &#x27;em + Ar* -&gt; em + Ar&#x27;
+    file_location = &#x27;.&#x27;
+    electrons = em
+  []
+  [reaction_3]
+    #type = ADZapdosEEDFRateLinearInterpolation
+    type = InterpolatedCoefficientLinear
+    #type = ADZapdosEEDFRateConstant
+    mean_energy = mean_en
+    property_file = &#x27;Argon_reactions_RateCoefficients/reaction_em + Ar* -&gt; em + em + Ar+.txt&#x27;
+    reaction = &#x27;em + Ar* -&gt; em + em + Ar+&#x27;
+    file_location = &#x27;.&#x27;
+    electrons = em
+  []
+  [reaction_4]
+    type = ADGenericRateConstant
+    reaction = &#x27;em + Ar* -&gt; em + Ar_r&#x27;
+    #reaction_rate_value = 2e-13
+    reaction_rate_value = 1.2044e11
+  []
+  [reaction_5]
+    type = ADGenericRateConstant
+    reaction = &#x27;Ar* + Ar* -&gt; Ar+ + Ar + em&#x27;
+    #reaction_rate_value = 6.2e-16
+    reaction_rate_value = 373364000
+  []
+  [reaction_6]
+    type = ADGenericRateConstant
+    reaction = &#x27;Ar* + Ar -&gt; Ar + Ar&#x27;
+    #reaction_rate_value = 3e-21
+    reaction_rate_value = 1806.6
+  []
+  [reaction_7]
+    type = ADGenericRateConstant
+    reaction = &#x27;Ar* + Ar + Ar -&gt; Ar_2 + Ar&#x27;
+    #reaction_rate_value = 1.1e-43
+    reaction_rate_value = 39890.9324
+  []
+[]
+
+#Acceleration Schemes are dictated by MultiApps, Transfers,
+#and PeriodicControllers
+[MultiApps]
+  #MultiApp of Acceleration by Shooting Method
+  [Shooting]
+    type = FullSolveMultiApp
+    input_files = &#x27;Acceleration_By_Shooting_Method_Shooting.i&#x27;
+    execute_on = &#x27;TIMESTEP_END&#x27;
+    enable = false
+  []
+[]
+
+[Transfers]
+  #MultiApp Transfers for Acceleration by Shooting Method
+  [SM_Ar*Reset_to_Shooting]
+    type = MultiAppCopyTransfer
+    to_multi_app = Shooting
+    source_variable = SM_Ar*Reset
+    variable = SM_Ar*Reset
+    enable = false
+  []
+
+  [Ar*_to_Shooting]
+    type = MultiAppCopyTransfer
+    to_multi_app = Shooting
+    source_variable = Ar*
+    variable = Ar*
+    enable = false
+  []
+  [Ar*S_to_Shooting]
+    type = MultiAppCopyTransfer
+    to_multi_app = Shooting
+    source_variable = Ar*S
+    variable = Ar*S
+    enable = false
+  []
+  [Ar*T_to_Shooting]
+    type = MultiAppCopyTransfer
+    to_multi_app = Shooting
+    source_variable = Ar*
+    variable = Ar*T
+    enable = false
+  []
+  [SMDeriv_to_Shooting]
+    type = MultiAppCopyTransfer
+    to_multi_app = Shooting
+    source_variable = SM_Ar*
+    variable = SM_Ar*
+    enable = false
+  []
+
+  [Ar*New_from_Shooting]
+    type = MultiAppCopyTransfer
+    from_multi_app = Shooting
+    source_variable = Ar*
+    variable = Ar*
+    enable = false
+  []
+  [SM_Ar*Reset_from_Shooting]
+    type = MultiAppCopyTransfer
+    from_multi_app = Shooting
+    source_variable = SM_Ar*Reset
+    variable = SM_Ar*
+    enable = false
+  []
+
+  [Ar*Relative_Diff]
+    type = MultiAppPostprocessorTransfer
+    from_multi_app = Shooting
+    from_postprocessor = Meta_Relative_Diff
+    to_postprocessor = Meta_Relative_Diff
+    reduction_type = minimum
+    enable = false
+  []
+[]
+
+#The Action the add the TimePeriod Controls to turn off and on the MultiApps
+[PeriodicControllers]
+  [Shooting]
+    enable_at_cycle_start = &#x27;*::Ar*S_for_Shooting&#x27;
+
+    enable_during_cycle = &#x27;*::SM_Ar*_time_deriv *::SM_Ar*_diffusion *::SM_Ar*_stepwise_ionization
+                           *::SM_Ar*_collisions *::SM_Ar*_quenching *::SM_Ar*_pooling
+                           *::SM_Ar*_2B_quenching *::SM_Ar*_3B_quenching&#x27;
+
+    enable_at_cycle_end = &#x27;MultiApps::Shooting
+                           *::SM_Ar*Reset_to_Shooting *::Ar*_to_Shooting
+                           *::Ar*S_to_Shooting *::Ar*T_to_Shooting
+                           *::SMDeriv_to_Shooting *::Ar*New_from_Shooting
+                           *::SM_Ar*Reset_from_Shooting *::Ar*Relative_Diff&#x27;
+    cycle_frequency = 13.56e6
+    #starting_cycle = 25
+    #cycles_between_controls = 25
+    starting_cycle = 50
+    cycles_between_controls = 50
+    cycles_per_controls = 1
+    num_controller_set = 2
+    name = Shooting
+  []
+[]
+
+[Postprocessors]
+  #Hold the metastable relative difference during the
+  #Shooting Method acceleration
+  [Meta_Relative_Diff]
+    type = Receiver
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  start_time = 3.6873e-6
+  end_time = 3.798e-6
+
+  solve_type = NEWTON
+  line_search = none
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = newmark-beta
+  dt = 1e-9
+  dtmin = 1e-14
+[]
+
+[Outputs]
+  perf_graph = true
+  [out]
+    type = Exodus
+    execute_on = &#x27;FINAL&#x27;
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#b268c344-744e-45ee-a264-71f942f44c62" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#14c5bcdc-d169-429f-9a7e-4a4c55a4aed1" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#7d9da23e-0fe8-4866-a8df-d73011c0b77f" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

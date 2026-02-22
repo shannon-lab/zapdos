@@ -1,0 +1,1175 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>DielectricBCWithEffEfield | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="a997ac51-ffc3-435f-a7a8-b014ada7e33e" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="db733dda-32ca-4bcd-ac5e-6825883337b2" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d03c1a2e-10b1-461a-b759-64abc0d32c24" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="a87f5d6c-dcd2-4897-967d-d339c5369600"><i class="material-icons">menu</i></a><ul class="sidenav" id="a87f5d6c-dcd2-4897-967d-d339c5369600"><li><a href="#!" class="dropdown-trigger" data-target="90567d9a-b2f3-4ec1-9a04-cecc66a8602d" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="ddb30b51-534e-4f46-9b09-9212ec7cfd19" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="09ee7ab7-919a-4eb9-bddd-cffdae037d95" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="a997ac51-ffc3-435f-a7a8-b014ada7e33e"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="db733dda-32ca-4bcd-ac5e-6825883337b2"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="d03c1a2e-10b1-461a-b759-64abc0d32c24"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="90567d9a-b2f3-4ec1-9a04-cecc66a8602d"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="ddb30b51-534e-4f46-9b09-9212ec7cfd19"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="09ee7ab7-919a-4eb9-bddd-cffdae037d95"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">bcs</span><a href="#" class="breadcrumb">DielectricBCWithEffEfield</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="2359543c-1758-44fb-95e4-4c1015dd296b" data-section-level="1" data-section-text="DielectricBCWithEffEfield"><h1 id="dielectricbcwitheffefield">DielectricBCWithEffEfield</h1><p>Time integrated dielectric boundary condition (Based on <a href="#lymberopoulos1994modeling">Lymberopoulos and Economou (1994)</a>)</p><section class="scrollspy" id="0d4270a4-de06-42a4-a151-f9dbfd3088a4" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p><code>DielectricBCWithEffEfield</code> is a type of <a href="NeumannBC.html"><code>NeumannBC</code></a> for the potential on the boundary of a grounded ideal dielectric. The advection term for the ion is determined by an effective electric field.</p><p>The potential at the boundary of a grounded ideal dielectric is defined as</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-32ed3dc9-7c6b-4aa6-ac32-8d1374872a76"></span><script>var element = document.getElementById("moose-equation-32ed3dc9-7c6b-4aa6-ac32-8d1374872a76");katex.render("\\varepsilon_{p}\\frac{\\partial (E \\cdot \\textbf{n}) }{\\partial t} - \\frac{\\varepsilon_{i}}{d_{i}}\\frac{\\partial V_{i}}{\\partial t} = - e \\left( \\Gamma_{+} \\cdot \\textbf{n} -\\Gamma_{e} \\cdot \\textbf{n} \\right) \\\\[10pt] \\Gamma_{e} \\cdot \\textbf{n}  = \\frac{1}{4}\\sqrt{\\frac{8 k T_{e}}{\\pi m_{e}}} \\ n_e - \\gamma \\Gamma_{+} \\cdot \\textbf{n} \\\\[10pt] \\Gamma_{+} \\cdot \\textbf{n}  = a \\ \\mu_{+} \\ \\vec{E}_{\\text{Eff.}} \\cdot \\textbf{n} \\ n_{+} \\\\[10pt] a = \\begin{cases} 1, & \\mu_{+} \\ \\vec{E}_{\\text{Eff.}} \\cdot \\textbf{n} > 0\\\\ 0, & \\mu_{+} \\ \\vec{E}_{\\text{Eff.}} \\cdot \\textbf{n} \\leq 0\\\\ \\end{cases}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where</p><ul class="browser-default"><li><p><span class="moose-katex-inline-equation" id="moose-equation-9096c4e7-c567-42d9-bc7a-759a87f0daa3"><script>var element = document.getElementById("moose-equation-9096c4e7-c567-42d9-bc7a-759a87f0daa3");katex.render("\\varepsilon_{i}", element, {displayMode:false,throwOnError:false});</script></span> is the permittivity of the dielectric, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-fbaa94ae-2223-4aba-b0ef-9b1ecca68d1d"><script>var element = document.getElementById("moose-equation-fbaa94ae-2223-4aba-b0ef-9b1ecca68d1d");katex.render("d_{i}", element, {displayMode:false,throwOnError:false});</script></span> is the thickness of the dielectric, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-5aae6bbb-2750-4fd6-93ee-f83fa725cff9"><script>var element = document.getElementById("moose-equation-5aae6bbb-2750-4fd6-93ee-f83fa725cff9");katex.render("V_{i}", element, {displayMode:false,throwOnError:false});</script></span> is the voltage on the dielectric, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-eacd9474-5f69-4164-9e25-49a699ad1539"><script>var element = document.getElementById("moose-equation-eacd9474-5f69-4164-9e25-49a699ad1539");katex.render("\\textbf{n}", element, {displayMode:false,throwOnError:false});</script></span> is the normal to the boundary, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-e893f410-4769-43d5-bc7d-7e26724ca1be"><script>var element = document.getElementById("moose-equation-e893f410-4769-43d5-bc7d-7e26724ca1be");katex.render("e", element, {displayMode:false,throwOnError:false});</script></span> is the elemental charge, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-bc56c932-11af-4cc6-830f-2207e0479717"><script>var element = document.getElementById("moose-equation-bc56c932-11af-4cc6-830f-2207e0479717");katex.render("\\varepsilon_{p}", element, {displayMode:false,throwOnError:false});</script></span> is the permittivity of the plasma (defaulted to the permittivity of free space), </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-947e55b4-84a1-4929-9523-fcdc83c6a05b"><script>var element = document.getElementById("moose-equation-947e55b4-84a1-4929-9523-fcdc83c6a05b");katex.render("\\vec{E} \\cdot \\textbf{n}", element, {displayMode:false,throwOnError:false});</script></span> is the electric field normal to the dielectric, </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-46c80c5b-286e-4b91-b8d5-8cc518fc897c"><script>var element = document.getElementById("moose-equation-46c80c5b-286e-4b91-b8d5-8cc518fc897c");katex.render("\\Gamma_{e}", element, {displayMode:false,throwOnError:false});</script></span> is the electron outflow flux, and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-45677ee8-4e70-4107-a2f0-425dd01f5c68"><script>var element = document.getElementById("moose-equation-45677ee8-4e70-4107-a2f0-425dd01f5c68");katex.render("\\Gamma_{+}", element, {displayMode:false,throwOnError:false});</script></span> is the ion outflow flux.</p></li></ul><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note:</span>Flux Information</div><div class="card-content"><div class="moose-alert-content"><p><span class="moose-katex-inline-equation" id="moose-equation-5769d700-07d5-41aa-96f3-84f0353dfb6f"><script>var element = document.getElementById("moose-equation-5769d700-07d5-41aa-96f3-84f0353dfb6f");katex.render("\\Gamma_{e}", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-aad2edd4-8129-4e2a-806e-4ca003a267c4"><script>var element = document.getElementById("moose-equation-aad2edd4-8129-4e2a-806e-4ca003a267c4");katex.render("\\Gamma_{+}", element, {displayMode:false,throwOnError:false});</script></span> are defined with the <a href="SakiyamaElectronDiffusionBC.html"><code>SakiyamaElectronDiffusionBC</code></a>, <a href="SakiyamaSecondaryElectronWithEffEfieldBC.html"><code>SakiyamaSecondaryElectronWithEffEfieldBC</code></a> and <a href="SakiyamaIonAdvectionWithEffEfieldBC.html"><code>SakiyamaIonAdvectionWithEffEfieldBC</code></a> (please refer to those BC&#x27;s for more information on the fluxes).</p></div></div></div><p>To convert the above equation into the form of a NeumannBC, the time integral is taken such that:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-5e1335de-ffd9-4229-a8c3-cdfe48a05c65"></span><script>var element = document.getElementById("moose-equation-5e1335de-ffd9-4229-a8c3-cdfe48a05c65");katex.render("\\int{ \\varepsilon_{p}\\frac{\\partial (E \\cdot \\textbf{n}) }{\\partial t} } dt - \\int{ \\frac{\\varepsilon_{i}}{d_{i}}\\frac{\\partial V_{i}}{\\partial t} } dt = \\int{ - e \\left( \\Gamma_{+} \\cdot \\textbf{n} -\\Gamma_{e} \\cdot \\textbf{n} \\right) } dt", element, {displayMode:true,throwOnError:false});</script></span></p><p>Using the trapezoidal rule for the definite integral and rearranging the equation such that the electric field term is on one side results in:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-24adfc88-c0a1-4e3c-9a0d-f368577b2d9b"></span><script>var element = document.getElementById("moose-equation-24adfc88-c0a1-4e3c-9a0d-f368577b2d9b");katex.render("\\varepsilon_{p} \\left( E \\cdot \\textbf{n} \\right) = \\varepsilon_{p} \\left( E_{\\text{old}} \\cdot \\textbf{n} \\right) + \\frac{\\varepsilon_{i}}{d_{i}} \\left( V - V_ {old} \\right) - 0.5 \\left( e \\left( \\Gamma_{+} \\cdot \\textbf{n} - \\Gamma_{e} \\cdot \\textbf{n} \\right) + e \\left( \\Gamma_{+} \\cdot \\textbf{n} - \\Gamma_{e} \\cdot \\textbf{n} \\right)_{old} \\right) dt", element, {displayMode:true,throwOnError:false});</script></span></p><p>where</p><ul class="browser-default"><li><p>The subscript <span class="moose-katex-inline-equation" id="moose-equation-f5692ae8-affa-4b0b-a92f-2a95bc31a8bd"><script>var element = document.getElementById("moose-equation-f5692ae8-affa-4b0b-a92f-2a95bc31a8bd");katex.render("\\text{old}", element, {displayMode:false,throwOnError:false});</script></span> is the value of the variable during the previous time step, and </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-813ebb1d-d3f0-40ee-b08f-331937f6fa06"><script>var element = document.getElementById("moose-equation-813ebb1d-d3f0-40ee-b08f-331937f6fa06");katex.render("dt", element, {displayMode:false,throwOnError:false});</script></span> is the current time step size.</p></li></ul><p>Lastly, the electrostatic approximation is applied to the electric field normal to the dielectric, which results in a NeumannBC for the potential defined as:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-5e02d3de-3ed7-44f4-8f52-e9748a15c92d"></span><script>var element = document.getElementById("moose-equation-5e02d3de-3ed7-44f4-8f52-e9748a15c92d");katex.render("\\varepsilon_{p} \\left( -\\nabla V \\cdot \\textbf{n} \\right) = \\varepsilon_{p} \\left( -\\nabla V_{\\text{old}} \\cdot \\textbf{n} \\right) + \\frac{\\varepsilon_{i}}{d_{i}} \\left( V - V_ {old} \\right) - 0.5 \\left( e \\left( \\Gamma_{+} \\cdot \\textbf{n} - \\Gamma_{e} \\cdot \\textbf{n} \\right) + e \\left( \\Gamma_{+} \\cdot \\textbf{n} - \\Gamma_{e} \\cdot \\textbf{n} \\right)_{old} \\right) dt", element, {displayMode:true,throwOnError:false});</script></span></p></section><section class="scrollspy" id="dcac1197-9f04-4a05-9851-47710efafbd8" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[BCs&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/BCs/index.html&quot;}&gt;&gt;&gt;]
+  [potential_left_BC]
+    type = DielectricBCWithEffEfield&lt;&lt;&lt;{&quot;description&quot;: &quot;Time integrated dielectric boundary condition (Based on [!cite](lymberopoulos1994modeling))&quot;, &quot;href&quot;: &quot;DielectricBCWithEffEfield.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this residual object operates on&quot;}&gt;&gt;&gt; = potential
+    electrons&lt;&lt;&lt;{&quot;description&quot;: &quot;The electron density in log form.&quot;}&gt;&gt;&gt; = em
+    electron_energy&lt;&lt;&lt;{&quot;description&quot;: &quot;The mean electron energy density in log form.&quot;}&gt;&gt;&gt; = mean_en
+    ions&lt;&lt;&lt;{&quot;description&quot;: &quot;A list of ion densities in log form&quot;}&gt;&gt;&gt; = &#x27;ion&#x27;
+    electric_field_x&lt;&lt;&lt;{&quot;description&quot;: &quot;The electric field in the x-direction&quot;}&gt;&gt;&gt; = Ex
+    electric_field_y&lt;&lt;&lt;{&quot;description&quot;: &quot;The electric field in the y-direction&quot;}&gt;&gt;&gt; = Ey
+    dielectric_constant&lt;&lt;&lt;{&quot;description&quot;: &quot;The dielectric constant of the material.&quot;}&gt;&gt;&gt; = 1.0
+    thickness&lt;&lt;&lt;{&quot;description&quot;: &quot;The thickness of the material.&quot;}&gt;&gt;&gt; = 1.0
+    emission_coeffs&lt;&lt;&lt;{&quot;description&quot;: &quot;The secondary electron emission coefficient for each ion provided in `ions`&quot;}&gt;&gt;&gt; = &#x27;users_gamma&#x27;
+    potential_units&lt;&lt;&lt;{&quot;description&quot;: &quot;The potential units.&quot;}&gt;&gt;&gt; = V
+    position_units&lt;&lt;&lt;{&quot;description&quot;: &quot;Units of position.&quot;}&gt;&gt;&gt; = 1.0
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = 3
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#1e049195-31e2-4124-81f6-a13fcca7e509">(test/tests/mms/bcs/2D_DielectricBCWithEffEfield.i)</a></section><section class="scrollspy" id="3fb182ca-91c9-4f5f-8b9b-909174c5b267" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="68cc6a96-8034-4ea8-ab8c-91a8fddd9186" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundary IDs from the mesh where this object applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of boundary IDs from the mesh where this object applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">dielectric_constant</span><span class="moose-parameter-header-description">The dielectric constant of the material.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The dielectric constant of the material.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electric_field_x</span><span class="moose-parameter-header-description">The electric field in the x-direction</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electric field in the x-direction</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electron_energy</span><span class="moose-parameter-header-description">The mean electron energy density in log form.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The mean electron energy density in log form.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electrons</span><span class="moose-parameter-header-description">The electron density in log form.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electron density in log form.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">ions</span><span class="moose-parameter-header-description">A list of ion densities in log form</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>A list of ion densities in log form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">position_units</span><span class="moose-parameter-header-description">Units of position.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Units of position.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">potential_units</span><span class="moose-parameter-header-description">The potential units.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The potential units.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">thickness</span><span class="moose-parameter-header-description">The thickness of the material.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The thickness of the material.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this residual object operates on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this residual object operates on</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="04cdb13d-170d-4a31-ade2-e65beebf9706" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">displacements</span><span class="moose-parameter-header-description">The displacements</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The displacements</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electric_field_y</span><span class="moose-parameter-header-description">The electric field in the y-direction</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electric field in the y-direction</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">electric_field_z</span><span class="moose-parameter-header-description">The electric field in the z-direction</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The electric field in the z-direction</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">emission_coeffs</span><span class="moose-parameter-header-description">The secondary electron emission coefficient for each ion provided in `ions`</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The secondary electron emission coefficient for each ion provided in `ions`</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="35d6c948-0132-45a1-a70b-93fd8bd7ffed" data-section-level="3" data-section-text="Contribution To Tagged Field Data Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">absolute_value_vector_tags</span><span class="moose-parameter-header-description">The tags for the vectors this residual object should fill with the absolute value of the residual contribution</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tags for the vectors this residual object should fill with the absolute value of the residual contribution</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_only</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether this object is only doing assembly to matrices (no vectors)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether this object is only doing assembly to matrices (no vectors)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, system</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">nontime</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nontime</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, time</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Contribution To Tagged Field Data Parameters</h3></summary></details></section><section id="9872ee7a-ab0d-4f43-acae-f136c2653362" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diag_save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this BC's diagonal jacobian contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this BC's diagonal jacobian contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this BC's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this BC's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">search_method</span><span class="moose-parameter-header-default">nearest_node_connected_sides</span><span class="moose-parameter-header-description">Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nearest_node_connected_sides</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nearest_node_connected_sides, all_proximate_sides</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">skip_execution_outside_variable_domain</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether to skip execution of this boundary condition when the variable it applies to is not defined on the boundary. This can facilitate setups with moving variable domains and fixed boundaries. Note that the FEProblem boundary-restricted integrity checks will also need to be turned off if using this option</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to skip execution of this boundary condition when the variable it applies to is not defined on the boundary. This can facilitate setups with moving variable domains and fixed boundaries. Note that the FEProblem boundary-restricted integrity checks will also need to be turned off if using this option</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="2a0b99dc-dda7-4b4f-85ab-1fbaec2906fa" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="3c6c319d-3531-420e-aa6a-1003298a7b52" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#09972334-630c-487c-aa43-9981a6dacab5">(test/tests/mms/bcs/2D_DielectricBCWithEffEfield.i)</a></li></ul></section><section class="scrollspy" id="6ad72036-205e-42a0-ac24-e8ec01f1ed1d" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="lymberopoulos1994modeling">Dimitris&nbsp;P Lymberopoulos and Demetre&nbsp;J Economou.
+Modeling and simulation of glow discharge plasma reactors.
+<em>Journal of Vacuum Science &amp; Technology A: Vacuum, Surfaces, and Films</em>, 12(4):1229–1236, 1994.
+<a href="https://doi.org/10.1116/1.579300">doi:10.1116/1.579300</a>.<a href="#cf666079-242f-462c-8e52-03b79c563838" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[BibTeX]</a><div class="modal" id="cf666079-242f-462c-8e52-03b79c563838"><div class="modal-content"><pre style="line-height:1.25;"><code class="language-latex">@article{lymberopoulos1994modeling,
+    author = "Lymberopoulos, Dimitris P and Economou, Demetre J",
+    title = "Modeling and simulation of glow discharge plasma reactors",
+    journal = "Journal of Vacuum Science \\& Technology A: Vacuum, Surfaces, and Films",
+    volume = "12",
+    number = "4",
+    pages = "1229--1236",
+    year = "1994",
+    publisher = "American Vacuum Society",
+    doi = "10.1116/1.579300"
+}
+</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="1e049195-31e2-4124-81f6-a13fcca7e509"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_DielectricBCWithEffEfield.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_DielectricBCWithEffEfield_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+  [ion]
+    initial_from_file_var = ion
+  []
+  [mean_en]
+    initial_from_file_var = mean_en
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+
+  [potential]
+    initial_from_file_var = potential
+  []
+[]
+
+# [ICs]
+#   [em_IC]
+#     type = FunctionIC
+#     variable = em
+#     function = &#x27;em_ICs&#x27;
+#   []
+#   [ion_IC]
+#     type = FunctionIC
+#     variable = ion
+#     function = &#x27;ion_ICs&#x27;
+#   []
+#   [mean_en_IC]
+#     type = FunctionIC
+#     variable = mean_en
+#     function = &#x27;mean_en_ICs&#x27;
+#   []
+# []
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = ElectronTimeDerivative
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+
+  #Ion Equations
+  [ion_time_derivative]
+    type = ElectronTimeDerivative
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    # position_units = 1.0
+    position_units = &#x27;${fparse sqrt(1/(1.6e-19 * 6.02e23))}&#x27; # e * N_A / 2
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = ADTimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = ADTimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+
+  #Potential
+  [Potential_time_deriv]
+    type = ADTimeDerivative
+    variable = potential
+  []
+  [Potential_diffusion]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = 1.0
+  []
+  [Potential_source]
+    type = BodyForce
+    variable = potential
+    function = &#x27;potential_source&#x27;
+  []
+
+  #Electron Energy Equations
+  [mean_en_time_deriv]
+    type = ElectronTimeDerivative
+    variable = mean_en
+  []
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_source]
+    type = BodyForce
+    variable = mean_en
+    function = &#x27;energy_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [mean_en_sol]
+  []
+
+  [em_sol]
+  []
+
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+
+  [potential_sol]
+  []
+[]
+
+[AuxKernels]
+  [mean_en_sol]
+    type = FunctionAux
+    variable = mean_en_sol
+    function = mean_en_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+
+  [potential_sol]
+    type = FunctionAux
+    variable = potential_sol
+    function = potential_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  [massem]
+    type = ConstantFunction
+    value = 2.0
+  []
+
+  [massem_mat]
+    type = ParsedFunction
+    symbol_names = massem
+    symbol_values = massem
+    value = &#x27;massem * 1.6e-19 * (1.6e-19 * 6.02e23)^2&#x27;
+  []
+
+  #Electron diffusion coeff.
+  [diffem]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muem]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Electron energy mobility coeff.
+  [diffmean_en]
+    type = ConstantFunction
+    value = 0.05
+  []
+  #Ion diffusion coeff.
+  [diffion]
+    type = ParsedFunction
+    symbol_names = diffem
+    symbol_values = diffem
+    expression = diffem
+  []
+  [muion]
+    type = ParsedFunction
+    symbol_names = muem
+    symbol_values = muem
+    expression = muem
+  []
+
+  [muion_mat]
+    type = ParsedFunction
+    symbol_names = muion
+    symbol_values = muion
+    value = &#x27;muion / (1.6e-19 * 6.02e23)&#x27;
+  []
+
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.05
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 2.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 2.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured electron energy solution
+  [mean_en_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;log(((3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(16*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+  #The manufactured potential solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;0.25*(sin(pi*t)/pi + 1.0)*(sin(pi*y) + sin(pi*x)) - t&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(diffem*pi^2*sin(pi*x) + (diffem*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 + (2*pi*cos(2*pi*t)*cos(pi*y))/5 - (muem*pi*(pi + sin(pi*t))*(10*sin(pi*x) + 10*sin(pi*y) + 10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) + 2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/20) / N_A&#x27;
+  []
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(diffion*pi^2*sin(pi*x) + (diffion*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 + (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (muion*pi^2*(sin(pi*t) + 1)*(10*sin(pi*x) + 10*sin(pi*y) + 10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) + 2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+  [energy_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;((3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*(8*muion*pi^2*cos(pi*t)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2) - (diffpotential*pi^2*sin(pi*t) - pi*sin(pi*t)*(sin(pi*x) + sin(pi*y)))/ee + (16*muion*pi^2*cos(2*pi*t)*cos(pi*y)*(sin(pi*t) + 1))/5))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) - diffmean_en*((3*massem*pi*((pi*cos(pi*t)*cos(pi*y))/ee - 8*muion*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(sin(pi*t) + 1))^2)/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5))/(16*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2) - (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*(8*muion*pi*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(sin(pi*t) + 1) - (pi^2*cos(pi*t)*sin(pi*y))/ee))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^2)/(8*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^3) + (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*((pi*cos(pi*t)*cos(pi*y))/ee - 8*muion*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(sin(pi*t) + 1))*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(4*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2)) - diffmean_en*((3*massem*pi*((pi*cos(pi*t)*cos(pi*x))/ee - 8*muion*pi^2*cos(pi*x)*(sin(pi*t) + 1))^2)/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi^3*cos(pi*x)^2*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(8*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^3) + (3*massem*pi^3*sin(pi*x)*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(16*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2) - (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*(8*muion*pi^3*sin(pi*x)*(sin(pi*t) + 1) - (pi^2*cos(pi*t)*sin(pi*x))/ee))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi^2*cos(pi*x)*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*((pi*cos(pi*t)*cos(pi*x))/ee - 8*muion*pi^2*cos(pi*x)*(sin(pi*t) + 1)))/(4*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2)) - (3*massem*pi^2*cos(2*pi*t)*cos(pi*y)*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(40*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2)) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*x) - diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*y) - diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [potential_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(cos(pi*t)*(sin(pi*x) + sin(pi*y)))/4 + diffpotential*pi^2*sin(pi*x)*(sin(pi*t)/(4*pi) + 1/4) + diffpotential*pi^2*sin(pi*y)*(sin(pi*t)/(4*pi) + 1/4) - 1&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [mean_en_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;em_ICs&#x27;
+    symbol_values = &#x27;em_ICs&#x27;
+    expression = &#x27;log(1.0)&#x27;
+  []
+
+  [V_func_left_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-diffpotential*pi*cos(pi*x)*(sin(pi*t)/(4*pi) + 1/4)&#x27;
+  []
+  [V_func_down_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-diffpotential*pi*cos(pi*y)*(sin(pi*t)/(4*pi) + 1/4)&#x27;
+  []
+[]
+
+[BCs]
+  [em_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [ion_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [energy_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [potential_left_BC]
+    type = DielectricBCWithEffEfield
+    variable = potential
+    electrons = em
+    electron_energy = mean_en
+    ions = &#x27;ion&#x27;
+    electric_field_x = Ex
+    electric_field_y = Ey
+    dielectric_constant = 1.0
+    thickness = 1.0
+    emission_coeffs = &#x27;users_gamma&#x27;
+    potential_units = V
+    position_units = 1.0
+    boundary = 3
+  []
+
+  [potential_Dirichlet_BC]
+    type = FunctionDirichletBC
+    variable = potential
+    function = &#x27;potential_fun&#x27;
+    boundary = &#x27;0 1 2&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  massem  NonAD_diffpotential  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  massem_mat        diffpotential        diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion diffem muion  muem  diffmean_en  diffpotential&#x27;
+    prop_values = &#x27;diffion  diffem muion_mat  muem  diffmean_en  diffpotential&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem  sgnion  sgnmean_en&#x27;
+    prop_values = &#x27;-1.0   1.0     -1.0&#x27;
+  []
+  [emission_coeffs]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;users_gamma&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+  [mean_en_l2Error]
+    type = ElementL2Error
+    variable = mean_en
+    function = mean_en_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [potential_l2Error]
+    type = ElementL2Error
+    variable = potential
+    function = potential_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  # end_time = 50
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="09972334-630c-487c-aa43-9981a6dacab5"><div class="modal-content"><h4>(test/tests/mms/bcs/2D_DielectricBCWithEffEfield.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [geo]
+    type = FileMeshGenerator
+    file = &#x27;2D_DielectricBCWithEffEfield_IC_out.e&#x27;
+    use_for_exodus_restart = true
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [em]
+    initial_from_file_var = em
+  []
+  [ion]
+    initial_from_file_var = ion
+  []
+  [mean_en]
+    initial_from_file_var = mean_en
+  []
+
+  [Ex]
+    initial_from_file_var = Ex
+  []
+  [Ey]
+    initial_from_file_var = Ey
+  []
+
+  [potential]
+    initial_from_file_var = potential
+  []
+[]
+
+# [ICs]
+#   [em_IC]
+#     type = FunctionIC
+#     variable = em
+#     function = &#x27;em_ICs&#x27;
+#   []
+#   [ion_IC]
+#     type = FunctionIC
+#     variable = ion
+#     function = &#x27;ion_ICs&#x27;
+#   []
+#   [mean_en_IC]
+#     type = FunctionIC
+#     variable = mean_en
+#     function = &#x27;mean_en_ICs&#x27;
+#   []
+# []
+
+[Kernels]
+  #Electron Equations
+  [em_time_derivative]
+    type = ElectronTimeDerivative
+    variable = em
+  []
+  [em_diffusion]
+    type = CoeffDiffusion
+    variable = em
+    position_units = 1.0
+  []
+  [em_advection]
+    type = EFieldAdvection
+    variable = em
+    position_units = 1.0
+  []
+  [em_source]
+    type = BodyForce
+    variable = em
+    function = &#x27;em_source&#x27;
+  []
+
+  #Ion Equations
+  [ion_time_derivative]
+    type = ElectronTimeDerivative
+    variable = ion
+  []
+  [ion_diffusion]
+    type = CoeffDiffusion
+    variable = ion
+    position_units = 1.0
+  []
+  [ion_advection]
+    type = EffectiveEFieldAdvection
+    variable = ion
+    u = Ex
+    v = Ey
+    # position_units = 1.0
+    position_units = &#x27;${fparse sqrt(1/(1.6e-19 * 6.02e23))}&#x27; # e * N_A / 2
+  []
+  [ion_source]
+    type = BodyForce
+    variable = ion
+    function = &#x27;ion_source&#x27;
+  []
+
+  #Eff. Efield
+  [EffEfield_X_time_deriv]
+    type = ADTimeDerivative
+    variable = Ex
+  []
+  [EffEfield_X_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEx
+    variable = Ex
+  []
+  [EffEfield_X_source]
+    type = BodyForce
+    variable = Ex
+    function = &#x27;Ex_source&#x27;
+  []
+  [EffEfield_Y_time_deriv]
+    type = ADTimeDerivative
+    variable = Ey
+  []
+  [EffEfield_Y_diffusion]
+    type = MatDiffusion
+    diffusivity = diffEy
+    variable = Ey
+  []
+  [EffEfield_Y_source]
+    type = BodyForce
+    variable = Ey
+    function = &#x27;Ey_source&#x27;
+  []
+
+  #Potential
+  [Potential_time_deriv]
+    type = ADTimeDerivative
+    variable = potential
+  []
+  [Potential_diffusion]
+    type = CoeffDiffusionLin
+    variable = potential
+    position_units = 1.0
+  []
+  [Potential_source]
+    type = BodyForce
+    variable = potential
+    function = &#x27;potential_source&#x27;
+  []
+
+  #Electron Energy Equations
+  [mean_en_time_deriv]
+    type = ElectronTimeDerivative
+    variable = mean_en
+  []
+  [mean_en_diffusion]
+    type = CoeffDiffusion
+    variable = mean_en
+    position_units = 1.0
+  []
+  [mean_en_source]
+    type = BodyForce
+    variable = mean_en
+    function = &#x27;energy_source&#x27;
+  []
+[]
+
+[AuxVariables]
+  [mean_en_sol]
+  []
+
+  [em_sol]
+  []
+
+  [ion_sol]
+  []
+
+  [Ex_sol]
+  []
+  [Ey_sol]
+  []
+
+  [potential_sol]
+  []
+[]
+
+[AuxKernels]
+  [mean_en_sol]
+    type = FunctionAux
+    variable = mean_en_sol
+    function = mean_en_fun
+  []
+
+  [em_sol]
+    type = FunctionAux
+    variable = em_sol
+    function = em_fun
+  []
+
+  [ion_sol]
+    type = FunctionAux
+    variable = ion_sol
+    function = ion_fun
+  []
+
+  [Ex_sol]
+    type = FunctionAux
+    variable = Ex_sol
+    function = Ex_fun
+  []
+  [Ey_sol]
+    type = FunctionAux
+    variable = Ey_sol
+    function = Ey_fun
+  []
+
+  [potential_sol]
+    type = FunctionAux
+    variable = potential_sol
+    function = potential_fun
+  []
+[]
+
+[Functions]
+  #Material Variables
+  [massem]
+    type = ConstantFunction
+    value = 2.0
+  []
+
+  [massem_mat]
+    type = ParsedFunction
+    symbol_names = massem
+    symbol_values = massem
+    value = &#x27;massem * 1.6e-19 * (1.6e-19 * 6.02e23)^2&#x27;
+  []
+
+  #Electron diffusion coeff.
+  [diffem]
+    type = ConstantFunction
+    value = 0.05
+  []
+  [muem]
+    type = ConstantFunction
+    value = 0.01
+  []
+  #Electron energy mobility coeff.
+  [diffmean_en]
+    type = ConstantFunction
+    value = 0.05
+  []
+  #Ion diffusion coeff.
+  [diffion]
+    type = ParsedFunction
+    symbol_names = diffem
+    symbol_values = diffem
+    expression = diffem
+  []
+  [muion]
+    type = ParsedFunction
+    symbol_names = muem
+    symbol_values = muem
+    expression = muem
+  []
+
+  [muion_mat]
+    type = ParsedFunction
+    symbol_names = muion
+    symbol_values = muion
+    value = &#x27;muion / (1.6e-19 * 6.02e23)&#x27;
+  []
+
+  [N_A]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [ee]
+    type = ConstantFunction
+    value = 1.0
+  []
+  [diffpotential]
+    type = ConstantFunction
+    value = 0.05
+  []
+
+  #Manufactured Solutions
+  #The manufactured electron density solution
+  [em_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 2.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured ion density solution
+  [ion_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((sin(pi*y) + 0.2*sin(2*pi*t)*cos(pi*y) + 2.0 + sin(pi*x)) / N_A)&#x27;
+  []
+  #The manufactured electron energy solution
+  [mean_en_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;log(((3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(16*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))) / N_A)&#x27;
+  []
+  #The manufactured eff. Efield solution
+  [Ex_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+  #The manufactured potential solution
+  [potential_fun]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;0.25*(sin(pi*t)/pi + 1.0)*(sin(pi*y) + sin(pi*x)) - t&#x27;
+  []
+
+  #Source Terms in moles
+  #The electron source term.
+  [em_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(diffem*pi^2*sin(pi*x) + (diffem*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 + (2*pi*cos(2*pi*t)*cos(pi*y))/5 - (muem*pi*(pi + sin(pi*t))*(10*sin(pi*x) + 10*sin(pi*y) + 10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) + 2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/20) / N_A&#x27;
+  []
+  #The ion source term.
+  [ion_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(diffion*pi^2*sin(pi*x) + (diffion*pi^2*(5*sin(pi*y) + cos(pi*y)*sin(2*pi*t)))/5 + (2*pi*cos(2*pi*t)*cos(pi*y))/5 + (muion*pi^2*(sin(pi*t) + 1)*(10*sin(pi*x) + 10*sin(pi*y) + 10*sin(pi*x)*sin(pi*y) - 10*cos(pi*x)^2 - 10*cos(pi*y)^2 + cos(pi*y)*sin(2*pi*t)*sin(pi*x) + 2*cos(pi*y)*sin(2*pi*t)*sin(pi*y) + 10))/5) / N_A&#x27;
+  []
+  [energy_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;((3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*(8*muion*pi^2*cos(pi*t)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2) - (diffpotential*pi^2*sin(pi*t) - pi*sin(pi*t)*(sin(pi*x) + sin(pi*y)))/ee + (16*muion*pi^2*cos(2*pi*t)*cos(pi*y)*(sin(pi*t) + 1))/5))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) - diffmean_en*((3*massem*pi*((pi*cos(pi*t)*cos(pi*y))/ee - 8*muion*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(sin(pi*t) + 1))^2)/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5))/(16*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2) - (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*(8*muion*pi*(pi^2*sin(pi*y) + (pi^2*cos(pi*y)*sin(2*pi*t))/5)*(sin(pi*t) + 1) - (pi^2*cos(pi*t)*sin(pi*y))/ee))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)^2)/(8*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^3) + (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*((pi*cos(pi*t)*cos(pi*y))/ee - 8*muion*pi*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5)*(sin(pi*t) + 1))*(pi*cos(pi*y) - (pi*sin(2*pi*t)*sin(pi*y))/5))/(4*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2)) - diffmean_en*((3*massem*pi*((pi*cos(pi*t)*cos(pi*x))/ee - 8*muion*pi^2*cos(pi*x)*(sin(pi*t) + 1))^2)/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi^3*cos(pi*x)^2*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(8*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^3) + (3*massem*pi^3*sin(pi*x)*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(16*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2) - (3*massem*pi*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*(8*muion*pi^3*sin(pi*x)*(sin(pi*t) + 1) - (pi^2*cos(pi*t)*sin(pi*x))/ee))/(8*ee*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2)) + (3*massem*pi^2*cos(pi*x)*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))*((pi*cos(pi*t)*cos(pi*x))/ee - 8*muion*pi^2*cos(pi*x)*(sin(pi*t) + 1)))/(4*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2)) - (3*massem*pi^2*cos(2*pi*t)*cos(pi*y)*((diffpotential*pi*cos(pi*t) - cos(pi*t)*(sin(pi*x) + sin(pi*y)) + 4)/ee + 8*muion*pi*(sin(pi*t) + 1)*(sin(pi*x) + sin(pi*y) + (cos(pi*y)*sin(2*pi*t))/5 + 2))^2)/(40*ee*(sin(x*pi) + sin(y*pi) + (cos(y*pi)*sin(2*t*pi))/5 + 2)^2)) / N_A&#x27;
+  []
+
+  #The Ex source term.
+  [Ex_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*x) - diffpotential*pi^3*cos(pi*x)*(sin(pi*t) + 1)&#x27;
+  []
+  [Ey_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-pi^2*cos(pi*t)*cos(pi*y) - diffpotential*pi^3*cos(pi*y)*(sin(pi*t) + 1)&#x27;
+  []
+
+  [potential_source]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;(cos(pi*t)*(sin(pi*x) + sin(pi*y)))/4 + diffpotential*pi^2*sin(pi*x)*(sin(pi*t)/(4*pi) + 1/4) + diffpotential*pi^2*sin(pi*y)*(sin(pi*t)/(4*pi) + 1/4) - 1&#x27;
+  []
+
+  [em_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [ion_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;N_A&#x27;
+    symbol_values = &#x27;N_A&#x27;
+    expression = &#x27;log((3.0 + sin(pi/2*x)) / N_A)&#x27;
+  []
+  [mean_en_ICs]
+    type = ParsedFunction
+    symbol_names = &#x27;em_ICs&#x27;
+    symbol_values = &#x27;em_ICs&#x27;
+    expression = &#x27;log(1.0)&#x27;
+  []
+
+  [V_func_left_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-diffpotential*pi*cos(pi*x)*(sin(pi*t)/(4*pi) + 1/4)&#x27;
+  []
+  [V_func_down_BC]
+    type = ParsedFunction
+    symbol_names = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    symbol_values = &#x27;ee N_A diffpotential diffem muem massem diffmean_en diffion muion&#x27;
+    expression = &#x27;-diffpotential*pi*cos(pi*y)*(sin(pi*t)/(4*pi) + 1/4)&#x27;
+  []
+[]
+
+[BCs]
+  [em_BC]
+    type = FunctionDirichletBC
+    variable = em
+    function = &#x27;em_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [ion_BC]
+    type = FunctionDirichletBC
+    variable = ion
+    function = &#x27;ion_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [energy_BC]
+    type = FunctionDirichletBC
+    variable = mean_en
+    function = &#x27;mean_en_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ex_BC]
+    type = FunctionDirichletBC
+    variable = Ex
+    function = &#x27;Ex_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [Ey_BC]
+    type = FunctionDirichletBC
+    variable = Ey
+    function = &#x27;Ey_fun&#x27;
+    boundary = &#x27;0 1 2 3&#x27;
+    preset = true
+  []
+
+  [potential_left_BC]
+    type = DielectricBCWithEffEfield
+    variable = potential
+    electrons = em
+    electron_energy = mean_en
+    ions = &#x27;ion&#x27;
+    electric_field_x = Ex
+    electric_field_y = Ey
+    dielectric_constant = 1.0
+    thickness = 1.0
+    emission_coeffs = &#x27;users_gamma&#x27;
+    potential_units = V
+    position_units = 1.0
+    boundary = 3
+  []
+
+  [potential_Dirichlet_BC]
+    type = FunctionDirichletBC
+    variable = potential
+    function = &#x27;potential_fun&#x27;
+    boundary = &#x27;0 1 2&#x27;
+    preset = true
+  []
+[]
+
+[Materials]
+  [field_solver]
+    type = FieldSolverMaterial
+    potential = potential
+  []
+  [Material_Coeff]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;e  N_A  massem  NonAD_diffpotential  diffEx         diffEy&#x27;
+    prop_values = &#x27;ee N_A  massem_mat        diffpotential        diffpotential  diffpotential &#x27;
+  []
+  [ADMaterial_Coeff_Set1]
+    type = ADGenericFunctionMaterial
+    prop_names = &#x27;diffion diffem muion  muem  diffmean_en  diffpotential&#x27;
+    prop_values = &#x27;diffion  diffem muion_mat  muem  diffmean_en  diffpotential&#x27;
+  []
+  [Charge_Signs]
+    type = GenericConstantMaterial
+    prop_names = &#x27;sgnem  sgnion  sgnmean_en&#x27;
+    prop_values = &#x27;-1.0   1.0     -1.0&#x27;
+  []
+  [emission_coeffs]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;users_gamma&#x27;
+    prop_values = &#x27;1.0&#x27;
+  []
+[]
+
+[Postprocessors]
+  [em_l2Error]
+    type = ElementL2Error
+    variable = em
+    function = em_fun
+  []
+  [ion_l2Error]
+    type = ElementL2Error
+    variable = ion
+    function = ion_fun
+  []
+  [mean_en_l2Error]
+    type = ElementL2Error
+    variable = mean_en
+    function = mean_en_fun
+  []
+
+  [Ex_l2Error]
+    type = ElementL2Error
+    variable = Ex
+    function = Ex_fun
+  []
+  [Ey_l2Error]
+    type = ElementL2Error
+    variable = Ey
+    function = Ey_fun
+  []
+
+  [potential_l2Error]
+    type = ElementL2Error
+    variable = potential
+    function = potential_fun
+  []
+
+  [h]
+    type = AverageElementSize
+  []
+[]
+
+[Preconditioning]
+  active = &#x27;smp&#x27;
+  [smp]
+    type = SMP
+    full = true
+  []
+
+  [fdp]
+    type = FDP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Transient
+  # end_time = 50
+  start_time = 50
+  end_time = 51
+
+  # dt = 0.008
+  dt = 0.02
+
+  automatic_scaling = true
+  compute_scaling_once = false
+  petsc_options = &#x27;-snes_converged_reason -snes_linesearch_monitor&#x27;
+  solve_type = NEWTON
+  line_search = none
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount&#x27;
+  petsc_options_value = &#x27;lu NONZERO 1.e-10&#x27;
+
+  scheme = bdf2
+
+  nl_abs_tol = 1e-13
+[]
+
+[Outputs]
+  [out]
+    type = Exodus
+    time_step_interval = 10
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#0d4270a4-de06-42a4-a151-f9dbfd3088a4" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#dcac1197-9f04-4a05-9851-47710efafbd8" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#3fb182ca-91c9-4f5f-8b9b-909174c5b267" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#3c6c319d-3531-420e-aa6a-1003298a7b52" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li><li><a href="#6ad72036-205e-42a0-ac24-e8ec01f1ed1d" class="tooltipped" data-position="left" data-tooltip="References">References</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

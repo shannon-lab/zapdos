@@ -1,0 +1,303 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>NodalNormalsEvaluator | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="4deaff3b-f0cb-4cde-a333-43d2854cd7bf" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="11a436d4-caa7-408a-be3d-4c2621066f51" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="9f2ee795-e172-4eaf-8a9a-d44c0b3dc287" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="fe2cef85-71eb-4ee5-a0fd-ffc2744e4c1f"><i class="material-icons">menu</i></a><ul class="sidenav" id="fe2cef85-71eb-4ee5-a0fd-ffc2744e4c1f"><li><a href="#!" class="dropdown-trigger" data-target="3fc543a6-bc6e-451c-9489-9dcd5d74377f" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="e811fac0-798a-4fab-b834-a6bb50dcde21" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="f545bc11-aead-4549-9db5-98edd409f71c" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="4deaff3b-f0cb-4cde-a333-43d2854cd7bf"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="11a436d4-caa7-408a-be3d-4c2621066f51"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="9f2ee795-e172-4eaf-8a9a-d44c0b3dc287"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="3fc543a6-bc6e-451c-9489-9dcd5d74377f"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="e811fac0-798a-4fab-b834-a6bb50dcde21"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="f545bc11-aead-4549-9db5-98edd409f71c"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">userobjects</span><a href="#" class="breadcrumb">NodalNormalsEvaluator</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="3746d609-d7f5-4ae1-a9f4-3d61de7da5d4" data-section-level="1" data-section-text="NodalNormalsEvaluator"><h1 id="nodalnormalsevaluator">NodalNormalsEvaluator</h1><p>Helper object to compute nodal normal values via the NodalNormals input block.</p><p>The <code>NodalNormalsEvaluator</code> is added automatically by the <a href="../actions/AddNodalNormalsAction.html">AddNodalNormalsAction</a>. This object is created for the boundaries specified in the <a href="#36f0fd9a-7354-4787-a352-90494a241f25" class="moose-modal-link modal-trigger">&quot;boundary&quot;</a> parameter. See the <a href="../../syntax/NodalNormals/index.html">NodalNormals System</a> for more information.</p><p>The nodal normal is computed from the <code>nodal_normal_x</code>, <code>nodal_normal_y</code> and <code>nodal_normal_z</code> variables, then it is used to divide the values for that node by the norm of the normal.</p><section class="scrollspy" id="89b545aa-4141-4982-8c31-4f29cfc5c26f" data-section-level="2" data-section-text="Example input syntax"><h2 id="example-input-syntax">Example input syntax</h2><p>In this example, the <code>NodalNormals</code> system uses a <code>NodalNormalsEvaluator</code>, added behind the scene by the action, to smooth the distance computation between two disjoint surfaces.</p><pre style="max-height:350px;"><code class="language-moose">[NodalNormals&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/NodalNormals/index.html&quot;}&gt;&gt;&gt;]
+  boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The boundary ID or name where the normals will be computed&quot;}&gt;&gt;&gt; = 11
+  corner_boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;boundary ID or name with nodes at &#x27;corners&#x27;&quot;}&gt;&gt;&gt; = 20
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#1342013f-d696-4e92-a0e7-aba5b7f72055">(moose/test/tests/geomsearch/3d_moving_penetration_smoothing/pl_test3nns.i)</a></section><section class="scrollspy" id="43c19544-818e-4be9-a886-b8b0288602b9" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="7b0050b0-ad80-4c66-a6b0-0cae725a28b3" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-default">ANY_BLOCK_ID </span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>ANY_BLOCK_ID </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundaries (ids or names) from the mesh where this object applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of boundaries (ids or names) from the mesh where this object applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">unique_node_execute</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">When false (default), block restricted objects will have the execute method called multiple times on a single node if the node lies on a interface between two subdomains.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>When false (default), block restricted objects will have the execute method called multiple times on a single node if the node lies on a interface between two subdomains.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="faa0dca4-18e0-4770-8cc7-4c76a920a57f" data-section-level="3" data-section-text="Execution Scheduling Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">allow_duplicate_execution_on_initial</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">TIMESTEP_END</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>TIMESTEP_END</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, INITIAL, LINEAR, LINEAR_CONVERGENCE, NONLINEAR, NONLINEAR_CONVERGENCE, POSTCHECK, TIMESTEP_END, TIMESTEP_BEGIN, MULTIAPP_FIXED_POINT_END, MULTIAPP_FIXED_POINT_BEGIN, MULTIAPP_FIXED_POINT_CONVERGENCE, FINAL, CUSTOM, TRANSFER</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execution_order_group</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">Execution order groups are executed in increasing order (e.g., the lowest number is executed first). Note that negative group numbers may be used to execute groups before the default (0) group. Please refer to the user object documentation for ordering of user object execution within a group.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Execution order groups are executed in increasing order (e.g., the lowest number is executed first). Note that negative group numbers may be used to execute groups before the default (0) group. Please refer to the user object documentation for ordering of user object execution within a group.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_postaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in POSTAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in POSTAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preic</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREIC during initial setup</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREIC during initial setup</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Execution Scheduling Parameters</h3></summary></details></section><section id="254e24b7-5d27-4af7-a407-c18d9778f7ff" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="36f0fd9a-7354-4787-a352-90494a241f25"><div class="modal-content"><h4>boundary</h4><p class="moose-parameter-description-default"><span>Default:</span>ANY_BOUNDARY_ID </p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The boundary ID or name where the normals will be computed</p></div></div><div class="moose-modal modal" id="1342013f-d696-4e92-a0e7-aba5b7f72055"><div class="modal-content"><h4>(moose/test/tests/geomsearch/3d_moving_penetration_smoothing/pl_test3nns.i)</h4><pre style="max-height:350px;"><code class="language-moose">[GlobalParams]
+  order = FIRST
+  family = LAGRANGE
+[]
+
+[Mesh]
+  file = pl_test3.e
+  displacements = &#x27;disp_x disp_y disp_z&#x27;
+[]
+
+[Variables]
+  [./disp_x]
+  [../]
+  [./disp_y]
+  [../]
+  [./disp_z]
+  [../]
+[]
+
+[AuxVariables]
+  [./distance]
+  [../]
+  [./tangential_distance]
+  [../]
+  [./normal_x]
+  [../]
+  [./normal_y]
+  [../]
+  [./normal_z]
+  [../]
+  [./closest_point_x]
+  [../]
+  [./closest_point_y]
+  [../]
+  [./closest_point_z]
+  [../]
+#  [./element_id]
+#  [../]
+  [./side]
+  [../]
+[]
+
+[Kernels]
+  [./diff_x]
+    type = Diffusion
+    variable = disp_x
+  [../]
+  [./diff_y]
+    type = Diffusion
+    variable = disp_y
+  [../]
+  [./diff_z]
+    type = Diffusion
+    variable = disp_z
+  [../]
+[]
+
+[AuxKernels]
+  [./penetrate]
+    type = PenetrationAux
+    variable = distance
+    boundary = 11            #secondary
+    paired_boundary = 12     #primary
+  [../]
+
+  [./penetrate2]
+    type = PenetrationAux
+    variable = distance
+    boundary = 12            #secondary
+    paired_boundary = 11     #primary
+    normal_smoothing_method = nodal_normal_based
+  [../]
+
+  [./penetrate3]
+    type = PenetrationAux
+    variable = tangential_distance
+    boundary = 11
+    paired_boundary = 12
+    quantity = tangential_distance
+  [../]
+
+  [./penetrate4]
+    type = PenetrationAux
+    variable = tangential_distance
+    boundary = 12
+    paired_boundary = 11
+    quantity = tangential_distance
+  [../]
+
+  [./penetrate5]
+    type = PenetrationAux
+    variable = normal_x
+    boundary = 11
+    paired_boundary = 12
+    quantity = normal_x
+  [../]
+
+  [./penetrate6]
+    type = PenetrationAux
+    variable = normal_x
+    boundary = 12
+    paired_boundary = 11
+    quantity = normal_x
+  [../]
+
+  [./penetrate7]
+    type = PenetrationAux
+    variable = normal_y
+    boundary = 11
+    paired_boundary = 12
+    quantity = normal_y
+  [../]
+
+  [./penetrate8]
+    type = PenetrationAux
+    variable = normal_y
+    boundary = 12
+    paired_boundary = 11
+    quantity = normal_y
+  [../]
+
+  [./penetrate9]
+    type = PenetrationAux
+    variable = normal_z
+    boundary = 11
+    paired_boundary = 12
+    quantity = normal_z
+  [../]
+
+  [./penetrate10]
+    type = PenetrationAux
+    variable = normal_z
+    boundary = 12
+    paired_boundary = 11
+    quantity = normal_z
+  [../]
+
+  [./penetrate11]
+    type = PenetrationAux
+    variable = closest_point_x
+    boundary = 11
+    paired_boundary = 12
+    quantity = closest_point_x
+  [../]
+
+  [./penetrate12]
+    type = PenetrationAux
+    variable = closest_point_x
+    boundary = 12
+    paired_boundary = 11
+    quantity = closest_point_x
+  [../]
+
+  [./penetrate13]
+    type = PenetrationAux
+    variable = closest_point_y
+    boundary = 11
+    paired_boundary = 12
+    quantity = closest_point_y
+  [../]
+
+  [./penetrate14]
+    type = PenetrationAux
+    variable = closest_point_y
+    boundary = 12
+    paired_boundary = 11
+    quantity = closest_point_y
+  [../]
+
+  [./penetrate15]
+    type = PenetrationAux
+    variable = closest_point_z
+    boundary = 11
+    paired_boundary = 12
+    quantity = closest_point_z
+  [../]
+
+  [./penetrate16]
+    type = PenetrationAux
+    variable = closest_point_z
+    boundary = 12
+    paired_boundary = 11
+    quantity = closest_point_z
+  [../]
+
+#  [./penetrate17]
+#    type = PenetrationAux
+#    variable = element_id
+#    boundary = 11
+#    paired_boundary = 12
+#    quantity = element_id
+#  [../]
+#
+#  [./penetrate18]
+#    type = PenetrationAux
+#    variable = element_id
+#    boundary = 12
+#    paired_boundary = 11
+#    quantity = element_id
+#  [../]
+
+  [./penetrate19]
+    type = PenetrationAux
+    variable = side
+    boundary = 11
+    paired_boundary = 12
+    quantity = side
+  [../]
+
+  [./penetrate20]
+    type = PenetrationAux
+    variable = side
+    boundary = 12
+    paired_boundary = 11
+    quantity = side
+  [../]
+[]
+
+[BCs]
+  [./b1x]
+    type = DirichletBC
+    variable = disp_x
+    preset = false
+    boundary = 1
+    value = 0
+  [../]
+
+  [./b1y]
+    type = DirichletBC
+    variable = disp_y
+    preset = false
+    boundary = 1
+    value = 0
+  [../]
+
+  [./b1z]
+    type = DirichletBC
+    variable = disp_z
+    preset = false
+    boundary = 1
+    value = 0
+  [../]
+
+  [./b2x]
+    type = DirichletBC
+    variable = disp_x
+    preset = false
+    boundary = 2
+    value = 0
+  [../]
+
+  [./b2y]
+    type = FunctionDirichletBC
+    variable = disp_y
+    preset = false
+    boundary = 2
+    function = disp_y
+  [../]
+
+  [./b2z]
+    type = DirichletBC
+    variable = disp_z
+    preset = false
+    boundary = 2
+    value = 0
+  [../]
+[]
+
+[Functions]
+  [./disp_y]
+    type = PiecewiseLinear
+    x = &#x27;0.0 0.25 0.75 1.0&#x27;
+    y = &#x27;0.0 2.0 -2.0  0.0&#x27;
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+
+  solve_type = &#x27;PJFNK&#x27;
+  petsc_options = &#x27;-snes_ksp_ew&#x27;
+
+  nl_rel_tol = 1e-9
+  l_max_its = 10
+
+  start_time = 0.0
+  dt = 0.02
+  end_time = 1.0
+[]
+
+[Outputs]
+  file_base = pl_test3nns_out
+  exodus = true
+[]
+
+[NodalNormals]
+  boundary = 11
+  corner_boundary = 20
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#89b545aa-4141-4982-8c31-4f29cfc5c26f" class="tooltipped" data-position="left" data-tooltip="Example input syntax">Example input syntax</a></li><li><a href="#43c19544-818e-4be9-a886-b8b0288602b9" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
