@@ -1,0 +1,1214 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Magnetostatic Problem on a Topologically Closed Conductor | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="2774e493-788b-461a-a4cf-1e923db2fd9e" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="56381169-c34f-40c1-a8d0-f2ed8db3246f" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="21f68e33-e107-4c35-befe-04e666f1835f" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="1641abc7-7a5d-45d6-b812-8c0ee1c7d648"><i class="material-icons">menu</i></a><ul class="sidenav" id="1641abc7-7a5d-45d6-b812-8c0ee1c7d648"><li><a href="#!" class="dropdown-trigger" data-target="cc2c15f1-2d76-4710-b953-8c7fcb519118" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="2268ff15-5f9d-4e03-be56-54de55088a7d" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="4d9e6cf7-0ad9-41df-a8e5-ae4e3bb6b2bf" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="2774e493-788b-461a-a4cf-1e923db2fd9e"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="56381169-c34f-40c1-a8d0-f2ed8db3246f"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="21f68e33-e107-4c35-befe-04e666f1835f"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="cc2c15f1-2d76-4710-b953-8c7fcb519118"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="2268ff15-5f9d-4e03-be56-54de55088a7d"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="4d9e6cf7-0ad9-41df-a8e5-ae4e3bb6b2bf"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">syntax</a><a href="." class="breadcrumb">MFEM</a><a href="#" class="breadcrumb">ClosedCoilMagnetostatic</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="2cd16f7f-0d93-4d9c-b752-84bdd0123f6e" data-section-level="1" data-section-text="Magnetostatic Problem on a Topologically Closed Conductor"><h1 id="magnetostatic-problem-on-a-topologically-closed-conductor">Magnetostatic Problem on a Topologically Closed Conductor</h1><section class="scrollspy" id="d2b49622-7a21-4df6-86c2-8a640c9dbab3" data-section-level="2" data-section-text="Summary"><h2 id="summary">Summary</h2><p>Solves for the magnetic field around a topologically closed toroidal conductor carrying a net   current, using a magnetic vector potential discretized using <span class="moose-katex-inline-equation" id="moose-equation-fef8c874-be8c-437c-877c-1cecffafd8c1"><script>var element = document.getElementById("moose-equation-fef8c874-be8c-437c-877c-1cecffafd8c1");katex.render("H(\\mathrm{curl})", element, {displayMode:false,throwOnError:false});</script></span> conforming Nédélec   elements, following the method described in <a href="https://hdl.handle.net/2268/191358">P. Dular, International Compumag Society Newsletter, 7, no. 2 (2000): 4-7.</a> for enforcing   global constraints.</p></section><section class="scrollspy" id="a2bfa8ca-7fda-4804-948b-6ca9a4e3cf84" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>This problem solves the magnetostatic problem with strong form:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-dabd12f3-c454-4cff-be08-e6e997982371"></span><script>var element = document.getElementById("moose-equation-dabd12f3-c454-4cff-be08-e6e997982371");katex.render("\\begin{split} \\vec \\nabla \\cdot \\vec B &= 0 \\\\  \\vec \\nabla \\times \\vec H &= \\vec J  \\\\  \\vec \\nabla \\times \\vec E &= - \\partial_t \\vec B = \\vec 0 \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p><p>with the constitutive relations</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-6c8da172-4d96-4f74-837f-ac812f4487ad"></span><script>var element = document.getElementById("moose-equation-6c8da172-4d96-4f74-837f-ac812f4487ad");katex.render("\\begin{split} \\vec B &= \\mu \\vec H \\\\  \\vec E &= \\rho \\vec J + \\vec E_{ext}\\\\  \\vec J &= \\sigma (\\vec E - \\vec E_{ext}) \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-1dad563c-a92d-4773-814f-49c117268e96"><script>var element = document.getElementById("moose-equation-1dad563c-a92d-4773-814f-49c117268e96");katex.render("\\vec B", element, {displayMode:false,throwOnError:false});</script></span> is the magnetic flux density, <span class="moose-katex-inline-equation" id="moose-equation-911dc7ab-8c4a-4ef9-9a8c-89be942b248d"><script>var element = document.getElementById("moose-equation-911dc7ab-8c4a-4ef9-9a8c-89be942b248d");katex.render("\\vec H", element, {displayMode:false,throwOnError:false});</script></span> is the magnetic field, <span class="moose-katex-inline-equation" id="moose-equation-cea24385-90af-4a67-855d-ed5ddc4f14ea"><script>var element = document.getElementById("moose-equation-cea24385-90af-4a67-855d-ed5ddc4f14ea");katex.render("\\vec J", element, {displayMode:false,throwOnError:false});</script></span> is the current  density, <span class="moose-katex-inline-equation" id="moose-equation-7db2ba5e-1f4f-4407-b786-257a4ec775fa"><script>var element = document.getElementById("moose-equation-7db2ba5e-1f4f-4407-b786-257a4ec775fa");katex.render("\\vec E", element, {displayMode:false,throwOnError:false});</script></span> is the electric field, <span class="moose-katex-inline-equation" id="moose-equation-d1957ad0-d820-42a6-8763-381f473849ab"><script>var element = document.getElementById("moose-equation-d1957ad0-d820-42a6-8763-381f473849ab");katex.render("\\vec E_{ext}", element, {displayMode:false,throwOnError:false});</script></span> is the externally applied electric field,  <span class="moose-katex-inline-equation" id="moose-equation-63ed6c56-915b-4310-80da-c7016086ae58"><script>var element = document.getElementById("moose-equation-63ed6c56-915b-4310-80da-c7016086ae58");katex.render("\\mu", element, {displayMode:false,throwOnError:false});</script></span> is the material permeability, <span class="moose-katex-inline-equation" id="moose-equation-cf937523-9e90-4999-8ca3-2a3737d26532"><script>var element = document.getElementById("moose-equation-cf937523-9e90-4999-8ca3-2a3737d26532");katex.render("\\rho", element, {displayMode:false,throwOnError:false});</script></span> is the material resistivity, and <span class="moose-katex-inline-equation" id="moose-equation-9df70a2b-e9b9-4ce3-b0c3-9fead9509007"><script>var element = document.getElementById("moose-equation-9df70a2b-e9b9-4ce3-b0c3-9fead9509007");katex.render("\\sigma", element, {displayMode:false,throwOnError:false});</script></span> is the material  conductivity. To enforce the divergence free condition on <span class="moose-katex-inline-equation" id="moose-equation-4d87d10e-5f61-474b-a34f-199a6f95cad3"><script>var element = document.getElementById("moose-equation-4d87d10e-5f61-474b-a34f-199a6f95cad3");katex.render("\\vec B", element, {displayMode:false,throwOnError:false});</script></span>, we shall also introduce the  magnetic vector potential <span class="moose-katex-inline-equation" id="moose-equation-a17d5463-ac47-4a1b-8ee7-6de07f1e4a47"><script>var element = document.getElementById("moose-equation-a17d5463-ac47-4a1b-8ee7-6de07f1e4a47");katex.render("\\vec A", element, {displayMode:false,throwOnError:false});</script></span> defined such that <span class="moose-katex-inline-equation" id="moose-equation-f41cafec-2568-4fda-b194-4dbda315df18"><script>var element = document.getElementById("moose-equation-f41cafec-2568-4fda-b194-4dbda315df18");katex.render("\\vec \\nabla \\times \\vec A = \\vec B", element, {displayMode:false,throwOnError:false});</script></span>.</p><p>In addition, we wish to impose a global voltage constraint on a toroidal conductor domain <span class="moose-katex-inline-equation" id="moose-equation-a28edbea-69df-490c-b0fe-4b6262a05dc6"><script>var element = document.getElementById("moose-equation-a28edbea-69df-490c-b0fe-4b6262a05dc6");katex.render("\\Omega_c", element, {displayMode:false,throwOnError:false});</script></span> of the form</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-1de27d50-8476-45db-9251-29b13022bac0"></span><script>var element = document.getElementById("moose-equation-1de27d50-8476-45db-9251-29b13022bac0");katex.render("    \\oint_{\\mathcal C} \\vec E \\cdot d\\vec l = -\\mathcal V", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-fd6c4b4d-38bd-42cd-9e58-1f322b52507e"><script>var element = document.getElementById("moose-equation-fd6c4b4d-38bd-42cd-9e58-1f322b52507e");katex.render("\\mathcal C", element, {displayMode:false,throwOnError:false});</script></span> is any path traversing around the conductor lying entirely within <span class="moose-katex-inline-equation" id="moose-equation-50d987f0-bc14-4873-a3ab-e484186622d5"><script>var element = document.getElementById("moose-equation-50d987f0-bc14-4873-a3ab-e484186622d5");katex.render("\\Omega_c", element, {displayMode:false,throwOnError:false});</script></span> with winding  number equal to one, and <span class="moose-katex-inline-equation" id="moose-equation-fd66ed21-5ae6-4a69-8913-4a0c21d40f05"><script>var element = document.getElementById("moose-equation-fd66ed21-5ae6-4a69-8913-4a0c21d40f05");katex.render("\\mathcal V", element, {displayMode:false,throwOnError:false});</script></span> is the loop voltage imposed on the conductor.</p><p>In a simply connected domain, satisfying  <span class="moose-katex-inline-equation" id="moose-equation-03f0e358-b791-4780-acc0-8ab30980ad3f"><script>var element = document.getElementById("moose-equation-03f0e358-b791-4780-acc0-8ab30980ad3f");katex.render("\\vec \\nabla \\times \\vec E =  \\vec 0", element, {displayMode:false,throwOnError:false});</script></span> can be achieved by  introducing a continuous single-valued scalar electric potential <span class="moose-katex-inline-equation" id="moose-equation-f3d379be-ff23-43e0-8491-cf2133e4d3d8"><script>var element = document.getElementById("moose-equation-f3d379be-ff23-43e0-8491-cf2133e4d3d8");katex.render("\\phi", element, {displayMode:false,throwOnError:false});</script></span> such that  <span class="moose-katex-inline-equation" id="moose-equation-1eda45f2-d7d6-47ff-9cc6-e5e72672518a"><script>var element = document.getElementById("moose-equation-1eda45f2-d7d6-47ff-9cc6-e5e72672518a");katex.render("\\vec E = -\\vec\\nabla \\phi", element, {displayMode:false,throwOnError:false});</script></span>. However, in order for the electric field <span class="moose-katex-inline-equation" id="moose-equation-dc608bce-7a8a-4a49-88c9-4f5a70a79825"><script>var element = document.getElementById("moose-equation-dc608bce-7a8a-4a49-88c9-4f5a70a79825");katex.render("\\vec E", element, {displayMode:false,throwOnError:false});</script></span> to be nonzero circulating the closed  conductor, this is no longer sufficient, since <span class="moose-katex-inline-equation" id="moose-equation-7f958a2c-3459-4497-8064-77456095130f"><script>var element = document.getElementById("moose-equation-7f958a2c-3459-4497-8064-77456095130f");katex.render("\\oint_{\\mathcal C} \\vec\\nabla \\phi \\cdot d\\vec l = 0", element, {displayMode:false,throwOnError:false});</script></span>.  We shall therefore represent the electric field by</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-f947fe25-441b-4bb5-af55-030d103434dc"></span><script>var element = document.getElementById("moose-equation-f947fe25-441b-4bb5-af55-030d103434dc");katex.render("    \\vec E = - \\vec \\nabla \\phi + \\vec E_{ext}.", element, {displayMode:true,throwOnError:false});</script></span></p><p>With this, we can arrive at the weak form for <span class="moose-katex-inline-equation" id="moose-equation-e5c932fb-2365-4740-8e9b-c5fd066d3647"><script>var element = document.getElementById("moose-equation-e5c932fb-2365-4740-8e9b-c5fd066d3647");katex.render("\\vec \\nabla \\times \\vec H = \\vec J", element, {displayMode:false,throwOnError:false});</script></span> we intend to solve, of the form</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-bf84a04e-5af0-4ff6-a158-9a66ec3b7031"></span><script>var element = document.getElementById("moose-equation-bf84a04e-5af0-4ff6-a158-9a66ec3b7031");katex.render("\\begin{split} (\\mu^{-1} \\vec \\nabla \\times \\vec A, \\vec \\nabla \\times \\vec A')_\\Omega - (\\vec H \\times \\vec n, \\vec A')_{\\partial \\Omega} +(\\sigma \\vec \\nabla \\phi, \\vec A')_{\\Omega_c} + (\\sigma \\vec E_{ext}, \\vec A')_\\Omega &= 0 \\,\\,\\, \\forall \\vec A' \\in V_A \\\\  (\\sigma \\vec \\nabla \\phi, \\vec \\nabla \\phi')_{\\Omega_c} +(\\sigma \\vec E_{ext}, \\vec \\nabla \\phi')_{\\Omega_c} &= 0 \\,\\,\\, \\forall \\phi' \\in V_\\phi \\\\  (\\sigma \\vec \\nabla \\phi, \\vec E_{ext}')_{\\Omega_c} +(\\sigma \\vec E_{ext}, \\vec E_{ext}')_{\\Omega_c} &= IV(\\vec E_{ext}') \\,\\,\\, \\forall \\vec E_{ext}' \\in V_E \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-9d51ff20-20bd-4535-959f-5c0bbfab3b54"></span><script>var element = document.getElementById("moose-equation-9d51ff20-20bd-4535-959f-5c0bbfab3b54");katex.render("\\begin{split} \\vec A, \\vec A' \\in H(\\mathrm{curl})(\\Omega) &: \\vec A \\times \\hat n= \\vec 0 \\,\\,\\, \\mathrm{on}\\,\\, \\partial\\Omega \\\\ \\phi, \\phi' \\in H^1(\\Omega_c) &: \\vec \\nabla \\phi \\cdot \\hat n= 0 \\,\\,\\, \\mathrm{on}\\,\\, \\partial\\Omega_c \\\\ \\vec E_{ext}, \\vec E_{ext}' \\in H(\\mathrm{curl})(\\Omega_c) &: \\vec \\nabla \\times \\vec E_{ext} = \\vec 0 \\,\\,\\, \\mathrm{in}\\,\\, \\Omega_c, \\,  \\oint_{\\mathcal C}  \\vec E_{ext} \\cdot d\\vec l = \\mathcal V \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p></section><section class="scrollspy" id="4ebee7e5-72e7-4b63-9324-48431d704f9f" data-section-level="2" data-section-text="Discretizing the External Electric Field"><h2 id="discretizing-the-external-electric-field">Discretizing the External Electric Field</h2><p>We must now find a suitable choice of basis <span class="moose-katex-inline-equation" id="moose-equation-a3a9a055-4fde-453e-b824-8413b4a74275"><script>var element = document.getElementById("moose-equation-a3a9a055-4fde-453e-b824-8413b4a74275");katex.render("{\\vec c_i \\in H(\\mathrm{curl})(\\Omega_c)}", element, {displayMode:false,throwOnError:false});</script></span> for the external electric field, such that</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-55362fc1-0d82-442c-86fc-25c673ae27c3"></span><script>var element = document.getElementById("moose-equation-55362fc1-0d82-442c-86fc-25c673ae27c3");katex.render("    \\vec E_{ext} = - \\sum_{i \\in \\Omega_c} V_i \\vec c_i", element, {displayMode:true,throwOnError:false});</script></span></p><p>for some unique set of degrees of freedom <span class="moose-katex-inline-equation" id="moose-equation-73362d4f-991b-4521-bbc7-4be09c0760bc"><script>var element = document.getElementById("moose-equation-73362d4f-991b-4521-bbc7-4be09c0760bc");katex.render("\\{V_i\\}", element, {displayMode:false,throwOnError:false});</script></span>. We shall also wish to restrict the support of <span class="moose-katex-inline-equation" id="moose-equation-abc55548-48c9-4486-803d-e5ed6310bf0d"><script>var element = document.getElementById("moose-equation-abc55548-48c9-4486-803d-e5ed6310bf0d");katex.render("\\{\\vec c_i\\}", element, {displayMode:false,throwOnError:false});</script></span> to the smallest number of elements possible in <span class="moose-katex-inline-equation" id="moose-equation-b9a1951c-9407-40a2-86de-a83272fb367f"><script>var element = document.getElementById("moose-equation-b9a1951c-9407-40a2-86de-a83272fb367f");katex.render("\\Omega_c", element, {displayMode:false,throwOnError:false});</script></span> to minimise the number of degrees of freedom required to represent <span class="moose-katex-inline-equation" id="moose-equation-352b824b-1d58-4c67-9bad-5d3612df0fed"><script>var element = document.getElementById("moose-equation-352b824b-1d58-4c67-9bad-5d3612df0fed");katex.render("\\vec E_{ext}", element, {displayMode:false,throwOnError:false});</script></span>.</p><p>To do this, we first identify a &#x27;cut&#x27; surface <span class="moose-katex-inline-equation" id="moose-equation-ccd19167-3c41-4f51-8ac3-4daf9a18905e"><script>var element = document.getElementById("moose-equation-ccd19167-3c41-4f51-8ac3-4daf9a18905e");katex.render("\\Gamma_c", element, {displayMode:false,throwOnError:false});</script></span> of the toroidal conductor that is required to make it simply connected. Next, we define a one element wide &#x27;transition&#x27; region <span class="moose-katex-inline-equation" id="moose-equation-3ed1bdd5-447c-47ec-91ec-be4983797d0d"><script>var element = document.getElementById("moose-equation-3ed1bdd5-447c-47ec-91ec-be4983797d0d");katex.render("\\Omega_t \\subset \\Omega_c", element, {displayMode:false,throwOnError:false});</script></span> on one side of the cut surface, using an <code>MFEMCutTransitionSubMesh</code> object, comprised of all elements with at least one vertex lying on the cut surface that lie on one side of the cut.</p><p>Next, to enforce <span class="moose-katex-inline-equation" id="moose-equation-f7c8c4b5-1d96-43eb-aaae-44c934f6ade5"><script>var element = document.getElementById("moose-equation-f7c8c4b5-1d96-43eb-aaae-44c934f6ade5");katex.render("\\vec \\nabla \\times \\vec E_{ext} =0", element, {displayMode:false,throwOnError:false});</script></span> in this region, we define a scalar field variable <span class="moose-katex-inline-equation" id="moose-equation-81760cfe-a8fa-49fb-adfe-f0e8a34eb923"><script>var element = document.getElementById("moose-equation-81760cfe-a8fa-49fb-adfe-f0e8a34eb923");katex.render("v", element, {displayMode:false,throwOnError:false});</script></span> defined on a (nodal) <span class="moose-katex-inline-equation" id="moose-equation-6a6a3baa-d18d-4dfa-99db-50497f38a7f1"><script>var element = document.getElementById("moose-equation-6a6a3baa-d18d-4dfa-99db-50497f38a7f1");katex.render("H^1", element, {displayMode:false,throwOnError:false});</script></span> conforming finite element space on this submesh such that <span class="moose-katex-inline-equation" id="moose-equation-f031fec4-e7a7-4372-9df6-d93bbb5392c1"><script>var element = document.getElementById("moose-equation-f031fec4-e7a7-4372-9df6-d93bbb5392c1");katex.render("\\vec E_{ext} = -\\vec \\nabla v", element, {displayMode:false,throwOnError:false});</script></span>:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-76417990-8038-4692-ab16-2b1288c8cf3d"></span><script>var element = document.getElementById("moose-equation-76417990-8038-4692-ab16-2b1288c8cf3d");katex.render("  v = \\sum_{i \\in \\Omega_t} V_i v_i", element, {displayMode:true,throwOnError:false});</script></span></p><p>so <span class="moose-katex-inline-equation" id="moose-equation-0d6f92f4-0590-4139-a858-0fd9988c6dec"><script>var element = document.getElementById("moose-equation-0d6f92f4-0590-4139-a858-0fd9988c6dec");katex.render("{\\vec c_i = \\vec \\nabla v_i}", element, {displayMode:false,throwOnError:false});</script></span>.</p><p>Finally, to impose the global voltage constraint <span class="moose-katex-inline-equation" id="moose-equation-00f468a8-f32d-4992-986e-4d43515ae779"><script>var element = document.getElementById("moose-equation-00f468a8-f32d-4992-986e-4d43515ae779");katex.render("\\mathcal V = \\oint_{\\mathcal C} \\vec E_{ext} \\cdot d\\vec l", element, {displayMode:false,throwOnError:false});</script></span>, we identify that</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-8b8311dc-3537-4035-9418-f09669bbb800"></span><script>var element = document.getElementById("moose-equation-8b8311dc-3537-4035-9418-f09669bbb800");katex.render("  \\mathcal V = \\oint_{\\mathcal C} \\vec E_{ext} \\cdot d\\vec l = v|_{\\Gamma_c} - v|_{\\partial \\Omega_t \\backslash \\Gamma_c}", element, {displayMode:true,throwOnError:false});</script></span></p><p>since <span class="moose-katex-inline-equation" id="moose-equation-89163e40-dc5c-4ccc-a9ac-00fee594bdd9"><script>var element = document.getElementById("moose-equation-89163e40-dc5c-4ccc-a9ac-00fee594bdd9");katex.render("\\vec c_i = 0", element, {displayMode:false,throwOnError:false});</script></span> outside <span class="moose-katex-inline-equation" id="moose-equation-bfa7b615-80b2-4ce1-9517-f0f319709fc8"><script>var element = document.getElementById("moose-equation-bfa7b615-80b2-4ce1-9517-f0f319709fc8");katex.render("\\Omega_t", element, {displayMode:false,throwOnError:false});</script></span>. The loop voltage constraint is thus strongly imposed by  Dirichlet conditions on <span class="moose-katex-inline-equation" id="moose-equation-dc442a3f-b1e5-456c-a0a4-1ce94c329ca7"><script>var element = document.getElementById("moose-equation-dc442a3f-b1e5-456c-a0a4-1ce94c329ca7");katex.render("v", element, {displayMode:false,throwOnError:false});</script></span>, setting <span class="moose-katex-inline-equation" id="moose-equation-97f78a40-1f5c-4b5d-809b-3595f96adfda"><script>var element = document.getElementById("moose-equation-97f78a40-1f5c-4b5d-809b-3595f96adfda");katex.render("v=0", element, {displayMode:false,throwOnError:false});</script></span> on <span class="moose-katex-inline-equation" id="moose-equation-8c24eca4-78e8-488a-a994-535bd2e16964"><script>var element = document.getElementById("moose-equation-8c24eca4-78e8-488a-a994-535bd2e16964");katex.render("\\partial \\Omega_t \\backslash \\Gamma_c", element, {displayMode:false,throwOnError:false});</script></span> and  <span class="moose-katex-inline-equation" id="moose-equation-09b6af36-c648-4197-8163-fdb30eac890a"><script>var element = document.getElementById("moose-equation-09b6af36-c648-4197-8163-fdb30eac890a");katex.render("v =\\mathcal V", element, {displayMode:false,throwOnError:false});</script></span> on <span class="moose-katex-inline-equation" id="moose-equation-80ccefa2-acd4-4eff-a5fd-06243e539ed4"><script>var element = document.getElementById("moose-equation-80ccefa2-acd4-4eff-a5fd-06243e539ed4");katex.render("\\Gamma_c", element, {displayMode:false,throwOnError:false});</script></span>. For lowest order <span class="moose-katex-inline-equation" id="moose-equation-55924628-31cc-4297-a003-423f04dea4f4"><script>var element = document.getElementById("moose-equation-55924628-31cc-4297-a003-423f04dea4f4");katex.render("H^1", element, {displayMode:false,throwOnError:false});</script></span> conforming representations of <span class="moose-katex-inline-equation" id="moose-equation-66540496-c804-44f3-8b44-ea3b8ca4a811"><script>var element = document.getElementById("moose-equation-66540496-c804-44f3-8b44-ea3b8ca4a811");katex.render("v", element, {displayMode:false,throwOnError:false});</script></span>, this fully  constrains <span class="moose-katex-inline-equation" id="moose-equation-432392d8-e0be-48de-a97b-e56f38c299f0"><script>var element = document.getElementById("moose-equation-432392d8-e0be-48de-a97b-e56f38c299f0");katex.render("\\vec E_{ext}", element, {displayMode:false,throwOnError:false});</script></span> in the transition region.</p><p>This is shown explicitly in the example file:</p><pre style="max-height:350px;"><code class="language-moose"># Solve for the electric field on a closed conductor subject to
+# global loop voltage constraint.
+
+initial_coil_domains = &#x27;TorusCore TorusSheath&#x27;
+coil_cut_surface = &#x27;Cut&#x27;
+coil_loop_voltage = -1.0
+coil_conductivity = 1.0
+
+[Problem&lt;&lt;&lt;{&quot;href&quot;: &quot;../Problem/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMProblem
+[]
+
+[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../Mesh/index.html&quot;}&gt;&gt;&gt;]
+    type = MFEMMesh
+    file = ../mesh/embedded_concentric_torus.e
+[]
+
+[FunctorMaterials&lt;&lt;&lt;{&quot;href&quot;: &quot;../FunctorMaterials/index.html&quot;}&gt;&gt;&gt;]
+  [Conductor]
+    type = MFEMGenericFunctorMaterial
+    prop_names = conductivity
+    prop_values = ${coil_conductivity}
+  []
+[]
+
+[ICs&lt;&lt;&lt;{&quot;href&quot;: &quot;../ICs/index.html&quot;}&gt;&gt;&gt;]
+  [coil_external_potential_ic]
+    type = MFEMScalarBoundaryIC
+    variable = coil_external_potential
+    boundary = ${coil_cut_surface}
+    coefficient = ${coil_loop_voltage}
+  []
+[]
+
+[SubMeshes]
+  [cut]
+    type = MFEMCutTransitionSubMesh
+    cut_boundary = ${coil_cut_surface}
+    block = ${initial_coil_domains}
+    transition_subdomain = transition_dom
+    transition_subdomain_boundary = transition_bdr
+    closed_subdomain = coil_dom
+  []
+  [coil]
+    type = MFEMDomainSubMesh
+    block = coil_dom
+    execution_order_group = 2
+  []
+[]
+
+[FESpaces]
+  [H1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+  []
+  [HCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+  []
+  [CoilH1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+    submesh = coil
+  []
+  [CoilHCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+    submesh = coil
+  []
+  [TransitionH1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+    submesh = cut
+  []
+  [TransitionHCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+    submesh = cut
+  []
+[]
+
+[Variables&lt;&lt;&lt;{&quot;href&quot;: &quot;../Variables/index.html&quot;}&gt;&gt;&gt;]
+  [coil_induced_potential]
+    type = MFEMVariable
+    fespace = CoilH1FESpace
+  []
+[]
+
+[AuxVariables&lt;&lt;&lt;{&quot;href&quot;: &quot;../AuxVariables/index.html&quot;}&gt;&gt;&gt;]
+  [coil_external_potential]
+    type = MFEMVariable
+    fespace = CoilH1FESpace
+  []
+  [transition_external_potential]
+    type = MFEMVariable
+    fespace = TransitionH1FESpace
+  []
+  [transition_external_e_field]
+    type = MFEMVariable
+    fespace = TransitionHCurlFESpace
+  []
+  [induced_potential]
+    type = MFEMVariable
+    fespace = H1FESpace
+  []
+  [induced_e_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+  [external_e_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+  [e_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxKernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../AuxKernels/index.html&quot;}&gt;&gt;&gt;]
+  [update_induced_e_field]
+    type = MFEMGradAux
+    variable = induced_e_field
+    source = induced_potential
+    scale_factor = -1.0
+    execute_on = TIMESTEP_END
+  []
+  [update_external_e_field]
+    type = MFEMGradAux
+    variable = transition_external_e_field
+    source = transition_external_potential
+    scale_factor = -1.0
+    execute_on = TIMESTEP_END
+  []
+  [update_total_e_field]
+    type = MFEMSumAux
+    variable = e_field
+    source_variables = &#x27;induced_e_field external_e_field&#x27;
+    execute_on = TIMESTEP_END
+    execution_order_group = 3
+  []
+[]
+
+[Kernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../Kernels/index.html&quot;}&gt;&gt;&gt;]
+  [diff]
+    type = MFEMDiffusionKernel
+    variable = coil_induced_potential
+    coefficient = conductivity
+  []
+  [source]
+    type = MFEMMixedGradGradKernel
+    trial_variable = coil_external_potential
+    variable = coil_induced_potential
+    coefficient = conductivity
+    block = &#x27;transition_dom&#x27;
+  []
+[]
+
+[Solver]
+  type = MFEMSuperLU
+[]
+
+[Executioner&lt;&lt;&lt;{&quot;href&quot;: &quot;../Executioner/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMSteady
+[]
+
+[Transfers&lt;&lt;&lt;{&quot;href&quot;: &quot;../Transfers/index.html&quot;}&gt;&gt;&gt;]
+  [submesh_transfer_from_coil]
+    type = MFEMSubMeshTransfer
+    from_variable = coil_induced_potential
+    to_variable = induced_potential
+    execute_on = TIMESTEP_END
+  []
+  [submesh_transfer_to_transition]
+    type = MFEMSubMeshTransfer
+    from_variable = coil_external_potential
+    to_variable = transition_external_potential
+    execute_on = TIMESTEP_END
+  []
+  [submesh_transfer_from_transition]
+    type = MFEMSubMeshTransfer
+    from_variable = transition_external_e_field
+    to_variable = external_e_field
+    execute_on = TIMESTEP_END
+    execution_order_group = 2
+  []
+[]
+
+[Outputs&lt;&lt;&lt;{&quot;href&quot;: &quot;../Outputs/index.html&quot;}&gt;&gt;&gt;]
+  [GlobalParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/WholePotentialCoil
+    vtk_format = ASCII
+  []
+  [TransitionParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/CutPotentialCoil
+    vtk_format = ASCII
+    submesh = cut
+  []
+  [CoilParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/Coil
+    vtk_format = ASCII
+    submesh = coil
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#c8576fa1-7377-4ff1-8707-02cba238c2c1">(moose/test/tests/mfem/submeshes/cut_closed_coil.i)</a></section><section class="scrollspy" id="a3d24231-5a90-4a27-b94d-888b9f62fdee" data-section-level="2" data-section-text="Solving for the Total Electric Field"><h2 id="solving-for-the-total-electric-field">Solving for the Total Electric Field</h2><p>With <span class="moose-katex-inline-equation" id="moose-equation-21a62648-c9c7-473b-a9b2-6527d1667b09"><script>var element = document.getElementById("moose-equation-21a62648-c9c7-473b-a9b2-6527d1667b09");katex.render("\\vec E_{ext}", element, {displayMode:false,throwOnError:false});</script></span> now constrained, we now must solve for the remaining degrees of freedom in  <span class="moose-katex-inline-equation" id="moose-equation-db1e50ef-f312-4ffe-83cf-441b9a74ced8"><script>var element = document.getElementById("moose-equation-db1e50ef-f312-4ffe-83cf-441b9a74ced8");katex.render("\\vec E", element, {displayMode:false,throwOnError:false});</script></span> arising due to surface charges in the coil as required for continuity of current in the conductor  (<span class="moose-katex-inline-equation" id="moose-equation-80839cfd-e14c-4b92-bf3b-b6281591684a"><script>var element = document.getElementById("moose-equation-80839cfd-e14c-4b92-bf3b-b6281591684a");katex.render("\\vec \\nabla \\cdot \\vec J = 0", element, {displayMode:false,throwOnError:false});</script></span>), by solving</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-b3252788-d652-42d1-aaf7-c8de9b7b0a1b"></span><script>var element = document.getElementById("moose-equation-b3252788-d652-42d1-aaf7-c8de9b7b0a1b");katex.render("(\\sigma \\vec \\nabla \\phi, \\vec \\nabla \\phi')_{\\Omega_c} +(\\sigma \\vec E_{ext}, \\vec \\nabla \\phi')_{\\Omega_t} = 0 \\,\\,\\, \\forall \\phi' \\in V_\\phi", element, {displayMode:true,throwOnError:false});</script></span></p><p>for <span class="moose-katex-inline-equation" id="moose-equation-3f9d1e91-df59-4ae3-88ec-3d3291fbc5e9"><script>var element = document.getElementById("moose-equation-3f9d1e91-df59-4ae3-88ec-3d3291fbc5e9");katex.render("\\phi", element, {displayMode:false,throwOnError:false});</script></span>. We then can calculate the total electric field from the sum of its induced and external components.</p></section><section class="scrollspy" id="4a64049d-44c3-4319-838a-05dc1b8d16dd" data-section-level="2" data-section-text="Solving for the Magnetic Flux Density"><h2 id="solving-for-the-magnetic-flux-density">Solving for the Magnetic Flux Density</h2><p>Finally, with the electric field in the conductor, we can now find the magnetic flux density around the current density flowing in the coil in the magnetostatic limit.</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-9ae533c2-be25-4e62-afd5-c25d9c8b797f"></span><script>var element = document.getElementById("moose-equation-9ae533c2-be25-4e62-afd5-c25d9c8b797f");katex.render("(\\mu^{-1} \\vec \\nabla \\times \\vec A, \\vec \\nabla \\times \\vec A')_\\Omega - (\\vec H \\times \\vec n, \\vec A')_{\\partial \\Omega} +(\\sigma \\vec \\nabla \\phi, \\vec A')_{\\Omega_c} + (\\sigma \\vec E_{ext}, \\vec A')_\\Omega = 0 \\,\\,\\, \\forall \\vec A' \\in V_A", element, {displayMode:true,throwOnError:false});</script></span></p><p>This is typically solved using <code>HypreAMS</code> as a preconditioner. Note that the above magnetostatic problem is singular in non-conductive regions, and thus either <code>singular = true</code> should be passed to the preconditioner or a small mass term <span class="moose-katex-inline-equation" id="moose-equation-6c9515a4-058f-4750-a5a4-f3870a598020"><script>var element = document.getElementById("moose-equation-6c9515a4-058f-4750-a5a4-f3870a598020");katex.render("(\\epsilon \\vec A, \\vec A')_\\Omega", element, {displayMode:false,throwOnError:false});</script></span> with <span class="moose-katex-inline-equation" id="moose-equation-f22d6b51-c7f9-4782-a545-2b1a125589c4"><script>var element = document.getElementById("moose-equation-f22d6b51-c7f9-4782-a545-2b1a125589c4");katex.render("\\epsilon << 1", element, {displayMode:false,throwOnError:false});</script></span> should be added for stability.</p></section><section class="scrollspy" id="50ceff0d-2ba3-456f-8c3b-e8651c6e443f" data-section-level="2" data-section-text="Example File"><h2 id="example-file">Example File</h2><p>The full closed coil magnetostatic example detailed above can be found below:</p><pre style="max-height:350px;"><code class="language-moose"># Magnetostatic problem solved on a closed conductor subject to
+# global loop voltage constraint.
+
+[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../Mesh/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMMesh
+  file = ../mesh/embedded_concentric_torus.e
+[]
+
+[Problem&lt;&lt;&lt;{&quot;href&quot;: &quot;../Problem/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMProblem
+[]
+
+[FESpaces]
+  [HCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+  []
+  [HDivFESpace]
+    type = MFEMVectorFESpace
+    fec_type = RT
+    fec_order = CONSTANT
+  []
+[]
+
+[Variables&lt;&lt;&lt;{&quot;href&quot;: &quot;../Variables/index.html&quot;}&gt;&gt;&gt;]
+  [a_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxVariables&lt;&lt;&lt;{&quot;href&quot;: &quot;../AuxVariables/index.html&quot;}&gt;&gt;&gt;]
+  [b_field]
+    type = MFEMVariable
+    fespace = HDivFESpace
+  []
+  [e_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxKernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../AuxKernels/index.html&quot;}&gt;&gt;&gt;]
+  [curl]
+    type = MFEMCurlAux
+    variable = b_field
+    source = a_field
+    scale_factor = 1.0
+    execute_on = TIMESTEP_END
+    execution_order_group = 3
+  []
+[]
+
+[Functions&lt;&lt;&lt;{&quot;href&quot;: &quot;../Functions/index.html&quot;}&gt;&gt;&gt;]
+  [exact_a_field]
+    type = ParsedVectorFunction&lt;&lt;&lt;{&quot;description&quot;: &quot;Returns a vector function based on string descriptions for each component.&quot;, &quot;href&quot;: &quot;../../source/functions/MooseParsedVectorFunction.html&quot;}&gt;&gt;&gt;
+    expression_x&lt;&lt;&lt;{&quot;description&quot;: &quot;x-component of function.&quot;}&gt;&gt;&gt; = &#x27;0&#x27;
+    expression_y&lt;&lt;&lt;{&quot;description&quot;: &quot;y-component of function.&quot;}&gt;&gt;&gt; = &#x27;0&#x27;
+    expression_z&lt;&lt;&lt;{&quot;description&quot;: &quot;z-component of function.&quot;}&gt;&gt;&gt; = &#x27;0&#x27;
+  []
+[]
+
+[BCs&lt;&lt;&lt;{&quot;href&quot;: &quot;../BCs/index.html&quot;}&gt;&gt;&gt;]
+  [tangential_a_bdr]
+    type = MFEMVectorTangentialDirichletBC
+    variable = a_field
+    vector_coefficient = exact_a_field
+    boundary = &#x27;Exterior&#x27;
+  []
+[]
+
+[FunctorMaterials&lt;&lt;&lt;{&quot;href&quot;: &quot;../FunctorMaterials/index.html&quot;}&gt;&gt;&gt;]
+  [Vacuum]
+    type = MFEMGenericFunctorMaterial
+    prop_names = reluctivity
+    prop_values = 1.0
+  []
+  [Conductor]
+    type = MFEMGenericFunctorMaterial
+    prop_names = conductivity
+    prop_values = 1.0
+    block = &#x27;TorusCore TorusSheath&#x27;
+  []
+[]
+
+[Kernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../Kernels/index.html&quot;}&gt;&gt;&gt;]
+  [mass]
+    type = MFEMVectorFEMassKernel
+    variable = a_field
+    coefficient = 1e-10
+  []
+  [curlcurl]
+    type = MFEMCurlCurlKernel
+    variable = a_field
+    coefficient = reluctivity
+  []
+  [source]
+    type = MFEMMixedVectorMassKernel
+    variable = a_field
+    trial_variable = e_field
+    coefficient = conductivity
+    block = &#x27;TorusCore TorusSheath&#x27;
+  []
+[]
+
+[Preconditioner]
+  [ams]
+    type = MFEMHypreAMS
+    fespace = HCurlFESpace
+  []
+[]
+
+[Solver]
+  type = MFEMHyprePCG
+  preconditioner = ams
+  l_tol = 1e-14
+  l_max_its = 1000
+[]
+
+[Executioner&lt;&lt;&lt;{&quot;href&quot;: &quot;../Executioner/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMSteady
+  device = cpu
+[]
+
+[MultiApps&lt;&lt;&lt;{&quot;href&quot;: &quot;../MultiApps/index.html&quot;}&gt;&gt;&gt;]
+  [coil]
+    type = FullSolveMultiApp&lt;&lt;&lt;{&quot;description&quot;: &quot;Performs a complete simulation during each execution.&quot;, &quot;href&quot;: &quot;../../source/multiapps/FullSolveMultiApp.html&quot;}&gt;&gt;&gt;
+    input_files&lt;&lt;&lt;{&quot;description&quot;: &quot;The input file for each App.  If this parameter only contains one input file it will be used for all of the Apps.  When using &#x27;positions_from_file&#x27; it is also admissable to provide one input_file per file.&quot;}&gt;&gt;&gt; = cut_closed_coil.i
+    execute_on&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.&quot;}&gt;&gt;&gt; = INITIAL
+  []
+[]
+
+[Transfers&lt;&lt;&lt;{&quot;href&quot;: &quot;../Transfers/index.html&quot;}&gt;&gt;&gt;]
+  [from_coil]
+    type = MultiAppMFEMCopyTransfer
+    source_variable = e_field
+    variable = e_field
+    from_multi_app = coil
+  []
+[]
+
+[Postprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../Postprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [CoilPower]
+    type = MFEMVectorFEInnerProductIntegralPostprocessor
+    coefficient = conductivity
+    dual_variable = e_field
+    primal_variable = e_field
+    block = &#x27;TorusCore TorusSheath&#x27;
+  []
+[]
+
+[Outputs&lt;&lt;&lt;{&quot;href&quot;: &quot;../Outputs/index.html&quot;}&gt;&gt;&gt;]
+  [ParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/MagnetostaticClosedCoil
+    vtk_format = ASCII
+  []
+  [ReportedPostprocessors]
+    type = CSV&lt;&lt;&lt;{&quot;description&quot;: &quot;Output for postprocessors, vector postprocessors, and scalar variables using comma seperated values (CSV).&quot;, &quot;href&quot;: &quot;../../source/outputs/CSV.html&quot;}&gt;&gt;&gt;
+    file_base&lt;&lt;&lt;{&quot;description&quot;: &quot;The desired solution output name without an extension. If not provided, MOOSE sets it with Outputs/file_base when available. Otherwise, MOOSE uses input file name and this object name for a master input or uses master file_base, the subapp name and this object name for a subapp input to set it.&quot;}&gt;&gt;&gt; = OutputData/AVMagnetostaticClosedCoilCSV
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#de8f668c-652b-4fb0-82ab-e75acd5c801a">(moose/test/tests/mfem/submeshes/av_magnetostatic.i)</a></section><section class="scrollspy" id="7cda7567-2581-486d-b817-446e50ec8beb" data-section-level="2" data-section-text="Global Current Constraints"><h2 id="global-current-constraints">Global Current Constraints</h2><p>Strongly constraining the total current through the conductor instead of the loop voltage is also possible, by defining a cut plane in the domain outside the conductor region using the H-phi formulation instead of the A-V formulation detailed above; the details are similar, using a magnetic scalar potential instead of an electric scalar potential. The constraint to be enforced is</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-52d5a627-7d89-4d88-be43-504dfed58085"></span><script>var element = document.getElementById("moose-equation-52d5a627-7d89-4d88-be43-504dfed58085");katex.render("\\oint_{\\mathcal C} \\vec H \\cdot d\\vec l = I", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-239b2c2e-2301-4b60-830e-678753b14f46"><script>var element = document.getElementById("moose-equation-239b2c2e-2301-4b60-830e-678753b14f46");katex.render("\\mathcal C", element, {displayMode:false,throwOnError:false});</script></span> is any path encircling the conductor, and I is the total current passing through the path <span class="moose-katex-inline-equation" id="moose-equation-91eaef4a-29b9-42f4-905f-99eb7bef3ea0"><script>var element = document.getElementById("moose-equation-91eaef4a-29b9-42f4-905f-99eb7bef3ea0");katex.render("\\mathcal C", element, {displayMode:false,throwOnError:false});</script></span>. Outside the conductor, the magnetic field <span class="moose-katex-inline-equation" id="moose-equation-a2bce1d6-1a99-404c-8efb-21de1b1b2859"><script>var element = document.getElementById("moose-equation-a2bce1d6-1a99-404c-8efb-21de1b1b2859");katex.render("\\vec H", element, {displayMode:false,throwOnError:false});</script></span> is curl-free, and thus can be expressed by the gradient of a scalar magnetic potential (up to a sign).</p><p>An example file for this approach can be found below:</p><pre style="max-height:350px;"><code class="language-moose"># Solve for the magnetic field around a closed conductor subject to
+# global current constraint.
+
+initial_vacuum_domains = &#x27;Exterior&#x27;
+vacuum_cut_surface = &#x27;Cut&#x27;
+conductor_current = 1.0
+vacuum_permeability = 1.0
+
+[Problem&lt;&lt;&lt;{&quot;href&quot;: &quot;../Problem/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMProblem
+[]
+
+[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../Mesh/index.html&quot;}&gt;&gt;&gt;]
+    type = MFEMMesh
+    file = ../mesh/split_embedded_concentric_torus.e
+[]
+
+[FunctorMaterials&lt;&lt;&lt;{&quot;href&quot;: &quot;../FunctorMaterials/index.html&quot;}&gt;&gt;&gt;]
+  [Conductor]
+    type = MFEMGenericFunctorMaterial
+    prop_names = permeability
+    prop_values = ${vacuum_permeability}
+  []
+[]
+
+[ICs&lt;&lt;&lt;{&quot;href&quot;: &quot;../ICs/index.html&quot;}&gt;&gt;&gt;]
+  [vacuum_cut_potential_ic]
+    type = MFEMScalarBoundaryIC
+    variable = vacuum_cut_potential
+    boundary = ${vacuum_cut_surface}
+    coefficient = ${conductor_current}
+  []
+[]
+
+[SubMeshes]
+  [cut]
+    type = MFEMCutTransitionSubMesh
+    cut_boundary = ${vacuum_cut_surface}
+    block = ${initial_vacuum_domains}
+    transition_subdomain = transition_dom
+    transition_subdomain_boundary = transition_bdr
+    closed_subdomain = vacuum_dom
+  []
+  [vacuum]
+    type = MFEMDomainSubMesh
+    block = vacuum_dom
+    execution_order_group = 2
+  []
+[]
+
+[FESpaces]
+  [VacuumH1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+    submesh = vacuum
+  []
+  [VacuumHCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+    submesh = vacuum
+  []
+  [TransitionH1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+    submesh = cut
+  []
+  [TransitionHCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+    submesh = cut
+  []
+  [HCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+  []
+[]
+
+[Variables&lt;&lt;&lt;{&quot;href&quot;: &quot;../Variables/index.html&quot;}&gt;&gt;&gt;]
+  [vacuum_magnetic_potential]
+    type = MFEMVariable
+    fespace = VacuumH1FESpace
+  []
+[]
+
+[AuxVariables&lt;&lt;&lt;{&quot;href&quot;: &quot;../AuxVariables/index.html&quot;}&gt;&gt;&gt;]
+  [vacuum_cut_potential]
+    type = MFEMVariable
+    fespace = VacuumH1FESpace
+  []
+  [transition_cut_potential]
+    type = MFEMVariable
+    fespace = TransitionH1FESpace
+  []
+  [transition_cut_function_field]
+    type = MFEMVariable
+    fespace = TransitionHCurlFESpace
+  []
+  [background_h_field]
+    type = MFEMVariable
+    fespace = VacuumHCurlFESpace
+  []
+  [cut_function_field]
+    type = MFEMVariable
+    fespace = VacuumHCurlFESpace
+  []
+  [vacuum_h_field]
+    type = MFEMVariable
+    fespace = VacuumHCurlFESpace
+  []
+  [h_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxKernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../AuxKernels/index.html&quot;}&gt;&gt;&gt;]
+  [update_background_h_field]
+    type = MFEMGradAux
+    variable = background_h_field
+    source = vacuum_magnetic_potential
+    scale_factor = -1.0
+    execute_on = TIMESTEP_END
+  []
+  [update_transition_cut_function_field]
+    type = MFEMGradAux
+    variable = transition_cut_function_field
+    source = transition_cut_potential
+    scale_factor = -1.0
+    execute_on = TIMESTEP_END
+  []
+  [update_total_h_field]
+    type = MFEMSumAux
+    variable = vacuum_h_field
+    source_variables = &#x27;background_h_field cut_function_field&#x27;
+    execute_on = TIMESTEP_END
+    execution_order_group = 3
+  []
+[]
+
+[BCs&lt;&lt;&lt;{&quot;href&quot;: &quot;../BCs/index.html&quot;}&gt;&gt;&gt;]
+  # Set zero of magnetic potential on symmetry plane
+  [Exterior]
+    type = MFEMScalarDirichletBC
+    variable = vacuum_magnetic_potential
+    boundary = &#x27;Cut&#x27;
+    coefficient = 0.0
+  []
+[]
+
+[Kernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../Kernels/index.html&quot;}&gt;&gt;&gt;]
+  [diff]
+    type = MFEMDiffusionKernel
+    variable = vacuum_magnetic_potential
+    coefficient = permeability
+  []
+  [source]
+    type = MFEMMixedGradGradKernel
+    trial_variable = vacuum_cut_potential
+    variable = vacuum_magnetic_potential
+    coefficient = permeability
+    block = &#x27;transition_dom&#x27;
+  []
+[]
+
+[Preconditioner]
+  [boomeramg]
+    type = MFEMHypreBoomerAMG
+  []
+[]
+
+[Solver]
+  type = MFEMHypreGMRES
+  preconditioner = boomeramg
+  l_tol = 1e-8
+  l_max_its = 100
+[]
+
+[Executioner&lt;&lt;&lt;{&quot;href&quot;: &quot;../Executioner/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMSteady
+[]
+
+[Transfers&lt;&lt;&lt;{&quot;href&quot;: &quot;../Transfers/index.html&quot;}&gt;&gt;&gt;]
+  [submesh_transfer_to_transition]
+    type = MFEMSubMeshTransfer
+    from_variable = vacuum_cut_potential
+    to_variable = transition_cut_potential
+    execute_on = TIMESTEP_END
+  []
+  [submesh_transfer_from_transition]
+    type = MFEMSubMeshTransfer
+    from_variable = transition_cut_function_field
+    to_variable = cut_function_field
+    execute_on = TIMESTEP_END
+    execution_order_group = 2
+  []
+  [submesh_transfer_from_vacuum]
+    type = MFEMSubMeshTransfer
+    from_variable = vacuum_h_field
+    to_variable = h_field
+    execute_on = TIMESTEP_END
+    execution_order_group = 4
+  []
+[]
+
+[Postprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../Postprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [MagneticEnergy]
+    type = MFEMVectorFEInnerProductIntegralPostprocessor
+    coefficient = ${fparse 0.5*vacuum_permeability}
+    dual_variable = vacuum_h_field
+    primal_variable = vacuum_h_field
+    execution_order_group = 4
+    block = &#x27;Exterior&#x27;
+  []
+[]
+
+[Outputs&lt;&lt;&lt;{&quot;href&quot;: &quot;../Outputs/index.html&quot;}&gt;&gt;&gt;]
+  [ReportedPostprocessors]
+    type = CSV&lt;&lt;&lt;{&quot;description&quot;: &quot;Output for postprocessors, vector postprocessors, and scalar variables using comma seperated values (CSV).&quot;, &quot;href&quot;: &quot;../../source/outputs/CSV.html&quot;}&gt;&gt;&gt;
+    file_base&lt;&lt;&lt;{&quot;description&quot;: &quot;The desired solution output name without an extension. If not provided, MOOSE sets it with Outputs/file_base when available. Otherwise, MOOSE uses input file name and this object name for a master input or uses master file_base, the subapp name and this object name for a subapp input to set it.&quot;}&gt;&gt;&gt; = OutputData/HPhiMagnetostaticClosedCoilCSV
+  []
+  [VacuumParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/HPhiMagnetostaticClosedCoil
+    vtk_format = ASCII
+    submesh = vacuum
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#cd236db4-58ae-4dcf-b85d-3b9face326bb">(moose/test/tests/mfem/submeshes/hphi_magnetostatic.i)</a></section></section><div class="moose-modal modal" id="c8576fa1-7377-4ff1-8707-02cba238c2c1"><div class="modal-content"><h4>(moose/test/tests/mfem/submeshes/cut_closed_coil.i)</h4><pre style="max-height:350px;"><code class="language-moose"># Solve for the electric field on a closed conductor subject to
+# global loop voltage constraint.
+
+initial_coil_domains = &#x27;TorusCore TorusSheath&#x27;
+coil_cut_surface = &#x27;Cut&#x27;
+coil_loop_voltage = -1.0
+coil_conductivity = 1.0
+
+[Problem]
+  type = MFEMProblem
+[]
+
+[Mesh]
+    type = MFEMMesh
+    file = ../mesh/embedded_concentric_torus.e
+[]
+
+[FunctorMaterials]
+  [Conductor]
+    type = MFEMGenericFunctorMaterial
+    prop_names = conductivity
+    prop_values = ${coil_conductivity}
+  []
+[]
+
+[ICs]
+  [coil_external_potential_ic]
+    type = MFEMScalarBoundaryIC
+    variable = coil_external_potential
+    boundary = ${coil_cut_surface}
+    coefficient = ${coil_loop_voltage}
+  []
+[]
+
+[SubMeshes]
+  [cut]
+    type = MFEMCutTransitionSubMesh
+    cut_boundary = ${coil_cut_surface}
+    block = ${initial_coil_domains}
+    transition_subdomain = transition_dom
+    transition_subdomain_boundary = transition_bdr
+    closed_subdomain = coil_dom
+  []
+  [coil]
+    type = MFEMDomainSubMesh
+    block = coil_dom
+    execution_order_group = 2
+  []
+[]
+
+[FESpaces]
+  [H1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+  []
+  [HCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+  []
+  [CoilH1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+    submesh = coil
+  []
+  [CoilHCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+    submesh = coil
+  []
+  [TransitionH1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+    submesh = cut
+  []
+  [TransitionHCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+    submesh = cut
+  []
+[]
+
+[Variables]
+  [coil_induced_potential]
+    type = MFEMVariable
+    fespace = CoilH1FESpace
+  []
+[]
+
+[AuxVariables]
+  [coil_external_potential]
+    type = MFEMVariable
+    fespace = CoilH1FESpace
+  []
+  [transition_external_potential]
+    type = MFEMVariable
+    fespace = TransitionH1FESpace
+  []
+  [transition_external_e_field]
+    type = MFEMVariable
+    fespace = TransitionHCurlFESpace
+  []
+  [induced_potential]
+    type = MFEMVariable
+    fespace = H1FESpace
+  []
+  [induced_e_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+  [external_e_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+  [e_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxKernels]
+  [update_induced_e_field]
+    type = MFEMGradAux
+    variable = induced_e_field
+    source = induced_potential
+    scale_factor = -1.0
+    execute_on = TIMESTEP_END
+  []
+  [update_external_e_field]
+    type = MFEMGradAux
+    variable = transition_external_e_field
+    source = transition_external_potential
+    scale_factor = -1.0
+    execute_on = TIMESTEP_END
+  []
+  [update_total_e_field]
+    type = MFEMSumAux
+    variable = e_field
+    source_variables = &#x27;induced_e_field external_e_field&#x27;
+    execute_on = TIMESTEP_END
+    execution_order_group = 3
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = MFEMDiffusionKernel
+    variable = coil_induced_potential
+    coefficient = conductivity
+  []
+  [source]
+    type = MFEMMixedGradGradKernel
+    trial_variable = coil_external_potential
+    variable = coil_induced_potential
+    coefficient = conductivity
+    block = &#x27;transition_dom&#x27;
+  []
+[]
+
+[Solver]
+  type = MFEMSuperLU
+[]
+
+[Executioner]
+  type = MFEMSteady
+[]
+
+[Transfers]
+  [submesh_transfer_from_coil]
+    type = MFEMSubMeshTransfer
+    from_variable = coil_induced_potential
+    to_variable = induced_potential
+    execute_on = TIMESTEP_END
+  []
+  [submesh_transfer_to_transition]
+    type = MFEMSubMeshTransfer
+    from_variable = coil_external_potential
+    to_variable = transition_external_potential
+    execute_on = TIMESTEP_END
+  []
+  [submesh_transfer_from_transition]
+    type = MFEMSubMeshTransfer
+    from_variable = transition_external_e_field
+    to_variable = external_e_field
+    execute_on = TIMESTEP_END
+    execution_order_group = 2
+  []
+[]
+
+[Outputs]
+  [GlobalParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/WholePotentialCoil
+    vtk_format = ASCII
+  []
+  [TransitionParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/CutPotentialCoil
+    vtk_format = ASCII
+    submesh = cut
+  []
+  [CoilParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/Coil
+    vtk_format = ASCII
+    submesh = coil
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="de8f668c-652b-4fb0-82ab-e75acd5c801a"><div class="modal-content"><h4>(moose/test/tests/mfem/submeshes/av_magnetostatic.i)</h4><pre style="max-height:350px;"><code class="language-moose"># Magnetostatic problem solved on a closed conductor subject to
+# global loop voltage constraint.
+
+[Mesh]
+  type = MFEMMesh
+  file = ../mesh/embedded_concentric_torus.e
+[]
+
+[Problem]
+  type = MFEMProblem
+[]
+
+[FESpaces]
+  [HCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+  []
+  [HDivFESpace]
+    type = MFEMVectorFESpace
+    fec_type = RT
+    fec_order = CONSTANT
+  []
+[]
+
+[Variables]
+  [a_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxVariables]
+  [b_field]
+    type = MFEMVariable
+    fespace = HDivFESpace
+  []
+  [e_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxKernels]
+  [curl]
+    type = MFEMCurlAux
+    variable = b_field
+    source = a_field
+    scale_factor = 1.0
+    execute_on = TIMESTEP_END
+    execution_order_group = 3
+  []
+[]
+
+[Functions]
+  [exact_a_field]
+    type = ParsedVectorFunction
+    expression_x = &#x27;0&#x27;
+    expression_y = &#x27;0&#x27;
+    expression_z = &#x27;0&#x27;
+  []
+[]
+
+[BCs]
+  [tangential_a_bdr]
+    type = MFEMVectorTangentialDirichletBC
+    variable = a_field
+    vector_coefficient = exact_a_field
+    boundary = &#x27;Exterior&#x27;
+  []
+[]
+
+[FunctorMaterials]
+  [Vacuum]
+    type = MFEMGenericFunctorMaterial
+    prop_names = reluctivity
+    prop_values = 1.0
+  []
+  [Conductor]
+    type = MFEMGenericFunctorMaterial
+    prop_names = conductivity
+    prop_values = 1.0
+    block = &#x27;TorusCore TorusSheath&#x27;
+  []
+[]
+
+[Kernels]
+  [mass]
+    type = MFEMVectorFEMassKernel
+    variable = a_field
+    coefficient = 1e-10
+  []
+  [curlcurl]
+    type = MFEMCurlCurlKernel
+    variable = a_field
+    coefficient = reluctivity
+  []
+  [source]
+    type = MFEMMixedVectorMassKernel
+    variable = a_field
+    trial_variable = e_field
+    coefficient = conductivity
+    block = &#x27;TorusCore TorusSheath&#x27;
+  []
+[]
+
+[Preconditioner]
+  [ams]
+    type = MFEMHypreAMS
+    fespace = HCurlFESpace
+  []
+[]
+
+[Solver]
+  type = MFEMHyprePCG
+  preconditioner = ams
+  l_tol = 1e-14
+  l_max_its = 1000
+[]
+
+[Executioner]
+  type = MFEMSteady
+  device = cpu
+[]
+
+[MultiApps]
+  [coil]
+    type = FullSolveMultiApp
+    input_files = cut_closed_coil.i
+    execute_on = INITIAL
+  []
+[]
+
+[Transfers]
+  [from_coil]
+    type = MultiAppMFEMCopyTransfer
+    source_variable = e_field
+    variable = e_field
+    from_multi_app = coil
+  []
+[]
+
+[Postprocessors]
+  [CoilPower]
+    type = MFEMVectorFEInnerProductIntegralPostprocessor
+    coefficient = conductivity
+    dual_variable = e_field
+    primal_variable = e_field
+    block = &#x27;TorusCore TorusSheath&#x27;
+  []
+[]
+
+[Outputs]
+  [ParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/MagnetostaticClosedCoil
+    vtk_format = ASCII
+  []
+  [ReportedPostprocessors]
+    type = CSV
+    file_base = OutputData/AVMagnetostaticClosedCoilCSV
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="cd236db4-58ae-4dcf-b85d-3b9face326bb"><div class="modal-content"><h4>(moose/test/tests/mfem/submeshes/hphi_magnetostatic.i)</h4><pre style="max-height:350px;"><code class="language-moose"># Solve for the magnetic field around a closed conductor subject to
+# global current constraint.
+
+initial_vacuum_domains = &#x27;Exterior&#x27;
+vacuum_cut_surface = &#x27;Cut&#x27;
+conductor_current = 1.0
+vacuum_permeability = 1.0
+
+[Problem]
+  type = MFEMProblem
+[]
+
+[Mesh]
+    type = MFEMMesh
+    file = ../mesh/split_embedded_concentric_torus.e
+[]
+
+[FunctorMaterials]
+  [Conductor]
+    type = MFEMGenericFunctorMaterial
+    prop_names = permeability
+    prop_values = ${vacuum_permeability}
+  []
+[]
+
+[ICs]
+  [vacuum_cut_potential_ic]
+    type = MFEMScalarBoundaryIC
+    variable = vacuum_cut_potential
+    boundary = ${vacuum_cut_surface}
+    coefficient = ${conductor_current}
+  []
+[]
+
+[SubMeshes]
+  [cut]
+    type = MFEMCutTransitionSubMesh
+    cut_boundary = ${vacuum_cut_surface}
+    block = ${initial_vacuum_domains}
+    transition_subdomain = transition_dom
+    transition_subdomain_boundary = transition_bdr
+    closed_subdomain = vacuum_dom
+  []
+  [vacuum]
+    type = MFEMDomainSubMesh
+    block = vacuum_dom
+    execution_order_group = 2
+  []
+[]
+
+[FESpaces]
+  [VacuumH1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+    submesh = vacuum
+  []
+  [VacuumHCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+    submesh = vacuum
+  []
+  [TransitionH1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+    submesh = cut
+  []
+  [TransitionHCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+    submesh = cut
+  []
+  [HCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+  []
+[]
+
+[Variables]
+  [vacuum_magnetic_potential]
+    type = MFEMVariable
+    fespace = VacuumH1FESpace
+  []
+[]
+
+[AuxVariables]
+  [vacuum_cut_potential]
+    type = MFEMVariable
+    fespace = VacuumH1FESpace
+  []
+  [transition_cut_potential]
+    type = MFEMVariable
+    fespace = TransitionH1FESpace
+  []
+  [transition_cut_function_field]
+    type = MFEMVariable
+    fespace = TransitionHCurlFESpace
+  []
+  [background_h_field]
+    type = MFEMVariable
+    fespace = VacuumHCurlFESpace
+  []
+  [cut_function_field]
+    type = MFEMVariable
+    fespace = VacuumHCurlFESpace
+  []
+  [vacuum_h_field]
+    type = MFEMVariable
+    fespace = VacuumHCurlFESpace
+  []
+  [h_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxKernels]
+  [update_background_h_field]
+    type = MFEMGradAux
+    variable = background_h_field
+    source = vacuum_magnetic_potential
+    scale_factor = -1.0
+    execute_on = TIMESTEP_END
+  []
+  [update_transition_cut_function_field]
+    type = MFEMGradAux
+    variable = transition_cut_function_field
+    source = transition_cut_potential
+    scale_factor = -1.0
+    execute_on = TIMESTEP_END
+  []
+  [update_total_h_field]
+    type = MFEMSumAux
+    variable = vacuum_h_field
+    source_variables = &#x27;background_h_field cut_function_field&#x27;
+    execute_on = TIMESTEP_END
+    execution_order_group = 3
+  []
+[]
+
+[BCs]
+  # Set zero of magnetic potential on symmetry plane
+  [Exterior]
+    type = MFEMScalarDirichletBC
+    variable = vacuum_magnetic_potential
+    boundary = &#x27;Cut&#x27;
+    coefficient = 0.0
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = MFEMDiffusionKernel
+    variable = vacuum_magnetic_potential
+    coefficient = permeability
+  []
+  [source]
+    type = MFEMMixedGradGradKernel
+    trial_variable = vacuum_cut_potential
+    variable = vacuum_magnetic_potential
+    coefficient = permeability
+    block = &#x27;transition_dom&#x27;
+  []
+[]
+
+[Preconditioner]
+  [boomeramg]
+    type = MFEMHypreBoomerAMG
+  []
+[]
+
+[Solver]
+  type = MFEMHypreGMRES
+  preconditioner = boomeramg
+  l_tol = 1e-8
+  l_max_its = 100
+[]
+
+[Executioner]
+  type = MFEMSteady
+[]
+
+[Transfers]
+  [submesh_transfer_to_transition]
+    type = MFEMSubMeshTransfer
+    from_variable = vacuum_cut_potential
+    to_variable = transition_cut_potential
+    execute_on = TIMESTEP_END
+  []
+  [submesh_transfer_from_transition]
+    type = MFEMSubMeshTransfer
+    from_variable = transition_cut_function_field
+    to_variable = cut_function_field
+    execute_on = TIMESTEP_END
+    execution_order_group = 2
+  []
+  [submesh_transfer_from_vacuum]
+    type = MFEMSubMeshTransfer
+    from_variable = vacuum_h_field
+    to_variable = h_field
+    execute_on = TIMESTEP_END
+    execution_order_group = 4
+  []
+[]
+
+[Postprocessors]
+  [MagneticEnergy]
+    type = MFEMVectorFEInnerProductIntegralPostprocessor
+    coefficient = ${fparse 0.5*vacuum_permeability}
+    dual_variable = vacuum_h_field
+    primal_variable = vacuum_h_field
+    execution_order_group = 4
+    block = &#x27;Exterior&#x27;
+  []
+[]
+
+[Outputs]
+  [ReportedPostprocessors]
+    type = CSV
+    file_base = OutputData/HPhiMagnetostaticClosedCoilCSV
+  []
+  [VacuumParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/HPhiMagnetostaticClosedCoil
+    vtk_format = ASCII
+    submesh = vacuum
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#d2b49622-7a21-4df6-86c2-8a640c9dbab3" class="tooltipped" data-position="left" data-tooltip="Summary">Summary</a></li><li><a href="#a2bfa8ca-7fda-4804-948b-6ca9a4e3cf84" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#4ebee7e5-72e7-4b63-9324-48431d704f9f" class="tooltipped" data-position="left" data-tooltip="Discretizing the External Electric Field">Discretizing the External Electric Field</a></li><li><a href="#a3d24231-5a90-4a27-b94d-888b9f62fdee" class="tooltipped" data-position="left" data-tooltip="Solving for the Total Electric Field">Solving for the Total Electric Field</a></li><li><a href="#4a64049d-44c3-4319-838a-05dc1b8d16dd" class="tooltipped" data-position="left" data-tooltip="Solving for the Magnetic Flux Density">Solving for the Magnetic Flux Density</a></li><li><a href="#50ceff0d-2ba3-456f-8c3b-e8651c6e443f" class="tooltipped" data-position="left" data-tooltip="Example File">Example File</a></li><li><a href="#7cda7567-2581-486d-b817-446e50ec8beb" class="tooltipped" data-position="left" data-tooltip="Global Current Constraints">Global Current Constraints</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
