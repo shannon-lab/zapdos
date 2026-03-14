@@ -1,0 +1,480 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>BuildArrayVariableAux | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="9b74f86b-db7e-4ec4-ae19-21537c10c8a5" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="1d394777-f3ca-43b5-bdef-834770ef46a8" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="3e8e33c5-0c28-40f4-8a9f-fe2efe696855" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="fb6863c8-e5f6-43a3-9b09-bbcf951b08fd"><i class="material-icons">menu</i></a><ul class="sidenav" id="fb6863c8-e5f6-43a3-9b09-bbcf951b08fd"><li><a href="#!" class="dropdown-trigger" data-target="f2e3d53b-80cf-40a8-9148-bdb9d72ec233" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d496b1ef-37b8-405e-977e-5fd3ca9e3572" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d3b91c7b-5d43-4e61-812c-503ef7f2299b" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="9b74f86b-db7e-4ec4-ae19-21537c10c8a5"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="1d394777-f3ca-43b5-bdef-834770ef46a8"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="3e8e33c5-0c28-40f4-8a9f-fe2efe696855"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="f2e3d53b-80cf-40a8-9148-bdb9d72ec233"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="d496b1ef-37b8-405e-977e-5fd3ca9e3572"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="d3b91c7b-5d43-4e61-812c-503ef7f2299b"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">auxkernels</span><a href="#" class="breadcrumb">BuildArrayVariableAux</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="6275c4fb-f73b-4767-a4ff-bfea559ba476" data-section-level="1" data-section-text="BuildArrayVariableAux"><h1 id="buildarrayvariableaux">BuildArrayVariableAux</h1><p>Combines multiple standard variables into an array variable.</p><section class="scrollspy" id="3e6f9498-bae9-4835-b8b1-0c317791c7ff" data-section-level="2" data-section-text="Example Syntax"><h2 id="example-syntax">Example Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[Variables&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Variables/index.html&quot;}&gt;&gt;&gt;]
+  [a]
+    order&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)&quot;}&gt;&gt;&gt; = FIRST
+    family&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the family of FE shape functions to use for this variable&quot;}&gt;&gt;&gt; = LAGRANGE
+  []
+  [b]
+    order&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)&quot;}&gt;&gt;&gt; = FIRST
+    family&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the family of FE shape functions to use for this variable&quot;}&gt;&gt;&gt; = LAGRANGE
+  []
+  [c]
+    order&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)&quot;}&gt;&gt;&gt; = CONSTANT
+    family&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the family of FE shape functions to use for this variable&quot;}&gt;&gt;&gt; = MONOMIAL
+    fv = true
+  []
+  [d]
+    order&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)&quot;}&gt;&gt;&gt; = CONSTANT
+    family&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the family of FE shape functions to use for this variable&quot;}&gt;&gt;&gt; = MONOMIAL
+    fv = true
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#bb815135-0f1e-49d3-a8fe-ddd0b197aa08">(moose/test/tests/auxkernels/build_array_variable_aux/build_array_variable_aux.i)</a><pre style="max-height:350px;"><code class="language-moose">[AuxVariables&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/AuxVariables/index.html&quot;}&gt;&gt;&gt;]
+  [ab]
+    order&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)&quot;}&gt;&gt;&gt; = FIRST
+    family&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the family of FE shape functions to use for this variable&quot;}&gt;&gt;&gt; = LAGRANGE
+    components = 2
+  []
+  [cd]
+    order&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)&quot;}&gt;&gt;&gt; = CONSTANT
+    family&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the family of FE shape functions to use for this variable&quot;}&gt;&gt;&gt; = MONOMIAL
+    components = 2
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#0d7222cc-97d2-4f8e-8099-3df552964058">(moose/test/tests/auxkernels/build_array_variable_aux/build_array_variable_aux.i)</a><pre style="max-height:350px;"><code class="language-moose">[AuxKernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/AuxKernels/index.html&quot;}&gt;&gt;&gt;]
+  [build_ab]
+    type = BuildArrayVariableAux&lt;&lt;&lt;{&quot;description&quot;: &quot;Combines multiple standard variables into an array variable.&quot;, &quot;href&quot;: &quot;BuildArrayVariableAux.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this object applies to&quot;}&gt;&gt;&gt; = ab
+    component_variables&lt;&lt;&lt;{&quot;description&quot;: &quot;The variables that make up each component of the output array variable.&quot;}&gt;&gt;&gt; = &#x27;a b&#x27;
+  []
+  [build_cd]
+    type = BuildArrayVariableAux&lt;&lt;&lt;{&quot;description&quot;: &quot;Combines multiple standard variables into an array variable.&quot;, &quot;href&quot;: &quot;BuildArrayVariableAux.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this object applies to&quot;}&gt;&gt;&gt; = cd
+    component_variables&lt;&lt;&lt;{&quot;description&quot;: &quot;The variables that make up each component of the output array variable.&quot;}&gt;&gt;&gt; = &#x27;c d&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#1434828e-3d48-4c99-a44c-8b5a64423ce5">(moose/test/tests/auxkernels/build_array_variable_aux/build_array_variable_aux.i)</a></section><section class="scrollspy" id="8426ab25-c388-4741-90d0-1cc68f7190a1" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="f94d6a22-901b-4339-b089-86fd3c44d87f" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this object applies to</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>AuxVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this object applies to</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="75677f95-ad86-4672-8551-5c0c99b12406" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundaries (ids or names) from the mesh where this object applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of boundaries (ids or names) from the mesh where this object applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">check_boundary_restricted</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Whether to check for multiple element sides on the boundary in the case of a boundary restricted, element aux variable. Setting this to false will allow contribution to a single element's elemental value(s) from multiple boundary sides on the same element (example: when the restricted boundary exists on two or more sides of an element, such as at a corner of a mesh</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to check for multiple element sides on the boundary in the case of a boundary restricted, element aux variable. Setting this to false will allow contribution to a single element's elemental value(s) from multiple boundary sides on the same element (example: when the restricted boundary exists on two or more sides of an element, such as at a corner of a mesh</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">component_variables</span><span class="moose-parameter-header-description">The variables that make up each component of the output array variable.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The variables that make up each component of the output array variable.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">LINEAR TIMESTEP_END</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>LINEAR TIMESTEP_END</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, INITIAL, LINEAR, LINEAR_CONVERGENCE, NONLINEAR, NONLINEAR_CONVERGENCE, POSTCHECK, TIMESTEP_END, TIMESTEP_BEGIN, MULTIAPP_FIXED_POINT_END, MULTIAPP_FIXED_POINT_BEGIN, MULTIAPP_FIXED_POINT_CONVERGENCE, FINAL, CUSTOM, PRE_DISPLACE</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="4cd7c07c-d685-4e96-a7cc-924a5382b38a" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">search_method</span><span class="moose-parameter-header-default">nearest_node_connected_sides</span><span class="moose-parameter-header-description">Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nearest_node_connected_sides</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nearest_node_connected_sides, all_proximate_sides</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="6219be7a-faa2-4b3c-a417-99437f1c97e6" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="bb815135-0f1e-49d3-a8fe-ddd0b197aa08"><div class="modal-content"><h4>(moose/test/tests/auxkernels/build_array_variable_aux/build_array_variable_aux.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [meshgen]
+    type = GeneratedMeshGenerator
+    nx = 2
+    ny = 2
+    dim = 2
+  []
+[]
+
+[Variables]
+  [a]
+    order = FIRST
+    family = LAGRANGE
+  []
+  [b]
+    order = FIRST
+    family = LAGRANGE
+  []
+  [c]
+    order = CONSTANT
+    family = MONOMIAL
+    fv = true
+  []
+  [d]
+    order = CONSTANT
+    family = MONOMIAL
+    fv = true
+  []
+[]
+
+[Kernels]
+  [diff_a]
+    type = Diffusion
+    variable = a
+  []
+  [diff_b]
+    type = Diffusion
+    variable = b
+  []
+[]
+
+[FVKernels]
+  [diff_c]
+    type = FVDiffusion
+    variable = c
+    coeff = 1
+  []
+  [diff_d]
+    type = FVDiffusion
+    variable = d
+    coeff = 1
+  []
+[]
+
+[BCs]
+  [a1]
+    type = DirichletBC
+    variable = a
+    boundary = left
+    value = 0
+  []
+  [a2]
+    type = DirichletBC
+    variable = a
+    boundary = right
+    value = 1
+  []
+  [b1]
+    type = DirichletBC
+    variable = b
+    boundary = bottom
+    value = 0
+  []
+  [b2]
+    type = DirichletBC
+    variable = b
+    boundary = top
+    value = 1
+  []
+[]
+
+[FVBCs]
+  [c1]
+    type = FVDirichletBC
+    variable = c
+    boundary = left
+    value = 0
+  []
+  [c2]
+    type = FVDirichletBC
+    variable = c
+    boundary = right
+    value = 1
+  []
+  [d1]
+    type = FVDirichletBC
+    variable = d
+    boundary = bottom
+    value = 0
+  []
+  [d2]
+    type = FVDirichletBC
+    variable = d
+    boundary = top
+    value = 1
+  []
+[]
+
+[Problem]
+  kernel_coverage_check = off
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = &#x27;NEWTON&#x27;
+[]
+
+[AuxVariables]
+  [ab]
+    order = FIRST
+    family = LAGRANGE
+    components = 2
+  []
+  [cd]
+    order = CONSTANT
+    family = MONOMIAL
+    components = 2
+  []
+[]
+
+[AuxKernels]
+  [build_ab]
+    type = BuildArrayVariableAux
+    variable = ab
+    component_variables = &#x27;a b&#x27;
+  []
+  [build_cd]
+    type = BuildArrayVariableAux
+    variable = cd
+    component_variables = &#x27;c d&#x27;
+  []
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="0d7222cc-97d2-4f8e-8099-3df552964058"><div class="modal-content"><h4>(moose/test/tests/auxkernels/build_array_variable_aux/build_array_variable_aux.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [meshgen]
+    type = GeneratedMeshGenerator
+    nx = 2
+    ny = 2
+    dim = 2
+  []
+[]
+
+[Variables]
+  [a]
+    order = FIRST
+    family = LAGRANGE
+  []
+  [b]
+    order = FIRST
+    family = LAGRANGE
+  []
+  [c]
+    order = CONSTANT
+    family = MONOMIAL
+    fv = true
+  []
+  [d]
+    order = CONSTANT
+    family = MONOMIAL
+    fv = true
+  []
+[]
+
+[Kernels]
+  [diff_a]
+    type = Diffusion
+    variable = a
+  []
+  [diff_b]
+    type = Diffusion
+    variable = b
+  []
+[]
+
+[FVKernels]
+  [diff_c]
+    type = FVDiffusion
+    variable = c
+    coeff = 1
+  []
+  [diff_d]
+    type = FVDiffusion
+    variable = d
+    coeff = 1
+  []
+[]
+
+[BCs]
+  [a1]
+    type = DirichletBC
+    variable = a
+    boundary = left
+    value = 0
+  []
+  [a2]
+    type = DirichletBC
+    variable = a
+    boundary = right
+    value = 1
+  []
+  [b1]
+    type = DirichletBC
+    variable = b
+    boundary = bottom
+    value = 0
+  []
+  [b2]
+    type = DirichletBC
+    variable = b
+    boundary = top
+    value = 1
+  []
+[]
+
+[FVBCs]
+  [c1]
+    type = FVDirichletBC
+    variable = c
+    boundary = left
+    value = 0
+  []
+  [c2]
+    type = FVDirichletBC
+    variable = c
+    boundary = right
+    value = 1
+  []
+  [d1]
+    type = FVDirichletBC
+    variable = d
+    boundary = bottom
+    value = 0
+  []
+  [d2]
+    type = FVDirichletBC
+    variable = d
+    boundary = top
+    value = 1
+  []
+[]
+
+[Problem]
+  kernel_coverage_check = off
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = &#x27;NEWTON&#x27;
+[]
+
+[AuxVariables]
+  [ab]
+    order = FIRST
+    family = LAGRANGE
+    components = 2
+  []
+  [cd]
+    order = CONSTANT
+    family = MONOMIAL
+    components = 2
+  []
+[]
+
+[AuxKernels]
+  [build_ab]
+    type = BuildArrayVariableAux
+    variable = ab
+    component_variables = &#x27;a b&#x27;
+  []
+  [build_cd]
+    type = BuildArrayVariableAux
+    variable = cd
+    component_variables = &#x27;c d&#x27;
+  []
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="1434828e-3d48-4c99-a44c-8b5a64423ce5"><div class="modal-content"><h4>(moose/test/tests/auxkernels/build_array_variable_aux/build_array_variable_aux.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [meshgen]
+    type = GeneratedMeshGenerator
+    nx = 2
+    ny = 2
+    dim = 2
+  []
+[]
+
+[Variables]
+  [a]
+    order = FIRST
+    family = LAGRANGE
+  []
+  [b]
+    order = FIRST
+    family = LAGRANGE
+  []
+  [c]
+    order = CONSTANT
+    family = MONOMIAL
+    fv = true
+  []
+  [d]
+    order = CONSTANT
+    family = MONOMIAL
+    fv = true
+  []
+[]
+
+[Kernels]
+  [diff_a]
+    type = Diffusion
+    variable = a
+  []
+  [diff_b]
+    type = Diffusion
+    variable = b
+  []
+[]
+
+[FVKernels]
+  [diff_c]
+    type = FVDiffusion
+    variable = c
+    coeff = 1
+  []
+  [diff_d]
+    type = FVDiffusion
+    variable = d
+    coeff = 1
+  []
+[]
+
+[BCs]
+  [a1]
+    type = DirichletBC
+    variable = a
+    boundary = left
+    value = 0
+  []
+  [a2]
+    type = DirichletBC
+    variable = a
+    boundary = right
+    value = 1
+  []
+  [b1]
+    type = DirichletBC
+    variable = b
+    boundary = bottom
+    value = 0
+  []
+  [b2]
+    type = DirichletBC
+    variable = b
+    boundary = top
+    value = 1
+  []
+[]
+
+[FVBCs]
+  [c1]
+    type = FVDirichletBC
+    variable = c
+    boundary = left
+    value = 0
+  []
+  [c2]
+    type = FVDirichletBC
+    variable = c
+    boundary = right
+    value = 1
+  []
+  [d1]
+    type = FVDirichletBC
+    variable = d
+    boundary = bottom
+    value = 0
+  []
+  [d2]
+    type = FVDirichletBC
+    variable = d
+    boundary = top
+    value = 1
+  []
+[]
+
+[Problem]
+  kernel_coverage_check = off
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = &#x27;NEWTON&#x27;
+[]
+
+[AuxVariables]
+  [ab]
+    order = FIRST
+    family = LAGRANGE
+    components = 2
+  []
+  [cd]
+    order = CONSTANT
+    family = MONOMIAL
+    components = 2
+  []
+[]
+
+[AuxKernels]
+  [build_ab]
+    type = BuildArrayVariableAux
+    variable = ab
+    component_variables = &#x27;a b&#x27;
+  []
+  [build_cd]
+    type = BuildArrayVariableAux
+    variable = cd
+    component_variables = &#x27;c d&#x27;
+  []
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#3e6f9498-bae9-4835-b8b1-0c317791c7ff" class="tooltipped" data-position="left" data-tooltip="Example Syntax">Example Syntax</a></li><li><a href="#8426ab25-c388-4741-90d0-1cc68f7190a1" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

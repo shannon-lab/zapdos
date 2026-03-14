@@ -1,0 +1,411 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>PeriodicAmplitudeRegulator | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="b6ba14a4-f331-4cef-a9be-01a5cb61ffb6" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="fc3347c5-6247-4230-aedd-d676c47aad9a" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="909858a1-46b1-43d0-812e-f1e6b0a67438" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="9e6d0f1b-800a-4a48-869c-d48ff8874a86"><i class="material-icons">menu</i></a><ul class="sidenav" id="9e6d0f1b-800a-4a48-869c-d48ff8874a86"><li><a href="#!" class="dropdown-trigger" data-target="26ec6aff-2bea-4197-b343-0368bf341515" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="5c7a7432-d717-4072-9db1-2597896b3344" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="6b0bc97b-6c71-43b1-8b84-b5ac6f02ceb6" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="b6ba14a4-f331-4cef-a9be-01a5cb61ffb6"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="fc3347c5-6247-4230-aedd-d676c47aad9a"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="909858a1-46b1-43d0-812e-f1e6b0a67438"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="26ec6aff-2bea-4197-b343-0368bf341515"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="5c7a7432-d717-4072-9db1-2597896b3344"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="6b0bc97b-6c71-43b1-8b84-b5ac6f02ceb6"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">postprocessors</span><a href="#" class="breadcrumb">PeriodicAmplitudeRegulator</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="f22d56db-6722-42bf-95dd-5a217ada1145" data-section-level="1" data-section-text="PeriodicAmplitudeRegulator"><h1 id="periodicamplituderegulator">PeriodicAmplitudeRegulator</h1><p><code>PeriodicAmplitudeRegulator</code> periodical updates its value based on the ratio of a coupled Postprocessor value and a reference value. The value of <code>PeriodicAmplitudeRegulator</code> is updated with the following scheme</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-6ced861a-e09c-487c-bae7-711ecc983184"></span><script>var element = document.getElementById("moose-equation-6ced861a-e09c-487c-bae7-711ecc983184");katex.render("  V_n =   \\frac{P_\\text{ref}}{P_\\text{actual}}   V_{n-1}", element, {displayMode:true,throwOnError:false});</script></span></p><p>Where <span class="moose-katex-inline-equation" id="moose-equation-a7702b44-4844-4967-888e-537941e80a21"><script>var element = document.getElementById("moose-equation-a7702b44-4844-4967-888e-537941e80a21");katex.render("V_n", element, {displayMode:false,throwOnError:false});</script></span> is the new value of the <code>PeriodicAmplitudeRegulator</code> Postprocessor, <span class="moose-katex-inline-equation" id="moose-equation-cd0fae2a-96e7-49dd-b558-2ba5870cdaa0"><script>var element = document.getElementById("moose-equation-cd0fae2a-96e7-49dd-b558-2ba5870cdaa0");katex.render("P_\\text{ref}", element, {displayMode:false,throwOnError:false});</script></span> is the reference value, <span class="moose-katex-inline-equation" id="moose-equation-caced4c7-7ca3-426e-9578-02d3f747bd1d"><script>var element = document.getElementById("moose-equation-caced4c7-7ca3-426e-9578-02d3f747bd1d");katex.render("P_\\text{actual}", element, {displayMode:false,throwOnError:false});</script></span> is the value of the coupled Postprocessor, <span class="moose-katex-inline-equation" id="moose-equation-099905d3-eb3e-4452-a60c-d054b6d52535"><script>var element = document.getElementById("moose-equation-099905d3-eb3e-4452-a60c-d054b6d52535");katex.render("V_{n-1}", element, {displayMode:false,throwOnError:false});</script></span> is the pervious value of the <code>PeriodicAmplitudeRegulator</code> Postprocessor, and the subscript <span class="moose-katex-inline-equation" id="moose-equation-b636262d-dd25-451a-b315-982a16f3493e"><script>var element = document.getElementById("moose-equation-b636262d-dd25-451a-b315-982a16f3493e");katex.render("n", element, {displayMode:false,throwOnError:false});</script></span> is some multiplicative integer of the period.</p><section class="scrollspy" id="e8e0c399-1608-4bdd-abef-c778efd16b82" data-section-level="2" data-section-text="Example Amplitude Regulation"><h2 id="example-amplitude-regulation">Example Amplitude Regulation</h2><p><code>PeriodicAmplitudeRegulator</code> is intended to be used to modify the value of a control parameter to force another Postprocessor value to be equal a refernce value. For the test example <a class="moose-source-filename tooltipped modal-trigger" href="#084439ad-fbc8-4d69-8963-22428a738ed5">periodic_modifier.i</a>, the reference value was <span class="moose-katex-inline-equation" id="moose-equation-cad7d709-5b6b-40ca-8333-e411100bb5f7"><script>var element = document.getElementById("moose-equation-cad7d709-5b6b-40ca-8333-e411100bb5f7");katex.render("10", element, {displayMode:false,throwOnError:false});</script></span> and the coupled Postprocessor was <a href="MultiPeriodAverager.html">MultiPeriodAverager</a>, which takes multiple period averages of a periodic integral that depends on the value of <code>PeriodicAmplitudeRegulator</code>. The results in the figure below are from the test example <a class="moose-source-filename tooltipped modal-trigger" href="#51beb628-6697-4488-834b-2a4247277fa6">periodic_modifier.i</a> with a more refined time step of <code>dt = 1e-2</code>. In this case, the Function Magnitude is the value of <code>PeriodicAmplitudeRegulator</code> with an initial value of <span class="moose-katex-inline-equation" id="moose-equation-b62fbbd2-3608-40e1-87eb-ecda7bf1f35a"><script>var element = document.getElementById("moose-equation-b62fbbd2-3608-40e1-87eb-ecda7bf1f35a");katex.render("-4", element, {displayMode:false,throwOnError:false});</script></span> and the Periodic Integral is the value of the coupled Postprocessor, <a href="MultiPeriodAverager.html">MultiPeriodAverager</a>.</p><div class="row"><div class="col s12 m6 l6"><div style=";text-align:center"><picture class="materialboxed moose-image" role="button" tabindex="0"><img src="../../media/periodic_modification.png" style="width:100%;display:block;margin-top:3em;margin-left:auto;margin-right:auto;"></img></picture></div></div><div class="col s12 m6 l6"><div style=";text-align:right"><picture class="materialboxed moose-image" role="button" tabindex="0"><img src="../../media/multi_period_mean.png" style="width:97%;display:block;margin-top:3em;margin-left:auto;margin-right:auto;"></img></picture></div></div></div></section><section class="scrollspy" id="674dbe78-0679-402e-bb2e-9a70415959ba" data-section-level="2" data-section-text="Example Input File Syntax"><h2 id="example-input-file-syntax">Example Input File Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[Functions&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Functions/index.html&quot;}&gt;&gt;&gt;]
+  [func]
+    type = ParsedFunction&lt;&lt;&lt;{&quot;description&quot;: &quot;Function created by parsing a string&quot;, &quot;href&quot;: &quot;../functions/MooseParsedFunction.html&quot;}&gt;&gt;&gt;
+    symbol_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Symbols (excluding t,x,y,z) that are bound to the values provided by the corresponding items in the vals vector.&quot;}&gt;&gt;&gt; = &#x27;mag&#x27;
+    symbol_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Constant numeric values, postprocessor names, function names, and scalar variables corresponding to the symbols in symbol_names.&quot;}&gt;&gt;&gt; = &#x27;mag&#x27;
+    expression&lt;&lt;&lt;{&quot;description&quot;: &quot;The user defined function.&quot;}&gt;&gt;&gt; = &#x27;mag * x * (x-1)&#x27;
+  []
+[]
+
+[Postprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Postprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [a]
+    type = ElementIntegralVariablePostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes a volume integral of the specified variable&quot;, &quot;href&quot;: &quot;ElementIntegralVariablePostprocessor.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this object operates on&quot;}&gt;&gt;&gt; = v
+    execute_on&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.&quot;}&gt;&gt;&gt; = &#x27;initial timestep_end&#x27;
+  []
+
+  [periodic_a]
+    type = PeriodicTimeIntegratedPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Integrate a Postprocessor value over a period in time using trapezoidal rule.&quot;, &quot;href&quot;: &quot;PeriodicTimeIntegratedPostprocessor.html&quot;}&gt;&gt;&gt;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the postprocessor you are integrating over time&quot;}&gt;&gt;&gt; = a
+    cycle_frequency&lt;&lt;&lt;{&quot;description&quot;: &quot;The frequency of the process. Used to calculate the period over which you are integrating.&quot;}&gt;&gt;&gt; = 0.1
+    coefficient&lt;&lt;&lt;{&quot;description&quot;: &quot;The value to multiply the postprocessor by when integrating&quot;}&gt;&gt;&gt; = 0.1
+    execute_on&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.&quot;}&gt;&gt;&gt; = &#x27;initial timestep_end&#x27;
+  []
+
+  [multi_period]
+    type = MultiPeriodAverager&lt;&lt;&lt;{&quot;description&quot;: &quot;Calculate the average value of a post processor over multiple periods&quot;, &quot;href&quot;: &quot;MultiPeriodAverager.html&quot;}&gt;&gt;&gt;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the postprocessor you would like to average over multiple periods&quot;}&gt;&gt;&gt; = periodic_a
+    cycle_frequency&lt;&lt;&lt;{&quot;description&quot;: &quot;The frequency of the process. Used to calculate the period over which you are integrating.&quot;}&gt;&gt;&gt; = 0.1
+    number_of_periods&lt;&lt;&lt;{&quot;description&quot;: &quot;The number of periods over which you are averaging&quot;}&gt;&gt;&gt; = 2
+    execute_on&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.&quot;}&gt;&gt;&gt; = &#x27;initial timestep_begin&#x27;
+  []
+
+  [mag]
+    type = PeriodicAmplitudeRegulator&lt;&lt;&lt;{&quot;description&quot;: &quot;Postprocessor that will modify its value by the ratio of anotherpostprocessor to the provided reference value&quot;, &quot;href&quot;: &quot;PeriodicAmplitudeRegulator.html&quot;}&gt;&gt;&gt;
+    value&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the postprocessor which will be compared to the reference&quot;}&gt;&gt;&gt; = multi_period
+    cycle_frequency&lt;&lt;&lt;{&quot;description&quot;: &quot;The frequency of the process. Used to calculate the period over which you are integrating.&quot;}&gt;&gt;&gt; = 0.1
+    initial_value&lt;&lt;&lt;{&quot;description&quot;: &quot;The initial value for this postprocessor&quot;}&gt;&gt;&gt; = -4
+    reference_value&lt;&lt;&lt;{&quot;description&quot;: &quot;The value that you want to the &#x27;value&#x27; parameter to maintain&quot;}&gt;&gt;&gt; = 10
+    start_cycle&lt;&lt;&lt;{&quot;description&quot;: &quot;The number of cycles you want to wait before postprocessor value begins to be modified&quot;}&gt;&gt;&gt; = 2
+    cycles_between_modification&lt;&lt;&lt;{&quot;description&quot;: &quot;The number of cycles between the modifications of the postprocessor value&quot;}&gt;&gt;&gt; = 2
+    execute_on&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.&quot;}&gt;&gt;&gt; = &#x27;initial timestep_end&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#6a4f3af6-0054-4153-98f6-50a04a615e01">(test/tests/postprocessors/periodic_amplitude_regulator/periodic_modifier.i)</a></section><section class="scrollspy" id="7c203321-fcd5-4cdc-81dd-26d498bea6b8" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="b92c16ee-1a62-45be-a068-9bc15e845288" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">cycle_frequency</span><span class="moose-parameter-header-description">The frequency of the process. Used to calculate the period over which you are integrating.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The frequency of the process. Used to calculate the period over which you are integrating.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">cycles_between_modification</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The number of cycles between the modifications of the postprocessor value</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The number of cycles between the modifications of the postprocessor value</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">initial_value</span><span class="moose-parameter-header-description">The initial value for this postprocessor</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The initial value for this postprocessor</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">reference_value</span><span class="moose-parameter-header-description">The value that you want to the 'value' parameter to maintain</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The value that you want to the 'value' parameter to maintain</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">start_cycle</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">The number of cycles you want to wait before postprocessor value begins to be modified</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The number of cycles you want to wait before postprocessor value begins to be modified</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">value</span><span class="moose-parameter-header-description">The name of the postprocessor which will be compared to the reference</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>PostprocessorName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the postprocessor which will be compared to the reference</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="84b04330-80ff-44c5-be8e-e13b22161875" data-section-level="3" data-section-text="Execution Scheduling Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">allow_duplicate_execution_on_initial</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">TIMESTEP_END</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>TIMESTEP_END</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, INITIAL, LINEAR, LINEAR_CONVERGENCE, NONLINEAR, NONLINEAR_CONVERGENCE, POSTCHECK, TIMESTEP_END, TIMESTEP_BEGIN, MULTIAPP_FIXED_POINT_END, MULTIAPP_FIXED_POINT_BEGIN, MULTIAPP_FIXED_POINT_CONVERGENCE, FINAL, CUSTOM, TRANSFER</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execution_order_group</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">Execution order groups are executed in increasing order (e.g., the lowest number is executed first). Note that negative group numbers may be used to execute groups before the default (0) group. Please refer to the user object documentation for ordering of user object execution within a group.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Execution order groups are executed in increasing order (e.g., the lowest number is executed first). Note that negative group numbers may be used to execute groups before the default (0) group. Please refer to the user object documentation for ordering of user object execution within a group.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_postaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in POSTAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in POSTAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preic</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREIC during initial setup</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREIC during initial setup</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Execution Scheduling Parameters</h3></summary></details></section><section id="c9b42084-65aa-4eac-b2a0-8d707790be6f" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-description">Vector of output names where you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Vector of output names where you would like to restrict the output of variables(s) associated with this object</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="ad1cf642-6593-49b3-9337-1ce24abdfed1" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section><section class="scrollspy" id="89031289-8f82-4f3e-90ed-759ab78f3e25" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a class="moose-source-filename tooltipped modal-trigger" href="#e2ba60b4-907c-4805-a60f-3f99081554f7">(test/tests/postprocessors/periodic_amplitude_regulator/periodic_modifier.i)</a></li></ul></section></section><div class="moose-modal modal" id="084439ad-fbc8-4d69-8963-22428a738ed5"><div class="modal-content"><h4>(test/tests/postprocessors/periodic_amplitude_regulator/periodic_modifier.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generator]
+    type = GeneratedMeshGenerator
+    dim = 1
+    xmax = 1
+    nx = 100
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [null_kernel]
+    type = NullKernel
+    variable = u
+  []
+[]
+
+[AuxVariables]
+  [v]
+  []
+[]
+
+[AuxKernels]
+  [func_kernel]
+    type = FunctionAux
+    variable = v
+    function = func
+  []
+[]
+
+[Functions]
+  [func]
+    type = ParsedFunction
+    symbol_names = &#x27;mag&#x27;
+    symbol_values = &#x27;mag&#x27;
+    expression = &#x27;mag * x * (x-1)&#x27;
+  []
+[]
+
+[Postprocessors]
+  [a]
+    type = ElementIntegralVariablePostprocessor
+    variable = v
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [periodic_a]
+    type = PeriodicTimeIntegratedPostprocessor
+    value = a
+    cycle_frequency = 0.1
+    coefficient = 0.1
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [multi_period]
+    type = MultiPeriodAverager
+    value = periodic_a
+    cycle_frequency = 0.1
+    number_of_periods = 2
+    execute_on = &#x27;initial timestep_begin&#x27;
+  []
+
+  [mag]
+    type = PeriodicAmplitudeRegulator
+    value = multi_period
+    cycle_frequency = 0.1
+    initial_value = -4
+    reference_value = 10
+    start_cycle = 2
+    cycles_between_modification = 2
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 200
+  dt = 0.5
+[]
+
+[Outputs]
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="51beb628-6697-4488-834b-2a4247277fa6"><div class="modal-content"><h4>(test/tests/postprocessors/periodic_amplitude_regulator/periodic_modifier.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generator]
+    type = GeneratedMeshGenerator
+    dim = 1
+    xmax = 1
+    nx = 100
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [null_kernel]
+    type = NullKernel
+    variable = u
+  []
+[]
+
+[AuxVariables]
+  [v]
+  []
+[]
+
+[AuxKernels]
+  [func_kernel]
+    type = FunctionAux
+    variable = v
+    function = func
+  []
+[]
+
+[Functions]
+  [func]
+    type = ParsedFunction
+    symbol_names = &#x27;mag&#x27;
+    symbol_values = &#x27;mag&#x27;
+    expression = &#x27;mag * x * (x-1)&#x27;
+  []
+[]
+
+[Postprocessors]
+  [a]
+    type = ElementIntegralVariablePostprocessor
+    variable = v
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [periodic_a]
+    type = PeriodicTimeIntegratedPostprocessor
+    value = a
+    cycle_frequency = 0.1
+    coefficient = 0.1
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [multi_period]
+    type = MultiPeriodAverager
+    value = periodic_a
+    cycle_frequency = 0.1
+    number_of_periods = 2
+    execute_on = &#x27;initial timestep_begin&#x27;
+  []
+
+  [mag]
+    type = PeriodicAmplitudeRegulator
+    value = multi_period
+    cycle_frequency = 0.1
+    initial_value = -4
+    reference_value = 10
+    start_cycle = 2
+    cycles_between_modification = 2
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 200
+  dt = 0.5
+[]
+
+[Outputs]
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="6a4f3af6-0054-4153-98f6-50a04a615e01"><div class="modal-content"><h4>(test/tests/postprocessors/periodic_amplitude_regulator/periodic_modifier.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generator]
+    type = GeneratedMeshGenerator
+    dim = 1
+    xmax = 1
+    nx = 100
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [null_kernel]
+    type = NullKernel
+    variable = u
+  []
+[]
+
+[AuxVariables]
+  [v]
+  []
+[]
+
+[AuxKernels]
+  [func_kernel]
+    type = FunctionAux
+    variable = v
+    function = func
+  []
+[]
+
+[Functions]
+  [func]
+    type = ParsedFunction
+    symbol_names = &#x27;mag&#x27;
+    symbol_values = &#x27;mag&#x27;
+    expression = &#x27;mag * x * (x-1)&#x27;
+  []
+[]
+
+[Postprocessors]
+  [a]
+    type = ElementIntegralVariablePostprocessor
+    variable = v
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [periodic_a]
+    type = PeriodicTimeIntegratedPostprocessor
+    value = a
+    cycle_frequency = 0.1
+    coefficient = 0.1
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [multi_period]
+    type = MultiPeriodAverager
+    value = periodic_a
+    cycle_frequency = 0.1
+    number_of_periods = 2
+    execute_on = &#x27;initial timestep_begin&#x27;
+  []
+
+  [mag]
+    type = PeriodicAmplitudeRegulator
+    value = multi_period
+    cycle_frequency = 0.1
+    initial_value = -4
+    reference_value = 10
+    start_cycle = 2
+    cycles_between_modification = 2
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 200
+  dt = 0.5
+[]
+
+[Outputs]
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="e2ba60b4-907c-4805-a60f-3f99081554f7"><div class="modal-content"><h4>(test/tests/postprocessors/periodic_amplitude_regulator/periodic_modifier.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [generator]
+    type = GeneratedMeshGenerator
+    dim = 1
+    xmax = 1
+    nx = 100
+  []
+[]
+
+[Problem]
+  type = FEProblem
+[]
+
+[Variables]
+  [u]
+  []
+[]
+
+[Kernels]
+  [null_kernel]
+    type = NullKernel
+    variable = u
+  []
+[]
+
+[AuxVariables]
+  [v]
+  []
+[]
+
+[AuxKernels]
+  [func_kernel]
+    type = FunctionAux
+    variable = v
+    function = func
+  []
+[]
+
+[Functions]
+  [func]
+    type = ParsedFunction
+    symbol_names = &#x27;mag&#x27;
+    symbol_values = &#x27;mag&#x27;
+    expression = &#x27;mag * x * (x-1)&#x27;
+  []
+[]
+
+[Postprocessors]
+  [a]
+    type = ElementIntegralVariablePostprocessor
+    variable = v
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [periodic_a]
+    type = PeriodicTimeIntegratedPostprocessor
+    value = a
+    cycle_frequency = 0.1
+    coefficient = 0.1
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+  [multi_period]
+    type = MultiPeriodAverager
+    value = periodic_a
+    cycle_frequency = 0.1
+    number_of_periods = 2
+    execute_on = &#x27;initial timestep_begin&#x27;
+  []
+
+  [mag]
+    type = PeriodicAmplitudeRegulator
+    value = multi_period
+    cycle_frequency = 0.1
+    initial_value = -4
+    reference_value = 10
+    start_cycle = 2
+    cycles_between_modification = 2
+    execute_on = &#x27;initial timestep_end&#x27;
+  []
+
+[]
+
+[Executioner]
+  type = Transient
+  end_time = 200
+  dt = 0.5
+[]
+
+[Outputs]
+  csv = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#e8e0c399-1608-4bdd-abef-c778efd16b82" class="tooltipped" data-position="left" data-tooltip="Example Amplitude Regulation">Example Amplitude Regulation</a></li><li><a href="#674dbe78-0679-402e-bb2e-9a70415959ba" class="tooltipped" data-position="left" data-tooltip="Example Input File Syntax">Example Input File Syntax</a></li><li><a href="#7c203321-fcd5-4cdc-81dd-26d498bea6b8" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#89031289-8f82-4f3e-90ed-759ab78f3e25" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
