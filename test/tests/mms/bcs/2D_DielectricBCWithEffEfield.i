@@ -227,7 +227,7 @@
     type = ParsedFunction
     symbol_names = massem
     symbol_values = massem
-    value = 'massem * 1.6e-19 * (1.6e-19 * 6.02e23)^2'
+    expression = 'massem * 1.6e-19 * (1.6e-19 * 6.02e23)^2'
   []
 
   #Electron diffusion coeff.
@@ -262,7 +262,7 @@
     type = ParsedFunction
     symbol_names = muion
     symbol_values = muion
-    value = 'muion / (1.6e-19 * 6.02e23)'
+    expression = 'muion / (1.6e-19 * 6.02e23)'
   []
 
   [N_A]
