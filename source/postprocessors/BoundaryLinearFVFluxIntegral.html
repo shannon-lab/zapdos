@@ -1,0 +1,216 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>BoundaryLinearFVFluxIntegral | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="1ae1f84b-f82f-461a-b257-453b57d2e5ca" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="654a4f9d-cc2a-4bea-8757-4fca08610344" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="23ff629c-5835-4297-9995-074bc981a966" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="9980e131-3703-40cc-8f59-e05fb030b3ef"><i class="material-icons">menu</i></a><ul class="sidenav" id="9980e131-3703-40cc-8f59-e05fb030b3ef"><li><a href="#!" class="dropdown-trigger" data-target="4d0a6246-9a48-40bd-a82b-1f30917014ec" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="1370251a-146a-4384-9328-fb24ac420ce4" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="083dcf47-6753-400c-b4e9-f68130b6556b" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="1ae1f84b-f82f-461a-b257-453b57d2e5ca"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="654a4f9d-cc2a-4bea-8757-4fca08610344"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="23ff629c-5835-4297-9995-074bc981a966"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="4d0a6246-9a48-40bd-a82b-1f30917014ec"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="1370251a-146a-4384-9328-fb24ac420ce4"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="083dcf47-6753-400c-b4e9-f68130b6556b"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">postprocessors</span><a href="#" class="breadcrumb">BoundaryLinearFVFluxIntegral</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="0a014883-c031-4261-a307-f09ad1fb5cc9" data-section-level="1" data-section-text="BoundaryLinearFVFluxIntegral"><h1 id="boundarylinearfvfluxintegral">BoundaryLinearFVFluxIntegral</h1><p>Computes the boundary integral of boundary flux contributions from one or more <code>LinearFVFluxKernel</code> objects (e.g. <a href="../linearfvkernels/LinearFVDiffusion.html">LinearFVDiffusion</a>, <a href="../linearfvkernels/LinearFVAdvection.html">LinearFVAdvection</a>). Let <span class="moose-katex-inline-equation" id="moose-equation-f383c427-b25c-43ee-9199-25a197e7c322"><script>var element = document.getElementById("moose-equation-f383c427-b25c-43ee-9199-25a197e7c322");katex.render("F_k(u)", element, {displayMode:false,throwOnError:false});</script></span> denote the boundary flux computed by kernel <span class="moose-katex-inline-equation" id="moose-equation-5e1733d6-5af9-4922-ab79-58e9359df43e"><script>var element = document.getElementById("moose-equation-5e1733d6-5af9-4922-ab79-58e9359df43e");katex.render("k", element, {displayMode:false,throwOnError:false});</script></span>. This postprocessor computes</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-d3bbaa8d-f061-4f03-96ec-beb807f481ac"></span><script>var element = document.getElementById("moose-equation-d3bbaa8d-f061-4f03-96ec-beb807f481ac");katex.render("\\int_S \\sum_k^{N} F_k(u)\\, dS,", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-2f672c57-4c97-4c51-8b9f-c8cd1dc2d553"><script>var element = document.getElementById("moose-equation-2f672c57-4c97-4c51-8b9f-c8cd1dc2d553");katex.render("N", element, {displayMode:false,throwOnError:false});</script></span> is the number of kernels listed in <a href="#28d31bab-560f-4774-9590-a6c3fb0ce2c6" class="moose-modal-link modal-trigger">&quot;linearfvkernels&quot;</a> and <span class="moose-katex-inline-equation" id="moose-equation-2512ecbb-3fff-4909-acc2-d82012cac061"><script>var element = document.getElementById("moose-equation-2512ecbb-3fff-4909-acc2-d82012cac061");katex.render("S", element, {displayMode:false,throwOnError:false});</script></span> is the selected sideset.</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note</span></div><div class="card-content"><div class="moose-alert-content"><p>All kernels listed in <a href="#8ed5d6fc-43e3-4da6-8902-f6cf85bee000" class="moose-modal-link modal-trigger">&quot;linearfvkernels&quot;</a> must act on the same linear FV variable name, and that variable must have a <a href="../../syntax/LinearFVBCs/index.html">LinearFVBoundaryCondition</a> on every boundary listed for this postprocessor. This is a requirement at the moment because we would like to avoid summing fluxes from different variables/equations.</p></div></div></div><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">comment</i><span class="moose-alert-title-brand">note</span></div><div class="card-content"><div class="moose-alert-content"><p>Furthermore, we don&#x27;t support flux evaluation for internal sidesets (internal to the domain of definition of the linearFV kernels) at the moment. This kernel is supposed to serve as a boundary flux evaluator.</p></div></div></div><section class="scrollspy" id="6035a444-8491-49f5-9fcd-074e3a2c76ca" data-section-level="2" data-section-text="Example Input Syntax"><h2 id="example-input-syntax">Example Input Syntax</h2><pre style="max-height:350px;"><code class="language-moose">[Postprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Postprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [flux_left_total]
+    type = BoundaryLinearFVFluxIntegral&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes the side integral of selected LinearFVFluxKernel boundary flux contributions.&quot;, &quot;href&quot;: &quot;BoundaryLinearFVFluxIntegral.html&quot;}&gt;&gt;&gt;
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = left
+    linearfvkernels&lt;&lt;&lt;{&quot;description&quot;: &quot;List of LinearFVFluxKernels whose boundary fluxes are integrated.&quot;}&gt;&gt;&gt; = &#x27;diffusion advection&#x27;
+  []
+  [flux_left_diff]
+    type = BoundaryLinearFVFluxIntegral&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes the side integral of selected LinearFVFluxKernel boundary flux contributions.&quot;, &quot;href&quot;: &quot;BoundaryLinearFVFluxIntegral.html&quot;}&gt;&gt;&gt;
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = left
+    linearfvkernels&lt;&lt;&lt;{&quot;description&quot;: &quot;List of LinearFVFluxKernels whose boundary fluxes are integrated.&quot;}&gt;&gt;&gt; = &#x27;diffusion&#x27;
+  []
+  [flux_left_adv]
+    type = BoundaryLinearFVFluxIntegral&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes the side integral of selected LinearFVFluxKernel boundary flux contributions.&quot;, &quot;href&quot;: &quot;BoundaryLinearFVFluxIntegral.html&quot;}&gt;&gt;&gt;
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = left
+    linearfvkernels&lt;&lt;&lt;{&quot;description&quot;: &quot;List of LinearFVFluxKernels whose boundary fluxes are integrated.&quot;}&gt;&gt;&gt; = &#x27;advection&#x27;
+  []
+  [flux_right_total]
+    type = BoundaryLinearFVFluxIntegral&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes the side integral of selected LinearFVFluxKernel boundary flux contributions.&quot;, &quot;href&quot;: &quot;BoundaryLinearFVFluxIntegral.html&quot;}&gt;&gt;&gt;
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = right
+    linearfvkernels&lt;&lt;&lt;{&quot;description&quot;: &quot;List of LinearFVFluxKernels whose boundary fluxes are integrated.&quot;}&gt;&gt;&gt; = &#x27;diffusion advection&#x27;
+  []
+  [flux_right_diff]
+    type = BoundaryLinearFVFluxIntegral&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes the side integral of selected LinearFVFluxKernel boundary flux contributions.&quot;, &quot;href&quot;: &quot;BoundaryLinearFVFluxIntegral.html&quot;}&gt;&gt;&gt;
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = right
+    linearfvkernels&lt;&lt;&lt;{&quot;description&quot;: &quot;List of LinearFVFluxKernels whose boundary fluxes are integrated.&quot;}&gt;&gt;&gt; = &#x27;diffusion&#x27;
+  []
+  [flux_right_adv]
+    type = BoundaryLinearFVFluxIntegral&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes the side integral of selected LinearFVFluxKernel boundary flux contributions.&quot;, &quot;href&quot;: &quot;BoundaryLinearFVFluxIntegral.html&quot;}&gt;&gt;&gt;
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = right
+    linearfvkernels&lt;&lt;&lt;{&quot;description&quot;: &quot;List of LinearFVFluxKernels whose boundary fluxes are integrated.&quot;}&gt;&gt;&gt; = &#x27;advection&#x27;
+  []
+  [flux_left_sum_error]
+    type = ParsedPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes a parsed expression with post-processors&quot;, &quot;href&quot;: &quot;ParsedPostprocessor.html&quot;}&gt;&gt;&gt;
+    expression&lt;&lt;&lt;{&quot;description&quot;: &quot;function expression&quot;}&gt;&gt;&gt; = &#x27;f_total - f_diff - f_adv&#x27;
+    pp_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Post-processors arguments&quot;}&gt;&gt;&gt; = &#x27;flux_left_total flux_left_diff flux_left_adv&#x27;
+    pp_symbols&lt;&lt;&lt;{&quot;description&quot;: &quot;Symbol associated with each post-processor argument&quot;}&gt;&gt;&gt; = &#x27;f_total f_diff f_adv&#x27;
+  []
+  [flux_right_sum_error]
+    type = ParsedPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes a parsed expression with post-processors&quot;, &quot;href&quot;: &quot;ParsedPostprocessor.html&quot;}&gt;&gt;&gt;
+    expression&lt;&lt;&lt;{&quot;description&quot;: &quot;function expression&quot;}&gt;&gt;&gt; = &#x27;f_total - f_diff - f_adv&#x27;
+    pp_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Post-processors arguments&quot;}&gt;&gt;&gt; = &#x27;flux_right_total flux_right_diff flux_right_adv&#x27;
+    pp_symbols&lt;&lt;&lt;{&quot;description&quot;: &quot;Symbol associated with each post-processor argument&quot;}&gt;&gt;&gt; = &#x27;f_total f_diff f_adv&#x27;
+  []
+  [flux_balance]
+    type = ParsedPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes a parsed expression with post-processors&quot;, &quot;href&quot;: &quot;ParsedPostprocessor.html&quot;}&gt;&gt;&gt;
+    expression&lt;&lt;&lt;{&quot;description&quot;: &quot;function expression&quot;}&gt;&gt;&gt; = &#x27;f_left + f_right&#x27;
+    pp_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Post-processors arguments&quot;}&gt;&gt;&gt; = &#x27;flux_left_total flux_right_total&#x27;
+    pp_symbols&lt;&lt;&lt;{&quot;description&quot;: &quot;Symbol associated with each post-processor argument&quot;}&gt;&gt;&gt; = &#x27;f_left f_right&#x27;
+  []
+  # These are the analytic solutions, when we refine we get closer and closer
+  [analytic_flux_left_adv]
+    type = ParsedPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes a parsed expression with post-processors&quot;, &quot;href&quot;: &quot;ParsedPostprocessor.html&quot;}&gt;&gt;&gt;
+    expression&lt;&lt;&lt;{&quot;description&quot;: &quot;function expression&quot;}&gt;&gt;&gt; = &#x27;-v&#x27;
+    constant_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of constants used in the parsed function (use this for kB etc.)&quot;}&gt;&gt;&gt; = &#x27;v&#x27;
+    constant_expressions&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of values for the constants in constant_names (can be an FParser expression)&quot;}&gt;&gt;&gt; = &#x27;0.5&#x27;
+  []
+  [analytic_flux_left_diff]
+    type = ParsedPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes a parsed expression with post-processors&quot;, &quot;href&quot;: &quot;ParsedPostprocessor.html&quot;}&gt;&gt;&gt;
+    expression&lt;&lt;&lt;{&quot;description&quot;: &quot;function expression&quot;}&gt;&gt;&gt; = &#x27;-v / (exp(v / k * L) - 1)&#x27;
+    constant_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of constants used in the parsed function (use this for kB etc.)&quot;}&gt;&gt;&gt; = &#x27;v k L&#x27;
+    constant_expressions&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of values for the constants in constant_names (can be an FParser expression)&quot;}&gt;&gt;&gt; = &#x27;0.5 0.5 1&#x27;
+  []
+  [analytic_flux_right_adv]
+    type = ParsedPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes a parsed expression with post-processors&quot;, &quot;href&quot;: &quot;ParsedPostprocessor.html&quot;}&gt;&gt;&gt;
+    expression&lt;&lt;&lt;{&quot;description&quot;: &quot;function expression&quot;}&gt;&gt;&gt; = &#x27;0&#x27;
+  []
+  [analytic_flux_right_diff]
+    type = ParsedPostprocessor&lt;&lt;&lt;{&quot;description&quot;: &quot;Computes a parsed expression with post-processors&quot;, &quot;href&quot;: &quot;ParsedPostprocessor.html&quot;}&gt;&gt;&gt;
+    expression&lt;&lt;&lt;{&quot;description&quot;: &quot;function expression&quot;}&gt;&gt;&gt; = &#x27;v * exp(v / k * L) / (exp(v / k * L) - 1)&#x27;
+    constant_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of constants used in the parsed function (use this for kB etc.)&quot;}&gt;&gt;&gt; = &#x27;v k L&#x27;
+    constant_expressions&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of values for the constants in constant_names (can be an FParser expression)&quot;}&gt;&gt;&gt; = &#x27;0.5 0.5 1&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#15326bbe-ff71-486d-bd52-f37c7544f5bd">(moose/test/tests/postprocessors/linearfv_flux_integral/linearfv_flux_integral.i)</a></section><section class="scrollspy" id="cea5e98a-a59b-429f-9336-994cb1355465" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="4859a63d-27dd-4757-b893-0a18e804ba9c" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundary IDs from the mesh where this object applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of boundary IDs from the mesh where this object applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">linearfvkernels</span><span class="moose-parameter-header-description">List of LinearFVFluxKernels whose boundary fluxes are integrated.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of LinearFVFluxKernels whose boundary fluxes are integrated.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="12935c22-13c2-49ba-ae3e-cd308a5d6b6f" data-section-level="3" data-section-text="Execution Scheduling Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">allow_duplicate_execution_on_initial</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>In the case where this UserObject is depended upon by an initial condition, allow it to be executed twice during the initial setup (once before the IC and again after mesh adaptivity (if applicable).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">TIMESTEP_END</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>TIMESTEP_END</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE, INITIAL, LINEAR, LINEAR_CONVERGENCE, NONLINEAR, NONLINEAR_CONVERGENCE, POSTCHECK, TIMESTEP_END, TIMESTEP_BEGIN, MULTIAPP_FIXED_POINT_END, MULTIAPP_FIXED_POINT_BEGIN, MULTIAPP_FIXED_POINT_CONVERGENCE, FINAL, CUSTOM, TRANSFER</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed. For a description of each flag, see https://mooseframework.inl.gov/source/interfaces/SetupInterface.html.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execution_order_group</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">Execution order groups are executed in increasing order (e.g., the lowest number is executed first). Note that negative group numbers may be used to execute groups before the default (0) group. Please refer to the user object documentation for ordering of user object execution within a group.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Execution order groups are executed in increasing order (e.g., the lowest number is executed first). Note that negative group numbers may be used to execute groups before the default (0) group. Please refer to the user object documentation for ordering of user object execution within a group.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_postaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in POSTAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in POSTAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preaux</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREAUX</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREAUX</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_preic</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Forces the UserObject to be executed in PREIC during initial setup</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Forces the UserObject to be executed in PREIC during initial setup</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Execution Scheduling Parameters</h3></summary></details></section><section id="6858e80d-6a19-450f-b8c0-695337a5e924" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-description">Vector of output names where you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;OutputName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Vector of output names where you would like to restrict the output of variables(s) associated with this object</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="40c8b86c-8d19-422a-a476-10ce502eb334" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="28d31bab-560f-4774-9590-a6c3fb0ce2c6"><div class="modal-content"><h4>linearfvkernels</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of LinearFVFluxKernels whose boundary fluxes are integrated.</p></div></div><div class="moose-modal modal" id="8ed5d6fc-43e3-4da6-8902-f6cf85bee000"><div class="modal-content"><h4>linearfvkernels</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>List of LinearFVFluxKernels whose boundary fluxes are integrated.</p></div></div><div class="moose-modal modal" id="15326bbe-ff71-486d-bd52-f37c7544f5bd"><div class="modal-content"><h4>(moose/test/tests/postprocessors/linearfv_flux_integral/linearfv_flux_integral.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [gmg]
+    type = GeneratedMeshGenerator
+    dim = 1
+    nx = 100
+  []
+[]
+
+[Problem]
+  linear_sys_names = &#x27;u_sys&#x27;
+[]
+
+[Variables]
+  [u]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 0.25
+  []
+[]
+
+[FVInterpolationMethods]
+  [upwind]
+    type = FVAdvectedUpwind
+  []
+[]
+
+[LinearFVKernels]
+  [diffusion]
+    type = LinearFVDiffusion
+    variable = u
+    diffusion_coeff = 0.5
+    use_nonorthogonal_correction = false
+  []
+  [advection]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &#x27;0.5 0 0&#x27;
+    advected_interp_method_name = upwind
+  []
+[]
+
+[LinearFVBCs]
+  [left]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = left
+    functor = 1
+  []
+  [right]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = right
+    functor = 0
+  []
+[]
+
+[Postprocessors]
+  [flux_left_total]
+    type = BoundaryLinearFVFluxIntegral
+    boundary = left
+    linearfvkernels = &#x27;diffusion advection&#x27;
+  []
+  [flux_left_diff]
+    type = BoundaryLinearFVFluxIntegral
+    boundary = left
+    linearfvkernels = &#x27;diffusion&#x27;
+  []
+  [flux_left_adv]
+    type = BoundaryLinearFVFluxIntegral
+    boundary = left
+    linearfvkernels = &#x27;advection&#x27;
+  []
+  [flux_right_total]
+    type = BoundaryLinearFVFluxIntegral
+    boundary = right
+    linearfvkernels = &#x27;diffusion advection&#x27;
+  []
+  [flux_right_diff]
+    type = BoundaryLinearFVFluxIntegral
+    boundary = right
+    linearfvkernels = &#x27;diffusion&#x27;
+  []
+  [flux_right_adv]
+    type = BoundaryLinearFVFluxIntegral
+    boundary = right
+    linearfvkernels = &#x27;advection&#x27;
+  []
+  [flux_left_sum_error]
+    type = ParsedPostprocessor
+    expression = &#x27;f_total - f_diff - f_adv&#x27;
+    pp_names = &#x27;flux_left_total flux_left_diff flux_left_adv&#x27;
+    pp_symbols = &#x27;f_total f_diff f_adv&#x27;
+  []
+  [flux_right_sum_error]
+    type = ParsedPostprocessor
+    expression = &#x27;f_total - f_diff - f_adv&#x27;
+    pp_names = &#x27;flux_right_total flux_right_diff flux_right_adv&#x27;
+    pp_symbols = &#x27;f_total f_diff f_adv&#x27;
+  []
+  [flux_balance]
+    type = ParsedPostprocessor
+    expression = &#x27;f_left + f_right&#x27;
+    pp_names = &#x27;flux_left_total flux_right_total&#x27;
+    pp_symbols = &#x27;f_left f_right&#x27;
+  []
+  # These are the analytic solutions, when we refine we get closer and closer
+  [analytic_flux_left_adv]
+    type = ParsedPostprocessor
+    expression = &#x27;-v&#x27;
+    constant_names = &#x27;v&#x27;
+    constant_expressions = &#x27;0.5&#x27;
+  []
+  [analytic_flux_left_diff]
+    type = ParsedPostprocessor
+    expression = &#x27;-v / (exp(v / k * L) - 1)&#x27;
+    constant_names = &#x27;v k L&#x27;
+    constant_expressions = &#x27;0.5 0.5 1&#x27;
+  []
+  [analytic_flux_right_adv]
+    type = ParsedPostprocessor
+    expression = &#x27;0&#x27;
+  []
+  [analytic_flux_right_diff]
+    type = ParsedPostprocessor
+    expression = &#x27;v * exp(v / k * L) / (exp(v / k * L) - 1)&#x27;
+    constant_names = &#x27;v k L&#x27;
+    constant_expressions = &#x27;0.5 0.5 1&#x27;
+  []
+[]
+
+[Executioner]
+  type = Steady
+  system_names = u_sys
+  l_tol = 1e-12
+  l_abs_tol = 1e-12
+  petsc_options_iname = &#x27;-pc_type&#x27;
+  petsc_options_value = &#x27;lu&#x27;
+[]
+
+[Outputs]
+  csv = true
+  execute_on = timestep_end
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#6035a444-8491-49f5-9fcd-074e3a2c76ca" class="tooltipped" data-position="left" data-tooltip="Example Input Syntax">Example Input Syntax</a></li><li><a href="#cea5e98a-a59b-429f-9336-994cb1355465" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
