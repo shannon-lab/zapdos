@@ -1,0 +1,397 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>LinearFVAdvection | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="bf24b354-ebd1-4f32-ba39-5b521f7bb89a" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="5f1fd38b-6b48-4957-94d6-d9119b7b9904" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="040df296-10d2-4450-9e01-04a610e8586a" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="e3384c31-4716-40f2-a601-d816af52fcfa"><i class="material-icons">menu</i></a><ul class="sidenav" id="e3384c31-4716-40f2-a601-d816af52fcfa"><li><a href="#!" class="dropdown-trigger" data-target="7d39420e-c6a8-48a8-a1cf-d2abdd543b58" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c8f09250-b8b7-4f0a-b3be-60304b0c4993" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="ef69cf6a-9782-413d-bab0-a147070b3afa" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="bf24b354-ebd1-4f32-ba39-5b521f7bb89a"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="5f1fd38b-6b48-4957-94d6-d9119b7b9904"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="040df296-10d2-4450-9e01-04a610e8586a"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="7d39420e-c6a8-48a8-a1cf-d2abdd543b58"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="c8f09250-b8b7-4f0a-b3be-60304b0c4993"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="ef69cf6a-9782-413d-bab0-a147070b3afa"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">linearfvkernels</span><a href="#" class="breadcrumb">LinearFVAdvection</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="540bd1d9-8096-45a0-bdfe-3480fc1c0fc9" data-section-level="1" data-section-text="LinearFVAdvection"><h1 id="linearfvadvection">LinearFVAdvection</h1><section class="scrollspy" id="acf940e4-d2f2-48e9-8971-94b81d5f3a34" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>This kernel contributes to the system matrix and the right hand side of a system which is solved for a linear finite volume variable <a href="../variables/MooseLinearVariableFV.html">MooseVariableLinearFVReal</a>. The contributions can be derived using the discretized term of the advection term:</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-884f25cb-825e-4272-ba61-e880aaedab9c"></span><script>var element = document.getElementById("moose-equation-884f25cb-825e-4272-ba61-e880aaedab9c");katex.render("\\int_{V_C} \\nabla \\cdot (u \\vec{v}) dV = \\sum_f\\int\\limits_{S_f} u \\vec{v}\\cdot \\vec{n} dS \\approx \\sum_f u_f\\vec{v}\\cdot \\vec{n}_f|S_f|,", element, {displayMode:true,throwOnError:false});</script></span><p>where <span class="moose-katex-inline-equation" id="moose-equation-935f3fcc-ce7c-436c-98dd-d38db1a72c68"><script>var element = document.getElementById("moose-equation-935f3fcc-ce7c-436c-98dd-d38db1a72c68");katex.render("V_C", element, {displayMode:false,throwOnError:false});</script></span> is a cell in the mesh, while <span class="moose-katex-inline-equation" id="moose-equation-c2d6b52b-6e17-46c4-80f8-3a61656ea9ae"><script>var element = document.getElementById("moose-equation-c2d6b52b-6e17-46c4-80f8-3a61656ea9ae");katex.render("\\vec{v}", element, {displayMode:false,throwOnError:false});</script></span> is a pre-defined constant advecting velocity that can be supplied through the <a href="#ae89e0d1-5619-42fe-8cb9-ef56e9b23699" class="moose-modal-link modal-trigger">&quot;velocity&quot;</a> parameter. The face value of the variable <span class="moose-katex-inline-equation" id="moose-equation-524f1a68-7e20-4bde-8fbb-80d24007ddd2"><script>var element = document.getElementById("moose-equation-524f1a68-7e20-4bde-8fbb-80d24007ddd2");katex.render("u_f", element, {displayMode:false,throwOnError:false});</script></span> is computed using the user-selected interpolation technique that can be supplied through the <a href="#fef1dfe9-2090-41a9-b4ec-3a12c94612b5" class="moose-modal-link modal-trigger">&quot;advected_interp_method_name&quot;</a> parameter.</p><section id="348757c9-5d1f-4798-b8b2-1f7ae7fbd510" data-section-level="3" data-section-text="Selecting the interpolation method"><h3 id="selecting-the-interpolation-method">Selecting the interpolation method</h3><p>The <a href="#de14b80e-a4d2-47d7-a892-d0e985ab473b" class="moose-modal-link modal-trigger">&quot;advected_interp_method_name&quot;</a> parameter is the name of an interpolation method in the <code>[FVInterpolationMethods]</code> block. For example, to use upwind interpolation, add an <a href="../fvinterpolationmethods/FVAdvectedUpwind.html">FVAdvectedUpwind</a> method and set <a href="#a7d0b801-2031-4646-8684-2adfdd403af5" class="moose-modal-link modal-trigger">&quot;advected_interp_method_name&quot;</a> to that method name:</p><pre style="max-height:350px;"><code class="language-moose">[FVInterpolationMethods&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/FVInterpolationMethods/index.html&quot;}&gt;&gt;&gt;]
+  [upwind]
+    type = FVAdvectedUpwind&lt;&lt;&lt;{&quot;description&quot;: &quot;Upwind interpolation for advected quantities using the face mass flux sign.&quot;, &quot;href&quot;: &quot;../fvinterpolationmethods/FVAdvectedUpwind.html&quot;}&gt;&gt;&gt;
+  []
+  [average]
+    type = FVGeometricAverage&lt;&lt;&lt;{&quot;description&quot;: &quot;Linear interpolation that uses the geometric weighting on FaceInfo.&quot;, &quot;href&quot;: &quot;../fvinterpolationmethods/FVGeometricAverage.html&quot;}&gt;&gt;&gt;
+  []
+  [muscl_venkat]
+    type = FVAdvectedVenkatakrishnanDeferredCorrection&lt;&lt;&lt;{&quot;description&quot;: &quot;MUSCL reconstruction with Venkatakrishnan-limited cell gradients using deferred correction.&quot;, &quot;href&quot;: &quot;../fvinterpolationmethods/FVAdvectedVenkatakrishnanDeferredCorrection.html&quot;}&gt;&gt;&gt;
+    deferred_correction_factor&lt;&lt;&lt;{&quot;description&quot;: &quot;Scales the deferred correction strength; 0 gives pure upwind (no deferred correction), 1 gives full deferred correction. Values &lt; 1 can improve fixed point robustness.&quot;}&gt;&gt;&gt; = 1.0
+  []
+  [nvd_vanleer]
+    type = FVAdvectedVanLeerWeightBased&lt;&lt;&lt;{&quot;description&quot;: &quot;Van Leer interpolation for advected quantities implemented as limited blending weights (no MUSCL reconstruction, no deferred correction).&quot;, &quot;href&quot;: &quot;../fvinterpolationmethods/FVAdvectedVanLeerWeightBased.html&quot;}&gt;&gt;&gt;
+    blending_factor&lt;&lt;&lt;{&quot;description&quot;: &quot;Scales the high-order blending strength; 0 gives pure upwind, 1 gives the full limited blending. Values &lt; 1 can improve linear solver robustness for fully implicit assembly.&quot;}&gt;&gt;&gt; = 1.0
+  []
+  [nvd_minmod]
+    type = FVAdvectedMinmodWeightBased&lt;&lt;&lt;{&quot;description&quot;: &quot;Minmod interpolation for advected quantities implemented as limited blending weights (no MUSCL reconstruction, no deferred correction).&quot;, &quot;href&quot;: &quot;../fvinterpolationmethods/FVAdvectedMinmodWeightBased.html&quot;}&gt;&gt;&gt;
+    blending_factor&lt;&lt;&lt;{&quot;description&quot;: &quot;Scales the high-order blending strength; 0 gives pure upwind, 1 gives the full limited blending. Values &lt; 1 can improve linear solver robustness for fully implicit assembly.&quot;}&gt;&gt;&gt; = 1.0
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#fe4e76eb-bfa1-46a2-9a0e-55b2a20e4a09">(moose/test/tests/linearfvkernels/advection/advection-1d.i)</a><pre style="max-height:350px;"><code class="language-moose">[LinearFVKernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/LinearFVKernels/index.html&quot;}&gt;&gt;&gt;]
+  [advection]
+    type = LinearFVAdvection&lt;&lt;&lt;{&quot;description&quot;: &quot;Represents the matrix and right hand side contributions of an advection term in a partial differential equation.&quot;, &quot;href&quot;: &quot;LinearFVAdvection.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable whose linear system this object contributes to&quot;}&gt;&gt;&gt; = u
+    velocity&lt;&lt;&lt;{&quot;description&quot;: &quot;Constant advection velocity&quot;}&gt;&gt;&gt; = &quot;0.5 0 0&quot;
+    advected_interp_method_name&lt;&lt;&lt;{&quot;description&quot;: &quot;Name of the FVInterpolationMethod to use for the advected quantity.&quot;}&gt;&gt;&gt; = upwind
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#04ae3ae8-4a37-4d2f-ab91-c95e9bb8fa18">(moose/test/tests/linearfvkernels/advection/advection-1d.i)</a><p>In the simplest case, using a linear interpolation method and an internal face for the integration, we get the following matrix contribution to the degree of freedom corresponding to the variable on <span class="moose-katex-inline-equation" id="moose-equation-38efbf14-2097-469b-b99c-9daaac73046c"><script>var element = document.getElementById("moose-equation-38efbf14-2097-469b-b99c-9daaac73046c");katex.render("V_C", element, {displayMode:false,throwOnError:false});</script></span>:</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-029677a0-d771-4eda-96cf-a1fc45d2c3e9"></span><script>var element = document.getElementById("moose-equation-029677a0-d771-4eda-96cf-a1fc45d2c3e9");katex.render("\\vec{v} \\cdot \\vec{n}_f |S_f| g_{C,f},", element, {displayMode:true,throwOnError:false});</script></span><p>where <span class="moose-katex-inline-equation" id="moose-equation-c2d792ee-2bad-4d93-b439-77db116110c8"><script>var element = document.getElementById("moose-equation-c2d792ee-2bad-4d93-b439-77db116110c8");katex.render("g_C", element, {displayMode:false,throwOnError:false});</script></span> is the geometric interpolation weight for the interpolation. Similarly, the same term contributes to the degree of freedom on the other side of the face with:</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-51a14219-d3a6-42cf-9e29-3ea66de16213"></span><script>var element = document.getElementById("moose-equation-51a14219-d3a6-42cf-9e29-3ea66de16213");katex.render("\\vec{v} \\cdot \\vec{n}_f |S_f| (1-g_{C,f}).", element, {displayMode:true,throwOnError:false});</script></span><div class="card moose-alert moose-alert-warning"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">warning</i><span class="moose-alert-title-brand">warning</span></div><div class="card-content"><div class="moose-alert-content"><p>When using non-zero flux boundary condition, only a single <code>LinearFVFluxKernel</code> may be used, as otherwise the boundary conditions may be applied multiple times. This warning applies to all <code>LinearFVFluxKernel</code>-derived classes.</p></div></div></div></section></section><section class="scrollspy" id="528d39f2-5fb8-4315-aa31-5c13916e307e" data-section-level="2" data-section-text="Example input syntax"><h2 id="example-input-syntax">Example input syntax</h2><p>This example describes a pure advection problem with a source term on a 2D mesh.</p><pre style="max-height:350px;"><code class="language-moose">[LinearFVKernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/LinearFVKernels/index.html&quot;}&gt;&gt;&gt;]
+  [advection]
+    type = LinearFVAdvection&lt;&lt;&lt;{&quot;description&quot;: &quot;Represents the matrix and right hand side contributions of an advection term in a partial differential equation.&quot;, &quot;href&quot;: &quot;LinearFVAdvection.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable whose linear system this object contributes to&quot;}&gt;&gt;&gt; = u
+    velocity&lt;&lt;&lt;{&quot;description&quot;: &quot;Constant advection velocity&quot;}&gt;&gt;&gt; = &quot;0.5 0 0&quot;
+    advected_interp_method_name&lt;&lt;&lt;{&quot;description&quot;: &quot;Name of the FVInterpolationMethod to use for the advected quantity.&quot;}&gt;&gt;&gt; = upwind
+  []
+  [source]
+    type = LinearFVSource&lt;&lt;&lt;{&quot;description&quot;: &quot;Represents the matrix and right hand side contributions of a solution-independent source term in a partial differential equation.&quot;, &quot;href&quot;: &quot;LinearFVSource.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable whose linear system this object contributes to&quot;}&gt;&gt;&gt; = u
+    source_density&lt;&lt;&lt;{&quot;description&quot;: &quot;The source density. A functor is any of the following: a variable, a functor material property, a function, a postprocessor or a number.&quot;}&gt;&gt;&gt; = source_func
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#a6498e93-c1b0-4bc4-adc5-373d43d24f89">(moose/test/tests/linearfvkernels/advection/advection-2d.i)</a></section><section class="scrollspy" id="1b12fb1c-f5ea-405d-82e4-f42881700fd4" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="ffb93535-ed1f-4e10-a045-a9a0a0cde1cb" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">advected_interp_method_name</span><span class="moose-parameter-header-description">Name of the FVInterpolationMethod to use for the advected quantity.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>InterpolationMethodName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Name of the FVInterpolationMethod to use for the advected quantity.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable whose linear system this object contributes to</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>LinearVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the variable whose linear system this object contributes to</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">velocity</span><span class="moose-parameter-header-description">Constant advection velocity</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>libMesh::VectorValue&lt;Real&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Constant advection velocity</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="b497efc0-eaa9-4af3-a272-5511f0ce28c0" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of blocks (ids or names) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of blocks (ids or names) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">force_boundary_execution</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether to force execution of this object on all external boundaries.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to force execution of this object on all external boundaries.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="5af0e8b0-3ab0-4a57-9e06-bbf1c10cf0b6" data-section-level="3" data-section-text="Contribution To Tagged Field Data Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">absolute_value_vector_tags</span><span class="moose-parameter-header-description">The tags for the vectors this residual object should fill with the absolute value of the residual contribution</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tags for the vectors this residual object should fill with the absolute value of the residual contribution</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_only</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether this object is only doing assembly to matrices (no vectors)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether this object is only doing assembly to matrices (no vectors)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, system</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">rhs</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>rhs</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>rhs, time</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Contribution To Tagged Field Data Parameters</h3></summary></details></section><section id="ff7384d0-87c1-42e3-8717-318104250767" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="e89411c7-87ae-43ba-bdcb-8953dcdab51a" data-section-level="3" data-section-text="Parallel Ghosting Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">ghost_layers</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">The number of layers of elements to ghost.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned short</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The number of layers of elements to ghost.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_point_neighbors</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether to use point neighbors, which introduces additional ghosting to that used for simple face neighbors.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to use point neighbors, which introduces additional ghosting to that used for simple face neighbors.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Parallel Ghosting Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="ae89e0d1-5619-42fe-8cb9-ef56e9b23699"><div class="modal-content"><h4>velocity</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>libMesh::VectorValue&lt;Real&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Constant advection velocity</p></div></div><div class="moose-modal modal" id="fef1dfe9-2090-41a9-b4ec-3a12c94612b5"><div class="modal-content"><h4>advected_interp_method_name</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>InterpolationMethodName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Name of the FVInterpolationMethod to use for the advected quantity.</p></div></div><div class="moose-modal modal" id="de14b80e-a4d2-47d7-a892-d0e985ab473b"><div class="modal-content"><h4>advected_interp_method_name</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>InterpolationMethodName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Name of the FVInterpolationMethod to use for the advected quantity.</p></div></div><div class="moose-modal modal" id="a7d0b801-2031-4646-8684-2adfdd403af5"><div class="modal-content"><h4>advected_interp_method_name</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>InterpolationMethodName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Name of the FVInterpolationMethod to use for the advected quantity.</p></div></div><div class="moose-modal modal" id="fe4e76eb-bfa1-46a2-9a0e-55b2a20e4a09"><div class="modal-content"><h4>(moose/test/tests/linearfvkernels/advection/advection-1d.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [gmg]
+    type = GeneratedMeshGenerator
+    dim = 1
+    nx = 2
+  []
+[]
+
+[Problem]
+  linear_sys_names = &#x27;u_sys&#x27;
+[]
+
+[Variables]
+  [u]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 1.0
+  []
+[]
+
+[FVInterpolationMethods]
+  [upwind]
+    type = FVAdvectedUpwind
+  []
+  [average]
+    type = FVGeometricAverage
+  []
+  [muscl_venkat]
+    type = FVAdvectedVenkatakrishnanDeferredCorrection
+    deferred_correction_factor = 1.0
+  []
+  [nvd_vanleer]
+    type = FVAdvectedVanLeerWeightBased
+    blending_factor = 1.0
+  []
+  [nvd_minmod]
+    type = FVAdvectedMinmodWeightBased
+    blending_factor = 1.0
+  []
+[]
+
+[LinearFVKernels]
+  [advection]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &quot;0.5 0 0&quot;
+    advected_interp_method_name = upwind
+  []
+  [source]
+    type = LinearFVSource
+    variable = u
+    source_density = source_func
+  []
+[]
+
+[LinearFVBCs]
+  [inflow]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = &quot;left&quot;
+    functor = analytic_solution
+  []
+  [outflow]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = u
+    boundary = &quot;right&quot;
+    use_two_term_expansion = false
+  []
+[]
+
+[Functions]
+  [source_func]
+    type = ParsedFunction
+    expression = &#x27;0.5*x&#x27;
+  []
+  [analytic_solution]
+    type = ParsedFunction
+    expression = &#x27;0.5+0.5*x*x&#x27;
+  []
+[]
+
+[Postprocessors]
+  [error]
+    type = ElementL2FunctorError
+    approximate = u
+    exact = analytic_solution
+    execute_on = FINAL
+  []
+  [h]
+    type = AverageElementSize
+    execute_on = FINAL
+  []
+[]
+
+[Convergence]
+  [linear]
+    type = IterationCountConvergence
+    max_iterations = 1
+    converge_at_max_iterations = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  system_names = u_sys
+  l_tol = 1e-10
+  multi_system_fixed_point=true
+  multi_system_fixed_point_convergence=linear
+  multi_system_fixed_point_relaxation_factor = 1.0
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -pc_factor_mat_solver_type -mat_mumps_icntl_14&#x27;
+  petsc_options_value = &#x27;lu       NONZERO               1e-12                     mumps                    50&#x27;
+[]
+
+[Outputs]
+  [csv]
+    type = CSV
+    execute_on = FINAL
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="04ae3ae8-4a37-4d2f-ab91-c95e9bb8fa18"><div class="modal-content"><h4>(moose/test/tests/linearfvkernels/advection/advection-1d.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [gmg]
+    type = GeneratedMeshGenerator
+    dim = 1
+    nx = 2
+  []
+[]
+
+[Problem]
+  linear_sys_names = &#x27;u_sys&#x27;
+[]
+
+[Variables]
+  [u]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 1.0
+  []
+[]
+
+[FVInterpolationMethods]
+  [upwind]
+    type = FVAdvectedUpwind
+  []
+  [average]
+    type = FVGeometricAverage
+  []
+  [muscl_venkat]
+    type = FVAdvectedVenkatakrishnanDeferredCorrection
+    deferred_correction_factor = 1.0
+  []
+  [nvd_vanleer]
+    type = FVAdvectedVanLeerWeightBased
+    blending_factor = 1.0
+  []
+  [nvd_minmod]
+    type = FVAdvectedMinmodWeightBased
+    blending_factor = 1.0
+  []
+[]
+
+[LinearFVKernels]
+  [advection]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &quot;0.5 0 0&quot;
+    advected_interp_method_name = upwind
+  []
+  [source]
+    type = LinearFVSource
+    variable = u
+    source_density = source_func
+  []
+[]
+
+[LinearFVBCs]
+  [inflow]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = &quot;left&quot;
+    functor = analytic_solution
+  []
+  [outflow]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = u
+    boundary = &quot;right&quot;
+    use_two_term_expansion = false
+  []
+[]
+
+[Functions]
+  [source_func]
+    type = ParsedFunction
+    expression = &#x27;0.5*x&#x27;
+  []
+  [analytic_solution]
+    type = ParsedFunction
+    expression = &#x27;0.5+0.5*x*x&#x27;
+  []
+[]
+
+[Postprocessors]
+  [error]
+    type = ElementL2FunctorError
+    approximate = u
+    exact = analytic_solution
+    execute_on = FINAL
+  []
+  [h]
+    type = AverageElementSize
+    execute_on = FINAL
+  []
+[]
+
+[Convergence]
+  [linear]
+    type = IterationCountConvergence
+    max_iterations = 1
+    converge_at_max_iterations = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  system_names = u_sys
+  l_tol = 1e-10
+  multi_system_fixed_point=true
+  multi_system_fixed_point_convergence=linear
+  multi_system_fixed_point_relaxation_factor = 1.0
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -pc_factor_mat_solver_type -mat_mumps_icntl_14&#x27;
+  petsc_options_value = &#x27;lu       NONZERO               1e-12                     mumps                    50&#x27;
+[]
+
+[Outputs]
+  [csv]
+    type = CSV
+    execute_on = FINAL
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="a6498e93-c1b0-4bc4-adc5-373d43d24f89"><div class="modal-content"><h4>(moose/test/tests/linearfvkernels/advection/advection-2d.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [gmg]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 2
+    ny= 1
+    ymax = 0.5
+  []
+[]
+
+[Problem]
+  linear_sys_names = &#x27;u_sys&#x27;
+[]
+
+[Variables]
+  [u]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 1.0
+  []
+[]
+
+[FVInterpolationMethods]
+  [upwind]
+    type = FVAdvectedUpwind
+  []
+  [average]
+    type = FVGeometricAverage
+  []
+  [muscl_venkat]
+    type = FVAdvectedVenkatakrishnanDeferredCorrection
+    deferred_correction_factor = 1.0
+  []
+  [nvd_vanleer]
+    type = FVAdvectedVanLeerWeightBased
+    blending_factor = 1.0
+  []
+  [nvd_minmod]
+    type = FVAdvectedMinmodWeightBased
+    blending_factor = 1.0
+  []
+[]
+
+[LinearFVKernels]
+  [advection]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &quot;0.5 0 0&quot;
+    advected_interp_method_name = upwind
+  []
+  [source]
+    type = LinearFVSource
+    variable = u
+    source_density = source_func
+  []
+[]
+
+[LinearFVBCs]
+  [inflow]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = &quot;left top bottom&quot;
+    functor = analytic_solution
+  []
+  [outflow]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = u
+    boundary = &quot;right&quot;
+    use_two_term_expansion = false
+  []
+[]
+
+[Functions]
+  [source_func]
+    type = ParsedFunction
+    expression = &#x27;0.5*pi*sin(2*y*pi)*cos(x*pi)&#x27;
+  []
+  [analytic_solution]
+    type = ParsedFunction
+    expression = &#x27;sin(x*pi)*sin(2*y*pi) + 1.5&#x27;
+  []
+[]
+
+[Postprocessors]
+  [error]
+    type = ElementL2FunctorError
+    approximate = u
+    exact = analytic_solution
+    execute_on = FINAL
+  []
+  [h]
+    type = AverageElementSize
+    execute_on = FINAL
+  []
+[]
+
+[Convergence]
+  [linear]
+    type = IterationCountConvergence
+    max_iterations = 1
+    converge_at_max_iterations = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  system_names = u_sys
+  l_tol = 1e-10
+  multi_system_fixed_point=true
+  multi_system_fixed_point_convergence=linear
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -pc_factor_mat_solver_type -mat_mumps_icntl_14&#x27;
+  petsc_options_value = &#x27;lu       NONZERO               1e-12                     mumps                    50&#x27;
+[]
+
+[Outputs]
+  [csv]
+    type = CSV
+    execute_on = FINAL
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#acf940e4-d2f2-48e9-8971-94b81d5f3a34" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#528d39f2-5fb8-4315-aa31-5c13916e307e" class="tooltipped" data-position="left" data-tooltip="Example input syntax">Example input syntax</a></li><li><a href="#1b12fb1c-f5ea-405d-82e4-f42881700fd4" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

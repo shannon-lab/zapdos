@@ -1,0 +1,300 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>FVAdvectedMinmodWeightBased | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="a133dd6e-20d6-44f1-ae22-e93c41bc74e5" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="13d03fcf-ae5e-4e45-9401-81e7589c3c5c" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="85bd5728-601c-44b1-beb9-6dc93a9ca855" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="bb073c8e-d12f-4ec0-9e0b-7befa6ebcfeb"><i class="material-icons">menu</i></a><ul class="sidenav" id="bb073c8e-d12f-4ec0-9e0b-7befa6ebcfeb"><li><a href="#!" class="dropdown-trigger" data-target="3cb97b1f-9f7e-4e66-9375-f2d98747a801" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="a1fc9bb0-ffe8-46d0-bd01-f1fd074be6de" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="8595f13c-3207-4625-bdcc-9e6feefbd3af" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="a133dd6e-20d6-44f1-ae22-e93c41bc74e5"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="13d03fcf-ae5e-4e45-9401-81e7589c3c5c"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="85bd5728-601c-44b1-beb9-6dc93a9ca855"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="3cb97b1f-9f7e-4e66-9375-f2d98747a801"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="a1fc9bb0-ffe8-46d0-bd01-f1fd074be6de"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="8595f13c-3207-4625-bdcc-9e6feefbd3af"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">fvinterpolationmethods</span><a href="#" class="breadcrumb">FVAdvectedMinmodWeightBased</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="5a3d5975-d0d7-4de0-8555-8c422674b420" data-section-level="1" data-section-text="FVAdvectedMinmodWeightBased"><h1 id="fvadvectedminmodweightbased">FVAdvectedMinmodWeightBased</h1><section class="scrollspy" id="22577bcb-8627-4bab-962f-9f98cef1ec8a" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p>This object provides a second-order, Total Variation Diminishing (TVD)-style scheme for interpolating a cell-centered advected quantity to a finite-volume face on unstructured grids. It is formulated as a <em>limited blending weight</em> between upwind and linear (geometric) interpolation, so it can be assembled using only two-cell (elem/neighbor) matrix weights (<a href="#moukalled2016finite">Moukalled et al. (2016)</a>, <a href="#jasak1996error">Jasak (1996)</a>, <a href="#greenshieldsweller2022">Greenshields and Weller (2022)</a>, <a href="#harten1997">Harten (1997)</a>).</p><p>Let <span class="moose-katex-inline-equation" id="moose-equation-0847d19b-8db2-4074-896d-feeb93252115"><script>var element = document.getElementById("moose-equation-0847d19b-8db2-4074-896d-feeb93252115");katex.render("\\phi_U", element, {displayMode:false,throwOnError:false});</script></span> and <span class="moose-katex-inline-equation" id="moose-equation-5fa420b5-8231-4303-a9ee-674a0593cd8a"><script>var element = document.getElementById("moose-equation-5fa420b5-8231-4303-a9ee-674a0593cd8a");katex.render("\\phi_D", element, {displayMode:false,throwOnError:false});</script></span> denote the upwind and downwind cell-centered values on a face (as determined by the sign of the face mass flux). The face value is written in a Normalized Variable Diagram (NVD) / Greenshields-type blending form (<a href="#greenshieldsweller2022">Greenshields and Weller (2022)</a>, <a href="#jasak1996error">Jasak (1996)</a>):</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-f5c8946b-50f4-43c9-90de-302fd38bc81d"></span><script>var element = document.getElementById("moose-equation-f5c8946b-50f4-43c9-90de-302fd38bc81d");katex.render("\\phi_f = (1-g)\\,\\phi_U + g\\,\\phi_D,", element, {displayMode:true,throwOnError:false});</script></span><p>where <span class="moose-katex-inline-equation" id="moose-equation-afa61190-3db7-487d-b6e0-68c26076342b"><script>var element = document.getElementById("moose-equation-afa61190-3db7-487d-b6e0-68c26076342b");katex.render("g", element, {displayMode:false,throwOnError:false});</script></span> controls how much downwind information is admitted. This method computes</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-c0eeefd5-1433-4629-9ffe-e3e63e1c83b6"></span><script>var element = document.getElementById("moose-equation-c0eeefd5-1433-4629-9ffe-e3e63e1c83b6");katex.render("g = \\alpha\\,\\beta(r_f)\\,(1-w_f),", element, {displayMode:true,throwOnError:false});</script></span><p>with:</p><ul class="browser-default"><li><p><span class="moose-katex-inline-equation" id="moose-equation-fc7f0c49-1f0a-4b25-9323-e4e3b2034f36"><script>var element = document.getElementById("moose-equation-fc7f0c49-1f0a-4b25-9323-e4e3b2034f36");katex.render("\\alpha", element, {displayMode:false,throwOnError:false});</script></span> the user scaling factor (<a href="#e2e9ef98-a77d-41d6-a6f3-556f47118774" class="moose-modal-link modal-trigger">&quot;blending_factor&quot;</a>). <span class="moose-katex-inline-equation" id="moose-equation-6f3864d1-43d7-4a27-a378-18acd7b9f7c9"><script>var element = document.getElementById("moose-equation-6f3864d1-43d7-4a27-a378-18acd7b9f7c9");katex.render("\\alpha=0", element, {displayMode:false,throwOnError:false});</script></span> gives pure upwind; <span class="moose-katex-inline-equation" id="moose-equation-f9beec2f-c364-40d1-bce4-a7ed7880c8a1"><script>var element = document.getElementById("moose-equation-f9beec2f-c364-40d1-bce4-a7ed7880c8a1");katex.render("\\alpha=1", element, {displayMode:false,throwOnError:false});</script></span> gives the full limited blending. Values <span class="moose-katex-inline-equation" id="moose-equation-911e278f-607b-4336-af7e-f3c7e334fc38"><script>var element = document.getElementById("moose-equation-911e278f-607b-4336-af7e-f3c7e334fc38");katex.render("<1", element, {displayMode:false,throwOnError:false});</script></span> can be useful for improving robustness of fully implicit solves. </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-d1fef6a3-2080-42bc-9c8d-8489197c5a59"><script>var element = document.getElementById("moose-equation-d1fef6a3-2080-42bc-9c8d-8489197c5a59");katex.render("w_f", element, {displayMode:false,throwOnError:false});</script></span> the geometric <em>linear-interpolation</em> weight associated with the upwind cell. On a uniform orthogonal mesh, <span class="moose-katex-inline-equation" id="moose-equation-ab5ca007-4e41-405f-9891-01e33973fca9"><script>var element = document.getElementById("moose-equation-ab5ca007-4e41-405f-9891-01e33973fca9");katex.render("w_f=\\tfrac{1}{2}", element, {displayMode:false,throwOnError:false});</script></span> and the linear scheme is recovered when <span class="moose-katex-inline-equation" id="moose-equation-3cc11329-f997-4ad0-8f17-a2ef6da2a586"><script>var element = document.getElementById("moose-equation-3cc11329-f997-4ad0-8f17-a2ef6da2a586");katex.render("g=1-w_f", element, {displayMode:false,throwOnError:false});</script></span>. </p></li><li><p><span class="moose-katex-inline-equation" id="moose-equation-a9809cbd-5017-4cb1-8f06-6dc04722463e"><script>var element = document.getElementById("moose-equation-a9809cbd-5017-4cb1-8f06-6dc04722463e");katex.render("\\beta(r_f)", element, {displayMode:false,throwOnError:false});</script></span> the limiter coefficient computed from a smoothness indicator <span class="moose-katex-inline-equation" id="moose-equation-d8621c50-d42e-44a9-994e-9aea59efbc9e"><script>var element = document.getElementById("moose-equation-d8621c50-d42e-44a9-994e-9aea59efbc9e");katex.render("r_f", element, {displayMode:false,throwOnError:false});</script></span> that compares upwind and downwind variation.</p></li></ul><p>When <a href="#a8ebf25b-d41a-43b5-ad74-a98a45588730" class="moose-modal-link modal-trigger">&quot;limit_to_linear&quot;</a> is enabled (default), the blending is additionally constrained so the scheme is never more downwind-biased than linear interpolation:</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-48847709-5144-4c2b-835c-c99d74a8e3f9"></span><script>var element = document.getElementById("moose-equation-48847709-5144-4c2b-835c-c99d74a8e3f9");katex.render("0 \\le g \\le 1-w_f.", element, {displayMode:true,throwOnError:false});</script></span><p>For unstructured grids, <span class="moose-katex-inline-equation" id="moose-equation-e3e459f6-81cb-46e0-8084-64aa1699de5f"><script>var element = document.getElementById("moose-equation-e3e459f6-81cb-46e0-8084-64aa1699de5f");katex.render("r_f", element, {displayMode:false,throwOnError:false});</script></span> is typically formed using a virtual upwind state built from the upwind cell gradient and the vector connecting neighboring cell centroids (see <a href="#moukalled2016finite">Moukalled et al. (2016)</a>). In smooth regions (<span class="moose-katex-inline-equation" id="moose-equation-7c49583e-991b-4375-9304-b9568c2a4800"><script>var element = document.getElementById("moose-equation-7c49583e-991b-4375-9304-b9568c2a4800");katex.render("r_f\\approx 1", element, {displayMode:false,throwOnError:false});</script></span>), <span class="moose-katex-inline-equation" id="moose-equation-582dcb3b-de7f-4dec-aae4-d242e11139cd"><script>var element = document.getElementById("moose-equation-582dcb3b-de7f-4dec-aae4-d242e11139cd");katex.render("\\beta\\approx 1", element, {displayMode:false,throwOnError:false});</script></span> and the method approaches linear interpolation. At local extrema or discontinuities (<span class="moose-katex-inline-equation" id="moose-equation-8cf3befd-fdb3-4f84-862c-1fae09ccf55e"><script>var element = document.getElementById("moose-equation-8cf3befd-fdb3-4f84-862c-1fae09ccf55e");katex.render("r_f\\le 0", element, {displayMode:false,throwOnError:false});</script></span>), <span class="moose-katex-inline-equation" id="moose-equation-63498f14-3b7f-4002-8eb6-aead6eefc8d8"><script>var element = document.getElementById("moose-equation-63498f14-3b7f-4002-8eb6-aead6eefc8d8");katex.render("\\beta=0", element, {displayMode:false,throwOnError:false});</script></span> and the method reverts to upwind, suppressing non-physical oscillations. </p><p>For minmod, the limiter function is</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-f954be54-211c-4b88-bae9-35206f0f5b49"></span><script>var element = document.getElementById("moose-equation-f954be54-211c-4b88-bae9-35206f0f5b49");katex.render("\\beta(r_f)=\\max\\!\\left(0,\\,\\min(1, r_f)\\right).", element, {displayMode:true,throwOnError:false});</script></span><p>Minmod is generally more diffusive than van Leer (it reduces high-order blending more aggressively), but it is often more robust near steep gradients. For limiter theory and available limiter definitions in MOOSE, see <a href="../../syntax/Limiters/index.html">Limiters</a>.</p></section><section class="scrollspy" id="b9ada9e9-1c8f-4523-b421-4c81a61ee663" data-section-level="2" data-section-text="Example Syntax"><h2 id="example-syntax">Example Syntax</h2><p>Declare the interpolation method in <code>[FVInterpolationMethods]</code>:</p><pre style="max-height:350px;"><code class="language-moose">  [nvd_minmod]
+    type = FVAdvectedMinmodWeightBased
+    blending_factor = 0.75
+  []</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#8c682726-9837-4258-8d85-4e8ab9cad76f">(moose/test/tests/linearfvkernels/advection/diagonal-step-2d.i)</a><p>Use it in a linear FV advection kernel via <a href="#19dd1fa8-99d3-4d5a-93d6-27fee9294cd1" class="moose-modal-link modal-trigger">&quot;advected_interp_method_name&quot;</a>:</p><pre style="max-height:350px;"><code class="language-moose">  [advection]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &quot;1 1 0&quot;
+    advected_interp_method_name = nvd_minmod
+  []</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#ed11bde8-dff5-4168-86bb-f36525e6cc08">(moose/test/tests/linearfvkernels/advection/diagonal-step-2d.i)</a></section><section class="scrollspy" id="43249c7c-bc65-46fe-b095-abaf99f4ab75" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="3fce0543-f0ab-417a-b289-ec7dbdaf11c7" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">blending_factor</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">Scales the high-order blending strength; 0 gives pure upwind, 1 gives the full limited blending. Values < 1 can improve linear solver robustness for fully implicit assembly.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>Real</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-doc-range"><span>Range:</span>blending_factor>=0 & blending_factor<=1</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Scales the high-order blending strength; 0 gives pure upwind, 1 gives the full limited blending. Values < 1 can improve linear solver robustness for fully implicit assembly.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">limit_to_linear</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Whether to limit the scheme to be no more downwind-biased than linear interpolation.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to limit the scheme to be no more downwind-biased than linear interpolation.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="c2a1f6f0-b9f8-4106-9e42-4ca0d7c0b8d7" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section><section class="scrollspy" id="8e703738-dc29-40e8-afbf-4a34ce182bd0" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="greenshieldsweller2022">Christopher Greenshields and Henry Weller.
+<em>Notes on Computational Fluid Dynamics: General Principles</em>.
+CFD Direct Ltd, Reading, UK, 2022.<a href="#411a4772-6835-4c84-9b26-24fb1a6b87d5" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[Export]</a><div class="modal" id="411a4772-6835-4c84-9b26-24fb1a6b87d5"><div class="modal-content"><h6>BibTeX</h6><pre style="line-height:1.25;"><code class="language-latex">@book{greenshieldsweller2022,
+    author = "Greenshields, Christopher and Weller, Henry",
+    title = "Notes on Computational Fluid Dynamics: General Principles",
+    year = "2022",
+    publisher = "CFD Direct Ltd",
+    address = "Reading, UK"
+}
+</code></pre><h6>RIS</h6><pre style="line-height:1.25;"><code class="language-none">TY  - BOOK
+AU  - Greenshields, Christopher
+AU  - Weller, Henry
+TI  - Notes on Computational Fluid Dynamics: General Principles
+PY  - 2022
+PB  - CFD Direct Ltd
+CY  - Reading, UK
+ER  - </code></pre><h6>Plain Text</h6><pre style="line-height:1.25;"><code class="language-none">Christopher Greenshields and Henry Weller. Notes on Computational Fluid Dynamics: General Principles. CFD Direct Ltd, Reading, UK, 2022.</code></pre></div></div></li><li id="harten1997">Ami Harten.
+High resolution schemes for hyperbolic conservation laws.
+<em>Journal of computational physics</em>, 135(2):260–278, 1997.<a href="#131b3e08-164c-442b-8d22-ee4bba518743" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[Export]</a><div class="modal" id="131b3e08-164c-442b-8d22-ee4bba518743"><div class="modal-content"><h6>BibTeX</h6><pre style="line-height:1.25;"><code class="language-latex">@article{harten1997,
+    author = "Harten, Ami",
+    title = "High resolution schemes for hyperbolic conservation laws",
+    journal = "Journal of computational physics",
+    volume = "135",
+    number = "2",
+    pages = "260--278",
+    year = "1997",
+    publisher = "Elsevier"
+}
+</code></pre><h6>RIS</h6><pre style="line-height:1.25;"><code class="language-none">TY  - JOUR
+AU  - Harten, Ami
+TI  - High resolution schemes for hyperbolic conservation laws
+JO  - Journal of computational physics
+PY  - 1997
+VL  - 135
+IS  - 2
+PB  - Elsevier
+SP  - 260
+EP  - 278
+ER  - </code></pre><h6>Plain Text</h6><pre style="line-height:1.25;"><code class="language-none">Ami Harten. High resolution schemes for hyperbolic conservation laws. Journal of computational physics, 135(2):260–278, 1997.</code></pre></div></div></li><li id="jasak1996error">Hrvoje Jasak.
+<em>Error analysis and estimation for the finite volume method with applications to fluid flows.</em>
+PhD thesis, Imperial College London (University of London), 1996.<a href="#d86bc711-0049-4535-96e2-acc4b0ea38c8" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[Export]</a><div class="modal" id="d86bc711-0049-4535-96e2-acc4b0ea38c8"><div class="modal-content"><h6>BibTeX</h6><pre style="line-height:1.25;"><code class="language-latex">@phdthesis{jasak1996error,
+    author = "Jasak, Hrvoje",
+    title = "Error analysis and estimation for the finite volume method with applications to fluid flows.",
+    year = "1996",
+    school = "Imperial College London (University of London)"
+}
+</code></pre><h6>RIS</h6><pre style="line-height:1.25;"><code class="language-none">TY  - THES
+AU  - Jasak, Hrvoje
+TI  - Error analysis and estimation for the finite volume method with applications to fluid flows.
+PY  - 1996
+ER  - </code></pre><h6>Plain Text</h6><pre style="line-height:1.25;"><code class="language-none">Hrvoje Jasak. Error analysis and estimation for the finite volume method with applications to fluid flows. PhD thesis, Imperial College London (University of London), 1996.</code></pre></div></div></li><li id="moukalled2016finite">Fadl Moukalled, L&nbsp;Mangani, Marwan Darwish, and others.
+<em>The finite volume method in computational fluid dynamics</em>.
+Volume&nbsp;6.
+Springer, 2016.<a href="#e0276af7-fe60-4cc6-86e8-7f67c0fd3bfe" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[Export]</a><div class="modal" id="e0276af7-fe60-4cc6-86e8-7f67c0fd3bfe"><div class="modal-content"><h6>BibTeX</h6><pre style="line-height:1.25;"><code class="language-latex">@book{moukalled2016finite,
+    author = "Moukalled, Fadl and Mangani, L and Darwish, Marwan and others",
+    title = "The finite volume method in computational fluid dynamics",
+    volume = "6",
+    year = "2016",
+    publisher = "Springer"
+}
+</code></pre><h6>RIS</h6><pre style="line-height:1.25;"><code class="language-none">TY  - BOOK
+AU  - Moukalled, Fadl
+AU  - Mangani, L
+AU  - Darwish, Marwan
+AU  - others
+TI  - The finite volume method in computational fluid dynamics
+PY  - 2016
+VL  - 6
+PB  - Springer
+ER  - </code></pre><h6>Plain Text</h6><pre style="line-height:1.25;"><code class="language-none">Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="e2e9ef98-a77d-41d6-a6f3-556f47118774"><div class="modal-content"><h4>blending_factor</h4><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>Real</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-doc-range"><span>Range:</span>blending_factor>=0 & blending_factor<=1</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Scales the high-order blending strength; 0 gives pure upwind, 1 gives the full limited blending. Values < 1 can improve linear solver robustness for fully implicit assembly.</p></div></div><div class="moose-modal modal" id="a8ebf25b-d41a-43b5-ad74-a98a45588730"><div class="modal-content"><h4>limit_to_linear</h4><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to limit the scheme to be no more downwind-biased than linear interpolation.</p></div></div><div class="moose-modal modal" id="8c682726-9837-4258-8d85-4e8ab9cad76f"><div class="modal-content"><h4>(moose/test/tests/linearfvkernels/advection/diagonal-step-2d.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [gmg]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 51
+    ny = 51
+  []
+  # Prevent test diffing on distributed parallel element numbering
+  allow_renumbering = false
+[]
+
+[Problem]
+  linear_sys_names = &#x27;u_sys&#x27;
+[]
+
+[Variables]
+  [u]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 0.5
+  []
+[]
+
+[FVInterpolationMethods]
+  [upwind]
+    type = FVAdvectedUpwind
+  []
+  [average]
+    type = FVGeometricAverage
+  []
+  [muscl_venkat]
+    type = FVAdvectedVenkatakrishnanDeferredCorrection
+    deferred_correction_factor = 1.0
+  []
+  [nvd_vanleer]
+    type = FVAdvectedVanLeerWeightBased
+    blending_factor = 0.75
+  []
+  [nvd_minmod]
+    type = FVAdvectedMinmodWeightBased
+    blending_factor = 0.75
+  []
+[]
+
+[LinearFVKernels]
+  [advection]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &quot;1 1 0&quot;
+    advected_interp_method_name = nvd_minmod
+  []
+[]
+
+[LinearFVBCs]
+  [left_inflow]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = left
+    functor = 0.5
+  []
+  [bottom_inflow]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = bottom
+    functor = 1
+  []
+  [outflow]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = u
+    boundary = &#x27;right top&#x27;
+    use_two_term_expansion = true
+  []
+[]
+
+[VectorPostprocessors]
+  [diag_sample]
+    type = LineValueSampler
+    variable = u
+    start_point = &#x27;1.0 0 0&#x27;
+    end_point = &#x27;0 1.0 0&#x27;
+    num_points = 101
+    sort_by = id
+    warn_discontinuous_face_values = false
+    execute_on = TIMESTEP_END
+  []
+[]
+
+[Convergence]
+  [linear]
+    type = IterationCountConvergence
+    max_iterations = 50
+    converge_at_max_iterations = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  system_names = u_sys
+  l_tol = 1e-12
+  multi_system_fixed_point = true
+  multi_system_fixed_point_convergence = linear
+  multi_system_fixed_point_relaxation_factor = 0.3
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -pc_factor_mat_solver_type -mat_mumps_icntl_14 -mat_mumps_icntl_20&#x27;
+  petsc_options_value = &#x27;lu       NONZERO               1e-12                     mumps                    50                  0&#x27;
+[]
+
+[Outputs]
+  csv = true
+  exodus = true
+  execute_on = TIMESTEP_END
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="19dd1fa8-99d3-4d5a-93d6-27fee9294cd1"><div class="modal-content"><h4>advected_interp_method_name</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>InterpolationMethodName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Name of the FVInterpolationMethod to use for the advected quantity.</p></div></div><div class="moose-modal modal" id="ed11bde8-dff5-4168-86bb-f36525e6cc08"><div class="modal-content"><h4>(moose/test/tests/linearfvkernels/advection/diagonal-step-2d.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [gmg]
+    type = GeneratedMeshGenerator
+    dim = 2
+    nx = 51
+    ny = 51
+  []
+  # Prevent test diffing on distributed parallel element numbering
+  allow_renumbering = false
+[]
+
+[Problem]
+  linear_sys_names = &#x27;u_sys&#x27;
+[]
+
+[Variables]
+  [u]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 0.5
+  []
+[]
+
+[FVInterpolationMethods]
+  [upwind]
+    type = FVAdvectedUpwind
+  []
+  [average]
+    type = FVGeometricAverage
+  []
+  [muscl_venkat]
+    type = FVAdvectedVenkatakrishnanDeferredCorrection
+    deferred_correction_factor = 1.0
+  []
+  [nvd_vanleer]
+    type = FVAdvectedVanLeerWeightBased
+    blending_factor = 0.75
+  []
+  [nvd_minmod]
+    type = FVAdvectedMinmodWeightBased
+    blending_factor = 0.75
+  []
+[]
+
+[LinearFVKernels]
+  [advection]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &quot;1 1 0&quot;
+    advected_interp_method_name = nvd_minmod
+  []
+[]
+
+[LinearFVBCs]
+  [left_inflow]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = left
+    functor = 0.5
+  []
+  [bottom_inflow]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = bottom
+    functor = 1
+  []
+  [outflow]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = u
+    boundary = &#x27;right top&#x27;
+    use_two_term_expansion = true
+  []
+[]
+
+[VectorPostprocessors]
+  [diag_sample]
+    type = LineValueSampler
+    variable = u
+    start_point = &#x27;1.0 0 0&#x27;
+    end_point = &#x27;0 1.0 0&#x27;
+    num_points = 101
+    sort_by = id
+    warn_discontinuous_face_values = false
+    execute_on = TIMESTEP_END
+  []
+[]
+
+[Convergence]
+  [linear]
+    type = IterationCountConvergence
+    max_iterations = 50
+    converge_at_max_iterations = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  system_names = u_sys
+  l_tol = 1e-12
+  multi_system_fixed_point = true
+  multi_system_fixed_point_convergence = linear
+  multi_system_fixed_point_relaxation_factor = 0.3
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -pc_factor_mat_solver_type -mat_mumps_icntl_14 -mat_mumps_icntl_20&#x27;
+  petsc_options_value = &#x27;lu       NONZERO               1e-12                     mumps                    50                  0&#x27;
+[]
+
+[Outputs]
+  csv = true
+  exodus = true
+  execute_on = TIMESTEP_END
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#22577bcb-8627-4bab-962f-9f98cef1ec8a" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#b9ada9e9-1c8f-4523-b421-4c81a61ee663" class="tooltipped" data-position="left" data-tooltip="Example Syntax">Example Syntax</a></li><li><a href="#43249c7c-bc65-46fe-b095-abaf99f4ab75" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#8e703738-dc29-40e8-afbf-4a34ce182bd0" class="tooltipped" data-position="left" data-tooltip="References">References</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
