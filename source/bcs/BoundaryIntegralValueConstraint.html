@@ -1,0 +1,205 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>BoundaryIntegralValueConstraint | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="1bfe54ea-d0b0-4f3c-9e39-a0821b4fb762" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="a2c0d902-7987-4e1a-8b0f-7a61b129cd4c" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="3698ea7b-d2fe-4354-916b-552ff74e6121" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="1a7ebe7e-e6ac-4bba-8d93-9488c0b90279"><i class="material-icons">menu</i></a><ul class="sidenav" id="1a7ebe7e-e6ac-4bba-8d93-9488c0b90279"><li><a href="#!" class="dropdown-trigger" data-target="6e995d04-d3db-4b17-a3be-b21be1b67bf6" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="f89f834c-6d9b-4911-b60d-98e89f8c5501" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="6fc7b1a1-f4fb-474d-a829-b20036ba9803" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="1bfe54ea-d0b0-4f3c-9e39-a0821b4fb762"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="a2c0d902-7987-4e1a-8b0f-7a61b129cd4c"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="3698ea7b-d2fe-4354-916b-552ff74e6121"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="6e995d04-d3db-4b17-a3be-b21be1b67bf6"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="f89f834c-6d9b-4911-b60d-98e89f8c5501"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="6fc7b1a1-f4fb-474d-a829-b20036ba9803"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">bcs</span><a href="#" class="breadcrumb">BoundaryIntegralValueConstraint</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="ea5233fe-40e6-44da-b585-e960d298837c" data-section-level="1" data-section-text="BoundaryIntegralValueConstraint"><h1 id="boundaryintegralvalueconstraint">BoundaryIntegralValueConstraint</h1><p>Enforces a prescribed average value for a finite element variable on a boundary using a scalar Lagrange multiplier.</p><section class="scrollspy" id="bdd1d2c5-b75e-4d68-a283-ca612b4382b1" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p><code>BoundaryIntegralValueConstraint</code> enforces</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-f8df548c-3a86-47c5-a06f-33ba7b12be1a"></span><script>var element = document.getElementById("moose-equation-f8df548c-3a86-47c5-a06f-33ba7b12be1a");katex.render("\\int_{\\Gamma} \\left(u - \\phi_0\\right) \\, d\\Gamma = 0", element, {displayMode:true,throwOnError:false});</script></span><p>on a boundary <span class="moose-katex-inline-equation" id="moose-equation-edf92aa5-2739-4af8-aead-a3a0d98aca44"><script>var element = document.getElementById("moose-equation-edf92aa5-2739-4af8-aead-a3a0d98aca44");katex.render("\\Gamma", element, {displayMode:false,throwOnError:false});</script></span> using a <code>SCALAR</code> Lagrange multiplier variable. This makes the average value of the finite element variable <code>u</code> on the specified <code>boundary</code> equal to <code>phi0</code>. The variable supplied to <a href="#9ee03520-fd9d-4abe-99fa-8a352778aac4" class="moose-modal-link modal-trigger">&quot;lambda&quot;</a> must use <code>family = SCALAR</code> and <code>order = FIRST</code>.</p><p>The object assembles both the field-variable equation and the scalar Lagrange multiplier equation, so no separate <code>ScalarKernel</code> is required for the Lagrange multiplier variable. It is the finite element boundary analogue of <a href="../fvbcs/FVBoundaryIntegralValueConstraint.html">FVBoundaryIntegralValueConstraint</a>.</p><p>The scalar Lagrange multiplier <span class="moose-katex-inline-equation" id="moose-equation-e898fa4f-d860-4a5c-b752-fbeeb065885d"><script>var element = document.getElementById("moose-equation-e898fa4f-d860-4a5c-b752-fbeeb065885d");katex.render("\\lambda", element, {displayMode:false,throwOnError:false});</script></span> has the physical meaning of the uniform boundary loading needed to enforce the average value constraint. For example, in a mechanical problem where <span class="moose-katex-inline-equation" id="moose-equation-ed74a2a9-1bb5-48c8-ad05-12668627ac08"><script>var element = document.getElementById("moose-equation-ed74a2a9-1bb5-48c8-ad05-12668627ac08");katex.render("u", element, {displayMode:false,throwOnError:false});</script></span> is a displacement field, <span class="moose-katex-inline-equation" id="moose-equation-50b08b59-66fb-40d6-8cda-4ad1f330b401"><script>var element = document.getElementById("moose-equation-50b08b59-66fb-40d6-8cda-4ad1f330b401");katex.render("\\lambda", element, {displayMode:false,throwOnError:false});</script></span> represents the uniform traction applied on <span class="moose-katex-inline-equation" id="moose-equation-c98f2b69-2370-40de-8a00-d15a81801f0d"><script>var element = document.getElementById("moose-equation-c98f2b69-2370-40de-8a00-d15a81801f0d");katex.render("\\Gamma", element, {displayMode:false,throwOnError:false});</script></span> to enforce the prescribed average displacement. In a heat-conduction problem where <span class="moose-katex-inline-equation" id="moose-equation-7a3bd996-70d9-48e7-b55e-253793ac3b53"><script>var element = document.getElementById("moose-equation-7a3bd996-70d9-48e7-b55e-253793ac3b53");katex.render("u", element, {displayMode:false,throwOnError:false});</script></span> is temperature, <span class="moose-katex-inline-equation" id="moose-equation-e0ad964d-89e6-43e4-bd60-952ddb85f2b7"><script>var element = document.getElementById("moose-equation-e0ad964d-89e6-43e4-bd60-952ddb85f2b7");katex.render("\\lambda", element, {displayMode:false,throwOnError:false});</script></span> represents the uniform boundary source term or flux needed to enforce the prescribed average temperature.</p><div class="card moose-alert moose-alert-warning"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">warning</i><span class="moose-alert-title-brand">warning</span></div><div class="card-content"><div class="moose-alert-content"><p>This constraint introduces a saddle-point block with zero diagonal terms. Use a preconditioner that includes the field and scalar variables. <code>SMP</code> with <code>full = true</code> is required for the complete off-diagonal Jacobian block structure, and a suitable shift or factorization is typically needed for the indefinite matrix.</p></div></div></div><p>If <code>phi0</code> is supplied as a postprocessor, set its <code>execute_on</code> to include <code>LINEAR</code> (or <code>NONLINEAR</code>) so the value is current during residual and Jacobian evaluation.</p></section><section class="scrollspy" id="44c950c1-265b-4dad-997b-0158d54ffcfb" data-section-level="2" data-section-text="Example Input Syntax"><h2 id="example-input-syntax">Example Input Syntax</h2><p>The Lagrange multiplier variable is declared as a first-order scalar variable:</p><pre style="max-height:350px;"><code class="language-moose">[Variables&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Variables/index.html&quot;}&gt;&gt;&gt;]
+  [u]
+  []
+  [lambda_left]
+    family&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the family of FE shape functions to use for this variable&quot;}&gt;&gt;&gt; = SCALAR
+    order&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)&quot;}&gt;&gt;&gt; = FIRST
+  []
+  [lambda_bottom]
+    family&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the family of FE shape functions to use for this variable&quot;}&gt;&gt;&gt; = SCALAR
+    order&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies the order of the FE shape function to use for this variable (additional orders not listed are allowed)&quot;}&gt;&gt;&gt; = FIRST
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#9e6d2fc4-2753-4b0c-9cde-e150c4472139">(moose/test/tests/bcs/boundary_integral_value_constraint/boundary_integral_value_constraint.i)</a><pre style="max-height:350px;"><code class="language-moose">[BCs&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/BCs/index.html&quot;}&gt;&gt;&gt;]
+  [left_average]
+    type = BoundaryIntegralValueConstraint&lt;&lt;&lt;{&quot;description&quot;: &quot;Enforces a prescribed average value for a finite element variable on a boundary using a scalar Lagrange multiplier.&quot;, &quot;href&quot;: &quot;BoundaryIntegralValueConstraint.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this residual object operates on&quot;}&gt;&gt;&gt; = u
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = left
+    lambda&lt;&lt;&lt;{&quot;description&quot;: &quot;Lagrange multiplier scalar variable&quot;}&gt;&gt;&gt; = lambda_left
+    phi0&lt;&lt;&lt;{&quot;description&quot;: &quot;The value that the constraint will enforce.&quot;}&gt;&gt;&gt; = 0.25
+  []
+  [bottom_average]
+    type = BoundaryIntegralValueConstraint&lt;&lt;&lt;{&quot;description&quot;: &quot;Enforces a prescribed average value for a finite element variable on a boundary using a scalar Lagrange multiplier.&quot;, &quot;href&quot;: &quot;BoundaryIntegralValueConstraint.html&quot;}&gt;&gt;&gt;
+    variable&lt;&lt;&lt;{&quot;description&quot;: &quot;The name of the variable that this residual object operates on&quot;}&gt;&gt;&gt; = u
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The list of boundary IDs from the mesh where this object applies&quot;}&gt;&gt;&gt; = bottom
+    lambda&lt;&lt;&lt;{&quot;description&quot;: &quot;Lagrange multiplier scalar variable&quot;}&gt;&gt;&gt; = lambda_bottom
+    phi0&lt;&lt;&lt;{&quot;description&quot;: &quot;The value that the constraint will enforce.&quot;}&gt;&gt;&gt; = 0.5
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#5d32318e-52c1-4089-ac7b-d41085b245c9">(moose/test/tests/bcs/boundary_integral_value_constraint/boundary_integral_value_constraint.i)</a></section><section class="scrollspy" id="36c0549e-0091-442b-8ae0-dc18ca0f4b60" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="f2c6d69d-eb57-42f8-8b31-74309277319d" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundary IDs from the mesh where this object applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The list of boundary IDs from the mesh where this object applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">lambda</span><span class="moose-parameter-header-description">Lagrange multiplier scalar variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Lagrange multiplier scalar variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this residual object operates on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this residual object operates on</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="e83a471d-de94-4cb7-bd82-9a08250761b2" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">phi0</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The value that the constraint will enforce.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>PostprocessorName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The value that the constraint will enforce.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="7e2ff8d8-34aa-4246-a7b4-6bf90525a94f" data-section-level="3" data-section-text="Contribution To Tagged Field Data Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">absolute_value_vector_tags</span><span class="moose-parameter-header-description">The tags for the vectors this residual object should fill with the absolute value of the residual contribution</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tags for the vectors this residual object should fill with the absolute value of the residual contribution</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;TagName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_only</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether this object is only doing assembly to matrices (no vectors)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether this object is only doing assembly to matrices (no vectors)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, system</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">nontime</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nontime</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime, time</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Contribution To Tagged Field Data Parameters</h3></summary></details></section><section id="928f45f3-00ac-4e10-9fd1-90f65dad763f" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diag_save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this BC's diagonal jacobian contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this BC's diagonal jacobian contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>Yes</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this BC's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;AuxVariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this BC's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">search_method</span><span class="moose-parameter-header-default">nearest_node_connected_sides</span><span class="moose-parameter-header-description">Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nearest_node_connected_sides</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nearest_node_connected_sides, all_proximate_sides</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Choice of search algorithm.  All options begin by finding the nearest node in the primary boundary to a query point in the secondary boundary.  In the default nearest_node_connected_sides algorithm, primary boundary elements are searched iff that nearest node is one of their nodes.  This is fast to determine via a pregenerated node-to-elem map and is robust on conforming meshes.  In the optional all_proximate_sides algorithm, primary boundary elements are searched iff they touch that nearest node, even if they are not topologically connected to it.  This is more CPU-intensive but is necessary for robustness on any boundary surfaces which has disconnections (such as Flex IGA meshes) or non-conformity (such as hanging nodes in adaptively h-refined meshes).</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">skip_execution_outside_variable_domain</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether to skip execution of this boundary condition when the variable it applies to is not defined on the boundary. This can facilitate setups with moving variable domains and fixed boundaries. Note that the FEProblem boundary-restricted integrity checks will also need to be turned off if using this option</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to skip execution of this boundary condition when the variable it applies to is not defined on the boundary. This can facilitate setups with moving variable domains and fixed boundaries. Note that the FEProblem boundary-restricted integrity checks will also need to be turned off if using this option</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="0753e52c-e890-41ac-a5e8-45b64431507d" data-section-level="3" data-section-text="Material Property Retrieval Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">prop_getter_suffix</span><span class="moose-parameter-header-description">An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>An optional suffix parameter that can be appended to any attempt to retrieve/get material properties. The suffix will be prepended with a '_' character.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_interpolated_state</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>For the old and older state use projected material properties interpolated at the quadrature points. To set up projection use the ProjectedStatefulMaterialStorageAction.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Material Property Retrieval Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="9ee03520-fd9d-4abe-99fa-8a352778aac4"><div class="modal-content"><h4>lambda</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;VariableName&gt;</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Lagrange multiplier scalar variable</p></div></div><div class="moose-modal modal" id="9e6d2fc4-2753-4b0c-9cde-e150c4472139"><div class="modal-content"><h4>(moose/test/tests/bcs/boundary_integral_value_constraint/boundary_integral_value_constraint.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  xmin = 0
+  xmax = 1
+  ymin = 0
+  ymax = 1
+  nx = 4
+  ny = 4
+  elem_type = QUAD4
+[]
+
+[Variables]
+  [u]
+  []
+  [lambda_left]
+    family = SCALAR
+    order = FIRST
+  []
+  [lambda_bottom]
+    family = SCALAR
+    order = FIRST
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = Diffusion
+    variable = u
+  []
+  [source]
+    type = BodyForce
+    variable = u
+    value = 1
+  []
+[]
+
+[BCs]
+  [left_average]
+    type = BoundaryIntegralValueConstraint
+    variable = u
+    boundary = left
+    lambda = lambda_left
+    phi0 = 0.25
+  []
+  [bottom_average]
+    type = BoundaryIntegralValueConstraint
+    variable = u
+    boundary = bottom
+    lambda = lambda_bottom
+    phi0 = 0.5
+  []
+[]
+
+[Postprocessors]
+  [left_average]
+    type = SideAverageValue
+    variable = u
+    boundary = left
+    execute_on = timestep_end
+  []
+  [bottom_average]
+    type = SideAverageValue
+    variable = u
+    boundary = bottom
+    execute_on = timestep_end
+  []
+[]
+
+[Preconditioning]
+  [full]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = NEWTON
+  nl_abs_tol = 1e-12
+  nl_rel_tol = 1e-12
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type&#x27;
+  petsc_options_value = &#x27;lu       NONZERO&#x27;
+[]
+
+[Outputs]
+  csv = true
+  hide = &#x27;lambda_left lambda_bottom&#x27;
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="5d32318e-52c1-4089-ac7b-d41085b245c9"><div class="modal-content"><h4>(moose/test/tests/bcs/boundary_integral_value_constraint/boundary_integral_value_constraint.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  xmin = 0
+  xmax = 1
+  ymin = 0
+  ymax = 1
+  nx = 4
+  ny = 4
+  elem_type = QUAD4
+[]
+
+[Variables]
+  [u]
+  []
+  [lambda_left]
+    family = SCALAR
+    order = FIRST
+  []
+  [lambda_bottom]
+    family = SCALAR
+    order = FIRST
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = Diffusion
+    variable = u
+  []
+  [source]
+    type = BodyForce
+    variable = u
+    value = 1
+  []
+[]
+
+[BCs]
+  [left_average]
+    type = BoundaryIntegralValueConstraint
+    variable = u
+    boundary = left
+    lambda = lambda_left
+    phi0 = 0.25
+  []
+  [bottom_average]
+    type = BoundaryIntegralValueConstraint
+    variable = u
+    boundary = bottom
+    lambda = lambda_bottom
+    phi0 = 0.5
+  []
+[]
+
+[Postprocessors]
+  [left_average]
+    type = SideAverageValue
+    variable = u
+    boundary = left
+    execute_on = timestep_end
+  []
+  [bottom_average]
+    type = SideAverageValue
+    variable = u
+    boundary = bottom
+    execute_on = timestep_end
+  []
+[]
+
+[Preconditioning]
+  [full]
+    type = SMP
+    full = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = NEWTON
+  nl_abs_tol = 1e-12
+  nl_rel_tol = 1e-12
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type&#x27;
+  petsc_options_value = &#x27;lu       NONZERO&#x27;
+[]
+
+[Outputs]
+  csv = true
+  hide = &#x27;lambda_left lambda_bottom&#x27;
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#bdd1d2c5-b75e-4d68-a283-ca612b4382b1" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#44c950c1-265b-4dad-997b-0158d54ffcfb" class="tooltipped" data-position="left" data-tooltip="Example Input Syntax">Example Input Syntax</a></li><li><a href="#36c0549e-0091-442b-8ae0-dc18ca0f4b60" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

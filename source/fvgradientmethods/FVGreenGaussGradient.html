@@ -1,0 +1,496 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>FVGreenGaussGradient | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="5c48d0bf-f9f3-4aae-9e58-49af432ca139" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="fc9c9462-ab3f-4804-b1fa-c468b01b6540" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="71d5c503-ca74-4046-b530-91064512c785" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="136c2be6-2adf-4a32-b444-279cc7d1c440"><i class="material-icons">menu</i></a><ul class="sidenav" id="136c2be6-2adf-4a32-b444-279cc7d1c440"><li><a href="#!" class="dropdown-trigger" data-target="c2383899-f2fe-4398-bf03-e71e2c4820cf" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="e48ad3f5-5d88-417f-87db-fd7c47d5dbcd" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="2020a20f-fc22-42b7-bfef-58df0c0fc391" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="5c48d0bf-f9f3-4aae-9e58-49af432ca139"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="fc9c9462-ab3f-4804-b1fa-c468b01b6540"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="71d5c503-ca74-4046-b530-91064512c785"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="c2383899-f2fe-4398-bf03-e71e2c4820cf"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="e48ad3f5-5d88-417f-87db-fd7c47d5dbcd"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="2020a20f-fc22-42b7-bfef-58df0c0fc391"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">fvgradientmethods</span><a href="#" class="breadcrumb">FVGreenGaussGradient</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="3c2446ad-4ee2-4c43-a6d9-2fa854b5280a" data-section-level="1" data-section-text="FVGreenGaussGradient"><h1 id="fvgreengaussgradient">FVGreenGaussGradient</h1><section class="scrollspy" id="825d6bc3-7460-4a32-8545-b97e0087da5f" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p>This method computes gradients for cell-centered linear finite-volume variables using the Green-Gauss theorem <a href="#moukalled2016finite">Moukalled et al. (2016)</a>. For a cell <span class="moose-katex-inline-equation" id="moose-equation-5b526d51-5864-4516-8f04-87d351becbf0"><script>var element = document.getElementById("moose-equation-5b526d51-5864-4516-8f04-87d351becbf0");katex.render("C", element, {displayMode:false,throwOnError:false});</script></span> with volume <span class="moose-katex-inline-equation" id="moose-equation-f8d36723-5a83-4158-94c4-c71db21ef768"><script>var element = document.getElementById("moose-equation-f8d36723-5a83-4158-94c4-c71db21ef768");katex.render("V_C", element, {displayMode:false,throwOnError:false});</script></span>, the method approximates the gradient of a cell-centered field <span class="moose-katex-inline-equation" id="moose-equation-03063467-8f48-463d-9af3-bfc4732e993e"><script>var element = document.getElementById("moose-equation-03063467-8f48-463d-9af3-bfc4732e993e");katex.render("\\phi", element, {displayMode:false,throwOnError:false});</script></span> as</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-7ef3b564-7496-44fe-b77e-dd98e51cf862"></span><script>var element = document.getElementById("moose-equation-7ef3b564-7496-44fe-b77e-dd98e51cf862");katex.render("\\nabla \\phi_C \\approx \\frac{1}{V_C}\\sum_f \\phi_f \\mathbf{S}_f,", element, {displayMode:true,throwOnError:false});</script></span><p>where <span class="moose-katex-inline-equation" id="moose-equation-31730c1a-f29c-4c78-9cc4-75d5c259401f"><script>var element = document.getElementById("moose-equation-31730c1a-f29c-4c78-9cc4-75d5c259401f");katex.render("f", element, {displayMode:false,throwOnError:false});</script></span> ranges over the cell faces, <span class="moose-katex-inline-equation" id="moose-equation-e6d067e3-08df-49ce-b711-d0c27882709c"><script>var element = document.getElementById("moose-equation-e6d067e3-08df-49ce-b711-d0c27882709c");katex.render("\\phi_f", element, {displayMode:false,throwOnError:false});</script></span> is the face value interpolated from adjacent cell-centered values and boundary data, and <span class="moose-katex-inline-equation" id="moose-equation-9d2ce480-2ac9-4be7-9cf8-9924446dd230"><script>var element = document.getElementById("moose-equation-9d2ce480-2ac9-4be7-9cf8-9924446dd230");katex.render("\\mathbf{S}_f", element, {displayMode:false,throwOnError:false});</script></span> is the outward face area vector.</p><p>Use this method when a linear FV variable or a gradient-based interpolation method needs gradients. MOOSE also provides two built-in method names for convenient input into gradient method parameters:</p><ul class="browser-default"><li><p><code>green-gauss</code>, equivalent to an <code>FVGreenGaussGradient</code> with <code>limiter = none</code> </p></li><li><p><code>green-gauss-venkatakrishnan</code>, equivalent to an <code>FVGreenGaussGradient</code> with <code>limiter = venkatakrishnan</code></p></li></ul><p>Named methods in <code>[FVGradientMethods]</code> are useful when several variables or interpolation methods should use the same gradient settings.</p></section><section class="scrollspy" id="f9042b9e-7a7c-413a-90de-22f9cce1a0ec" data-section-level="2" data-section-text="Limiters"><h2 id="limiters">Limiters</h2><p>The optional <a href="#8c2f141e-f23d-4ce1-9acc-d6deda28b4e5" class="moose-modal-link modal-trigger">&quot;limiter&quot;</a> parameter controls whether MOOSE limits the Green-Gauss gradient before using it. With <code>limiter = none</code>, the Green-Gauss result is used directly. With <code>limiter = venkatakrishnan</code>, MOOSE first computes the Green-Gauss gradient and then applies the Venkatakrishnan limiter <a href="#venkatakrishnan1993">Venkatakrishnan (1993)</a>. A limiter can reduce overshoots near steep solution changes.</p></section><section class="scrollspy" id="d09359e3-0210-46e6-8f24-3b1cd6d1f9af" data-section-level="2" data-section-text="Example Syntax"><h2 id="example-syntax">Example Syntax</h2><p>Declare a named Green-Gauss gradient method in <code>[FVGradientMethods]</code>:</p><pre style="max-height:350px;"><code class="language-moose">[FVGradientMethods&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/FVGradientMethods/index.html&quot;}&gt;&gt;&gt;]
+  [gg]
+    type = FVGreenGaussGradient&lt;&lt;&lt;{&quot;description&quot;: &quot;Green-Gauss cell-centered gradient method.&quot;, &quot;href&quot;: &quot;FVGreenGaussGradient.html&quot;}&gt;&gt;&gt;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#ac105b4f-2479-42a7-8dc4-a0f0280f65da">(moose/test/tests/variables/linearfv/shared-gradient-method.i)</a><p>Use the method as the default gradient method for a linear FV variable through <a href="#00b78e60-35a0-4ce9-839d-9ad6d893ec80" class="moose-modal-link modal-trigger">&quot;gradient_method&quot;</a>:</p><pre style="max-height:350px;"><code class="language-moose">[Variables&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Variables/index.html&quot;}&gt;&gt;&gt;]
+  [u]
+    type = MooseLinearVariableFVReal&lt;&lt;&lt;{&quot;description&quot;: &quot;Base class for Moose variables. This should never be the terminal object type&quot;, &quot;href&quot;: &quot;../variables/MooseLinearVariableFV.html&quot;}&gt;&gt;&gt;
+    solver_sys&lt;&lt;&lt;{&quot;description&quot;: &quot;If this variable is a solver variable, this is the solver system to which it should be added.&quot;}&gt;&gt;&gt; = &#x27;u_sys&#x27;
+    initial_condition&lt;&lt;&lt;{&quot;description&quot;: &quot;Specifies a constant initial condition for this variable&quot;}&gt;&gt;&gt; = 1.0
+    gradient_method&lt;&lt;&lt;{&quot;description&quot;: &quot;Default gradient computation method to register when a consumer requests gradients from this variable. This may be a built-in method name like &#x27;green-gauss&#x27; or &#x27;green-gauss-venkatakrishnan&#x27;, or the name of an object in [FVGradientMethods].&quot;}&gt;&gt;&gt; = gg
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#9d05d16c-4ffe-4778-99bb-23e356ebf8e5">(moose/test/tests/variables/linearfv/shared-gradient-method.i)</a><p>The same named method can also be used by a gradient-based interpolation method, such as <a href="../fvinterpolationmethods/FVAdvectedMUSCLDeferredCorrection.html">FVAdvectedMUSCLDeferredCorrection</a>:</p><pre style="max-height:350px;"><code class="language-moose">[FVInterpolationMethods&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/FVInterpolationMethods/index.html&quot;}&gt;&gt;&gt;]
+  [muscl]
+    type = FVAdvectedMUSCLDeferredCorrection&lt;&lt;&lt;{&quot;description&quot;: &quot;MUSCL reconstruction with cell gradients from a named gradient method using deferred correction.&quot;, &quot;href&quot;: &quot;../fvinterpolationmethods/FVAdvectedMUSCLDeferredCorrection.html&quot;}&gt;&gt;&gt;
+    gradient_method&lt;&lt;&lt;{&quot;description&quot;: &quot;Gradient method used to compute cell gradients for the high-order reconstruction.&quot;}&gt;&gt;&gt; = gg
+    deferred_correction_factor&lt;&lt;&lt;{&quot;description&quot;: &quot;Scales the deferred correction strength; 0 gives pure upwind (no deferred correction), 1 gives full deferred correction. Values &lt; 1 can improve fixed point robustness.&quot;}&gt;&gt;&gt; = 1.0
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#0481ed1d-d145-43b7-8513-650879068618">(moose/test/tests/variables/linearfv/shared-gradient-method.i)</a></section><section class="scrollspy" id="6fb9e5ef-c10b-4404-b7da-9ee5f44e9cdd" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="b26a0161-8cbd-4627-93e5-66a107be5d5f" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">limiter</span><span class="moose-parameter-header-default">none</span><span class="moose-parameter-header-description">Limiter to apply to gradients produced by this method.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>none</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>none, venkatakrishnan</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Limiter to apply to gradients produced by this method.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="abc15a67-29af-4fa0-b2e2-a7746efe45ec" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;std::string&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section><section class="scrollspy" id="a2d1e857-e286-48db-b773-0cc6d1cdb695" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="moukalled2016finite">Fadl Moukalled, L&nbsp;Mangani, Marwan Darwish, and others.
+<em>The finite volume method in computational fluid dynamics</em>.
+Volume&nbsp;6.
+Springer, 2016.<a href="#0f0b80fe-2d13-4ef1-b316-8caa0f685196" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[Export]</a><div class="modal" id="0f0b80fe-2d13-4ef1-b316-8caa0f685196"><div class="modal-content"><h6>BibTeX</h6><pre style="line-height:1.25;"><code class="language-latex">@book{moukalled2016finite,
+    author = "Moukalled, Fadl and Mangani, L and Darwish, Marwan and others",
+    title = "The finite volume method in computational fluid dynamics",
+    volume = "6",
+    year = "2016",
+    publisher = "Springer"
+}
+</code></pre><h6>RIS</h6><pre style="line-height:1.25;"><code class="language-none">TY  - BOOK
+AU  - Moukalled, Fadl
+AU  - Mangani, L
+AU  - Darwish, Marwan
+AU  - others
+TI  - The finite volume method in computational fluid dynamics
+PY  - 2016
+VL  - 6
+PB  - Springer
+ER  - </code></pre><h6>Plain Text</h6><pre style="line-height:1.25;"><code class="language-none">Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.</code></pre></div></div></li><li id="venkatakrishnan1993">Venkat Venkatakrishnan.
+On the accuracy of limiters and convergence to steady state solutions.
+In <em>31st Aerospace Sciences Meeting</em>, 880. 1993.<a href="#e9f035a8-30fb-4b57-ac44-1c96fc775b58" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[Export]</a><div class="modal" id="e9f035a8-30fb-4b57-ac44-1c96fc775b58"><div class="modal-content"><h6>BibTeX</h6><pre style="line-height:1.25;"><code class="language-latex">@inproceedings{venkatakrishnan1993,
+    author = "Venkatakrishnan, Venkat",
+    title = "On the accuracy of limiters and convergence to steady state solutions",
+    booktitle = "31st Aerospace Sciences Meeting",
+    pages = "880",
+    year = "1993"
+}
+</code></pre><h6>RIS</h6><pre style="line-height:1.25;"><code class="language-none">TY  - CPAPER
+AU  - Venkatakrishnan, Venkat
+TI  - On the accuracy of limiters and convergence to steady state solutions
+T2  - 31st Aerospace Sciences Meeting
+PY  - 1993
+SP  - 880
+ER  - </code></pre><h6>Plain Text</h6><pre style="line-height:1.25;"><code class="language-none">Venkat Venkatakrishnan. On the accuracy of limiters and convergence to steady state solutions. In 31st Aerospace Sciences Meeting, 880. 1993.</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="8c2f141e-f23d-4ce1-9acc-d6deda28b4e5"><div class="modal-content"><h4>limiter</h4><p class="moose-parameter-description-default"><span>Default:</span>none</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>none, venkatakrishnan</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Limiter to apply to gradients produced by this method.</p></div></div><div class="moose-modal modal" id="ac105b4f-2479-42a7-8dc4-a0f0280f65da"><div class="modal-content"><h4>(moose/test/tests/variables/linearfv/shared-gradient-method.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [gmg]
+    type = GeneratedMeshGenerator
+    dim = 1
+    nx = 4
+  []
+[]
+
+[Problem]
+  linear_sys_names = &#x27;u_sys&#x27;
+[]
+
+[Variables]
+  [u]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 1.0
+    gradient_method = gg
+  []
+  [v]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 1.0
+    gradient_method = gg
+  []
+[]
+
+[FVGradientMethods]
+  [gg]
+    type = FVGreenGaussGradient
+  []
+[]
+
+[FVInterpolationMethods]
+  [muscl]
+    type = FVAdvectedMUSCLDeferredCorrection
+    gradient_method = gg
+    deferred_correction_factor = 1.0
+  []
+[]
+
+[LinearFVKernels]
+  [advection_u]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &quot;1 0 0&quot;
+    advected_interp_method_name = muscl
+  []
+  [source_u]
+    type = LinearFVSource
+    variable = u
+    source_density = source_func
+  []
+  [advection_v]
+    type = LinearFVAdvection
+    variable = v
+    velocity = &quot;1 0 0&quot;
+    advected_interp_method_name = muscl
+  []
+  [source_v]
+    type = LinearFVSource
+    variable = v
+    source_density = source_func
+  []
+[]
+
+[LinearFVBCs]
+  [inflow_u]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = &quot;left&quot;
+    functor = analytic_solution
+  []
+  [outflow_u]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = u
+    boundary = &quot;right&quot;
+    use_two_term_expansion = false
+  []
+  [inflow_v]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = v
+    boundary = &quot;left&quot;
+    functor = analytic_solution
+  []
+  [outflow_v]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = v
+    boundary = &quot;right&quot;
+    use_two_term_expansion = false
+  []
+[]
+
+[Functions]
+  [source_func]
+    type = ParsedFunction
+    expression = x
+  []
+  [analytic_solution]
+    type = ParsedFunction
+    expression = &#x27;0.5+0.5*x*x&#x27;
+  []
+[]
+
+[Postprocessors]
+  [error_u]
+    type = ElementL2FunctorError
+    approximate = u
+    exact = analytic_solution
+    execute_on = FINAL
+  []
+  [error_v]
+    type = ElementL2FunctorError
+    approximate = v
+    exact = analytic_solution
+    execute_on = FINAL
+  []
+  [h]
+    type = AverageElementSize
+    execute_on = FINAL
+  []
+[]
+
+[Convergence]
+  [linear]
+    type = IterationCountConvergence
+    max_iterations = 8
+    converge_at_max_iterations = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  system_names = u_sys
+  l_tol = 1e-10
+  multi_system_fixed_point = true
+  multi_system_fixed_point_convergence = linear
+  multi_system_fixed_point_relaxation_factor = 1.0
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -pc_factor_mat_solver_type -mat_mumps_icntl_14&#x27;
+  petsc_options_value = &#x27;lu       NONZERO               1e-12                     mumps                    50&#x27;
+[]
+
+[Outputs]
+  [csv]
+    type = CSV
+    execute_on = FINAL
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="00b78e60-35a0-4ce9-839d-9ad6d893ec80"><div class="modal-content"><h4>gradient_method</h4><p class="moose-parameter-description-default"><span>Default:</span>green-gauss</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>GradientMethodName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Default gradient computation method to register when a consumer requests gradients from this variable. This may be a built-in method name like 'green-gauss' or 'green-gauss-venkatakrishnan', or the name of an object in [FVGradientMethods].</p></div></div><div class="moose-modal modal" id="9d05d16c-4ffe-4778-99bb-23e356ebf8e5"><div class="modal-content"><h4>(moose/test/tests/variables/linearfv/shared-gradient-method.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [gmg]
+    type = GeneratedMeshGenerator
+    dim = 1
+    nx = 4
+  []
+[]
+
+[Problem]
+  linear_sys_names = &#x27;u_sys&#x27;
+[]
+
+[Variables]
+  [u]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 1.0
+    gradient_method = gg
+  []
+  [v]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 1.0
+    gradient_method = gg
+  []
+[]
+
+[FVGradientMethods]
+  [gg]
+    type = FVGreenGaussGradient
+  []
+[]
+
+[FVInterpolationMethods]
+  [muscl]
+    type = FVAdvectedMUSCLDeferredCorrection
+    gradient_method = gg
+    deferred_correction_factor = 1.0
+  []
+[]
+
+[LinearFVKernels]
+  [advection_u]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &quot;1 0 0&quot;
+    advected_interp_method_name = muscl
+  []
+  [source_u]
+    type = LinearFVSource
+    variable = u
+    source_density = source_func
+  []
+  [advection_v]
+    type = LinearFVAdvection
+    variable = v
+    velocity = &quot;1 0 0&quot;
+    advected_interp_method_name = muscl
+  []
+  [source_v]
+    type = LinearFVSource
+    variable = v
+    source_density = source_func
+  []
+[]
+
+[LinearFVBCs]
+  [inflow_u]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = &quot;left&quot;
+    functor = analytic_solution
+  []
+  [outflow_u]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = u
+    boundary = &quot;right&quot;
+    use_two_term_expansion = false
+  []
+  [inflow_v]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = v
+    boundary = &quot;left&quot;
+    functor = analytic_solution
+  []
+  [outflow_v]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = v
+    boundary = &quot;right&quot;
+    use_two_term_expansion = false
+  []
+[]
+
+[Functions]
+  [source_func]
+    type = ParsedFunction
+    expression = x
+  []
+  [analytic_solution]
+    type = ParsedFunction
+    expression = &#x27;0.5+0.5*x*x&#x27;
+  []
+[]
+
+[Postprocessors]
+  [error_u]
+    type = ElementL2FunctorError
+    approximate = u
+    exact = analytic_solution
+    execute_on = FINAL
+  []
+  [error_v]
+    type = ElementL2FunctorError
+    approximate = v
+    exact = analytic_solution
+    execute_on = FINAL
+  []
+  [h]
+    type = AverageElementSize
+    execute_on = FINAL
+  []
+[]
+
+[Convergence]
+  [linear]
+    type = IterationCountConvergence
+    max_iterations = 8
+    converge_at_max_iterations = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  system_names = u_sys
+  l_tol = 1e-10
+  multi_system_fixed_point = true
+  multi_system_fixed_point_convergence = linear
+  multi_system_fixed_point_relaxation_factor = 1.0
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -pc_factor_mat_solver_type -mat_mumps_icntl_14&#x27;
+  petsc_options_value = &#x27;lu       NONZERO               1e-12                     mumps                    50&#x27;
+[]
+
+[Outputs]
+  [csv]
+    type = CSV
+    execute_on = FINAL
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="0481ed1d-d145-43b7-8513-650879068618"><div class="modal-content"><h4>(moose/test/tests/variables/linearfv/shared-gradient-method.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [gmg]
+    type = GeneratedMeshGenerator
+    dim = 1
+    nx = 4
+  []
+[]
+
+[Problem]
+  linear_sys_names = &#x27;u_sys&#x27;
+[]
+
+[Variables]
+  [u]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 1.0
+    gradient_method = gg
+  []
+  [v]
+    type = MooseLinearVariableFVReal
+    solver_sys = &#x27;u_sys&#x27;
+    initial_condition = 1.0
+    gradient_method = gg
+  []
+[]
+
+[FVGradientMethods]
+  [gg]
+    type = FVGreenGaussGradient
+  []
+[]
+
+[FVInterpolationMethods]
+  [muscl]
+    type = FVAdvectedMUSCLDeferredCorrection
+    gradient_method = gg
+    deferred_correction_factor = 1.0
+  []
+[]
+
+[LinearFVKernels]
+  [advection_u]
+    type = LinearFVAdvection
+    variable = u
+    velocity = &quot;1 0 0&quot;
+    advected_interp_method_name = muscl
+  []
+  [source_u]
+    type = LinearFVSource
+    variable = u
+    source_density = source_func
+  []
+  [advection_v]
+    type = LinearFVAdvection
+    variable = v
+    velocity = &quot;1 0 0&quot;
+    advected_interp_method_name = muscl
+  []
+  [source_v]
+    type = LinearFVSource
+    variable = v
+    source_density = source_func
+  []
+[]
+
+[LinearFVBCs]
+  [inflow_u]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = u
+    boundary = &quot;left&quot;
+    functor = analytic_solution
+  []
+  [outflow_u]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = u
+    boundary = &quot;right&quot;
+    use_two_term_expansion = false
+  []
+  [inflow_v]
+    type = LinearFVAdvectionDiffusionFunctorDirichletBC
+    variable = v
+    boundary = &quot;left&quot;
+    functor = analytic_solution
+  []
+  [outflow_v]
+    type = LinearFVAdvectionDiffusionOutflowBC
+    variable = v
+    boundary = &quot;right&quot;
+    use_two_term_expansion = false
+  []
+[]
+
+[Functions]
+  [source_func]
+    type = ParsedFunction
+    expression = x
+  []
+  [analytic_solution]
+    type = ParsedFunction
+    expression = &#x27;0.5+0.5*x*x&#x27;
+  []
+[]
+
+[Postprocessors]
+  [error_u]
+    type = ElementL2FunctorError
+    approximate = u
+    exact = analytic_solution
+    execute_on = FINAL
+  []
+  [error_v]
+    type = ElementL2FunctorError
+    approximate = v
+    exact = analytic_solution
+    execute_on = FINAL
+  []
+  [h]
+    type = AverageElementSize
+    execute_on = FINAL
+  []
+[]
+
+[Convergence]
+  [linear]
+    type = IterationCountConvergence
+    max_iterations = 8
+    converge_at_max_iterations = true
+  []
+[]
+
+[Executioner]
+  type = Steady
+  system_names = u_sys
+  l_tol = 1e-10
+  multi_system_fixed_point = true
+  multi_system_fixed_point_convergence = linear
+  multi_system_fixed_point_relaxation_factor = 1.0
+  petsc_options_iname = &#x27;-pc_type -pc_factor_shift_type -pc_factor_shift_amount -pc_factor_mat_solver_type -mat_mumps_icntl_14&#x27;
+  petsc_options_value = &#x27;lu       NONZERO               1e-12                     mumps                    50&#x27;
+[]
+
+[Outputs]
+  [csv]
+    type = CSV
+    execute_on = FINAL
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#825d6bc3-7460-4a32-8545-b97e0087da5f" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#f9042b9e-7a7c-413a-90de-22f9cce1a0ec" class="tooltipped" data-position="left" data-tooltip="Limiters">Limiters</a></li><li><a href="#d09359e3-0210-46e6-8f24-3b1cd6d1f9af" class="tooltipped" data-position="left" data-tooltip="Example Syntax">Example Syntax</a></li><li><a href="#6fb9e5ef-c10b-4404-b7da-9ee5f44e9cdd" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#a2d1e857-e286-48db-b773-0cc6d1cdb695" class="tooltipped" data-position="left" data-tooltip="References">References</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

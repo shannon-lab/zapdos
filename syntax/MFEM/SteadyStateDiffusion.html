@@ -1,0 +1,253 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Steady State Diffusion | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="49c016fe-13ea-4a71-90e7-f69d08830a0a" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="b8e9d1ca-6ab9-4fa5-be97-a061ec19949c" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="eff7e126-d3ab-4af8-b0fb-691c4098cfd3" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="824622fe-12e4-4bc6-85b9-61c29a28e9d0"><i class="material-icons">menu</i></a><ul class="sidenav" id="824622fe-12e4-4bc6-85b9-61c29a28e9d0"><li><a href="#!" class="dropdown-trigger" data-target="7f06634f-2fcb-43b6-b650-a7996fc7d774" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="9abe0ecf-8595-452b-acc2-6c5d7cd19d82" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="a3daf1eb-f1f9-41fe-b986-b96c941b0a1f" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="49c016fe-13ea-4a71-90e7-f69d08830a0a"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="b8e9d1ca-6ab9-4fa5-be97-a061ec19949c"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="eff7e126-d3ab-4af8-b0fb-691c4098cfd3"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="7f06634f-2fcb-43b6-b650-a7996fc7d774"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="9abe0ecf-8595-452b-acc2-6c5d7cd19d82"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="a3daf1eb-f1f9-41fe-b986-b96c941b0a1f"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">syntax</a><a href="." class="breadcrumb">MFEM</a><a href="#" class="breadcrumb">SteadyStateDiffusion</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="8e1f8159-59d9-454a-84c3-ebc2d51c76b0" data-section-level="1" data-section-text="Steady State Diffusion"><h1 id="steady-state-diffusion">Steady State Diffusion</h1><section class="scrollspy" id="f8091741-855c-4dc8-8570-64db5eb26438" data-section-level="2" data-section-text="Summary"><h2 id="summary">Summary</h2><p>Solves a steady state diffusion problem for the   temperature profile across a mug with fixed temperatures on two boundaries.</p></section><section class="scrollspy" id="4bbecbd0-ccb1-437a-9ad0-70c2420470ff" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>This problem solves the steady state heat equation with strong form:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-cf0b5373-abea-4966-a89e-a0a33957ffaf"></span><script>var element = document.getElementById("moose-equation-cf0b5373-abea-4966-a89e-a0a33957ffaf");katex.render("\\begin{split} \\vec \\nabla \\cdot \\left(k\\vec\\nabla T\\right) = 0 \\,\\,\\,&\\mathrm{on}\\,\\, \\Omega \\\\ T = T_0 \\,\\,\\, &\\mathrm{on}\\,\\, \\Gamma_\\mathrm{D} \\\\ k \\vec \\nabla T \\cdot \\hat n = 0 \\,\\,\\, &\\mathrm{on}\\,\\, \\partial \\Omega \\backslash \\Gamma_\\mathrm{D} \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where <span class="moose-katex-inline-equation" id="moose-equation-657fddff-404f-4660-8638-7bec00fc77ed"><script>var element = document.getElementById("moose-equation-657fddff-404f-4660-8638-7bec00fc77ed");katex.render("k = 1.0", element, {displayMode:false,throwOnError:false});</script></span>, <span class="moose-katex-inline-equation" id="moose-equation-a6d850de-d2cb-4076-b8b7-526176530413"><script>var element = document.getElementById("moose-equation-a6d850de-d2cb-4076-b8b7-526176530413");katex.render("T_0 = 1.0", element, {displayMode:false,throwOnError:false});</script></span> on the base of the mug and <span class="moose-katex-inline-equation" id="moose-equation-38b1100a-a65d-4ef7-a119-d0b9fc2c38bc"><script>var element = document.getElementById("moose-equation-38b1100a-a65d-4ef7-a119-d0b9fc2c38bc");katex.render("T_0 = 0.0", element, {displayMode:false,throwOnError:false});</script></span> at the top of the mug.</p><p>In this example, we solve this using the weak form</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-49961121-e26c-409b-b9f7-7d8551112e5c"></span><script>var element = document.getElementById("moose-equation-49961121-e26c-409b-b9f7-7d8551112e5c");katex.render("(k \\vec \\nabla T, \\vec \\nabla v)_\\Omega = 0 \\,\\,\\, \\forall v \\in V", element, {displayMode:true,throwOnError:false});</script></span><p>where</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-33549fd4-d8cc-4138-b115-7c2c3b7d5ca9"></span><script>var element = document.getElementById("moose-equation-33549fd4-d8cc-4138-b115-7c2c3b7d5ca9");katex.render("\\begin{split} T \\in H^1(\\Omega) &: T = T_0 \\,\\,\\, \\mathrm{on}\\,\\, \\Gamma_\\mathrm{D} \\\\ v \\in H^1(\\Omega) &: v = 0 \\,\\,\\, \\mathrm{on}\\,\\, \\Gamma_\\mathrm{D} \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p></section><section class="scrollspy" id="94206a87-1b85-45b3-af34-35e31c448f2c" data-section-level="2" data-section-text="Example File"><h2 id="example-file">Example File</h2><pre style="max-height:350px;"><code class="language-moose">[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../Mesh/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMFileMesh
+  file = ../mesh/mug.e
+[]
+
+[Problem&lt;&lt;&lt;{&quot;href&quot;: &quot;../Problem/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMProblem
+[]
+
+[FESpaces]
+  [H1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+  []
+  [HCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+  []
+[]
+
+[Variables&lt;&lt;&lt;{&quot;href&quot;: &quot;../Variables/index.html&quot;}&gt;&gt;&gt;]
+  [concentration]
+    type = MFEMVariable
+    fespace = H1FESpace
+  []
+[]
+
+[AuxVariables&lt;&lt;&lt;{&quot;href&quot;: &quot;../AuxVariables/index.html&quot;}&gt;&gt;&gt;]
+  [concentration_gradient]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxKernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../AuxKernels/index.html&quot;}&gt;&gt;&gt;]
+  [grad]
+    type = MFEMGradAux
+    variable = concentration_gradient
+    source = concentration
+    execute_on = TIMESTEP_END
+  []
+[]
+
+[BCs&lt;&lt;&lt;{&quot;href&quot;: &quot;../BCs/index.html&quot;}&gt;&gt;&gt;]
+  [bottom]
+    type = MFEMScalarDirichletBC
+    variable = concentration
+    boundary = &#x27;bottom&#x27;
+    coefficient = 1.0
+  []
+  [top]
+    type = MFEMScalarDirichletBC
+    variable = concentration
+    boundary = &#x27;top&#x27;
+  []
+[]
+
+[Kernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../Kernels/index.html&quot;}&gt;&gt;&gt;]
+  [diff]
+    type = MFEMDiffusionKernel
+    variable = concentration
+  []
+[]
+
+[Solvers]
+  inactive = &#x27;jacobi&#x27;
+  [boomeramg]
+    type = MFEMHypreBoomerAMG
+  []
+  [jacobi]
+    type = MFEMOperatorJacobiSmoother
+  []
+  [main]
+    type = MFEMHypreGMRES
+    preconditioner = boomeramg
+    l_tol = 1e-16
+    l_max_its = 1000
+  []
+[]
+
+[Executioner&lt;&lt;&lt;{&quot;href&quot;: &quot;../Executioner/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMSteady
+  device = cpu
+[]
+
+[Postprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../Postprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [solution_l2_norm]
+    type = MFEML2Error
+    variable = concentration
+    function = 0
+  []
+[]
+
+[VectorPostprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../VectorPostprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [line_sample]
+    type = MFEMVariableLineValueSampler
+    variable = &#x27;concentration&#x27;
+    start_point = &#x27;2.125 0 -2.375&#x27;
+    end_point = &#x27;2.125 0 2.625&#x27;
+    num_points = 101
+  []
+[]
+
+[Outputs&lt;&lt;&lt;{&quot;href&quot;: &quot;../Outputs/index.html&quot;}&gt;&gt;&gt;]
+  active&lt;&lt;&lt;{&quot;description&quot;: &quot;If specified only the blocks named will be visited and made active&quot;}&gt;&gt;&gt; = CSV
+  [CSV]
+    type = CSV&lt;&lt;&lt;{&quot;description&quot;: &quot;Output for postprocessors, vector postprocessors, and scalar variables using comma seperated values (CSV).&quot;, &quot;href&quot;: &quot;../../source/outputs/CSV.html&quot;}&gt;&gt;&gt;
+    file_base&lt;&lt;&lt;{&quot;description&quot;: &quot;The desired solution output name without an extension. If not provided, MOOSE sets it with Outputs/file_base when available. Otherwise, MOOSE uses input file name and this object name for a master input or uses master file_base, the subapp name and this object name for a subapp input to set it.&quot;}&gt;&gt;&gt; = OutputData/diffusion
+  []
+  [ParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/ParaViewDataCollection
+    vtk_format = ASCII
+  []
+  [VisItDataCollection]
+    type = MFEMVisItDataCollection
+    file_base = OutputData/VisItDataCollection
+  []
+  [ConduitDataCollection]
+    type = MFEMConduitDataCollection
+    file_base = OutputData/ConduitDataCollection/Run
+    protocol = conduit_bin
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#b1044b27-28ad-4ff8-805f-56e6e4cba755">(moose/test/tests/mfem/kernels/diffusion.i)</a></section></section><div class="moose-modal modal" id="b1044b27-28ad-4ff8-805f-56e6e4cba755"><div class="modal-content"><h4>(moose/test/tests/mfem/kernels/diffusion.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  type = MFEMFileMesh
+  file = ../mesh/mug.e
+[]
+
+[Problem]
+  type = MFEMProblem
+[]
+
+[FESpaces]
+  [H1FESpace]
+    type = MFEMScalarFESpace
+    fec_type = H1
+    fec_order = FIRST
+  []
+  [HCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+  []
+[]
+
+[Variables]
+  [concentration]
+    type = MFEMVariable
+    fespace = H1FESpace
+  []
+[]
+
+[AuxVariables]
+  [concentration_gradient]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxKernels]
+  [grad]
+    type = MFEMGradAux
+    variable = concentration_gradient
+    source = concentration
+    execute_on = TIMESTEP_END
+  []
+[]
+
+[BCs]
+  [bottom]
+    type = MFEMScalarDirichletBC
+    variable = concentration
+    boundary = &#x27;bottom&#x27;
+    coefficient = 1.0
+  []
+  [top]
+    type = MFEMScalarDirichletBC
+    variable = concentration
+    boundary = &#x27;top&#x27;
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = MFEMDiffusionKernel
+    variable = concentration
+  []
+[]
+
+
+[Solvers]
+  inactive = &#x27;jacobi&#x27;
+  [boomeramg]
+    type = MFEMHypreBoomerAMG
+  []
+  [jacobi]
+    type = MFEMOperatorJacobiSmoother
+  []
+  [main]
+    type = MFEMHypreGMRES
+    preconditioner = boomeramg
+    l_tol = 1e-16
+    l_max_its = 1000
+  []
+[]
+
+[Executioner]
+  type = MFEMSteady
+  device = cpu
+[]
+
+[Postprocessors]
+  [solution_l2_norm]
+    type = MFEML2Error
+    variable = concentration
+    function = 0
+  []
+[]
+
+[VectorPostprocessors]
+  [line_sample]
+    type = MFEMVariableLineValueSampler
+    variable = &#x27;concentration&#x27;
+    start_point = &#x27;2.125 0 -2.375&#x27;
+    end_point = &#x27;2.125 0 2.625&#x27;
+    num_points = 101
+  []
+[]
+
+[Outputs]
+  active = CSV
+  [CSV]
+    type = CSV
+    file_base = OutputData/diffusion
+  []
+  [ParaViewDataCollection]
+    type = MFEMParaViewDataCollection
+    file_base = OutputData/ParaViewDataCollection
+    vtk_format = ASCII
+  []
+  [VisItDataCollection]
+    type = MFEMVisItDataCollection
+    file_base = OutputData/VisItDataCollection
+  []
+  [ConduitDataCollection]
+    type = MFEMConduitDataCollection
+    file_base = OutputData/ConduitDataCollection/Run
+    protocol = conduit_bin
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#f8091741-855c-4dc8-8570-64db5eb26438" class="tooltipped" data-position="left" data-tooltip="Summary">Summary</a></li><li><a href="#4bbecbd0-ccb1-437a-9ad0-70c2420470ff" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#94206a87-1b85-45b3-af34-35e31c448f2c" class="tooltipped" data-position="left" data-tooltip="Example File">Example File</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
