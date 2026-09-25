@@ -1,0 +1,555 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>XYFrontalDelaunayGenerator | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="7543fb2c-efd8-44d3-a6be-3e69dc405bfa" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="446f50b4-550c-445c-bd26-9056bed64aa7" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="7cc9e800-b02c-4ff0-8941-21c47e256230" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="56d85c59-fe40-4e62-b81f-c4b43db12425"><i class="material-icons">menu</i></a><ul class="sidenav" id="56d85c59-fe40-4e62-b81f-c4b43db12425"><li><a href="#!" class="dropdown-trigger" data-target="b344f0ce-b4e2-4fd0-957f-a0395ca35534" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="6c4e8f4a-8d74-40be-9273-0f3e6aeaff14" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="9714296e-f4da-4729-9048-5194e7f44787" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="7543fb2c-efd8-44d3-a6be-3e69dc405bfa"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="446f50b4-550c-445c-bd26-9056bed64aa7"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="7cc9e800-b02c-4ff0-8941-21c47e256230"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="b344f0ce-b4e2-4fd0-957f-a0395ca35534"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="6c4e8f4a-8d74-40be-9273-0f3e6aeaff14"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="9714296e-f4da-4729-9048-5194e7f44787"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">meshgenerators</span><a href="#" class="breadcrumb">XYFrontalDelaunayGenerator</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="6eb15809-2a2b-467f-b55f-f5c6944e6dff" data-section-level="1" data-section-text="XYFrontalDelaunayGenerator"><h1 id="xyfrontaldelaunaygenerator">XYFrontalDelaunayGenerator</h1><p>Triangulates meshes within boundaries defined by input meshes by advancing a front, which places points at a target size ahead of the triangles that are still too large.</p><section class="scrollspy" id="dd8d9acd-66a1-490e-905e-bc78be18e459" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p><code>XYFrontalDelaunayGenerator</code> triangulates the planar region enclosed by an input boundary mesh, optionally around holes. It shares the boundary, hole and sizing parameters of <a href="XYDelaunayGenerator.html">XYDelaunayGenerator</a>; the boundary layer, <code>output_subdomain_id</code>, <code>smooth_triangulation</code>, <code>tri_element_type</code>, <code>interior_point_files</code>, stitching <code>algorithm</code> and <code>verbose_stitching</code> parameters of that generator are not available here. It defines the region with <a href="#702ff130-e1e2-4fb3-a07d-b2673e0037ed" class="moose-modal-link modal-trigger">&quot;boundary&quot;</a> and <a href="#d6f50d85-40c4-4927-8b7d-55e6ca27b371" class="moose-modal-link modal-trigger">&quot;holes&quot;</a>, limits the element size with <a href="#da1ab3fb-1f34-4cf1-94a6-34a5b93b9f88" class="moose-modal-link modal-trigger">&quot;desired_area&quot;</a>, <a href="#02cfd734-735c-456d-96bc-7b6dc7c2ff8d" class="moose-modal-link modal-trigger">&quot;desired_area_func&quot;</a> or <a href="#066d95ba-1361-4807-a01c-742b188dfd49" class="moose-modal-link modal-trigger">&quot;use_auto_area_func&quot;</a>, and names the result with <a href="#2c0b5b83-0c0d-4662-8ece-33cc124ba493" class="moose-modal-link modal-trigger">&quot;output_subdomain_name&quot;</a>, <a href="#6fd30447-0e26-41a7-9708-2a764b87d193" class="moose-modal-link modal-trigger">&quot;output_boundary&quot;</a> and <a href="#811a3511-db17-4a66-8b0a-168008bb352d" class="moose-modal-link modal-trigger">&quot;hole_boundaries&quot;</a>. Consult that page for the meaning of those parameters, for how a boundary ring is read out of an input mesh, and for hole stitching. <a href="#72945a7e-b34a-464c-b96a-5c7374c397fa" class="moose-modal-link modal-trigger">&quot;interior_points&quot;</a> forces nodes at given interior locations; points outside the region are ignored.</p><p>What differs is how the interior points are chosen. Rather than refining a triangulation until every element meets the area limit, this generator advances a front (<a href="#rebay1993frontaldelaunay">Rebay, 1993</a>). A triangle counts as too large when its circumradius exceeds the circumradius targeted at its centroid. The edges those triangles share with the acceptable ones form the front. The front is advanced by placing one point at the target size ahead of an edge and inserting it with the Bowyer-Watson algorithm. Placing points at the size the mesh is meant to have, instead of subdividing until that size is reached, gives a triangulation whose element shapes are chosen rather than inherited.</p><p>The purpose of that control here is to feed <a href="TriToQuadConverter.html">TriToQuadConverter</a>. Recombination merges pairs of adjacent triangles and scores the merge on how close the resulting internal angles are to <span class="moose-katex-inline-equation" id="moose-equation-9b4d9a58-c028-4f1e-9be5-e263df1003e5"><script>var element = document.getElementById("moose-equation-9b4d9a58-c028-4f1e-9be5-e263df1003e5");katex.render("\\pi/2", element, {displayMode:false,throwOnError:false});</script></span> (<a href="#remacle2012blossomquad">Remacle et al., 2012</a>), so a triangulation biased toward right angles yields far more merges than an equilateral one.</p><p>The output consists of first-order TRI3 elements. The boundary input must also be first order, and the generator requires a replicated mesh.</p></section><section class="scrollspy" id="ff3c300d-6946-49ab-b6a1-6996cef4de37" data-section-level="2" data-section-text="Target Size Metric"><h2 id="target-size-metric">Target Size Metric</h2><p><a href="#6a68661a-cf7f-4160-9931-7da7086fd76e" class="moose-modal-link modal-trigger">&quot;metric&quot;</a> selects the norm in which the target size ahead of the front is measured.</p><p><code>L2</code> measures the distance to the new point in the Euclidean norm, which is the conventional frontal-Delaunay choice and places points that make the triangles equilateral. It is the right choice when the triangles are the final mesh.</p><p><code>LINF</code> measures it in the <span class="moose-katex-inline-equation" id="moose-equation-99e6305f-9b5a-47bb-af0d-ae6fb05d9d72"><script>var element = document.getElementById("moose-equation-99e6305f-9b5a-47bb-af0d-ae6fb05d9d72");katex.render("L^\\infty", element, {displayMode:false,throwOnError:false});</script></span> norm of a local frame (<a href="#remacle2013frontalquad">Remacle et al., 2013</a>). Because the unit ball of that norm is a square rather than a circle, the placement favors triangles that are right isosceles in the frame, and two such triangles sharing their hypotenuse recombine into a near-square quadrilateral. This is the metric to use when <a href="TriToQuadConverter.html">TriToQuadConverter</a> follows.</p></section><section class="scrollspy" id="86dc52c3-d01c-4a52-9e5b-51f4d180089c" data-section-level="2" data-section-text="Local Frame Orientation"><h2 id="local-frame-orientation">Local Frame Orientation</h2><p>The <span class="moose-katex-inline-equation" id="moose-equation-b3bf78a1-739d-4e5b-9482-377280ca7d14"><script>var element = document.getElementById("moose-equation-b3bf78a1-739d-4e5b-9482-377280ca7d14");katex.render("L^\\infty", element, {displayMode:false,throwOnError:false});</script></span> norm is only defined once a local frame is fixed, and <a href="#397d2477-3fd8-4d4a-ad13-41a83bfc7bb1" class="moose-modal-link modal-trigger">&quot;orientation&quot;</a> supplies it. The parameter has no effect when <a href="#680c475f-730f-4ebe-bb9e-8d8453f9bd87" class="moose-modal-link modal-trigger">&quot;metric&quot;</a> is <code>L2</code>, which needs no frame.</p><p><code>BOUNDARY</code> takes the frame from the tangent of the nearest boundary segment. It requires no solve, and it aligns the elements with the boundary where they meet it, but far from the boundary the nearest segment is a poor guide and the frame can turn abruptly between neighboring points.</p><p><code>CROSS_FIELD</code> instead solves for a smooth four-fold direction field over the domain. A coarse background triangulation is built first; the boundary tangents are imposed on it in a representation under which four directions <span class="moose-katex-inline-equation" id="moose-equation-d8124e7a-617d-49f3-8ff3-bf8b143b54b2"><script>var element = document.getElementById("moose-equation-d8124e7a-617d-49f3-8ff3-bf8b143b54b2");katex.render("\\pi/2", element, {displayMode:false,throwOnError:false});</script></span> apart are the same value, that representation is smoothed by a Laplace solve, and the frame at any point is then interpolated from the background mesh. The field is boundary-aligned near the boundary and varies smoothly inside, which is what keeps the right isosceles triangles, and so the quadrilaterals that <a href="TriToQuadConverter.html">TriToQuadConverter</a> later merges them into, aligned with each other across the interior.</p><p>A cross field cannot be smooth everywhere on every domain. It has singularities, points where the frame is undefined. The triangles placed around a singularity cannot all be aligned with each other, and a quadrilateral mesh recombined from them acquires a node there whose valence is not four. Those singularities are forced by the geometry, not by the solve: they arise where a boundary corner turns through an angle that is <strong>not</strong> a multiple of <span class="moose-katex-inline-equation" id="moose-equation-d7177c80-b263-4827-bc0c-80d6a15b5e4d"><script>var element = document.getElementById("moose-equation-d7177c80-b263-4827-bc0c-80d6a15b5e4d");katex.render("\\pi/2", element, {displayMode:false,throwOnError:false});</script></span>, and where the tangent of a curved boundary winds far enough that no smooth interpolation of the imposed directions exists in the interior. A circular boundary is the clearest case of the second kind.</p><p>A reentrant corner does not by itself force a singularity. The <span class="moose-katex-inline-equation" id="moose-equation-a255f2f2-cc83-425e-ac3d-ca34cd9b8de2"><script>var element = document.getElementById("moose-equation-a255f2f2-cc83-425e-ac3d-ca34cd9b8de2");katex.render("270^\\circ", element, {displayMode:false,throwOnError:false});</script></span> corner of a rectilinear L-shaped domain turns through <span class="moose-katex-inline-equation" id="moose-equation-14c201e7-57fb-43ab-84b3-94855ce8bc82"><script>var element = document.getElementById("moose-equation-14c201e7-57fb-43ab-84b3-94855ce8bc82");katex.render("3\\pi/2", element, {displayMode:false,throwOnError:false});</script></span>, a multiple of <span class="moose-katex-inline-equation" id="moose-equation-6f4404a1-19e0-44a8-9fe6-f0b669fa6ef0"><script>var element = document.getElementById("moose-equation-6f4404a1-19e0-44a8-9fe6-f0b669fa6ef0");katex.render("\\pi/2", element, {displayMode:false,throwOnError:false});</script></span>, so the field passes through it without a defect and no irregular vertex is required: three quadrilaterals meeting at that corner is the regular configuration for it.</p></section><section class="scrollspy" id="ab75d2c9-93eb-4583-b282-340f7d50bd4d" data-section-level="2" data-section-text="Example Syntax"><h2 id="example-syntax">Example Syntax</h2><p>Triangulating a disk. This input sets neither <a href="#083062ee-5d91-40a5-8182-46343640575d" class="moose-modal-link modal-trigger">&quot;metric&quot;</a> nor <a href="#1f1d400e-b411-4830-b0cd-8e0322acf27a" class="moose-modal-link modal-trigger">&quot;orientation&quot;</a>, so the elements come out right isosceles in the frame of a cross field solved over the disk:</p><pre style="max-height:350px;"><code class="language-moose">[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Mesh/index.html&quot;}&gt;&gt;&gt;]
+  [outer_bdy]
+    type = ParsedCurveGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;This ParsedCurveGenerator object is designed to generate a mesh of a curve that consists of EDGE2, EDGE3, or EDGE4 elements.&quot;, &quot;href&quot;: &quot;ParsedCurveGenerator.html&quot;}&gt;&gt;&gt;
+    x_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of x(t)&quot;}&gt;&gt;&gt; = &#x27;r*cos(t)&#x27;
+    y_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of y(t)&quot;}&gt;&gt;&gt; = &#x27;r*sin(t)&#x27;
+    section_bounding_t_values&lt;&lt;&lt;{&quot;description&quot;: &quot;The &#x27;t&#x27; values that bound the sections of the curve. Start and end points must be included. The number of entries in &#x27;nums_segments&#x27; should be equal to one less than the number of entries in this parameter.&quot;}&gt;&gt;&gt; = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of constants used in the parsed function (use this for kB etc.)&quot;}&gt;&gt;&gt; = &#x27;r&#x27;
+    constant_expressions&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of values for the constants in constant_names (can be an FParser expression)&quot;}&gt;&gt;&gt; = &#x27;1.0&#x27;
+    nums_segments&lt;&lt;&lt;{&quot;description&quot;: &quot;Numbers of segments (EDGE elements) of each section of the curve to be generated. The number of entries in this parameter should be equal to one less than the number of entries in &#x27;section_bounding_t_values&#x27;&quot;}&gt;&gt;&gt; = &#x27;16 16&#x27;
+    is_closed_loop&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether the curve is closed or not.&quot;}&gt;&gt;&gt; = true
+  []
+  [triang]
+    type = XYFrontalDelaunayGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;Triangulates meshes within boundaries defined by input meshes by advancing a front, which places points at a target size ahead of the triangles that are still too large.&quot;, &quot;href&quot;: &quot;XYFrontalDelaunayGenerator.html&quot;}&gt;&gt;&gt;
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The input MeshGenerator defining the output outer boundary and required Steiner points.&quot;}&gt;&gt;&gt; = &#x27;outer_bdy&#x27;
+    refine_boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether to allow automatically refining the outer boundary.&quot;}&gt;&gt;&gt; = false
+    desired_area&lt;&lt;&lt;{&quot;description&quot;: &quot;Desired (maximum) triangle area, or 0 to skip uniform refinement&quot;}&gt;&gt;&gt; = 0.02
+    output_subdomain_name&lt;&lt;&lt;{&quot;description&quot;: &quot;Subdomain name to set on new triangles.&quot;}&gt;&gt;&gt; = &#x27;triangles&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#762b0353-edfd-42f8-aa25-426f34142c61">(moose/test/tests/meshgenerators/xy_frontal_delaunay_generator/frontal_circle.i)</a><div class="card moose-float" style="width:60%;margin-left:auto;margin-right:auto;" id="fig:frontal_circle"><div class="card-content"><picture class="materialboxed moose-image" role="button" tabindex="0"><img src="../../large_media/framework/meshgenerators/frontal_circle_mesh.png" alt="The disk triangulation of the input above. The advance places the points, so the triangles lean toward right isosceles shapes aligned with the cross field."></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 1: </span><span class="moose-caption-text" id="fig:frontal_circle">The disk triangulation of the input above. The advance places the points, so the triangles lean toward right isosceles shapes aligned with the cross field.</span></p></div></div><p>A domain containing a hole. The front advances from the hole boundary as well as from the outer boundary, and the name given in <a href="#768340df-ead0-4f2c-82a5-3a2db1ac1ec7" class="moose-modal-link modal-trigger">&quot;hole_boundaries&quot;</a> is carried onto the sideset that the hole leaves behind:</p><pre style="max-height:350px;"><code class="language-moose">[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Mesh/index.html&quot;}&gt;&gt;&gt;]
+  [outer_bdy]
+    type = ParsedCurveGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;This ParsedCurveGenerator object is designed to generate a mesh of a curve that consists of EDGE2, EDGE3, or EDGE4 elements.&quot;, &quot;href&quot;: &quot;ParsedCurveGenerator.html&quot;}&gt;&gt;&gt;
+    x_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of x(t)&quot;}&gt;&gt;&gt; = &#x27;r*cos(t)&#x27;
+    y_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of y(t)&quot;}&gt;&gt;&gt; = &#x27;r*sin(t)&#x27;
+    section_bounding_t_values&lt;&lt;&lt;{&quot;description&quot;: &quot;The &#x27;t&#x27; values that bound the sections of the curve. Start and end points must be included. The number of entries in &#x27;nums_segments&#x27; should be equal to one less than the number of entries in this parameter.&quot;}&gt;&gt;&gt; = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of constants used in the parsed function (use this for kB etc.)&quot;}&gt;&gt;&gt; = &#x27;r&#x27;
+    constant_expressions&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of values for the constants in constant_names (can be an FParser expression)&quot;}&gt;&gt;&gt; = &#x27;1.0&#x27;
+    nums_segments&lt;&lt;&lt;{&quot;description&quot;: &quot;Numbers of segments (EDGE elements) of each section of the curve to be generated. The number of entries in this parameter should be equal to one less than the number of entries in &#x27;section_bounding_t_values&#x27;&quot;}&gt;&gt;&gt; = &#x27;16 16&#x27;
+    is_closed_loop&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether the curve is closed or not.&quot;}&gt;&gt;&gt; = true
+  []
+  [inner_bdy]
+    type = ParsedCurveGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;This ParsedCurveGenerator object is designed to generate a mesh of a curve that consists of EDGE2, EDGE3, or EDGE4 elements.&quot;, &quot;href&quot;: &quot;ParsedCurveGenerator.html&quot;}&gt;&gt;&gt;
+    x_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of x(t)&quot;}&gt;&gt;&gt; = &#x27;r*cos(t)&#x27;
+    y_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of y(t)&quot;}&gt;&gt;&gt; = &#x27;r*sin(t)&#x27;
+    section_bounding_t_values&lt;&lt;&lt;{&quot;description&quot;: &quot;The &#x27;t&#x27; values that bound the sections of the curve. Start and end points must be included. The number of entries in &#x27;nums_segments&#x27; should be equal to one less than the number of entries in this parameter.&quot;}&gt;&gt;&gt; = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of constants used in the parsed function (use this for kB etc.)&quot;}&gt;&gt;&gt; = &#x27;r&#x27;
+    constant_expressions&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of values for the constants in constant_names (can be an FParser expression)&quot;}&gt;&gt;&gt; = &#x27;0.35&#x27;
+    nums_segments&lt;&lt;&lt;{&quot;description&quot;: &quot;Numbers of segments (EDGE elements) of each section of the curve to be generated. The number of entries in this parameter should be equal to one less than the number of entries in &#x27;section_bounding_t_values&#x27;&quot;}&gt;&gt;&gt; = &#x27;6 6&#x27;
+    is_closed_loop&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether the curve is closed or not.&quot;}&gt;&gt;&gt; = true
+  []
+  [triang]
+    type = XYFrontalDelaunayGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;Triangulates meshes within boundaries defined by input meshes by advancing a front, which places points at a target size ahead of the triangles that are still too large.&quot;, &quot;href&quot;: &quot;XYFrontalDelaunayGenerator.html&quot;}&gt;&gt;&gt;
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The input MeshGenerator defining the output outer boundary and required Steiner points.&quot;}&gt;&gt;&gt; = &#x27;outer_bdy&#x27;
+    holes&lt;&lt;&lt;{&quot;description&quot;: &quot;The MeshGenerators that define mesh holes.&quot;}&gt;&gt;&gt; = &#x27;inner_bdy&#x27;
+    hole_boundaries&lt;&lt;&lt;{&quot;description&quot;: &quot;Boundary names to set on holes.  Default IDs are numbered up from 1 if no hole meshes are stitched; or from maximum boundary ID of all the stitched hole meshes + 2.&quot;}&gt;&gt;&gt; = &#x27;inner&#x27;
+    refine_boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether to allow automatically refining the outer boundary.&quot;}&gt;&gt;&gt; = false
+    refine_holes&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether to allow automatically refining each hole boundary.&quot;}&gt;&gt;&gt; = &#x27;false&#x27;
+    desired_area&lt;&lt;&lt;{&quot;description&quot;: &quot;Desired (maximum) triangle area, or 0 to skip uniform refinement&quot;}&gt;&gt;&gt; = 0.02
+    output_subdomain_name&lt;&lt;&lt;{&quot;description&quot;: &quot;Subdomain name to set on new triangles.&quot;}&gt;&gt;&gt; = &#x27;triangles&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#ca24df8c-191a-4eb2-82b0-c639ca28c5cd">(moose/test/tests/meshgenerators/xy_frontal_delaunay_generator/frontal_annulus.i)</a><p>A polyline boundary with a reentrant corner, which the front reaches from two sides at once:</p><pre style="max-height:350px;"><code class="language-moose">[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Mesh/index.html&quot;}&gt;&gt;&gt;]
+  [outer_bdy]
+    type = PolyLineMeshGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;Generates meshes from edges connecting a list of points.&quot;, &quot;href&quot;: &quot;PolyLineMeshGenerator.html&quot;}&gt;&gt;&gt;
+    points&lt;&lt;&lt;{&quot;description&quot;: &quot;The points defining the polyline, in order&quot;}&gt;&gt;&gt; = &#x27;0.0 0.0 0.0
+              2.0 0.0 0.0
+              2.0 1.0 0.0
+              1.0 1.0 0.0
+              1.0 2.0 0.0
+              0.0 2.0 0.0&#x27;
+    loop&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether edges should form a closed loop&quot;}&gt;&gt;&gt; = true
+  []
+  [triang]
+    type = XYFrontalDelaunayGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;Triangulates meshes within boundaries defined by input meshes by advancing a front, which places points at a target size ahead of the triangles that are still too large.&quot;, &quot;href&quot;: &quot;XYFrontalDelaunayGenerator.html&quot;}&gt;&gt;&gt;
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The input MeshGenerator defining the output outer boundary and required Steiner points.&quot;}&gt;&gt;&gt; = &#x27;outer_bdy&#x27;
+    refine_boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether to allow automatically refining the outer boundary.&quot;}&gt;&gt;&gt; = true
+    desired_area&lt;&lt;&lt;{&quot;description&quot;: &quot;Desired (maximum) triangle area, or 0 to skip uniform refinement&quot;}&gt;&gt;&gt; = 0.02
+    output_subdomain_name&lt;&lt;&lt;{&quot;description&quot;: &quot;Subdomain name to set on new triangles.&quot;}&gt;&gt;&gt; = &#x27;triangles&#x27;
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#1fa72639-8c90-48c9-b383-fee3f84cc9c4">(moose/test/tests/meshgenerators/xy_frontal_delaunay_generator/frontal_l_shape.i)</a><p>The end-to-end use is the pipeline below, which triangulates the domain of the MBB beam (the Messerschmitt-Bölkow-Blohm beam, the rectangular benchmark domain of topology optimization) with three circular holes cut into it, and then recombines the result into quadrilaterals, collecting the triangles that could not be merged into their own subdomain so the yield can be measured:</p><pre style="max-height:350px;"><code class="language-moose">[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../../syntax/Mesh/index.html&quot;}&gt;&gt;&gt;]
+  [outer_bdy]
+    type = PolyLineMeshGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;Generates meshes from edges connecting a list of points.&quot;, &quot;href&quot;: &quot;PolyLineMeshGenerator.html&quot;}&gt;&gt;&gt;
+    points&lt;&lt;&lt;{&quot;description&quot;: &quot;The points defining the polyline, in order&quot;}&gt;&gt;&gt; = &#x27;0.0 0.0 0.0
+              3.0 0.0 0.0
+              3.0 1.0 0.0
+              0.0 1.0 0.0&#x27;
+    loop&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether edges should form a closed loop&quot;}&gt;&gt;&gt; = true
+    nums_edges_between_points&lt;&lt;&lt;{&quot;description&quot;: &quot;How many Edge elements to build between each point pair. If a single value is given, it is applied to all segments. Otherwise, the number of entries must match the number of segments.&quot;}&gt;&gt;&gt; = &#x27;21 7 21 7&#x27;
+  []
+  [hole_left]
+    type = ParsedCurveGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;This ParsedCurveGenerator object is designed to generate a mesh of a curve that consists of EDGE2, EDGE3, or EDGE4 elements.&quot;, &quot;href&quot;: &quot;ParsedCurveGenerator.html&quot;}&gt;&gt;&gt;
+    x_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of x(t)&quot;}&gt;&gt;&gt; = &#x27;x0 + r*cos(t)&#x27;
+    y_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of y(t)&quot;}&gt;&gt;&gt; = &#x27;y0 + r*sin(t)&#x27;
+    section_bounding_t_values&lt;&lt;&lt;{&quot;description&quot;: &quot;The &#x27;t&#x27; values that bound the sections of the curve. Start and end points must be included. The number of entries in &#x27;nums_segments&#x27; should be equal to one less than the number of entries in this parameter.&quot;}&gt;&gt;&gt; = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of constants used in the parsed function (use this for kB etc.)&quot;}&gt;&gt;&gt; = &#x27;x0 y0 r&#x27;
+    constant_expressions&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of values for the constants in constant_names (can be an FParser expression)&quot;}&gt;&gt;&gt; = &#x27;0.6 0.5 0.22&#x27;
+    nums_segments&lt;&lt;&lt;{&quot;description&quot;: &quot;Numbers of segments (EDGE elements) of each section of the curve to be generated. The number of entries in this parameter should be equal to one less than the number of entries in &#x27;section_bounding_t_values&#x27;&quot;}&gt;&gt;&gt; = &#x27;5 5&#x27;
+    is_closed_loop&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether the curve is closed or not.&quot;}&gt;&gt;&gt; = true
+  []
+  [hole_center]
+    type = ParsedCurveGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;This ParsedCurveGenerator object is designed to generate a mesh of a curve that consists of EDGE2, EDGE3, or EDGE4 elements.&quot;, &quot;href&quot;: &quot;ParsedCurveGenerator.html&quot;}&gt;&gt;&gt;
+    x_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of x(t)&quot;}&gt;&gt;&gt; = &#x27;x0 + r*cos(t)&#x27;
+    y_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of y(t)&quot;}&gt;&gt;&gt; = &#x27;y0 + r*sin(t)&#x27;
+    section_bounding_t_values&lt;&lt;&lt;{&quot;description&quot;: &quot;The &#x27;t&#x27; values that bound the sections of the curve. Start and end points must be included. The number of entries in &#x27;nums_segments&#x27; should be equal to one less than the number of entries in this parameter.&quot;}&gt;&gt;&gt; = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of constants used in the parsed function (use this for kB etc.)&quot;}&gt;&gt;&gt; = &#x27;x0 y0 r&#x27;
+    constant_expressions&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of values for the constants in constant_names (can be an FParser expression)&quot;}&gt;&gt;&gt; = &#x27;1.5 0.5 0.22&#x27;
+    nums_segments&lt;&lt;&lt;{&quot;description&quot;: &quot;Numbers of segments (EDGE elements) of each section of the curve to be generated. The number of entries in this parameter should be equal to one less than the number of entries in &#x27;section_bounding_t_values&#x27;&quot;}&gt;&gt;&gt; = &#x27;5 5&#x27;
+    is_closed_loop&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether the curve is closed or not.&quot;}&gt;&gt;&gt; = true
+  []
+  [hole_right]
+    type = ParsedCurveGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;This ParsedCurveGenerator object is designed to generate a mesh of a curve that consists of EDGE2, EDGE3, or EDGE4 elements.&quot;, &quot;href&quot;: &quot;ParsedCurveGenerator.html&quot;}&gt;&gt;&gt;
+    x_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of x(t)&quot;}&gt;&gt;&gt; = &#x27;x0 + r*cos(t)&#x27;
+    y_formula&lt;&lt;&lt;{&quot;description&quot;: &quot;Function expression of y(t)&quot;}&gt;&gt;&gt; = &#x27;y0 + r*sin(t)&#x27;
+    section_bounding_t_values&lt;&lt;&lt;{&quot;description&quot;: &quot;The &#x27;t&#x27; values that bound the sections of the curve. Start and end points must be included. The number of entries in &#x27;nums_segments&#x27; should be equal to one less than the number of entries in this parameter.&quot;}&gt;&gt;&gt; = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of constants used in the parsed function (use this for kB etc.)&quot;}&gt;&gt;&gt; = &#x27;x0 y0 r&#x27;
+    constant_expressions&lt;&lt;&lt;{&quot;description&quot;: &quot;Vector of values for the constants in constant_names (can be an FParser expression)&quot;}&gt;&gt;&gt; = &#x27;2.4 0.5 0.22&#x27;
+    nums_segments&lt;&lt;&lt;{&quot;description&quot;: &quot;Numbers of segments (EDGE elements) of each section of the curve to be generated. The number of entries in this parameter should be equal to one less than the number of entries in &#x27;section_bounding_t_values&#x27;&quot;}&gt;&gt;&gt; = &#x27;5 5&#x27;
+    is_closed_loop&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether the curve is closed or not.&quot;}&gt;&gt;&gt; = true
+  []
+  [triang]
+    type = XYFrontalDelaunayGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;Triangulates meshes within boundaries defined by input meshes by advancing a front, which places points at a target size ahead of the triangles that are still too large.&quot;, &quot;href&quot;: &quot;XYFrontalDelaunayGenerator.html&quot;}&gt;&gt;&gt;
+    boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;The input MeshGenerator defining the output outer boundary and required Steiner points.&quot;}&gt;&gt;&gt; = &#x27;outer_bdy&#x27;
+    holes&lt;&lt;&lt;{&quot;description&quot;: &quot;The MeshGenerators that define mesh holes.&quot;}&gt;&gt;&gt; = &#x27;hole_left
+             hole_center
+             hole_right&#x27;
+    refine_boundary&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether to allow automatically refining the outer boundary.&quot;}&gt;&gt;&gt; = false
+    refine_holes&lt;&lt;&lt;{&quot;description&quot;: &quot;Whether to allow automatically refining each hole boundary.&quot;}&gt;&gt;&gt; = &#x27;false false false&#x27;
+    desired_area&lt;&lt;&lt;{&quot;description&quot;: &quot;Desired (maximum) triangle area, or 0 to skip uniform refinement&quot;}&gt;&gt;&gt; = 0.01
+    metric&lt;&lt;&lt;{&quot;description&quot;: &quot;The norm the target size is measured in when a point is placed ahead of the front. &#x27;L2&#x27; places points that make equilateral triangles. &#x27;LINF&#x27; places points that make right isosceles triangles in the local frame, the shape that recombines into good quadrilaterals.&quot;}&gt;&gt;&gt; = LINF
+    orientation&lt;&lt;&lt;{&quot;description&quot;: &quot;Where the local frame the &#x27;LINF&#x27; metric measures in comes from. &#x27;CROSS_FIELD&#x27; solves for a cross field over the domain. &#x27;BOUNDARY&#x27; takes the frame of the nearest boundary segment, which needs no solve. This parameter has no effect when metric is &#x27;L2&#x27;.&quot;}&gt;&gt;&gt; = CROSS_FIELD
+    output_subdomain_name&lt;&lt;&lt;{&quot;description&quot;: &quot;Subdomain name to set on new triangles.&quot;}&gt;&gt;&gt; = &#x27;mbb&#x27;
+  []
+  [to_quad]
+    type = TriToQuadConverter&lt;&lt;&lt;{&quot;description&quot;: &quot;Converts a mesh consisting of TRI3 elements into a mesh consisting of QUAD4 elements, either by splitting every triangle into three quadrilaterals or by merging pairs of adjacent triangles.&quot;, &quot;href&quot;: &quot;TriToQuadConverter.html&quot;}&gt;&gt;&gt;
+    input&lt;&lt;&lt;{&quot;description&quot;: &quot;The TRI3 mesh to convert into QUAD4 elements.&quot;}&gt;&gt;&gt; = triang
+    algorithm&lt;&lt;&lt;{&quot;description&quot;: &quot;The algorithm used to build the quadrilaterals. &#x27;SUBDIVISION&#x27; splits every triangle into three quadrilaterals. &#x27;RECOMBINE&#x27; merges pairs of adjacent triangles into quadrilaterals.&quot;}&gt;&gt;&gt; = RECOMBINE
+    eta_min&lt;&lt;&lt;{&quot;description&quot;: &quot;&#x27;RECOMBINE&#x27; algorithm only: the quality score eta = 1 - (2 / pi) max_k |pi / 2 - alpha_k| of the quadrilateral, in which alpha_k are its four internal angles, that a pair of adjacent triangles must reach to be merged. A rectangle scores 1 and a non-convex quadrilateral 0.&quot;}&gt;&gt;&gt; = 0.3
+  []
+  [smooth]
+    type = SmoothMeshGenerator&lt;&lt;&lt;{&quot;description&quot;: &quot;Utilizes the specified smoothing algorithm to attempt to improve mesh quality.&quot;, &quot;href&quot;: &quot;SmoothMeshGenerator.html&quot;}&gt;&gt;&gt;
+    input&lt;&lt;&lt;{&quot;description&quot;: &quot;The mesh we want to smooth.&quot;}&gt;&gt;&gt; = to_quad
+    algorithm&lt;&lt;&lt;{&quot;description&quot;: &quot;The smoothing algorithm to use.&quot;}&gt;&gt;&gt; = laplace
+  []
+
+  # Greedy matching breaks score ties by element id, so keep the ids stable across processor counts
+  allow_renumbering = false
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#6bea1f52-3665-4216-ad0b-77f4e0102de9">(moose/test/tests/meshgenerators/mbb_pipeline/mbb_pipeline.i)</a><div class="card moose-float" style="width:90%;margin-left:auto;margin-right:auto;" id="fig:mbb_all_quad"><div class="card-content"><picture class="materialboxed moose-image" role="button" tabindex="0"><img src="../../large_media/framework/meshgenerators/mbb_all_quad_mesh.png" alt="The MBB-beam domain meshed by this pipeline with [!param](/Mesh/TriToQuadConverter/all_quad), recombined into quadrilaterals and smoothed."></img></picture><p class="moose-caption"><span class="moose-caption-heading">Figure 2: </span><span class="moose-caption-text" id="fig:mbb_all_quad">The MBB-beam domain meshed by this pipeline with <a href="#f2ce340f-0d04-4b1e-802c-c43e44626046" class="moose-modal-link modal-trigger">&quot;all_quad&quot;</a>, recombined into quadrilaterals and smoothed.</span></p></div></div></section><section class="scrollspy" id="27f4d9a1-2447-4d22-9c39-ef70bc4757ff" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="rebay1993frontaldelaunay">S.&nbsp;Rebay.
+Efficient unstructured mesh generation by means of delaunay triangulation and <span class="bibtex-protected">Bowyer</span>-<span class="bibtex-protected">Watson</span> algorithm.
+<em>Journal of Computational Physics</em>, 106(1):125–138, 1993.
+<a href="https://doi.org/10.1006/jcph.1993.1097">doi:10.1006/jcph.1993.1097</a>.<a href="#482079e8-645f-444d-b5bb-6ffd67a77179" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[Export]</a><div class="modal" id="482079e8-645f-444d-b5bb-6ffd67a77179"><div class="modal-content"><h6>BibTeX</h6><pre style="line-height:1.25;"><code class="language-latex">@article{rebay1993frontaldelaunay,
+    author = "Rebay, S.",
+    title = "Efficient Unstructured Mesh Generation by Means of Delaunay Triangulation and {Bowyer}-{Watson} Algorithm",
+    journal = "Journal of Computational Physics",
+    volume = "106",
+    number = "1",
+    pages = "125--138",
+    year = "1993",
+    doi = "10.1006/jcph.1993.1097",
+    publisher = "Elsevier"
+}
+</code></pre><h6>RIS</h6><pre style="line-height:1.25;"><code class="language-none">TY  - JOUR
+AU  - Rebay, S.
+TI  - Efficient Unstructured Mesh Generation by Means of Delaunay Triangulation and Bowyer-Watson Algorithm
+JO  - Journal of Computational Physics
+PY  - 1993
+VL  - 106
+IS  - 1
+PB  - Elsevier
+DO  - 10.1006/jcph.1993.1097
+SP  - 125
+EP  - 138
+ER  - </code></pre><h6>Plain Text</h6><pre style="line-height:1.25;"><code class="language-none">S. Rebay. Efficient unstructured mesh generation by means of delaunay triangulation and Bowyer-Watson algorithm. Journal of Computational Physics, 106(1):125–138, 1993. doi:10.1006/jcph.1993.1097.</code></pre></div></div></li><li id="remacle2013frontalquad">J.-F. Remacle, F.&nbsp;Henrotte, T.&nbsp;Carrier-Baudouin, E.&nbsp;B<span class="bibtex-protected">é</span>chet, E.&nbsp;Marchandise, C.&nbsp;Geuzaine, and T.&nbsp;Mouton.
+A frontal delaunay quad mesh generator using the <span class="moose-katex-inline-equation" id="moose-equation-a85fcf8e-f1b9-42a5-9a59-12bbc69d4368"><script>var element = document.getElementById("moose-equation-a85fcf8e-f1b9-42a5-9a59-12bbc69d4368");katex.render("L^\\infty", element, {displayMode:false,throwOnError:false});</script></span> norm.
+<em>International Journal for Numerical Methods in Engineering</em>, 94(5):494–512, 2013.
+<a href="https://doi.org/10.1002/nme.4458">doi:10.1002/nme.4458</a>.<a href="#0a7d3073-ee0b-4862-876a-260c282a756c" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[Export]</a><div class="modal" id="0a7d3073-ee0b-4862-876a-260c282a756c"><div class="modal-content"><h6>BibTeX</h6><pre style="line-height:1.25;"><code class="language-latex">@article{remacle2013frontalquad,
+    author = "Remacle, J.-F. and Henrotte, F. and Carrier-Baudouin, T. and B{\'e}chet, E. and Marchandise, E. and Geuzaine, C. and Mouton, T.",
+    title = "A Frontal Delaunay Quad Mesh Generator Using the $L^\infty$ Norm",
+    journal = "International Journal for Numerical Methods in Engineering",
+    volume = "94",
+    number = "5",
+    pages = "494--512",
+    year = "2013",
+    doi = "10.1002/nme.4458",
+    publisher = "Wiley Online Library"
+}
+</code></pre><h6>RIS</h6><pre style="line-height:1.25;"><code class="language-none">TY  - JOUR
+AU  - Remacle, J.-F.
+AU  - Henrotte, F.
+AU  - Carrier-Baudouin, T.
+AU  - Béchet, E.
+AU  - Marchandise, E.
+AU  - Geuzaine, C.
+AU  - Mouton, T.
+TI  - A Frontal Delaunay Quad Mesh Generator Using the L^∞ Norm
+JO  - International Journal for Numerical Methods in Engineering
+PY  - 2013
+VL  - 94
+IS  - 5
+PB  - Wiley Online Library
+DO  - 10.1002/nme.4458
+SP  - 494
+EP  - 512
+ER  - </code></pre><h6>Plain Text</h6><pre style="line-height:1.25;"><code class="language-none">J.-F. Remacle, F. Henrotte, T. Carrier-Baudouin, E. Béchet, E. Marchandise, C. Geuzaine, and T. Mouton. A frontal delaunay quad mesh generator using the $l^\infty $ norm. International Journal for Numerical Methods in Engineering, 94(5):494–512, 2013. doi:10.1002/nme.4458.</code></pre></div></div></li><li id="remacle2012blossomquad">J.-F. Remacle, J.&nbsp;Lambrechts, B.&nbsp;Seny, E.&nbsp;Marchandise, A.&nbsp;Johnen, and C.&nbsp;Geuzaine.
+Blossom-quad: a non-uniform quadrilateral mesh generator using a minimum-cost perfect-matching algorithm.
+<em>International Journal for Numerical Methods in Engineering</em>, 89(9):1102–1119, 2012.
+<a href="https://doi.org/10.1002/nme.3279">doi:10.1002/nme.3279</a>.<a href="#76319922-d20c-4826-b781-7b8e4d4b24e2" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[Export]</a><div class="modal" id="76319922-d20c-4826-b781-7b8e4d4b24e2"><div class="modal-content"><h6>BibTeX</h6><pre style="line-height:1.25;"><code class="language-latex">@article{remacle2012blossomquad,
+    author = "Remacle, J.-F. and Lambrechts, J. and Seny, B. and Marchandise, E. and Johnen, A. and Geuzaine, C.",
+    title = "Blossom-Quad: A Non-Uniform Quadrilateral Mesh Generator Using a Minimum-Cost Perfect-Matching Algorithm",
+    journal = "International Journal for Numerical Methods in Engineering",
+    volume = "89",
+    number = "9",
+    pages = "1102--1119",
+    year = "2012",
+    doi = "10.1002/nme.3279",
+    publisher = "Wiley Online Library"
+}
+</code></pre><h6>RIS</h6><pre style="line-height:1.25;"><code class="language-none">TY  - JOUR
+AU  - Remacle, J.-F.
+AU  - Lambrechts, J.
+AU  - Seny, B.
+AU  - Marchandise, E.
+AU  - Johnen, A.
+AU  - Geuzaine, C.
+TI  - Blossom-Quad: A Non-Uniform Quadrilateral Mesh Generator Using a Minimum-Cost Perfect-Matching Algorithm
+JO  - International Journal for Numerical Methods in Engineering
+PY  - 2012
+VL  - 89
+IS  - 9
+PB  - Wiley Online Library
+DO  - 10.1002/nme.3279
+SP  - 1102
+EP  - 1119
+ER  - </code></pre><h6>Plain Text</h6><pre style="line-height:1.25;"><code class="language-none">J.-F. Remacle, J. Lambrechts, B. Seny, E. Marchandise, A. Johnen, and C. Geuzaine. Blossom-quad: a non-uniform quadrilateral mesh generator using a minimum-cost perfect-matching algorithm. International Journal for Numerical Methods in Engineering, 89(9):1102–1119, 2012. doi:10.1002/nme.3279.</code></pre></div></div></li></ol></div></section><section class="scrollspy" id="2a88fcc1-60e5-4814-9126-3cffe4d937ea" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="5c61312d-33bb-4e40-961d-762fc44161aa" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The input MeshGenerator defining the output outer boundary and required Steiner points.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MeshGeneratorName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The input MeshGenerator defining the output outer boundary and required Steiner points.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="16aab8f1-9caa-441e-bbeb-db3c42515dc0" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">add_nodes_per_boundary_segment</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">How many more nodes to add in each outer boundary segment.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>How many more nodes to add in each outer boundary segment.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">desired_area</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">Desired (maximum) triangle area, or 0 to skip uniform refinement</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>Real</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-doc-range"><span>Range:</span>desired_area>=0</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Desired (maximum) triangle area, or 0 to skip uniform refinement</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">desired_area_func</span><span class="moose-parameter-header-description">Desired area as a function of x,y; omit to skip non-uniform refinement</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Desired area as a function of x,y; omit to skip non-uniform refinement</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">hole_boundaries</span><span class="moose-parameter-header-description">Boundary names to set on holes.  Default IDs are numbered up from 1 if no hole meshes are stitched; or from maximum boundary ID of all the stitched hole meshes + 2.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Boundary names to set on holes.  Default IDs are numbered up from 1 if no hole meshes are stitched; or from maximum boundary ID of all the stitched hole meshes + 2.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">holes</span><span class="moose-parameter-header-description">The MeshGenerators that define mesh holes.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;MeshGeneratorName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The MeshGenerators that define mesh holes.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">input_boundary_names</span><span class="moose-parameter-header-description">2D-input-mesh boundaries defining the output mesh outer boundary</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>2D-input-mesh boundaries defining the output mesh outer boundary</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">input_subdomain_names</span><span class="moose-parameter-header-description">1D-input-mesh subdomains defining the output mesh outer boundary</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;SubdomainName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>1D-input-mesh subdomains defining the output mesh outer boundary</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">max_angle_deviation</span><span class="moose-parameter-header-default">60</span><span class="moose-parameter-header-description">Maximum angle deviation from the global average normal vector in the input mesh.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>60</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>Real</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-doc-range"><span>Range:</span>max_angle_deviation>0 & max_angle_deviation<90</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Maximum angle deviation from the global average normal vector in the input mesh.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">output_boundary</span><span class="moose-parameter-header-description">Boundary name to set on new outer boundary.  Default ID: 0 if no hole meshes are stitched; or maximum boundary ID of all the stitched hole meshes + 1.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>BoundaryName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Boundary name to set on new outer boundary.  Default ID: 0 if no hole meshes are stitched; or maximum boundary ID of all the stitched hole meshes + 1.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">output_subdomain_name</span><span class="moose-parameter-header-description">Subdomain name to set on new triangles.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>SubdomainName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Subdomain name to set on new triangles.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">refine_boundary</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Whether to allow automatically refining the outer boundary.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to allow automatically refining the outer boundary.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">refine_holes</span><span class="moose-parameter-header-description">Whether to allow automatically refining each hole boundary.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;bool&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to allow automatically refining each hole boundary.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">stitch_holes</span><span class="moose-parameter-header-description">Whether to stitch to the mesh defining each hole.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;bool&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether to stitch to the mesh defining each hole.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">verbose</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether the generator should output additional information</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether the generator should output additional information</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">verify_holes</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Verify holes do not intersect boundary or each other.  Asymptotically costly.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Verify holes do not intersect boundary or each other.  Asymptotically costly.</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="a6609ac7-7841-40fa-a75a-30949f0efc9f" data-section-level="3" data-section-text="Automatic Triangle Meshing Area Control Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">auto_area_func_default_size</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">Background size for automatic area function, or 0 to use non background size</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>Real</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Background size for automatic area function, or 0 to use non background size</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">auto_area_func_default_size_dist</span><span class="moose-parameter-header-default">-1</span><span class="moose-parameter-header-description">Effective distance of background size for automatic area function, or negative to use non background size</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>-1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>Real</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Effective distance of background size for automatic area function, or negative to use non background size</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">auto_area_function_num_points</span><span class="moose-parameter-header-default">10</span><span class="moose-parameter-header-description">Maximum number of nearest points used for the inverse distance interpolation algorithm for automatic area function calculation.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>10</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Maximum number of nearest points used for the inverse distance interpolation algorithm for automatic area function calculation.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">auto_area_function_power</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">Polynomial power of the inverse distance interpolation algorithm for automatic area function calculation.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>Real</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-doc-range"><span>Range:</span>auto_area_function_power>0</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Polynomial power of the inverse distance interpolation algorithm for automatic area function calculation.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_auto_area_func</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Use the automatic area function for the triangle meshing region.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Use the automatic area function for the triangle meshing region.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Automatic Triangle Meshing Area Control Parameters</h3></summary></details></section><section id="40c41d08-b2bf-4267-9bce-8d18f74572a5" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_with_name</span><span class="moose-parameter-header-description">Keep the mesh from this mesh generator in memory with the name specified</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Keep the mesh from this mesh generator in memory with the name specified</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="35f05b60-99a2-40ba-b029-5536f889e7ba" data-section-level="3" data-section-text="Mandatory Mesh Interior Nodes Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">interior_points</span><span class="moose-parameter-header-description">Interior node locations. Any point outside the surface will not be meshed.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;libMesh::Point&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Interior node locations. Any point outside the surface will not be meshed.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Mandatory Mesh Interior Nodes Parameters</h3></summary></details></section><section id="d6fbac7d-6957-4af4-bf7d-33f37c5ba697" data-section-level="3" data-section-text="Frontal Advance Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">metric</span><span class="moose-parameter-header-default">LINF</span><span class="moose-parameter-header-description">The norm the target size is measured in when a point is placed ahead of the front. 'L2' places points that make equilateral triangles. 'LINF' places points that make right isosceles triangles in the local frame, the shape that recombines into good quadrilaterals.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>LINF</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>L2, LINF</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The norm the target size is measured in when a point is placed ahead of the front. 'L2' places points that make equilateral triangles. 'LINF' places points that make right isosceles triangles in the local frame, the shape that recombines into good quadrilaterals.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">orientation</span><span class="moose-parameter-header-default">CROSS_FIELD</span><span class="moose-parameter-header-description">Where the local frame the 'LINF' metric measures in comes from. 'CROSS_FIELD' solves for a cross field over the domain. 'BOUNDARY' takes the frame of the nearest boundary segment, which needs no solve. This parameter has no effect when metric is 'L2'.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>CROSS_FIELD</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>BOUNDARY, CROSS_FIELD</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Where the local frame the 'LINF' metric measures in comes from. 'CROSS_FIELD' solves for a cross field over the domain. 'BOUNDARY' takes the frame of the nearest boundary segment, which needs no solve. This parameter has no effect when metric is 'L2'.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Frontal Advance Parameters</h3></summary></details></section><section id="f3c1eb57-f414-44eb-a334-57e84c9ec214" data-section-level="3" data-section-text="Debugging Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">nemesis</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to output the mesh file in the nemesisformat (only if output = true)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not to output the mesh file in the nemesisformat (only if output = true)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">output</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to output the mesh file after generating the mesh</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not to output the mesh file after generating the mesh</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">show_info</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not to show mesh info after generating the mesh (bounding box, element types, sidesets, nodesets, subdomains, etc)</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Whether or not to show mesh info after generating the mesh (bounding box, element types, sidesets, nodesets, subdomains, etc)</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Debugging Parameters</h3></summary></details></section></section></section><div class="moose-modal modal" id="702ff130-e1e2-4fb3-a07d-b2673e0037ed"><div class="modal-content"><h4>boundary</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MeshGeneratorName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The input MeshGenerator defining the output outer boundary and required Steiner points.</p></div></div><div class="moose-modal modal" id="d6f50d85-40c4-4927-8b7d-55e6ca27b371"><div class="modal-content"><h4>holes</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;MeshGeneratorName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The MeshGenerators that define mesh holes.</p></div></div><div class="moose-modal modal" id="da1ab3fb-1f34-4cf1-94a6-34a5b93b9f88"><div class="modal-content"><h4>desired_area</h4><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>Real</p><p class="moose-parameter-description-doc-unit"><span>Unit:</span>(no unit assumed)</p><p class="moose-parameter-description-doc-range"><span>Range:</span>desired_area>=0</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Desired (maximum) triangle area, or 0 to skip uniform refinement</p></div></div><div class="moose-modal modal" id="02cfd734-735c-456d-96bc-7b6dc7c2ff8d"><div class="modal-content"><h4>desired_area_func</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::string</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Desired area as a function of x,y; omit to skip non-uniform refinement</p></div></div><div class="moose-modal modal" id="066d95ba-1361-4807-a01c-742b188dfd49"><div class="modal-content"><h4>use_auto_area_func</h4><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Use the automatic area function for the triangle meshing region.</p></div></div><div class="moose-modal modal" id="2c0b5b83-0c0d-4662-8ece-33cc124ba493"><div class="modal-content"><h4>output_subdomain_name</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>SubdomainName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Subdomain name to set on new triangles.</p></div></div><div class="moose-modal modal" id="6fd30447-0e26-41a7-9708-2a764b87d193"><div class="modal-content"><h4>output_boundary</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>BoundaryName</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Boundary name to set on new outer boundary.  Default ID: 0 if no hole meshes are stitched; or maximum boundary ID of all the stitched hole meshes + 1.</p></div></div><div class="moose-modal modal" id="811a3511-db17-4a66-8b0a-168008bb352d"><div class="modal-content"><h4>hole_boundaries</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Boundary names to set on holes.  Default IDs are numbered up from 1 if no hole meshes are stitched; or from maximum boundary ID of all the stitched hole meshes + 2.</p></div></div><div class="moose-modal modal" id="72945a7e-b34a-464c-b96a-5c7374c397fa"><div class="modal-content"><h4>interior_points</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;libMesh::Point&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Interior node locations. Any point outside the surface will not be meshed.</p></div></div><div class="moose-modal modal" id="6a68661a-cf7f-4160-9931-7da7086fd76e"><div class="modal-content"><h4>metric</h4><p class="moose-parameter-description-default"><span>Default:</span>LINF</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>L2, LINF</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The norm the target size is measured in when a point is placed ahead of the front. 'L2' places points that make equilateral triangles. 'LINF' places points that make right isosceles triangles in the local frame, the shape that recombines into good quadrilaterals.</p></div></div><div class="moose-modal modal" id="397d2477-3fd8-4d4a-ad13-41a83bfc7bb1"><div class="modal-content"><h4>orientation</h4><p class="moose-parameter-description-default"><span>Default:</span>CROSS_FIELD</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>BOUNDARY, CROSS_FIELD</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Where the local frame the 'LINF' metric measures in comes from. 'CROSS_FIELD' solves for a cross field over the domain. 'BOUNDARY' takes the frame of the nearest boundary segment, which needs no solve. This parameter has no effect when metric is 'L2'.</p></div></div><div class="moose-modal modal" id="680c475f-730f-4ebe-bb9e-8d8453f9bd87"><div class="modal-content"><h4>metric</h4><p class="moose-parameter-description-default"><span>Default:</span>LINF</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>L2, LINF</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The norm the target size is measured in when a point is placed ahead of the front. 'L2' places points that make equilateral triangles. 'LINF' places points that make right isosceles triangles in the local frame, the shape that recombines into good quadrilaterals.</p></div></div><div class="moose-modal modal" id="083062ee-5d91-40a5-8182-46343640575d"><div class="modal-content"><h4>metric</h4><p class="moose-parameter-description-default"><span>Default:</span>LINF</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>L2, LINF</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>The norm the target size is measured in when a point is placed ahead of the front. 'L2' places points that make equilateral triangles. 'LINF' places points that make right isosceles triangles in the local frame, the shape that recombines into good quadrilaterals.</p></div></div><div class="moose-modal modal" id="1f1d400e-b411-4830-b0cd-8e0322acf27a"><div class="modal-content"><h4>orientation</h4><p class="moose-parameter-description-default"><span>Default:</span>CROSS_FIELD</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>BOUNDARY, CROSS_FIELD</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Where the local frame the 'LINF' metric measures in comes from. 'CROSS_FIELD' solves for a cross field over the domain. 'BOUNDARY' takes the frame of the nearest boundary segment, which needs no solve. This parameter has no effect when metric is 'L2'.</p></div></div><div class="moose-modal modal" id="762b0353-edfd-42f8-aa25-426f34142c61"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/xy_frontal_delaunay_generator/frontal_circle.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [outer_bdy]
+    type = ParsedCurveGenerator
+    x_formula = &#x27;r*cos(t)&#x27;
+    y_formula = &#x27;r*sin(t)&#x27;
+    section_bounding_t_values = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names = &#x27;r&#x27;
+    constant_expressions = &#x27;1.0&#x27;
+    nums_segments = &#x27;16 16&#x27;
+    is_closed_loop = true
+  []
+  [triang]
+    type = XYFrontalDelaunayGenerator
+    boundary = &#x27;outer_bdy&#x27;
+    refine_boundary = false
+    desired_area = 0.02
+    output_subdomain_name = &#x27;triangles&#x27;
+  []
+[]
+
+[Problem]
+  solve = false
+[]
+
+[AuxVariables]
+  [quality]
+    family = MONOMIAL
+    order = CONSTANT
+  []
+[]
+
+[AuxKernels]
+  [qa]
+    type = ElementQualityAux
+    variable = quality
+    metric = SHAPE
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Postprocessors]
+  [area]
+    type = VolumePostprocessor
+    outputs = csv
+  []
+  [avg_quality]
+    type = ElementAverageValue
+    variable = quality
+    outputs = csv
+  []
+  [elem_size]
+    type = AverageElementSize
+    outputs = csv
+  []
+[]
+
+[Outputs]
+  csv = true
+  execute_on = &#x27;FINAL&#x27;
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="768340df-ead0-4f2c-82a5-3a2db1ac1ec7"><div class="modal-content"><h4>hole_boundaries</h4><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector&lt;BoundaryName&gt;</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>Boundary names to set on holes.  Default IDs are numbered up from 1 if no hole meshes are stitched; or from maximum boundary ID of all the stitched hole meshes + 2.</p></div></div><div class="moose-modal modal" id="ca24df8c-191a-4eb2-82b0-c639ca28c5cd"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/xy_frontal_delaunay_generator/frontal_annulus.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [outer_bdy]
+    type = ParsedCurveGenerator
+    x_formula = &#x27;r*cos(t)&#x27;
+    y_formula = &#x27;r*sin(t)&#x27;
+    section_bounding_t_values = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names = &#x27;r&#x27;
+    constant_expressions = &#x27;1.0&#x27;
+    nums_segments = &#x27;16 16&#x27;
+    is_closed_loop = true
+  []
+  [inner_bdy]
+    type = ParsedCurveGenerator
+    x_formula = &#x27;r*cos(t)&#x27;
+    y_formula = &#x27;r*sin(t)&#x27;
+    section_bounding_t_values = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names = &#x27;r&#x27;
+    constant_expressions = &#x27;0.35&#x27;
+    nums_segments = &#x27;6 6&#x27;
+    is_closed_loop = true
+  []
+  [triang]
+    type = XYFrontalDelaunayGenerator
+    boundary = &#x27;outer_bdy&#x27;
+    holes = &#x27;inner_bdy&#x27;
+    hole_boundaries = &#x27;inner&#x27;
+    refine_boundary = false
+    refine_holes = &#x27;false&#x27;
+    desired_area = 0.02
+    output_subdomain_name = &#x27;triangles&#x27;
+  []
+[]
+
+[Problem]
+  solve = false
+[]
+
+[AuxVariables]
+  [quality]
+    family = MONOMIAL
+    order = CONSTANT
+  []
+[]
+
+[AuxKernels]
+  [qa]
+    type = ElementQualityAux
+    variable = quality
+    metric = SHAPE
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Postprocessors]
+  [area]
+    type = VolumePostprocessor
+    outputs = csv
+  []
+  [avg_quality]
+    type = ElementAverageValue
+    variable = quality
+    outputs = csv
+  []
+  [elem_size]
+    type = AverageElementSize
+    outputs = csv
+  []
+  [hole_perimeter]
+    type = AreaPostprocessor
+    boundary = &#x27;inner&#x27;
+    outputs = csv
+  []
+[]
+
+[Outputs]
+  csv = true
+  execute_on = &#x27;FINAL&#x27;
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="1fa72639-8c90-48c9-b383-fee3f84cc9c4"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/xy_frontal_delaunay_generator/frontal_l_shape.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [outer_bdy]
+    type = PolyLineMeshGenerator
+    points = &#x27;0.0 0.0 0.0
+              2.0 0.0 0.0
+              2.0 1.0 0.0
+              1.0 1.0 0.0
+              1.0 2.0 0.0
+              0.0 2.0 0.0&#x27;
+    loop = true
+  []
+  [triang]
+    type = XYFrontalDelaunayGenerator
+    boundary = &#x27;outer_bdy&#x27;
+    refine_boundary = true
+    desired_area = 0.02
+    output_subdomain_name = &#x27;triangles&#x27;
+  []
+[]
+
+[Problem]
+  solve = false
+[]
+
+[AuxVariables]
+  [quality]
+    family = MONOMIAL
+    order = CONSTANT
+  []
+[]
+
+[AuxKernels]
+  [qa]
+    type = ElementQualityAux
+    variable = quality
+    metric = SHAPE
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Postprocessors]
+  [area]
+    type = VolumePostprocessor
+    outputs = csv
+  []
+  [avg_quality]
+    type = ElementAverageValue
+    variable = quality
+    outputs = csv
+  []
+  [elem_size]
+    type = AverageElementSize
+    outputs = csv
+  []
+[]
+
+[Outputs]
+  csv = true
+  execute_on = &#x27;FINAL&#x27;
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="6bea1f52-3665-4216-ad0b-77f4e0102de9"><div class="modal-content"><h4>(moose/test/tests/meshgenerators/mbb_pipeline/mbb_pipeline.i)</h4><pre style="max-height:350px;"><code class="language-moose">[Mesh]
+  [outer_bdy]
+    type = PolyLineMeshGenerator
+    points = &#x27;0.0 0.0 0.0
+              3.0 0.0 0.0
+              3.0 1.0 0.0
+              0.0 1.0 0.0&#x27;
+    loop = true
+    nums_edges_between_points = &#x27;21 7 21 7&#x27;
+  []
+  [hole_left]
+    type = ParsedCurveGenerator
+    x_formula = &#x27;x0 + r*cos(t)&#x27;
+    y_formula = &#x27;y0 + r*sin(t)&#x27;
+    section_bounding_t_values = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names = &#x27;x0 y0 r&#x27;
+    constant_expressions = &#x27;0.6 0.5 0.22&#x27;
+    nums_segments = &#x27;5 5&#x27;
+    is_closed_loop = true
+  []
+  [hole_center]
+    type = ParsedCurveGenerator
+    x_formula = &#x27;x0 + r*cos(t)&#x27;
+    y_formula = &#x27;y0 + r*sin(t)&#x27;
+    section_bounding_t_values = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names = &#x27;x0 y0 r&#x27;
+    constant_expressions = &#x27;1.5 0.5 0.22&#x27;
+    nums_segments = &#x27;5 5&#x27;
+    is_closed_loop = true
+  []
+  [hole_right]
+    type = ParsedCurveGenerator
+    x_formula = &#x27;x0 + r*cos(t)&#x27;
+    y_formula = &#x27;y0 + r*sin(t)&#x27;
+    section_bounding_t_values = &#x27;${fparse 0.0} ${fparse pi} ${fparse 2.0*pi}&#x27;
+    constant_names = &#x27;x0 y0 r&#x27;
+    constant_expressions = &#x27;2.4 0.5 0.22&#x27;
+    nums_segments = &#x27;5 5&#x27;
+    is_closed_loop = true
+  []
+  [triang]
+    type = XYFrontalDelaunayGenerator
+    boundary = &#x27;outer_bdy&#x27;
+    holes = &#x27;hole_left
+             hole_center
+             hole_right&#x27;
+    refine_boundary = false
+    refine_holes = &#x27;false false false&#x27;
+    desired_area = 0.01
+    metric = LINF
+    orientation = CROSS_FIELD
+    output_subdomain_name = &#x27;mbb&#x27;
+  []
+  [to_quad]
+    type = TriToQuadConverter
+    input = triang
+    algorithm = RECOMBINE
+    eta_min = 0.3
+  []
+  [smooth]
+    type = SmoothMeshGenerator
+    input = to_quad
+    algorithm = laplace
+  []
+
+  # Greedy matching breaks score ties by element id, so keep the ids stable across processor counts
+  allow_renumbering = false
+[]
+
+[Problem]
+  solve = false
+[]
+
+[AuxVariables]
+  [quality]
+    family = MONOMIAL
+    order = CONSTANT
+  []
+[]
+
+[AuxKernels]
+  [qa]
+    type = ElementQualityAux
+    variable = quality
+    metric = SHAPE
+  []
+[]
+
+[Executioner]
+  type = Transient
+  num_steps = 1
+[]
+
+[Postprocessors]
+  [area]
+    type = VolumePostprocessor
+    outputs = csv
+  []
+  [avg_quality]
+    type = ElementAverageValue
+    variable = quality
+    outputs = csv
+  []
+  [elem_size]
+    type = AverageElementSize
+    outputs = csv
+  []
+  [quad_area]
+    type = VolumePostprocessor
+    block = &#x27;mbb&#x27;
+    outputs = none
+  []
+  [quad_area_fraction]
+    type = ParsedPostprocessor
+    expression = &#x27;quad_area / area&#x27;
+    pp_names = &#x27;quad_area area&#x27;
+    outputs = csv
+  []
+[]
+
+[Outputs]
+  csv = true
+  execute_on = &#x27;FINAL&#x27;
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="f2ce340f-0d04-4b1e-802c-c43e44626046"><div class="modal-content"><h4>all_quad</h4><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-controllable"><span>Controllable:</span>No</p><p class="moose-parameter-description"><span>Description:</span>'RECOMBINE' algorithm only: whether the triangles that could not be merged are eliminated so that the converted mesh consists exclusively of quadrilaterals.</p></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#dd8d9acd-66a1-490e-905e-bc78be18e459" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li><li><a href="#ff3c300d-6946-49ab-b6a1-6996cef4de37" class="tooltipped" data-position="left" data-tooltip="Target Size Metric">Target Size Metric</a></li><li><a href="#86dc52c3-d01c-4a52-9e5b-51f4d180089c" class="tooltipped" data-position="left" data-tooltip="Local Frame Orientation">Local Frame Orientation</a></li><li><a href="#ab75d2c9-93eb-4583-b282-340f7d50bd4d" class="tooltipped" data-position="left" data-tooltip="Example Syntax">Example Syntax</a></li><li><a href="#27f4d9a1-2447-4d22-9c39-ef70bc4757ff" class="tooltipped" data-position="left" data-tooltip="References">References</a></li><li><a href="#2a88fcc1-60e5-4814-9126-3cffe4d937ea" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>
