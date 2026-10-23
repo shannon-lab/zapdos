@@ -10,7 +10,7 @@ the instructions to the conda installation step named "Cloning MOOSE". Then,
 return to this page and continue with Step Two.
 
 - [Linux and MacOS](https://mooseframework.inl.gov/getting_started/installation/conda.html)
-- [Windows 10 (experimental)](https://mooseframework.inl.gov/getting_started/installation/windows10.html)
+- [Windows Subsystem for Linux](https://mooseframework.inl.gov/getting_started/installation/windows.html)
 
 Advanced manual installation instructions for this environment are available
 [via the MOOSE website](https://mooseframework.inl.gov/getting_started/installation/index.html).

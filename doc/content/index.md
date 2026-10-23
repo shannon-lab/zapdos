@@ -4,47 +4,84 @@
 
 # Zapdos class=center light style=font-size:300%
 
-# An open source MOOSE Framework application for the simulation of plasmas class=center style=font-weight:200;font-size:200%
+# An open-source application for plasma simulations class=center style=font-weight:200;font-size:200%
+
+!style halign=center
+Zapdos utilizes the fluid description of plasmas to model a wide range of applications, for both industrial and fusion purposes.
+A summary of the models that Zapdos employees can be found on the [Plasma Models page](plasma_models/index.md). Zapdos is based on the
+[MOOSE framework](https://mooseframework.inl.gov), and builds on the framework and modules for many of its capabilities.
 
 !row!
 !col! small=12 medium=4 large=4 icon=flash_on
 ### Rapid Development class=center style=font-weight:200;
 
 !style halign=center
-Zapdos, through the [MOOSE Framework](https://mooseframework.inl.gov), provides
-a plug-in infrastructure that simplifies definitions of physics, material
-properties, and postprocessing.
+
+- Simple [installation](getting_started/installation.md)
+- Extensive [tutorials](getting_started/examples_and_tutorials/index.md)
+- Physics coupling with [MOOSE modules](https://mooseframework.inl.gov/modules/)
+
+!col-end!
+
+!col! small=12 medium=4 large=4 icon=assessment
+### Verification & Validation class=center style=font-weight:200;
+
+!style halign=center
+
+- Extensive [V&V cases](verification_and_validation/index.md)
+- [Software documentation](syntax/zapdos_only.md)
+- CI testing with [CIVET](https://github.com/idaholab/civet)
+
 !col-end!
 
 !col! small=12 medium=4 large=4 icon=group
-### Multi-scale class=center style=font-weight:200;
+### Collaborative Community class=center style=font-weight:200;
 
 !style halign=center
-Zapdos supports multi-scale models, enabling collaboration across applications,
-time-scales, and spatial domains.
-!col-end!
 
-!col! small=12 medium=4 large=4 icon=settings
-### Multi-platform class=center style=font-weight:200;
+- Interactive [discussion forum](https://github.com/shannon-lab/zapdos/discussions)
+- Suggest [features and report bugs](https://github.com/shannon-lab/zapdos/issues)
+- Growing networks between national labs, universities, and industry
 
-!style halign=center
-Zapdos runs on Mac OS, Linux, and Windows 10 and is easy to get started with.
-Begin by exploring [our installation page](getting_started/installation.md).
 !col-end!
 !row-end!
 
-!media media/ncsu-logo.png style=width:25%;display:block;margin-top:3em;margin-left:auto;margin-right:auto;
+!row!
+!col! small=12 medium=4 large=4
+!style halign=center
+!media media/ncsu-logo.png style=width:59%;display:block;margin-left:auto;margin-right:auto;
+!col-end!
+
+!col! small=12 medium=4 large=4
+!style halign=center
+!media media/inl-logo.png style=width:44%;display:block;margin-left:auto;margin-right:auto;
+!col-end!
+
+!col! small=12 medium=4 large=4
+!style halign=center
+!media media/uicu-logo.png style=width:65%;display:block;margin-left:auto;margin-right:auto;
+!col-end!
+!row-end!
 
 !row! class=center
-[Department of Nuclear Engineering](https://www.ne.ncsu.edu/)
-
+!col! small=12 medium=4 large=4 style=margin-top:-2em
+[Department of Nuclear Engineering,](https://www.ne.ncsu.edu/) \\
 [4-STAR Research Group](https://www.ne.ncsu.edu/people/scshanno)
+!col-end!
+
+!col! small=12 medium=4 large=4 style=margin-top:-2em
+[Idaho National Laboratory,](https://inl.gov/) \\
+[Fusion Safety Program](https://fusionsafety.inl.gov)
+!col-end!
+
+!col! small=12 medium=4 large=4 style=margin-top:-2em
+[Nuclear, Plasma & Radiological Engineering,](https://npre.illinois.edu/) \\
+[Laboratory of Computational Plasma Physics](https://curreli.npre.illinois.edu/)
+!col-end!
 !row-end!
 
-# Collaborators (current and former) class=center style=font-weight:200;font-size:200%
+# Additional Collaborators (current and former) class=center style=font-weight:200;font-size:200%
 
-- [Idaho National Laboratory (INL), Fusion Safety Program](https://fusionsafety.inl.gov)
-- [Laboratory of Computational Plasma Physics (University of Illinois Urbana-Champaign)](https://curreli.npre.illinois.edu/)
 - [Oak Ridge National Laboratory, Fusion Energy Division](https://www.ornl.gov/division/fed)
 - [Go Research Group (University of Notre Dame)](https://gogroup.nd.edu/)
 - Graves Lab (University of California, Berkeley)
