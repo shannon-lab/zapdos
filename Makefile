@@ -14,6 +14,7 @@ else
   MOOSE_DIR        ?= $(shell dirname `pwd`)/moose
 endif
 
+
 # framework
 FRAMEWORK_DIR      := $(MOOSE_DIR)/framework
 include $(FRAMEWORK_DIR)/build.mk
