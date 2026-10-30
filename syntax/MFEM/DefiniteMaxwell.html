@@ -1,0 +1,287 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Definite Maxwell Problem | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="db18e26c-08cd-49a8-bec2-bbd7e29c1a9e" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="6e8c4aa0-49c8-416e-a8b7-bc1a19869ff5" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="88f4e11d-d63e-40a9-80d3-88f6fa95b65d" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="e2fc0ac1-bc9a-423e-9386-85ff610b4e1b"><i class="material-icons">menu</i></a><ul class="sidenav" id="e2fc0ac1-bc9a-423e-9386-85ff610b4e1b"><li><a href="#!" class="dropdown-trigger" data-target="fd4d2353-f70b-43c6-9bdc-042387f01e07" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="c0d3b5b4-8e5c-4357-99ee-27191606e2f5" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="6d50abbc-b057-4c39-aab1-b7a37599dc70" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="db18e26c-08cd-49a8-bec2-bbd7e29c1a9e"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="6e8c4aa0-49c8-416e-a8b7-bc1a19869ff5"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="88f4e11d-d63e-40a9-80d3-88f6fa95b65d"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="fd4d2353-f70b-43c6-9bdc-042387f01e07"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="c0d3b5b4-8e5c-4357-99ee-27191606e2f5"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="6d50abbc-b057-4c39-aab1-b7a37599dc70"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">syntax</a><a href="." class="breadcrumb">MFEM</a><a href="#" class="breadcrumb">DefiniteMaxwell</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="1b624fa7-59c7-46e4-9f9f-377c3b9595ae" data-section-level="1" data-section-text="Definite Maxwell Problem"><h1 id="definite-maxwell-problem">Definite Maxwell Problem</h1><section class="scrollspy" id="e97e3153-2ae9-4046-91b3-18dadba43be1" data-section-level="2" data-section-text="Summary"><h2 id="summary">Summary</h2><p>Solves a 3D electromagnetic diffusion problem for   the electric field on a cube missing an octant, discretized using <span class="moose-katex-inline-equation" id="moose-equation-61350084-8074-499f-964f-04984ab06bf4"><script>var element = document.getElementById("moose-equation-61350084-8074-499f-964f-04984ab06bf4");katex.render("H(\\mathrm{curl})", element, {displayMode:false,throwOnError:false});</script></span> conforming Nédélec elements. This example   is based on <a href="https://mfem.org/examples/">MFEM Example 3</a>.</p></section><section class="scrollspy" id="286bf282-bbf9-4253-ac24-3bd087286e09" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>This problem solves a definite Maxwell equation with strong form:</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-5cefd192-3ecb-41da-b731-72f3517d712d"></span><script>var element = document.getElementById("moose-equation-5cefd192-3ecb-41da-b731-72f3517d712d");katex.render("\\begin{split} \\vec\\nabla \\times \\vec\\nabla \\times \\vec E + \\vec E = \\vec f \\,\\,\\,&\\mathrm{on}\\,\\, \\Omega \\\\ \\vec E \\times \\hat n= \\vec g \\,\\,\\, &\\mathrm{on}\\,\\, \\partial\\Omega \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p><p>where</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-ff2dae15-2032-401b-a8b7-491846ba81d9"></span><script>var element = document.getElementById("moose-equation-ff2dae15-2032-401b-a8b7-491846ba81d9");katex.render("\\vec f = \\begin{pmatrix}     (1+\\pi^2)\\sin(\\pi y)\\\\     (1+\\pi^2)\\sin(\\pi z)\\\\     (1+\\pi^2)\\sin(\\pi x) \\end{pmatrix},\\,\\,\\, \\vec g = \\begin{pmatrix}     \\sin(\\pi y)\\\\     \\sin(\\pi z)\\\\     \\sin(\\pi x) \\end{pmatrix}", element, {displayMode:true,throwOnError:false});</script></span></p><p>In this example, we solve this using the weak form</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-c5842ace-a7b6-4bd3-8ca7-626ff59a3ae8"></span><script>var element = document.getElementById("moose-equation-c5842ace-a7b6-4bd3-8ca7-626ff59a3ae8");katex.render("(\\vec\\nabla \\times \\vec E, \\vec\\nabla \\times \\vec v)_\\Omega + (\\vec E, \\vec v)_\\Omega = (\\vec f, \\vec v)_\\Omega \\,\\,\\, \\forall \\vec v \\in V", element, {displayMode:true,throwOnError:false});</script></span><p>where</p><p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-2a90b34e-a262-4596-815c-7804dabd0f79"></span><script>var element = document.getElementById("moose-equation-2a90b34e-a262-4596-815c-7804dabd0f79");katex.render("\\begin{split} \\vec E \\in H(\\mathrm{curl})(\\Omega) &: \\vec E \\times \\hat n= \\vec g \\,\\,\\, \\mathrm{on}\\,\\, \\partial\\Omega \\\\ \\vec v \\in H(\\mathrm{curl})(\\Omega) &: \\vec v \\times \\hat n= \\vec 0 \\,\\,\\, \\mathrm{on}\\,\\, \\partial\\Omega \\end{split}", element, {displayMode:true,throwOnError:false});</script></span></p></section><section class="scrollspy" id="64182555-3071-4e67-85a8-c16d5de5d3cf" data-section-level="2" data-section-text="Example File"><h2 id="example-file">Example File</h2><pre style="max-height:350px;"><code class="language-moose"># Definite Maxwell problem solved with Nedelec elements of the first kind
+# based on MFEM Example 3.
+
+[Mesh&lt;&lt;&lt;{&quot;href&quot;: &quot;../Mesh/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMFileMesh
+  file = ../mesh/small_fichera.mesh
+[]
+
+[Problem&lt;&lt;&lt;{&quot;href&quot;: &quot;../Problem/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMProblem
+[]
+
+[FESpaces]
+  [HCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+  []
+  [HDivFESpace]
+    type = MFEMVectorFESpace
+    fec_type = RT
+    fec_order = CONSTANT
+  []
+[]
+
+[Variables&lt;&lt;&lt;{&quot;href&quot;: &quot;../Variables/index.html&quot;}&gt;&gt;&gt;]
+  [e_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxVariables&lt;&lt;&lt;{&quot;href&quot;: &quot;../AuxVariables/index.html&quot;}&gt;&gt;&gt;]
+  [db_dt_field]
+    type = MFEMVariable
+    fespace = HDivFESpace
+  []
+[]
+
+[AuxKernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../AuxKernels/index.html&quot;}&gt;&gt;&gt;]
+  [curl]
+    type = MFEMCurlAux
+    variable = db_dt_field
+    source = e_field
+    scale_factor = -1.0
+  []
+[]
+
+[Functions&lt;&lt;&lt;{&quot;href&quot;: &quot;../Functions/index.html&quot;}&gt;&gt;&gt;]
+  [exact_e_field]
+    type = ParsedVectorFunction&lt;&lt;&lt;{&quot;description&quot;: &quot;Returns a vector function based on string descriptions for each component.&quot;, &quot;href&quot;: &quot;../../source/functions/MooseParsedVectorFunction.html&quot;}&gt;&gt;&gt;
+    expression_x&lt;&lt;&lt;{&quot;description&quot;: &quot;x-component of function.&quot;}&gt;&gt;&gt; = &#x27;sin(kappa * y)&#x27;
+    expression_y&lt;&lt;&lt;{&quot;description&quot;: &quot;y-component of function.&quot;}&gt;&gt;&gt; = &#x27;sin(kappa * z)&#x27;
+    expression_z&lt;&lt;&lt;{&quot;description&quot;: &quot;z-component of function.&quot;}&gt;&gt;&gt; = &#x27;sin(kappa * x)&#x27;
+
+    symbol_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Symbols (excluding t,x,y,z) that are bound to the values provided by the corresponding items in the symbol_values vector.&quot;}&gt;&gt;&gt; = kappa
+    symbol_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Constant numeric values, postprocessor names, function names, and scalar variables corresponding to the symbols in symbol_names.&quot;}&gt;&gt;&gt; = 3.1415926535
+  []
+
+  [forcing_field]
+    type = ParsedVectorFunction&lt;&lt;&lt;{&quot;description&quot;: &quot;Returns a vector function based on string descriptions for each component.&quot;, &quot;href&quot;: &quot;../../source/functions/MooseParsedVectorFunction.html&quot;}&gt;&gt;&gt;
+    expression_x&lt;&lt;&lt;{&quot;description&quot;: &quot;x-component of function.&quot;}&gt;&gt;&gt; = &#x27;(1. + kappa * kappa) * sin(kappa * y)&#x27;
+    expression_y&lt;&lt;&lt;{&quot;description&quot;: &quot;y-component of function.&quot;}&gt;&gt;&gt; = &#x27;(1. + kappa * kappa) * sin(kappa * z)&#x27;
+    expression_z&lt;&lt;&lt;{&quot;description&quot;: &quot;z-component of function.&quot;}&gt;&gt;&gt; = &#x27;(1. + kappa * kappa) * sin(kappa * x)&#x27;
+
+    symbol_names&lt;&lt;&lt;{&quot;description&quot;: &quot;Symbols (excluding t,x,y,z) that are bound to the values provided by the corresponding items in the symbol_values vector.&quot;}&gt;&gt;&gt; = kappa
+    symbol_values&lt;&lt;&lt;{&quot;description&quot;: &quot;Constant numeric values, postprocessor names, function names, and scalar variables corresponding to the symbols in symbol_names.&quot;}&gt;&gt;&gt; = 3.1415926535
+  []
+[]
+
+[BCs&lt;&lt;&lt;{&quot;href&quot;: &quot;../BCs/index.html&quot;}&gt;&gt;&gt;]
+  [tangential_E_bdr]
+    type = MFEMVectorTangentialDirichletBC
+    variable = e_field
+    vector_coefficient = exact_e_field
+  []
+[]
+
+[Kernels&lt;&lt;&lt;{&quot;href&quot;: &quot;../Kernels/index.html&quot;}&gt;&gt;&gt;]
+  [curlcurl]
+    type = MFEMCurlCurlKernel
+    variable = e_field
+  []
+  [mass]
+    type = MFEMVectorFEMassKernel
+    variable = e_field
+  []
+  [source]
+    type = MFEMVectorFEDomainLFKernel
+    variable = e_field
+    vector_coefficient = forcing_field
+  []
+[]
+
+[Solvers]
+  active = &#x27;gmres ams&#x27;
+  [ams]
+    type = MFEMHypreAMS
+    fespace = HCurlFESpace
+  []
+  [matrix_free_ams]
+    type = MFEMMatrixFreeAMS
+  []
+  [gmres]
+    type = MFEMHypreGMRES
+    preconditioner = ams
+    l_tol = 1e-12
+  []
+  [cg]
+    type = MFEMCGSolver
+    preconditioner = matrix_free_ams
+    l_tol = 1e-12
+  []
+[]
+
+[Executioner&lt;&lt;&lt;{&quot;href&quot;: &quot;../Executioner/index.html&quot;}&gt;&gt;&gt;]
+  type = MFEMSteady
+  device = cpu
+[]
+
+[VectorPostprocessors&lt;&lt;&lt;{&quot;href&quot;: &quot;../VectorPostprocessors/index.html&quot;}&gt;&gt;&gt;]
+  [line_sample_e_field]
+    type = MFEMVariableLineValueSampler
+    variable = &#x27;e_field&#x27;
+    start_point = &#x27;-0.99 -0.99 0.99&#x27;
+    end_point = &#x27;0.99 0.99 -0.99&#x27;
+    num_points = 114
+  []
+  [line_sample_db_dt_field]
+    type = MFEMVariableLineValueSampler
+    variable = &#x27;db_dt_field&#x27;
+    start_point = &#x27;-0.99 -0.99 0.99&#x27;
+    end_point = &#x27;0.99 0.99 -0.99&#x27;
+    num_points = 114
+  []
+[]
+
+[Outputs&lt;&lt;&lt;{&quot;href&quot;: &quot;../Outputs/index.html&quot;}&gt;&gt;&gt;]
+  [CSV]
+    type = CSV&lt;&lt;&lt;{&quot;description&quot;: &quot;Output for postprocessors, vector postprocessors, and scalar variables using comma seperated values (CSV).&quot;, &quot;href&quot;: &quot;../../source/outputs/CSV.html&quot;}&gt;&gt;&gt;
+    file_base&lt;&lt;&lt;{&quot;description&quot;: &quot;The desired solution output name without an extension. If not provided, MOOSE sets it with Outputs/file_base when available. Otherwise, MOOSE uses input file name and this object name for a master input or uses master file_base, the subapp name and this object name for a subapp input to set it.&quot;}&gt;&gt;&gt; = OutputData/CurlCurl/curlcurl
+  []
+[]</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#06751bb5-427e-48de-99b6-f55c956e5332">(moose/test/tests/mfem/kernels/curlcurl.i)</a></section></section><div class="moose-modal modal" id="06751bb5-427e-48de-99b6-f55c956e5332"><div class="modal-content"><h4>(moose/test/tests/mfem/kernels/curlcurl.i)</h4><pre style="max-height:350px;"><code class="language-moose"># Definite Maxwell problem solved with Nedelec elements of the first kind
+# based on MFEM Example 3.
+
+[Mesh]
+  type = MFEMFileMesh
+  file = ../mesh/small_fichera.mesh
+[]
+
+[Problem]
+  type = MFEMProblem
+[]
+
+[FESpaces]
+  [HCurlFESpace]
+    type = MFEMVectorFESpace
+    fec_type = ND
+    fec_order = FIRST
+  []
+  [HDivFESpace]
+    type = MFEMVectorFESpace
+    fec_type = RT
+    fec_order = CONSTANT
+  []
+[]
+
+[Variables]
+  [e_field]
+    type = MFEMVariable
+    fespace = HCurlFESpace
+  []
+[]
+
+[AuxVariables]
+  [db_dt_field]
+    type = MFEMVariable
+    fespace = HDivFESpace
+  []
+[]
+
+[AuxKernels]
+  [curl]
+    type = MFEMCurlAux
+    variable = db_dt_field
+    source = e_field
+    scale_factor = -1.0
+  []
+[]
+
+[Functions]
+  [exact_e_field]
+    type = ParsedVectorFunction
+    expression_x = &#x27;sin(kappa * y)&#x27;
+    expression_y = &#x27;sin(kappa * z)&#x27;
+    expression_z = &#x27;sin(kappa * x)&#x27;
+
+    symbol_names = kappa
+    symbol_values = 3.1415926535
+  []
+
+  [forcing_field]
+    type = ParsedVectorFunction
+    expression_x = &#x27;(1. + kappa * kappa) * sin(kappa * y)&#x27;
+    expression_y = &#x27;(1. + kappa * kappa) * sin(kappa * z)&#x27;
+    expression_z = &#x27;(1. + kappa * kappa) * sin(kappa * x)&#x27;
+
+    symbol_names = kappa
+    symbol_values = 3.1415926535
+  []
+[]
+
+[BCs]
+  [tangential_E_bdr]
+    type = MFEMVectorTangentialDirichletBC
+    variable = e_field
+    vector_coefficient = exact_e_field
+  []
+[]
+
+[Kernels]
+  [curlcurl]
+    type = MFEMCurlCurlKernel
+    variable = e_field
+  []
+  [mass]
+    type = MFEMVectorFEMassKernel
+    variable = e_field
+  []
+  [source]
+    type = MFEMVectorFEDomainLFKernel
+    variable = e_field
+    vector_coefficient = forcing_field
+  []
+[]
+
+
+[Solvers]
+  active = &#x27;gmres ams&#x27;
+  [ams]
+    type = MFEMHypreAMS
+    fespace = HCurlFESpace
+  []
+  [matrix_free_ams]
+    type = MFEMMatrixFreeAMS
+  []
+  [gmres]
+    type = MFEMHypreGMRES
+    preconditioner = ams
+    l_tol = 1e-12
+  []
+  [cg]
+    type = MFEMCGSolver
+    preconditioner = matrix_free_ams
+    l_tol = 1e-12
+  []
+[]
+
+[Executioner]
+  type = MFEMSteady
+  device = cpu
+[]
+
+[VectorPostprocessors]
+  [line_sample_e_field]
+    type = MFEMVariableLineValueSampler
+    variable = &#x27;e_field&#x27;
+    start_point = &#x27;-0.99 -0.99 0.99&#x27;
+    end_point = &#x27;0.99 0.99 -0.99&#x27;
+    num_points = 114
+  []
+  [line_sample_db_dt_field]
+    type = MFEMVariableLineValueSampler
+    variable = &#x27;db_dt_field&#x27;
+    start_point = &#x27;-0.99 -0.99 0.99&#x27;
+    end_point = &#x27;0.99 0.99 -0.99&#x27;
+    num_points = 114
+  []
+[]
+
+[Outputs]
+  [CSV]
+    type = CSV
+    file_base = OutputData/CurlCurl/curlcurl
+  []
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#e97e3153-2ae9-4046-91b3-18dadba43be1" class="tooltipped" data-position="left" data-tooltip="Summary">Summary</a></li><li><a href="#286bf282-bbf9-4253-ac24-3bd087286e09" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#64182555-3071-4e67-85a8-c16d5de5d3cf" class="tooltipped" data-position="left" data-tooltip="Example File">Example File</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script><script type="text/javascript" src="../../js/moose_input_parser.js"></script>

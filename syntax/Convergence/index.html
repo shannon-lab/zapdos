@@ -1,0 +1,404 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Convergence System | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="bde3f949-e21e-48e4-bad7-57021d26c68a" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="99328473-a9f6-433a-8fd3-9d903607b6f4" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="e37a39cd-74b9-4eb9-a773-6067d92eb32e" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="b3102320-aa65-4cc5-ab8c-653de4c7c290"><i class="material-icons">menu</i></a><ul class="sidenav" id="b3102320-aa65-4cc5-ab8c-653de4c7c290"><li><a href="#!" class="dropdown-trigger" data-target="7efe8720-64a4-4a9e-9742-9e09ebe7d880" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="3104041c-a111-4f2d-abae-d3141162fcb8" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="a2a46c4d-dae9-4669-9377-6674459b9ebd" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="bde3f949-e21e-48e4-bad7-57021d26c68a"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="99328473-a9f6-433a-8fd3-9d903607b6f4"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="e37a39cd-74b9-4eb9-a773-6067d92eb32e"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="7efe8720-64a4-4a9e-9742-9e09ebe7d880"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="3104041c-a111-4f2d-abae-d3141162fcb8"><li><a href="../zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="a2a46c4d-dae9-4669-9377-6674459b9ebd"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">syntax</a><a href="." class="breadcrumb">Convergence</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="8260abc6-7f0b-4fb5-aa1b-b9dee7a45dfb" data-section-level="1" data-section-text="Convergence System"><h1 id="convergence-system">Convergence System</h1><p>The Convergence system allows users to customize the stopping criteria for the iteration in various solves:</p><ul class="browser-default"><li><p>Nonlinear system solves </p></li><li><p>Linear system solves (for <code>solve_type = LINEAR</code> in the executioner, not for inner linear solves within a nonlinear solve) </p></li><li><p>Steady-state detection in <a href="../../source/executioners/Transient.html">Transient</a> </p></li><li><p>Fixed point solves with <a href="../MultiApps/index.html">MultiApps</a> </p></li><li><p>Fixed point solves with multiple systems</p></li></ul><p>Instead of supplying convergence-related parameters directly to the executioner, the user creates <code>Convergence</code> objects whose names are then supplied to the executioner, e.g.,</p><pre style="max-height:350px;"><code class="language-text">
+[Convergence]
+  [my_convergence1]
+    type = MyCustomConvergenceClass
+    # some convergence parameters, like tolerances
+  []
+[]
+
+[Executioner]
+  type = Steady
+  nonlinear_convergence = my_convergence1
+[]
+</code></pre><p>Currently only the nonlinear solve convergence is supported, but others are planned for the near future. If the <code>nonlinear_convergence</code> parameter is not specified, then the default <code>Convergence</code> associated with the problem is created internally.</p><section class="scrollspy" id="db80eb57-c42a-467b-838e-99aa4b086591" data-section-level="2" data-section-text="Available Objects"><h2 id="available-objects">Available Objects</h2><ul class="moose-syntax-list collection with-header"><li class="collection-header">Moose App</li><li class="collection-item"><a href="../../source/convergence/DefaultMultiAppFixedPointConvergence.html">DefaultMultiAppFixedPointConvergence</a>Default fixed point convergence criteria.</li><li class="collection-item"><a href="../../source/convergence/DefaultNonlinearConvergence.html">DefaultNonlinearConvergence</a>Default convergence criteria for FEProblem.</li><li class="collection-item"><a href="../../source/convergence/DefaultSteadyStateConvergence.html">DefaultSteadyStateConvergence</a>Default convergence criteria for steady-state detection in a transient simulation.</li><li class="collection-item"><a href="../../source/convergence/IterationCountConvergence.html">IterationCountConvergence</a>Checks the iteration count.</li><li class="collection-item"><a href="../../source/convergence/MultiPostprocessorConvergence.html">MultiPostprocessorConvergence</a>Converges if multiple post-processors are all less than tolerances.</li><li class="collection-item"><a href="../../source/convergence/ParsedConvergence.html">ParsedConvergence</a>Evaluates convergence from a parsed expression.</li><li class="collection-item"><a href="../../source/convergence/PostprocessorConvergence.html">PostprocessorConvergence</a>Compares the absolute value of a post-processor to a tolerance.</li><li class="collection-item"><a href="../../source/convergence/PostprocessorSteadyStateConvergence.html">PostprocessorSteadyStateConvergence</a>Compares the absolute value of a post-processor to a tolerance for steady-state checks.</li><li class="collection-item"><a href="../../source/convergence/ReferenceResidualConvergence.html">ReferenceResidualConvergence</a>Check the convergence of a problem with respect to a user-supplied reference solution. Replaces ReferenceResidualProblem, currently still used in conjunction with it.</li></ul></section><section class="scrollspy" id="f5c53fd7-3da7-4580-9b50-edb8f2d44131" data-section-level="2" data-section-text="Available Actions"><h2 id="available-actions">Available Actions</h2><ul class="moose-syntax-list collection with-header"><li class="collection-header">Moose App</li><li class="collection-item"><a href="../../source/actions/AddConvergenceAction.html">AddConvergenceAction</a>Add a Convergence object to the simulation.</li></ul></section><section class="scrollspy" id="8ec54518-7232-4c70-877d-9e0c5290c34e" data-section-level="2" data-section-text="Convergence Criteria Design Considerations"><h2 id="convergence-criteria-design-considerations">Convergence Criteria Design Considerations</h2><p>Here we provide some considerations to make in designing convergence criteria and choosing appropriate parameter values. Consider a system of algebraic system of equations</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-680f3761-bb5b-4cf1-8edb-61466f0ca88f"></span><script>var element = document.getElementById("moose-equation-680f3761-bb5b-4cf1-8edb-61466f0ca88f");katex.render("\\mathbf{r}(\\mathbf{u}) = \\mathbf{0} \\,,", element, {displayMode:true,throwOnError:false});</script></span><p>where <span class="moose-katex-inline-equation" id="moose-equation-27d878a2-d289-431a-80a1-1b709f628523"><script>var element = document.getElementById("moose-equation-27d878a2-d289-431a-80a1-1b709f628523");katex.render("\\mathbf{u}", element, {displayMode:false,throwOnError:false});</script></span> is the unknown solution vector, and <span class="moose-katex-inline-equation" id="moose-equation-ba930376-5185-4356-ba99-772fd2445857"><script>var element = document.getElementById("moose-equation-ba930376-5185-4356-ba99-772fd2445857");katex.render("\\mathbf{r}", element, {displayMode:false,throwOnError:false});</script></span> is the residual function. To solve this system using an iterative method, we must decide on criteria to stop the iteration. In general, iteration for a solve should halt when the approximate solution <span class="moose-katex-inline-equation" id="moose-equation-ad86778d-340b-4aec-b1e0-7072fb2e2a48"><script>var element = document.getElementById("moose-equation-ad86778d-340b-4aec-b1e0-7072fb2e2a48");katex.render("\\tilde{\\mathbf{u}}", element, {displayMode:false,throwOnError:false});</script></span> has reached a satisfactory level of error <span class="moose-katex-inline-equation" id="moose-equation-dab21483-9b89-463b-90c5-32e19fe646d4"><script>var element = document.getElementById("moose-equation-dab21483-9b89-463b-90c5-32e19fe646d4");katex.render("\\mathbf{e} \\equiv \\tilde{\\mathbf{u}} - \\mathbf{u}", element, {displayMode:false,throwOnError:false});</script></span>, using a condition such as</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-33fd1447-d64d-4e4a-a5d8-39deced6e2f4"></span><span class="moose-katex-equation-number">(1)</span><script>var element = document.getElementById("moose-equation-33fd1447-d64d-4e4a-a5d8-39deced6e2f4");katex.render("\\|\\mathbf{e}\\| \\leq \\tau_u \\,,", element, {displayMode:true,throwOnError:false});</script></span><p>where <span class="moose-katex-inline-equation" id="moose-equation-aa758153-a566-4214-a25d-d14f7fef0aa9"><script>var element = document.getElementById("moose-equation-aa758153-a566-4214-a25d-d14f7fef0aa9");katex.render("\\|\\cdot\\|", element, {displayMode:false,throwOnError:false});</script></span> denotes some norm, and <span class="moose-katex-inline-equation" id="moose-equation-fc5b8aeb-0c1e-4c08-ae43-c179c5227c4d"><script>var element = document.getElementById("moose-equation-fc5b8aeb-0c1e-4c08-ae43-c179c5227c4d");katex.render("\\tau_u", element, {displayMode:false,throwOnError:false});</script></span> denotes some tolerance. Unfortunately, since we do not know <span class="moose-katex-inline-equation" id="moose-equation-e9f0cc22-a504-455d-81b0-cb3b5d0640d7"><script>var element = document.getElementById("moose-equation-e9f0cc22-a504-455d-81b0-cb3b5d0640d7");katex.render("\\mathbf{u}", element, {displayMode:false,throwOnError:false});</script></span>, the error <span class="moose-katex-inline-equation" id="moose-equation-8c22bb04-1578-45aa-a38b-d6075da450ac"><script>var element = document.getElementById("moose-equation-8c22bb04-1578-45aa-a38b-d6075da450ac");katex.render("\\mathbf{e}", element, {displayMode:false,throwOnError:false});</script></span> is also unknown and thus may not be computed directly. Thus some approximation of the condition <a class="moose-equation-reference" href="#moose-equation-33fd1447-d64d-4e4a-a5d8-39deced6e2f4">Eq. (1)</a> must be made. This may entail some approximation of the error <span class="moose-katex-inline-equation" id="moose-equation-74e19f23-079c-4f81-b118-e44d710877ae"><script>var element = document.getElementById("moose-equation-74e19f23-079c-4f81-b118-e44d710877ae");katex.render("\\mathbf{e}", element, {displayMode:false,throwOnError:false});</script></span> or some criteria which implies the desired criteria. For example, a very common approach is to use a residual criteria such as</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-d7877a1a-7ba4-4090-a354-c1728397428c"></span><script>var element = document.getElementById("moose-equation-d7877a1a-7ba4-4090-a354-c1728397428c");katex.render("\\|\\mathbf{r}\\| \\leq \\tau_{r,\\text{abs}} \\,.", element, {displayMode:true,throwOnError:false});</script></span><p>While it is true that <span class="moose-katex-inline-equation" id="moose-equation-137fa78d-2d62-406c-95c3-21387cb6e501"><script>var element = document.getElementById("moose-equation-137fa78d-2d62-406c-95c3-21387cb6e501");katex.render("\\|\\mathbf{r}\\| = 0", element, {displayMode:false,throwOnError:false});</script></span> implies <span class="moose-katex-inline-equation" id="moose-equation-d2ab556e-e763-43b2-9071-cb5d81528a81"><script>var element = document.getElementById("moose-equation-d2ab556e-e763-43b2-9071-cb5d81528a81");katex.render("\\|\\mathbf{e}\\| = 0", element, {displayMode:false,throwOnError:false});</script></span>, a zero-tolerance is impractical, and the translation between the tolerance <span class="moose-katex-inline-equation" id="moose-equation-614b89c6-7956-47f1-9041-8cc730f88bfe"><script>var element = document.getElementById("moose-equation-614b89c6-7956-47f1-9041-8cc730f88bfe");katex.render("\\tau_u", element, {displayMode:false,throwOnError:false});</script></span> to the tolerance is <span class="moose-katex-inline-equation" id="moose-equation-883c7fa4-bdd5-4b55-8fd9-d46902d6b27d"><script>var element = document.getElementById("moose-equation-883c7fa4-bdd5-4b55-8fd9-d46902d6b27d");katex.render("\\tau_r", element, {displayMode:false,throwOnError:false});</script></span> is difficult. The &quot;acceptable&quot; absolute residual tolerance is tricky to determine and is highly dependent on the equations being solved. To attempt to circumvent this issue, relative residual criteria have been used, dividing the residual norm by another value in an attempt to normalize it. A common approach that has been used is to use the initial residual vector <span class="moose-katex-inline-equation" id="moose-equation-db303e0b-c951-4c05-92f0-a43c331b1e16"><script>var element = document.getElementById("moose-equation-db303e0b-c951-4c05-92f0-a43c331b1e16");katex.render("\\mathbf{r}_0", element, {displayMode:false,throwOnError:false});</script></span> to normalize:</p><span class="moose-katex-block-equation"><span class="moose-katex-equation table-cell" id="moose-equation-8ce26852-0c50-4c75-a446-10d770087c24"></span><script>var element = document.getElementById("moose-equation-8ce26852-0c50-4c75-a446-10d770087c24");katex.render("\\frac{\\|\\mathbf{r}\\|}{\\|\\mathbf{r}_0\\|} \\leq \\tau_{r,\\text{rel}} \\,,", element, {displayMode:true,throwOnError:false});</script></span><p>where <span class="moose-katex-inline-equation" id="moose-equation-c369f613-1f15-4441-a5b1-bf8c373f5356"><script>var element = document.getElementById("moose-equation-c369f613-1f15-4441-a5b1-bf8c373f5356");katex.render("\\tau_{r,\\text{rel}}", element, {displayMode:false,throwOnError:false});</script></span> is the relative residual tolerance. The disadvantage with this particular choice is that this is highly dependent on how good the initial guess is: if the initial guess is very good, it will be nearly impossible to converge to the tolerance, and if the initial guess is very bad, it will be too easy to converge to the tolerance, resulting in an erroneous solution.</p><p>Some other considerations are the following:</p><ul class="browser-default"><li><p>Consider round-off error: if error ever reaches values around round-off error, the solve should definitely be considered converged, as iterating further provides no benefit. </p></li><li><p>Consider the other sources of error in the model that produced the system of algebraic equations that you&#x27;re solving. For example, if solving a system of partial differential equations, consider the model error and the discretization error; it is not beneficial to require algebraic error less than the other sources of error. </p></li><li><p>Since each convergence criteria typically has some weak point where they break down, it is usually advisable to use a combination of criteria.</p></li></ul><p>For more information on convergence criteria, see <a href="#rao2018stopping">Rao et al. (2018)</a> for example.</p><div class="card moose-alert moose-alert-tip"><div class="card-title moose-alert-title"><i class="material-icons moose-inline-icon">school</i><span class="moose-alert-title-brand">tip:</span>Create your own convergence action</div><div class="card-content"><div class="moose-alert-content"><p>The <code>Convergence</code> system provides a lot of flexibility by providing several pieces that can be combined together to create a desired set of convergence criteria. Since this may involve a large number of objects (including objects from other systems), it may be beneficial to create an <a href="../../source/actions/Action.html">Action</a> to create more compact and convenient syntax for your application.</p></div></div></div></section><section class="scrollspy" id="357c5da3-626e-4ab8-a73c-32fd3ebca24f" data-section-level="2" data-section-text="Implementing a New Convergence Class"><h2 id="implementing-a-new-convergence-class">Implementing a New Convergence Class</h2><p><code>Convergence</code> objects are responsible for overriding the virtual method</p><pre style="max-height:350px;"><code class="language-text">
+MooseConvergenceStatus checkConvergence(unsigned int iter)
+</code></pre><p>The returned type <code>MooseConvergenceStatus</code> is one of the following values:</p><ul class="browser-default"><li><p><code>CONVERGED</code>: The system has converged. </p></li><li><p><code>DIVERGED</code>: The system has diverged. </p></li><li><p><code>ITERATING</code>: The system has neither converged nor diverged and thus will continue to iterate.</p></li></ul><section id="4fb3df50-be2b-453d-9c1a-9af42fd19ffd" data-section-level="3" data-section-text="Convergence Iteration Type"><h3 id="convergence-iteration-type">Convergence Iteration Type</h3><p><code>Convergence</code> objects may override the method</p><pre style="max-height:350px;"><code class="language-text">
+void checkIterationType(IterationType)
+</code></pre><p>This method is called a single time by the relevant context of the iteration for which convergence is being checked. Its purpose is to perform any checks related to the compatibility of the <code>Convergence</code> object and the iteration type. For example, <a href="../../source/convergence/DefaultNonlinearConvergence.html">DefaultNonlinearConvergence</a> may only be used for nonlinear solves, so it overrides the <code>checkIterationType</code> method to check it is not being used with other iteration types:</p><pre style="max-height:350px;"><code class="language-cpp">void
+DefaultNonlinearConvergence::checkIterationType(IterationType it_type) const
+{
+  DefaultConvergenceBase::checkIterationType(it_type);
+
+  if (it_type != ConvergenceIterationTypes::NONLINEAR)
+    mooseError(&quot;DefaultNonlinearConvergence can only be used with nonlinear solves.&quot;);
+}
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#a6e27f0c-6522-4520-b797-14b15c3a790e">(moose/framework/src/convergence/DefaultNonlinearConvergence.C)</a><p>The following iteration types are available for all MOOSE-based applications:</p><ul class="browser-default"><li><p><code>ConvergenceIterationTypes::NONLINEAR</code>: Nonlinear solves </p></li><li><p><code>ConvergenceIterationTypes::LINEAR</code>: Linear solves (<code>solve_type = LINEAR</code>, not inner linear solves of nonlinear solves) </p></li><li><p><code>ConvergenceIterationTypes::MULTIAPP_FIXED_POINT</code>: MultiApp fixed point solves </p></li><li><p><code>ConvergenceIterationTypes::MULTISYSTEM_FIXED_POINT</code>: Multi-system fixed point solves </p></li><li><p><code>ConvergenceIterationTypes::STEADY_STATE</code>: Steady-state detection in transient simulations</p></li></ul><p>Apps may register additional iteration types by making the following registration call, somewhere within the global namespace, typically within <code>MyApp.h</code>, where <code>MY_TYPE</code> is the desired new iteration type:</p><pre style="max-height:350px;"><code class="language-text">
+namespace ConvergenceIterationTypes
+{
+  const auto MY_TYPE = registerType(&quot;MY_TYPE&quot;);
+}
+</code></pre></section></section><section class="scrollspy" id="d7666cdd-ec24-4a1e-a695-c6d6c3af71ef" data-section-level="2" data-section-text="References"><h2 id="references">References</h2><div class="moose-bibliography"><ol><li id="rao2018stopping">Kaustubh Rao, Paul Malan, and J.&nbsp;Blair Perot.
+A stopping criterion for the iterative solution of partial differential equations.
+<em>Journal of Computational Physics</em>, 352:265&ndash;284, 2018.
+URL: <a href="https://www.sciencedirect.com/science/article/pii/S0021999117306939">https://www.sciencedirect.com/science/article/pii/S0021999117306939</a>, <a href="https://doi.org/https://doi.org/10.1016/j.jcp.2017.09.033">doi:https://doi.org/10.1016/j.jcp.2017.09.033</a>.<a href="#279d9151-cd5f-4b0f-af4e-86e4a1b9b696" class="modal-trigger moose-bibtex-modal" style="padding-left:10px;">[Export]</a><div class="modal" id="279d9151-cd5f-4b0f-af4e-86e4a1b9b696"><div class="modal-content"><h6>BibTeX</h6><pre style="line-height:1.25;"><code class="language-latex">@article{rao2018stopping,
+    author = "Rao, Kaustubh and Malan, Paul and Perot, J. Blair",
+    title = "A stopping criterion for the iterative solution of partial differential equations",
+    journal = "Journal of Computational Physics",
+    volume = "352",
+    pages = "265-284",
+    year = "2018",
+    issn = "0021-9991",
+    doi = "https://doi.org/10.1016/j.jcp.2017.09.033",
+    url = "https://www.sciencedirect.com/science/article/pii/S0021999117306939"
+}
+</code></pre><h6>RIS</h6><pre style="line-height:1.25;"><code class="language-none">TY  - JOUR
+AU  - Rao, Kaustubh
+AU  - Malan, Paul
+AU  - Perot, J. Blair
+TI  - A stopping criterion for the iterative solution of partial differential equations
+JO  - Journal of Computational Physics
+PY  - 2018
+VL  - 352
+DO  - https://doi.org/10.1016/j.jcp.2017.09.033
+UR  - https://www.sciencedirect.com/science/article/pii/S0021999117306939
+SP  - 265
+EP  - 284
+ER  - </code></pre><h6>Plain Text</h6><pre style="line-height:1.25;"><code class="language-none">Kaustubh Rao, Paul Malan, and J. Blair Perot. A stopping criterion for the iterative solution of partial differential equations. Journal of Computational Physics, 352:265-284, 2018. URL: https://www.sciencedirect.com/science/article/pii/S0021999117306939, doi:https://doi.org/10.1016/j.jcp.2017.09.033.</code></pre></div></div></li></ol></div></section></section><div class="moose-modal modal" id="a6e27f0c-6522-4520-b797-14b15c3a790e"><div class="modal-content"><h4>(moose/framework/src/convergence/DefaultNonlinearConvergence.C)</h4><pre style="max-height:350px;"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+// MOOSE includes
+#include &quot;DefaultNonlinearConvergence.h&quot;
+#include &quot;FEProblemBase.h&quot;
+#include &quot;PetscSupport.h&quot;
+#include &quot;NonlinearSystemBase.h&quot;
+#include &quot;ConvergenceIterationTypes.h&quot;
+
+#include &quot;libmesh/system.h&quot;
+
+// PETSc includes
+#include &lt;petsc.h&gt;
+#include &lt;petscmat.h&gt;
+#include &lt;petscsnes.h&gt;
+
+registerMooseObject(&quot;MooseApp&quot;, DefaultNonlinearConvergence);
+
+InputParameters
+DefaultNonlinearConvergence::validParams()
+{
+  InputParameters params = DefaultConvergenceBase::validParams();
+  params += FEProblemSolve::feProblemDefaultConvergenceParams();
+
+  params.addPrivateParam&lt;bool&gt;(&quot;added_as_default&quot;, false);
+
+  params.addClassDescription(&quot;Default convergence criteria for FEProblem.&quot;);
+
+  return params;
+}
+
+DefaultNonlinearConvergence::DefaultNonlinearConvergence(const InputParameters &amp; parameters)
+  : DefaultConvergenceBase(parameters),
+    _fe_problem(*getCheckedPointerParam&lt;FEProblemBase *&gt;(&quot;_fe_problem_base&quot;)),
+    _nl_abs_div_tol(getSharedExecutionerParam&lt;Real&gt;(&quot;nl_abs_div_tol&quot;)),
+    _nl_rel_div_tol(getSharedExecutionerParam&lt;Real&gt;(&quot;nl_div_tol&quot;)),
+    _div_threshold(std::numeric_limits&lt;Real&gt;::max()),
+    _nl_forced_its(getSharedExecutionerParam&lt;unsigned int&gt;(&quot;nl_forced_its&quot;)),
+    _nl_max_pingpong(getSharedExecutionerParam&lt;unsigned int&gt;(&quot;n_max_nonlinear_pingpong&quot;)),
+    _nl_current_pingpong(0),
+    _nl_rel_step_tol(getSharedExecutionerParam&lt;Real&gt;(&quot;nl_rel_step_tol&quot;)),
+    _nl_max_funcs(getSharedExecutionerParam&lt;unsigned int&gt;(&quot;nl_max_funcs&quot;)),
+    _nl_max_its(getSharedExecutionerParam&lt;unsigned int&gt;(&quot;nl_max_its&quot;)),
+    _nl_abs_tol(getSharedExecutionerParam&lt;Real&gt;(&quot;nl_abs_tol&quot;)),
+    _nl_rel_tol(getSharedExecutionerParam&lt;Real&gt;(&quot;nl_rel_tol&quot;))
+{
+}
+
+void
+DefaultNonlinearConvergence::initialSetup()
+{
+  DefaultConvergenceBase::initialSetup();
+
+  // This method is also called in preLoop(), which will overwrite the parameters set here.
+  // It needs to be called here to collect the names of any duplicate parameters for the
+  // checkDuplicateSetSharedExecutionerParams() check. It needs to be called in preLoop()
+  // because it needs to know the current nonlinear system; Convergence objects do not know
+  // their &quot;associated&quot; nonlinear system (and they could in fact have multiple).
+  setNonlinearSystemParameters();
+}
+
+void
+DefaultNonlinearConvergence::checkIterationType(IterationType it_type) const
+{
+  DefaultConvergenceBase::checkIterationType(it_type);
+
+  if (it_type != ConvergenceIterationTypes::NONLINEAR)
+    mooseError(&quot;DefaultNonlinearConvergence can only be used with nonlinear solves.&quot;);
+}
+
+void
+DefaultNonlinearConvergence::preLoop()
+{
+  DefaultConvergenceBase::preLoop();
+
+  setNonlinearSystemParameters();
+}
+
+void
+DefaultNonlinearConvergence::setNonlinearSystemParameters()
+{
+  NonlinearSystemBase &amp; nl_sys = _fe_problem.currentNonlinearSystem();
+
+  auto &amp; params = nl_sys.system().parameters;
+  params.set&lt;unsigned int&gt;(&quot;nonlinear solver maximum iterations&quot;) = _nl_max_its;
+  params.set&lt;unsigned int&gt;(&quot;nonlinear solver maximum function evaluations&quot;) = _nl_max_funcs;
+  params.set&lt;Real&gt;(&quot;nonlinear solver absolute residual tolerance&quot;) = _nl_abs_tol;
+  params.set&lt;Real&gt;(&quot;nonlinear solver relative residual tolerance&quot;) = _nl_rel_tol;
+  params.set&lt;Real&gt;(&quot;nonlinear solver divergence tolerance&quot;) =
+      getSharedExecutionerParam&lt;Real&gt;(&quot;nl_div_tol&quot;);
+  params.set&lt;Real&gt;(&quot;nonlinear solver absolute step tolerance&quot;) =
+      getSharedExecutionerParam&lt;Real&gt;(&quot;nl_abs_step_tol&quot;);
+  params.set&lt;Real&gt;(&quot;nonlinear solver relative step tolerance&quot;) = _nl_rel_step_tol;
+
+  // Records which object&#x27;s tolerances are the ones actually active on the shared SNES, so that
+  // checkPetscToleranceOverrides() does not mistake another DefaultNonlinearConvergence object&#x27;s
+  // (legitimately) overwriting these same parameters for an ignored PETSc command-line option.
+  params.set&lt;const DefaultNonlinearConvergence *&gt;(
+      &quot;_default_nonlinear_convergence_tolerance_writer&quot;) = this;
+}
+
+NonlinearSystemBase &amp;
+DefaultNonlinearConvergence::nonlinearSystem()
+{
+  return _fe_problem.currentNonlinearSystem();
+}
+
+bool
+DefaultNonlinearConvergence::checkResidualConvergence(const unsigned int n_iter,
+                                                      const Real fnorm,
+                                                      const Real ref_norm,
+                                                      const Real rel_tol,
+                                                      const Real abs_tol,
+                                                      std::ostringstream &amp; oss)
+{
+  if (fnorm &lt; abs_tol)
+  {
+    oss &lt;&lt; &quot;Converged due to absolute residual &quot; &lt;&lt; fnorm &lt;&lt; &quot; &lt; absolute tolerance (&quot; &lt;&lt; abs_tol
+        &lt;&lt; &quot;)\n&quot;;
+    return true;
+  }
+  else if (n_iter &amp;&amp; fnorm &lt;= ref_norm * rel_tol)
+  {
+    oss &lt;&lt; &quot;Converged due to relative/normalized residual norm &quot; &lt;&lt; fnorm / ref_norm
+        &lt;&lt; &quot; &lt; relative tolerance (&quot; &lt;&lt; rel_tol &lt;&lt; &quot;)\n&quot;;
+    return true;
+  }
+  else
+    return false;
+}
+
+void
+DefaultNonlinearConvergence::checkPetscToleranceOverrides()
+{
+  if (_nl_checked_petsc_tolerance_overrides)
+    return;
+  _nl_checked_petsc_tolerance_overrides = true;
+
+  NonlinearSystemBase &amp; nl_sys = nonlinearSystem();
+  auto &amp; params = nl_sys.system().parameters;
+  // If another DefaultNonlinearConvergence object last wrote these shared parameters (as
+  // happens when multiple such objects are combined, e.g. via ParsedConvergence, onto the same
+  // nonlinear system), its tolerances are the ones actually active on the SNES, not ours; that
+  // is not a PETSc command-line override, so there is nothing for us to warn about here.
+  if (params.get&lt;const DefaultNonlinearConvergence *&gt;(
+          &quot;_default_nonlinear_convergence_tolerance_writer&quot;) != this)
+    return;
+
+  SNES snes = nl_sys.getSNES();
+  PetscReal abs_tol, rel_tol, rel_step_tol;
+  PetscInt max_its, max_funcs;
+  LibmeshPetscCallA(
+      _fe_problem.comm().get(),
+      SNESGetTolerances(snes, &amp;abs_tol, &amp;rel_tol, &amp;rel_step_tol, &amp;max_its, &amp;max_funcs));
+
+  std::ostringstream oss;
+  if (abs_tol != _nl_abs_tol)
+    oss &lt;&lt; &quot;  -snes_atol = &quot; &lt;&lt; abs_tol &lt;&lt; &quot; (nl_abs_tol = &quot; &lt;&lt; _nl_abs_tol &lt;&lt; &quot;)\n&quot;;
+  if (rel_tol != _nl_rel_tol)
+    oss &lt;&lt; &quot;  -snes_rtol = &quot; &lt;&lt; rel_tol &lt;&lt; &quot; (nl_rel_tol = &quot; &lt;&lt; _nl_rel_tol &lt;&lt; &quot;)\n&quot;;
+  if (rel_step_tol != _nl_rel_step_tol)
+    oss &lt;&lt; &quot;  -snes_stol = &quot; &lt;&lt; rel_step_tol &lt;&lt; &quot; (nl_rel_step_tol = &quot; &lt;&lt; _nl_rel_step_tol &lt;&lt; &quot;)\n&quot;;
+  if (max_its != static_cast&lt;PetscInt&gt;(_nl_max_its))
+    oss &lt;&lt; &quot;  -snes_max_it = &quot; &lt;&lt; max_its &lt;&lt; &quot; (nl_max_its = &quot; &lt;&lt; _nl_max_its &lt;&lt; &quot;)\n&quot;;
+  if (max_funcs != static_cast&lt;PetscInt&gt;(_nl_max_funcs))
+    oss &lt;&lt; &quot;  -snes_max_funcs = &quot; &lt;&lt; max_funcs &lt;&lt; &quot; (nl_max_funcs = &quot; &lt;&lt; _nl_max_funcs &lt;&lt; &quot;)\n&quot;;
+
+  if (!oss.str().empty())
+    mooseWarning(&quot;The following PETSc SNES option(s) were set to a value different from what &quot;
+                 &quot;this Convergence object enforces. Because this object performs its own &quot;
+                 &quot;convergence check using its own cached tolerances, these PETSc-level settings &quot;
+                 &quot;have no effect:\n&quot;,
+                 oss.str());
+}
+
+Convergence::MooseConvergenceStatus
+DefaultNonlinearConvergence::checkConvergence(unsigned int n_iter)
+{
+  TIME_SECTION(_perfid_check_convergence);
+
+  NonlinearSystemBase &amp; system = nonlinearSystem();
+  MooseConvergenceStatus status = MooseConvergenceStatus::ITERATING;
+
+  SNES snes = system.getSNES();
+
+  checkPetscToleranceOverrides();
+
+  // ||u||
+  PetscReal xnorm;
+  LibmeshPetscCallA(_fe_problem.comm().get(), SNESGetSolutionNorm(snes, &amp;xnorm));
+
+  // ||r||
+  PetscReal fnorm;
+  LibmeshPetscCallA(_fe_problem.comm().get(), SNESGetFunctionNorm(snes, &amp;fnorm));
+
+  // ||du||
+  PetscReal snorm;
+  LibmeshPetscCallA(_fe_problem.comm().get(), SNESGetUpdateNorm(snes, &amp;snorm));
+
+  // Get current number of function evaluations done by SNES
+  PetscInt nfuncs;
+  LibmeshPetscCallA(_fe_problem.comm().get(), SNESGetNumberFunctionEvals(snes, &amp;nfuncs));
+
+#if !PETSC_VERSION_LESS_THAN(3, 8, 4)
+  PetscBool force_iteration = PETSC_FALSE;
+  LibmeshPetscCallA(_fe_problem.comm().get(), SNESGetForceIteration(snes, &amp;force_iteration));
+
+  // if PETSc says to force iteration, then force at least one iteration
+  if (force_iteration &amp;&amp; !(_nl_forced_its))
+    _nl_forced_its = 1;
+
+  // if specified here to force iteration, but PETSc doesn&#x27;t know, tell it
+  if (!force_iteration &amp;&amp; (_nl_forced_its))
+  {
+    LibmeshPetscCallA(_fe_problem.comm().get(), SNESSetForceIteration(snes, PETSC_TRUE));
+  }
+#endif
+
+  // See if SNESSetFunctionDomainError() has been called.
+  // Note: SNESSetFunctionDomainError() and SNESGetFunctionDomainError() were added
+  // in different releases of PETSc. The latter was removed in PETSc 3.25.0.
+#if PETSC_VERSION_LESS_THAN(3, 25, 0)
+  PetscBool domainerror;
+  LibmeshPetscCallA(_fe_problem.comm().get(), SNESGetFunctionDomainError(snes, &amp;domainerror));
+  if (domainerror)
+    status = MooseConvergenceStatus::DIVERGED;
+#else
+  SNESConvergedReason reason;
+  LibmeshPetscCallA(_fe_problem.comm().get(), SNESGetConvergedReason(snes, &amp;reason));
+  if (reason == SNES_DIVERGED_FUNCTION_DOMAIN)
+    status = MooseConvergenceStatus::DIVERGED;
+#endif
+
+  // Needed by ResidualReferenceConvergence
+  nonlinearConvergenceSetup();
+
+  Real fnorm_old;
+  // This is the first residual before any iterations have been done, but after
+  // solution-modifying objects (if any) have been imposed on the solution vector.
+  // We save it, and use it to detect convergence if system.usePreSMOResidual() == false.
+  if (n_iter == 0)
+  {
+    system.setInitialResidual(fnorm);
+    fnorm_old = fnorm;
+    _nl_current_pingpong = 0;
+  }
+  else
+    fnorm_old = system._last_nl_rnorm;
+
+  // Check for nonlinear residual ping-pong.
+  // Ping-pong will always start from a residual increase
+  if ((_nl_current_pingpong % 2 == 1 &amp;&amp; !(fnorm &gt; fnorm_old)) ||
+      (_nl_current_pingpong % 2 == 0 &amp;&amp; fnorm &gt; fnorm_old))
+    _nl_current_pingpong += 1;
+  else
+    _nl_current_pingpong = 0;
+
+  const auto ref_residual = system.referenceResidual();
+  std::ostringstream oss;
+  if (n_iter &lt; _nl_forced_its)
+    oss &lt;&lt; &quot;Number of forced iterations not yet reached: &quot; &lt;&lt; n_iter &lt;&lt; &quot; &lt; &quot; &lt;&lt; _nl_forced_its
+        &lt;&lt; &#x27;\n&#x27;;
+  else if (fnorm != fnorm)
+  {
+    oss &lt;&lt; &quot;Failed to converge, residual norm is NaN\n&quot;;
+    status = MooseConvergenceStatus::DIVERGED;
+  }
+  else if (checkResidualConvergence(n_iter, fnorm, ref_residual, _nl_rel_tol, _nl_abs_tol, oss))
+    status = MooseConvergenceStatus::CONVERGED;
+  else if (nfuncs &gt;= cast_int&lt;PetscInt&gt;(_nl_max_funcs))
+  {
+    oss &lt;&lt; &quot;Exceeded maximum number of residual evaluations: &quot; &lt;&lt; nfuncs &lt;&lt; &quot; &gt; &quot; &lt;&lt; _nl_max_funcs
+        &lt;&lt; &#x27;\n&#x27;;
+    status = MooseConvergenceStatus::DIVERGED;
+  }
+  else if ((n_iter &gt;= _nl_forced_its) &amp;&amp; n_iter &amp;&amp; fnorm &gt; system._last_nl_rnorm &amp;&amp;
+           fnorm &gt;= _div_threshold)
+  {
+    oss &lt;&lt; &quot;Nonlinear solve was blowing up!\n&quot;;
+    status = MooseConvergenceStatus::DIVERGED;
+  }
+  else if (snorm &lt; _nl_rel_step_tol * xnorm)
+  {
+    oss &lt;&lt; &quot;Converged due to small update length: &quot; &lt;&lt; snorm &lt;&lt; &quot; &lt; &quot; &lt;&lt; _nl_rel_step_tol &lt;&lt; &quot; * &quot;
+        &lt;&lt; xnorm &lt;&lt; &#x27;\n&#x27;;
+    status = MooseConvergenceStatus::CONVERGED;
+  }
+  else if (_nl_rel_div_tol &gt; 0 &amp;&amp; fnorm &gt; ref_residual * _nl_rel_div_tol)
+  {
+    oss &lt;&lt; &quot;Diverged due to relative residual &quot; &lt;&lt; ref_residual &lt;&lt; &quot; &gt; divergence tolerance &quot;
+        &lt;&lt; _nl_rel_div_tol &lt;&lt; &quot; * relative residual &quot; &lt;&lt; ref_residual &lt;&lt; &#x27;\n&#x27;;
+    status = MooseConvergenceStatus::DIVERGED;
+  }
+  else if (_nl_abs_div_tol &gt; 0 &amp;&amp; fnorm &gt; _nl_abs_div_tol)
+  {
+    oss &lt;&lt; &quot;Diverged due to residual &quot; &lt;&lt; fnorm &lt;&lt; &quot; &gt; absolute divergence tolerance &quot;
+        &lt;&lt; _nl_abs_div_tol &lt;&lt; &#x27;\n&#x27;;
+    status = MooseConvergenceStatus::DIVERGED;
+  }
+  else if (_nl_current_pingpong &gt; _nl_max_pingpong)
+  {
+    oss &lt;&lt; &quot;Diverged due to maximum nonlinear residual pingpong achieved&quot; &lt;&lt; &#x27;\n&#x27;;
+    status = MooseConvergenceStatus::DIVERGED;
+  }
+
+  system._last_nl_rnorm = fnorm;
+  system._current_nl_its = static_cast&lt;unsigned int&gt;(n_iter);
+
+  std::string msg;
+  msg = oss.str();
+  if (_app.multiAppLevel() &gt; 0)
+    MooseUtils::indentMessage(_app.name(), msg);
+  if (msg.length() &gt; 0)
+#if !PETSC_VERSION_LESS_THAN(3, 17, 0)
+    LibmeshPetscCallA(_fe_problem.comm().get(), PetscInfo(snes, &quot;%s&quot;, msg.c_str()));
+#else
+    LibmeshPetscCallA(_fe_problem.comm().get(), PetscInfo(snes, msg.c_str()));
+#endif
+
+  verboseOutput(oss);
+
+  return status;
+}
+
+void
+DefaultNonlinearConvergence::setMaximumIterations(const unsigned int max_iter)
+{
+  _nl_max_its = max_iter;
+}
+
+void
+DefaultNonlinearConvergence::setAbsoluteTolerance(const Real abs_tol)
+{
+  _nl_abs_tol = abs_tol;
+}
+
+void
+DefaultNonlinearConvergence::setRelativeTolerance(const Real rel_tol)
+{
+  _nl_rel_tol = rel_tol;
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#db80eb57-c42a-467b-838e-99aa4b086591" class="tooltipped" data-position="left" data-tooltip="Available Objects">Available Objects</a></li><li><a href="#f5c53fd7-3da7-4580-9b50-edb8f2d44131" class="tooltipped" data-position="left" data-tooltip="Available Actions">Available Actions</a></li><li><a href="#8ec54518-7232-4c70-877d-9e0c5290c34e" class="tooltipped" data-position="left" data-tooltip="Convergence Criteria Design Considerations">Convergence Criteria Design Considerations</a></li><li><a href="#357c5da3-626e-4ab8-a73c-32fd3ebca24f" class="tooltipped" data-position="left" data-tooltip="Implementing a New Convergence Class">Implementing a New Convergence Class</a></li><li><a href="#d7666cdd-ec24-4a1e-a695-c6d6c3af71ef" class="tooltipped" data-position="left" data-tooltip="References">References</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

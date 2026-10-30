@@ -1,0 +1,440 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>MooseRandomPerturbation | Zapdos</title><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/devel_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/civet_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/zapdos.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="../../index.html" class="left moose-logo hide-on-med-and-down" id="home-button">Zapdos</a><a href="https://github.com/shannon-lab/zapdos" class="right"><img src="../../media/framework/github-logo.png" alt="GitHub wordmark" class="github-mark"></img><img src="../../media/framework/github-mark.png" alt="GitHub logo" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="#!" class="dropdown-trigger" data-target="d6162ac4-0c15-49c0-81c3-229a039b910e" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="d7a1dd33-2d52-4130-b1ee-14e21b39e4dd" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="6abb82e5-0b12-4da4-8888-2a61f3b93487" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#" class="sidenav-trigger" data-target="76ac4a7a-df27-470a-9845-d3e9a98fb880"><i class="material-icons">menu</i></a><ul class="sidenav" id="76ac4a7a-df27-470a-9845-d3e9a98fb880"><li><a href="#!" class="dropdown-trigger" data-target="de41a400-4ba9-4c7b-82f7-575eab900199" data-constrainWidth="false">Getting Started<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="9f00613a-3eab-4ca2-ad0f-8e30e3acec9a" data-constrainWidth="false">Documentation<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="#!" class="dropdown-trigger" data-target="e5ca1dac-caf3-4e02-a9af-6783fa5ce8eb" data-constrainWidth="false">Help<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../citing.html">Citing</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div><ul class="dropdown-content" id="d6162ac4-0c15-49c0-81c3-229a039b910e"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="d7a1dd33-2d52-4130-b1ee-14e21b39e4dd"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="6abb82e5-0b12-4da4-8888-2a61f3b93487"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul><ul class="dropdown-content" id="de41a400-4ba9-4c7b-82f7-575eab900199"><li><a href="../../getting_started/installation.html">Installation</a></li><li><a href="../../getting_started/using_zapdos.html">Using Zapdos</a></li><li><a href="../../getting_started/zapdos_meshing.html">Generating Meshes</a></li><li><a href="../../tutorial/index.html">Tutorial Slides</a></li></ul><ul class="dropdown-content" id="9f00613a-3eab-4ca2-ad0f-8e30e3acec9a"><li><a href="../../syntax/zapdos_only.html">Zapdos Input Syntax</a></li><li><a href="../../syntax/index.html">Complete Code Syntax</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/moose/classes.html">MOOSE Doxygen</a></li><li><a href="https://mooseframework.inl.gov/docs/doxygen/libmesh/classes.html">libMesh Doxygen</a></li><li><a href="../../a-to-z.html">Zapdos A to Z Index</a></li><li><a href="../../examples/crane_examples.html">CRANE Examples</a></li><li><a href="../../development/contributing.html">Contributing Guidelines</a></li><li><a href="../../development/code_standards.html">Code Standards</a></li><li><a href="../../publications.html">List of Publications</a></li></ul><ul class="dropdown-content" id="e5ca1dac-caf3-4e02-a9af-6783fa5ce8eb"><li><a href="https://github.com/shannon-lab/zapdos/discussions">Zapdos Discussions Forum</a></li><li><a href="../../development/zapdos_developer_info.html">Zapdos Developer Information</a></li><li><a href="https://github.com/idaholab/moose/discussions">MOOSE Discussions Forum</a></li><li><a href="https://mooseframework.inl.gov/">MOOSE Homepage</a></li><li><a href="../../development/moose_developer_info.html">MOOSE Developer Information</a></li></ul></nav><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="/index.md" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">utils</span><a href="#" class="breadcrumb">MooseRandomPerturbation</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="1953309f-5a2a-47e4-be39-c55a699c6229" data-section-level="1" data-section-text="MooseRandomPerturbation"><h1 id="mooserandomperturbation">MooseRandomPerturbation</h1><section class="scrollspy" id="7785eadc-deba-4a13-9537-ea48d2dd4b0b" data-section-level="2" data-section-text="Overview"><h2 id="overview">Overview</h2><p>MooseRandomPerturbation generates a keyed pseudo-random permutation of the integers [0, n) using a balanced Feistel network. Given the same seed and n, the mapping is fully deterministic and bijective: every input in [0, n) maps to a unique output in [0, n), and different seeds produce statistically independent permutations. This makes it useful for shuffling a fixed-size index set (e.g., sample or row indices) reproducibly without materializing the full permutation in memory.</p><pre style="max-height:350px;"><code class="language-cpp"> * Generates a keyed pseudo-random permutation of the integers [0, n) using a
+ * balanced Feistel network. Given the same seed and n, the mapping is fully
+ * deterministic and bijective: every input in [0, n) maps to a unique output
+ * in [0, n). Different seeds produce statistically independent permutations.
+ *
+ * Because n need not be a power of two, the Feistel network operates on a
+ * padded domain of size 2^(2*half_bits) &gt;= n and uses cycle-walking: if the
+ * raw output falls outside [0, n) it is re-applied until a valid index is
+ * reached. This guarantees termination because the padded permutation is
+ * itself a bijection and n &gt; 0 ensures at least one valid output exists.
+ *
+ * The permutation is also invertible via invert(), which runs the Feistel
+ * rounds in reverse order.
+ */
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#f481a4f3-6475-4f65-bd58-1e33c9b95867">(moose/framework/include/utils/MooseRandomPerturbation.h)</a><p>An instance is constructed with a seed, the domain size <code>n</code>, and the number of Feistel rounds to apply (more rounds improve mixing at the cost of throughput):</p><pre style="max-height:350px;"><code class="language-cpp">  MooseRandomPerturbation(uint64_t seed, unsigned int n, unsigned int rounds = 8);
+</code></pre><p>The <code>permute</code> and <code>invert</code> methods then map an index to its permuted value and back, such that <code>invert(permute(x)) == x</code> for every x in [0, n):</p><pre style="max-height:350px;"><code class="language-cpp">  uint32_t permute(uint32_t x) const;
+</code></pre><pre style="max-height:350px;"><code class="language-cpp">  uint32_t invert(uint32_t y) const;
+</code></pre><p>For example, LatinHypercube constructs one MooseRandomPerturbation per column to shuffle that column&#x27;s row assignment:</p><pre style="max-height:350px;"><code class="language-cpp">    _shufflers.push_back(std::make_unique&lt;MooseRandomPerturbation&gt;(seed, getNumberOfRows()));
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#23043c53-f263-499b-8f3c-db554b45a291">(moose/modules/stochastic_tools/src/samplers/LatinHypercubeSampler.C)</a><section id="9ccead7f-765a-4db3-8b62-c7bcd46596c4" data-section-level="3" data-section-text="Recovering from a checkpoint"><h3 id="recovering-from-a-checkpoint">Recovering from a checkpoint</h3><p>Because the permutation is fully determined by the seed, n, and round count, <code>dataStore</code>/<code>dataLoad</code> specializations serialize only those three values rather than any per-index mapping, allowing a <code>MooseRandomPerturbation</code> (typically held via <code>std::unique_ptr</code>) to be exactly reconstructed on recover:</p><pre style="max-height:350px;"><code class="language-cpp">dataStore(std::ostream &amp; stream, MooseRandomPerturbation &amp; v, void * context)
+{
+  uint64_t seed = (static_cast&lt;uint64_t&gt;(v._k1) &lt;&lt; 32) | v._k0;
+  dataStore(stream, seed, context);
+  dataStore(stream, v._n, context);
+  dataStore(stream, v._rounds, context);
+}
+
+template &lt;&gt;
+inline void
+dataStore(std::ostream &amp; stream, std::unique_ptr&lt;MooseRandomPerturbation&gt; &amp; v, void * context)
+{
+  dataStore(stream, *v, context);
+}
+
+template &lt;&gt;
+inline void
+dataLoad(std::istream &amp; stream, std::unique_ptr&lt;MooseRandomPerturbation&gt; &amp; v, void * context)
+{
+  uint64_t seed;
+  unsigned int n, rounds;
+  dataLoad(stream, seed, context);
+  dataLoad(stream, n, context);
+  dataLoad(stream, rounds, context);
+  v = std::make_unique&lt;MooseRandomPerturbation&gt;(seed, n, rounds);
+</code></pre><a class="moose-source-filename tooltipped modal-trigger" href="#52c63811-da4c-41d4-8567-a5327802ef44">(moose/framework/include/utils/MooseRandomPerturbation.h)</a></section></section></section><div class="moose-modal modal" id="f481a4f3-6475-4f65-bd58-1e33c9b95867"><div class="modal-content"><h4>(moose/framework/include/utils/MooseRandomPerturbation.h)</h4><pre style="max-height:350px;"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#pragma once
+
+#include &quot;DataIO.h&quot;
+#include &quot;MooseError.h&quot;
+
+#include &lt;cstdint&gt;
+
+/**
+ * Generates a keyed pseudo-random permutation of the integers [0, n) using a
+ * balanced Feistel network. Given the same seed and n, the mapping is fully
+ * deterministic and bijective: every input in [0, n) maps to a unique output
+ * in [0, n). Different seeds produce statistically independent permutations.
+ *
+ * Because n need not be a power of two, the Feistel network operates on a
+ * padded domain of size 2^(2*half_bits) &gt;= n and uses cycle-walking: if the
+ * raw output falls outside [0, n) it is re-applied until a valid index is
+ * reached. This guarantees termination because the padded permutation is
+ * itself a bijection and n &gt; 0 ensures at least one valid output exists.
+ *
+ * The permutation is also invertible via invert(), which runs the Feistel
+ * rounds in reverse order.
+ */
+class MooseRandomPerturbation
+{
+public:
+  /**
+   * Construct a permutation of [0, \p n) keyed by \p seed.
+   *
+   * @param seed  64-bit seed; split into two 32-bit subkeys for the round function.
+   * @param n     Size of the domain to permute; must be &gt; 0.
+   * @param rounds Number of Feistel rounds. More rounds improve mixing at the
+   *               cost of throughput; 8 is sufficient for sampling applications.
+   */
+  MooseRandomPerturbation(uint64_t seed, unsigned int n, unsigned int rounds = 8);
+
+  /**
+   * Map \p x to its permuted index in [0, n).
+   *
+   * Applies the Feistel network to the padded domain and cycle-walks until
+   * the result falls within [0, n).
+   *
+   * @param x  Input index; must satisfy x &lt; n.
+   * @return   A unique index in [0, n). Calling permute for every x in [0, n)
+   *           yields each value in [0, n) exactly once.
+   */
+  uint32_t permute(uint32_t x) const;
+
+  /**
+   * Recover the original index from a permuted value, i.e. invert(permute(x)) == x.
+   *
+   * Runs the Feistel rounds in reverse order and cycle-walks back into [0, n).
+   *
+   * @param y  Permuted index; must satisfy y &lt; n.
+   * @return   The unique x in [0, n) such that permute(x) == y.
+   */
+  uint32_t invert(uint32_t y) const;
+
+private:
+  /**
+   * Apply one full pass of the balanced Feistel network over the padded
+   * domain [0, 2^(2*half_bits)). The result may fall outside [0, n); the
+   * caller is responsible for cycle-walking.
+   *
+   * @param x  Input value in the padded domain.
+   * @return   Permuted value in the padded domain.
+   */
+  uint32_t permutePadded(uint32_t x) const;
+
+  /**
+   * Invert one full pass of the Feistel network by running rounds in reverse.
+   *
+   * @param y  Value in the padded domain produced by permutePadded.
+   * @return   The original input to permutePadded that produced \p y.
+   */
+  uint32_t invertPadded(uint32_t y) const;
+
+  /**
+   * Keyed round function F(half, round) used in each Feistel step.
+   *
+   * Mixes the half-block with both subkeys and a round-dependent constant
+   * derived from the golden-ratio fractional bits (0x9e3779b9), then passes
+   * the result through a 32-bit avalanche hash (mix32).
+   *
+   * @param half   The half-block value (R in the forward direction).
+   * @param round  Zero-based round index, used to vary the constant each round.
+   * @return       Mixed value masked to \p _half_bits width.
+   */
+  uint32_t roundFunction(uint32_t half, unsigned int round) const;
+
+  /**
+   * Return the number of bits needed to represent values in [0, n-1], i.e.
+   * ceil(log2(n)). Returns 0 for n == 1 (no bits needed to index a single element).
+   *
+   * @param n  Must be &gt; 0.
+   */
+  static unsigned int ceilLog2(uint32_t n);
+
+  /**
+   * Bijective 32-bit avalanche hash (finalizer from Murmur3 / degski hash).
+   * Used inside the round function to achieve good bit diffusion.
+   *
+   * @param x  32-bit input.
+   * @return   Hashed 32-bit output; the mapping is invertible.
+   */
+  static uint32_t mix32(uint32_t x);
+
+  /// Lower 32 bits of the seed, used as the first subkey in the round function
+  const uint32_t _k0;
+  /// Upper 32 bits of the seed, used as the second subkey in the round function
+  const uint32_t _k1;
+  /// Size of the permutation domain [0, n)
+  const unsigned int _n;
+  /// Number of bits in each Feistel half-block: ceil((ceil(log2(n)) + 1) / 2)
+  const unsigned int _half_bits;
+  /// Bitmask of width _half_bits, used to keep half-block arithmetic in range
+  const uint32_t _half_mask;
+  /// Number of Feistel rounds to apply per permute/invert call
+  const unsigned int _rounds;
+
+  // for restart capability
+  friend void dataStore&lt;MooseRandomPerturbation&gt;(std::ostream &amp;, MooseRandomPerturbation &amp;, void *);
+};
+
+template &lt;&gt;
+inline void
+dataStore(std::ostream &amp; stream, MooseRandomPerturbation &amp; v, void * context)
+{
+  uint64_t seed = (static_cast&lt;uint64_t&gt;(v._k1) &lt;&lt; 32) | v._k0;
+  dataStore(stream, seed, context);
+  dataStore(stream, v._n, context);
+  dataStore(stream, v._rounds, context);
+}
+
+template &lt;&gt;
+inline void
+dataStore(std::ostream &amp; stream, std::unique_ptr&lt;MooseRandomPerturbation&gt; &amp; v, void * context)
+{
+  dataStore(stream, *v, context);
+}
+
+template &lt;&gt;
+inline void
+dataLoad(std::istream &amp; stream, std::unique_ptr&lt;MooseRandomPerturbation&gt; &amp; v, void * context)
+{
+  uint64_t seed;
+  unsigned int n, rounds;
+  dataLoad(stream, seed, context);
+  dataLoad(stream, n, context);
+  dataLoad(stream, rounds, context);
+  v = std::make_unique&lt;MooseRandomPerturbation&gt;(seed, n, rounds);
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="23043c53-f263-499b-8f3c-db554b45a291"><div class="modal-content"><h4>(moose/modules/stochastic_tools/src/samplers/LatinHypercubeSampler.C)</h4><pre style="max-height:350px;"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;LatinHypercubeSampler.h&quot;
+#include &quot;Distribution.h&quot;
+#include &quot;MooseRandomPerturbation.h&quot;
+
+registerMooseObjectAliased(&quot;StochasticToolsApp&quot;, LatinHypercubeSampler, &quot;LatinHypercube&quot;);
+
+InputParameters
+LatinHypercubeSampler::validParams()
+{
+  InputParameters params = Sampler::validParams();
+  params.addClassDescription(&quot;Latin Hypercube Sampler.&quot;);
+  params.addRequiredParam&lt;dof_id_type&gt;(&quot;num_rows&quot;, &quot;The size of the square matrix to generate.&quot;);
+  params.addRequiredParam&lt;std::vector&lt;DistributionName&gt;&gt;(
+      &quot;distributions&quot;,
+      &quot;The distribution names to be sampled, the number of distributions provided defines the &quot;
+      &quot;number of columns per matrix.&quot;);
+  return params;
+}
+
+LatinHypercubeSampler::LatinHypercubeSampler(const InputParameters &amp; parameters)
+  : Sampler(parameters),
+    _shufflers(declareRestartableData&lt;std::vector&lt;std::unique_ptr&lt;MooseRandomPerturbation&gt;&gt;&gt;(
+        &quot;lhs_shufflers&quot;))
+{
+  const auto &amp; distribution_names = getParam&lt;std::vector&lt;DistributionName&gt;&gt;(&quot;distributions&quot;);
+  for (const DistributionName &amp; name : distribution_names)
+    _distributions.push_back(&amp;getDistributionByName(name));
+
+  setNumberOfRows(getParam&lt;dof_id_type&gt;(&quot;num_rows&quot;));
+  setNumberOfCols(distribution_names.size());
+  // Generator 0: within-bin uniform draws. Generator 1: column shuffler seeds.
+  setNumberOfRandomSeeds(2);
+}
+
+void
+LatinHypercubeSampler::executeTearDown()
+{
+  _shufflers.clear();
+  for (const auto col : make_range(getNumberOfCols()))
+  {
+    const auto seed = getRandl(col, 0, std::numeric_limits&lt;uint32_t&gt;::max(), 1);
+    _shufflers.push_back(std::make_unique&lt;MooseRandomPerturbation&gt;(seed, getNumberOfRows()));
+  }
+}
+
+Real
+LatinHypercubeSampler::computeSample(dof_id_type row_index, dof_id_type col_index) const
+{
+  mooseAssert(_shufflers.size() &gt; 0, &quot;Shufflers have not been initialized.&quot;);
+
+  // Divide [0,1] into N equal bins of width 1/N.
+  const Real bin_size = 1. / getNumberOfRows();
+
+  // Map row_index to a shuffled bin via the column&#x27;s bijective permutation.
+  // Because permute() is a bijection on [0, N), each row gets a distinct bin,
+  // which is the core LHS stratification guarantee.
+  const auto bin = _shufflers[col_index]-&gt;permute(row_index);
+
+  // Draw a uniform random point within the selected bin.
+  const auto lower = bin * bin_size;
+  const auto upper = (bin + 1) * bin_size;
+  const Real probability =
+      getRand(row_index * getNumberOfCols() + col_index) * (upper - lower) + lower;
+
+  // Transform the probability through the inverse CDF to obtain the sample value.
+  return _distributions[col_index]-&gt;quantile(probability);
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="moose-modal modal" id="52c63811-da4c-41d4-8567-a5327802ef44"><div class="modal-content"><h4>(moose/framework/include/utils/MooseRandomPerturbation.h)</h4><pre style="max-height:350px;"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://mooseframework.inl.gov
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#pragma once
+
+#include &quot;DataIO.h&quot;
+#include &quot;MooseError.h&quot;
+
+#include &lt;cstdint&gt;
+
+/**
+ * Generates a keyed pseudo-random permutation of the integers [0, n) using a
+ * balanced Feistel network. Given the same seed and n, the mapping is fully
+ * deterministic and bijective: every input in [0, n) maps to a unique output
+ * in [0, n). Different seeds produce statistically independent permutations.
+ *
+ * Because n need not be a power of two, the Feistel network operates on a
+ * padded domain of size 2^(2*half_bits) &gt;= n and uses cycle-walking: if the
+ * raw output falls outside [0, n) it is re-applied until a valid index is
+ * reached. This guarantees termination because the padded permutation is
+ * itself a bijection and n &gt; 0 ensures at least one valid output exists.
+ *
+ * The permutation is also invertible via invert(), which runs the Feistel
+ * rounds in reverse order.
+ */
+class MooseRandomPerturbation
+{
+public:
+  /**
+   * Construct a permutation of [0, \p n) keyed by \p seed.
+   *
+   * @param seed  64-bit seed; split into two 32-bit subkeys for the round function.
+   * @param n     Size of the domain to permute; must be &gt; 0.
+   * @param rounds Number of Feistel rounds. More rounds improve mixing at the
+   *               cost of throughput; 8 is sufficient for sampling applications.
+   */
+  MooseRandomPerturbation(uint64_t seed, unsigned int n, unsigned int rounds = 8);
+
+  /**
+   * Map \p x to its permuted index in [0, n).
+   *
+   * Applies the Feistel network to the padded domain and cycle-walks until
+   * the result falls within [0, n).
+   *
+   * @param x  Input index; must satisfy x &lt; n.
+   * @return   A unique index in [0, n). Calling permute for every x in [0, n)
+   *           yields each value in [0, n) exactly once.
+   */
+  uint32_t permute(uint32_t x) const;
+
+  /**
+   * Recover the original index from a permuted value, i.e. invert(permute(x)) == x.
+   *
+   * Runs the Feistel rounds in reverse order and cycle-walks back into [0, n).
+   *
+   * @param y  Permuted index; must satisfy y &lt; n.
+   * @return   The unique x in [0, n) such that permute(x) == y.
+   */
+  uint32_t invert(uint32_t y) const;
+
+private:
+  /**
+   * Apply one full pass of the balanced Feistel network over the padded
+   * domain [0, 2^(2*half_bits)). The result may fall outside [0, n); the
+   * caller is responsible for cycle-walking.
+   *
+   * @param x  Input value in the padded domain.
+   * @return   Permuted value in the padded domain.
+   */
+  uint32_t permutePadded(uint32_t x) const;
+
+  /**
+   * Invert one full pass of the Feistel network by running rounds in reverse.
+   *
+   * @param y  Value in the padded domain produced by permutePadded.
+   * @return   The original input to permutePadded that produced \p y.
+   */
+  uint32_t invertPadded(uint32_t y) const;
+
+  /**
+   * Keyed round function F(half, round) used in each Feistel step.
+   *
+   * Mixes the half-block with both subkeys and a round-dependent constant
+   * derived from the golden-ratio fractional bits (0x9e3779b9), then passes
+   * the result through a 32-bit avalanche hash (mix32).
+   *
+   * @param half   The half-block value (R in the forward direction).
+   * @param round  Zero-based round index, used to vary the constant each round.
+   * @return       Mixed value masked to \p _half_bits width.
+   */
+  uint32_t roundFunction(uint32_t half, unsigned int round) const;
+
+  /**
+   * Return the number of bits needed to represent values in [0, n-1], i.e.
+   * ceil(log2(n)). Returns 0 for n == 1 (no bits needed to index a single element).
+   *
+   * @param n  Must be &gt; 0.
+   */
+  static unsigned int ceilLog2(uint32_t n);
+
+  /**
+   * Bijective 32-bit avalanche hash (finalizer from Murmur3 / degski hash).
+   * Used inside the round function to achieve good bit diffusion.
+   *
+   * @param x  32-bit input.
+   * @return   Hashed 32-bit output; the mapping is invertible.
+   */
+  static uint32_t mix32(uint32_t x);
+
+  /// Lower 32 bits of the seed, used as the first subkey in the round function
+  const uint32_t _k0;
+  /// Upper 32 bits of the seed, used as the second subkey in the round function
+  const uint32_t _k1;
+  /// Size of the permutation domain [0, n)
+  const unsigned int _n;
+  /// Number of bits in each Feistel half-block: ceil((ceil(log2(n)) + 1) / 2)
+  const unsigned int _half_bits;
+  /// Bitmask of width _half_bits, used to keep half-block arithmetic in range
+  const uint32_t _half_mask;
+  /// Number of Feistel rounds to apply per permute/invert call
+  const unsigned int _rounds;
+
+  // for restart capability
+  friend void dataStore&lt;MooseRandomPerturbation&gt;(std::ostream &amp;, MooseRandomPerturbation &amp;, void *);
+};
+
+template &lt;&gt;
+inline void
+dataStore(std::ostream &amp; stream, MooseRandomPerturbation &amp; v, void * context)
+{
+  uint64_t seed = (static_cast&lt;uint64_t&gt;(v._k1) &lt;&lt; 32) | v._k0;
+  dataStore(stream, seed, context);
+  dataStore(stream, v._n, context);
+  dataStore(stream, v._rounds, context);
+}
+
+template &lt;&gt;
+inline void
+dataStore(std::ostream &amp; stream, std::unique_ptr&lt;MooseRandomPerturbation&gt; &amp; v, void * context)
+{
+  dataStore(stream, *v, context);
+}
+
+template &lt;&gt;
+inline void
+dataLoad(std::istream &amp; stream, std::unique_ptr&lt;MooseRandomPerturbation&gt; &amp; v, void * context)
+{
+  uint64_t seed;
+  unsigned int n, rounds;
+  dataLoad(stream, seed, context);
+  dataLoad(stream, n, context);
+  dataLoad(stream, rounds, context);
+  v = std::make_unique&lt;MooseRandomPerturbation&gt;(seed, n, rounds);
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#7785eadc-deba-4a13-9537-ea48d2dd4b0b" class="tooltipped" data-position="left" data-tooltip="Overview">Overview</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
